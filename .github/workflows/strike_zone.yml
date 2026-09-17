@@ -1,0 +1,42 @@
+name: Strike Zone
+
+on:
+  schedule:
+    # MLB plays daily during the season. 13:00 UTC = 9am ET, run early
+    # enough to be ready well before typical game times but late enough
+    # that the previous night's box scores/game logs are finalized.
+    # First-time schedule for this project; adjust freely once you see
+    # how it behaves.
+    - cron: '0 13 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Strike Zone
+        # No API key needed — this uses the public MLB Stats API, unlike
+        # Match IQ / Player Stat Model which need THESTATSAPI_KEY.
+        run: python3 build_slate.py
+
+      - name: Commit and push updated slate
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/strike-zone/
+          git diff --staged --quiet || git commit -m "Update Strike Zone daily slate"
+          git push
