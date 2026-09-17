@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Predictor Suite</title>
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#121820; --panel2:#161d27; --border:#233040;
+    --text:#e8edf2; --sub:#8b98a8; --amber:#facc15;
+  }
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    padding:20px; max-width:640px; margin:0 auto;
+  }
+  h1{ font-size:24px; margin-bottom:4px; }
+  .sub{ color:var(--sub); font-size:13px; margin-bottom:24px; }
+  .card{
+    display:block; background:var(--panel); border:1px solid var(--border);
+    border-radius:12px; padding:16px; margin-bottom:12px; text-decoration:none;
+    color:var(--text); transition:background 0.15s;
+  }
+  .card:active{ background:var(--panel2); }
+  .card .emoji{ font-size:22px; margin-right:8px; }
+  .card .name{ font-size:17px; font-weight:700; }
+  .card .desc{ color:var(--sub); font-size:12px; margin-top:4px; line-height:1.5; }
+  .footer{ color:var(--sub); font-size:11px; text-align:center; margin-top:28px; line-height:1.6; }
+</style>
+</head>
+<body>
+  <h1>🎯 Predictor Suite</h1>
+  <div class="sub">Model-driven sports predictions, updated automatically.</div>
+
+  <a class="card" href="match-iq/match_iq_index.html">
+    <span class="emoji">⚽</span><span class="name">Match IQ</span>
+    <div class="desc">Football correct score, goals, corners &amp; player props — Premier League, Championship, Bundesliga, Eredivisie, La Liga, Primeira Liga, UEFA Champions League, MLS.</div>
+  </a>
+
+  <a class="card" href="player-stat-model/index.html">
+    <span class="emoji">🎯</span><span class="name">Player Stat Model</span>
+    <div class="desc">Football player props — shots, cards, goals, assists, tackles, fouls — blended last-10-match form + season rates.</div>
+  </a>
+
+  <a class="card" href="blitz-iq/index.html">
+    <span class="emoji">🏈</span><span class="name">Blitz IQ</span>
+    <div class="desc">NFL team totals &amp; player props — passing/rushing yards, receptions.</div>
+  </a>
+
+  <a class="card" href="blue-line/index.html">
+    <span class="emoji">🔵</span><span class="name">Blue Line</span>
+    <div class="desc">NHL team &amp; player props — goals, shots on goal, points.</div>
+  </a>
+
+  <a class="card" href="strike-zone/index.html">
+    <span class="emoji">⚾</span><span class="name">Strike Zone</span>
+    <div class="desc">MLB daily slate — pitcher strikeouts/outs, team runs &amp; hits.</div>
+  </a>
+
+  <div class="footer">
+    Each model runs on its own automated schedule via GitHub Actions.<br>
+    All projections are probabilistic estimates, not guarantees — treat as a ranking tool, not a firm price.
+  </div>
+</body>
+</html>
