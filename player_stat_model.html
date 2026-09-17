@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Player Stat Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#101B2D;
+    --card:#16233A;
+    --card-hi:#1D2E48;
+    --line:#2A3A54;
+    --amber:#E3A542;
+    --teal:#4FA8A0;
+    --text:#ECEEF1;
+    --muted:#8593A8;
+    --bad:#D9695C;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--navy);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{max-width:480px;margin:0 auto;padding:20px 16px 48px;}
+
+  header{margin-bottom:20px;}
+  header .kicker{color:var(--teal);font-size:13px;font-weight:600;letter-spacing:0.02em;}
+  header h1{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:34px;
+    line-height:1.05;
+    margin:4px 0 6px;
+  }
+  header p{color:var(--muted);font-size:14px;margin:0;line-height:1.5;}
+
+  .search-row{display:flex;gap:8px;margin:18px 0;}
+  select, input[type=text], input[type=number]{
+    background:var(--card);
+    border:1px solid var(--line);
+    color:var(--text);
+    border-radius:8px;
+    padding:10px 12px;
+    font-size:15px;
+    font-family:inherit;
+  }
+  select{flex:1;}
+  select:focus, input:focus{outline:2px solid var(--amber);outline-offset:1px;}
+
+  .player-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    border-bottom:1px solid var(--line);
+    padding-bottom:10px;
+    margin-bottom:14px;
+  }
+  .player-head h2{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:24px;
+    margin:0;
+  }
+  .player-head .form-tag{
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .game-log{
+    font-size:11px;
+    color:var(--muted);
+    line-height:1.5;
+    margin-bottom:14px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .stat-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .stat-cell{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:10px 12px;
+  }
+  .stat-cell .label{font-size:12px;color:var(--muted);margin-bottom:2px;}
+  .stat-cell .value{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:22px;
+  }
+
+  .market-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+  .market-tabs button{
+    background:var(--card);
+    border:1px solid var(--line);
+    color:var(--muted);
+    padding:8px 12px;
+    border-radius:999px;
+    font-size:13px;
+    font-family:inherit;
+    cursor:pointer;
+  }
+  .market-tabs button.active{
+    background:var(--amber);
+    border-color:var(--amber);
+    color:var(--navy);
+    font-weight:600;
+  }
+
+  .line-row{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+  .line-row label{font-size:13px;color:var(--muted);white-space:nowrap;}
+  .line-row input{width:80px;}
+
+  .result{
+    background:var(--card-hi);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px;
+  }
+  .result .pct{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:56px;
+    line-height:1;
+    color:var(--amber);
+  }
+  .result .pct.low{color:var(--bad);}
+  .result .desc{font-size:14px;color:var(--muted);margin-top:6px;}
+  .bar-track{
+    height:8px;
+    background:var(--line);
+    border-radius:999px;
+    margin-top:14px;
+    overflow:hidden;
+  }
+  .bar-fill{
+    height:100%;
+    background:var(--amber);
+    border-radius:999px;
+    transition:width .3s ease;
+  }
+
+  .props-list{margin-top:16px;}
+  .props-list .row{
+    display:flex;
+    justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid var(--line);
+    font-size:14px;
+  }
+  .props-list .row:last-child{border-bottom:none;}
+  .props-list .row .name{color:var(--text);}
+  .props-list .row .pct{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:16px;
+    color:var(--amber);
+  }
+
+  .view-tabs{display:flex;gap:6px;margin-bottom:18px;}
+  .view-tabs button{
+    flex:1;
+    background:var(--card);
+    border:1px solid var(--line);
+    color:var(--muted);
+    padding:10px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:600;
+    font-family:inherit;
+    cursor:pointer;
+  }
+  .view-tabs button.active{
+    background:var(--amber);
+    border-color:var(--amber);
+    color:var(--navy);
+  }
+
+  .screener-meta{color:var(--muted);font-size:13px;margin-bottom:14px;}
+
+  .qual-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-left:3px solid var(--amber);
+    border-radius:8px;
+    padding:12px 14px;
+    margin-bottom:8px;
+  }
+  .qual-card .name{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:18px;
+  }
+  .qual-card .meta{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:2px;
+  }
+  .qual-card .hits{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:6px;
+  }
+  .qual-card .hit-pill{
+    background:var(--card-hi);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:3px 9px;
+    font-size:12px;
+    color:var(--teal);
+  }
+
+  .market-section{margin-bottom:20px;}
+  .market-section h3{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:17px;
+    margin:0 0 8px;
+    color:var(--text);
+  }
+  .rank-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:7px 0;
+    border-bottom:1px solid var(--line);
+    font-size:14px;
+  }
+  .rank-row:last-child{border-bottom:none;}
+  .rank-row .pos{color:var(--muted);width:20px;font-size:13px;}
+  .rank-row .pct{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    color:var(--amber);
+  }
+
+  .empty, .note{
+    text-align:center;
+    color:var(--muted);
+    font-size:14px;
+    padding:40px 12px;
+    line-height:1.6;
+  }
+  .note{padding:12px 0 0;text-align:left;}
+  .note code{
+    background:var(--card);
+    padding:1px 5px;
+    border-radius:4px;
+    font-size:12px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker">PLAYER PROPS</div>
+    <h1>Player Stat Model</h1>
+    <p>Blended last-10-match form and full-season rates, priced with a Poisson model for shots, cards, goals and assists.</p>
+  </header>
+
+  <div class="view-tabs" id="viewTabs">
+    <button data-view="screener" class="active">Screener</button>
+    <button data-view="player">Player</button>
+  </div>
+
+  <div id="builderPanel" style="background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px">
+    <div style="font-size:15px;font-weight:700;margin-bottom:10px">🎯 Safest Bet Builder</div>
+    <div id="builderCategoryToggles" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;font-size:12px"></div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <label style="font-size:12px;color:var(--muted)">Target odds:</label>
+      <input id="builderTargetOdds" type="number" step="0.1" min="1.1" value="5.0"
+        style="width:70px;background:var(--navy);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:6px 8px;font-size:13px">
+      <label style="font-size:12px;color:var(--muted)">Max legs:</label>
+      <input id="builderMaxLegs" type="number" step="1" min="2" value="8"
+        style="width:55px;background:var(--navy);border:1px solid var(--line);color:var(--text);border-radius:6px;padding:6px 8px;font-size:13px">
+      <button onclick="buildSafest()"
+        style="background:var(--teal);border:none;color:var(--navy);font-weight:600;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
+        Build
+      </button>
+      <button onclick="buildSafest()"
+        style="background:var(--card-hi);border:1px solid var(--line);color:var(--text);padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
+        🔀 Shuffle
+      </button>
+    </div>
+    <div id="builderResult" style="font-size:12px;color:var(--muted)">
+      Untick any market you don't want considered, set a target odds and leg cap, then tap
+      Build. Rotates through ticked categories, groups near-tied legs and shuffles within
+      each group so it draws from more of the scanned pool rather than the same few
+      players, and caps at 2 legs per player to avoid stacking correlated lines from the
+      same underlying performance (e.g. Over 1.5 and Over 2.5 shots for the same player).
+      Tap Shuffle for a fresh pick without changing your settings.
+    </div>
+  </div>
+
+  <div id="screenerView"></div>
+
+  <div id="playerView" style="display:none;">
+    <div class="search-row">
+      <select id="playerSelect"></select>
+    </div>
+    <div id="content"></div>
+  </div>
+
+  <p class="note">
+    Loads <code>player_stats_data.json</code>, generated by <code>player_stat_model.py</code>.
+    Host both files together (e.g. on GitHub Pages) or open this file from the same
+    folder as the JSON. Showing sample data until that file is found.
+  </p>
+
+</div>
+
+<script>
+// ---- Sample data so the app is usable standalone before you wire up live JSON ----
+const SAMPLE_PLAYERS = {
+  "Sample Forward": {
+    player_name: "Sample Forward",
+    team_name: "Sample United", league_name: "Sample League",
+    rolling_matches_used: 8,
+    expected_minutes: 90,
+    projected_per_match: { shots: 3.1, shots_on_target: 1.4, cards: 0.22, goals: 0.61, assists: 0.24, tackles: 1.2, fouls: 0.9 },
+    game_log: {
+      shots: [2, 4, 3, 5, 2, 4, 3, 4], shots_on_target: [1, 2, 1, 2, 1, 1, 2, 1],
+      goals: [0, 1, 0, 1, 0, 1, 0, 1], assists: [0, 0, 1, 0, 0, 0, 1, 0],
+      cards: [0, 0, 1, 0, 0, 0, 0, 0], tackles: [1, 0, 1, 1, 0, 1, 0, 1], fouls: [1, 1, 0, 2, 1, 0, 1, 1]
+    },
+    props: {
+      "shots_over_1.5": 0.79, "shots_over_2.5": 0.53,
+      "sot_over_0.5": 0.72, "sot_over_1.5": 0.34,
+      "to_be_carded": 0.20, "to_score": 0.46,
+      "to_assist": 0.22, "goal_or_assist": 0.58
+    },
+    hit_rates: {
+      "shots_over_1.5": {hits:8,total:8}, "shots_over_2.5": {hits:6,total:8},
+      "sot_over_0.5": {hits:8,total:8}, "sot_over_1.5": {hits:3,total:8},
+      "to_be_carded": {hits:1,total:8}, "to_score": {hits:4,total:8},
+      "to_assist": {hits:2,total:8}, "goal_or_assist": {hits:6,total:8},
+      "tackles_over_1.5": {hits:0,total:8}, "tackles_over_2.5": {hits:0,total:8},
+      "fouls_over_1.5": {hits:1,total:8}, "fouls_over_2.5": {hits:0,total:8}
+    },
+    criteria_hit: ["shots_over_1.5", "sot_over_0.5", "goal_or_assist"]
+  },
+  "Sample Winger": {
+    player_name: "Sample Winger",
+    team_name: "Sample City", league_name: "Sample League",
+    rolling_matches_used: 9,
+    expected_minutes: 85,
+    projected_per_match: { shots: 2.2, shots_on_target: 0.9, cards: 0.15, goals: 0.28, assists: 0.35, tackles: 1.8, fouls: 1.1 },
+    props: {
+      "shots_over_1.5": 0.56, "shots_over_2.5": 0.27,
+      "sot_over_0.5": 0.54, "sot_over_1.5": 0.15,
+      "to_be_carded": 0.14, "to_score": 0.24,
+      "to_assist": 0.30, "goal_or_assist": 0.46
+    },
+    hit_rates: {
+      "shots_over_1.5": {hits:5,total:9}, "shots_over_2.5": {hits:2,total:9},
+      "sot_over_0.5": {hits:5,total:9}, "sot_over_1.5": {hits:1,total:9},
+      "to_be_carded": {hits:1,total:9}, "to_score": {hits:2,total:9},
+      "to_assist": {hits:3,total:9}, "goal_or_assist": {hits:4,total:9}
+    }
+  },
+  "Sample Fullback": {
+    player_name: "Sample Fullback",
+    team_name: "Sample United", league_name: "Sample League",
+    rolling_matches_used: 10,
+    expected_minutes: 90,
+    projected_per_match: { shots: 0.7, shots_on_target: 0.2, cards: 0.28, goals: 0.03, assists: 0.09, tackles: 2.6, fouls: 1.7 },
+    props: {
+      "shots_over_1.5": 0.09, "shots_over_2.5": 0.02,
+      "sot_over_0.5": 0.18, "sot_over_1.5": 0.02,
+      "to_be_carded": 0.24, "to_score": 0.03,
+      "to_assist": 0.09, "goal_or_assist": 0.11
+    },
+    hit_rates: {
+      "shots_over_1.5": {hits:1,total:10}, "shots_over_2.5": {hits:0,total:10},
+      "sot_over_0.5": {hits:2,total:10}, "sot_over_1.5": {hits:0,total:10},
+      "to_be_carded": {hits:2,total:10}, "to_score": {hits:0,total:10},
+      "to_assist": {hits:1,total:10}, "goal_or_assist": {hits:1,total:10},
+      "tackles_over_1.5": {hits:7,total:10}, "tackles_over_2.5": {hits:3,total:10}
+    },
+    criteria_hit: ["to_be_carded"]
+  }
+};
+
+const SAMPLE_SCREENER = {
+  generated_at: "sample data",
+  qualifying: ["Sample Forward", "Sample Fullback"],
+  top_by_market: {
+    "shots_over_1.5": ["Sample Forward", "Sample Winger", "Sample Fullback"],
+    "sot_over_0.5": ["Sample Forward", "Sample Winger", "Sample Fullback"],
+    "to_be_carded": ["Sample Fullback", "Sample Forward", "Sample Winger"],
+    "goal_or_assist": ["Sample Forward", "Sample Winger", "Sample Fullback"]
+  },
+  custom_criteria_qualifying: [
+    { player_name: "Sample Fullback", hits: [{ stat: "tackles", line: 2.0, prob: 0.731, hit_rate: {hits:3,total:10} }] }
+  ]
+};
+
+// Sample legs for the Safest Bet Builder, before a real scan has run —
+// mirrors the shape build_legs() produces in player_stat_model.py.
+const SAMPLE_LEGS = [
+  { player: "Sample Forward", market: "Sample Forward Over 1.5 Shots", prob: 79, hit_rate: {hits:8,total:8}, category: "Shots", detail: "Sample United · Sample League", history: "2/4/3/5/2/4/3/4" },
+  { player: "Sample Forward", market: "Sample Forward Over 0.5 Shots on Target", prob: 72, hit_rate: {hits:8,total:8}, category: "Shots on Target", detail: "Sample United · Sample League", history: "1/2/1/2/1/1/2/1" },
+  { player: "Sample Forward", market: "Sample Forward Goal or Assist", prob: 58, hit_rate: {hits:6,total:8}, category: "Goal or Assist", detail: "Sample United · Sample League", history: "0/1/1/1/0/1/1/1" },
+  { player: "Sample Winger", market: "Sample Winger Over 1.5 Shots", prob: 61, hit_rate: {hits:5,total:9}, category: "Shots", detail: "Sample City · Sample League", history: null },
+  { player: "Sample Winger", market: "Sample Winger To Assist", prob: 41, hit_rate: {hits:3,total:9}, category: "Assists", detail: "Sample City · Sample League", history: null },
+  { player: "Sample Fullback", market: "Sample Fullback Over 1.5 Tackles", prob: 73, hit_rate: {hits:7,total:10}, category: "Tackles", detail: "Sample United · Sample League", history: null },
+  { player: "Sample Fullback", market: "Sample Fullback To Be Carded", prob: 28, hit_rate: {hits:2,total:10}, category: "Cards", detail: "Sample United · Sample League", history: null },
+  { player: "Sample Fullback", market: "Sample Fullback Over 1.5 Fouls", prob: 55, hit_rate: null, category: "Fouls", detail: "Sample United · Sample League", history: null },
+];
+
+const PROP_LABELS = {
+  "shots_over_1.5": "Over 1.5 shots",
+  "shots_over_2.5": "Over 2.5 shots",
+  "sot_over_0.5": "Over 0.5 shots on target",
+  "sot_over_1.5": "Over 1.5 shots on target",
+  "to_be_carded": "To be carded",
+  "to_score": "To score",
+  "to_assist": "To assist",
+  "goal_or_assist": "Goal or assist"
+};
+
+// Human-readable names for the raw stat keys used by custom criteria
+// (e.g. "shots_on_target" -> "shots on target") — a different
+// namespace from PROP_LABELS above, which labels prop KEYS like
+// "shots_over_1.5", not raw stat names.
+const STAT_LABELS = {
+  shots: "shots",
+  shots_on_target: "shots on target",
+  cards: "cards",
+  goals: "goals",
+  assists: "assists",
+  tackles: "tackles",
+  fouls: "fouls",
+};
+
+let PLAYERS = null;
+let SCREENER = null;
+let LEGS = null;
+let currentPlayer = null;
+let currentMarket = "shots";
+let currentView = "screener";
+
+const MARKETS = [
+  { key: "shots", label: "Shots" },
+  { key: "shots_on_target", label: "Shots on Target" },
+  { key: "cards", label: "Cards" },
+  { key: "goals", label: "Goals + Assists" },
+  { key: "tackles", label: "Tackles" },
+  { key: "fouls", label: "Fouls" }
+];
+
+function poissonPmf(k, lam) {
+  if (lam <= 0) return k === 0 ? 1 : 0;
+  let fact = 1;
+  for (let i = 2; i <= k; i++) fact *= i;
+  return Math.exp(-lam) * Math.pow(lam, k) / fact;
+}
+function probOver(lam, line) {
+  const threshold = Math.floor(line) + 1;
+  let cum = 0;
+  for (let k = 0; k < threshold; k++) cum += poissonPmf(k, lam);
+  return 1 - cum;
+}
+function probAtLeastOne(lam) { return 1 - poissonPmf(0, lam); }
+
+async function loadData() {
+  try {
+    const res = await fetch("player_stats_data.json");
+    if (!res.ok) throw new Error("not found");
+    const raw = await res.json();
+    // Support both the current {players, screener} shape and a flat
+    // {name: report, ...} shape from an older run of the script.
+    PLAYERS = raw.players || raw;
+    SCREENER = raw.screener || null;
+    LEGS = raw.legs || null;
+  } catch (e) {
+    PLAYERS = SAMPLE_PLAYERS;
+    SCREENER = SAMPLE_SCREENER;
+    LEGS = SAMPLE_LEGS;
+  }
+  setupViewTabs();
+  populatePlayerSelect();
+  initBuilderCategoryToggles();
+  renderScreener();
+  switchView(SCREENER ? "screener" : "player");
+}
+
+function setupViewTabs() {
+  document.querySelectorAll("#viewTabs button").forEach(btn => {
+    btn.addEventListener("click", () => switchView(btn.dataset.view));
+  });
+}
+
+function switchView(view) {
+  currentView = view;
+  document.querySelectorAll("#viewTabs button").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.view === view);
+  });
+  document.getElementById("builderPanel").style.display = view === "screener" ? "block" : "none";
+  document.getElementById("screenerView").style.display = view === "screener" ? "block" : "none";
+  document.getElementById("playerView").style.display = view === "player" ? "block" : "none";
+}
+
+function initBuilderCategoryToggles() {
+  const container = document.getElementById("builderCategoryToggles");
+  const cats = [...new Set((LEGS || []).map(l => l.category))];
+  container.innerHTML = cats.map(c => `
+    <label style="display:flex;align-items:center;gap:4px;color:var(--text);cursor:pointer">
+      <input type="checkbox" class="builderCatToggle" value="${c}" checked>
+      ${c}
+    </label>
+  `).join("");
+}
+
+function shuffleArr(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Sorts safest-first at a coarse level (5-point probability bands) but
+// shuffles legs WITHIN each band, so several legs sitting at similar
+// probabilities get picked in a different order each time instead of
+// always the same one — draws from more of the scanned pool rather
+// than fixating on whichever leg is a fraction ahead.
+function tieredShuffleLegs(legs, bandSize) {
+  const bands = {};
+  legs.forEach(l => {
+    const band = Math.floor(l.prob / bandSize);
+    (bands[band] = bands[band] || []).push(l);
+  });
+  const bandKeys = Object.keys(bands).map(Number).sort((a, b) => b - a);
+  let result = [];
+  bandKeys.forEach(b => { result = result.concat(shuffleArr(bands[b])); });
+  return result;
+}
+
+function buildSafest() {
+  const target = parseFloat(document.getElementById("builderTargetOdds").value) || 5.0;
+  const maxLegs = parseInt(document.getElementById("builderMaxLegs").value) || 8;
+  const activeCats = [...document.querySelectorAll(".builderCatToggle:checked")].map(el => el.value);
+
+  const byCategory = {};
+  (LEGS || []).filter(l => l.prob > 0 && activeCats.includes(l.category)).forEach(l => {
+    (byCategory[l.category] = byCategory[l.category] || []).push(l);
+  });
+  const categories = Object.keys(byCategory);
+  categories.forEach(c => { byCategory[c] = tieredShuffleLegs(byCategory[c], 5); });
+  const cursor = {};
+  categories.forEach(c => cursor[c] = 0);
+
+  const chosen = [];
+  const playerCount = {};  // capped per PLAYER, not per match — see builderPanel's own note
+  let combinedOdds = 1;
+  let addedThisPass = true;
+
+  while (addedThisPass && combinedOdds < target && chosen.length < maxLegs) {
+    addedThisPass = false;
+    for (const cat of categories) {
+      if (combinedOdds >= target || chosen.length >= maxLegs) break;
+      const arr = byCategory[cat];
+      while (cursor[cat] < arr.length) {
+        const leg = arr[cursor[cat]];
+        cursor[cat]++;
+        const count = playerCount[leg.player] || 0;
+        if (count >= 2) continue;
+        chosen.push(leg);
+        combinedOdds *= 100 / leg.prob;
+        playerCount[leg.player] = count + 1;
+        addedThisPass = true;
+        break;
+      }
+    }
+  }
+
+  const el = document.getElementById("builderResult");
+  if (!chosen.length) {
+    el.innerHTML = "No legs available to build from.";
+    return;
+  }
+
+  const rows = chosen.map(l =>
+    `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--line)">
+       <span>${l.market}<br><span style="color:var(--muted)">${l.category} · ${l.detail}</span>
+       ${l.history ? `<br><span style="color:var(--muted);font-size:10px">last games: ${l.history}</span>` : ""}</span>
+       <span style="text-align:right"><span style="color:var(--amber);font-weight:bold">${l.prob}%</span>${l.hit_rate ? `<br><span style="color:var(--muted);font-size:11px">${l.hit_rate.hits}/${l.hit_rate.total}</span>` : ""}</span>
+     </div>`
+  ).join("");
+
+  const capNote = chosen.length >= maxLegs && combinedOdds < target
+    ? " (hit the leg cap before reaching target — raise Max legs or lower Target odds)"
+    : (combinedOdds < target ? " (ran out of legs before reaching target)" : "");
+
+  el.innerHTML = `
+    <div style="color:var(--text);font-size:13px;margin-bottom:6px">
+      ${chosen.length} legs · est. combined odds ~<b>${combinedOdds.toFixed(2)}</b>${capNote}
+    </div>
+    ${rows}
+    <div style="color:var(--muted);font-size:10px;margin-top:8px;line-height:1.4">
+      Estimate multiplies each leg's fair odds (100/probability) — real sportsbook odds
+      include their margin and legs from the same player aren't fully independent, so
+      treat this as a ranking tool, not a firm price.
+    </div>
+  `;
+}
+
+function renderScreener() {
+  const el = document.getElementById("screenerView");
+  if (!SCREENER) {
+    el.innerHTML = `<div class="empty">No scan results yet. Run the Python script in watchlist or competition scan mode to populate this.</div>`;
+    return;
+  }
+
+  const qualifyingHtml = SCREENER.qualifying.length
+    ? SCREENER.qualifying.map(name => {
+        const p = PLAYERS[name];
+        if (!p) return "";
+        const hits = (p.criteria_hit || []).map(key => {
+          const hr = (p.hit_rates || {})[key];
+          const hrText = hr ? ` (${hr.hits}/${hr.total})` : "";
+          return `<span class="hit-pill">${PROP_LABELS[key] || key} · ${(p.props[key]*100).toFixed(0)}%${hrText}</span>`;
+        }).join("");
+        return `<div class="qual-card"><div class="name">${name}</div><div class="meta">${p.team_name || ''} · ${p.league_name || ''}</div><div class="hits">${hits}</div></div>`;
+      }).join("")
+    : `<div class="empty">No players cleared a threshold this scan.</div>`;
+
+  // Custom criteria hits carry their own stat/line/prob/hit_rate directly
+  // in the screener data (not a lookup key into a player's fixed props
+  // dict), since these lines are arbitrary and set in CUSTOM_CRITERIA
+  // rather than being one of the pre-built props every player has.
+  // Team/league still come from the same PLAYERS lookup as the
+  // fixed-criteria cards.
+  const customHits = SCREENER.custom_criteria_qualifying || [];
+  const customCriteriaHtml = customHits.length
+    ? customHits.map(entry => {
+        const p = PLAYERS[entry.player_name];
+        const pills = (entry.hits || []).map(h => {
+          const hrText = h.hit_rate ? ` (${h.hit_rate.hits}/${h.hit_rate.total})` : "";
+          return `<span class="hit-pill">over ${h.line} ${STAT_LABELS[h.stat] || h.stat} · ${(h.prob*100).toFixed(0)}%${hrText}</span>`;
+        }).join("");
+        const meta = p ? `<div class="meta">${p.team_name || ''} · ${p.league_name || ''}</div>` : '';
+        return `<div class="qual-card"><div class="name">${entry.player_name}</div>${meta}<div class="hits">${pills}</div></div>`;
+      }).join("")
+    : `<div class="empty">No players cleared a custom line this scan.</div>`;
+
+  const marketsHtml = Object.entries(SCREENER.top_by_market || {}).map(([market, names]) => `
+    <div class="market-section">
+      <h3>${PROP_LABELS[market] || market}</h3>
+      ${names.map((name, i) => {
+        const p = PLAYERS[name];
+        if (!p) return "";
+        const hr = (p.hit_rates || {})[market];
+        const hrText = hr ? ` <span style="color:var(--muted);font-weight:normal">(${hr.hits}/${hr.total})</span>` : "";
+        return `<div class="rank-row"><span><span class="pos">${i+1}</span>${name}</span><span class="pct">${(p.props[market]*100).toFixed(1)}%${hrText}</span></div>`;
+      }).join("")}
+    </div>
+  `).join("");
+
+  el.innerHTML = `
+    <div class="screener-meta">Scan generated ${SCREENER.generated_at}</div>
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:18px;margin:0 0 10px;">Meets criteria</h3>
+    ${qualifyingHtml}
+    <div style="height:8px;"></div>
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:18px;margin:16px 0 10px;">Meets custom criteria</h3>
+    ${customCriteriaHtml}
+    <div style="height:8px;"></div>
+    ${marketsHtml}
+  `;
+}
+
+function populatePlayerSelect() {
+  const sel = document.getElementById("playerSelect");
+  sel.innerHTML = "";
+  Object.keys(PLAYERS).forEach((name) => {
+    const opt = document.createElement("option");
+    opt.value = name;
+    opt.textContent = name;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener("change", () => {
+    currentPlayer = PLAYERS[sel.value];
+    render();
+  });
+  currentPlayer = PLAYERS[Object.keys(PLAYERS)[0]];
+  render();
+}
+
+// Mirrors format_game_log() in player_stat_model.py exactly — same
+// labels, same order, same skip-empty behavior. game_log arrays are
+// already oldest→newest (the Python side reverses before saving), so
+// this just joins them, no re-ordering needed here.
+const GAME_LOG_LABELS = [
+  ["shots", "shots"], ["shots_on_target", "SoT"], ["goals", "goals"],
+  ["assists", "assists"], ["cards", "cards"], ["tackles", "tackles"],
+  ["fouls", "fouls"],
+];
+function formatGameLog(gameLog) {
+  if (!gameLog) return "—";
+  const parts = GAME_LOG_LABELS
+    .filter(([key]) => (gameLog[key] || []).length > 0)
+    .map(([key, label]) => `${label} ${gameLog[key].map(v => Math.trunc(v)).join("/")}`);
+  return parts.length ? parts.join(" · ") : "—";
+}
+
+function render() {
+  const el = document.getElementById("content");
+  if (!currentPlayer) {
+    el.innerHTML = '<div class="empty">No player data loaded yet.</div>';
+    return;
+  }
+  const p = currentPlayer;
+
+  el.innerHTML = `
+    <div class="player-head">
+      <h2>${p.player_name}</h2>
+      <div class="form-tag">${p.team_name || 'Unknown team'} · ${p.league_name || 'Unknown league'}</div>
+      <div class="form-tag">${p.rolling_matches_used}-match form · ~${p.expected_minutes}' expected</div>
+    </div>
+
+    ${p.rolling_matches_used > 0 ? `<div class="game-log">last games — ${formatGameLog(p.game_log)}</div>` : ''}
+
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="label">Shots / match</div><div class="value">${p.projected_per_match.shots.toFixed(2)}</div></div>
+      <div class="stat-cell"><div class="label">On target / match</div><div class="value">${p.projected_per_match.shots_on_target.toFixed(2)}</div></div>
+      <div class="stat-cell"><div class="label">Cards / match</div><div class="value">${p.projected_per_match.cards.toFixed(2)}</div></div>
+      <div class="stat-cell"><div class="label">Goals+Assists / match</div><div class="value">${(p.projected_per_match.goals + p.projected_per_match.assists).toFixed(2)}</div></div>
+      <div class="stat-cell"><div class="label">Tackles / match</div><div class="value">${p.projected_per_match.tackles.toFixed(2)}</div></div>
+      <div class="stat-cell"><div class="label">Fouls / match</div><div class="value">${p.projected_per_match.fouls.toFixed(2)}</div></div>
+    </div>
+
+    <div class="market-tabs" id="marketTabs"></div>
+    <div id="lineControl"></div>
+    <div class="result" id="result"></div>
+
+    <div class="props-list">
+      ${Object.entries(p.props).map(([key, prob]) => `
+        <div class="row">
+          <span class="name">${PROP_LABELS[key] || key}</span>
+          <span class="pct">${(prob * 100).toFixed(1)}%</span>
+        </div>
+      `).join("")}
+    </div>
+  `;
+
+  const tabsEl = document.getElementById("marketTabs");
+  MARKETS.forEach(m => {
+    const btn = document.createElement("button");
+    btn.textContent = m.label;
+    if (m.key === currentMarket) btn.classList.add("active");
+    btn.addEventListener("click", () => { currentMarket = m.key; render(); });
+    tabsEl.appendChild(btn);
+  });
+
+  renderLineControl();
+}
+
+// Same per-market -> game_log key mapping the Python side uses
+// (PROP_LINE_MAP), so a client-side hit-rate for an arbitrary,
+// user-adjustable line stays consistent with how the backend computes
+// it for the fixed prop lines.
+function getGameLogValues(p, market) {
+  if (market === "goals") {
+    const goals = (p.game_log && p.game_log.goals) || [];
+    const assists = (p.game_log && p.game_log.assists) || [];
+    if (goals.length && assists.length && goals.length === assists.length) {
+      return goals.map((g, i) => g + assists[i]);
+    }
+    return [];
+  }
+  return (p.game_log && p.game_log[market]) || [];
+}
+
+function hitRate(values, line) {
+  if (!values || !values.length) return null;
+  const hits = values.filter(v => v > line).length;
+  return { hits, total: values.length };
+}
+
+function renderLineControl() {
+  const wrap = document.getElementById("lineControl");
+  const p = currentPlayer;
+  let lam, defaultLine, unit;
+
+  if (currentMarket === "shots") { lam = p.projected_per_match.shots; defaultLine = 1.5; unit = "shots"; }
+  else if (currentMarket === "shots_on_target") { lam = p.projected_per_match.shots_on_target; defaultLine = 0.5; unit = "shots on target"; }
+  else if (currentMarket === "cards") { lam = p.projected_per_match.cards; defaultLine = 0.5; unit = "cards"; }
+  else if (currentMarket === "tackles") { lam = p.projected_per_match.tackles; defaultLine = 1.5; unit = "tackles"; }
+  else if (currentMarket === "fouls") { lam = p.projected_per_match.fouls; defaultLine = 1.5; unit = "fouls"; }
+  else { lam = p.projected_per_match.goals + p.projected_per_match.assists; defaultLine = 0.5; unit = "goal + assist involvements"; }
+
+  wrap.innerHTML = `
+    <div class="line-row">
+      <label for="lineInput">Line (over)</label>
+      <input type="number" id="lineInput" value="${defaultLine}" step="0.5" min="0">
+      <span style="color:var(--muted);font-size:13px;">${unit}</span>
+    </div>
+  `;
+
+  const input = document.getElementById("lineInput");
+  const update = () => {
+    const line = parseFloat(input.value) || 0;
+    const prob = probOver(lam, line);
+    const hr = hitRate(getGameLogValues(p, currentMarket), line);
+    renderResult(prob, `${p.player_name} over ${line} ${unit}`, hr);
+  };
+  input.addEventListener("input", update);
+  update();
+}
+
+function renderResult(prob, description, hr) {
+  const el = document.getElementById("result");
+  const pct = (prob * 100).toFixed(1);
+  const hrText = hr ? `<div class="desc" style="margin-top:2px">${hr.hits}/${hr.total} of last games actually cleared this line</div>` : "";
+  el.innerHTML = `
+    <div class="pct ${prob < 0.35 ? "low" : ""}">${pct}%</div>
+    <div class="desc">${description}</div>
+    ${hrText}
+    <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+  `;
+}
+
+loadData();
+</script>
+</body>
+</html>
