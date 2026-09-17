@@ -1,0 +1,777 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Blitz IQ — NFL</title></head>
+<body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
+<h2 style="text-align:center">🏈 BLITZ IQ — NFL Team Points</h2>
+<p style="text-align:center;color:#888;font-size:11px">Recency-weighted scoring/allowed rates, Normal-distribution projected · 17 Sep 19:46</p>
+<p style="text-align:center;margin-bottom:16px"><a href="blitz_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
+
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:10px">🎯 Safest Bet Builder</div>
+  <div id="categoryToggles" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;font-size:12px"></div>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+    <label style="font-size:12px;color:#aaa">Target odds:</label>
+    <input id="targetOdds" type="number" step="0.1" min="1.1" value="5.0"
+      style="width:70px;background:#0f1318;border:1px solid #333;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
+    <label style="font-size:12px;color:#aaa">Max legs:</label>
+    <input id="maxLegs" type="number" step="1" min="2" value="8"
+      style="width:55px;background:#0f1318;border:1px solid #333;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
+    <button onclick="buildSafest()"
+      style="background:#3a7d7a;border:none;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
+      Build
+    </button>
+    <button onclick="buildSafest()"
+      style="background:#2a3038;border:1px solid #444;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
+      🔀 Shuffle
+    </button>
+  </div>
+  <div id="builderResult" style="font-size:12px;color:#888">
+    Untick any market type you don't want considered, set a target odds and
+    leg cap, then tap Build. It rotates through whichever categories are
+    ticked, groups near-tied legs and shuffles within each group so it draws
+    from more of the week's games rather than always the exact same few, and
+    caps at 2 legs per game to avoid stacking correlated legs from one
+    matchup. Tap Shuffle for a fresh pick among equally-safe options without
+    changing your settings.
+  </div>
+</div>
+<script>
+const LEGS = [{"match": "Minnesota Vikings @ Chicago Bears", "market": "Chicago Bears Over 23.0 Points", "prob": 83, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 32.4 pts (1gm)", "history": "59.0"}, {"match": "Minnesota Vikings @ Chicago Bears", "market": "Minnesota Vikings Over 22.5 Points", "prob": 82, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 31.8 pts (1gm)", "history": "39.0"}, {"match": "Minnesota Vikings @ Chicago Bears", "market": "Game Over 46.0 Total Points", "prob": 90, "category": "Game Total", "hit_rate": null, "detail": "proj 64.2 pts (1v1gm)", "history": null}, {"match": "Minnesota Vikings @ Chicago Bears", "market": "Rome Odunze Over 2.5 Receptions", "prob": 68, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.5 (1gm)", "history": "2.0"}, {"match": "Minnesota Vikings @ Chicago Bears", "market": "Caleb Williams Over 175.0 Passing Yards", "prob": 89, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 243.5 (1gm)", "history": "269.0"}, {"match": "Minnesota Vikings @ Chicago Bears", "market": "Colston Loveland Over 1.5 Receptions", "prob": 73, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 2.6 (1gm)", "history": "0.0"}, {"match": "Minnesota Vikings @ Chicago Bears", "market": "D'Andre Swift Over 54.5 Rushing Yards", "prob": 78, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 76.0 (1gm)", "history": "124.0"}, {"match": "Minnesota Vikings @ Chicago Bears", "market": "Justin Jefferson Over 3.5 Receptions", "prob": 73, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 5.0 (1gm)", "history": "8.0"}, {"match": "Minnesota Vikings @ Chicago Bears", "market": "Kyler Murray Over 130.0 Passing Yards", "prob": 82, "category": "Passing Yards", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 180.8 (1gm)", "history": "18.0"}, {"match": "Minnesota Vikings @ Chicago Bears", "market": "T.J. Hockenson Over 2.5 Receptions", "prob": 70, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.6 (1gm)", "history": "4.0"}, {"match": "Minnesota Vikings @ Chicago Bears", "market": "Aaron Jones Sr. Over 39.5 Rushing Yards", "prob": 71, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 55.0 (1gm)", "history": "40.0"}, {"match": "Detroit Lions @ Buffalo Bills", "market": "Buffalo Bills Over 20.5 Points", "prob": 80, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 29.0 pts (1gm)", "history": "36.0"}, {"match": "Detroit Lions @ Buffalo Bills", "market": "Detroit Lions Over 20.0 Points", "prob": 79, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 28.0 pts (1gm)", "history": "31.0"}, {"match": "Detroit Lions @ Buffalo Bills", "market": "Game Over 41.0 Total Points", "prob": 87, "category": "Game Total", "hit_rate": null, "detail": "proj 57.0 pts (1v1gm)", "history": null}, {"match": "Detroit Lions @ Buffalo Bills", "market": "DJ Moore Over 3.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.2 (1gm)", "history": "5.0"}, {"match": "Detroit Lions @ Buffalo Bills", "market": "Josh Allen Over 187.0 Passing Yards", "prob": 91, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 259.8 (1gm)", "history": "334.0"}, {"match": "Detroit Lions @ Buffalo Bills", "market": "Dalton Kincaid Over 2.5 Receptions", "prob": 75, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.9 (1gm)", "history": "5.0"}, {"match": "Detroit Lions @ Buffalo Bills", "market": "James Cook III Over 42.5 Rushing Yards", "prob": 72, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 59.2 (1gm)", "history": "57.0"}, {"match": "Detroit Lions @ Buffalo Bills", "market": "Amon-Ra St. Brown Over 3.5 Receptions", "prob": 80, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 5.5 (1gm)", "history": "10.0"}, {"match": "Detroit Lions @ Buffalo Bills", "market": "Jared Goff Over 164.0 Passing Yards", "prob": 88, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 227.8 (1gm)", "history": "206.0"}, {"match": "Detroit Lions @ Buffalo Bills", "market": "Sam LaPorta Over 2.5 Receptions", "prob": 75, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.9 (1gm)", "history": "5.0"}, {"match": "Detroit Lions @ Buffalo Bills", "market": "Jahmyr Gibbs Over 60.0 Rushing Yards", "prob": 80, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 84.0 (1gm)", "history": "156.0"}, {"match": "Cincinnati Bengals @ Houston Texans", "market": "Houston Texans Over 19.0 Points", "prob": 79, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 26.9 pts (1gm)", "history": "31.0"}, {"match": "Cincinnati Bengals @ Houston Texans", "market": "Cincinnati Bengals Over 21.0 Points", "prob": 81, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 29.8 pts (1gm)", "history": "33.0"}, {"match": "Cincinnati Bengals @ Houston Texans", "market": "Game Over 40.5 Total Points", "prob": 87, "category": "Game Total", "hit_rate": null, "detail": "proj 56.7 pts (1v1gm)", "history": null}, {"match": "Cincinnati Bengals @ Houston Texans", "market": "Nico Collins Over 3.0 Receptions", "prob": 71, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.8 (1gm)", "history": "7.0"}, {"match": "Cincinnati Bengals @ Houston Texans", "market": "C.J. Stroud Over 176.0 Passing Yards", "prob": 89, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 244.8 (1gm)", "history": "274.0"}, {"match": "Cincinnati Bengals @ Houston Texans", "market": "Dalton Schultz Over 2.5 Receptions", "prob": 70, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.6 (1gm)", "history": "4.0"}, {"match": "Cincinnati Bengals @ Houston Texans", "market": "David Montgomery Over 43.0 Rushing Yards", "prob": 73, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 60.0 (1gm)", "history": "60.0"}, {"match": "Cincinnati Bengals @ Houston Texans", "market": "Ja'Marr Chase Over 2.5 Receptions", "prob": 68, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.5 (1gm)", "history": "2.0"}, {"match": "Cincinnati Bengals @ Houston Texans", "market": "Joe Burrow Over 172.5 Passing Yards", "prob": 89, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 239.8 (1gm)", "history": "254.0"}, {"match": "Cincinnati Bengals @ Houston Texans", "market": "Mike Gesicki Over 2.5 Receptions", "prob": 75, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.9 (1gm)", "history": "5.0"}, {"match": "Cincinnati Bengals @ Houston Texans", "market": "Chase Brown Over 42.0 Rushing Yards", "prob": 73, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 59.0 (1gm)", "history": "56.0"}, {"match": "New Orleans Saints @ Baltimore Ravens", "market": "Baltimore Ravens Over 22.0 Points", "prob": 81, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 30.6 pts (1gm)", "history": "41.0"}, {"match": "New Orleans Saints @ Baltimore Ravens", "market": "New Orleans Saints Over 18.0 Points", "prob": 78, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 25.6 pts (1gm)", "history": "30.0"}, {"match": "New Orleans Saints @ Baltimore Ravens", "market": "Game Over 40.0 Total Points", "prob": 87, "category": "Game Total", "hit_rate": null, "detail": "proj 56.2 pts (1v1gm)", "history": null}, {"match": "New Orleans Saints @ Baltimore Ravens", "market": "Zay Flowers Over 3.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.2 (1gm)", "history": "5.0"}, {"match": "New Orleans Saints @ Baltimore Ravens", "market": "Lamar Jackson Over 185.0 Passing Yards", "prob": 91, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 257.2 (1gm)", "history": "324.0"}, {"match": "New Orleans Saints @ Baltimore Ravens", "market": "Mark Andrews Over 2.5 Receptions", "prob": 70, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.6 (1gm)", "history": "4.0"}, {"match": "New Orleans Saints @ Baltimore Ravens", "market": "Derrick Henry Over 58.0 Rushing Yards", "prob": 79, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 81.0 (1gm)", "history": "144.0"}, {"match": "New Orleans Saints @ Baltimore Ravens", "market": "Chris Olave Over 3.5 Receptions", "prob": 80, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 5.5 (1gm)", "history": "10.0"}, {"match": "New Orleans Saints @ Baltimore Ravens", "market": "Tyler Shough Over 200.5 Passing Yards", "prob": 92, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 278.8 (1gm)", "history": "410.0"}, {"match": "New Orleans Saints @ Baltimore Ravens", "market": "Juwan Johnson Over 2.0 Receptions", "prob": 66, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.4 (1gm)", "history": "3.0"}, {"match": "New Orleans Saints @ Baltimore Ravens", "market": "Travis Etienne Jr. Over 40.5 Rushing Yards", "prob": 72, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 56.5 (1gm)", "history": "46.0"}, {"match": "Carolina Panthers @ Atlanta Falcons", "market": "Atlanta Falcons Over 21.0 Points", "prob": 80, "category": "Team Total", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 29.3 pts (1gm)", "history": "13.0"}, {"match": "Carolina Panthers @ Atlanta Falcons", "market": "Carolina Panthers Over 19.0 Points", "prob": 77, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 26.5 pts (1gm)", "history": "37.0"}, {"match": "Carolina Panthers @ Atlanta Falcons", "market": "Game Over 40.0 Total Points", "prob": 87, "category": "Game Total", "hit_rate": null, "detail": "proj 55.8 pts (1v1gm)", "history": null}, {"match": "Carolina Panthers @ Atlanta Falcons", "market": "Drake London Over 2.5 Receptions", "prob": 68, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.5 (1gm)", "history": "2.0"}, {"match": "Carolina Panthers @ Atlanta Falcons", "market": "Michael Penix Jr. Over 167.5 Passing Yards", "prob": 88, "category": "Passing Yards", "hit_rate": {"hits": 4, "total": 5}, "detail": "proj 232.9 (5gm)", "history": "250.0/313.0/172.0/135.0/298.0"}, {"match": "Carolina Panthers @ Atlanta Falcons", "market": "Kyle Pitts Sr. Over 1.5 Receptions", "prob": 73, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 2.6 (1gm)", "history": "0.0"}, {"match": "Carolina Panthers @ Atlanta Falcons", "market": "Bijan Robinson Over 47.0 Rushing Yards", "prob": 75, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 65.8 (1gm)", "history": "83.0"}, {"match": "Carolina Panthers @ Atlanta Falcons", "market": "Tetairoa McMillan Over 3.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.2 (1gm)", "history": "5.0"}, {"match": "Carolina Panthers @ Atlanta Falcons", "market": "Bryce Young Over 191.5 Passing Yards", "prob": 91, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 266.5 (1gm)", "history": "361.0"}, {"match": "Carolina Panthers @ Atlanta Falcons", "market": "Tommy Tremble Over 2.0 Receptions", "prob": 66, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.4 (1gm)", "history": "3.0"}, {"match": "Carolina Panthers @ Atlanta Falcons", "market": "Chuba Hubbard Over 41.0 Rushing Yards", "prob": 72, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 57.2 (1gm)", "history": "49.0"}, {"match": "Indianapolis Colts @ Kansas City Chiefs", "market": "Kansas City Chiefs Over 22.0 Points", "prob": 81, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 30.6 pts (1gm)", "history": "31.0"}, {"match": "Indianapolis Colts @ Kansas City Chiefs", "market": "Indianapolis Colts Over 14.5 Points", "prob": 73, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 20.7 pts (1gm)", "history": "23.0"}, {"match": "Indianapolis Colts @ Kansas City Chiefs", "market": "Game Over 36.5 Total Points", "prob": 85, "category": "Game Total", "hit_rate": null, "detail": "proj 51.3 pts (1v1gm)", "history": null}, {"match": "Indianapolis Colts @ Kansas City Chiefs", "market": "Rashee Rice Over 2.5 Receptions", "prob": 68, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.5 (1gm)", "history": "2.0"}, {"match": "Indianapolis Colts @ Kansas City Chiefs", "market": "Patrick Mahomes Over 159.5 Passing Yards", "prob": 87, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 222.2 (1gm)", "history": "184.0"}, {"match": "Indianapolis Colts @ Kansas City Chiefs", "market": "Travis Kelce Over 2.0 Receptions", "prob": 66, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.4 (1gm)", "history": "3.0"}, {"match": "Indianapolis Colts @ Kansas City Chiefs", "market": "Kenneth Walker III Over 63.5 Rushing Yards", "prob": 81, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 88.2 (1gm)", "history": "173.0"}, {"match": "Indianapolis Colts @ Kansas City Chiefs", "market": "Alec Pierce Over 2.5 Receptions", "prob": 76, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.0 (1gm)", "history": "4.0"}, {"match": "Indianapolis Colts @ Kansas City Chiefs", "market": "Daniel Jones Over 156.5 Passing Yards", "prob": 87, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 217.8 (1gm)", "history": "166.0"}, {"match": "Indianapolis Colts @ Kansas City Chiefs", "market": "Tyler Warren Over 2.0 Receptions", "prob": 66, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.4 (1gm)", "history": "3.0"}, {"match": "Indianapolis Colts @ Kansas City Chiefs", "market": "Jonathan Taylor Over 50.0 Rushing Yards", "prob": 76, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 69.5 (1gm)", "history": "98.0"}, {"match": "Cleveland Browns @ Tampa Bay Buccaneers", "market": "Tampa Bay Buccaneers Over 19.5 Points", "prob": 79, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 27.7 pts (1gm)", "history": "27.0"}, {"match": "Cleveland Browns @ Tampa Bay Buccaneers", "market": "Cleveland Browns Over 16.0 Points", "prob": 75, "category": "Team Total", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 22.8 pts (1gm)", "history": "10.0"}, {"match": "Cleveland Browns @ Tampa Bay Buccaneers", "market": "Game Over 36.0 Total Points", "prob": 85, "category": "Game Total", "hit_rate": null, "detail": "proj 50.5 pts (1v1gm)", "history": null}, {"match": "Cleveland Browns @ Tampa Bay Buccaneers", "market": "Emeka Egbuka Over 3.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.2 (1gm)", "history": "5.0"}, {"match": "Cleveland Browns @ Tampa Bay Buccaneers", "market": "Baker Mayfield Over 165.5 Passing Yards", "prob": 88, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 230.2 (1gm)", "history": "216.0"}, {"match": "Cleveland Browns @ Tampa Bay Buccaneers", "market": "Cade Otton Over 2.0 Receptions", "prob": 66, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.4 (1gm)", "history": "3.0"}, {"match": "Cleveland Browns @ Tampa Bay Buccaneers", "market": "Bucky Irving Over 40.0 Rushing Yards", "prob": 72, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 56.2 (1gm)", "history": "45.0"}, {"match": "Cleveland Browns @ Tampa Bay Buccaneers", "market": "Jerry Jeudy Over 2.5 Receptions", "prob": 68, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.5 (1gm)", "history": "2.0"}, {"match": "Cleveland Browns @ Tampa Bay Buccaneers", "market": "Deshaun Watson Over 163.5 Passing Yards", "prob": 88, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 227.5 (1gm)", "history": "205.0"}, {"match": "Cleveland Browns @ Tampa Bay Buccaneers", "market": "Harold Fannin Jr. Over 2.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.1 (1gm)", "history": "2.0"}, {"match": "Cleveland Browns @ Tampa Bay Buccaneers", "market": "Quinshon Judkins Over 38.0 Rushing Yards", "prob": 71, "category": "Rushing Yards", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 53.2 (1gm)", "history": "33.0"}, {"match": "Green Bay Packers @ New York Jets", "market": "New York Jets Over 20.0 Points", "prob": 78, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 27.8 pts (1gm)", "history": "23.0"}, {"match": "Green Bay Packers @ New York Jets", "market": "Green Bay Packers Over 14.5 Points", "prob": 73, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 20.5 pts (1gm)", "history": "22.0"}, {"match": "Green Bay Packers @ New York Jets", "market": "Game Over 34.5 Total Points", "prob": 84, "category": "Game Total", "hit_rate": null, "detail": "proj 48.3 pts (1v1gm)", "history": null}, {"match": "Green Bay Packers @ New York Jets", "market": "Garrett Wilson Over 3.0 Receptions", "prob": 66, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.5 (1gm)", "history": "6.0"}, {"match": "Green Bay Packers @ New York Jets", "market": "Geno Smith Over 165.5 Passing Yards", "prob": 88, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 230.0 (1gm)", "history": "215.0"}, {"match": "Green Bay Packers @ New York Jets", "market": "Mason Taylor Over 2.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.1 (1gm)", "history": "2.0"}, {"match": "Green Bay Packers @ New York Jets", "market": "Breece Hall Over 50.5 Rushing Yards", "prob": 76, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 70.5 (1gm)", "history": "102.0"}, {"match": "Green Bay Packers @ New York Jets", "market": "Christian Watson Over 3.0 Receptions", "prob": 66, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.5 (1gm)", "history": "6.0"}, {"match": "Green Bay Packers @ New York Jets", "market": "Jordan Love Over 196.5 Passing Yards", "prob": 92, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 273.0 (1gm)", "history": "387.0"}, {"match": "Green Bay Packers @ New York Jets", "market": "Tucker Kraft Over 2.0 Receptions", "prob": 66, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.4 (1gm)", "history": "3.0"}, {"match": "Green Bay Packers @ New York Jets", "market": "MarShawn Lloyd Over 39.0 Rushing Yards", "prob": 71, "category": "Rushing Yards", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 54.2 (1gm)", "history": "37.0"}, {"match": "Washington Commanders @ Dallas Cowboys", "market": "Dallas Cowboys Over 16.5 Points", "prob": 75, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 23.4 pts (1gm)", "history": "20.0"}, {"match": "Washington Commanders @ Dallas Cowboys", "market": "Washington Commanders Over 17.5 Points", "prob": 77, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 24.8 pts (1gm)", "history": "22.0"}, {"match": "Washington Commanders @ Dallas Cowboys", "market": "Game Over 34.5 Total Points", "prob": 83, "category": "Game Total", "hit_rate": null, "detail": "proj 48.2 pts (1v1gm)", "history": null}, {"match": "Washington Commanders @ Dallas Cowboys", "market": "CeeDee Lamb Over 3.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.2 (1gm)", "history": "5.0"}, {"match": "Washington Commanders @ Dallas Cowboys", "market": "Dak Prescott Over 158.0 Passing Yards", "prob": 87, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 220.0 (1gm)", "history": "175.0"}, {"match": "Washington Commanders @ Dallas Cowboys", "market": "Jake Ferguson Over 2.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.1 (1gm)", "history": "2.0"}, {"match": "Washington Commanders @ Dallas Cowboys", "market": "Javonte Williams Over 39.5 Rushing Yards", "prob": 71, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 55.2 (1gm)", "history": "41.0"}, {"match": "Washington Commanders @ Dallas Cowboys", "market": "Terry McLaurin Over 2.5 Receptions", "prob": 68, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.5 (1gm)", "history": "2.0"}, {"match": "Washington Commanders @ Dallas Cowboys", "market": "Jayden Daniels Over 156.0 Passing Yards", "prob": 87, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 217.2 (1gm)", "history": "164.0"}, {"match": "Washington Commanders @ Dallas Cowboys", "market": "Chig Okonkwo Over 2.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.1 (1gm)", "history": "2.0"}, {"match": "Washington Commanders @ Dallas Cowboys", "market": "Jacory Croskey-Merritt Over 43.5 Rushing Yards", "prob": 73, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 60.8 (1gm)", "history": "63.0"}, {"match": "Jacksonville Jaguars @ Denver Broncos", "market": "Denver Broncos Over 12.5 Points", "prob": 71, "category": "Team Total", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 17.9 pts (1gm)", "history": "10.0"}, {"match": "Jacksonville Jaguars @ Denver Broncos", "market": "Jacksonville Jaguars Over 20.5 Points", "prob": 80, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 28.8 pts (1gm)", "history": "34.0"}, {"match": "Jacksonville Jaguars @ Denver Broncos", "market": "Game Over 33.5 Total Points", "prob": 83, "category": "Game Total", "hit_rate": null, "detail": "proj 46.7 pts (1v1gm)", "history": null}, {"match": "Jacksonville Jaguars @ Denver Broncos", "market": "Jaylen Waddle Over 2.0 Receptions", "prob": 62, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.2 (1gm)", "history": "1.0"}, {"match": "Jacksonville Jaguars @ Denver Broncos", "market": "Bo Nix Over 150.0 Passing Yards", "prob": 86, "category": "Passing Yards", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 209.0 (1gm)", "history": "131.0"}, {"match": "Jacksonville Jaguars @ Denver Broncos", "market": "Evan Engram Over 2.5 Receptions", "prob": 70, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.6 (1gm)", "history": "4.0"}, {"match": "Jacksonville Jaguars @ Denver Broncos", "market": "J.K. Dobbins Over 38.5 Rushing Yards", "prob": 71, "category": "Rushing Yards", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 54.0 (1gm)", "history": "36.0"}, {"match": "Jacksonville Jaguars @ Denver Broncos", "market": "Brian Thomas Jr. Over 2.5 Receptions", "prob": 73, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.8 (1gm)", "history": "3.0"}, {"match": "Jacksonville Jaguars @ Denver Broncos", "market": "Trevor Lawrence Over 171.0 Passing Yards", "prob": 89, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 237.5 (1gm)", "history": "245.0"}, {"match": "Jacksonville Jaguars @ Denver Broncos", "market": "Brenton Strange Over 2.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.1 (1gm)", "history": "2.0"}, {"match": "Jacksonville Jaguars @ Denver Broncos", "market": "Bhayshul Tuten Over 44.0 Rushing Yards", "prob": 73, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 61.5 (1gm)", "history": "66.0"}, {"match": "New York Giants @ Los Angeles Rams", "market": "Los Angeles Rams Over 13.5 Points", "prob": 72, "category": "Team Total", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 19.3 pts (1gm)", "history": "7.0"}, {"match": "New York Giants @ Los Angeles Rams", "market": "New York Giants Over 18.5 Points", "prob": 78, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 26.1 pts (1gm)", "history": "28.0"}, {"match": "New York Giants @ Los Angeles Rams", "market": "Game Over 32.5 Total Points", "prob": 82, "category": "Game Total", "hit_rate": null, "detail": "proj 45.4 pts (1v1gm)", "history": null}, {"match": "New York Giants @ Los Angeles Rams", "market": "Puka Nacua Over 3.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.2 (1gm)", "history": "5.0"}, {"match": "New York Giants @ Los Angeles Rams", "market": "Matthew Stafford Over 154.5 Passing Yards", "prob": 86, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 215.0 (1gm)", "history": "155.0"}, {"match": "New York Giants @ Los Angeles Rams", "market": "Colby Parkinson Over 2.0 Receptions", "prob": 55, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 2.9 (1gm)", "history": "1.0"}, {"match": "New York Giants @ Los Angeles Rams", "market": "Kyren Williams Over 39.5 Rushing Yards", "prob": 71, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 55.2 (1gm)", "history": "41.0"}, {"match": "New York Giants @ Los Angeles Rams", "market": "Malik Nabers Over 3.0 Receptions", "prob": 66, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.5 (1gm)", "history": "6.0"}, {"match": "New York Giants @ Los Angeles Rams", "market": "Jaxson Dart Over 168.0 Passing Yards", "prob": 88, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 233.8 (1gm)", "history": "230.0"}, {"match": "New York Giants @ Los Angeles Rams", "market": "Isaiah Likely Over 3.0 Receptions", "prob": 67, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.6 (1gm)", "history": "8.0"}, {"match": "New York Giants @ Los Angeles Rams", "market": "Cam Skattebo Over 46.5 Rushing Yards", "prob": 75, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 65.2 (1gm)", "history": "81.0"}, {"match": "Las Vegas Raiders @ Los Angeles Chargers", "market": "Los Angeles Chargers Over 13.5 Points", "prob": 72, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 19.4 pts (1gm)", "history": "14.0"}, {"match": "Las Vegas Raiders @ Los Angeles Chargers", "market": "Las Vegas Raiders Over 18.0 Points", "prob": 78, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 25.6 pts (1gm)", "history": "27.0"}, {"match": "Las Vegas Raiders @ Los Angeles Chargers", "market": "Game Over 32.0 Total Points", "prob": 82, "category": "Game Total", "hit_rate": null, "detail": "proj 45.0 pts (1v1gm)", "history": null}, {"match": "Las Vegas Raiders @ Los Angeles Chargers", "market": "Ladd McConkey Over 3.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.2 (1gm)", "history": "5.0"}, {"match": "Las Vegas Raiders @ Los Angeles Chargers", "market": "Justin Herbert Over 164.5 Passing Yards", "prob": 88, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 228.5 (1gm)", "history": "209.0"}, {"match": "Las Vegas Raiders @ Los Angeles Chargers", "market": "Charlie Kolar Over 1.5 Receptions", "prob": 73, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 2.6 (1gm)", "history": "0.0"}, {"match": "Las Vegas Raiders @ Los Angeles Chargers", "market": "Omarion Hampton Over 40.0 Rushing Yards", "prob": 71, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 55.8 (1gm)", "history": "43.0"}, {"match": "Las Vegas Raiders @ Los Angeles Chargers", "market": "Tre Tucker Over 2.5 Receptions", "prob": 68, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.5 (1gm)", "history": "2.0"}, {"match": "Las Vegas Raiders @ Los Angeles Chargers", "market": "Kirk Cousins Over 155.5 Passing Yards", "prob": 87, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 216.2 (1gm)", "history": "160.0"}, {"match": "Las Vegas Raiders @ Los Angeles Chargers", "market": "Brock Bowers Over 3.0 Receptions", "prob": 71, "category": "Receptions", "hit_rate": {"hits": 5, "total": 5}, "detail": "proj 4.8 (5gm)", "history": "12.0/5.0/4.0/5.0/5.0"}, {"match": "Las Vegas Raiders @ Los Angeles Chargers", "market": "Ashton Jeanty Over 50.5 Rushing Yards", "prob": 76, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 70.5 (1gm)", "history": "102.0"}, {"match": "Philadelphia Eagles @ Tennessee Titans", "market": "Tennessee Titans Over 14.5 Points", "prob": 73, "category": "Team Total", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 20.5 pts (1gm)", "history": "10.0"}, {"match": "Philadelphia Eagles @ Tennessee Titans", "market": "Philadelphia Eagles Over 17.0 Points", "prob": 76, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 24.1 pts (1gm)", "history": "24.0"}, {"match": "Philadelphia Eagles @ Tennessee Titans", "market": "Game Over 32.0 Total Points", "prob": 81, "category": "Game Total", "hit_rate": null, "detail": "proj 44.6 pts (1v1gm)", "history": null}, {"match": "Philadelphia Eagles @ Tennessee Titans", "market": "Carnell Tate Over 2.5 Receptions", "prob": 76, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.0 (1gm)", "history": "4.0"}, {"match": "Philadelphia Eagles @ Tennessee Titans", "market": "Cam Ward Over 152.0 Passing Yards", "prob": 86, "category": "Passing Yards", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 211.2 (1gm)", "history": "140.0"}, {"match": "Philadelphia Eagles @ Tennessee Titans", "market": "Gunnar Helm Over 2.5 Receptions", "prob": 70, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.6 (1gm)", "history": "4.0"}, {"match": "Philadelphia Eagles @ Tennessee Titans", "market": "Tony Pollard Over 38.5 Rushing Yards", "prob": 71, "category": "Rushing Yards", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 53.8 (1gm)", "history": "35.0"}, {"match": "Philadelphia Eagles @ Tennessee Titans", "market": "DeVonta Smith Over 2.5 Receptions", "prob": 73, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.8 (1gm)", "history": "3.0"}, {"match": "Philadelphia Eagles @ Tennessee Titans", "market": "Jalen Hurts Over 163.0 Passing Yards", "prob": 88, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 227.0 (1gm)", "history": "203.0"}, {"match": "Philadelphia Eagles @ Tennessee Titans", "market": "Dallas Goedert Over 2.5 Receptions", "prob": 70, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.6 (1gm)", "history": "4.0"}, {"match": "Philadelphia Eagles @ Tennessee Titans", "market": "Saquon Barkley Over 47.0 Rushing Yards", "prob": 75, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 65.8 (1gm)", "history": "83.0"}, {"match": "Miami Dolphins @ San Francisco 49ers", "market": "San Francisco 49ers Over 18.5 Points", "prob": 77, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 25.9 pts (1gm)", "history": "27.0"}, {"match": "Miami Dolphins @ San Francisco 49ers", "market": "Miami Dolphins Over 12.5 Points", "prob": 71, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 17.9 pts (1gm)", "history": "13.0"}, {"match": "Miami Dolphins @ San Francisco 49ers", "market": "Game Over 31.5 Total Points", "prob": 81, "category": "Game Total", "hit_rate": null, "detail": "proj 43.8 pts (1v1gm)", "history": null}, {"match": "Miami Dolphins @ San Francisco 49ers", "market": "Mike Evans Over 3.0 Receptions", "prob": 66, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.5 (1gm)", "history": "6.0"}, {"match": "Miami Dolphins @ San Francisco 49ers", "market": "Brock Purdy Over 163.5 Passing Yards", "prob": 88, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 227.5 (1gm)", "history": "205.0"}, {"match": "Miami Dolphins @ San Francisco 49ers", "market": "George Kittle Over 2.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.1 (1gm)", "history": "2.0"}, {"match": "Miami Dolphins @ San Francisco 49ers", "market": "Christian McCaffrey Over 44.5 Rushing Yards", "prob": 73, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 62.0 (1gm)", "history": "68.0"}, {"match": "Miami Dolphins @ San Francisco 49ers", "market": "Malik Washington Over 2.5 Receptions", "prob": 73, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.8 (1gm)", "history": "3.0"}, {"match": "Miami Dolphins @ San Francisco 49ers", "market": "Malik Willis Over 166.0 Passing Yards", "prob": 88, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 231.2 (1gm)", "history": "220.0"}, {"match": "Miami Dolphins @ San Francisco 49ers", "market": "Greg Dulcich Over 2.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.1 (1gm)", "history": "2.0"}, {"match": "Miami Dolphins @ San Francisco 49ers", "market": "De'Von Achane Over 38.5 Rushing Yards", "prob": 71, "category": "Rushing Yards", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 54.0 (1gm)", "history": "36.0"}, {"match": "Seattle Seahawks @ Arizona Cardinals", "market": "Arizona Cardinals Over 15.0 Points", "prob": 74, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 21.3 pts (1gm)", "history": "26.0"}, {"match": "Seattle Seahawks @ Arizona Cardinals", "market": "Seattle Seahawks Over 13.5 Points", "prob": 72, "category": "Team Total", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 19.4 pts (1gm)", "history": "13.0"}, {"match": "Seattle Seahawks @ Arizona Cardinals", "market": "Game Over 29.0 Total Points", "prob": 80, "category": "Game Total", "hit_rate": null, "detail": "proj 40.7 pts (1v1gm)", "history": null}, {"match": "Seattle Seahawks @ Arizona Cardinals", "market": "Marvin Harrison Jr. Over 2.0 Receptions", "prob": 62, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.2 (1gm)", "history": "1.0"}, {"match": "Seattle Seahawks @ Arizona Cardinals", "market": "Jacoby Brissett Over 176.5 Passing Yards", "prob": 90, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 245.5 (1gm)", "history": "277.0"}, {"match": "Seattle Seahawks @ Arizona Cardinals", "market": "Trey McBride Over 3.5 Receptions", "prob": 72, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.9 (1gm)", "history": "9.0"}, {"match": "Seattle Seahawks @ Arizona Cardinals", "market": "Jeremiyah Love Over 39.5 Rushing Yards", "prob": 71, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 55.2 (1gm)", "history": "41.0"}, {"match": "Seattle Seahawks @ Arizona Cardinals", "market": "Jaxon Smith-Njigba Over 3.5 Receptions", "prob": 73, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 5.0 (1gm)", "history": "8.0"}, {"match": "Seattle Seahawks @ Arizona Cardinals", "market": "Sam Darnold Over 129.0 Passing Yards", "prob": 82, "category": "Passing Yards", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 179.5 (1gm)", "history": "13.0"}, {"match": "Seattle Seahawks @ Arizona Cardinals", "market": "AJ Barner Over 2.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.1 (1gm)", "history": "2.0"}, {"match": "Seattle Seahawks @ Arizona Cardinals", "market": "Jadarian Price Over 41.5 Rushing Yards", "prob": 72, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 58.0 (1gm)", "history": "52.0"}, {"match": "Pittsburgh Steelers @ New England Patriots", "market": "New England Patriots Over 13.0 Points", "prob": 71, "category": "Team Total", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 18.5 pts (1gm)", "history": "10.0"}, {"match": "Pittsburgh Steelers @ New England Patriots", "market": "Pittsburgh Steelers Over 14.5 Points", "prob": 73, "category": "Team Total", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 20.7 pts (1gm)", "history": "20.0"}, {"match": "Pittsburgh Steelers @ New England Patriots", "market": "Game Over 28.0 Total Points", "prob": 79, "category": "Game Total", "hit_rate": null, "detail": "proj 39.3 pts (1v1gm)", "history": null}, {"match": "Pittsburgh Steelers @ New England Patriots", "market": "Romeo Doubs Over 2.0 Receptions", "prob": 58, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.0 (1gm)", "history": "0.0"}, {"match": "Pittsburgh Steelers @ New England Patriots", "market": "Drake Maye Over 158.5 Passing Yards", "prob": 87, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 220.8 (1gm)", "history": "178.0"}, {"match": "Pittsburgh Steelers @ New England Patriots", "market": "Hunter Henry Over 2.0 Receptions", "prob": 66, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 3.4 (1gm)", "history": "3.0"}, {"match": "Pittsburgh Steelers @ New England Patriots", "market": "Rhamondre Stevenson Over 41.5 Rushing Yards", "prob": 72, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 57.8 (1gm)", "history": "51.0"}, {"match": "Pittsburgh Steelers @ New England Patriots", "market": "DK Metcalf Over 2.5 Receptions", "prob": 76, "category": "Receptions", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 4.0 (1gm)", "history": "4.0"}, {"match": "Pittsburgh Steelers @ New England Patriots", "market": "Aaron Rodgers Over 166.5 Passing Yards", "prob": 88, "category": "Passing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 231.5 (1gm)", "history": "221.0"}, {"match": "Pittsburgh Steelers @ New England Patriots", "market": "Darnell Washington Over 2.0 Receptions", "prob": 60, "category": "Receptions", "hit_rate": {"hits": 0, "total": 1}, "detail": "proj 3.1 (1gm)", "history": "2.0"}, {"match": "Pittsburgh Steelers @ New England Patriots", "market": "Jaylen Warren Over 40.5 Rushing Yards", "prob": 72, "category": "Rushing Yards", "hit_rate": {"hits": 1, "total": 1}, "detail": "proj 56.5 (1gm)", "history": "46.0"}];
+
+function initCategoryToggles() {
+  const container = document.getElementById('categoryToggles');
+  const cats = [...new Set(LEGS.map(l => l.category))];
+  container.innerHTML = cats.map(c => `
+    <label style="display:flex;align-items:center;gap:4px;color:#ccc;cursor:pointer">
+      <input type="checkbox" class="catToggle" value="${c}" checked>
+      ${c}
+    </label>
+  `).join('');
+}
+initCategoryToggles();
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Sorts safest-first at a coarse level (5-point probability bands) but
+// shuffles legs WITHIN each band, so several legs sitting at similar
+// probabilities get picked in a different order each time instead of
+// always the same one — lets the builder draw from the full pool of
+// games instead of fixating on whichever leg is a fraction ahead.
+function tieredShuffle(legs, bandSize) {
+  const bands = {};
+  legs.forEach(l => {
+    const band = Math.floor(l.prob / bandSize);
+    (bands[band] = bands[band] || []).push(l);
+  });
+  const bandKeys = Object.keys(bands).map(Number).sort((a, b) => b - a);
+  let result = [];
+  bandKeys.forEach(b => { result = result.concat(shuffle(bands[b])); });
+  return result;
+}
+
+function buildSafest() {
+  const target = parseFloat(document.getElementById('targetOdds').value) || 5.0;
+  const maxLegs = parseInt(document.getElementById('maxLegs').value) || 8;
+  const activeCats = [...document.querySelectorAll('.catToggle:checked')].map(el => el.value);
+
+  const byCategory = {};
+  LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category)).forEach(l => {
+    (byCategory[l.category] = byCategory[l.category] || []).push(l);
+  });
+  const categories = Object.keys(byCategory);
+  categories.forEach(c => { byCategory[c] = tieredShuffle(byCategory[c], 5); });
+  const cursor = {};
+  categories.forEach(c => cursor[c] = 0);
+
+  const chosen = [];
+  const matchCount = {};
+  let combinedOdds = 1;
+  let addedThisPass = true;
+
+  while (addedThisPass && combinedOdds < target && chosen.length < maxLegs) {
+    addedThisPass = false;
+    for (const cat of categories) {
+      if (combinedOdds >= target || chosen.length >= maxLegs) break;
+      const arr = byCategory[cat];
+      while (cursor[cat] < arr.length) {
+        const leg = arr[cursor[cat]];
+        cursor[cat]++;
+        const count = matchCount[leg.match] || 0;
+        if (count >= 2) continue;  // cap legs per game to limit correlation risk
+        chosen.push(leg);
+        combinedOdds *= 100 / leg.prob;
+        matchCount[leg.match] = count + 1;
+        addedThisPass = true;
+        break;
+      }
+    }
+  }
+
+  const el = document.getElementById('builderResult');
+  if (!chosen.length) {
+    el.innerHTML = 'No legs available to build from.';
+    return;
+  }
+
+  const rows = chosen.map(l =>
+    `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #2a3038">
+       <span>${l.match}<br><span style="color:#7ec8ff">${l.market}</span> <span style="color:#555">· ${l.category}</span>
+       ${l.detail ? `<br><span style="color:#666;font-size:10px">${l.detail}</span>` : ''}
+       ${l.history ? `<br><span style="color:#555;font-size:10px">last games: ${l.history}</span>` : ''}</span>
+       <span style="text-align:right"><span style="color:#ffeb3b;font-weight:bold">${l.prob}%</span>${l.hit_rate ? `<br><span style="color:#888;font-size:11px">${l.hit_rate.hits}/${l.hit_rate.total}</span>` : ''}</span>
+     </div>`
+  ).join('');
+
+  const capNote = chosen.length >= maxLegs && combinedOdds < target
+    ? ' (hit the leg cap before reaching target — raise Max legs or lower Target odds)'
+    : (combinedOdds < target ? ' (ran out of legs before reaching target)' : '');
+
+  el.innerHTML = `
+    <div style="color:white;font-size:13px;margin-bottom:6px">
+      ${chosen.length} legs · est. combined odds ~<b>${combinedOdds.toFixed(2)}</b>${capNote}
+    </div>
+    ${rows}
+    <div style="color:#666;font-size:10px;margin-top:8px;line-height:1.4">
+      Estimate multiplies each leg's fair odds (100/probability) — real
+      sportsbook odds include their margin and legs within the same game
+      aren't fully independent, so treat this as a ranking tool, not a firm
+      price. Team/game totals use a Normal-distribution projection; WR/TE
+      receptions use Poisson. All lines are set automatically below the
+      model's projection for a safety margin.
+    </div>
+  `;
+}
+</script>
+
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-20 17:00</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Minnesota Vikings @ Chicago Bears</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Minnesota Vikings</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">31.8</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">64.2</div></div>
+    <div><div style="color:#aaa;font-size:11px">Chicago Bears</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">32.4</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Minnesota Vikings: 39.0 scored/gm • 22.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    Chicago Bears: 59.0 scored/gm • 37.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Minnesota Vikings Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Justin Jefferson (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">5.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Kyler Murray (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">180.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>T.J. Hockenson (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.6 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Aaron Jones Sr. (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">55.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Chicago Bears Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Rome Odunze (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Caleb Williams (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">243.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Colston Loveland (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">2.6 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>D'Andre Swift (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">76.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-18 00:15</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Detroit Lions @ Buffalo Bills</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Detroit Lions</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">28.0</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">57.0</div></div>
+    <div><div style="color:#aaa;font-size:11px">Buffalo Bills</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">29.0</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Detroit Lions: 31.0 scored/gm • 30.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    Buffalo Bills: 36.0 scored/gm • 31.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Detroit Lions Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Amon-Ra St. Brown (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">5.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jared Goff (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">227.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Sam LaPorta (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.9 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jahmyr Gibbs (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">84.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Buffalo Bills Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>DJ Moore (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Josh Allen (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">259.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Dalton Kincaid (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.9 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>James Cook III (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">59.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-20 17:00</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Cincinnati Bengals @ Houston Texans</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Cincinnati Bengals</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">29.8</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">56.7</div></div>
+    <div><div style="color:#aaa;font-size:11px">Houston Texans</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">26.9</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Cincinnati Bengals: 33.0 scored/gm • 27.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    Houston Texans: 31.0 scored/gm • 36.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Cincinnati Bengals Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Ja'Marr Chase (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Joe Burrow (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">239.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Mike Gesicki (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.9 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Chase Brown (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">59.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Houston Texans Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Nico Collins (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>C.J. Stroud (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">244.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Dalton Schultz (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.6 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>David Montgomery (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">60.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-20 17:00</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">New Orleans Saints @ Baltimore Ravens</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">New Orleans Saints</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">25.6</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">56.2</div></div>
+    <div><div style="color:#aaa;font-size:11px">Baltimore Ravens</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">30.6</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>New Orleans Saints: 30.0 scored/gm • 31.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    Baltimore Ravens: 41.0 scored/gm • 23.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">New Orleans Saints Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Chris Olave (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">5.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Tyler Shough (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">278.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Juwan Johnson (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.4 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Travis Etienne Jr. (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">56.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Baltimore Ravens Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Zay Flowers (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Lamar Jackson (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">257.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Mark Andrews (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.6 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Derrick Henry (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">81.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-20 17:00</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Carolina Panthers @ Atlanta Falcons</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Carolina Panthers</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">26.5</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">55.8</div></div>
+    <div><div style="color:#aaa;font-size:11px">Atlanta Falcons</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">29.3</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Carolina Panthers: 37.0 scored/gm • 59.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    Atlanta Falcons: 13.0 scored/gm • 20.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Carolina Panthers Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Tetairoa McMillan (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Bryce Young (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">266.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Tommy Tremble (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.4 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Chuba Hubbard (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">57.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Atlanta Falcons Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Drake London (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Michael Penix Jr. (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">232.9 <span style="color:#666;font-weight:normal">(5gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Kyle Pitts Sr. (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">2.6 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Bijan Robinson (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">65.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-21 00:20</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Indianapolis Colts @ Kansas City Chiefs</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Indianapolis Colts</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">20.7</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">51.3</div></div>
+    <div><div style="color:#aaa;font-size:11px">Kansas City Chiefs</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">30.6</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Indianapolis Colts: 23.0 scored/gm • 41.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    Kansas City Chiefs: 31.0 scored/gm • 10.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Indianapolis Colts Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Alec Pierce (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Daniel Jones (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">217.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Tyler Warren (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.4 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jonathan Taylor (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">69.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Kansas City Chiefs Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Rashee Rice (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Patrick Mahomes (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">222.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Travis Kelce (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.4 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Kenneth Walker III (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">88.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-20 17:00</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Cleveland Browns @ Tampa Bay Buccaneers</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Cleveland Browns</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">22.8</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">50.5</div></div>
+    <div><div style="color:#aaa;font-size:11px">Tampa Bay Buccaneers</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">27.7</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Cleveland Browns: 10.0 scored/gm • 34.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    Tampa Bay Buccaneers: 27.0 scored/gm • 33.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Cleveland Browns Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jerry Jeudy (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Deshaun Watson (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">227.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Harold Fannin Jr. (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.1 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Quinshon Judkins (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">53.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Tampa Bay Buccaneers Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Emeka Egbuka (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Baker Mayfield (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">230.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Cade Otton (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.4 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Bucky Irving (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">56.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-20 17:00</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Green Bay Packers @ New York Jets</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Green Bay Packers</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">20.5</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">48.3</div></div>
+    <div><div style="color:#aaa;font-size:11px">New York Jets</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">27.8</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Green Bay Packers: 22.0 scored/gm • 39.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    New York Jets: 23.0 scored/gm • 10.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Green Bay Packers Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Christian Watson (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jordan Love (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">273.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Tucker Kraft (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.4 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>MarShawn Lloyd (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">54.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">New York Jets Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Garrett Wilson (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Geno Smith (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">230.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Mason Taylor (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.1 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Breece Hall (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">70.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-20 20:25</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Washington Commanders @ Dallas Cowboys</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Washington Commanders</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">24.8</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">48.2</div></div>
+    <div><div style="color:#aaa;font-size:11px">Dallas Cowboys</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">23.4</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Washington Commanders: 22.0 scored/gm • 24.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    Dallas Cowboys: 20.0 scored/gm • 28.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Washington Commanders Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Terry McLaurin (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jayden Daniels (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">217.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Chig Okonkwo (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.1 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jacory Croskey-Merritt (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">60.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Dallas Cowboys Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>CeeDee Lamb (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Dak Prescott (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">220.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jake Ferguson (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.1 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Javonte Williams (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">55.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-20 20:05</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Jacksonville Jaguars @ Denver Broncos</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Jacksonville Jaguars</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">28.8</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">46.7</div></div>
+    <div><div style="color:#aaa;font-size:11px">Denver Broncos</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">17.9</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Jacksonville Jaguars: 34.0 scored/gm • 10.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    Denver Broncos: 10.0 scored/gm • 31.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Jacksonville Jaguars Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Brian Thomas Jr. (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Trevor Lawrence (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">237.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Brenton Strange (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.1 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Bhayshul Tuten (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">61.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Denver Broncos Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jaylen Waddle (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Bo Nix (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">209.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Evan Engram (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.6 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>J.K. Dobbins (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">54.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-22 00:15</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">New York Giants @ Los Angeles Rams</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">New York Giants</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">26.1</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">45.4</div></div>
+    <div><div style="color:#aaa;font-size:11px">Los Angeles Rams</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">19.3</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>New York Giants: 28.0 scored/gm • 20.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    Los Angeles Rams: 7.0 scored/gm • 27.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">New York Giants Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Malik Nabers (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jaxson Dart (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">233.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Isaiah Likely (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.6 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Cam Skattebo (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">65.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Los Angeles Rams Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Puka Nacua (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Matthew Stafford (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">215.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Colby Parkinson (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">2.9 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Kyren Williams (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">55.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-20 20:05</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Las Vegas Raiders @ Los Angeles Chargers</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Las Vegas Raiders</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">25.6</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">45.0</div></div>
+    <div><div style="color:#aaa;font-size:11px">Los Angeles Chargers</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">19.4</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Las Vegas Raiders: 27.0 scored/gm • 13.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    Los Angeles Chargers: 14.0 scored/gm • 26.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Las Vegas Raiders Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Tre Tucker (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Kirk Cousins (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">216.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Brock Bowers (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.8 <span style="color:#666;font-weight:normal">(5gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Ashton Jeanty (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">70.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Los Angeles Chargers Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Ladd McConkey (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Justin Herbert (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">228.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Charlie Kolar (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">2.6 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Omarion Hampton (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">55.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-20 17:00</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Philadelphia Eagles @ Tennessee Titans</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Philadelphia Eagles</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">24.1</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">44.6</div></div>
+    <div><div style="color:#aaa;font-size:11px">Tennessee Titans</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">20.5</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Philadelphia Eagles: 24.0 scored/gm • 22.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    Tennessee Titans: 10.0 scored/gm • 23.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Philadelphia Eagles Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>DeVonta Smith (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jalen Hurts (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">227.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Dallas Goedert (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.6 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Saquon Barkley (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">65.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Tennessee Titans Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Carnell Tate (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Cam Ward (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">211.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Gunnar Helm (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.6 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Tony Pollard (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">53.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-20 20:25</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Miami Dolphins @ San Francisco 49ers</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Miami Dolphins</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">17.9</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">43.8</div></div>
+    <div><div style="color:#aaa;font-size:11px">San Francisco 49ers</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">25.9</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Miami Dolphins: 13.0 scored/gm • 27.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    San Francisco 49ers: 27.0 scored/gm • 7.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Miami Dolphins Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Malik Washington (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Malik Willis (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">231.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Greg Dulcich (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.1 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>De'Von Achane (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">54.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">San Francisco 49ers Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Mike Evans (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Brock Purdy (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">227.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>George Kittle (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.1 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Christian McCaffrey (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">62.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-20 20:25</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Seattle Seahawks @ Arizona Cardinals</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Seattle Seahawks</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">19.4</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">40.7</div></div>
+    <div><div style="color:#aaa;font-size:11px">Arizona Cardinals</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">21.3</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Seattle Seahawks: 13.0 scored/gm • 10.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    Arizona Cardinals: 26.0 scored/gm • 14.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Seattle Seahawks Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jaxon Smith-Njigba (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">5.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Sam Darnold (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">179.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>AJ Barner (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.1 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jadarian Price (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">58.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Arizona Cardinals Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Marvin Harrison Jr. (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jacoby Brissett (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">245.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Trey McBride (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.9 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jeremiyah Love (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">55.2 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-20 17:00</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Pittsburgh Steelers @ New England Patriots</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">Pittsburgh Steelers</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">20.7</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">39.3</div></div>
+    <div><div style="color:#aaa;font-size:11px">New England Patriots</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">18.5</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>Pittsburgh Steelers: 20.0 scored/gm • 13.0 allowed/gm (1gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    New England Patriots: 10.0 scored/gm • 13.0 allowed/gm (1gm)
+  </div>
+  <div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">Pittsburgh Steelers Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>DK Metcalf (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">4.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Aaron Rodgers (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">231.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Darnell Washington (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.1 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Jaylen Warren (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">56.5 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div><div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">New England Patriots Player Props</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Romeo Doubs (WR) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.0 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Drake Maye (QB) — Passing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">220.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Hunter Henry (TE) — Receptions</div>
+  <div style="color:#c792ea;font-weight:bold">3.4 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>Rhamondre Stevenson (RB) — Rushing Yards</div>
+  <div style="color:#c792ea;font-weight:bold">57.8 <span style="color:#666;font-weight:normal">(1gm)</span></div>
+</div></div>
+</div>
+<p style="text-align:center;color:#666;font-size:10px;margin-top:20px">Enter your book's Over/Under line and odds to compute an edge the same way as the MLB/soccer tools — this page shows the model's own projection only.</p>
+</body></html>
