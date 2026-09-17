@@ -1,0 +1,38 @@
+name: Player Stat Model
+
+on:
+  schedule:
+    # Daily 07:00 UTC — unchanged from before consolidation.
+    - cron: '0 7 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Player Stat Model (automated daily fixture scan)
+        env:
+          THESTATSAPI_KEY: ${{ secrets.THESTATSAPI_KEY }}
+        run: python3 player_stat_model.py --auto
+
+      - name: Commit and push updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/player-stat-model/
+          git diff --staged --quiet || git commit -m "Update Player Stat Model daily fixture scan"
+          git push
