@@ -33,7 +33,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/player-stat-model/
+          [ -d docs/player-stat-model ] && git add docs/player-stat-model/ || true
           git diff --staged --quiet || git commit -m "Update Player Stat Model daily fixture scan"
           git pull --rebase --autostash origin main
           git push
