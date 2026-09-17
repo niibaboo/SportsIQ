@@ -451,33 +451,33 @@
         "team": "San Diego Padres",
         "opp": "Colorado Rockies",
         "opp_kpct": 22.8,
-        "lambda": 4.45,
+        "lambda": 5.08,
         "lo": 2,
-        "hi": 7,
-        "proj_ip": 5.5,
-        "outs_lambda": 16.42,
-        "outs_lo": 11,
-        "outs_hi": 22,
-        "season_era": "3.06",
-        "season_k9": "7.64",
-        "season_hits9": "7.03",
-        "bb9": 3.36,
-        "whip": "1.15",
-        "l5_str": "7\u00b76\u00b73\u00b74\u00b72",
+        "hi": 8,
+        "proj_ip": 6.3,
+        "outs_lambda": 18.78,
+        "outs_lo": 13,
+        "outs_hi": 24,
+        "season_era": "3.04",
+        "season_k9": "7.62",
+        "season_hits9": "7.07",
+        "bb9": 3.39,
+        "whip": "1.16",
+        "l5_str": "7\u00b76\u00b73\u00b74\u00b75",
         "l5_vs_season": -11.0,
         "k_last5": [
           7,
           6,
           3,
           4,
-          2
+          5
         ],
         "outs_last5": [
           21,
           18,
           18,
           21,
-          5
+          17
         ]
       },
       {
@@ -486,20 +486,20 @@
         "team": "Colorado Rockies",
         "opp": "San Diego Padres",
         "opp_kpct": 21.5,
-        "lambda": 4.22,
+        "lambda": 4.13,
         "lo": 2,
         "hi": 7,
-        "proj_ip": 4.5,
-        "outs_lambda": 13.64,
-        "outs_lo": 9,
-        "outs_hi": 18,
-        "season_era": "6.07",
-        "season_k9": "7.61",
-        "season_hits9": "12.14",
-        "bb9": 1.81,
+        "proj_ip": 4.7,
+        "outs_lambda": 14.24,
+        "outs_lo": 10,
+        "outs_hi": 19,
+        "season_era": "6.01",
+        "season_k9": "7.53",
+        "season_hits9": "12.20",
+        "bb9": 1.79,
         "whip": "1.55",
         "l5_str": "5\u00b73\u00b74\u00b75\u00b73",
-        "l5_vs_season": 20.0,
+        "l5_vs_season": 11.0,
         "k_last5": [
           5,
           3,
@@ -512,7 +512,7 @@
           15,
           14,
           12,
-          6
+          9
         ]
       }
     ],
@@ -520,72 +520,72 @@
       "away": {
         "team": "San Diego Padres",
         "opp": "Colorado Rockies",
-        "lambda": 8.71,
-        "lo": 5,
+        "lambda": 9.35,
+        "lo": 6,
         "hi": 13,
-        "l5_str": "6\u00b78\u00b73\u00b79\u00b77",
+        "l5_str": "6\u00b78\u00b73\u00b79\u00b79",
         "last5_runs": [
           6,
           8,
           3,
           9,
-          7
+          9
         ],
-        "season_rpg": 4.35,
+        "season_rpg": 4.37,
         "run_factor": 1.46
       },
       "home": {
         "team": "Colorado Rockies",
         "opp": "San Diego Padres",
-        "lambda": 2.82,
+        "lambda": 2.93,
         "lo": 1,
         "hi": 5,
-        "l5_str": "1\u00b77\u00b79\u00b73\u00b71",
+        "l5_str": "1\u00b77\u00b79\u00b73\u00b72",
         "last5_runs": [
           1,
           7,
           9,
           3,
-          1
+          2
         ],
-        "season_rpg": 4.68,
-        "run_factor": 0.85
+        "season_rpg": 4.69,
+        "run_factor": 0.83
       }
     },
     "team_hits": {
       "away": {
         "team": "San Diego Padres",
         "opp": "Colorado Rockies",
-        "lambda": 12.77,
-        "lo": 8,
-        "hi": 17,
-        "l5_str": "9\u00b713\u00b711\u00b713\u00b78",
+        "lambda": 15.01,
+        "lo": 10,
+        "hi": 20,
+        "l5_str": "9\u00b713\u00b711\u00b713\u00b715",
         "last5_hits": [
           9,
           13,
           11,
           13,
-          8
+          15
         ],
-        "season_hpg": 7.98,
+        "season_hpg": 8.03,
         "hit_factor": 1.33
       },
       "home": {
         "team": "Colorado Rockies",
         "opp": "San Diego Padres",
-        "lambda": 5.4,
+        "lambda": 6.67,
         "lo": 3,
-        "hi": 8,
-        "l5_str": "5\u00b714\u00b716\u00b74\u00b73",
+        "hi": 10,
+        "l5_str": "5\u00b714\u00b716\u00b74\u00b77",
         "last5_hits": [
           5,
           14,
           16,
           4,
-          3
+          7
         ],
-        "season_hpg": 8.6,
-        "hit_factor": 0.88
+        "season_hpg": 8.63,
+        "hit_factor": 0.87
       }
     }
   },
