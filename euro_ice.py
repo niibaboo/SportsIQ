@@ -58,7 +58,10 @@ import requests
 from datetime import date, datetime
 
 BASE = "https://hockey.highlightly.net"
-API_KEY = os.environ.get("HIGHLIGHTLY_KEY", "6b2f351b-99fb-47e7-9034-f3a305f2418d")
+# SECURITY: no hardcoded fallback key. The old default here was a real,
+# committed API key sitting in a PUBLIC repo — rotate that key on
+# Highlightly's dashboard if this file was ever pushed with one baked in.
+API_KEY = os.environ.get("HIGHLIGHTLY_KEY")
 
 # UNCONFIRMED exact names — see module docstring point 3. Watch the
 # first run's "couldn't find league" warnings closely.
@@ -70,8 +73,8 @@ FINISHED_STATES = {"Finished", "Finished after penalties", "Finished after over 
 
 
 def _get(path, params=None):
-    if API_KEY == "PASTE_YOUR_KEY_HERE":
-        print("Set HIGHLIGHTLY_KEY env var or edit API_KEY in this file first.")
+    if not API_KEY:
+        print("Set the HIGHLIGHTLY_KEY environment variable first.")
         raise SystemExit(1)
     headers = {"x-rapidapi-key": API_KEY}
     r = requests.get(f"{BASE}{path}", headers=headers, params=params or {})
@@ -104,6 +107,30 @@ def safe_line(lam, factor=DEFAULT_LINE_FACTOR, round_to=0.5):
     raw = lam * factor
     line = math.floor(raw / round_to) * round_to
     return max(line, round_to)
+
+
+def win_probs_and_scores(lh, la):
+    """Regulation-time home/away/tie win probabilities plus the top-9
+    most likely correct scores, from a Poisson grid over each team's
+    projected goals — same approach as Blue Line's per-game card, minus
+    OT/SO (no way to model that from goals-only data, so these are NOT
+    true moneyline probabilities, same caveat as the sibling tools)."""
+    ph = pa = pt = 0.0
+    for i in range(10):
+        for j in range(10):
+            p = poisson_pmf(i, lh) * poisson_pmf(j, la)
+            if i > j:
+                ph += p
+            elif j > i:
+                pa += p
+            else:
+                pt += p
+    scores = []
+    for i in range(7):
+        for j in range(7):
+            scores.append(((j, i), poisson_pmf(j, la) * poisson_pmf(i, lh)))
+    scores.sort(key=lambda x: x[1], reverse=True)
+    return ph, pa, pt, scores[:9]
 
 
 def find_league(name):
@@ -224,8 +251,59 @@ def season_start_guess(target_date):
     return f"{year}-09-01"
 
 
-def build_legs(target_date):
+def render_match_card(league_name, home_name, away_name, lh, la, tot, o55,
+                       ph, pa, pt, top9, home_proj, away_proj):
+    """Per-match card: win probability bar + correct-score grid, matching
+    Blue Line's card layout. No props section — Highlightly has no
+    player-level data (see module docstring SCOPE NOTE) — replaced here
+    with a last-5-games line for each team, since that data does exist
+    for this source and Blue Line's doesn't have an equivalent to show."""
+
+    def render_scores():
+        return "".join(
+            f"<div style='background:var(--panel2);border-radius:8px;padding:8px;text-align:center'>"
+            f"<div style='font-size:12px;color:var(--sub)'>{away_name} {a}-{h} {home_name}</div>"
+            f"<div style='font-weight:700;margin-top:2px'>{p*100:.1f}%</div></div>"
+            for (a, h), p in top9
+        )
+
+    win_bar = f"""<div style="margin:10px 0 6px 0">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+        <span>{away_name} {pa*100:.0f}%</span><span>Tie {pt*100:.0f}%</span><span>{home_name} {ph*100:.0f}%</span>
+      </div>
+      <div style="display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--panel2)">
+        <div style="width:{pa*100:.1f}%;background:#ff4d5a"></div>
+        <div style="width:{pt*100:.1f}%;background:#5a5f7a"></div>
+        <div style="width:{ph*100:.1f}%;background:#4ea1ff"></div>
+      </div>
+    </div>"""
+
+    home_hist = "/".join(str(v) for v in home_proj["last5_gf"]) or "—"
+    away_hist = "/".join(str(v) for v in away_proj["last5_gf"]) or "—"
+    history_note = (
+        f"<div style='font-size:11px;color:var(--sub);margin-top:8px'>"
+        f"last games: {home_name} {home_hist} &nbsp;|&nbsp; {away_name} {away_hist}</div>"
+    )
+
+    return f"""<div class="builderPanel">
+      <div style="font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:.03em">{league_name}</div>
+      <h3 style="margin:2px 0 4px 0;font-size:17px">{away_name} @ {home_name} — Total {tot:.2f}</h3>
+      <p style="margin:0;color:var(--sub);font-size:13px">Proj: {away_name} {la:.2f} - {lh:.2f} {home_name} | O5.5 {o55*100:.0f}%</p>
+      {win_bar}
+      <div style="margin-top:12px">
+        <div style="font-size:12px;color:var(--sub);margin-bottom:6px">Correct Score</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">{render_scores()}</div>
+      </div>
+      {history_note}
+    </div>"""
+
+
+def build_legs_and_cards(target_date):
+    """Returns (legs, cards_html). legs feeds the Safest Bet Builder;
+    cards_html is the per-match win-prob/correct-score breakdown that
+    was previously missing entirely from this tool's output."""
     legs = []
+    cards = ""
     from_date = season_start_guess(target_date)
 
     for league_name in LEAGUE_NAMES:
@@ -285,7 +363,19 @@ def build_legs(target_date):
                         "detail": f"proj {round(total_lambda, 2)} goals combined",
                         "history": None,
                     })
-    return legs
+
+                # NEW: build the per-match card (win prob bar + correct
+                # score grid) that this tool was previously missing.
+                lh, la = home_proj["lambda"], away_proj["lambda"]
+                tot = lh + la
+                o55 = prob_over(tot, 5.5)
+                ph, pa, pt, top9 = win_probs_and_scores(lh, la)
+                cards += render_match_card(
+                    league["name"], home["name"], away["name"],
+                    lh, la, tot, o55, ph, pa, pt, top9, home_proj, away_proj,
+                )
+
+    return legs, cards
 
 
 HTML_TEMPLATE = """<!DOCTYPE html>
@@ -333,13 +423,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </div>
   </div>
 
+  {cards}
+
   <div class="footnote">
     Team-totals lambda blends a recency-weighted last-5-games rate ({weight}% recent) with
     season-to-date average, then prices with a Poisson distribution. Lines are set
     automatically below the model's projection for a safety margin. Game Total combines two
     teams' own separate scoring histories, not real head-to-head data — treat it with more
-    caution than the single-team legs. This tool covers goals only; no player props are
-    available from Highlightly's free tier.
+    caution than the single-team legs. Win probability / correct score are regulation-time
+    only (no OT/SO modeling from goals-only data). This tool covers goals only; no player
+    props are available from Highlightly's free tier.
   </div>
 
 <script>
@@ -446,11 +539,12 @@ initToggles();
 """
 
 
-def render_html(legs, target_date):
+def render_html(legs, cards, target_date):
     return HTML_TEMPLATE.format(
         date=target_date.isoformat(),
         generated=datetime.now().strftime("%Y-%m-%d %H:%M"),
         weight=int(RECENT_WEIGHT * 100),
+        cards=cards or "<p style='color:var(--sub);text-align:center'>No matchups had enough data for a full card today.</p>",
         legs_json=json.dumps(legs),
     )
 
@@ -462,7 +556,7 @@ if __name__ == "__main__":
         target = date.today()
 
     print(f"Fetching Euro Ice slate for {target.isoformat()}…")
-    legs = build_legs(target)
+    legs, cards = build_legs_and_cards(target)
 
     if not legs:
         print("No usable legs today — either no fixtures found for the configured "
@@ -470,7 +564,7 @@ if __name__ == "__main__":
               "docs/ left as whatever the last successful run published.")
         raise SystemExit(0)
 
-    html = render_html(legs, target)
+    html = render_html(legs, cards, target)
     os.makedirs("docs/euro-ice", exist_ok=True)
     with open("docs/euro-ice/index.html", "w") as f:
         f.write(html)
