@@ -29,12 +29,16 @@ flagged inline where it matters, but the two biggest ones:
      window?). Defaulted to a guessed season-start date — verify
      against what a real response actually contains before trusting
      season_gpg numbers.
-  3. The exact league names Highlightly uses internally for Czech
-     Extraliga and DEL aren't confirmed — find_league()'s exact-match
-     preference (same protection that caught Match IQ's Canadian
-     Premier League mismatch) will fail loudly with a "couldn't find"
-     warning rather than silently matching the wrong thing, but the
-     names below are still a first guess.
+  3. RESOLVED (2026-09-18, via debug_leagues.py --confirm against live
+     data): league IDs are now hardcoded in LEAGUE_TARGETS below rather
+     than resolved by name at runtime. "Extraliga" turned out to be
+     genuinely ambiguous — Highlightly has three leagues by that exact
+     name (Belarus, Czech Republic, Slovakia); an earlier version of
+     this script matched Belarus by mistake since name-only lookup has
+     no way to disambiguate identically-named leagues in different
+     countries. All four current leagues (SHL, Czech Extraliga, DEL,
+     Switzerland National League) have confirmed IDs now — see
+     LEAGUE_TARGETS.
 
 Usage:
     pip3 install requests --break-system-packages
@@ -65,7 +69,19 @@ API_KEY = os.environ.get("HIGHLIGHTLY_KEY")
 
 # UNCONFIRMED exact names — see module docstring point 3. Watch the
 # first run's "couldn't find league" warnings closely.
-LEAGUE_NAMES = ["SHL", "Extraliga", "DEL"]
+# CONFIRMED via debug_leagues.py --confirm against live Highlightly data
+# (2026-09-18). "Extraliga" alone is genuinely ambiguous — Highlightly has
+# THREE leagues by that exact name (Belarus id=1635, Czech Republic
+# id=9294, Slovakia id=78225); the old name-only lookup silently picked
+# whichever came first and matched Belarus. IDs are hardcoded here
+# instead of resolved by name+country at runtime, which removes that
+# ambiguity risk entirely rather than just filtering it correctly.
+LEAGUE_TARGETS = [
+    {"id": 40781, "name": "SHL", "country": "Sweden"},
+    {"id": 9294, "name": "Extraliga", "country": "Czech Republic"},
+    {"id": 16953, "name": "DEL", "country": "Germany"},
+    {"id": 44185, "name": "National League", "country": "Switzerland"},
+]
 
 RECENT_WEIGHT = 0.65
 DEFAULT_LINE_FACTOR = 0.72  # same safety-margin convention as every other tool
@@ -135,10 +151,12 @@ def win_probs_and_scores(lh, la):
 
 def find_league(name):
     """name -> league dict, preferring an exact case-insensitive name
-    match over the first search result. Same protection that caught
-    Match IQ's "Premier League" search resolving to "Canadian Premier
-    League" instead — a fuzzy first-result match is not trusted here
-    either."""
+    match over the first search result. NOT used by build_legs_and_cards()
+    anymore — see LEAGUE_TARGETS above: "Extraliga" turned out to match
+    THREE different countries by exact name, so even the "prefer exact
+    match" protection here isn't enough on its own when multiple leagues
+    share the identical name. Kept for reference and for debug tooling
+    (this is the same lookup debug_leagues.py's --confirm mode uses)."""
     data = _get("/leagues", {"leagueName": name})
     results = data.get("data", [])
     if not results:
@@ -337,14 +355,8 @@ def build_legs_and_cards(target_date):
     cards = ""
     from_date = season_start_guess(target_date)
 
-    for league_name in LEAGUE_NAMES:
-        league = find_league(league_name)
-        if not league:
-            print(f"  [!] couldn't find league '{league_name}' — skipping "
-                  f"(check the exact name Highlightly uses via GET /leagues)")
-            continue
-        country = league.get("country", {}).get("name", "?")
-        print(f"Scanning {league['name']} ({country})...")
+    for league in LEAGUE_TARGETS:
+        print(f"Scanning {league['name']} ({league['country']})...")
         matches = get_upcoming_matches(league["id"], target_date)
         print(f"  {len(matches)} fixtures found")
 
