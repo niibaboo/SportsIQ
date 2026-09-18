@@ -1,110 +1,218 @@
 [
   {
-    "match": "Slavutych vs Baranavichy",
-    "subject": "Slavutych",
-    "market": "Slavutych Over 2.5 Goals",
+    "match": "Olomouc HC vs Plze\u0148",
+    "subject": "Olomouc HC",
+    "market": "Olomouc HC Over 2.5 Goals",
     "prob": 69,
     "hit_rate": {
       "hits": 3,
       "total": 5
     },
     "category": "Extraliga Team Total",
-    "detail": "proj 3.58 goals \u00b7 season 3.67/gm",
-    "history": "6/2/6/1/4"
+    "detail": "proj 3.57 goals \u00b7 season 5.0/gm",
+    "history": "1/3/0/3/5"
   },
   {
-    "match": "Slavutych vs Baranavichy",
-    "subject": "Baranavichy",
-    "market": "Baranavichy Over 3.0 Goals",
-    "prob": 68,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 4.64 goals \u00b7 season 5.33/gm",
-    "history": "2/2/4/4/8"
-  },
-  {
-    "match": "Slavutych vs Baranavichy",
-    "subject": "Slavutych vs Baranavichy",
-    "market": "Game Over 5.5 Total Goals",
-    "prob": 83,
-    "hit_rate": null,
-    "category": "Extraliga Game Total",
-    "detail": "proj 8.22 goals combined",
-    "history": null
-  },
-  {
-    "match": "Vitebsk vs Novopolotsk",
-    "subject": "Vitebsk",
-    "market": "Vitebsk Over 2.0 Goals",
-    "prob": 64,
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 3.28 goals \u00b7 season 3.33/gm",
-    "history": "3/3/3/4/3"
-  },
-  {
-    "match": "Vitebsk vs Novopolotsk",
-    "subject": "Novopolotsk",
-    "market": "Novopolotsk Over 1.5 Goals",
-    "prob": 68,
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 2.34 goals \u00b7 season 2.33/gm",
-    "history": "3/2/2/3/2"
-  },
-  {
-    "match": "Vitebsk vs Novopolotsk",
-    "subject": "Vitebsk vs Novopolotsk",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 66,
-    "hit_rate": null,
-    "category": "Extraliga Game Total",
-    "detail": "proj 5.62 goals combined",
-    "history": null
-  },
-  {
-    "match": "Lokomotiv Orsha vs Soligorsk",
-    "subject": "Lokomotiv Orsha",
-    "market": "Lokomotiv Orsha Over 1.5 Goals",
+    "match": "Olomouc HC vs Plze\u0148",
+    "subject": "Plze\u0148",
+    "market": "Plze\u0148 Over 2.5 Goals",
     "prob": 71,
     "hit_rate": {
       "hits": 3,
       "total": 5
     },
     "category": "Extraliga Team Total",
-    "detail": "proj 2.47 goals \u00b7 season 3.67/gm",
-    "history": "2/0/4/4/1"
+    "detail": "proj 3.7 goals \u00b7 season 4.0/gm",
+    "history": "4/2/4/10/2"
   },
   {
-    "match": "Lokomotiv Orsha vs Soligorsk",
-    "subject": "Soligorsk",
-    "market": "Soligorsk Over 4.5 Goals",
-    "prob": 78,
+    "match": "Olomouc HC vs Plze\u0148",
+    "subject": "Olomouc HC vs Plze\u0148",
+    "market": "Game Over 5.0 Total Goals",
+    "prob": 73,
+    "hit_rate": null,
+    "category": "Extraliga Game Total",
+    "detail": "proj 7.27 goals combined",
+    "history": null
+  },
+  {
+    "match": "Mountfield HK vs \u010cesk\u00e9 Bud\u011bjovice",
+    "subject": "Mountfield HK",
+    "market": "Mountfield HK Over 2.5 Goals",
+    "prob": 70,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 3.64 goals \u00b7 season 5.0/gm",
+    "history": "3/1/1/3/5"
+  },
+  {
+    "match": "Mountfield HK vs \u010cesk\u00e9 Bud\u011bjovice",
+    "subject": "\u010cesk\u00e9 Bud\u011bjovice",
+    "market": "\u010cesk\u00e9 Bud\u011bjovice Over 1.5 Goals",
+    "prob": 66,
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 2.25 goals \u00b7 season 2.0/gm",
+    "history": "2/5/2/7/2"
+  },
+  {
+    "match": "Mountfield HK vs \u010cesk\u00e9 Bud\u011bjovice",
+    "subject": "Mountfield HK vs \u010cesk\u00e9 Bud\u011bjovice",
+    "market": "Game Over 4.0 Total Goals",
+    "prob": 70,
+    "hit_rate": null,
+    "category": "Extraliga Game Total",
+    "detail": "proj 5.89 goals combined",
+    "history": null
+  },
+  {
+    "match": "Kladno vs Sparta Prague",
+    "subject": "Kladno",
+    "market": "Kladno Over 2.0 Goals",
+    "prob": 55,
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 2.9 goals \u00b7 season 4.0/gm",
+    "history": "4/1/2/2/4"
+  },
+  {
+    "match": "Kladno vs Sparta Prague",
+    "subject": "Sparta Prague",
+    "market": "Sparta Prague Over 1.5 Goals",
+    "prob": 64,
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 2.18 goals \u00b7 season 2.0/gm",
+    "history": "5/2/5/2/2"
+  },
+  {
+    "match": "Kladno vs Sparta Prague",
+    "subject": "Kladno vs Sparta Prague",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 75,
+    "hit_rate": null,
+    "category": "Extraliga Game Total",
+    "detail": "proj 5.08 goals combined",
+    "history": null
+  },
+  {
+    "match": "Mlada Boleslav vs Karlovy Vary",
+    "subject": "Mlada Boleslav",
+    "market": "Mlada Boleslav Over 1.5 Goals",
+    "prob": 74,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 2.63 goals \u00b7 season 3.0/gm",
+    "history": "4/5/1/1/3"
+  },
+  {
+    "match": "Mlada Boleslav vs Karlovy Vary",
+    "subject": "Karlovy Vary",
+    "market": "Karlovy Vary Over 0.5 Goals",
+    "prob": 72,
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
     "category": "Extraliga Team Total",
-    "detail": "proj 6.55 goals \u00b7 season 6.67/gm",
-    "history": "7/3/5/7/8"
+    "detail": "proj 1.27 goals \u00b7 season 0.0/gm",
+    "history": "5/2/3/3/0"
   },
   {
-    "match": "Lokomotiv Orsha vs Soligorsk",
-    "subject": "Lokomotiv Orsha vs Soligorsk",
-    "market": "Game Over 6.0 Total Goals",
-    "prob": 80,
+    "match": "Mlada Boleslav vs Karlovy Vary",
+    "subject": "Mlada Boleslav vs Karlovy Vary",
+    "market": "Game Over 2.5 Total Goals",
+    "prob": 75,
     "hit_rate": null,
     "category": "Extraliga Game Total",
-    "detail": "proj 9.02 goals combined",
+    "detail": "proj 3.9 goals combined",
+    "history": null
+  },
+  {
+    "match": "Litv\u00ednov vs Pardubice Dynamo",
+    "subject": "Litv\u00ednov",
+    "market": "Litv\u00ednov Over 0.5 Goals",
+    "prob": 68,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 1.13 goals \u00b7 season 1.0/gm",
+    "history": "1/2/0/2/1"
+  },
+  {
+    "match": "Litv\u00ednov vs Pardubice Dynamo",
+    "subject": "Pardubice Dynamo",
+    "market": "Pardubice Dynamo Over 2.0 Goals",
+    "prob": 59,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 3.05 goals \u00b7 season 3.0/gm",
+    "history": "6/1/2/6/3"
+  },
+  {
+    "match": "Litv\u00ednov vs Pardubice Dynamo",
+    "subject": "Litv\u00ednov vs Pardubice Dynamo",
+    "market": "Game Over 3.0 Total Goals",
+    "prob": 60,
+    "hit_rate": null,
+    "category": "Extraliga Game Total",
+    "detail": "proj 4.18 goals combined",
+    "history": null
+  },
+  {
+    "match": "T\u0159inec vs Kometa Brno",
+    "subject": "T\u0159inec",
+    "market": "T\u0159inec Over 2.0 Goals",
+    "prob": 55,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 2.9 goals \u00b7 season 2.0/gm",
+    "history": "4/5/1/6/2"
+  },
+  {
+    "match": "T\u0159inec vs Kometa Brno",
+    "subject": "Kometa Brno",
+    "market": "Kometa Brno Over 1.0 Goals",
+    "prob": 57,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 1.93 goals \u00b7 season 2.0/gm",
+    "history": "3/1/3/1/2"
+  },
+  {
+    "match": "T\u0159inec vs Kometa Brno",
+    "subject": "T\u0159inec vs Kometa Brno",
+    "market": "Game Over 3.0 Total Goals",
+    "prob": 71,
+    "hit_rate": null,
+    "category": "Extraliga Game Total",
+    "detail": "proj 4.83 goals combined",
     "history": null
   },
   {
@@ -321,6 +429,222 @@
     "hit_rate": null,
     "category": "DEL Game Total",
     "detail": "proj 5.16 goals combined",
+    "history": null
+  },
+  {
+    "match": "Langnau Tigers vs Z\u00fcrich Lions",
+    "subject": "Langnau Tigers",
+    "market": "Langnau Tigers Over 1.5 Goals",
+    "prob": 63,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 2.14 goals \u00b7 season 1.0/gm",
+    "history": "6/5/4/2/1"
+  },
+  {
+    "match": "Langnau Tigers vs Z\u00fcrich Lions",
+    "subject": "Z\u00fcrich Lions",
+    "market": "Z\u00fcrich Lions Over 3.0 Goals",
+    "prob": 61,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 4.21 goals \u00b7 season 5.0/gm",
+    "history": "0/5/5/2/5"
+  },
+  {
+    "match": "Langnau Tigers vs Z\u00fcrich Lions",
+    "subject": "Langnau Tigers vs Z\u00fcrich Lions",
+    "market": "Game Over 4.5 Total Goals",
+    "prob": 76,
+    "hit_rate": null,
+    "category": "National League Game Total",
+    "detail": "proj 6.35 goals combined",
+    "history": null
+  },
+  {
+    "match": "Servette vs Ajoie",
+    "subject": "Servette",
+    "market": "Servette Over 1.5 Goals",
+    "prob": 74,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 2.65 goals \u00b7 season 3.0/gm",
+    "history": "6/3/2/1/3"
+  },
+  {
+    "match": "Servette vs Ajoie",
+    "subject": "Ajoie",
+    "market": "Ajoie Over 1.5 Goals",
+    "prob": 75,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 2.69 goals \u00b7 season 3.0/gm",
+    "history": "3/0/3/4/2"
+  },
+  {
+    "match": "Servette vs Ajoie",
+    "subject": "Servette vs Ajoie",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 78,
+    "hit_rate": null,
+    "category": "National League Game Total",
+    "detail": "proj 5.34 goals combined",
+    "history": null
+  },
+  {
+    "match": "EHC Kloten vs Lugano",
+    "subject": "EHC Kloten",
+    "market": "EHC Kloten Over 2.0 Goals",
+    "prob": 54,
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 2.84 goals \u00b7 season 4.0/gm",
+    "history": "1/5/1/2/4"
+  },
+  {
+    "match": "EHC Kloten vs Lugano",
+    "subject": "Lugano",
+    "market": "Lugano Over 3.0 Goals",
+    "prob": 68,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 4.65 goals \u00b7 season 6.0/gm",
+    "history": "4/1/7/1/6"
+  },
+  {
+    "match": "EHC Kloten vs Lugano",
+    "subject": "EHC Kloten vs Lugano",
+    "market": "Game Over 5.0 Total Goals",
+    "prob": 76,
+    "hit_rate": null,
+    "category": "National League Game Total",
+    "detail": "proj 7.49 goals combined",
+    "history": null
+  },
+  {
+    "match": "Bern vs Davos",
+    "subject": "Bern",
+    "market": "Bern Over 2.5 Goals",
+    "prob": 78,
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 4.16 goals \u00b7 season 3.0/gm",
+    "history": "5/6/7/5/3"
+  },
+  {
+    "match": "Bern vs Davos",
+    "subject": "Davos",
+    "market": "Davos Over 2.5 Goals",
+    "prob": 73,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 3.78 goals \u00b7 season 4.0/gm",
+    "history": "3/8/4/2/4"
+  },
+  {
+    "match": "Bern vs Davos",
+    "subject": "Bern vs Davos",
+    "market": "Game Over 5.5 Total Goals",
+    "prob": 80,
+    "hit_rate": null,
+    "category": "National League Game Total",
+    "detail": "proj 7.94 goals combined",
+    "history": null
+  },
+  {
+    "match": "Ambr\u00ec-Piotta vs Rapperswil-Jona Lakers",
+    "subject": "Ambr\u00ec-Piotta",
+    "market": "Ambr\u00ec-Piotta Over 2.5 Goals",
+    "prob": 76,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 4.01 goals \u00b7 season 6.0/gm",
+    "history": "3/5/3/2/3"
+  },
+  {
+    "match": "Ambr\u00ec-Piotta vs Rapperswil-Jona Lakers",
+    "subject": "Rapperswil-Jona Lakers",
+    "market": "Rapperswil-Jona Lakers Over 2.0 Goals",
+    "prob": 62,
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 3.21 goals \u00b7 season 3.0/gm",
+    "history": "7/7/3/3/3"
+  },
+  {
+    "match": "Ambr\u00ec-Piotta vs Rapperswil-Jona Lakers",
+    "subject": "Ambr\u00ec-Piotta vs Rapperswil-Jona Lakers",
+    "market": "Game Over 5.0 Total Goals",
+    "prob": 73,
+    "hit_rate": null,
+    "category": "National League Game Total",
+    "detail": "proj 7.22 goals combined",
+    "history": null
+  },
+  {
+    "match": "Fribourg-Gott\u00e9ron vs Lausanne",
+    "subject": "Fribourg-Gott\u00e9ron",
+    "market": "Fribourg-Gott\u00e9ron Over 1.5 Goals",
+    "prob": 68,
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 2.36 goals \u00b7 season 2.0/gm",
+    "history": "4/3/2/3/2"
+  },
+  {
+    "match": "Fribourg-Gott\u00e9ron vs Lausanne",
+    "subject": "Lausanne",
+    "market": "Lausanne Over 1.0 Goals",
+    "prob": 44,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 1.48 goals \u00b7 season 0.0/gm",
+    "history": "3/4/2/6/0"
+  },
+  {
+    "match": "Fribourg-Gott\u00e9ron vs Lausanne",
+    "subject": "Fribourg-Gott\u00e9ron vs Lausanne",
+    "market": "Game Over 2.5 Total Goals",
+    "prob": 74,
+    "hit_rate": null,
+    "category": "National League Game Total",
+    "detail": "proj 3.84 goals combined",
     "history": null
   }
 ]
