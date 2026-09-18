@@ -8,6 +8,10 @@ on:
     - cron: '*/5 * * * *'  # Every 5 minutes
   workflow_dispatch: {}    # Allow manual trigger
 
+# Allow the workflow to write back to the repo (for committing JSON)
+permissions:
+  contents: write
+
 jobs:
   live:
     runs-on: ubuntu-latest
