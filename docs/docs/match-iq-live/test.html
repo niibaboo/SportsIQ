@@ -1,0 +1,136 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Match IQ — Live Signals (Test)</title>
+<style>
+  body { background:#0b0f14; color:white; font-family:Arial; padding:12px; max-width:700px; margin:auto; }
+  h2 { text-align:center; }
+  .meta { text-align:center; color:#888; font-size:11px; margin-bottom:16px; }
+  .debug { background:#1a1f26; border:1px solid #666; border-radius:8px; padding:12px; margin:12px 0; font-size:11px; color:#aaa; max-height:200px; overflow-y:auto; }
+  .match-card { background:#1a1f26; border-radius:12px; padding:16px; margin:12px 0; border:1px solid #2a3038; }
+  .match-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .match-title { font-size:15px; font-weight:bold; }
+  .league { font-size:11px; color:#999; }
+  .elapsed { font-size:11px; color:#aaa; }
+  .score { font-size:24px; font-weight:bold; text-align:center; margin:8px 0; }
+  .signal-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+  .signal { background:#0f1318; border-radius:8px; padding:10px; text-align:center; }
+  .signal-label { font-size:10px; color:#aaa; margin-bottom:4px; }
+  .signal-value { font-size:20px; font-weight:bold; color:#ffeb3b; }
+  .signal-btts { color:#a0e8a0; }
+  .signal-next { color:#7ec8ff; }
+  .signal-status { font-size:9px; color:#666; margin-top:4px; }
+  .team-stats { font-size:10px; color:#888; margin-top:10px; padding-top:10px; border-top:1px solid #2a3038; line-height:1.4; }
+  .no-matches { text-align:center; color:#888; padding:40px 20px; }
+  .loading { text-align:center; color:#888; padding:20px; }
+  .error { color:#ff6b6b; font-size:12px; }
+  .last-update { text-align:center; color:#666; font-size:10px; margin-top:20px; }
+</style></head><body>
+<h2>⚡ Live Signals (Test)</h2>
+<div class="meta">Testing JSON load from repo</div>
+<div class="debug">
+  <strong>Debug log:</strong><br>
+  <span id="debugLog"></span>
+</div>
+<div id="container">
+  <div class="loading">Loading live matches...</div>
+</div>
+<div class="last-update">Last update: <span id="lastUpdate">—</span></div>
+<script>
+function log(msg) {
+  const el = document.getElementById('debugLog');
+  el.innerHTML += msg + '<br>';
+  console.log(msg);
+}
+
+async function fetchAndRender() {
+  try {
+    log('Fetching live_matches.json...');
+    const resp = await fetch('https://raw.githubusercontent.com/niibaboo/SportsIQ/main/docs/match-iq-live/live_matches.json');
+    
+    if (!resp.ok) {
+      log(`ERROR: HTTP ${resp.status}`);
+      throw new Error(`HTTP ${resp.status}`);
+    }
+    
+    const data = await resp.json();
+    log(`✓ JSON loaded, ${data.matches ? data.matches.length : 0} matches found`);
+    
+    const container = document.getElementById('container');
+    
+    if (!data.matches || data.matches.length === 0) {
+      container.innerHTML = '<div class="no-matches">No live matches at the moment.<br><br>Check back during match days.</div>';
+      updateTime();
+      return;
+    }
+    
+    let html = '';
+    for (const m of data.matches) {
+      const nextGoal = m.next_goal || {};
+      const btts = m.btts || {};
+      
+      let homeStatsLine = '', awayStatsLine = '';
+      
+      if (m.home_live_stats && m.home_live_stats.xg !== null) {
+        homeStatsLine = `${m.home_team}: ${m.home_live_stats.shots} shots, ${m.home_live_stats.xg.toFixed(2)} xG (season avg: ${m.home_season_stats.goals_for.toFixed(1)}/match)`;
+      } else if (m.home_season_stats) {
+        homeStatsLine = `${m.home_team}: season avg ${m.home_season_stats.goals_for.toFixed(1)} goals/match, ${m.home_season_stats.shots} shots/match`;
+      }
+      
+      if (m.away_live_stats && m.away_live_stats.xg !== null) {
+        awayStatsLine = `${m.away_team}: ${m.away_live_stats.shots} shots, ${m.away_live_stats.xg.toFixed(2)} xG (season avg: ${m.away_season_stats.goals_for.toFixed(1)}/match)`;
+      } else if (m.away_season_stats) {
+        awayStatsLine = `${m.away_team}: season avg ${m.away_season_stats.goals_for.toFixed(1)} goals/match, ${m.away_season_stats.shots} shots/match`;
+      }
+      
+      html += `
+        <div class="match-card">
+          <div class="match-header">
+            <div>
+              <div class="league">${m.league}</div>
+              <div class="match-title">${m.home_team} vs ${m.away_team}</div>
+            </div>
+            <div class="elapsed">${m.elapsed_minute || 0}' · ${m.status}</div>
+          </div>
+          <div class="score">${m.home_goals}-${m.away_goals}</div>
+          <div class="signal-grid">
+            <div class="signal">
+              <div class="signal-label">Next Goal</div>
+              <div class="signal-value signal-next">${m.home_team}</div>
+              <div style="font-size:16px;font-weight:bold;color:#ffeb3b">${nextGoal.home || '—'}%</div>
+            </div>
+            <div class="signal">
+              <div class="signal-label">Next Goal</div>
+              <div class="signal-value signal-next">${m.away_team}</div>
+              <div style="font-size:16px;font-weight:bold;color:#ffeb3b">${nextGoal.away || '—'}%</div>
+            </div>
+          </div>
+          <div class="signal">
+            <div class="signal-label">Both Teams to Score</div>
+            <div class="signal-value signal-btts">${btts.prob || '—'}%</div>
+            <div class="signal-status">${btts.status || '—'}</div>
+          </div>
+          <div class="team-stats">
+            ${homeStatsLine}<br>${awayStatsLine}
+          </div>
+        </div>
+      `;
+    }
+    
+    container.innerHTML = html;
+    updateTime();
+  } catch (err) {
+    log(`FAILED: ${err.message}`);
+    document.getElementById('container').innerHTML = `<div class="error">Error: ${err.message}</div>`;
+  }
+}
+
+function updateTime() {
+  document.getElementById('lastUpdate').innerText = new Date().toLocaleTimeString();
+}
+
+log('Page loaded, fetching...');
+fetchAndRender();
+
+// Poll every 60 seconds
+setInterval(fetchAndRender, 60000);
+</script>
+</body></html>
