@@ -1,5 +1,90 @@
 {
-  "generated": "2026-09-18T16:50:41.902064+00:00",
-  "total_live": 0,
-  "matches": []
+  "generated": "2026-09-18T18:36:35.465399+00:00",
+  "total_live": 2,
+  "matches": [
+    {
+      "league": "Bundesliga",
+      "match_id": "mt_899837393",
+      "home_team": "FC Bayern M\u00fcnchen",
+      "away_team": "1. FC Union Berlin",
+      "home_goals": 0,
+      "away_goals": 0,
+      "elapsed_minute": 45,
+      "minutes_remaining": 45,
+      "status": "live",
+      "kickoff": "2026-09-18T18:30:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "45min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 28,
+        "status": "0-0 (both must score)",
+        "reasoning": "Home 1.50, Away 1.50"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": null,
+        "shots_on_target": null,
+        "xg": null
+      },
+      "away_live_stats": {
+        "shots": null,
+        "shots_on_target": null,
+        "xg": null
+      }
+    },
+    {
+      "league": "Eredivisie",
+      "match_id": "mt_022910414",
+      "home_team": "FC Groningen",
+      "away_team": "PEC Zwolle",
+      "home_goals": 1,
+      "away_goals": 0,
+      "elapsed_minute": 45,
+      "minutes_remaining": 45,
+      "status": "live",
+      "kickoff": "2026-09-18T18:00:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "45min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 53,
+        "status": "Away must score (45min left)",
+        "reasoning": "Away exp rate 1.50"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": null,
+        "shots_on_target": null,
+        "xg": null
+      },
+      "away_live_stats": {
+        "shots": null,
+        "shots_on_target": null,
+        "xg": null
+      }
+    }
+  ]
 }
