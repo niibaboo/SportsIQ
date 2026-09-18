@@ -1,0 +1,479 @@
+#!/usr/bin/env python3
+"""
+Euro Ice — Team & Game Totals (SHL / Czech Extraliga / DEL)
+--------------------------------------------------------------
+Team-level goals over/under predictor for SHL (Sweden), Czech Extraliga,
+and DEL (Germany), built on Highlightly's Hockey API free tier:
+  https://highlightly.net/hockey-api/documentation/
+
+SCOPE NOTE — read before assuming this matches Blue Line's coverage:
+Highlightly's API has NO player-level endpoints anywhere (confirmed by
+reading every documented endpoint: Countries, Highlights, Leagues,
+Matches, Teams, Bookmakers, Odds, Last Five Games, Head-2-Head,
+Standings — all team/match-level only). This tool can only ever cover
+TEAM TOTALS and GAME TOTALS, never player props (goalscorer, points,
+shots on goal). If you need those for these leagues, this data source
+can't provide them.
+
+UNVERIFIED ASSUMPTIONS — this was built entirely from Highlightly's
+documentation, not tested against a live API key. Everything below is
+flagged inline where it matters, but the two biggest ones:
+  1. state.score.current's format ("4 - 3") is parsed as HOME - AWAY.
+     Documentation's own example is unhelpful (both teams named
+     identically in the sample), so this order is a reasonable guess,
+     not a confirmed fact. If projections come out looking backwards
+     (a team's "goals for" looks suspiciously like their "goals
+     against"), this is the first place to check.
+  2. /teams/statistics/{id} requires a fromDate param whose exact
+     semantics aren't fully documented (season-to-date? rolling
+     window?). Defaulted to a guessed season-start date — verify
+     against what a real response actually contains before trusting
+     season_gpg numbers.
+  3. The exact league names Highlightly uses internally for Czech
+     Extraliga and DEL aren't confirmed — find_league()'s exact-match
+     preference (same protection that caught Match IQ's Canadian
+     Premier League mismatch) will fail loudly with a "couldn't find"
+     warning rather than silently matching the wrong thing, but the
+     names below are still a first guess.
+
+Usage:
+    pip3 install requests --break-system-packages
+    export HIGHLIGHTLY_KEY=your_key_here
+    python3 euro_ice.py               # today's fixtures across all 3 leagues
+    python3 euro_ice.py 2026-10-05    # a specific date
+    python3 euro_ice.py --auto        # non-interactive, for GitHub Actions —
+                                       # same as running with no date arg,
+                                       # scans today and always exits 0
+
+Output:
+    docs/euro-ice/index.html
+    docs/euro-ice/euro_ice.json
+"""
+
+import os
+import sys
+import math
+import json
+import requests
+from datetime import date, datetime
+
+BASE = "https://hockey.highlightly.net"
+API_KEY = os.environ.get("HIGHLIGHTLY_KEY", "6b2f351b-99fb-47e7-9034-f3a305f2418d")
+
+# UNCONFIRMED exact names — see module docstring point 3. Watch the
+# first run's "couldn't find league" warnings closely.
+LEAGUE_NAMES = ["SHL", "Extraliga", "DEL"]
+
+RECENT_WEIGHT = 0.65
+DEFAULT_LINE_FACTOR = 0.72  # same safety-margin convention as every other tool
+FINISHED_STATES = {"Finished", "Finished after penalties", "Finished after over time"}
+
+
+def _get(path, params=None):
+    if API_KEY == "PASTE_YOUR_KEY_HERE":
+        print("Set HIGHLIGHTLY_KEY env var or edit API_KEY in this file first.")
+        raise SystemExit(1)
+    headers = {"x-rapidapi-key": API_KEY}
+    r = requests.get(f"{BASE}{path}", headers=headers, params=params or {})
+    r.raise_for_status()
+    return r.json()
+
+
+def poisson_pmf(k, lam):
+    return math.exp(-lam) * (lam ** k) / math.factorial(k)
+
+
+def prob_over(lam, line):
+    threshold = math.floor(line) + 1
+    cum = sum(poisson_pmf(i, lam) for i in range(threshold))
+    return 1 - cum
+
+
+def hit_rate(values, line):
+    """(hits, total) from raw per-game values — same model-free
+    empirical cross-check used everywhere else in this suite."""
+    if not values:
+        return None
+    hits = sum(1 for v in values if v > line)
+    return {"hits": hits, "total": len(values)}
+
+
+def safe_line(lam, factor=DEFAULT_LINE_FACTOR, round_to=0.5):
+    if lam is None:
+        return None
+    raw = lam * factor
+    line = math.floor(raw / round_to) * round_to
+    return max(line, round_to)
+
+
+def find_league(name):
+    """name -> league dict, preferring an exact case-insensitive name
+    match over the first search result. Same protection that caught
+    Match IQ's "Premier League" search resolving to "Canadian Premier
+    League" instead — a fuzzy first-result match is not trusted here
+    either."""
+    data = _get("/leagues", {"leagueName": name})
+    results = data.get("data", [])
+    if not results:
+        return None
+    for lg in results:
+        if lg.get("name", "").lower() == name.lower():
+            return lg
+    return results[0]
+
+
+def parse_score(score_str):
+    """'4 - 3' -> (4, 3), assumed HOME - AWAY. Returns None on anything
+    unparseable rather than guessing — see module docstring point 1
+    for why this order is not fully confirmed."""
+    if not score_str:
+        return None
+    parts = score_str.replace(" ", "").split("-")
+    if len(parts) != 2:
+        return None
+    try:
+        return int(parts[0]), int(parts[1])
+    except ValueError:
+        return None
+
+
+def get_last_five(team_id):
+    """Raw last-5 FINISHED games for a team, oldest first. Highlightly's
+    own docs say unfinished games are never included in this endpoint's
+    response, so no extra state filtering is needed here — unlike the
+    general /matches endpoint, which mixes finished and upcoming games
+    together and needs explicit filtering (see get_upcoming_matches)."""
+    games = _get("/last-five-games", {"teamId": team_id})
+    parsed = []
+    for g in games:
+        score = parse_score(g.get("state", {}).get("score", {}).get("current"))
+        if not score:
+            continue
+        home_goals, away_goals = score
+        is_home = g.get("homeTeam", {}).get("id") == team_id
+        gf = home_goals if is_home else away_goals
+        parsed.append({"date": g.get("date") or "", "gf": gf})
+    parsed.sort(key=lambda x: x["date"])
+    return parsed
+
+
+def get_team_season_stats(team_id, from_date):
+    """Season aggregate via /teams/statistics/{id}?fromDate=... — see
+    module docstring point 2 on fromDate's unconfirmed semantics."""
+    try:
+        data = _get(f"/teams/statistics/{team_id}", {"fromDate": from_date})
+    except requests.HTTPError:
+        return None
+    if not data:
+        return None
+    return data[0] if isinstance(data, list) else data
+
+
+def project_team_goals(team_id, from_date, weight=RECENT_WEIGHT):
+    """Blended recency-weighted + season-average goals-for projection —
+    same architecture as Strike Zone's project_team_runs()."""
+    season = get_team_season_stats(team_id, from_date)
+    last5 = get_last_five(team_id)
+
+    season_gpg = None
+    if season:
+        total = season.get("total", {})
+        played = total.get("games", {}).get("played")
+        scored = total.get("goals", {}).get("scored")
+        if played:
+            season_gpg = scored / played
+
+    gf_values = [g["gf"] for g in last5]
+    recent_gpg = None
+    if len(gf_values) >= 2:
+        n = len(gf_values)
+        wts = [1.4 ** i for i in range(n)]
+        recent_gpg = sum(w * g for w, g in zip(wts, gf_values)) / sum(wts)
+    elif gf_values:
+        recent_gpg = gf_values[0]
+
+    if season_gpg is None and recent_gpg is None:
+        return None
+    if season_gpg is None:
+        blended = recent_gpg
+    elif recent_gpg is None:
+        blended = season_gpg
+    else:
+        blended = weight * recent_gpg + (1 - weight) * season_gpg
+
+    return {
+        "lambda": round(blended, 2),
+        "last5_gf": gf_values,
+        "season_gpg": round(season_gpg, 2) if season_gpg is not None else None,
+    }
+
+
+def get_upcoming_matches(league_id, target_date):
+    data = _get("/matches", {"leagueId": league_id, "date": target_date.isoformat()})
+    matches = data.get("data", [])
+    return [m for m in matches if m.get("state", {}).get("description") == "Not started"]
+
+
+def season_start_guess(target_date):
+    """European hockey seasons typically run Sept–April/May. If scanning
+    in the first half of the calendar year, last season started the
+    PREVIOUS September. A heuristic, not confirmed against how
+    Highlightly itself defines season boundaries — see module docstring
+    point 2."""
+    year = target_date.year if target_date.month >= 7 else target_date.year - 1
+    return f"{year}-09-01"
+
+
+def build_legs(target_date):
+    legs = []
+    from_date = season_start_guess(target_date)
+
+    for league_name in LEAGUE_NAMES:
+        league = find_league(league_name)
+        if not league:
+            print(f"  [!] couldn't find league '{league_name}' — skipping "
+                  f"(check the exact name Highlightly uses via GET /leagues)")
+            continue
+        country = league.get("country", {}).get("name", "?")
+        print(f"Scanning {league['name']} ({country})...")
+        matches = get_upcoming_matches(league["id"], target_date)
+        print(f"  {len(matches)} fixtures found")
+
+        for m in matches:
+            home, away = m["homeTeam"], m["awayTeam"]
+            match_label = f"{home['name']} vs {away['name']}"
+
+            home_proj = project_team_goals(home["id"], from_date)
+            away_proj = project_team_goals(away["id"], from_date)
+
+            for team, proj in ((home, home_proj), (away, away_proj)):
+                if not proj:
+                    continue
+                line = safe_line(proj["lambda"])
+                if not line:
+                    continue
+                prob = prob_over(proj["lambda"], line)
+                legs.append({
+                    "match": match_label,
+                    "subject": team["name"],
+                    "market": f"{team['name']} Over {line} Goals",
+                    "prob": round(prob * 100),
+                    "hit_rate": hit_rate(proj["last5_gf"], line),
+                    "category": f"{league['name']} Team Total",
+                    "detail": f"proj {proj['lambda']} goals" +
+                              (f" · season {proj['season_gpg']}/gm" if proj["season_gpg"] is not None else ""),
+                    "history": "/".join(str(v) for v in proj["last5_gf"]) or None,
+                })
+
+            if home_proj and away_proj:
+                total_lambda = home_proj["lambda"] + away_proj["lambda"]
+                line = safe_line(total_lambda)
+                if line:
+                    prob = prob_over(total_lambda, line)
+                    legs.append({
+                        "match": match_label,
+                        "subject": match_label,
+                        "market": f"Game Over {line} Total Goals",
+                        "prob": round(prob * 100),
+                        # No hit_rate here deliberately — same reasoning
+                        # as Blitz IQ's Game Total leg: this combines
+                        # two teams' SEPARATE scoring histories, not a
+                        # real shared head-to-head record, so there's
+                        # no genuine paired history to count against.
+                        "hit_rate": None,
+                        "category": f"{league['name']} Game Total",
+                        "detail": f"proj {round(total_lambda, 2)} goals combined",
+                        "history": None,
+                    })
+    return legs
+
+
+HTML_TEMPLATE = """<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Euro Ice — {date}</title>
+<style>
+  :root{{--bg:#0b0f14; --panel:#121820; --panel2:#161d27; --border:#233040; --text:#e8edf2; --sub:#8b98a8; --amber:#facc15; --green:#22c55e;}}
+  body{{margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; padding:16px; max-width:640px; margin:0 auto;}}
+  h1{{font-size:20px; margin-bottom:4px;}}
+  .sub{{color:var(--sub); font-size:13px; margin-bottom:18px;}}
+  .builderPanel{{background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:14px;}}
+  .builderTitle{{font-size:15px; font-weight:800; margin-bottom:10px;}}
+  .builderToggles{{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px; font-size:12px;}}
+  .builderToggles label{{display:flex; align-items:center; gap:4px; color:var(--text); cursor:pointer;}}
+  .builderControls{{display:flex; gap:8px; align-items:center; margin-bottom:6px; flex-wrap:wrap;}}
+  .builderControls label{{font-size:12px; color:var(--sub);}}
+  .builderControls input{{width:70px; background:var(--panel2); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:6px 8px; font-size:13px;}}
+  .builderBtn{{background:var(--green); color:#04140a; font-weight:700; border:none; padding:7px 14px; border-radius:6px; font-size:13px; cursor:pointer;}}
+  .builderBtnAlt{{background:var(--panel2); border:1px solid var(--border); color:var(--text); padding:7px 14px; border-radius:6px; font-size:13px; cursor:pointer;}}
+  .builderResult{{font-size:12px; color:var(--sub);}}
+  .legRow{{display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid var(--border);}}
+  .footnote{{font-size:11px; color:var(--sub); text-align:center; margin-top:20px; line-height:1.6;}}
+</style></head>
+<body>
+  <h1>🧊 Euro Ice — Team &amp; Game Totals</h1>
+  <div class="sub">SHL · Czech Extraliga · DEL — {date} · generated {generated}</div>
+
+  <div id="builderPanel" class="builderPanel">
+    <div class="builderTitle">🎯 Safest Bet Builder</div>
+    <div id="builderCategoryToggles" class="builderToggles"></div>
+    <div class="builderControls">
+      <label>Target odds:</label>
+      <input type="number" step="0.1" min="1.1" value="5.0" id="targetOdds">
+      <label>Max legs:</label>
+      <input type="number" step="1" min="2" value="8" id="maxLegs">
+      <button class="builderBtn" onclick="buildSafest()">Build</button>
+      <button class="builderBtnAlt" onclick="buildSafest()">🔀 Shuffle</button>
+    </div>
+    <div id="builderResult" class="builderResult">
+      Untick any market you don't want considered, set a target odds and leg cap, then tap
+      Build. Caps at 2 legs per team/matchup to avoid stacking a team's own Team Total against
+      the same game's Game Total. Team-level only — no player props are available from this
+      data source. Tap Shuffle for a fresh pick without changing your settings.
+    </div>
+  </div>
+
+  <div class="footnote">
+    Team-totals lambda blends a recency-weighted last-5-games rate ({weight}% recent) with
+    season-to-date average, then prices with a Poisson distribution. Lines are set
+    automatically below the model's projection for a safety margin. Game Total combines two
+    teams' own separate scoring histories, not real head-to-head data — treat it with more
+    caution than the single-team legs. This tool covers goals only; no player props are
+    available from Highlightly's free tier.
+  </div>
+
+<script>
+const LEGS = {legs_json};
+
+function poissonCDF(threshold, lambda){{
+  let p = Math.exp(-lambda), cum = p;
+  for(let i=1;i<=threshold;i++){{ p = p*lambda/i; cum += p; }}
+  return cum;
+}}
+function initToggles() {{
+  const container = document.getElementById('builderCategoryToggles');
+  const cats = [...new Set(LEGS.map(l => l.category))];
+  container.innerHTML = cats.map(c => `
+    <label><input type="checkbox" class="catToggle" value="${{c}}" checked> ${{c}}</label>
+  `).join('');
+}}
+function shuffleArr(arr) {{
+  for (let i = arr.length - 1; i > 0; i--) {{
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }}
+  return arr;
+}}
+function tieredShuffle(legs, bandSize) {{
+  const bands = {{}};
+  legs.forEach(l => {{
+    const band = Math.floor(l.prob / bandSize);
+    (bands[band] = bands[band] || []).push(l);
+  }});
+  const keys = Object.keys(bands).map(Number).sort((a,b) => b-a);
+  let result = [];
+  keys.forEach(k => {{ result = result.concat(shuffleArr(bands[k])); }});
+  return result;
+}}
+function buildSafest() {{
+  const target = parseFloat(document.getElementById('targetOdds').value) || 5.0;
+  const maxLegs = parseInt(document.getElementById('maxLegs').value) || 8;
+  const activeCats = [...document.querySelectorAll('.catToggle:checked')].map(el => el.value);
+
+  const byCategory = {{}};
+  LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category)).forEach(l => {{
+    (byCategory[l.category] = byCategory[l.category] || []).push(l);
+  }});
+  const categories = Object.keys(byCategory);
+  categories.forEach(c => {{ byCategory[c] = tieredShuffle(byCategory[c], 5); }});
+  const cursor = {{}};
+  categories.forEach(c => cursor[c] = 0);
+
+  const chosen = [];
+  const subjectCount = {{}};
+  let combinedOdds = 1;
+  let addedThisPass = true;
+
+  while (addedThisPass && combinedOdds < target && chosen.length < maxLegs) {{
+    addedThisPass = false;
+    for (const cat of categories) {{
+      if (combinedOdds >= target || chosen.length >= maxLegs) break;
+      const arr = byCategory[cat];
+      while (cursor[cat] < arr.length) {{
+        const leg = arr[cursor[cat]];
+        cursor[cat]++;
+        const count = subjectCount[leg.subject] || 0;
+        if (count >= 2) continue;
+        chosen.push(leg);
+        combinedOdds *= 100 / leg.prob;
+        subjectCount[leg.subject] = count + 1;
+        addedThisPass = true;
+        break;
+      }}
+    }}
+  }}
+
+  const out = document.getElementById('builderResult');
+  if (!chosen.length) {{ out.innerHTML = 'No legs available to build from.'; return; }}
+
+  const rows = chosen.map(l => `
+    <div class="legRow">
+      <span>${{l.match}}<br><span style="color:var(--amber)">${{l.market}}</span> <span style="color:var(--sub)">· ${{l.category}}</span>
+      ${{l.detail ? `<br><span style="color:var(--sub);font-size:10px">${{l.detail}}</span>` : ''}}
+      ${{l.history ? `<br><span style="color:var(--sub);font-size:10px">last games: ${{l.history}}</span>` : ''}}</span>
+      <span style="text-align:right"><span style="color:var(--amber);font-weight:bold">${{l.prob}}%</span>${{l.hit_rate ? `<br><span style="color:var(--sub);font-size:11px">${{l.hit_rate.hits}}/${{l.hit_rate.total}}</span>` : ''}}</span>
+    </div>
+  `).join('');
+
+  const capNote = chosen.length >= maxLegs && combinedOdds < target
+    ? ' (hit the leg cap before reaching target — raise Max legs or lower Target odds)'
+    : (combinedOdds < target ? ' (ran out of legs before reaching target)' : '');
+
+  out.innerHTML = `
+    <div style="color:var(--text);font-size:13px;margin-bottom:6px">
+      ${{chosen.length}} legs · est. combined odds ~<b>${{combinedOdds.toFixed(2)}}</b>${{capNote}}
+    </div>
+    ${{rows}}
+    <div style="color:var(--sub);font-size:10px;margin-top:8px;line-height:1.4">
+      Estimate multiplies each leg's fair odds (100/probability) — real sportsbook odds
+      include their margin, so treat this as a ranking tool, not a firm price.
+    </div>
+  `;
+}}
+initToggles();
+</script>
+</body></html>
+"""
+
+
+def render_html(legs, target_date):
+    return HTML_TEMPLATE.format(
+        date=target_date.isoformat(),
+        generated=datetime.now().strftime("%Y-%m-%d %H:%M"),
+        weight=int(RECENT_WEIGHT * 100),
+        legs_json=json.dumps(legs),
+    )
+
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1 and sys.argv[1] != "--auto":
+        target = date.fromisoformat(sys.argv[1])
+    else:
+        target = date.today()
+
+    print(f"Fetching Euro Ice slate for {target.isoformat()}…")
+    legs = build_legs(target)
+
+    if not legs:
+        print("No usable legs today — either no fixtures found for the configured "
+              "leagues, or no team had enough data to project. Nothing to publish; "
+              "docs/ left as whatever the last successful run published.")
+        raise SystemExit(0)
+
+    html = render_html(legs, target)
+    os.makedirs("docs/euro-ice", exist_ok=True)
+    with open("docs/euro-ice/index.html", "w") as f:
+        f.write(html)
+    with open("docs/euro-ice/euro_ice.json", "w") as f:
+        json.dump(legs, f, indent=2, default=str)
+    print(f"\nDone. {len(legs)} legs written to docs/euro-ice/index.html")
