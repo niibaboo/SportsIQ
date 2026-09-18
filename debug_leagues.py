@@ -98,7 +98,7 @@ if len(sys.argv) > 1 and sys.argv[1] == "--confirm":
     sys.exit(0)
 
 
-
+def _get(path, params=None):
     # Per the official docs, the required header is x-rapidapi-key
     # (x-rapidapi-host is only needed if you're calling through RapidAPI's
     # host instead of hockey.highlightly.net directly).
