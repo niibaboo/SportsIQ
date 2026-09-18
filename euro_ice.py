@@ -196,6 +196,34 @@ def get_team_season_stats(team_id, from_date):
     return data[0] if isinstance(data, list) else data
 
 
+def cap_outliers(values, multiplier=1.5, min_cap=3):
+    """Clip any single game's goal count before it enters the
+    recency-weighted average, so one freak blowout doesn't single-
+    handedly drag a team's projection up. Cap is set relative to the
+    sample's own median (1.5x by default) rather than a fixed number,
+    so it scales with how the team's actually been playing — a team
+    with a median of 2 gets capped near 3, a high-scoring team with a
+    median of 5 gets capped near 7.5, not squashed to the same ceiling.
+    min_cap keeps the cap from collapsing to something tiny (e.g. a
+    median of 1 shouldn't cap everything at 1.5). Needs at least 3
+    games to compute a median worth trusting; below that, values pass
+    through unchanged — capping off 1-2 data points isn't a real
+    outlier detection, just noise.
+
+    NOTE: this only affects the RECENCY-WEIGHTED projection input.
+    last5_gf (used for display and for hit_rate()'s empirical over/under
+    count) still holds the real, uncapped scores — capping is a
+    modeling choice for the lambda estimate, not a rewrite of history.
+    """
+    if len(values) < 3:
+        return values
+    sorted_vals = sorted(values)
+    n = len(sorted_vals)
+    median = sorted_vals[n // 2] if n % 2 == 1 else (sorted_vals[n // 2 - 1] + sorted_vals[n // 2]) / 2
+    cap = max(median * multiplier, min_cap)
+    return [min(v, cap) for v in values]
+
+
 def project_team_goals(team_id, from_date, weight=RECENT_WEIGHT):
     """Blended recency-weighted + season-average goals-for projection —
     same architecture as Strike Zone's project_team_runs()."""
@@ -210,14 +238,17 @@ def project_team_goals(team_id, from_date, weight=RECENT_WEIGHT):
         if played:
             season_gpg = scored / played
 
+    # last5_gf stays RAW (real scores) for display + hit_rate(); only the
+    # values feeding the weighted-average projection get outlier-capped.
     gf_values = [g["gf"] for g in last5]
+    capped_values = cap_outliers(gf_values)
     recent_gpg = None
-    if len(gf_values) >= 2:
-        n = len(gf_values)
+    if len(capped_values) >= 2:
+        n = len(capped_values)
         wts = [1.4 ** i for i in range(n)]
-        recent_gpg = sum(w * g for w, g in zip(wts, gf_values)) / sum(wts)
-    elif gf_values:
-        recent_gpg = gf_values[0]
+        recent_gpg = sum(w * g for w, g in zip(wts, capped_values)) / sum(wts)
+    elif capped_values:
+        recent_gpg = capped_values[0]
 
     if season_gpg is None and recent_gpg is None:
         return None
