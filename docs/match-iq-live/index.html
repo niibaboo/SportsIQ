@@ -35,7 +35,7 @@
 <script>
 async function fetchAndRender() {
   try {
-    const resp = await fetch('live_matches.json');
+    const resp = await fetch('live_matches.json?t=' + Date.now());
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const data = await resp.json();
     
