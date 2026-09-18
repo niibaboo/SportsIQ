@@ -1,0 +1,42 @@
+name: Euro Ice
+
+on:
+  schedule:
+    # SHL, Czech Extraliga, DEL games are typically evening CET (17:00-19:00 UTC).
+    # 11:00 UTC = noon CET, run in the morning so the day's fixture list is
+    # ready well ahead of typical game times. First-time schedule for this
+    # project; adjust freely once you see how it behaves.
+    - cron: '0 11 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Euro Ice
+        env:
+          HIGHLIGHTLY_KEY: ${{ secrets.HIGHLIGHTLY_KEY }}
+        run: python3 euro_ice.py
+
+      - name: Commit and push updated slate
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          [ -d docs/euro-ice ] && git add docs/euro-ice/ || true
+          git diff --staged --quiet || git commit -m "Update Euro Ice daily slate"
+          git pull --rebase --autostash origin main
+          git push
