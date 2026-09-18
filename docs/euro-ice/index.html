@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Euro Ice — 2026-09-18</title>
+<style>
+  :root{--bg:#0b0f14; --panel:#121820; --panel2:#161d27; --border:#233040; --text:#e8edf2; --sub:#8b98a8; --amber:#facc15; --green:#22c55e;}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; padding:16px; max-width:640px; margin:0 auto;}
+  h1{font-size:20px; margin-bottom:4px;}
+  .sub{color:var(--sub); font-size:13px; margin-bottom:18px;}
+  .builderPanel{background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:14px;}
+  .builderTitle{font-size:15px; font-weight:800; margin-bottom:10px;}
+  .builderToggles{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px; font-size:12px;}
+  .builderToggles label{display:flex; align-items:center; gap:4px; color:var(--text); cursor:pointer;}
+  .builderControls{display:flex; gap:8px; align-items:center; margin-bottom:6px; flex-wrap:wrap;}
+  .builderControls label{font-size:12px; color:var(--sub);}
+  .builderControls input{width:70px; background:var(--panel2); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:6px 8px; font-size:13px;}
+  .builderBtn{background:var(--green); color:#04140a; font-weight:700; border:none; padding:7px 14px; border-radius:6px; font-size:13px; cursor:pointer;}
+  .builderBtnAlt{background:var(--panel2); border:1px solid var(--border); color:var(--text); padding:7px 14px; border-radius:6px; font-size:13px; cursor:pointer;}
+  .builderResult{font-size:12px; color:var(--sub);}
+  .legRow{display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid var(--border);}
+  .footnote{font-size:11px; color:var(--sub); text-align:center; margin-top:20px; line-height:1.6;}
+</style></head>
+<body>
+  <h1>🧊 Euro Ice — Team &amp; Game Totals</h1>
+  <div class="sub">SHL · Czech Extraliga · DEL — 2026-09-18 · generated 2026-09-18 07:11</div>
+
+  <div id="builderPanel" class="builderPanel">
+    <div class="builderTitle">🎯 Safest Bet Builder</div>
+    <div id="builderCategoryToggles" class="builderToggles"></div>
+    <div class="builderControls">
+      <label>Target odds:</label>
+      <input type="number" step="0.1" min="1.1" value="5.0" id="targetOdds">
+      <label>Max legs:</label>
+      <input type="number" step="1" min="2" value="8" id="maxLegs">
+      <button class="builderBtn" onclick="buildSafest()">Build</button>
+      <button class="builderBtnAlt" onclick="buildSafest()">🔀 Shuffle</button>
+    </div>
+    <div id="builderResult" class="builderResult">
+      Untick any market you don't want considered, set a target odds and leg cap, then tap
+      Build. Caps at 2 legs per team/matchup to avoid stacking a team's own Team Total against
+      the same game's Game Total. Team-level only — no player props are available from this
+      data source. Tap Shuffle for a fresh pick without changing your settings.
+    </div>
+  </div>
+
+  <div class="footnote">
+    Team-totals lambda blends a recency-weighted last-5-games rate (65% recent) with
+    season-to-date average, then prices with a Poisson distribution. Lines are set
+    automatically below the model's projection for a safety margin. Game Total combines two
+    teams' own separate scoring histories, not real head-to-head data — treat it with more
+    caution than the single-team legs. This tool covers goals only; no player props are
+    available from Highlightly's free tier.
+  </div>
+
+<script>
+const LEGS = [{"match": "Slavutych vs Baranavichy", "subject": "Slavutych", "market": "Slavutych Over 2.5 Goals", "prob": 69, "hit_rate": {"hits": 3, "total": 5}, "category": "Extraliga Team Total", "detail": "proj 3.58 goals \u00b7 season 3.67/gm", "history": "6/2/6/1/4"}, {"match": "Slavutych vs Baranavichy", "subject": "Baranavichy", "market": "Baranavichy Over 3.5 Goals", "prob": 75, "hit_rate": {"hits": 3, "total": 5}, "category": "Extraliga Team Total", "detail": "proj 5.09 goals \u00b7 season 5.33/gm", "history": "2/2/4/4/8"}, {"match": "Slavutych vs Baranavichy", "subject": "Slavutych vs Baranavichy", "market": "Game Over 6.0 Total Goals", "prob": 76, "hit_rate": null, "category": "Extraliga Game Total", "detail": "proj 8.67 goals combined", "history": null}, {"match": "Vitebsk vs Novopolotsk", "subject": "Vitebsk", "market": "Vitebsk Over 2.0 Goals", "prob": 64, "hit_rate": {"hits": 5, "total": 5}, "category": "Extraliga Team Total", "detail": "proj 3.28 goals \u00b7 season 3.33/gm", "history": "3/3/3/4/3"}, {"match": "Vitebsk vs Novopolotsk", "subject": "Novopolotsk", "market": "Novopolotsk Over 1.5 Goals", "prob": 68, "hit_rate": {"hits": 5, "total": 5}, "category": "Extraliga Team Total", "detail": "proj 2.34 goals \u00b7 season 2.33/gm", "history": "3/2/2/3/2"}, {"match": "Vitebsk vs Novopolotsk", "subject": "Vitebsk vs Novopolotsk", "market": "Game Over 4.0 Total Goals", "prob": 66, "hit_rate": null, "category": "Extraliga Game Total", "detail": "proj 5.62 goals combined", "history": null}, {"match": "Lokomotiv Orsha vs Soligorsk", "subject": "Lokomotiv Orsha", "market": "Lokomotiv Orsha Over 1.5 Goals", "prob": 76, "hit_rate": {"hits": 3, "total": 5}, "category": "Extraliga Team Total", "detail": "proj 2.75 goals \u00b7 season 3.67/gm", "history": "2/0/4/4/1"}, {"match": "Lokomotiv Orsha vs Soligorsk", "subject": "Soligorsk", "market": "Soligorsk Over 4.5 Goals", "prob": 78, "hit_rate": {"hits": 4, "total": 5}, "category": "Extraliga Team Total", "detail": "proj 6.55 goals \u00b7 season 6.67/gm", "history": "7/3/5/7/8"}, {"match": "Lokomotiv Orsha vs Soligorsk", "subject": "Lokomotiv Orsha vs Soligorsk", "market": "Game Over 6.5 Total Goals", "prob": 82, "hit_rate": null, "category": "Extraliga Game Total", "detail": "proj 9.3 goals combined", "history": null}, {"match": "N\u00fcrnberg Ice Tigers vs Augsburger Panther", "subject": "N\u00fcrnberg Ice Tigers", "market": "N\u00fcrnberg Ice Tigers Over 1.5 Goals", "prob": 68, "hit_rate": {"hits": 3, "total": 5}, "category": "DEL Team Total", "detail": "proj 2.34 goals", "history": "1/4/1/2/3"}, {"match": "N\u00fcrnberg Ice Tigers vs Augsburger Panther", "subject": "Augsburger Panther", "market": "Augsburger Panther Over 2.0 Goals", "prob": 64, "hit_rate": {"hits": 3, "total": 5}, "category": "DEL Team Total", "detail": "proj 3.31 goals", "history": "4/4/1/2/5"}, {"match": "N\u00fcrnberg Ice Tigers vs Augsburger Panther", "subject": "N\u00fcrnberg Ice Tigers vs Augsburger Panther", "market": "Game Over 4.0 Total Goals", "prob": 67, "hit_rate": null, "category": "DEL Game Total", "detail": "proj 5.65 goals combined", "history": null}, {"match": "Iserlohn Roosters vs ERC Ingolstadt", "subject": "Iserlohn Roosters", "market": "Iserlohn Roosters Over 2.0 Goals", "prob": 57, "hit_rate": {"hits": 2, "total": 5}, "category": "DEL Team Total", "detail": "proj 2.98 goals", "history": "1/1/2/4/4"}, {"match": "Iserlohn Roosters vs ERC Ingolstadt", "subject": "ERC Ingolstadt", "market": "ERC Ingolstadt Over 2.0 Goals", "prob": 65, "hit_rate": {"hits": 4, "total": 5}, "category": "DEL Team Total", "detail": "proj 3.34 goals", "history": "4/1/3/5/3"}, {"match": "Iserlohn Roosters vs ERC Ingolstadt", "subject": "Iserlohn Roosters vs ERC Ingolstadt", "market": "Game Over 4.5 Total Goals", "prob": 76, "hit_rate": null, "category": "DEL Game Total", "detail": "proj 6.32 goals combined", "history": null}, {"match": "M\u00fcnchen Red Bulls vs Adler Mannheim", "subject": "M\u00fcnchen Red Bulls", "market": "M\u00fcnchen Red Bulls Over 2.0 Goals", "prob": 55, "hit_rate": {"hits": 3, "total": 5}, "category": "DEL Team Total", "detail": "proj 2.89 goals", "history": "2/3/4/5/1"}, {"match": "M\u00fcnchen Red Bulls vs Adler Mannheim", "subject": "Adler Mannheim", "market": "Adler Mannheim Over 2.0 Goals", "prob": 64, "hit_rate": {"hits": 3, "total": 5}, "category": "DEL Team Total", "detail": "proj 3.31 goals", "history": "1/3/1/5/4"}, {"match": "M\u00fcnchen Red Bulls vs Adler Mannheim", "subject": "M\u00fcnchen Red Bulls vs Adler Mannheim", "market": "Game Over 4.0 Total Goals", "prob": 74, "hit_rate": null, "category": "DEL Game Total", "detail": "proj 6.2 goals combined", "history": null}, {"match": "Kolner vs Grizzly Wolfsburg", "subject": "Kolner", "market": "Kolner Over 3.0 Goals", "prob": 62, "hit_rate": {"hits": 4, "total": 5}, "category": "DEL Team Total", "detail": "proj 4.3 goals", "history": "5/5/5/5/3"}, {"match": "Kolner vs Grizzly Wolfsburg", "subject": "Grizzly Wolfsburg", "market": "Grizzly Wolfsburg Over 1.5 Goals", "prob": 75, "hit_rate": {"hits": 4, "total": 5}, "category": "DEL Team Total", "detail": "proj 2.7 goals", "history": "2/0/2/3/4"}, {"match": "Kolner vs Grizzly Wolfsburg", "subject": "Kolner vs Grizzly Wolfsburg", "market": "Game Over 5.0 Total Goals", "prob": 70, "hit_rate": null, "category": "DEL Game Total", "detail": "proj 7.0 goals combined", "history": null}, {"match": "Schwenninger vs Frankfurt Lowen", "subject": "Schwenninger", "market": "Schwenninger Over 2.5 Goals", "prob": 77, "hit_rate": {"hits": 3, "total": 5}, "category": "DEL Team Total", "detail": "proj 4.07 goals", "history": "1/6/2/3/6"}, {"match": "Schwenninger vs Frankfurt Lowen", "subject": "Frankfurt Lowen", "market": "Frankfurt Lowen Over 2.5 Goals", "prob": 74, "hit_rate": {"hits": 4, "total": 5}, "category": "DEL Team Total", "detail": "proj 3.87 goals", "history": "6/3/1/4/5"}, {"match": "Schwenninger vs Frankfurt Lowen", "subject": "Schwenninger vs Frankfurt Lowen", "market": "Game Over 5.5 Total Goals", "prob": 80, "hit_rate": null, "category": "DEL Game Total", "detail": "proj 7.94 goals combined", "history": null}, {"match": "Krefeld Pinguine vs Bremerhaven", "subject": "Krefeld Pinguine", "market": "Krefeld Pinguine Over 1.5 Goals", "prob": 76, "hit_rate": {"hits": 4, "total": 5}, "category": "DEL Team Total", "detail": "proj 2.73 goals", "history": "0/3/3/3/3"}, {"match": "Krefeld Pinguine vs Bremerhaven", "subject": "Bremerhaven", "market": "Bremerhaven Over 2.0 Goals", "prob": 53, "hit_rate": {"hits": 2, "total": 5}, "category": "DEL Team Total", "detail": "proj 2.79 goals", "history": "2/2/5/3/2"}, {"match": "Krefeld Pinguine vs Bremerhaven", "subject": "Krefeld Pinguine vs Bremerhaven", "market": "Game Over 3.5 Total Goals", "prob": 80, "hit_rate": null, "category": "DEL Game Total", "detail": "proj 5.52 goals combined", "history": null}];
+
+function poissonCDF(threshold, lambda){
+  let p = Math.exp(-lambda), cum = p;
+  for(let i=1;i<=threshold;i++){ p = p*lambda/i; cum += p; }
+  return cum;
+}
+function initToggles() {
+  const container = document.getElementById('builderCategoryToggles');
+  const cats = [...new Set(LEGS.map(l => l.category))];
+  container.innerHTML = cats.map(c => `
+    <label><input type="checkbox" class="catToggle" value="${c}" checked> ${c}</label>
+  `).join('');
+}
+function shuffleArr(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+function tieredShuffle(legs, bandSize) {
+  const bands = {};
+  legs.forEach(l => {
+    const band = Math.floor(l.prob / bandSize);
+    (bands[band] = bands[band] || []).push(l);
+  });
+  const keys = Object.keys(bands).map(Number).sort((a,b) => b-a);
+  let result = [];
+  keys.forEach(k => { result = result.concat(shuffleArr(bands[k])); });
+  return result;
+}
+function buildSafest() {
+  const target = parseFloat(document.getElementById('targetOdds').value) || 5.0;
+  const maxLegs = parseInt(document.getElementById('maxLegs').value) || 8;
+  const activeCats = [...document.querySelectorAll('.catToggle:checked')].map(el => el.value);
+
+  const byCategory = {};
+  LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category)).forEach(l => {
+    (byCategory[l.category] = byCategory[l.category] || []).push(l);
+  });
+  const categories = Object.keys(byCategory);
+  categories.forEach(c => { byCategory[c] = tieredShuffle(byCategory[c], 5); });
+  const cursor = {};
+  categories.forEach(c => cursor[c] = 0);
+
+  const chosen = [];
+  const subjectCount = {};
+  let combinedOdds = 1;
+  let addedThisPass = true;
+
+  while (addedThisPass && combinedOdds < target && chosen.length < maxLegs) {
+    addedThisPass = false;
+    for (const cat of categories) {
+      if (combinedOdds >= target || chosen.length >= maxLegs) break;
+      const arr = byCategory[cat];
+      while (cursor[cat] < arr.length) {
+        const leg = arr[cursor[cat]];
+        cursor[cat]++;
+        const count = subjectCount[leg.subject] || 0;
+        if (count >= 2) continue;
+        chosen.push(leg);
+        combinedOdds *= 100 / leg.prob;
+        subjectCount[leg.subject] = count + 1;
+        addedThisPass = true;
+        break;
+      }
+    }
+  }
+
+  const out = document.getElementById('builderResult');
+  if (!chosen.length) { out.innerHTML = 'No legs available to build from.'; return; }
+
+  const rows = chosen.map(l => `
+    <div class="legRow">
+      <span>${l.match}<br><span style="color:var(--amber)">${l.market}</span> <span style="color:var(--sub)">· ${l.category}</span>
+      ${l.detail ? `<br><span style="color:var(--sub);font-size:10px">${l.detail}</span>` : ''}
+      ${l.history ? `<br><span style="color:var(--sub);font-size:10px">last games: ${l.history}</span>` : ''}</span>
+      <span style="text-align:right"><span style="color:var(--amber);font-weight:bold">${l.prob}%</span>${l.hit_rate ? `<br><span style="color:var(--sub);font-size:11px">${l.hit_rate.hits}/${l.hit_rate.total}</span>` : ''}</span>
+    </div>
+  `).join('');
+
+  const capNote = chosen.length >= maxLegs && combinedOdds < target
+    ? ' (hit the leg cap before reaching target — raise Max legs or lower Target odds)'
+    : (combinedOdds < target ? ' (ran out of legs before reaching target)' : '');
+
+  out.innerHTML = `
+    <div style="color:var(--text);font-size:13px;margin-bottom:6px">
+      ${chosen.length} legs · est. combined odds ~<b>${combinedOdds.toFixed(2)}</b>${capNote}
+    </div>
+    ${rows}
+    <div style="color:var(--sub);font-size:10px;margin-top:8px;line-height:1.4">
+      Estimate multiplies each leg's fair odds (100/probability) — real sportsbook odds
+      include their margin, so treat this as a ranking tool, not a firm price.
+    </div>
+  `;
+}
+initToggles();
+</script>
+</body></html>

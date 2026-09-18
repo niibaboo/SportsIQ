@@ -1,0 +1,326 @@
+[
+  {
+    "match": "Slavutych vs Baranavichy",
+    "subject": "Slavutych",
+    "market": "Slavutych Over 2.5 Goals",
+    "prob": 69,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 3.58 goals \u00b7 season 3.67/gm",
+    "history": "6/2/6/1/4"
+  },
+  {
+    "match": "Slavutych vs Baranavichy",
+    "subject": "Baranavichy",
+    "market": "Baranavichy Over 3.5 Goals",
+    "prob": 75,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 5.09 goals \u00b7 season 5.33/gm",
+    "history": "2/2/4/4/8"
+  },
+  {
+    "match": "Slavutych vs Baranavichy",
+    "subject": "Slavutych vs Baranavichy",
+    "market": "Game Over 6.0 Total Goals",
+    "prob": 76,
+    "hit_rate": null,
+    "category": "Extraliga Game Total",
+    "detail": "proj 8.67 goals combined",
+    "history": null
+  },
+  {
+    "match": "Vitebsk vs Novopolotsk",
+    "subject": "Vitebsk",
+    "market": "Vitebsk Over 2.0 Goals",
+    "prob": 64,
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 3.28 goals \u00b7 season 3.33/gm",
+    "history": "3/3/3/4/3"
+  },
+  {
+    "match": "Vitebsk vs Novopolotsk",
+    "subject": "Novopolotsk",
+    "market": "Novopolotsk Over 1.5 Goals",
+    "prob": 68,
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 2.34 goals \u00b7 season 2.33/gm",
+    "history": "3/2/2/3/2"
+  },
+  {
+    "match": "Vitebsk vs Novopolotsk",
+    "subject": "Vitebsk vs Novopolotsk",
+    "market": "Game Over 4.0 Total Goals",
+    "prob": 66,
+    "hit_rate": null,
+    "category": "Extraliga Game Total",
+    "detail": "proj 5.62 goals combined",
+    "history": null
+  },
+  {
+    "match": "Lokomotiv Orsha vs Soligorsk",
+    "subject": "Lokomotiv Orsha",
+    "market": "Lokomotiv Orsha Over 1.5 Goals",
+    "prob": 76,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 2.75 goals \u00b7 season 3.67/gm",
+    "history": "2/0/4/4/1"
+  },
+  {
+    "match": "Lokomotiv Orsha vs Soligorsk",
+    "subject": "Soligorsk",
+    "market": "Soligorsk Over 4.5 Goals",
+    "prob": 78,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 6.55 goals \u00b7 season 6.67/gm",
+    "history": "7/3/5/7/8"
+  },
+  {
+    "match": "Lokomotiv Orsha vs Soligorsk",
+    "subject": "Lokomotiv Orsha vs Soligorsk",
+    "market": "Game Over 6.5 Total Goals",
+    "prob": 82,
+    "hit_rate": null,
+    "category": "Extraliga Game Total",
+    "detail": "proj 9.3 goals combined",
+    "history": null
+  },
+  {
+    "match": "N\u00fcrnberg Ice Tigers vs Augsburger Panther",
+    "subject": "N\u00fcrnberg Ice Tigers",
+    "market": "N\u00fcrnberg Ice Tigers Over 1.5 Goals",
+    "prob": 68,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 2.34 goals",
+    "history": "1/4/1/2/3"
+  },
+  {
+    "match": "N\u00fcrnberg Ice Tigers vs Augsburger Panther",
+    "subject": "Augsburger Panther",
+    "market": "Augsburger Panther Over 2.0 Goals",
+    "prob": 64,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 3.31 goals",
+    "history": "4/4/1/2/5"
+  },
+  {
+    "match": "N\u00fcrnberg Ice Tigers vs Augsburger Panther",
+    "subject": "N\u00fcrnberg Ice Tigers vs Augsburger Panther",
+    "market": "Game Over 4.0 Total Goals",
+    "prob": 67,
+    "hit_rate": null,
+    "category": "DEL Game Total",
+    "detail": "proj 5.65 goals combined",
+    "history": null
+  },
+  {
+    "match": "Iserlohn Roosters vs ERC Ingolstadt",
+    "subject": "Iserlohn Roosters",
+    "market": "Iserlohn Roosters Over 2.0 Goals",
+    "prob": 57,
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 2.98 goals",
+    "history": "1/1/2/4/4"
+  },
+  {
+    "match": "Iserlohn Roosters vs ERC Ingolstadt",
+    "subject": "ERC Ingolstadt",
+    "market": "ERC Ingolstadt Over 2.0 Goals",
+    "prob": 65,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 3.34 goals",
+    "history": "4/1/3/5/3"
+  },
+  {
+    "match": "Iserlohn Roosters vs ERC Ingolstadt",
+    "subject": "Iserlohn Roosters vs ERC Ingolstadt",
+    "market": "Game Over 4.5 Total Goals",
+    "prob": 76,
+    "hit_rate": null,
+    "category": "DEL Game Total",
+    "detail": "proj 6.32 goals combined",
+    "history": null
+  },
+  {
+    "match": "M\u00fcnchen Red Bulls vs Adler Mannheim",
+    "subject": "M\u00fcnchen Red Bulls",
+    "market": "M\u00fcnchen Red Bulls Over 2.0 Goals",
+    "prob": 55,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 2.89 goals",
+    "history": "2/3/4/5/1"
+  },
+  {
+    "match": "M\u00fcnchen Red Bulls vs Adler Mannheim",
+    "subject": "Adler Mannheim",
+    "market": "Adler Mannheim Over 2.0 Goals",
+    "prob": 64,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 3.31 goals",
+    "history": "1/3/1/5/4"
+  },
+  {
+    "match": "M\u00fcnchen Red Bulls vs Adler Mannheim",
+    "subject": "M\u00fcnchen Red Bulls vs Adler Mannheim",
+    "market": "Game Over 4.0 Total Goals",
+    "prob": 74,
+    "hit_rate": null,
+    "category": "DEL Game Total",
+    "detail": "proj 6.2 goals combined",
+    "history": null
+  },
+  {
+    "match": "Kolner vs Grizzly Wolfsburg",
+    "subject": "Kolner",
+    "market": "Kolner Over 3.0 Goals",
+    "prob": 62,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 4.3 goals",
+    "history": "5/5/5/5/3"
+  },
+  {
+    "match": "Kolner vs Grizzly Wolfsburg",
+    "subject": "Grizzly Wolfsburg",
+    "market": "Grizzly Wolfsburg Over 1.5 Goals",
+    "prob": 75,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 2.7 goals",
+    "history": "2/0/2/3/4"
+  },
+  {
+    "match": "Kolner vs Grizzly Wolfsburg",
+    "subject": "Kolner vs Grizzly Wolfsburg",
+    "market": "Game Over 5.0 Total Goals",
+    "prob": 70,
+    "hit_rate": null,
+    "category": "DEL Game Total",
+    "detail": "proj 7.0 goals combined",
+    "history": null
+  },
+  {
+    "match": "Schwenninger vs Frankfurt Lowen",
+    "subject": "Schwenninger",
+    "market": "Schwenninger Over 2.5 Goals",
+    "prob": 77,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 4.07 goals",
+    "history": "1/6/2/3/6"
+  },
+  {
+    "match": "Schwenninger vs Frankfurt Lowen",
+    "subject": "Frankfurt Lowen",
+    "market": "Frankfurt Lowen Over 2.5 Goals",
+    "prob": 74,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 3.87 goals",
+    "history": "6/3/1/4/5"
+  },
+  {
+    "match": "Schwenninger vs Frankfurt Lowen",
+    "subject": "Schwenninger vs Frankfurt Lowen",
+    "market": "Game Over 5.5 Total Goals",
+    "prob": 80,
+    "hit_rate": null,
+    "category": "DEL Game Total",
+    "detail": "proj 7.94 goals combined",
+    "history": null
+  },
+  {
+    "match": "Krefeld Pinguine vs Bremerhaven",
+    "subject": "Krefeld Pinguine",
+    "market": "Krefeld Pinguine Over 1.5 Goals",
+    "prob": 76,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 2.73 goals",
+    "history": "0/3/3/3/3"
+  },
+  {
+    "match": "Krefeld Pinguine vs Bremerhaven",
+    "subject": "Bremerhaven",
+    "market": "Bremerhaven Over 2.0 Goals",
+    "prob": 53,
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 2.79 goals",
+    "history": "2/2/5/3/2"
+  },
+  {
+    "match": "Krefeld Pinguine vs Bremerhaven",
+    "subject": "Krefeld Pinguine vs Bremerhaven",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 80,
+    "hit_rate": null,
+    "category": "DEL Game Total",
+    "detail": "proj 5.52 goals combined",
+    "history": null
+  }
+]
