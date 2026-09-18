@@ -1,242 +1,121 @@
 <!DOCTYPE html><html><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>Match IQ</title></head>
-<body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
-<h2 style="text-align:center">⚽ MATCH IQ — Full Stats</h2>
-<p style="text-align:center;color:#888;font-size:11px">Powered by TheStatsAPI · 18 Sep 11:18</p>
-
-<div style="display:flex;align-items:center;justify-content:center;gap:20px;margin:10px 0 4px">
-  <span style="color:#444;font-size:20px">◀</span>
-  <span style="font-size:15px;font-weight:bold">Fri 18 Sep</span>
-  <a href="match_iq_day-2026-09-19.html" style="color:#7ec8ff;text-decoration:none;font-size:20px">▶</a>
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Match IQ — Live Signals</title>
+<style>
+  body { background:#0b0f14; color:white; font-family:Arial; padding:12px; max-width:700px; margin:auto; }
+  h2 { text-align:center; }
+  .meta { text-align:center; color:#888; font-size:11px; margin-bottom:16px; }
+  .back-link { display:inline-block; margin-bottom:12px; }
+  .back-link a { color:#7ec8ff; text-decoration:none; font-size:13px; }
+  .match-card { background:#1a1f26; border-radius:12px; padding:16px; margin:12px 0; border:1px solid #2a3038; }
+  .match-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .match-title { font-size:15px; font-weight:bold; }
+  .league { font-size:11px; color:#999; }
+  .elapsed { font-size:11px; color:#aaa; }
+  .score { font-size:24px; font-weight:bold; text-align:center; margin:8px 0; }
+  .signal-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+  .signal { background:#0f1318; border-radius:8px; padding:10px; text-align:center; }
+  .signal-label { font-size:10px; color:#aaa; margin-bottom:4px; }
+  .signal-value { font-size:20px; font-weight:bold; color:#ffeb3b; }
+  .signal-btts { color:#a0e8a0; }
+  .signal-next { color:#7ec8ff; }
+  .signal-status { font-size:9px; color:#666; margin-top:4px; }
+  .team-stats { font-size:10px; color:#888; margin-top:10px; padding-top:10px; border-top:1px solid #2a3038; line-height:1.4; }
+  .no-matches { text-align:center; color:#888; padding:40px 20px; }
+  .loading { text-align:center; color:#888; padding:20px; }
+  .error { color:#ff6b6b; font-size:12px; }
+  .last-update { text-align:center; color:#666; font-size:10px; margin-top:20px; }
+</style></head><body>
+<div class="back-link"><a href="../match-iq/match_iq_index.html">← Back to Match IQ</a></div>
+<h2>⚡ Live Signals</h2>
+<div class="meta">In-play next goal & BTTS probabilities · Updates every 60s</div>
+<div id="container">
+  <div class="loading">Loading live matches...</div>
 </div>
-<p style="text-align:center;margin-bottom:16px"><a href="match_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
-
-<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
-  <div style="font-size:14px;font-weight:bold;margin-bottom:10px">🎯 Safest Bet Builder</div>
-  <div id="categoryToggles" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;font-size:12px"></div>
-  <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
-    <label style="font-size:12px;color:#aaa">Target odds:</label>
-    <input id="targetOdds" type="number" step="0.1" min="1.1" value="5.0"
-      style="width:70px;background:#0f1318;border:1px solid #333;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
-    <label style="font-size:12px;color:#aaa">Max legs:</label>
-    <input id="maxLegs" type="number" step="1" min="2" value="8"
-      style="width:55px;background:#0f1318;border:1px solid #333;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
-    <button onclick="buildSafest()"
-      style="background:#3a7d7a;border:none;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
-      Build
-    </button>
-    <button onclick="buildSafest()"
-      style="background:#2a3038;border:1px solid #444;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
-      🔀 Shuffle
-    </button>
-  </div>
-  <div id="builderResult" style="font-size:12px;color:#888">
-    Untick any market type you don't want considered (Corners starts unticked —
-    lower counts mean more relative variance than shots/SoT), set a target odds
-    and leg cap, then tap Build. It rotates through whichever categories are
-    ticked, groups near-tied legs and shuffles within each group so it draws
-    from more of the day's matches rather than always the exact same few, and
-    caps at 2 legs per match to avoid stacking correlated legs from one game.
-    Tap Shuffle for a fresh pick among equally-safe options without changing
-    your settings.
-  </div>
-</div>
+<div class="last-update">Last update: <span id="lastUpdate">—</span></div>
 <script>
-const LEGS = [{"match": "FC Bayern M\u00fcnchen v 1. FC Union Berlin", "market": "Over 2.5 Goals", "prob": 76, "category": "Goals", "detail": "4.01 exp goals (3v3gm)", "history": "H 5/0/2 \u00b7 A 3/0/1"}, {"match": "FC Bayern M\u00fcnchen v 1. FC Union Berlin", "market": "BTTS", "prob": 63, "category": "BTTS", "detail": "4.01 exp goals (3v3gm)", "history": "H 5/0/2 \u00b7 A 3/0/1"}, {"match": "FC Bayern M\u00fcnchen v 1. FC Union Berlin", "market": "FH Corners Over 3.5", "prob": 64, "category": "FH Corners", "detail": "4.4 exp FH corners (3v3gm)", "history": "H 5/4/1 \u00b7 A 1/0/1"}, {"match": "FC Bayern M\u00fcnchen v 1. FC Union Berlin", "market": "FC Bayern M\u00fcnchen Over 15.0 Shots", "prob": 90, "category": "Shots", "detail": "avg 21.3 (3gm)", "history": "21/15/28"}, {"match": "FC Bayern M\u00fcnchen v 1. FC Union Berlin", "market": "FC Bayern M\u00fcnchen Over 4.5 Shots on Target", "prob": 80, "category": "Shots on Target", "detail": "avg 6.7 (3gm)", "history": "9/5/6"}, {"match": "FC Bayern M\u00fcnchen v 1. FC Union Berlin", "market": "FC Bayern M\u00fcnchen Over 6.5 Corners", "prob": 85, "category": "Corners", "detail": "avg 9.7 (3gm)", "history": "9/11/9"}, {"match": "FC Bayern M\u00fcnchen v 1. FC Union Berlin", "market": "FC Bayern M\u00fcnchen Over 0.5 Cards", "prob": 63, "category": "Cards", "detail": "avg 1.0 (3gm)", "history": "1/2/0"}, {"match": "FC Bayern M\u00fcnchen v 1. FC Union Berlin", "market": "1. FC Union Berlin Over 10.5 Shots", "prob": 87, "category": "Shots", "detail": "avg 14.7 (3gm)", "history": "19/5/20"}, {"match": "FC Bayern M\u00fcnchen v 1. FC Union Berlin", "market": "1. FC Union Berlin Over 4.0 Shots on Target", "prob": 71, "category": "Shots on Target", "detail": "avg 6.0 (3gm)", "history": "10/0/8"}, {"match": "FC Bayern M\u00fcnchen v 1. FC Union Berlin", "market": "1. FC Union Berlin Over 2.0 Corners", "prob": 64, "category": "Corners", "detail": "avg 3.3 (3gm)", "history": "5/1/4"}, {"match": "FC Bayern M\u00fcnchen v 1. FC Union Berlin", "market": "1. FC Union Berlin Over 0.5 Cards", "prob": 90, "category": "Cards", "detail": "avg 2.3 (3gm)", "history": "2/2/3"}, {"match": "FC Groningen v PEC Zwolle", "market": "Over 2.5 Goals", "prob": 76, "category": "Goals", "detail": "3.97 exp goals (6v6gm)", "history": "H 2/4/1/2/2/1 \u00b7 A 0/1/2/1/2/0"}, {"match": "FC Groningen v PEC Zwolle", "market": "BTTS", "prob": 70, "category": "BTTS", "detail": "3.97 exp goals (6v6gm)", "history": "H 2/4/1/2/2/1 \u00b7 A 0/1/2/1/2/0"}, {"match": "FC Groningen v PEC Zwolle", "market": "FH Corners Over 3.5", "prob": 42, "category": "FH Corners", "detail": "3.32 exp FH corners (6v6gm)", "history": "H 1/0/1/2/4/0 \u00b7 A 1/1/0/2/3/1"}, {"match": "FC Groningen v PEC Zwolle", "market": "FC Groningen Over 10.5 Shots", "prob": 87, "category": "Shots", "detail": "avg 14.7 (6gm)", "history": "16/17/7/23/21/4"}, {"match": "FC Groningen v PEC Zwolle", "market": "FC Groningen Over 3.5 Shots on Target", "prob": 76, "category": "Shots on Target", "detail": "avg 5.2 (6gm)", "history": "5/14/4/2/4/2"}, {"match": "FC Groningen v PEC Zwolle", "market": "FC Groningen Over 3.0 Corners", "prob": 62, "category": "Corners", "detail": "avg 4.3 (6gm)", "history": "5/2/4/7/8/0"}, {"match": "FC Groningen v PEC Zwolle", "market": "FC Groningen Over 0.5 Cards", "prob": 63, "category": "Cards", "detail": "avg 1.0 (6gm)", "history": "0/1/1/3/1/0"}, {"match": "FC Groningen v PEC Zwolle", "market": "PEC Zwolle Over 7.5 Shots", "prob": 84, "category": "Shots", "detail": "avg 10.8 (6gm)", "history": "7/8/20/9/15/6"}, {"match": "FC Groningen v PEC Zwolle", "market": "PEC Zwolle Over 2.5 Shots on Target", "prob": 73, "category": "Shots on Target", "detail": "avg 3.8 (6gm)", "history": "2/3/7/2/6/3"}, {"match": "FC Groningen v PEC Zwolle", "market": "PEC Zwolle Over 2.5 Corners", "prob": 73, "category": "Corners", "detail": "avg 3.8 (6gm)", "history": "2/3/3/6/4/5"}, {"match": "FC Groningen v PEC Zwolle", "market": "PEC Zwolle Over 0.5 Cards", "prob": 86, "category": "Cards", "detail": "avg 2.0 (6gm)", "history": "3/2/1/2"}, {"match": "Brentford v Chelsea", "market": "Over 2.5 Goals", "prob": 74, "category": "Goals", "detail": "3.84 exp goals (4v4gm)", "history": "H 3/1/1/2 \u00b7 A 3/4/1/2"}, {"match": "Brentford v Chelsea", "market": "BTTS", "prob": 72, "category": "BTTS", "detail": "3.84 exp goals (4v4gm)", "history": "H 3/1/1/2 \u00b7 A 3/4/1/2"}, {"match": "Brentford v Chelsea", "market": "FH Corners Over 3.5", "prob": 72, "category": "FH Corners", "detail": "4.91 exp FH corners (4v4gm)", "history": "H 2/4/3/0 \u00b7 A 3/2/0/6"}, {"match": "Brentford v Chelsea", "market": "Brentford Over 12.0 Shots", "prob": 86, "category": "Shots", "detail": "avg 17.0 (4gm)", "history": "26/22/12/8"}, {"match": "Brentford v Chelsea", "market": "Brentford Over 3.0 Shots on Target", "prob": 60, "category": "Shots on Target", "detail": "avg 4.2 (4gm)", "history": "8/5/2/2"}, {"match": "Brentford v Chelsea", "market": "Brentford Over 3.0 Corners", "prob": 66, "category": "Corners", "detail": "avg 4.5 (4gm)", "history": "7/6/4/1"}, {"match": "Brentford v Chelsea", "market": "Brentford Over 0.5 Cards", "prob": 89, "category": "Cards", "detail": "avg 2.2 (4gm)", "history": "1/4/3/1"}, {"match": "Brentford v Chelsea", "market": "Chelsea Over 10.5 Shots", "prob": 88, "category": "Shots", "detail": "avg 15.0 (4gm)", "history": "18/17/13/12"}, {"match": "Brentford v Chelsea", "market": "Chelsea Over 4.0 Shots on Target", "prob": 71, "category": "Shots on Target", "detail": "avg 6.0 (4gm)", "history": "6/6/5/7"}, {"match": "Brentford v Chelsea", "market": "Chelsea Over 3.5 Corners", "prob": 76, "category": "Corners", "detail": "avg 5.2 (4gm)", "history": "4/4/3/10"}, {"match": "Brentford v Chelsea", "market": "Chelsea Over 0.5 Cards", "prob": 89, "category": "Cards", "detail": "avg 2.2 (4gm)", "history": "3/1/4/1"}];
-
-function initCategoryToggles() {
-  const container = document.getElementById('categoryToggles');
-  const cats = [...new Set(LEGS.map(l => l.category))];
-  container.innerHTML = cats.map(c => `
-    <label style="display:flex;align-items:center;gap:4px;color:#ccc;cursor:pointer">
-      <input type="checkbox" class="catToggle" value="${c}" ${c === 'Corners' ? '' : 'checked'}>
-      ${c}
-    </label>
-  `).join('');
-}
-initCategoryToggles();
-
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-// Sorts safest-first at a coarse level (5-point probability bands) but
-// shuffles legs WITHIN each band, so e.g. five different legs all sitting
-// at 84-88% get picked in a different order each time instead of always
-// the same one — this is what actually lets the builder draw from the
-// full pool of matches instead of fixating on whichever leg happens to
-// be a fraction of a percent ahead.
-function tieredShuffle(legs, bandSize) {
-  const bands = {};
-  legs.forEach(l => {
-    const band = Math.floor(l.prob / bandSize);
-    (bands[band] = bands[band] || []).push(l);
-  });
-  const bandKeys = Object.keys(bands).map(Number).sort((a, b) => b - a);
-  let result = [];
-  bandKeys.forEach(b => { result = result.concat(shuffle(bands[b])); });
-  return result;
-}
-
-function buildSafest() {
-  const target = parseFloat(document.getElementById('targetOdds').value) || 5.0;
-  const maxLegs = parseInt(document.getElementById('maxLegs').value) || 8;
-  const activeCats = [...document.querySelectorAll('.catToggle:checked')].map(el => el.value);
-
-  // Group legs by category, tiered-shuffled within each, so the builder can
-  // round-robin across market types instead of exhausting one category
-  // (usually Shots, since it tends to have the highest raw probabilities)
-  // before touching any other — and so it doesn't fixate on the same
-  // handful of matches every time when many legs are near-equally safe.
-  const byCategory = {};
-  LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category)).forEach(l => {
-    (byCategory[l.category] = byCategory[l.category] || []).push(l);
-  });
-  const categories = Object.keys(byCategory);
-  categories.forEach(c => { byCategory[c] = tieredShuffle(byCategory[c], 5); });
-  const cursor = {};
-  categories.forEach(c => cursor[c] = 0);
-
-  const chosen = [];
-  const matchCount = {};
-  let combinedOdds = 1;
-  let addedThisPass = true;
-
-  while (addedThisPass && combinedOdds < target && chosen.length < maxLegs) {
-    addedThisPass = false;
-    for (const cat of categories) {
-      if (combinedOdds >= target || chosen.length >= maxLegs) break;
-      const arr = byCategory[cat];
-      while (cursor[cat] < arr.length) {
-        const leg = arr[cursor[cat]];
-        cursor[cat]++;
-        const count = matchCount[leg.match] || 0;
-        if (count >= 2) continue;  // cap legs per match to limit correlation risk
-        chosen.push(leg);
-        combinedOdds *= 100 / leg.prob;
-        matchCount[leg.match] = count + 1;
-        addedThisPass = true;
-        break;
-      }
+async function fetchAndRender() {
+  try {
+    const resp = await fetch('live_matches.json');
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+    
+    const container = document.getElementById('container');
+    
+    if (!data.matches || data.matches.length === 0) {
+      container.innerHTML = '<div class="no-matches">No live matches at the moment.<br><br>Check back during match days.</div>';
+      updateTime();
+      return;
     }
+    
+    let html = '';
+    for (const m of data.matches) {
+      const nextGoal = m.next_goal || {};
+      const btts = m.btts || {};
+      
+      // Build team stats line — show live stats if available, fallback to season averages
+      let homeStatsLine = '', awayStatsLine = '';
+      
+      if (m.home_live_stats && m.home_live_stats.xg !== null) {
+        homeStatsLine = `${m.home_team}: ${m.home_live_stats.shots} shots, ${m.home_live_stats.xg.toFixed(2)} xG (season avg: ${m.home_season_stats.goals_for.toFixed(1)}/match)`;
+      } else if (m.home_season_stats) {
+        homeStatsLine = `${m.home_team}: season avg ${m.home_season_stats.goals_for.toFixed(1)} goals/match, ${m.home_season_stats.shots} shots/match`;
+      }
+      
+      if (m.away_live_stats && m.away_live_stats.xg !== null) {
+        awayStatsLine = `${m.away_team}: ${m.away_live_stats.shots} shots, ${m.away_live_stats.xg.toFixed(2)} xG (season avg: ${m.away_season_stats.goals_for.toFixed(1)}/match)`;
+      } else if (m.away_season_stats) {
+        awayStatsLine = `${m.away_team}: season avg ${m.away_season_stats.goals_for.toFixed(1)} goals/match, ${m.away_season_stats.shots} shots/match`;
+      }
+      
+      html += `
+        <div class="match-card">
+          <div class="match-header">
+            <div>
+              <div class="league">${m.league}</div>
+              <div class="match-title">${m.home_team} vs ${m.away_team}</div>
+            </div>
+            <div class="elapsed">${m.elapsed_minute || 0}' · ${m.status}</div>
+          </div>
+          <div class="score">${m.home_goals}-${m.away_goals}</div>
+          <div class="signal-grid">
+            <div class="signal">
+              <div class="signal-label">Next Goal</div>
+              <div class="signal-value signal-next">${m.home_team}</div>
+              <div style="font-size:16px;font-weight:bold;color:#ffeb3b">${nextGoal.home || '—'}%</div>
+            </div>
+            <div class="signal">
+              <div class="signal-label">Next Goal</div>
+              <div class="signal-value signal-next">${m.away_team}</div>
+              <div style="font-size:16px;font-weight:bold;color:#ffeb3b">${nextGoal.away || '—'}%</div>
+            </div>
+          </div>
+          <div class="signal">
+            <div class="signal-label">Both Teams to Score</div>
+            <div class="signal-value signal-btts">${btts.prob || '—'}%</div>
+            <div class="signal-status">${btts.status || '—'}</div>
+          </div>
+          <div class="team-stats">
+            ${homeStatsLine}<br>${awayStatsLine}
+          </div>
+        </div>
+      `;
+    }
+    
+    container.innerHTML = html;
+    updateTime();
+  } catch (err) {
+    document.getElementById('container').innerHTML = `<div class="error">Error loading live data: ${err.message}</div>`;
   }
-
-  const el = document.getElementById('builderResult');
-  if (!chosen.length) {
-    el.innerHTML = 'No legs available to build from.';
-    return;
-  }
-
-  const rows = chosen.map(l =>
-    `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #2a3038">
-       <span>${l.match}<br><span style="color:#7ec8ff">${l.market}</span> <span style="color:#555">· ${l.category}</span>
-       ${l.detail ? `<br><span style="color:#666;font-size:10px">${l.detail}</span>` : ''}
-       ${l.history ? `<br><span style="color:#555;font-size:10px">last games: ${l.history}</span>` : ''}</span>
-       <span style="color:#ffeb3b;font-weight:bold">${l.prob}%</span>
-     </div>`
-  ).join('');
-
-  const capNote = chosen.length >= maxLegs && combinedOdds < target
-    ? ' (hit the leg cap before reaching target — raise Max legs or lower Target odds)'
-    : (combinedOdds < target ? ' (ran out of legs before reaching target)' : '');
-
-  el.innerHTML = `
-    <div style="color:white;font-size:13px;margin-bottom:6px">
-      ${chosen.length} legs · est. combined odds ~<b>${combinedOdds.toFixed(2)}</b>${capNote}
-    </div>
-    ${rows}
-    <div style="color:#666;font-size:10px;margin-top:8px;line-height:1.4">
-      Estimate multiplies each leg's fair odds (100/probability) — real bookmaker
-      odds include their margin and legs within the same match aren't fully
-      independent, so treat this as a ranking tool, not a firm price. Shots/SoT/
-      corners lines are set automatically below each team's recent-form average
-      for a safety margin; goals/BTTS/FH-corners use the model's own probabilities.
-    </div>
-  `;
 }
-</script>
 
-<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
-  <div style="font-size:11px;color:#999">Bundesliga · 2026-09-18 18:30</div>
-  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">FC Bayern München vs 1. FC Union Berlin</div>
-  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
-    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.01</div></div>
-    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">76%</div></div>
-    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">63%</div></div>
-  </div>
-  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
-    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">74%</div></div>
-    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">14%</div></div>
-    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">11%</div></div>
-  </div>
-  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
-    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">4.4</div></div>
-    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">64%</div></div>
-    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">45%</div></div>
-  </div>
-  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
-    <div>FC Bayern München: 2.33 goals/gm · shots 21.3 · SoT 6.7 · corners 9.7 (FH 3.3) · tackles 13.3 · saves 1.3 · cards 1.0 (3gm)</div>
-    <div style="margin-top:4px">1. FC Union Berlin: 1.33 goals/gm · shots 14.7 · SoT 6.0 · corners 3.3 (FH 0.7) · tackles 15.7 · saves 4.0 · cards 2.3 (3gm)</div>
-  </div>
-  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
-    <div><span style="color:#aaa">FC Bayern München last games</span> — goals 5/0/2 · shots 21/15/28 · SoT 9/5/6 · corners 9/11/9 · cards 1/2/0</div>
-    <div style="margin-top:3px"><span style="color:#aaa">1. FC Union Berlin last games</span> — goals 3/0/1 · shots 19/5/20 · SoT 10/0/8 · corners 5/1/4 · cards 2/2/3</div>
-  </div>
-</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
-  <div style="font-size:11px;color:#999">Eredivisie · 2026-09-18 18:00</div>
-  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">FC Groningen vs PEC Zwolle</div>
-  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
-    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.97</div></div>
-    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">76%</div></div>
-    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">70%</div></div>
-  </div>
-  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
-    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">62%</div></div>
-    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">18%</div></div>
-    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">20%</div></div>
-  </div>
-  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
-    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">3.32</div></div>
-    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">42%</div></div>
-    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">24%</div></div>
-  </div>
-  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
-    <div>FC Groningen: 2.0 goals/gm · shots 14.7 · SoT 5.2 · corners 4.3 (FH 1.3) · tackles 13.0 · saves 4.3 · cards 1.0 (6gm)</div>
-    <div style="margin-top:4px">PEC Zwolle: 1.0 goals/gm · shots 10.8 · SoT 3.8 · corners 3.8 (FH 1.3) · tackles 16.8 · saves 4.7 · cards 2.0 (6gm)</div>
-  </div>
-  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
-    <div><span style="color:#aaa">FC Groningen last games</span> — goals 2/4/1/2/2/1 · shots 16/17/7/23/21/4 · SoT 5/14/4/2/4/2 · corners 5/2/4/7/8/0 · cards 0/1/1/3/1/0</div>
-    <div style="margin-top:3px"><span style="color:#aaa">PEC Zwolle last games</span> — goals 0/1/2/1/2/0 · shots 7/8/20/9/15/6 · SoT 2/3/7/2/6/3 · corners 2/3/3/6/4/5 · cards 3/2/1/2</div>
-  </div>
-</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
-  <div style="font-size:11px;color:#999">Premier League · 2026-09-18 19:00</div>
-  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Brentford vs Chelsea</div>
-  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
-    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.84</div></div>
-    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">74%</div></div>
-    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">72%</div></div>
-  </div>
-  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
-    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">49%</div></div>
-    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">21%</div></div>
-    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">31%</div></div>
-  </div>
-  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
-    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">4.91</div></div>
-    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">72%</div></div>
-    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">54%</div></div>
-  </div>
-  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
-    <div>Brentford: 1.75 goals/gm · shots 17.0 · SoT 4.2 · corners 4.5 (FH 2.2) · tackles 16.8 · saves 3.8 · cards 2.2 (4gm)</div>
-    <div style="margin-top:4px">Chelsea: 2.5 goals/gm · shots 15.0 · SoT 6.0 · corners 5.2 (FH 2.8) · tackles 14.5 · saves 4.8 · cards 2.2 (4gm)</div>
-  </div>
-  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
-    <div><span style="color:#aaa">Brentford last games</span> — goals 3/1/1/2 · shots 26/22/12/8 · SoT 8/5/2/2 · corners 7/6/4/1 · cards 1/4/3/1</div>
-    <div style="margin-top:3px"><span style="color:#aaa">Chelsea last games</span> — goals 3/4/1/2 · shots 18/17/13/12 · SoT 6/6/5/7 · corners 4/4/3/10 · cards 3/1/4/1</div>
-  </div>
-</div>
+function updateTime() {
+  document.getElementById('lastUpdate').innerText = new Date().toLocaleTimeString();
+}
+
+// Initial fetch
+fetchAndRender();
+
+// Poll every 60 seconds
+setInterval(fetchAndRender, 60000);
+</script>
 </body></html>
