@@ -136,8 +136,15 @@ def get_team_season_stats(team_id, competition_id, season_id, key):
 
 def estimate_remaining_time(match):
     """Extract elapsed minutes from the match status.
-    TheStatsAPI returns status.minute for live matches."""
+    TheStatsAPI returns status.minute for live matches, but sometimes
+    status itself is a string instead of a dict. Handle both cases."""
     status = match.get("status", {})
+    
+    # Defensive: if status is a string (description), we can't get .minute from it
+    if isinstance(status, str):
+        # Status is just a description string; assume mid-match
+        return 45
+    
     elapsed = status.get("minute", 45)
     return max(0, 90 - elapsed)  # assume 90 min total; could refine for ET
 
