@@ -372,7 +372,7 @@ def build_live_signals(key):
                 "away_goals": away_goals,
                 "elapsed_minute": estimate_remaining_time(m),  # return minute, not remaining
                 "minutes_remaining": minutes_left,
-                "status": m.get("status", {}).get("description", "Unknown"),
+                "status": m.get("status", "Unknown") if isinstance(m.get("status"), str) else m.get("status", {}).get("description", "Unknown"),
                 "kickoff": m.get("utc_date", ""),
                 "next_goal": next_goal,
                 "btts": btts,
