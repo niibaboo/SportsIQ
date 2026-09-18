@@ -151,9 +151,16 @@ def estimate_remaining_time(match):
 
 def get_live_match_stats(match_id, key):
     """Fetch live match statistics (shots, xG, etc.) from TheStatsAPI.
-    Returns a dict with 'home' and 'away' keys, each containing shots and xG."""
+    Returns a dict with 'home' and 'away' keys, each containing shots and xG.
+    Some matches may not have stats available (404) — return None in that case."""
     data = _get(f"/football/matches/{match_id}/statistics", key)
-    if not data or not data.get("data"):
+    
+    # 404 on stats endpoint — match may be too recent or stats not tracked
+    # This is not a fatal error; we'll just use season baselines instead
+    if data is None:
+        return None
+    
+    if not data.get("data"):
         return None
     
     stats = data["data"]
@@ -331,7 +338,13 @@ def build_live_signals(key):
             minutes_left = estimate_remaining_time(m)
             
             # Fetch live match statistics (shots, xG so far)
-            live_stats = get_live_match_stats(m["id"], key)
+            # Some matches may not have stats available (404) — that's OK, fall back to season baselines
+            try:
+                live_stats = get_live_match_stats(m["id"], key)
+            except Exception as e:
+                print(f"    Warning: couldn't fetch stats for {m['home_team']['name']} vs {m['away_team']['name']}: {e}")
+                live_stats = None
+            
             home_live_xg = live_stats["home"]["xg"] if live_stats else None
             away_live_xg = live_stats["away"]["xg"] if live_stats else None
             home_shots = live_stats["home"]["shots"] if live_stats else None
