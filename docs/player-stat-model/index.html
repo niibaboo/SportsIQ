@@ -185,10 +185,19 @@
       font-size: 12px;
     }
     
-    .history-label {
+    .stat-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .stat-label {
       color: var(--sub);
       font-size: 11px;
-      margin-bottom: 6px;
+      min-width: 60px;
+      font-weight: 600;
     }
     
     .dots {
@@ -394,14 +403,14 @@
               
               ${gameLog && Object.keys(gameLog).length > 0 ? `
                 <div class="history">
-                  <div class="history-label">Last 7 games</div>
-                  ${gameLog.shots ? `<div style="margin-bottom: 8px;"><small style="color: var(--sub);">Shots:</small> ${gameLog.shots.map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
-                  ${gameLog.shots_on_target ? `<div style="margin-bottom: 8px;"><small style="color: var(--sub);">SoT:</small> ${gameLog.shots_on_target.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
-                  ${gameLog.goals ? `<div style="margin-bottom: 8px;"><small style="color: var(--sub);">Goals:</small> ${gameLog.goals.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
-                  ${gameLog.assists ? `<div style="margin-bottom: 8px;"><small style="color: var(--sub);">Assists:</small> ${gameLog.assists.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
-                  ${gameLog.cards ? `<div style="margin-bottom: 8px;"><small style="color: var(--sub);">Cards:</small> ${gameLog.cards.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
-                  ${gameLog.tackles ? `<div style="margin-bottom: 8px;"><small style="color: var(--sub);">Tackles:</small> ${gameLog.tackles.map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
-                  ${gameLog.fouls ? `<div><small style="color: var(--sub);">Fouls:</small> ${gameLog.fouls.map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  <div style="margin-bottom: 12px; font-weight: 600; color: var(--text);">Last 7 games</div>
+                  ${gameLog.shots ? `<div class="stat-row"><div class="stat-label">Shots:</div> ${gameLog.shots.map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.shots_on_target ? `<div class="stat-row"><div class="stat-label">SoT:</div> ${gameLog.shots_on_target.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.goals ? `<div class="stat-row"><div class="stat-label">Goals:</div> ${gameLog.goals.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.assists ? `<div class="stat-row"><div class="stat-label">Assists:</div> ${gameLog.assists.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.cards ? `<div class="stat-row"><div class="stat-label">Cards:</div> ${gameLog.cards.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.tackles ? `<div class="stat-row"><div class="stat-label">Tackles:</div> ${gameLog.tackles.map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.fouls ? `<div class="stat-row"><div class="stat-label">Fouls:</div> ${gameLog.fouls.map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
                 </div>
               ` : ''}
             </div>
