@@ -258,6 +258,108 @@
       padding-top: 20px;
       border-top: 1px solid var(--border);
     }
+    
+    .prop-checkbox {
+      margin-right: 8px;
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+    }
+    
+    .prop-with-checkbox {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    
+    .betbuilder-panel {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--panel);
+      border-top: 2px solid var(--accent);
+      padding: 16px;
+      max-height: 40vh;
+      overflow-y: auto;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+      z-index: 100;
+    }
+    
+    .betbuilder-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .betbuilder-title {
+      font-weight: 700;
+      font-size: 16px;
+    }
+    
+    .betbuilder-close {
+      background: none;
+      border: none;
+      color: var(--sub);
+      cursor: pointer;
+      font-size: 20px;
+    }
+    
+    .betbuilder-legs {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    
+    .betbuilder-leg {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--panel2);
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+    }
+    
+    .leg-remove {
+      background: none;
+      border: none;
+      color: var(--red);
+      cursor: pointer;
+      font-size: 16px;
+      margin-left: 8px;
+    }
+    
+    .betbuilder-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    
+    .summary-stat {
+      text-align: center;
+    }
+    
+    .summary-label {
+      color: var(--sub);
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+    
+    .summary-value {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--accent);
+    }
   </style>
 </head>
 <body>
@@ -284,6 +386,15 @@
     Data updated daily • Last update: <span id="timestamp">—</span>
   </div>
 
+  <div class="betbuilder-panel" id="betbuilder" style="display: none;">
+    <div class="betbuilder-header">
+      <div class="betbuilder-title">🎯 Betbuilder</div>
+      <button class="betbuilder-close" onclick="closeBetbuilder()">✕</button>
+    </div>
+    <div class="betbuilder-legs" id="betbuilderLegs"></div>
+    <div class="betbuilder-summary" id="betbuilderSummary"></div>
+  </div>
+
   <script>
     const PROP_CATEGORIES = {
       shots: ['shots_over_1.5', 'shots_over_2.5'],
@@ -295,6 +406,76 @@
     
     let allPlayers = [];
     let currentFilter = 'all';
+    let selectedLegs = [];
+    
+    function toggleLeg(playerName, prop, prob) {
+      const legId = `${playerName}|${prop}`;
+      const index = selectedLegs.findIndex(l => l.id === legId);
+      
+      if (index > -1) {
+        selectedLegs.splice(index, 1);
+      } else {
+        selectedLegs.push({ id: legId, playerName, prop, prob });
+      }
+      
+      updateBetbuilder();
+      
+      const checkbox = document.querySelector(`input[data-leg="${legId}"]`);
+      if (checkbox) checkbox.checked = index === -1;
+    }
+    
+    function updateBetbuilder() {
+      const panel = document.getElementById('betbuilder');
+      const legsDiv = document.getElementById('betbuilderLegs');
+      const summaryDiv = document.getElementById('betbuilderSummary');
+      
+      if (selectedLegs.length === 0) {
+        panel.style.display = 'none';
+        return;
+      }
+      
+      panel.style.display = 'block';
+      document.body.style.paddingBottom = '280px';
+      
+      legsDiv.innerHTML = selectedLegs.map(leg => `
+        <div class="betbuilder-leg">
+          <div>
+            <strong>${leg.playerName}</strong><br>
+            <small>${leg.prop.replace(/_/g, ' ')}</small>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="color: var(--green); font-weight: 700;">${(leg.prob * 100).toFixed(0)}%</span>
+            <button class="leg-remove" onclick="toggleLeg('${leg.playerName}', '${leg.prop}', ${leg.prob})">×</button>
+          </div>
+        </div>
+      `).join('');
+      
+      const combinedProb = selectedLegs.reduce((acc, leg) => acc * leg.prob, 1);
+      const decimalOdds = 1 / combinedProb;
+      const potentialPayout = (combinedProb * 100).toFixed(1);
+      
+      summaryDiv.innerHTML = `
+        <div class="summary-stat">
+          <div class="summary-label">Legs</div>
+          <div class="summary-value">${selectedLegs.length}</div>
+        </div>
+        <div class="summary-stat">
+          <div class="summary-label">Odds</div>
+          <div class="summary-value">${decimalOdds.toFixed(2)}</div>
+        </div>
+        <div class="summary-stat">
+          <div class="summary-label">Probability</div>
+          <div class="summary-value">${potentialPayout}%</div>
+        </div>
+      `;
+    }
+    
+    function closeBetbuilder() {
+      selectedLegs = [];
+      document.getElementById('betbuilder').style.display = 'none';
+      document.body.style.paddingBottom = '0';
+      document.querySelectorAll('.prop-checkbox').forEach(cb => cb.checked = false);
+    }
     
     async function loadData() {
       try {
@@ -392,9 +573,13 @@
                 .map(([prop, prob]) => {
                   const hr = hitRates[prop];
                   const probClass = getProbClass(prob);
+                  const legId = `${player.player_name}|${prop}`;
                   return `
                     <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--border);">
-                      <span style="font-size: 13px; color: var(--sub);">${prop.replace(/_/g, ' ')}</span>
+                      <div style="display: flex; align-items: center; flex: 1;">
+                        <input type="checkbox" class="prop-checkbox" data-leg="${legId}" onclick="toggleLeg('${player.player_name}', '${prop}', ${prob})" />
+                        <span style="font-size: 13px; color: var(--sub);">${prop.replace(/_/g, ' ')}</span>
+                      </div>
                       <span class="prob ${probClass}">${(prob * 100).toFixed(0)}%</span>
                       ${hr ? `<span style="font-size: 11px; color: var(--sub);">${hr.hits}/${hr.total}</span>` : ''}
                     </div>
