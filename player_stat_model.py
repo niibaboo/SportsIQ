@@ -736,28 +736,14 @@ def run_competition_scan(competition_id: str, days_ahead: int = 7) -> list[dict]
     return all_reports
 
 
-# Leagues the automated "today's fixtures" run scans. Expanded here to
-# the full English pyramid + domestic cups per an explicit choice to
-# accept the quota cost — flagging it plainly since it's real:
-# player-level scanning is far more expensive per team than Match IQ's
-# team-level scanning (each player costs a stats call plus up to
-# ROLLING_MATCHES match-lookups for rolling form, so one full squad can
-# be 100+ calls). Six leagues on a day where several play at once could
-# mean many teams' full squads scanned in one run. Watch the first few
-# runs' logs closely for 429s, and trim this list back down if quota
-# turns out too tight — same trial-and-adjust approach as Match IQ's
-# own league list. Names below are verified against TheStatsAPI at
-# runtime by find_competition()'s exact-match logic, not guessed blindly
-# — but still worth checking each run's "Scanning today's fixtures — X"
-# lines actually say what you expect, the same way "Premier League" once
-# silently resolved to "Canadian Premier League" until that got fixed.
+# Leagues the automated "today's fixtures" run scans.
+# OPTIMIZED: Reduced to Premier League only to stay within TheStatsAPI rate limits.
+# Player-level scanning is expensive (each player = 1 stats call + up to ROLLING_MATCHES
+# match lookups). Premier League alone = ~20 teams × ~25 players = ~500 API calls per run.
+# Rotate through other leagues manually or expand the list once quota is confirmed.
+# To add more leagues: Championship, League One, League Two, FA Cup, EFL Cup.
 DAILY_SCAN_LEAGUES = [
     "Premier League",
-    "Championship",
-    "League One",
-    "League Two",
-    "FA Cup",
-    "EFL Cup",
 ]
 
 
