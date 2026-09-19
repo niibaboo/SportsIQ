@@ -1,42 +1,414 @@
-name: Player Stat Model
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player Stat Model — Football Props</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #121820;
+      --panel2: #161d27;
+      --border: #233040;
+      --text: #e8edf2;
+      --sub: #8b98a8;
+      --accent: #facc15;
+      --green: #10b981;
+      --red: #ef4444;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    .header {
+      margin-bottom: 30px;
+    }
+    
+    .back-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 13px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    
+    h1 {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+    
+    .subtitle {
+      color: var(--sub);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+    
+    .filters {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    
+    .filter-btn {
+      padding: 8px 16px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      color: var(--sub);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    
+    .filter-btn.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+    
+    .filter-btn:hover {
+      border-color: var(--accent);
+    }
+    
+    .content {
+      display: grid;
+      gap: 16px;
+    }
+    
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      transition: all 0.2s;
+    }
+    
+    .card:hover {
+      background: var(--panel2);
+      border-color: var(--accent);
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    
+    .player-info {
+      flex: 1;
+    }
+    
+    .player-name {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+    
+    .player-detail {
+      font-size: 12px;
+      color: var(--sub);
+    }
+    
+    .market {
+      font-weight: 600;
+      color: var(--accent);
+      margin-right: 12px;
+    }
+    
+    .prob {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    
+    .prob.high {
+      color: var(--green);
+    }
+    
+    .prob.medium {
+      color: var(--accent);
+    }
+    
+    .prob.low {
+      color: var(--red);
+    }
+    
+    .card-body {
+      display: grid;
+      gap: 12px;
+    }
+    
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+    }
+    
+    .metric {
+      background: var(--panel2);
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+    }
+    
+    .metric-label {
+      color: var(--sub);
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+    
+    .metric-value {
+      font-weight: 700;
+      font-size: 14px;
+    }
+    
+    .history {
+      background: var(--panel2);
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+    }
+    
+    .history-label {
+      color: var(--sub);
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
+    
+    .dots {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    
+    .dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 11px;
+    }
+    
+    .dot.over {
+      background: var(--green);
+      color: #000;
+    }
+    
+    .dot.under {
+      background: var(--red);
+      color: #fff;
+    }
+    
+    .raw-data {
+      color: var(--sub);
+      font-size: 11px;
+      margin-top: 8px;
+      font-family: monospace;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--sub);
+    }
+    
+    .error {
+      background: var(--panel);
+      border: 1px solid var(--red);
+      padding: 16px;
+      border-radius: 12px;
+      color: var(--red);
+      margin: 20px 0;
+    }
+    
+    .footer {
+      text-align: center;
+      color: var(--sub);
+      font-size: 11px;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a href="../" class="back-link">← Back to SportsIQ</a>
+    <h1>📊 Player Stat Model</h1>
+    <div class="subtitle">Football player props — shots, cards, goals+assists, tackles, fouls</div>
+  </div>
+  
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All players</button>
+    <button class="filter-btn" data-filter="shots">Shots</button>
+    <button class="filter-btn" data-filter="cards">Cards</button>
+    <button class="filter-btn" data-filter="goals_assists">Goals+Assists</button>
+    <button class="filter-btn" data-filter="tackles">Tackles</button>
+    <button class="filter-btn" data-filter="fouls">Fouls</button>
+  </div>
+  
+  <div class="content" id="content">
+    <div class="loading">Loading player data...</div>
+  </div>
+  
+  <div class="footer">
+    Data updated daily • Last update: <span id="timestamp">—</span>
+  </div>
 
-on:
-  schedule:
-    - cron: '0 12 * * *'  # 12:00 PM UTC daily
-  workflow_dispatch: {}
-
-permissions:
-  contents: write
-
-jobs:
-  generate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - name: Install dependencies
-        run: pip install requests
-      - name: Generate Player Stat Model
-        env:
-          THESTATSAPI_KEY: ${{ secrets.THESTATSAPI_KEY }}
-        run: python3 player_stat_model.py --auto
-      - name: Copy data to docs
-        run: |
-          mkdir -p docs/player-stat-model
-          if [ -f player_stats_data.json ]; then
-            cp player_stats_data.json docs/player-stat-model/player_stats_data.json
-            echo "✓ Copied player_stats_data.json"
-          fi
-          if [ -f player_stat_model.html ]; then
-            cp player_stat_model.html docs/player-stat-model/index.html
-            echo "✓ Copied index.html"
-          fi
-      - name: Commit and push
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/player-stat-model/
-          git commit -m "Player Stat Model update $(date -u +'%Y-%m-%d %H:%M UTC')" || true
-          git push
+  <script>
+    const PROP_CATEGORIES = {
+      shots: ['shots_over_1.5', 'shots_over_2.5'],
+      cards: ['to_be_carded'],
+      goals_assists: ['goal_or_assist'],
+      tackles: ['tackles_over_1.5', 'tackles_over_2.5'],
+      fouls: ['fouls_over_1.5', 'fouls_over_2.5'],
+    };
+    
+    let allPlayers = [];
+    let currentFilter = 'all';
+    
+    async function loadData() {
+      try {
+        const response = await fetch('player_stats_data.json?' + Date.now());
+        if (!response.ok) throw new Error('Failed to load data');
+        const data = await response.json();
+        
+        // Update timestamp
+        if (data.screener?.generated_at) {
+          document.getElementById('timestamp').textContent = data.screener.generated_at;
+        }
+        
+        allPlayers = Object.values(data.players || {});
+        renderPlayers();
+        setupFilters();
+      } catch (err) {
+        document.getElementById('content').innerHTML = `
+          <div class="error">
+            <strong>Error loading data:</strong> ${err.message}<br>
+            Make sure player_stats_data.json exists and is properly formatted.
+          </div>
+        `;
+      }
+    }
+    
+    function setupFilters() {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentFilter = btn.dataset.filter;
+          renderPlayers();
+        });
+      });
+    }
+    
+    function shouldShowPlayer(player, filter) {
+      if (filter === 'all') return true;
+      
+      const categories = PROP_CATEGORIES[filter] || [];
+      return categories.some(cat => player.props?.[cat] > 0);
+    }
+    
+    function getProbClass(prob) {
+      if (prob >= 0.65) return 'high';
+      if (prob >= 0.55) return 'medium';
+      return 'low';
+    }
+    
+    function formatHistory(gameLog, line) {
+      if (!gameLog || !gameLog[0]) return '—';
+      return gameLog.map(v => v > line ? `<span class="dot over">${v}</span>` : `<span class="dot under">${v}</span>`).join('');
+    }
+    
+    function renderPlayers() {
+      const filtered = allPlayers.filter(p => shouldShowPlayer(p, currentFilter));
+      
+      if (filtered.length === 0) {
+        document.getElementById('content').innerHTML = '<div class="loading">No players found for this filter.</div>';
+        return;
+      }
+      
+      // Sort by highest probability
+      filtered.sort((a, b) => {
+        const aMax = Math.max(...Object.values(a.props || {}));
+        const bMax = Math.max(...Object.values(b.props || {}));
+        return bMax - aMax;
+      });
+      
+      const html = filtered.map(player => {
+        const gameLog = player.game_log || {};
+        const hitRates = player.hit_rates || {};
+        
+        return `
+          <div class="card">
+            <div class="card-header">
+              <div class="player-info">
+                <div class="player-name">${player.player_name}</div>
+                <div class="player-detail">${player.team_name} • ${player.league_name}</div>
+              </div>
+              <div>
+                <span class="market">${player.rolling_matches_used} games used</span>
+              </div>
+            </div>
+            
+            <div class="card-body">
+              ${player.low_data ? '<div class="error">⚠ Low data: Probabilities may be unreliable</div>' : ''}
+              
+              ${Object.entries(player.props || {})
+                .filter(([k, v]) => v > 0)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3)
+                .map(([prop, prob]) => {
+                  const hr = hitRates[prop];
+                  const probClass = getProbClass(prob);
+                  return `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--border);">
+                      <span style="font-size: 13px; color: var(--sub);">${prop.replace(/_/g, ' ')}</span>
+                      <span class="prob ${probClass}">${(prob * 100).toFixed(0)}%</span>
+                      ${hr ? `<span style="font-size: 11px; color: var(--sub);">${hr.hits}/${hr.total}</span>` : ''}
+                    </div>
+                  `;
+                }).join('')}
+              
+              ${gameLog && Object.keys(gameLog).length > 0 ? `
+                <div class="history">
+                  <div class="history-label">Last 7 games</div>
+                  <div class="dots">
+                    ${gameLog.shots ? `<span>${gameLog.shots.map((v, i) => `<span class="dot ${v > 2 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</span>` : ''}
+                  </div>
+                  <div class="raw-data">${player.rolling_form_summary || '—'}</div>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      document.getElementById('content').innerHTML = html;
+    }
+    
+    // Load data on page load
+    loadData();
+  </script>
+</body>
+</html>
