@@ -311,7 +311,7 @@
                     </div>
                     <div class="stat-box">
                       <div class="stat-label">Possession</div>
-                      <div class="stat-value">${homePossession}${homePossession !== '—' ? '%' : ''}</div>
+                      <div class="stat-value">${homePossession === '—' ? homePossession : homePossession + '%'}</div>
                     </div>
                   </div>
                 </div>
@@ -334,7 +334,7 @@
                     </div>
                     <div class="stat-box">
                       <div class="stat-label">Possession</div>
-                      <div class="stat-value">${awayPossession}${awayPossession !== '—' ? '%' : ''}</div>
+                      <div class="stat-value">${awayPossession === '—' ? awayPossession : awayPossession + '%'}</div>
                     </div>
                   </div>
                 </div>
