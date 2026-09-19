@@ -289,8 +289,10 @@
     
     async function loadData() {
       try {
-        const response = await fetch('player_stats_data.json?' + Date.now());
-        if (!response.ok) throw new Error('Failed to load data');
+        // Use GitHub raw URL directly for reliability
+        const url = 'https://raw.githubusercontent.com/niibaboo/SportsIQ/main/docs/player-stat-model/player_stats_data.json?' + Date.now();
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to load data (' + response.status + ')');
         const data = await response.json();
         
         // Update timestamp
