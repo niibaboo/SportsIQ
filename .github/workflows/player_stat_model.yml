@@ -1,8 +1,6 @@
 name: Player Stat Model
 
 on:
-  schedule:
-    - cron: '0 12 * * *'  # 12:00 PM UTC daily
   workflow_dispatch: {}
 
 permissions:
