@@ -135,64 +135,73 @@ def get_team_season_stats(team_id, competition_id, season_id, key):
 
 
 def estimate_remaining_time(match):
-    """Extract elapsed minutes from the match status.
-    TheStatsAPI returns status.minute for live matches, but sometimes
-    status itself is a string instead of a dict. Handle both cases."""
-    status = match.get("status", {})
-    
-    # Defensive: if status is a string (description), we can't get .minute from it
-    if isinstance(status, str):
-        # Status is just a description string; can't determine minute
-        return None
-    
-    # Extract actual elapsed minute
-    elapsed = status.get("minute")
+    """Extract elapsed minutes from the match object.
+    TheStatsAPI provides 'elapsed_minutes' field directly on the match."""
+    # Get elapsed minutes directly from match (not from status)
+    elapsed = match.get("elapsed_minutes")
     if elapsed is None:
         return None
     return elapsed
 
 
 def get_live_match_stats(match_id, key):
-    """Fetch live match statistics (shots, xG, possession, etc.) from TheStatsAPI.
-    Returns a dict with 'home' and 'away' keys, each containing multiple stats.
-    Some matches may not have stats available (404) — return None in that case."""
+    """Fetch live match statistics from TheStatsAPI's live-stats endpoint.
+    Response structure:
+    {
+      "data": {
+        "stats": {
+          "ball_possession": {"all": {"home": 48, "away": 52}},
+          "total_shots": {"all": {"home": 7, "away": 9}},
+          "corner_kicks": {"all": {"home": 4, "away": 5}}
+        }
+      }
+    }
+    """
     data = _get(f"/football/matches/{match_id}/live-stats", key)
     
-    # 404 on stats endpoint — match may be too recent or stats not tracked
-    # This is not a fatal error; we'll just use season baselines instead
     if data is None:
-        print(f"    [DEBUG] /live-stats returned None for match {match_id}")
         return None
     
-    if not data.get("data"):
-        print(f"    [DEBUG] /live-stats returned no data for match {match_id}, full response: {data}")
+    # Navigate to the stats object
+    if not data.get("data") or not data["data"].get("stats"):
         return None
     
-    stats = data["data"]
-    print(f"    [DEBUG] /live-stats raw data: {stats}")
+    stats = data["data"]["stats"]
     
-    # TheStatsAPI returns statistics with home/away keys
-    home_stats = stats.get("home", {})
-    away_stats = stats.get("away", {})
+    # Extract possession
+    possession = stats.get("ball_possession", {}).get("all", {})
+    home_possession = possession.get("home")
+    away_possession = possession.get("away")
+    
+    # Extract total shots
+    shots = stats.get("total_shots", {}).get("all", {})
+    home_shots = shots.get("home")
+    away_shots = shots.get("away")
+    
+    # Extract shots on target (if available)
+    shots_on_target = stats.get("shots_on_target", {}).get("all", {})
+    home_sot = shots_on_target.get("home")
+    away_sot = shots_on_target.get("away")
+    
+    # Extract corner kicks
+    corners = stats.get("corner_kicks", {}).get("all", {})
+    home_corners = corners.get("home")
+    away_corners = corners.get("away")
     
     return {
         "home": {
-            "shots": home_stats.get("shots", 0),
-            "shots_on_target": home_stats.get("shots_on_target", 0),
-            "xg": home_stats.get("expected_goals", 0),
-            "possession": home_stats.get("possession", None),
-            "dangerous_attacks": home_stats.get("dangerous_attacks", 0),
-            "passes": home_stats.get("passes", 0),
-            "passes_completed": home_stats.get("passes_completed", 0),
+            "shots": home_shots,
+            "shots_on_target": home_sot,
+            "xg": None,  # Not available in this endpoint
+            "possession": home_possession,
+            "corners": home_corners,
         },
         "away": {
-            "shots": away_stats.get("shots", 0),
-            "shots_on_target": away_stats.get("shots_on_target", 0),
-            "xg": away_stats.get("expected_goals", 0),
-            "possession": away_stats.get("possession", None),
-            "dangerous_attacks": away_stats.get("dangerous_attacks", 0),
-            "passes": away_stats.get("passes", 0),
-            "passes_completed": away_stats.get("passes_completed", 0),
+            "shots": away_shots,
+            "shots_on_target": away_sot,
+            "xg": None,  # Not available in this endpoint
+            "possession": away_possession,
+            "corners": away_corners,
         }
     }
 
@@ -331,17 +340,7 @@ def build_live_signals(key):
         matches = get_live_matches(comp_id, key)
         print(f"  {len(matches)} live match(es)")
         
-        for i, m in enumerate(matches):
-            # DEBUG: Print the first match's structure to see what fields are available
-            if i == 0:
-                print(f"    [DEBUG] First match top-level keys: {list(m.keys())}")
-                print(f"    [DEBUG] Full first match: {m}")
-                status = m.get('status')
-                print(f"    [DEBUG] status value: {status}")
-                print(f"    [DEBUG] status type: {type(status)}")
-                if isinstance(status, dict):
-                    print(f"    [DEBUG] status keys: {list(status.keys())}")
-            
+        for m in matches:
             home_id = m["home_team"]["id"]
             away_id = m["away_team"]["id"]
             
@@ -412,16 +411,16 @@ def build_live_signals(key):
                 "home_live_stats": {  # live stats this match
                     "shots": home_shots,
                     "shots_on_target": live_stats["home"]["shots_on_target"] if live_stats else None,
-                    "xg": home_live_xg,
+                    "xg": live_stats["home"]["xg"] if live_stats else None,
                     "possession": live_stats["home"]["possession"] if live_stats else None,
-                    "dangerous_attacks": live_stats["home"]["dangerous_attacks"] if live_stats else None,
+                    "corners": live_stats["home"]["corners"] if live_stats else None,
                 },
                 "away_live_stats": {  # live stats this match
                     "shots": away_shots,
                     "shots_on_target": live_stats["away"]["shots_on_target"] if live_stats else None,
-                    "xg": away_live_xg,
+                    "xg": live_stats["away"]["xg"] if live_stats else None,
                     "possession": live_stats["away"]["possession"] if live_stats else None,
-                    "dangerous_attacks": live_stats["away"]["dangerous_attacks"] if live_stats else None,
+                    "corners": live_stats["away"]["corners"] if live_stats else None,
                 },
             })
     
