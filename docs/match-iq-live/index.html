@@ -275,7 +275,7 @@
           const homeSoT = homeLive.shots_on_target !== null ? homeLive.shots_on_target : '—';
           const awaySoT = awayLive.shots_on_target !== null ? awayLive.shots_on_target : '—';
           
-          const hasLiveData = (homeLive.xg !== null) || (awayLive.xg !== null);
+          const hasLiveData = (homeLive.possession !== null) || (awayLive.possession !== null);
           
           html += `
             <div class="match-card">
