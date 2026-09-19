@@ -43,6 +43,16 @@ MIN_OVER25_PCT = 65  # only keep fixtures with Over 2.5 probability above this..
 MIN_BTTS_PCT = 55    # ...AND BTTS probability above this (both required — Over 2.5
                       # is the primary filter, BTTS lowered to a softer bar so it
                       # doesn't knock out otherwise-good Over 2.5 picks)
+                      # This pair only gates the MAIN Match IQ page — see
+                      # build_all_predictions()/apply_main_filter() below.
+
+# Daily Signals scanners — each applied independently to the FULL unfiltered
+# fixture list (not the main-page-filtered one above), so e.g. a low-scoring
+# but corner-heavy match can still qualify for the corners scanner even
+# though it'd never pass the main page's Over 2.5 + BTTS filter.
+SCANNER_OVER25_MIN = 70
+SCANNER_BTTS_MIN = 70
+SCANNER_CORNERS_MIN = 60
 
 # Start small — uncomment more once you've confirmed the API-call budget
 # works for your trial quota. Names must match exactly what TheStatsAPI's
@@ -348,6 +358,42 @@ def predict_fh_corners(h_form, a_form):
     }
 
 
+_full_corners_samples = []
+DEFAULT_FULL_CORNERS_AVG = 5.0  # sane per-team starting point (~10 total/match) before any real samples exist
+
+
+def _lg_full_corners_avg():
+    if not _full_corners_samples:
+        return DEFAULT_FULL_CORNERS_AVG
+    return sum(_full_corners_samples) / len(_full_corners_samples)
+
+
+def _record_full_corners_sample(form):
+    if form.get("avg_corners") is not None:
+        _full_corners_samples.append(form["avg_corners"])
+
+
+def predict_full_corners(h_form, a_form):
+    """Full-match total corners Over 10.5 — same running-average shrinkage
+    approach as predict_fh_corners (no corners-conceded data to build a
+    proper opponent adjustment from), just using each team's full-match
+    corners_list instead of the first-half-only one."""
+    _record_full_corners_sample(h_form)
+    _record_full_corners_sample(a_form)
+    lg_avg = _lg_full_corners_avg()
+
+    h_c = shrink(h_form.get("avg_corners"), h_form["n_games"], lg_avg)
+    a_c = shrink(a_form.get("avg_corners"), a_form["n_games"], lg_avg)
+    exp_corners_total = round(h_c + a_c, 2)
+
+    p_over105 = 1 - poisson_cdf(10, exp_corners_total)
+
+    return {
+        "exp_corners": exp_corners_total,
+        "corners_over105": round(p_over105 * 100),
+    }
+
+
 def predict_team_props(form):
     """Poisson-priced shots / shots-on-target / corners / cards
     probabilities for one team.
@@ -453,7 +499,7 @@ def build_legs(predictions):
     return legs
 
 
-def build_predictions(key):
+def build_all_predictions(key):
     all_predictions = []
     for name in LEAGUE_SEARCH_NAMES:
         print(f"Looking up competition: {name}")
@@ -488,29 +534,38 @@ def build_predictions(key):
 
             proj = predict_goals(h_form, a_form, lg_scored, lg_conceded)
             fh_corners_proj = predict_fh_corners(h_form, a_form)
+            full_corners_proj = predict_full_corners(h_form, a_form)
             result_1x2 = predict_1x2(proj["exp_home"], proj["exp_away"])
             merged = {
                 "league": comp["name"], "date": m["utc_date"], "date_key": m["utc_date"][:10],
                 "home_team": m["home_team"]["name"], "away_team": m["away_team"]["name"],
                 "home_form": h_form, "away_form": a_form,
                 "home_props": predict_team_props(h_form), "away_props": predict_team_props(a_form),
-                **proj, **fh_corners_proj, **result_1x2,
+                **proj, **fh_corners_proj, **full_corners_proj, **result_1x2,
             }
             all_predictions.append(merged)
-
-    before_filter = len(all_predictions)
-    all_predictions = [
-        p for p in all_predictions
-        if p["over25"] > MIN_OVER25_PCT and p["btts"] > MIN_BTTS_PCT
-    ]
-    print(f"\nFiltered to Over 2.5 > {MIN_OVER25_PCT}% AND BTTS > {MIN_BTTS_PCT}%: "
-          f"{len(all_predictions)} of {before_filter} fixtures kept")
 
     # Sort by date first (so grouping into date-pages is clean), then by
     # expected goals within each date (so the most interesting fixtures
     # still show first within a given day's page).
     all_predictions.sort(key=lambda p: (p["date_key"], -p["exp_total"]))
     return all_predictions
+
+
+def apply_main_filter(all_predictions):
+    """The MAIN Match IQ page's filter — unchanged from before. Kept as a
+    separate step (rather than baked into build_all_predictions) so the
+    Daily Signals scanners below can each apply their own independent
+    threshold to the full, unfiltered fixture list instead of inheriting
+    this one."""
+    before = len(all_predictions)
+    filtered = [
+        p for p in all_predictions
+        if p["over25"] > MIN_OVER25_PCT and p["btts"] > MIN_BTTS_PCT
+    ]
+    print(f"\nMain page filter — Over 2.5 > {MIN_OVER25_PCT}% AND BTTS > {MIN_BTTS_PCT}%: "
+          f"{len(filtered)} of {before} fixtures kept")
+    return filtered
 
 
 def group_by_date(predictions):
@@ -688,6 +743,7 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
 <h2 style="text-align:center">⚽ MATCH IQ — Full Stats</h2>
 <p style="text-align:center;color:#888;font-size:11px">Powered by TheStatsAPI · {generated}</p>
+<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a></p>
 {date_bar}
 <p style="text-align:center;margin-bottom:16px"><a href="match_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
 {builder}
@@ -821,6 +877,141 @@ def write_csv(predictions, path):
             ])
 
 
+SCANNER_CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;padding:14px;margin:10px 0;border:1px solid #2a3038;display:flex;gap:12px;align-items:flex-start">
+  <div style="min-width:72px;text-align:center;background:#0f1318;border:1px solid #2a3038;border-radius:10px;padding:8px 6px;flex-shrink:0">
+    <div style="font-size:10px;color:#888">{badge_label}</div>
+    <div style="font-size:20px;font-weight:bold;color:#a0e8a0">{badge_value}%</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:11px;color:#999">{league} · {time}</div>
+    <div style="font-size:15px;font-weight:bold;margin:2px 0 6px">{home_team} vs {away_team}</div>
+    <div style="font-size:11px;color:#aaa">O2.5: <span style="color:#a0e8a0">{over25}%</span> &nbsp;|&nbsp; BTTS: <span style="color:#a0e8a0">{btts}%</span> &nbsp;|&nbsp; Corners 10.5+: <span style="color:#a0e8a0">{corners_disp}%</span></div>
+  </div>
+</div>"""
+
+SCANNER_HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>{page_title} — Match IQ</title></head>
+<body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
+<p style="text-align:center;margin-bottom:6px"><a href="../../match_iq_index.html" style="color:#7ec8ff;text-decoration:none;font-size:12px">← Match IQ</a></p>
+<h2 style="text-align:center;margin-bottom:2px">{icon} {page_title}</h2>
+<p style="text-align:center;color:#888;font-size:11px;margin-top:0">{subtitle} · {generated}</p>
+<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a></p>
+{date_bar}
+<p style="text-align:center;margin-bottom:12px"><a href="{csv_name}" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Export CSV</a></p>
+<p style="text-align:center;color:#888;font-size:12px;margin-bottom:14px">{qualified_count} matches qualified</p>
+{cards}
+</body></html>"""
+
+
+def _scanner_badge_value(p, market_key):
+    return {"over25": p["over25"], "btts": p["btts"], "corners_over105": p["corners_over105"]}[market_key]
+
+
+def render_scanner_cards(predictions, market_key, badge_label):
+    if not predictions:
+        return '<p style="text-align:center;color:#888">No fixtures on this date qualified.</p>'
+    cards = ""
+    for p in predictions:
+        cards += SCANNER_CARD_TEMPLATE.format(
+            badge_label=badge_label, badge_value=_scanner_badge_value(p, market_key),
+            league=p["league"], time=p["date"][:16].replace("T", " "),
+            home_team=p["home_team"], away_team=p["away_team"],
+            over25=p["over25"], btts=p["btts"], corners_disp=p["corners_over105"],
+        )
+    return cards
+
+
+def make_scanner_html(predictions, page_title, icon, subtitle, market_key, badge_label,
+                       csv_name, date_label=None, prev_href=None, next_href=None):
+    prev_link = f'<a href="{prev_href}" style="color:#7ec8ff;text-decoration:none;font-size:20px">◀</a>' if prev_href else '<span style="color:#444;font-size:20px">◀</span>'
+    next_link = f'<a href="{next_href}" style="color:#7ec8ff;text-decoration:none;font-size:20px">▶</a>' if next_href else '<span style="color:#444;font-size:20px">▶</span>'
+    date_bar = f"""
+<div style="display:flex;align-items:center;justify-content:center;gap:20px;margin:10px 0 4px">
+  {prev_link}
+  <span style="font-size:15px;font-weight:bold">{date_label or ''}</span>
+  {next_link}
+</div>""" if date_label else ""
+
+    return SCANNER_HTML_TEMPLATE.format(
+        page_title=page_title, icon=icon, subtitle=subtitle,
+        generated=datetime.now().strftime("%d %b %H:%M"),
+        date_bar=date_bar, csv_name=csv_name,
+        qualified_count=len(predictions),
+        cards=render_scanner_cards(predictions, market_key, badge_label),
+    )
+
+
+def write_scanner_csv(predictions, path):
+    with open(path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Date", "League", "HomeTeam", "AwayTeam", "Over25", "BTTS",
+                          "ExpCorners", "CornersOver105"])
+        for p in predictions:
+            writer.writerow([p["date"], p["league"], p["home_team"], p["away_team"],
+                              p["over25"], p["btts"], p["exp_corners"], p["corners_over105"]])
+
+
+SCANNER_CONFIGS = [
+    {
+        "dir": "over25", "market_key": "over25", "min": SCANNER_OVER25_MIN,
+        "title": "Over 2.5 Goals Daily Scanner", "icon": "📊", "badge_label": "O2.5",
+        "subtitle_fmt": f"All matches with ≥{SCANNER_OVER25_MIN}% Over 2.5 probability",
+    },
+    {
+        "dir": "btts", "market_key": "btts", "min": SCANNER_BTTS_MIN,
+        "title": "BTTS Daily Scanner", "icon": "⚽", "badge_label": "BTTS",
+        "subtitle_fmt": f"All matches with ≥{SCANNER_BTTS_MIN}% BTTS probability",
+    },
+    {
+        "dir": "corners", "market_key": "corners_over105", "min": SCANNER_CORNERS_MIN,
+        "title": "Over 10.5 Corners Daily Scanner", "icon": "🚩", "badge_label": "O10.5",
+        "subtitle_fmt": f"All matches with ≥{SCANNER_CORNERS_MIN}% Over 10.5 corners probability",
+    },
+]
+
+
+def build_daily_signals_scanners(all_predictions, base_dir="docs/match-iq/scanners"):
+    """Generates the three Daily Signals scanner pages (Over 2.5, BTTS,
+    Over 10.5 Corners), each filtered independently from the FULL
+    unfiltered fixture list — not the main page's filtered set — with
+    its own date-paginated pages and CSV export, mirroring the main
+    Match IQ page's existing date-navigation pattern."""
+    for cfg in SCANNER_CONFIGS:
+        qualified = [p for p in all_predictions if _scanner_badge_value(p, cfg["market_key"]) >= cfg["min"]]
+        qualified.sort(key=lambda p: (p["date_key"], -_scanner_badge_value(p, cfg["market_key"])))
+
+        out_dir = f"{base_dir}/{cfg['dir']}"
+        os.makedirs(out_dir, exist_ok=True)
+
+        by_date = group_by_date(qualified)
+        date_keys = list(by_date.keys())
+
+        common = dict(page_title=cfg["title"], icon=cfg["icon"], subtitle=cfg["subtitle_fmt"],
+                      market_key=cfg["market_key"], badge_label=cfg["badge_label"],
+                      csv_name=f"{cfg['dir']}_predictions.csv")
+
+        if not date_keys:
+            with open(f"{out_dir}/index.html", "w") as f:
+                f.write(make_scanner_html([], **common))
+        else:
+            for i, date_key in enumerate(date_keys):
+                prev_href = date_page_filename(date_keys[i - 1]) if i > 0 else None
+                next_href = date_page_filename(date_keys[i + 1]) if i < len(date_keys) - 1 else None
+                page_html = make_scanner_html(
+                    by_date[date_key], date_label=format_date_label(date_key),
+                    prev_href=prev_href, next_href=next_href, **common,
+                )
+                with open(f"{out_dir}/{date_page_filename(date_key)}", "w") as f:
+                    f.write(page_html)
+            with open(f"{out_dir}/{date_page_filename(date_keys[0])}") as f:
+                soonest_html = f.read()
+            with open(f"{out_dir}/index.html", "w") as f:
+                f.write(soonest_html)
+
+        write_scanner_csv(qualified, f"{out_dir}/{cfg['dir']}_predictions.csv")
+        print(f"  {cfg['title']}: {len(qualified)} fixtures across {len(date_keys)} date(s)")
+
+
 if __name__ == "__main__":
     # Prefer an environment variable (safer for CI — command-line args can
     # end up visible in process listings/logs) but keep the command-line
@@ -833,7 +1024,8 @@ if __name__ == "__main__":
         print("  (or set the THESTATSAPI_KEY environment variable)")
         sys.exit(1)
 
-    predictions = build_predictions(api_key)
+    all_predictions = build_all_predictions(api_key)
+    predictions = apply_main_filter(all_predictions)
 
     os.makedirs("docs/match-iq", exist_ok=True)
     by_date = group_by_date(predictions)
@@ -866,4 +1058,9 @@ if __name__ == "__main__":
     with open("docs/match-iq/match_iq.json", "w") as f:
         json.dump(predictions, f, indent=2, default=str)
 
-    print(f"\nDone — {len(predictions)} fixtures projected across {len(date_keys)} date(s).")
+    print(f"\nMain page — {len(predictions)} fixtures across {len(date_keys)} date(s).")
+
+    print("\nBuilding Daily Signals scanners...")
+    build_daily_signals_scanners(all_predictions)
+
+    print(f"\nDone — {len(all_predictions)} total fixtures projected.")
