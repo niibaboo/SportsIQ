@@ -1,27 +1,27 @@
 {
-  "generated": "2026-09-19T13:44:48.645377+00:00",
-  "total_live": 4,
+  "generated": "2026-09-19T14:50:01.664523+00:00",
+  "total_live": 11,
   "matches": [
     {
-      "league": "Bundesliga",
-      "match_id": "mt_733746499",
-      "home_team": "SV Werder Bremen",
-      "away_team": "FC Augsburg",
-      "home_goals": 0,
+      "league": "Premier League",
+      "match_id": "mt_899744220",
+      "home_team": "Newcastle United",
+      "away_team": "Hull City",
+      "home_goals": 2,
       "away_goals": 0,
-      "elapsed_minute": 13,
-      "minutes_remaining": 77,
+      "elapsed_minute": 42,
+      "minutes_remaining": 48,
       "status": "live",
-      "kickoff": "2026-09-19T13:30:00.000Z",
+      "kickoff": "2026-09-19T14:00:00.000Z",
       "next_goal": {
         "home": 50,
         "away": 50,
-        "reasoning": "77min left, season rates 1.50/1.50 (no live stats yet)"
+        "reasoning": "48min left, season rates 1.50/1.50 (no live stats yet)"
       },
       "btts": {
-        "prob": 52,
-        "status": "0-0 (both must score)",
-        "reasoning": "Home 1.50, Away 1.50"
+        "prob": 55,
+        "status": "Away must score (48min left)",
+        "reasoning": "Away exp rate 1.50"
       },
       "home_season_stats": {
         "goals_for": 1.5,
@@ -34,85 +34,315 @@
         "xg": 1.2
       },
       "home_live_stats": {
-        "shots": 1,
-        "shots_on_target": 1,
+        "shots": 6,
+        "shots_on_target": 2,
         "xg": null,
-        "possession": 33,
-        "corners": null
+        "possession": 68,
+        "corners": 1
       },
       "away_live_stats": {
-        "shots": 1,
+        "shots": 2,
         "shots_on_target": 1,
         "xg": null,
-        "possession": 67,
-        "corners": null
+        "possession": 32,
+        "corners": 2
       }
     },
     {
-      "league": "Bundesliga",
-      "match_id": "mt_899837359",
-      "home_team": "Hamburger SV",
-      "away_team": "1. FC K\u00f6ln",
-      "home_goals": 0,
-      "away_goals": 0,
-      "elapsed_minute": 14,
-      "minutes_remaining": 76,
-      "status": "live",
-      "kickoff": "2026-09-19T13:30:00.000Z",
-      "next_goal": {
-        "home": 50,
-        "away": 50,
-        "reasoning": "76min left, season rates 1.50/1.50 (no live stats yet)"
-      },
-      "btts": {
-        "prob": 52,
-        "status": "0-0 (both must score)",
-        "reasoning": "Home 1.50, Away 1.50"
-      },
-      "home_season_stats": {
-        "goals_for": 1.5,
-        "shots": 12,
-        "xg": 1.2
-      },
-      "away_season_stats": {
-        "goals_for": 1.5,
-        "shots": 12,
-        "xg": 1.2
-      },
-      "home_live_stats": {
-        "shots": 0,
-        "shots_on_target": null,
-        "xg": null,
-        "possession": 38,
-        "corners": null
-      },
-      "away_live_stats": {
-        "shots": 1,
-        "shots_on_target": null,
-        "xg": null,
-        "possession": 62,
-        "corners": null
-      }
-    },
-    {
-      "league": "Bundesliga",
-      "match_id": "mt_377364686",
-      "home_team": "Borussia M'gladbach",
-      "away_team": "1. FSV Mainz 05",
+      "league": "Premier League",
+      "match_id": "mt_200193806",
+      "home_team": "Everton",
+      "away_team": "Ipswich Town",
       "home_goals": 1,
       "away_goals": 0,
-      "elapsed_minute": 14,
-      "minutes_remaining": 76,
+      "elapsed_minute": 41,
+      "minutes_remaining": 49,
       "status": "live",
-      "kickoff": "2026-09-19T13:30:00.000Z",
+      "kickoff": "2026-09-19T14:00:00.000Z",
       "next_goal": {
         "home": 50,
         "away": 50,
-        "reasoning": "76min left, season rates 1.50/1.50 (no live stats yet)"
+        "reasoning": "49min left, season rates 1.50/1.50 (no live stats yet)"
       },
       "btts": {
-        "prob": 72,
-        "status": "Away must score (76min left)",
+        "prob": 56,
+        "status": "Away must score (49min left)",
+        "reasoning": "Away exp rate 1.50"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": 10,
+        "shots_on_target": 1,
+        "xg": null,
+        "possession": 54,
+        "corners": 0
+      },
+      "away_live_stats": {
+        "shots": 6,
+        "shots_on_target": 2,
+        "xg": null,
+        "possession": 46,
+        "corners": 3
+      }
+    },
+    {
+      "league": "Premier League",
+      "match_id": "mt_155834755",
+      "home_team": "Brighton & Hove Albion",
+      "away_team": "Arsenal",
+      "home_goals": 1,
+      "away_goals": 0,
+      "elapsed_minute": 42,
+      "minutes_remaining": 48,
+      "status": "live",
+      "kickoff": "2026-09-19T14:00:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "48min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 55,
+        "status": "Away must score (48min left)",
+        "reasoning": "Away exp rate 1.50"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": 8,
+        "shots_on_target": 3,
+        "xg": null,
+        "possession": 44,
+        "corners": 2
+      },
+      "away_live_stats": {
+        "shots": 2,
+        "shots_on_target": 0,
+        "xg": null,
+        "possession": 56,
+        "corners": 0
+      }
+    },
+    {
+      "league": "Championship",
+      "match_id": "mt_022532832",
+      "home_team": "Wrexham",
+      "away_team": "Southampton",
+      "home_goals": 1,
+      "away_goals": 0,
+      "elapsed_minute": 38,
+      "minutes_remaining": 52,
+      "status": "live",
+      "kickoff": "2026-09-19T14:00:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "52min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 58,
+        "status": "Away must score (52min left)",
+        "reasoning": "Away exp rate 1.50"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": 4,
+        "shots_on_target": 3,
+        "xg": null,
+        "possession": 35,
+        "corners": 2
+      },
+      "away_live_stats": {
+        "shots": 9,
+        "shots_on_target": 4,
+        "xg": null,
+        "possession": 65,
+        "corners": 0
+      }
+    },
+    {
+      "league": "Championship",
+      "match_id": "mt_200170973",
+      "home_team": "Queens Park Rangers",
+      "away_team": "Preston North End",
+      "home_goals": 0,
+      "away_goals": 2,
+      "elapsed_minute": 38,
+      "minutes_remaining": 52,
+      "status": "live",
+      "kickoff": "2026-09-19T14:00:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "52min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 58,
+        "status": "Home must score (52min left)",
+        "reasoning": "Home exp rate 1.50"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": 6,
+        "shots_on_target": 1,
+        "xg": null,
+        "possession": 58,
+        "corners": 4
+      },
+      "away_live_stats": {
+        "shots": 3,
+        "shots_on_target": 2,
+        "xg": null,
+        "possession": 42,
+        "corners": 1
+      }
+    },
+    {
+      "league": "Championship",
+      "match_id": "mt_155865301",
+      "home_team": "Portsmouth",
+      "away_team": "Blackburn Rovers",
+      "home_goals": 1,
+      "away_goals": 1,
+      "elapsed_minute": 40,
+      "minutes_remaining": 50,
+      "status": "live",
+      "kickoff": "2026-09-19T14:00:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "50min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 100,
+        "status": "BTTS Hit",
+        "reasoning": "Both teams have already scored"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": 7,
+        "shots_on_target": 3,
+        "xg": null,
+        "possession": 53,
+        "corners": 7
+      },
+      "away_live_stats": {
+        "shots": 4,
+        "shots_on_target": 3,
+        "xg": null,
+        "possession": 47,
+        "corners": 4
+      }
+    },
+    {
+      "league": "Championship",
+      "match_id": "mt_377417081",
+      "home_team": "Lincoln City",
+      "away_team": "Swansea City",
+      "home_goals": 0,
+      "away_goals": 0,
+      "elapsed_minute": 40,
+      "minutes_remaining": 50,
+      "status": "live",
+      "kickoff": "2026-09-19T14:00:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "50min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 32,
+        "status": "0-0 (both must score)",
+        "reasoning": "Home 1.50, Away 1.50"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": 8,
+        "shots_on_target": 4,
+        "xg": null,
+        "possession": 25,
+        "corners": 1
+      },
+      "away_live_stats": {
+        "shots": 4,
+        "shots_on_target": 1,
+        "xg": null,
+        "possession": 75,
+        "corners": 0
+      }
+    },
+    {
+      "league": "Championship",
+      "match_id": "mt_466286576",
+      "home_team": "Burnley",
+      "away_team": "Derby County",
+      "home_goals": 1,
+      "away_goals": 0,
+      "elapsed_minute": 38,
+      "minutes_remaining": 52,
+      "status": "live",
+      "kickoff": "2026-09-19T14:00:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "52min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 58,
+        "status": "Away must score (52min left)",
         "reasoning": "Away exp rate 1.50"
       },
       "home_season_stats": {
@@ -129,15 +359,61 @@
         "shots": 2,
         "shots_on_target": 1,
         "xg": null,
-        "possession": 45,
-        "corners": null
+        "possession": 56,
+        "corners": 3
       },
       "away_live_stats": {
-        "shots": 2,
-        "shots_on_target": 0,
+        "shots": 4,
+        "shots_on_target": 1,
         "xg": null,
-        "possession": 55,
-        "corners": null
+        "possession": 44,
+        "corners": 2
+      }
+    },
+    {
+      "league": "Championship",
+      "match_id": "mt_511941727",
+      "home_team": "Birmingham City",
+      "away_team": "Middlesbrough",
+      "home_goals": 0,
+      "away_goals": 0,
+      "elapsed_minute": 41,
+      "minutes_remaining": 49,
+      "status": "live",
+      "kickoff": "2026-09-19T14:00:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "49min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 31,
+        "status": "0-0 (both must score)",
+        "reasoning": "Home 1.50, Away 1.50"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": 8,
+        "shots_on_target": 3,
+        "xg": null,
+        "possession": 48,
+        "corners": 2
+      },
+      "away_live_stats": {
+        "shots": 11,
+        "shots_on_target": 2,
+        "xg": null,
+        "possession": 52,
+        "corners": 2
       }
     },
     {
@@ -145,21 +421,21 @@
       "match_id": "mt_644620231",
       "home_team": "Eintracht Frankfurt",
       "away_team": "SC Freiburg",
-      "home_goals": 1,
-      "away_goals": 0,
-      "elapsed_minute": 14,
-      "minutes_remaining": 76,
+      "home_goals": 2,
+      "away_goals": 1,
+      "elapsed_minute": 47,
+      "minutes_remaining": 43,
       "status": "live",
       "kickoff": "2026-09-19T13:30:00.000Z",
       "next_goal": {
         "home": 50,
         "away": 50,
-        "reasoning": "76min left, season rates 1.50/1.50 (no live stats yet)"
+        "reasoning": "43min left, season rates 1.50/1.50 (no live stats yet)"
       },
       "btts": {
-        "prob": 72,
-        "status": "Away must score (76min left)",
-        "reasoning": "Away exp rate 1.50"
+        "prob": 100,
+        "status": "BTTS Hit",
+        "reasoning": "Both teams have already scored"
       },
       "home_season_stats": {
         "goals_for": 1.5,
@@ -172,18 +448,64 @@
         "xg": 1.2
       },
       "home_live_stats": {
-        "shots": 1,
-        "shots_on_target": 1,
+        "shots": 5,
+        "shots_on_target": 2,
         "xg": null,
-        "possession": 36,
-        "corners": 0
+        "possession": 40,
+        "corners": 3
       },
       "away_live_stats": {
-        "shots": 2,
-        "shots_on_target": 0,
+        "shots": 15,
+        "shots_on_target": 6,
         "xg": null,
-        "possession": 64,
+        "possession": 60,
+        "corners": 5
+      }
+    },
+    {
+      "league": "Eredivisie",
+      "match_id": "mt_988479177",
+      "home_team": "ADO Den Haag",
+      "away_team": "SC Cambuur",
+      "home_goals": 0,
+      "away_goals": 0,
+      "elapsed_minute": 17,
+      "minutes_remaining": 73,
+      "status": "live",
+      "kickoff": "2026-09-19T14:30:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "73min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 50,
+        "status": "0-0 (both must score)",
+        "reasoning": "Home 1.50, Away 1.50"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": 2,
+        "shots_on_target": null,
+        "xg": null,
+        "possession": 58,
         "corners": 1
+      },
+      "away_live_stats": {
+        "shots": 0,
+        "shots_on_target": null,
+        "xg": null,
+        "possession": 42,
+        "corners": 0
       }
     }
   ]
