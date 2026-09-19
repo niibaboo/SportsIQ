@@ -1,11 +1,6 @@
 name: Match IQ Live Signals
 
-# Run every 5 minutes — minimum GitHub Actions schedule granularity.
-# The frontend then polls the generated JSON every 60s, so max staleness
-# is ~5 minutes between script runs, but typically much fresher.
 on:
-  schedule:
-    - cron: '*/5 * * * *'  # Every 5 minutes
   workflow_dispatch: {}    # Allow manual trigger
 
 # Allow the workflow to write back to the repo (for committing JSON)
