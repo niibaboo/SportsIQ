@@ -1,119 +1,27 @@
 {
-  "generated": "2026-09-19T17:31:03.635270+00:00",
-  "total_live": 3,
+  "generated": "2026-09-19T19:35:12.833666+00:00",
+  "total_live": 2,
   "matches": [
     {
-      "league": "Premier League",
-      "match_id": "mt_733622110",
-      "home_team": "Nottingham Forest",
-      "away_team": "Coventry City",
-      "home_goals": 0,
-      "away_goals": 0,
-      "elapsed_minute": 46,
-      "minutes_remaining": 44,
-      "status": "live",
-      "kickoff": "2026-09-19T16:30:00.000Z",
-      "next_goal": {
-        "home": 50,
-        "away": 50,
-        "reasoning": "44min left, season rates 1.50/1.50 (no live stats yet)"
-      },
-      "btts": {
-        "prob": 27,
-        "status": "0-0 (both must score)",
-        "reasoning": "Home 1.50, Away 1.50"
-      },
-      "home_season_stats": {
-        "goals_for": 1.5,
-        "shots": 12,
-        "xg": 1.2
-      },
-      "away_season_stats": {
-        "goals_for": 1.5,
-        "shots": 12,
-        "xg": 1.2
-      },
-      "home_live_stats": {
-        "shots": 14,
-        "shots_on_target": 2,
-        "xg": null,
-        "possession": 53,
-        "corners": 1
-      },
-      "away_live_stats": {
-        "shots": 6,
-        "shots_on_target": 1,
-        "xg": null,
-        "possession": 47,
-        "corners": 1
-      }
-    },
-    {
-      "league": "Bundesliga",
-      "match_id": "mt_022015115",
-      "home_team": "VfB Stuttgart",
-      "away_team": "Borussia Dortmund",
-      "home_goals": 0,
-      "away_goals": 0,
-      "elapsed_minute": 40,
-      "minutes_remaining": 50,
-      "status": "live",
-      "kickoff": "2026-09-19T16:30:00.000Z",
-      "next_goal": {
-        "home": 50,
-        "away": 50,
-        "reasoning": "50min left, season rates 1.50/1.50 (no live stats yet)"
-      },
-      "btts": {
-        "prob": 32,
-        "status": "0-0 (both must score)",
-        "reasoning": "Home 1.50, Away 1.50"
-      },
-      "home_season_stats": {
-        "goals_for": 1.5,
-        "shots": 12,
-        "xg": 1.2
-      },
-      "away_season_stats": {
-        "goals_for": 1.5,
-        "shots": 12,
-        "xg": 1.2
-      },
-      "home_live_stats": {
-        "shots": 5,
-        "shots_on_target": 2,
-        "xg": null,
-        "possession": 45,
-        "corners": 2
-      },
-      "away_live_stats": {
-        "shots": 6,
-        "shots_on_target": 0,
-        "xg": null,
-        "possession": 55,
-        "corners": 2
-      }
-    },
-    {
       "league": "Eredivisie",
-      "match_id": "mt_733047927",
-      "home_team": "Sparta Rotterdam",
-      "away_team": "SC Heerenveen",
+      "match_id": "mt_644526340",
+      "home_team": "Willem II Tilburg",
+      "away_team": "Fortuna Sittard",
       "home_goals": 0,
-      "away_goals": 1,
-      "elapsed_minute": 43,
-      "minutes_remaining": 47,
+      "away_goals": 0,
+      "elapsed_minute": 32,
+      "minutes_remaining": 58,
       "status": "live",
-      "kickoff": "2026-09-19T16:45:00.000Z",
+      "kickoff": "2026-09-19T19:00:00.000Z",
       "next_goal": {
         "home": 50,
         "away": 50,
-        "reasoning": "47min left, season rates 1.50/1.50 (no live stats yet)"
+        "reasoning": "58min left, season rates 1.50/1.50 (no live stats yet)"
       },
       "btts": {
-        "prob": 54,
-        "status": "Home must score (47min left)",
-        "reasoning": "Home exp rate 1.50"
+        "prob": 38,
+        "status": "0-0 (both must score)",
+        "reasoning": "Home 1.50, Away 1.50"
       },
       "home_season_stats": {
         "goals_for": 1.5,
@@ -127,17 +35,63 @@
       },
       "home_live_stats": {
         "shots": 3,
-        "shots_on_target": 0,
+        "shots_on_target": 1,
         "xg": null,
-        "possession": 48,
-        "corners": 2
+        "possession": 42,
+        "corners": 0
       },
       "away_live_stats": {
-        "shots": 13,
-        "shots_on_target": 3,
+        "shots": 3,
+        "shots_on_target": 0,
         "xg": null,
-        "possession": 52,
-        "corners": 6
+        "possession": 58,
+        "corners": 1
+      }
+    },
+    {
+      "league": "Eredivisie",
+      "match_id": "mt_200852659",
+      "home_team": "AFC Ajax",
+      "away_team": "Excelsior",
+      "home_goals": 2,
+      "away_goals": 2,
+      "elapsed_minute": 75,
+      "minutes_remaining": 15,
+      "status": "live",
+      "kickoff": "2026-09-19T18:00:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "15min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 100,
+        "status": "BTTS Hit",
+        "reasoning": "Both teams have already scored"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": 21,
+        "shots_on_target": 6,
+        "xg": null,
+        "possession": 80,
+        "corners": 3
+      },
+      "away_live_stats": {
+        "shots": 4,
+        "shots_on_target": 2,
+        "xg": null,
+        "possession": 20,
+        "corners": 0
       }
     }
   ]
