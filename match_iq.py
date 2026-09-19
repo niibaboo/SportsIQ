@@ -53,6 +53,8 @@ MIN_BTTS_PCT = 55    # ...AND BTTS probability above this (both required — Ove
 SCANNER_OVER25_MIN = 70
 SCANNER_BTTS_MIN = 70
 SCANNER_CORNERS_MIN = 60
+SCANNER_FH_BTTS_MIN = 60
+SCANNER_OVER45_MIN = 50
 
 # Start small — uncomment more once you've confirmed the API-call budget
 # works for your trial quota. Names must match exactly what TheStatsAPI's
@@ -194,6 +196,12 @@ def get_team_form(team_id, competition_id, season_id, key):
     scored, conceded = [], []
     shots, shots_on_target, corners, saves = [], [], [], []
     fh_corners, tackles = [], []
+    fh_goals = []  # first-half goals scored, per match — same "field name
+                    # unverified against a real API response" caveat as the
+                    # other period-split stats below (corner_kicks/first_half
+                    # is confirmed working; goals/first_half is assumed to
+                    # follow the same overview-stats shape but hasn't been
+                    # checked against a live response)
     cards = []  # yellow + red combined, per match — field names unverified against
                 # a real API response, same caveat as the other stats below
 
@@ -227,6 +235,10 @@ def get_team_form(team_id, competition_id, season_id, key):
         if fh_v is not None:
             fh_corners.append(fh_v)
 
+        fh_g = side_val("goals", "first_half")
+        if fh_g is not None:
+            fh_goals.append(fh_g)
+
         yellow = side_val("yellow_cards")
         red = side_val("red_cards")
         if yellow is not None or red is not None:
@@ -252,6 +264,8 @@ def get_team_form(team_id, competition_id, season_id, key):
         "saves_list": saves,
         "avg_fh_corners": round(sum(fh_corners) / len(fh_corners), 1) if fh_corners else None,
         "fh_corners_list": fh_corners,
+        "avg_fh_goals": round(sum(fh_goals) / len(fh_goals), 2) if fh_goals else None,
+        "fh_goals_list": fh_goals,
         "avg_tackles": round(sum(tackles) / len(tackles), 1) if tackles else None,
         "avg_cards": round(sum(cards) / len(cards), 1) if cards else None,
         "cards_list": cards,
@@ -280,11 +294,12 @@ def predict_goals(h_form, a_form, lg_scored, lg_conceded):
     exp_total = round(exp_home + exp_away, 2)
 
     p_over25 = 1 - poisson_cdf(2, exp_total)
+    p_over45 = 1 - poisson_cdf(4, exp_total)
     p_btts = (1 - poisson_pmf(0, exp_home)) * (1 - poisson_pmf(0, exp_away))
 
     return {
         "exp_home": round(exp_home, 2), "exp_away": round(exp_away, 2), "exp_total": exp_total,
-        "over25": round(p_over25 * 100), "btts": round(p_btts * 100),
+        "over25": round(p_over25 * 100), "over45": round(p_over45 * 100), "btts": round(p_btts * 100),
     }
 
 
@@ -355,6 +370,42 @@ def predict_fh_corners(h_form, a_form):
         "exp_fh_corners": exp_fh_total,
         "fh_corners_over35": round(p_over35 * 100),
         "fh_corners_over45": round(p_over45 * 100),
+    }
+
+
+_fh_goals_samples = []
+DEFAULT_FH_GOALS_AVG = 0.65  # sane per-team starting point (~1.3 total FH goals/match) before any real samples exist
+
+
+def _lg_fh_goals_avg():
+    if not _fh_goals_samples:
+        return DEFAULT_FH_GOALS_AVG
+    return sum(_fh_goals_samples) / len(_fh_goals_samples)
+
+
+def _record_fh_goals_sample(form):
+    if form.get("avg_fh_goals") is not None:
+        _fh_goals_samples.append(form["avg_fh_goals"])
+
+
+def predict_fh_btts(h_form, a_form):
+    """First-half BTTS — same running-average shrinkage as FH corners (no
+    opponent adjustment; each team's own FH scoring rate, not split by who
+    they faced). Relies on the goals/first_half stat existing in the API
+    response — see the fh_goals extraction note in fetch_form for the
+    verification caveat."""
+    _record_fh_goals_sample(h_form)
+    _record_fh_goals_sample(a_form)
+    lg_avg = _lg_fh_goals_avg()
+
+    h_fh = shrink(h_form.get("avg_fh_goals"), h_form["n_games"], lg_avg)
+    a_fh = shrink(a_form.get("avg_fh_goals"), a_form["n_games"], lg_avg)
+
+    p_fh_btts = (1 - poisson_pmf(0, h_fh)) * (1 - poisson_pmf(0, a_fh))
+
+    return {
+        "exp_fh_home": h_fh, "exp_fh_away": a_fh,
+        "fh_btts": round(p_fh_btts * 100),
     }
 
 
@@ -535,13 +586,14 @@ def build_all_predictions(key):
             proj = predict_goals(h_form, a_form, lg_scored, lg_conceded)
             fh_corners_proj = predict_fh_corners(h_form, a_form)
             full_corners_proj = predict_full_corners(h_form, a_form)
+            fh_btts_proj = predict_fh_btts(h_form, a_form)
             result_1x2 = predict_1x2(proj["exp_home"], proj["exp_away"])
             merged = {
                 "league": comp["name"], "date": m["utc_date"], "date_key": m["utc_date"][:10],
                 "home_team": m["home_team"]["name"], "away_team": m["away_team"]["name"],
                 "home_form": h_form, "away_form": a_form,
                 "home_props": predict_team_props(h_form), "away_props": predict_team_props(a_form),
-                **proj, **fh_corners_proj, **full_corners_proj, **result_1x2,
+                **proj, **fh_corners_proj, **full_corners_proj, **fh_btts_proj, **result_1x2,
             }
             all_predictions.append(merged)
 
@@ -743,7 +795,7 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
 <h2 style="text-align:center">⚽ MATCH IQ — Full Stats</h2>
 <p style="text-align:center;color:#888;font-size:11px">Powered by TheStatsAPI · {generated}</p>
-<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a></p>
+<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/fh-btts-over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">FH BTTS/O4.5</a></p>
 {date_bar}
 <p style="text-align:center;margin-bottom:16px"><a href="match_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
 {builder}
@@ -895,7 +947,7 @@ SCANNER_HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <p style="text-align:center;margin-bottom:6px"><a href="../../match_iq_index.html" style="color:#7ec8ff;text-decoration:none;font-size:12px">← Match IQ</a></p>
 <h2 style="text-align:center;margin-bottom:2px">{icon} {page_title}</h2>
 <p style="text-align:center;color:#888;font-size:11px;margin-top:0">{subtitle} · {generated}</p>
-<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a></p>
+<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a>·<a href="../fh-btts-over45/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">FH BTTS/O4.5</a></p>
 {date_bar}
 <p style="text-align:center;margin-bottom:12px"><a href="{csv_name}" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Export CSV</a></p>
 <p style="text-align:center;color:#888;font-size:12px;margin-bottom:14px">{qualified_count} matches qualified</p>
@@ -949,6 +1001,100 @@ def write_scanner_csv(predictions, path):
         for p in predictions:
             writer.writerow([p["date"], p["league"], p["home_team"], p["away_team"],
                               p["over25"], p["btts"], p["exp_corners"], p["corners_over105"]])
+
+
+# --- Combined FH BTTS + Over 4.5 Goals scanner ---------------------------
+# Unlike the three single-market scanners above, a fixture here qualifies
+# if it clears EITHER threshold (not both) — same "flagged" idea as the
+# original Daily Signals mockup, where a match could be flagged for one
+# market, the other, or both.
+
+COMBINED_CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;padding:14px;margin:10px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">{league} · {time}</div>
+  <div style="font-size:15px;font-weight:bold;margin:2px 0 6px">{home_team} vs {away_team}</div>
+  <div style="font-size:11px;color:#aaa;margin-bottom:6px">FH BTTS: <span style="color:{fh_btts_color}">{fh_btts}%</span> &nbsp;|&nbsp; Over 4.5: <span style="color:{over45_color}">{over45}%</span></div>
+  <div style="font-size:11px;color:#a0e8a0">{flags}</div>
+</div>"""
+
+
+def render_combined_cards(predictions):
+    if not predictions:
+        return '<p style="text-align:center;color:#888">No fixtures on this date qualified.</p>'
+    cards = ""
+    for p in predictions:
+        fh_hit = p["fh_btts"] >= SCANNER_FH_BTTS_MIN
+        o45_hit = p["over45"] >= SCANNER_OVER45_MIN
+        flags = " + ".join(f for f, hit in [("✓ FH BTTS flagged", fh_hit), ("✓ Over 4.5 flagged", o45_hit)] if hit)
+        cards += COMBINED_CARD_TEMPLATE.format(
+            league=p["league"], time=p["date"][:16].replace("T", " "),
+            home_team=p["home_team"], away_team=p["away_team"],
+            fh_btts=p["fh_btts"], over45=p["over45"], flags=flags,
+            fh_btts_color="#a0e8a0" if fh_hit else "#aaa",
+            over45_color="#a0e8a0" if o45_hit else "#aaa",
+        )
+    return cards
+
+
+def make_combined_scanner_html(predictions, csv_name, date_label=None, prev_href=None, next_href=None):
+    prev_link = f'<a href="{prev_href}" style="color:#7ec8ff;text-decoration:none;font-size:20px">◀</a>' if prev_href else '<span style="color:#444;font-size:20px">◀</span>'
+    next_link = f'<a href="{next_href}" style="color:#7ec8ff;text-decoration:none;font-size:20px">▶</a>' if next_href else '<span style="color:#444;font-size:20px">▶</span>'
+    date_bar = f"""
+<div style="display:flex;align-items:center;justify-content:center;gap:20px;margin:10px 0 4px">
+  {prev_link}
+  <span style="font-size:15px;font-weight:bold">{date_label or ''}</span>
+  {next_link}
+</div>""" if date_label else ""
+
+    return SCANNER_HTML_TEMPLATE.format(
+        page_title="FH BTTS / Over 4.5 Daily Scanner", icon="🎯",
+        subtitle=f"First-half BTTS ≥{SCANNER_FH_BTTS_MIN}% or Over 4.5 Goals ≥{SCANNER_OVER45_MIN}%",
+        generated=datetime.now().strftime("%d %b %H:%M"),
+        date_bar=date_bar, csv_name=csv_name,
+        qualified_count=len(predictions),
+        cards=render_combined_cards(predictions),
+    )
+
+
+def write_combined_scanner_csv(predictions, path):
+    with open(path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Date", "League", "HomeTeam", "AwayTeam", "FHBTTS", "Over45"])
+        for p in predictions:
+            writer.writerow([p["date"], p["league"], p["home_team"], p["away_team"],
+                              p["fh_btts"], p["over45"]])
+
+
+def build_combined_scanner(all_predictions, base_dir="docs/match-iq/scanners"):
+    qualified = [p for p in all_predictions
+                 if p["fh_btts"] >= SCANNER_FH_BTTS_MIN or p["over45"] >= SCANNER_OVER45_MIN]
+    qualified.sort(key=lambda p: (p["date_key"], -max(p["fh_btts"], p["over45"])))
+
+    out_dir = f"{base_dir}/fh-btts-over45"
+    os.makedirs(out_dir, exist_ok=True)
+
+    by_date = group_by_date(qualified)
+    date_keys = list(by_date.keys())
+
+    if not date_keys:
+        with open(f"{out_dir}/index.html", "w") as f:
+            f.write(make_combined_scanner_html([], csv_name="fh-btts-over45_predictions.csv"))
+    else:
+        for i, date_key in enumerate(date_keys):
+            prev_href = date_page_filename(date_keys[i - 1]) if i > 0 else None
+            next_href = date_page_filename(date_keys[i + 1]) if i < len(date_keys) - 1 else None
+            page_html = make_combined_scanner_html(
+                by_date[date_key], csv_name="fh-btts-over45_predictions.csv",
+                date_label=format_date_label(date_key), prev_href=prev_href, next_href=next_href,
+            )
+            with open(f"{out_dir}/{date_page_filename(date_key)}", "w") as f:
+                f.write(page_html)
+        with open(f"{out_dir}/{date_page_filename(date_keys[0])}") as f:
+            soonest_html = f.read()
+        with open(f"{out_dir}/index.html", "w") as f:
+            f.write(soonest_html)
+
+    write_combined_scanner_csv(qualified, f"{out_dir}/fh-btts-over45_predictions.csv")
+    print(f"  FH BTTS / Over 4.5 scanner: {len(qualified)} fixtures across {len(date_keys)} date(s)")
 
 
 SCANNER_CONFIGS = [
@@ -1010,6 +1156,8 @@ def build_daily_signals_scanners(all_predictions, base_dir="docs/match-iq/scanne
 
         write_scanner_csv(qualified, f"{out_dir}/{cfg['dir']}_predictions.csv")
         print(f"  {cfg['title']}: {len(qualified)} fixtures across {len(date_keys)} date(s)")
+
+    build_combined_scanner(all_predictions, base_dir)
 
 
 if __name__ == "__main__":
