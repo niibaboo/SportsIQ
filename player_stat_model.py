@@ -399,9 +399,11 @@ def per90(total: float, minutes: float) -> float:
     return total * 90.0 / minutes
 
 
-def rolling_form(player_id: str, team_id: str) -> dict:
-    """Average per-90 rate across the player's last N finished matches."""
-    matches = get_team_recent_matches(team_id)
+def rolling_form(player_id: str, matches: list[dict]) -> dict:
+    """Average per-90 rate across the player's last N finished matches.
+    
+    NOTE: matches are passed in, not fetched — prevents redundant API calls
+    when scanning an entire squad."""
     totals = {k: 0.0 for k in STAT_FIELDS}
     game_logs = {k: [] for k in STAT_FIELDS}  # per-match values, newest-first
     minutes_played = 0.0
@@ -595,9 +597,12 @@ def compute_hit_rates(game_log: dict) -> dict:
 
 
 def build_report(player: dict, stats: dict, team_id: str, expected_minutes: float,
-                  team_name: str | None = None, league_name: str | None = None) -> dict:
+                  team_name: str | None = None, league_name: str | None = None,
+                  matches: list[dict] | None = None) -> dict:
     player_id = player["id"]
-    rolling = rolling_form(player_id, team_id)
+    if matches is None:
+        matches = get_team_recent_matches(team_id)
+    rolling = rolling_form(player_id, matches)
     season = season_baseline(stats)
     blended_per90 = blend(rolling, season)
 
@@ -672,13 +677,16 @@ def build_player_report(name: str, expected_minutes: float = 90.0) -> dict:
 # ----------------------------------------------------------------------
 
 def scan_team(team_id: str, min_avg_minutes: float = MIN_AVG_MINUTES) -> list[dict]:
-    """Build reports for every regular starter in a team's squad."""
+    """Build reports for every regular starter in a team's squad.
+    
+    OPTIMIZED: Fetches team matches once at the start, passes to each player's report."""
     resolved = resolve_team_and_league(team_id)
     season_id = resolved["season_id"]
     if not season_id:
         print(f"    Couldn't resolve a current season_id for team {team_id} — skipping scan")
         return []
     squad = get_team_squad(team_id)
+    team_matches = get_team_recent_matches(team_id)  # FETCH ONCE HERE
     reports = []
     for player in squad:
         try:
@@ -690,7 +698,8 @@ def scan_team(team_id: str, min_avg_minutes: float = MIN_AVG_MINUTES) -> list[di
             continue  # fringe/bench player — skip to save quota + noise
         try:
             report = build_report(player, stats, team_id, expected_minutes=min(avg_minutes, 90),
-                                   team_name=resolved["team_name"], league_name=resolved["league_name"])
+                                   team_name=resolved["team_name"], league_name=resolved["league_name"],
+                                   matches=team_matches)
         except Exception:
             continue
         reports.append(report)
