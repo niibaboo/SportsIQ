@@ -1,121 +1,387 @@
-<!DOCTYPE html><html><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>Match IQ — Live Signals</title>
-<style>
-  body { background:#0b0f14; color:white; font-family:Arial; padding:12px; max-width:700px; margin:auto; }
-  h2 { text-align:center; }
-  .meta { text-align:center; color:#888; font-size:11px; margin-bottom:16px; }
-  .back-link { display:inline-block; margin-bottom:12px; }
-  .back-link a { color:#7ec8ff; text-decoration:none; font-size:13px; }
-  .match-card { background:#1a1f26; border-radius:12px; padding:16px; margin:12px 0; border:1px solid #2a3038; }
-  .match-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-  .match-title { font-size:15px; font-weight:bold; }
-  .league { font-size:11px; color:#999; }
-  .elapsed { font-size:11px; color:#aaa; }
-  .score { font-size:24px; font-weight:bold; text-align:center; margin:8px 0; }
-  .signal-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
-  .signal { background:#0f1318; border-radius:8px; padding:10px; text-align:center; }
-  .signal-label { font-size:10px; color:#aaa; margin-bottom:4px; }
-  .signal-value { font-size:20px; font-weight:bold; color:#ffeb3b; }
-  .signal-btts { color:#a0e8a0; }
-  .signal-next { color:#7ec8ff; }
-  .signal-status { font-size:9px; color:#666; margin-top:4px; }
-  .team-stats { font-size:10px; color:#888; margin-top:10px; padding-top:10px; border-top:1px solid #2a3038; line-height:1.4; }
-  .no-matches { text-align:center; color:#888; padding:40px 20px; }
-  .loading { text-align:center; color:#888; padding:20px; }
-  .error { color:#ff6b6b; font-size:12px; }
-  .last-update { text-align:center; color:#666; font-size:10px; margin-top:20px; }
-</style></head><body>
-<div class="back-link"><a href="../">← Back to SportsIQ</a></div>
-<h2>⚡ Live Signals</h2>
-<div class="meta">In-play next goal & BTTS probabilities · Updates every 60s</div>
-<div id="container">
-  <div class="loading">Loading live matches...</div>
-</div>
-<div class="last-update">Last update: <span id="lastUpdate">—</span></div>
-<script>
-async function fetchAndRender() {
-  try {
-    const resp = await fetch('https://raw.githubusercontent.com/niibaboo/SportsIQ/main/docs/match-iq-live/live_matches.json?t=' + Date.now());
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const data = await resp.json();
-    
-    const container = document.getElementById('container');
-    
-    if (!data.matches || data.matches.length === 0) {
-      container.innerHTML = '<div class="no-matches">No live matches at the moment.<br><br>Check back during match days.</div>';
-      updateTime();
-      return;
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Match IQ — Live Signals</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #1a1f26;
+      --panel2: #0f1318;
+      --border: #2a3038;
+      --text: #e8edf2;
+      --sub: #8b98a8;
+      --accent: #ffeb3b;
+      --green: #7ec8ff;
+      --warn: #ff6b6b;
     }
     
-    let html = '';
-    for (const m of data.matches) {
-      const nextGoal = m.next_goal || {};
-      const btts = m.btts || {};
-      
-      // Build team stats line — show live stats if available, fallback to season averages
-      let homeStatsLine = '', awayStatsLine = '';
-      
-      if (m.home_live_stats && m.home_live_stats.xg !== null) {
-        homeStatsLine = `${m.home_team}: ${m.home_live_stats.shots} shots, ${m.home_live_stats.xg.toFixed(2)} xG (season avg: ${m.home_season_stats.goals_for.toFixed(1)}/match)`;
-      } else if (m.home_season_stats) {
-        homeStatsLine = `${m.home_team}: season avg ${m.home_season_stats.goals_for.toFixed(1)} goals/match, ${m.home_season_stats.shots} shots/match`;
-      }
-      
-      if (m.away_live_stats && m.away_live_stats.xg !== null) {
-        awayStatsLine = `${m.away_team}: ${m.away_live_stats.shots} shots, ${m.away_live_stats.xg.toFixed(2)} xG (season avg: ${m.away_season_stats.goals_for.toFixed(1)}/match)`;
-      } else if (m.away_season_stats) {
-        awayStatsLine = `${m.away_team}: season avg ${m.away_season_stats.goals_for.toFixed(1)} goals/match, ${m.away_season_stats.shots} shots/match`;
-      }
-      
-      html += `
-        <div class="match-card">
-          <div class="match-header">
-            <div>
-              <div class="league">${m.league}</div>
-              <div class="match-title">${m.home_team} vs ${m.away_team}</div>
-            </div>
-            <div class="elapsed">${m.elapsed_minute || 0}' · ${m.status}</div>
-          </div>
-          <div class="score">${m.home_goals}-${m.away_goals}</div>
-          <div class="signal-grid">
-            <div class="signal">
-              <div class="signal-label">Next Goal</div>
-              <div class="signal-value signal-next">${m.home_team}</div>
-              <div style="font-size:16px;font-weight:bold;color:#ffeb3b">${nextGoal.home || '—'}%</div>
-            </div>
-            <div class="signal">
-              <div class="signal-label">Next Goal</div>
-              <div class="signal-value signal-next">${m.away_team}</div>
-              <div style="font-size:16px;font-weight:bold;color:#ffeb3b">${nextGoal.away || '—'}%</div>
-            </div>
-          </div>
-          <div class="signal">
-            <div class="signal-label">Both Teams to Score</div>
-            <div class="signal-value signal-btts">${btts.prob || '—'}%</div>
-            <div class="signal-status">${btts.status || '—'}</div>
-          </div>
-          <div class="team-stats">
-            ${homeStatsLine}<br>${awayStatsLine}
-          </div>
-        </div>
-      `;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 12px;
+      max-width: 900px;
+      margin: 0 auto;
     }
     
-    container.innerHTML = html;
-    updateTime();
-  } catch (err) {
-    document.getElementById('container').innerHTML = `<div class="error">Error loading live data: ${err.message}</div>`;
-  }
-}
+    .back-link {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--green);
+      text-decoration: none;
+      font-size: 13px;
+    }
+    
+    h1 {
+      font-size: 28px;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+    
+    .meta {
+      text-align: center;
+      color: var(--sub);
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .match-card {
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 16px 0;
+      border: 1px solid var(--border);
+    }
+    
+    .match-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .match-info {
+      flex: 1;
+    }
+    
+    .league {
+      font-size: 11px;
+      color: var(--sub);
+      margin-bottom: 2px;
+    }
+    
+    .match-title {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    
+    .elapsed {
+      font-size: 12px;
+      color: var(--sub);
+      text-align: right;
+    }
+    
+    .score-section {
+      text-align: center;
+      margin: 16px 0;
+    }
+    
+    .score {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    
+    .live-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+      background: var(--panel2);
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px solid var(--border);
+    }
+    
+    .team-live-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    
+    .stat-box {
+      background: var(--panel);
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    
+    .stat-label {
+      font-size: 10px;
+      color: var(--sub);
+      margin-bottom: 3px;
+    }
+    
+    .stat-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--green);
+    }
+    
+    .stat-vs {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+    }
+    
+    .stat-vs-label {
+      font-size: 9px;
+      color: var(--sub);
+    }
+    
+    .stat-vs-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    
+    .probabilities {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    
+    .prob-card {
+      background: var(--panel2);
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    
+    .prob-label {
+      font-size: 11px;
+      color: var(--sub);
+      margin-bottom: 6px;
+    }
+    
+    .prob-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    
+    .prob-sub {
+      font-size: 10px;
+      color: var(--green);
+      margin-top: 4px;
+    }
+    
+    .season-baseline {
+      font-size: 10px;
+      color: var(--sub);
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    
+    .no-matches {
+      text-align: center;
+      color: var(--sub);
+      padding: 40px 20px;
+    }
+    
+    .loading {
+      text-align: center;
+      color: var(--sub);
+      padding: 20px;
+    }
+    
+    .last-update {
+      text-align: center;
+      color: var(--sub);
+      font-size: 11px;
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    
+    .live-badge {
+      display: inline-block;
+      background: var(--warn);
+      color: #000;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+    }
+  </style>
+</head>
+<body>
+  <a href="../" class="back-link">← Back to SportsIQ</a>
+  <h1>⚡ Live Signals</h1>
+  <div class="meta">Live match stats with next-goal & BTTS probabilities · Updates every 60s</div>
+  
+  <div id="container">
+    <div class="loading">Loading live matches...</div>
+  </div>
+  
+  <div class="last-update">Last update: <span id="lastUpdate">—</span></div>
 
-function updateTime() {
-  document.getElementById('lastUpdate').innerText = new Date().toLocaleTimeString();
-}
-
-// Initial fetch
-fetchAndRender();
-
-// Poll every 60 seconds
-setInterval(fetchAndRender, 60000);
-</script>
-</body></html>
+  <script>
+    async function fetchAndRender() {
+      try {
+        const resp = await fetch('https://raw.githubusercontent.com/niibaboo/SportsIQ/main/docs/match-iq-live/live_matches.json?t=' + Date.now());
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+        
+        const container = document.getElementById('container');
+        
+        if (!data.matches || data.matches.length === 0) {
+          container.innerHTML = '<div class="no-matches">No live matches at the moment.<br><br>Check back during match days.</div>';
+          updateTime();
+          return;
+        }
+        
+        let html = '';
+        for (const m of data.matches) {
+          const nextGoal = m.next_goal || {};
+          const btts = m.btts || {};
+          
+          // Live stats (prioritized) or season stats (fallback)
+          const homeLive = m.home_live_stats || {};
+          const awayLive = m.away_live_stats || {};
+          const homeSeason = m.home_season_stats || {};
+          const awaySeason = m.away_season_stats || {};
+          
+          const homeShots = homeLive.shots !== null ? homeLive.shots : '—';
+          const awayShotsVal = awayLive.shots !== null ? awayLive.shots : '—';
+          const homeXG = homeLive.xg !== null ? homeLive.xg.toFixed(2) : '—';
+          const awayXG = awayLive.xg !== null ? awayLive.xg.toFixed(2) : '—';
+          const homePossession = homeLive.possession !== null ? homeLive.possession : '—';
+          const awayPossession = awayLive.possession !== null ? awayLive.possession : '—';
+          const homeSoT = homeLive.shots_on_target !== null ? homeLive.shots_on_target : '—';
+          const awaySoT = awayLive.shots_on_target !== null ? awayLive.shots_on_target : '—';
+          
+          const hasLiveData = (homeLive.xg !== null) || (awayLive.xg !== null);
+          
+          html += `
+            <div class="match-card">
+              <div class="match-header">
+                <div class="match-info">
+                  <div class="league">${m.league}</div>
+                  <div class="match-title">${m.home_team} vs ${m.away_team}${hasLiveData ? '<span class="live-badge">LIVE</span>' : ''}</div>
+                </div>
+                <div class="elapsed">${m.elapsed_minute || 0}' · ${m.status}</div>
+              </div>
+              
+              <div class="score-section">
+                <div class="score">${m.home_goals}-${m.away_goals}</div>
+              </div>
+              
+              <!-- Live Match Stats -->
+              <div class="live-stats-grid">
+                <!-- Home Team Stats -->
+                <div>
+                  <div style="font-weight: 700; font-size: 12px; margin-bottom: 8px; color: var(--text);">${m.home_team}</div>
+                  <div class="team-live-stats">
+                    <div class="stat-box">
+                      <div class="stat-label">Shots</div>
+                      <div class="stat-value">${homeShots}</div>
+                    </div>
+                    <div class="stat-box">
+                      <div class="stat-label">SoT</div>
+                      <div class="stat-value">${homeSoT}</div>
+                    </div>
+                    <div class="stat-box">
+                      <div class="stat-label">xG</div>
+                      <div class="stat-value">${homeXG}</div>
+                    </div>
+                    <div class="stat-box">
+                      <div class="stat-label">Possession</div>
+                      <div class="stat-value">${homePossession}${homePossession !== '—' ? '%' : ''}</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Away Team Stats -->
+                <div>
+                  <div style="font-weight: 700; font-size: 12px; margin-bottom: 8px; color: var(--text);">${m.away_team}</div>
+                  <div class="team-live-stats">
+                    <div class="stat-box">
+                      <div class="stat-label">Shots</div>
+                      <div class="stat-value">${awayShotsVal}</div>
+                    </div>
+                    <div class="stat-box">
+                      <div class="stat-label">SoT</div>
+                      <div class="stat-value">${awaySoT}</div>
+                    </div>
+                    <div class="stat-box">
+                      <div class="stat-label">xG</div>
+                      <div class="stat-value">${awayXG}</div>
+                    </div>
+                    <div class="stat-box">
+                      <div class="stat-label">Possession</div>
+                      <div class="stat-value">${awayPossession}${awayPossession !== '—' ? '%' : ''}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Probabilities -->
+              <div class="probabilities">
+                <div class="prob-card">
+                  <div class="prob-label">Next Goal<br>${m.home_team}</div>
+                  <div class="prob-value">${nextGoal.home || '—'}%</div>
+                </div>
+                <div class="prob-card">
+                  <div class="prob-label">Both Teams<br>to Score</div>
+                  <div class="prob-value">${btts.prob || '—'}%</div>
+                  <div class="prob-sub">${btts.status || ''}</div>
+                </div>
+                <div class="prob-card">
+                  <div class="prob-label">Next Goal<br>${m.away_team}</div>
+                  <div class="prob-value">${nextGoal.away || '—'}%</div>
+                </div>
+              </div>
+              
+              <!-- Season Baseline -->
+              <div class="season-baseline">
+                <strong>Season Avg:</strong><br>
+                ${m.home_team}: ${homeSeason.goals_for ? homeSeason.goals_for.toFixed(1) : '—'} goals/match · ${homeSeason.shots || '—'} shots/match<br>
+                ${m.away_team}: ${awaySeason.goals_for ? awaySeason.goals_for.toFixed(1) : '—'} goals/match · ${awaySeason.shots || '—'} shots/match
+              </div>
+            </div>
+          `;
+        }
+        
+        container.innerHTML = html;
+        updateTime();
+      } catch (err) {
+        document.getElementById('container').innerHTML = `<div class="no-matches">Error loading live data.<br><br>${err.message}</div>`;
+      }
+    }
+    
+    function updateTime() {
+      const now = new Date();
+      document.getElementById('lastUpdate').textContent = now.toLocaleTimeString();
+    }
+    
+    // Initial load + refresh every 60 seconds
+    fetchAndRender();
+    setInterval(fetchAndRender, 60000);
+  </script>
+</body>
+</html>
