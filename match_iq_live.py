@@ -142,11 +142,14 @@ def estimate_remaining_time(match):
     
     # Defensive: if status is a string (description), we can't get .minute from it
     if isinstance(status, str):
-        # Status is just a description string; assume mid-match
-        return 45
+        # Status is just a description string; can't determine minute
+        return None
     
-    elapsed = status.get("minute", 45)
-    return max(0, 90 - elapsed)  # assume 90 min total; could refine for ET
+    # Extract actual elapsed minute
+    elapsed = status.get("minute")
+    if elapsed is None:
+        return None
+    return elapsed
 
 
 def get_live_match_stats(match_id, key):
@@ -158,12 +161,15 @@ def get_live_match_stats(match_id, key):
     # 404 on stats endpoint — match may be too recent or stats not tracked
     # This is not a fatal error; we'll just use season baselines instead
     if data is None:
+        print(f"    [DEBUG] /live-stats returned None for match {match_id}")
         return None
     
     if not data.get("data"):
+        print(f"    [DEBUG] /live-stats returned no data for match {match_id}, full response: {data}")
         return None
     
     stats = data["data"]
+    print(f"    [DEBUG] /live-stats raw data: {stats}")
     
     # TheStatsAPI returns statistics with home/away keys
     home_stats = stats.get("home", {})
@@ -342,8 +348,15 @@ def build_live_signals(key):
             home_goals = score.get("home", 0)
             away_goals = score.get("away", 0)
             
-            # Time remaining
-            minutes_left = estimate_remaining_time(m)
+            # Get actual elapsed minute from match status
+            elapsed_minute = estimate_remaining_time(m)
+            if elapsed_minute is None:
+                # Can't determine minute, skip this match
+                print(f"    Skipping {m['home_team']['name']} vs {m['away_team']['name']} — no minute data")
+                continue
+            
+            # Calculate remaining time for probability calculations (assume 90 min match)
+            minutes_left = max(0, 90 - elapsed_minute)
             
             # Fetch live match statistics (shots, xG so far)
             # Some matches may not have stats available (404) — that's OK, fall back to season baselines
@@ -378,7 +391,7 @@ def build_live_signals(key):
                 "away_team": m["away_team"]["name"],
                 "home_goals": home_goals,
                 "away_goals": away_goals,
-                "elapsed_minute": estimate_remaining_time(m),  # return minute, not remaining
+                "elapsed_minute": elapsed_minute,
                 "minutes_remaining": minutes_left,
                 "status": m.get("status", "Unknown") if isinstance(m.get("status"), str) else m.get("status", {}).get("description", "Unknown"),
                 "kickoff": m.get("utc_date", ""),
