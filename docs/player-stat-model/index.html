@@ -289,8 +289,10 @@
     
     async function loadData() {
       try {
-        const response = await fetch('player_stats_data.json?' + Date.now());
-        if (!response.ok) throw new Error('Failed to load data');
+        // Use GitHub raw URL directly for reliability
+        const url = 'https://raw.githubusercontent.com/niibaboo/SportsIQ/main/docs/player-stat-model/player_stats_data.json?' + Date.now();
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to load data (' + response.status + ')');
         const data = await response.json();
         
         // Update timestamp
@@ -393,10 +395,13 @@
               ${gameLog && Object.keys(gameLog).length > 0 ? `
                 <div class="history">
                   <div class="history-label">Last 7 games</div>
-                  <div class="dots">
-                    ${gameLog.shots ? `<span>${gameLog.shots.map((v, i) => `<span class="dot ${v > 2 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</span>` : ''}
-                  </div>
-                  <div class="raw-data">${player.rolling_form_summary || '—'}</div>
+                  ${gameLog.shots ? `<div style="margin-bottom: 8px;"><small style="color: var(--sub);">Shots:</small> ${gameLog.shots.map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.shots_on_target ? `<div style="margin-bottom: 8px;"><small style="color: var(--sub);">SoT:</small> ${gameLog.shots_on_target.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.goals ? `<div style="margin-bottom: 8px;"><small style="color: var(--sub);">Goals:</small> ${gameLog.goals.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.assists ? `<div style="margin-bottom: 8px;"><small style="color: var(--sub);">Assists:</small> ${gameLog.assists.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.cards ? `<div style="margin-bottom: 8px;"><small style="color: var(--sub);">Cards:</small> ${gameLog.cards.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.tackles ? `<div style="margin-bottom: 8px;"><small style="color: var(--sub);">Tackles:</small> ${gameLog.tackles.map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.fouls ? `<div><small style="color: var(--sub);">Fouls:</small> ${gameLog.fouls.map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
                 </div>
               ` : ''}
             </div>
