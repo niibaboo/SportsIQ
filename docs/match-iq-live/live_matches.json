@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-19T11:35:49.765538+00:00",
+  "generated": "2026-09-19T12:58:26.519853+00:00",
   "total_live": 4,
   "matches": [
     {
@@ -8,7 +8,7 @@
       "home_team": "Tottenham Hotspur",
       "away_team": "Aston Villa",
       "home_goals": 0,
-      "away_goals": 0,
+      "away_goals": 1,
       "elapsed_minute": 45,
       "minutes_remaining": 45,
       "status": "live",
@@ -16,12 +16,12 @@
       "next_goal": {
         "home": 50,
         "away": 50,
-        "reasoning": "45min left, season rates 1.50/1.50 (no live stats yet)"
+        "reasoning": "45min left, live xG: 0.00/0.00, adj: 0.50x/0.50x"
       },
       "btts": {
-        "prob": 28,
-        "status": "0-0 (both must score)",
-        "reasoning": "Home 1.50, Away 1.50"
+        "prob": 31,
+        "status": "Home must score (45min left)",
+        "reasoning": "Home exp rate 1.50 (live xG: 0.00/0.00)"
       },
       "home_season_stats": {
         "goals_for": 1.5,
@@ -34,14 +34,18 @@
         "xg": 1.2
       },
       "home_live_stats": {
-        "shots": null,
-        "shots_on_target": null,
-        "xg": null
+        "shots": 0,
+        "shots_on_target": 0,
+        "xg": 0,
+        "possession": null,
+        "dangerous_attacks": 0
       },
       "away_live_stats": {
-        "shots": null,
-        "shots_on_target": null,
-        "xg": null
+        "shots": 0,
+        "shots_on_target": 0,
+        "xg": 0,
+        "possession": null,
+        "dangerous_attacks": 0
       }
     },
     {
@@ -50,7 +54,7 @@
       "home_team": "Stoke City",
       "away_team": "Sheffield United",
       "home_goals": 0,
-      "away_goals": 0,
+      "away_goals": 1,
       "elapsed_minute": 45,
       "minutes_remaining": 45,
       "status": "live",
@@ -58,12 +62,12 @@
       "next_goal": {
         "home": 50,
         "away": 50,
-        "reasoning": "45min left, season rates 1.50/1.50 (no live stats yet)"
+        "reasoning": "45min left, live xG: 0.00/0.00, adj: 0.50x/0.50x"
       },
       "btts": {
-        "prob": 28,
-        "status": "0-0 (both must score)",
-        "reasoning": "Home 1.50, Away 1.50"
+        "prob": 31,
+        "status": "Home must score (45min left)",
+        "reasoning": "Home exp rate 1.50 (live xG: 0.00/0.00)"
       },
       "home_season_stats": {
         "goals_for": 1.5,
@@ -76,14 +80,18 @@
         "xg": 1.2
       },
       "home_live_stats": {
-        "shots": null,
-        "shots_on_target": null,
-        "xg": null
+        "shots": 0,
+        "shots_on_target": 0,
+        "xg": 0,
+        "possession": null,
+        "dangerous_attacks": 0
       },
       "away_live_stats": {
-        "shots": null,
-        "shots_on_target": null,
-        "xg": null
+        "shots": 0,
+        "shots_on_target": 0,
+        "xg": 0,
+        "possession": null,
+        "dangerous_attacks": 0
       }
     },
     {
@@ -91,7 +99,7 @@
       "match_id": "mt_899709456",
       "home_team": "Millwall",
       "away_team": "West Ham United",
-      "home_goals": 0,
+      "home_goals": 2,
       "away_goals": 0,
       "elapsed_minute": 45,
       "minutes_remaining": 45,
@@ -100,12 +108,12 @@
       "next_goal": {
         "home": 50,
         "away": 50,
-        "reasoning": "45min left, season rates 1.50/1.50 (no live stats yet)"
+        "reasoning": "45min left, live xG: 0.00/0.00, adj: 0.50x/0.50x"
       },
       "btts": {
-        "prob": 28,
-        "status": "0-0 (both must score)",
-        "reasoning": "Home 1.50, Away 1.50"
+        "prob": 31,
+        "status": "Away must score (45min left)",
+        "reasoning": "Away exp rate 1.50 (live xG: 0.00/0.00)"
       },
       "home_season_stats": {
         "goals_for": 1.5,
@@ -118,14 +126,18 @@
         "xg": 1.2
       },
       "home_live_stats": {
-        "shots": null,
-        "shots_on_target": null,
-        "xg": null
+        "shots": 0,
+        "shots_on_target": 0,
+        "xg": 0,
+        "possession": null,
+        "dangerous_attacks": 0
       },
       "away_live_stats": {
-        "shots": null,
-        "shots_on_target": null,
-        "xg": null
+        "shots": 0,
+        "shots_on_target": 0,
+        "xg": 0,
+        "possession": null,
+        "dangerous_attacks": 0
       }
     },
     {
@@ -133,8 +145,8 @@
       "match_id": "mt_644094133",
       "home_team": "Cardiff City",
       "away_team": "Charlton Athletic",
-      "home_goals": 0,
-      "away_goals": 0,
+      "home_goals": 3,
+      "away_goals": 1,
       "elapsed_minute": 45,
       "minutes_remaining": 45,
       "status": "live",
@@ -142,12 +154,12 @@
       "next_goal": {
         "home": 50,
         "away": 50,
-        "reasoning": "45min left, season rates 1.50/1.50 (no live stats yet)"
+        "reasoning": "45min left, live xG: 0.00/0.00, adj: 0.50x/0.50x"
       },
       "btts": {
-        "prob": 28,
-        "status": "0-0 (both must score)",
-        "reasoning": "Home 1.50, Away 1.50"
+        "prob": 100,
+        "status": "BTTS Hit",
+        "reasoning": "Both teams have already scored"
       },
       "home_season_stats": {
         "goals_for": 1.5,
@@ -160,14 +172,18 @@
         "xg": 1.2
       },
       "home_live_stats": {
-        "shots": null,
-        "shots_on_target": null,
-        "xg": null
+        "shots": 0,
+        "shots_on_target": 0,
+        "xg": 0,
+        "possession": null,
+        "dangerous_attacks": 0
       },
       "away_live_stats": {
-        "shots": null,
-        "shots_on_target": null,
-        "xg": null
+        "shots": 0,
+        "shots_on_target": 0,
+        "xg": 0,
+        "possession": null,
+        "dangerous_attacks": 0
       }
     }
   ]
