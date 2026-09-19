@@ -2,38 +2,41 @@ name: Player Stat Model
 
 on:
   schedule:
-    # Daily 07:00 UTC — unchanged from before consolidation.
-    - cron: '0 7 * * *'
+    - cron: '0 12 * * *'  # 12:00 PM UTC daily
   workflow_dispatch: {}
 
 permissions:
   contents: write
 
 jobs:
-  build:
+  generate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repo
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-
       - name: Install dependencies
         run: pip install requests
-
-      - name: Run Player Stat Model (automated daily fixture scan)
+      - name: Generate Player Stat Model
         env:
           THESTATSAPI_KEY: ${{ secrets.THESTATSAPI_KEY }}
         run: python3 player_stat_model.py --auto
-
-      - name: Commit and push updated data
+      - name: Copy data to docs
+        run: |
+          mkdir -p docs/player-stat-model
+          if [ -f player_stats_data.json ]; then
+            cp player_stats_data.json docs/player-stat-model/player_stats_data.json
+            echo "✓ Copied player_stats_data.json"
+          fi
+          if [ -f player_stat_model.html ]; then
+            cp player_stat_model.html docs/player-stat-model/index.html
+            echo "✓ Copied index.html"
+          fi
+      - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          [ -d docs/player-stat-model ] && git add docs/player-stat-model/ || true
-          git diff --staged --quiet || git commit -m "Update Player Stat Model daily fixture scan"
-          git pull --rebase --autostash origin main
+          git add docs/player-stat-model/
+          git commit -m "Player Stat Model update $(date -u +'%Y-%m-%d %H:%M UTC')" || true
           git push
