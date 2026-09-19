@@ -1,13 +1,17 @@
-Date,League,HomeTeam,AwayTeam,Over25,BTTS,ExpCorners,CornersOver105
-2026-09-19T19:00:00.000Z,Eredivisie,Willem II Tilburg,Fortuna Sittard,81,73,7.32,12
-2026-09-19T16:30:00.000Z,Bundesliga,VfB Stuttgart,Borussia Dortmund,77,69,10.52,48
-2026-09-19T18:00:00.000Z,Eredivisie,AFC Ajax,Excelsior,70,69,12.04,66
-2026-09-20T10:15:00.000Z,Eredivisie,Feyenoord,FC Utrecht,91,74,9.89,40
-2026-09-20T14:45:00.000Z,Eredivisie,NEC Nijmegen,Go Ahead Eagles,82,79,10.57,49
-2026-09-20T13:30:00.000Z,Bundesliga,Bayer 04 Leverkusen,RB Leipzig,77,75,13.12,76
-2026-09-20T23:00:00.000Z,MLS,Inter Miami CF,San Diego FC,77,74,9.89,40
-2026-09-20T15:30:00.000Z,Bundesliga,FC Schalke 04,SV 07 Elversberg,70,69,7.82,17
-2026-09-26T23:30:00.000Z,MLS,Charlotte FC,Chicago Fire,72,70,9.19,32
-2026-09-26T23:30:00.000Z,MLS,CF Montréal,FC Cincinnati,71,70,10.61,49
-2026-09-27T23:00:00.000Z,MLS,Columbus Crew,Inter Miami CF,77,73,9.74,38
-2026-09-27T00:30:00.000Z,MLS,Nashville SC,Toronto FC,72,68,10.68,50
+Date,League,HomeTeam,AwayTeam,Over25,Over45,BTTS,ExpCorners,CornersOver105
+2026-09-19T19:00:00.000Z,Eredivisie,Willem II Tilburg,Fortuna Sittard,81,44,73,10.41,47
+2026-09-19T18:00:00.000Z,Eredivisie,AFC Ajax,Excelsior,70,29,68,9.99,42
+2026-09-20T10:15:00.000Z,Eredivisie,Feyenoord,FC Utrecht,91,64,74,11.19,56
+2026-09-20T12:00:00.000Z,Swiss Super League,FC Vaduz,FC Thun,87,54,80,10.68,50
+2026-09-20T15:00:00.000Z,Eliteserien,Tromsø IL,HamKam,82,46,70,8.91,28
+2026-09-20T14:45:00.000Z,Eredivisie,NEC Nijmegen,Go Ahead Eagles,82,45,79,8.87,28
+2026-09-20T14:30:00.000Z,Swiss Super League,Basel,FC St. Gallen 1879,79,41,75,11.65,62
+2026-09-20T13:30:00.000Z,Bundesliga,Bayer 04 Leverkusen,RB Leipzig,77,39,75,11.56,61
+2026-09-20T23:00:00.000Z,MLS,Inter Miami CF,San Diego FC,77,38,74,9.41,34
+2026-09-20T12:00:00.000Z,Danish Superliga,Brøndby IF,FC København,75,35,63,9.41,34
+2026-09-20T12:30:00.000Z,Eliteserien,Vålerenga IF,Fredrikstad FK,71,31,69,12.46,70
+2026-09-20T15:30:00.000Z,Bundesliga,FC Schalke 04,SV 07 Elversberg,70,29,69,10.4,47
+2026-09-26T23:30:00.000Z,MLS,Charlotte FC,Chicago Fire,72,32,70,11.34,58
+2026-09-26T23:30:00.000Z,MLS,CF Montréal,FC Cincinnati,71,31,70,11.13,56
+2026-09-27T23:00:00.000Z,MLS,Columbus Crew,Inter Miami CF,77,38,73,8.84,28
+2026-09-27T00:30:00.000Z,MLS,Nashville SC,Toronto FC,72,32,68,10.13,43
