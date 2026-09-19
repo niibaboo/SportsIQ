@@ -1,5 +1,41 @@
 [
   {
+    "match": "Lule\u00e5 HF vs R\u00f6gle",
+    "subject": "Lule\u00e5 HF",
+    "market": "Lule\u00e5 HF Over 1.5 Goals",
+    "prob": 70,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "SHL Team Total",
+    "detail": "proj 2.42 goals",
+    "history": "0/2/2/3/4"
+  },
+  {
+    "match": "Lule\u00e5 HF vs R\u00f6gle",
+    "subject": "R\u00f6gle",
+    "market": "R\u00f6gle Over 2.0 Goals",
+    "prob": 53,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "SHL Team Total",
+    "detail": "proj 2.81 goals",
+    "history": "3/0/0/5/4"
+  },
+  {
+    "match": "Lule\u00e5 HF vs R\u00f6gle",
+    "subject": "Lule\u00e5 HF vs R\u00f6gle",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 77,
+    "hit_rate": null,
+    "category": "SHL Game Total",
+    "detail": "proj 5.23 goals combined",
+    "history": null
+  },
+  {
     "match": "Djurg\u00e5rden vs IF Bj\u00f6rkl\u00f6ven",
     "subject": "Djurg\u00e5rden",
     "market": "Djurg\u00e5rden Over 2.0 Goals",
@@ -52,239 +88,59 @@
     "match": "F\u00e4rjestad vs Orebro HK",
     "subject": "Orebro HK",
     "market": "Orebro HK Over 2.0 Goals",
-    "prob": 53,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 2.81 goals",
-    "history": "2/3/3/4/2"
-  },
-  {
-    "match": "F\u00e4rjestad vs Orebro HK",
-    "subject": "F\u00e4rjestad vs Orebro HK",
-    "market": "Game Over 3.5 Total Goals",
-    "prob": 73,
-    "hit_rate": null,
-    "category": "SHL Game Total",
-    "detail": "proj 4.97 goals combined",
-    "history": null
-  },
-  {
-    "match": "Lule\u00e5 HF vs R\u00f6gle",
-    "subject": "Lule\u00e5 HF",
-    "market": "Lule\u00e5 HF Over 1.5 Goals",
-    "prob": 70,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 2.42 goals",
-    "history": "0/2/2/3/4"
-  },
-  {
-    "match": "Lule\u00e5 HF vs R\u00f6gle",
-    "subject": "R\u00f6gle",
-    "market": "R\u00f6gle Over 2.0 Goals",
-    "prob": 53,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 2.81 goals",
-    "history": "3/0/0/5/4"
-  },
-  {
-    "match": "Lule\u00e5 HF vs R\u00f6gle",
-    "subject": "Lule\u00e5 HF vs R\u00f6gle",
-    "market": "Game Over 3.5 Total Goals",
-    "prob": 77,
-    "hit_rate": null,
-    "category": "SHL Game Total",
-    "detail": "proj 5.23 goals combined",
-    "history": null
-  },
-  {
-    "match": "Skellefte\u00e5 AIK vs Bryn\u00e4s",
-    "subject": "Skellefte\u00e5 AIK",
-    "market": "Skellefte\u00e5 AIK Over 2.0 Goals",
-    "prob": 67,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 3.44 goals",
-    "history": "0/6/3/3/6"
-  },
-  {
-    "match": "Skellefte\u00e5 AIK vs Bryn\u00e4s",
-    "subject": "Bryn\u00e4s",
-    "market": "Bryn\u00e4s Over 1.5 Goals",
-    "prob": 68,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 2.37 goals",
-    "history": "3/2/3/1/3"
-  },
-  {
-    "match": "Skellefte\u00e5 AIK vs Bryn\u00e4s",
-    "subject": "Skellefte\u00e5 AIK vs Bryn\u00e4s",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 69,
-    "hit_rate": null,
-    "category": "SHL Game Total",
-    "detail": "proj 5.81 goals combined",
-    "history": null
-  },
-  {
-    "match": "Link\u00f6ping HC vs Timr\u00e5",
-    "subject": "Link\u00f6ping HC",
-    "market": "Link\u00f6ping HC Over 2.0 Goals",
     "prob": 55,
     "hit_rate": {
       "hits": 3,
       "total": 5
     },
     "category": "SHL Team Total",
-    "detail": "proj 2.89 goals",
-    "history": "4/2/4/2/3"
+    "detail": "proj 2.88 goals \u00b7 season 3.0/gm",
+    "history": "2/3/3/4/2"
   },
   {
-    "match": "Link\u00f6ping HC vs Timr\u00e5",
-    "subject": "Timr\u00e5",
-    "market": "Timr\u00e5 Over 3.0 Goals",
-    "prob": 71,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 4.83 goals",
-    "history": "2/5/7/4/5"
-  },
-  {
-    "match": "Link\u00f6ping HC vs Timr\u00e5",
-    "subject": "Link\u00f6ping HC vs Timr\u00e5",
-    "market": "Game Over 5.5 Total Goals",
-    "prob": 78,
-    "hit_rate": null,
-    "category": "SHL Game Total",
-    "detail": "proj 7.72 goals combined",
-    "history": null
-  },
-  {
-    "match": "HV71 vs Malm\u00f6 Redhawks",
-    "subject": "HV71",
-    "market": "HV71 Over 2.0 Goals",
-    "prob": 53,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 2.78 goals",
-    "history": "4/2/0/3/4"
-  },
-  {
-    "match": "HV71 vs Malm\u00f6 Redhawks",
-    "subject": "Malm\u00f6 Redhawks",
-    "market": "Malm\u00f6 Redhawks Over 1.5 Goals",
-    "prob": 73,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 2.57 goals",
-    "history": "1/3/3/2/3"
-  },
-  {
-    "match": "HV71 vs Malm\u00f6 Redhawks",
-    "subject": "HV71 vs Malm\u00f6 Redhawks",
+    "match": "F\u00e4rjestad vs Orebro HK",
+    "subject": "F\u00e4rjestad vs Orebro HK",
     "market": "Game Over 3.5 Total Goals",
-    "prob": 78,
+    "prob": 74,
     "hit_rate": null,
     "category": "SHL Game Total",
-    "detail": "proj 5.35 goals combined",
+    "detail": "proj 5.04 goals combined",
     "history": null
   },
   {
-    "match": "Fr\u00f6lunda vs V\u00e4xj\u00f6 Lakers",
-    "subject": "Fr\u00f6lunda",
-    "market": "Fr\u00f6lunda Over 2.0 Goals",
-    "prob": 54,
-    "hit_rate": {
-      "hits": 2,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 2.86 goals \u00b7 season 3.75/gm",
-    "history": "1/6/2/2/5"
-  },
-  {
-    "match": "Fr\u00f6lunda vs V\u00e4xj\u00f6 Lakers",
-    "subject": "V\u00e4xj\u00f6 Lakers",
-    "market": "V\u00e4xj\u00f6 Lakers Over 1.5 Goals",
+    "match": "T\u0159inec vs Plze\u0148",
+    "subject": "T\u0159inec",
+    "market": "T\u0159inec Over 2.5 Goals",
     "prob": 76,
     "hit_rate": {
       "hits": 3,
       "total": 5
     },
-    "category": "SHL Team Total",
-    "detail": "proj 2.77 goals",
-    "history": "3/1/3/1/6"
-  },
-  {
-    "match": "Fr\u00f6lunda vs V\u00e4xj\u00f6 Lakers",
-    "subject": "Fr\u00f6lunda vs V\u00e4xj\u00f6 Lakers",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 66,
-    "hit_rate": null,
-    "category": "SHL Game Total",
-    "detail": "proj 5.63 goals combined",
-    "history": null
-  },
-  {
-    "match": "Plze\u0148 vs T\u0159inec",
-    "subject": "Plze\u0148",
-    "market": "Plze\u0148 Over 1.5 Goals",
-    "prob": 72,
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
     "category": "Extraliga Team Total",
-    "detail": "proj 2.55 goals \u00b7 season 3.0/gm",
-    "history": "2/4/10/2/2"
-  },
-  {
-    "match": "Plze\u0148 vs T\u0159inec",
-    "subject": "T\u0159inec",
-    "market": "T\u0159inec Over 3.0 Goals",
-    "prob": 60,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 4.17 goals \u00b7 season 4.0/gm",
+    "detail": "proj 4.0 goals \u00b7 season 3.5/gm",
     "history": "5/1/6/2/6"
   },
   {
-    "match": "Plze\u0148 vs T\u0159inec",
-    "subject": "Plze\u0148 vs T\u0159inec",
-    "market": "Game Over 4.5 Total Goals",
-    "prob": 80,
+    "match": "T\u0159inec vs Plze\u0148",
+    "subject": "Plze\u0148",
+    "market": "Plze\u0148 Over 2.0 Goals",
+    "prob": 63,
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 3.25 goals \u00b7 season 5.0/gm",
+    "history": "2/4/10/2/2"
+  },
+  {
+    "match": "T\u0159inec vs Plze\u0148",
+    "subject": "T\u0159inec vs Plze\u0148",
+    "market": "Game Over 5.0 Total Goals",
+    "prob": 73,
     "hit_rate": null,
     "category": "Extraliga Game Total",
-    "detail": "proj 6.72 goals combined",
+    "detail": "proj 7.25 goals combined",
     "history": null
   },
   {
@@ -324,52 +180,52 @@
     "history": null
   },
   {
-    "match": "Davos vs Zug",
-    "subject": "Davos",
-    "market": "Davos Over 2.0 Goals",
-    "prob": 59,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "National League Team Total",
-    "detail": "proj 3.08 goals \u00b7 season 3.0/gm",
-    "history": "8/4/2/4/2"
-  },
-  {
-    "match": "Davos vs Zug",
-    "subject": "Zug",
-    "market": "Zug Over 3.0 Goals",
+    "match": "Lausanne vs Ambr\u00ec-Piotta",
+    "subject": "Lausanne",
+    "market": "Lausanne Over 2.0 Goals",
     "prob": 63,
     "hit_rate": {
-      "hits": 3,
+      "hits": 2,
       "total": 5
     },
     "category": "National League Team Total",
-    "detail": "proj 4.36 goals \u00b7 season 5.0/gm",
-    "history": "3/4/4/3/5"
+    "detail": "proj 3.25 goals \u00b7 season 6.0/gm",
+    "history": "4/2/6/0/2"
   },
   {
-    "match": "Davos vs Zug",
-    "subject": "Davos vs Zug",
-    "market": "Game Over 5.0 Total Goals",
-    "prob": 75,
+    "match": "Lausanne vs Ambr\u00ec-Piotta",
+    "subject": "Ambr\u00ec-Piotta",
+    "market": "Ambr\u00ec-Piotta Over 2.0 Goals",
+    "prob": 67,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 3.43 goals \u00b7 season 3.33/gm",
+    "history": "5/3/2/3/6"
+  },
+  {
+    "match": "Lausanne vs Ambr\u00ec-Piotta",
+    "subject": "Lausanne vs Ambr\u00ec-Piotta",
+    "market": "Game Over 4.5 Total Goals",
+    "prob": 80,
     "hit_rate": null,
     "category": "National League Game Total",
-    "detail": "proj 7.44 goals combined",
+    "detail": "proj 6.68 goals combined",
     "history": null
   },
   {
     "match": "Ajoie vs EHC Kloten",
     "subject": "Ajoie",
     "market": "Ajoie Over 2.0 Goals",
-    "prob": 65,
+    "prob": 62,
     "hit_rate": {
       "hits": 3,
       "total": 5
     },
     "category": "National League Team Total",
-    "detail": "proj 3.35 goals \u00b7 season 4.0/gm",
+    "detail": "proj 3.18 goals \u00b7 season 3.5/gm",
     "history": "0/3/4/2/4"
   },
   {
@@ -389,23 +245,23 @@
     "match": "Ajoie vs EHC Kloten",
     "subject": "Ajoie vs EHC Kloten",
     "market": "Game Over 5.0 Total Goals",
-    "prob": 74,
+    "prob": 72,
     "hit_rate": null,
     "category": "National League Game Total",
-    "detail": "proj 7.33 goals combined",
+    "detail": "proj 7.16 goals combined",
     "history": null
   },
   {
     "match": "Biel vs Langnau Tigers",
     "subject": "Biel",
-    "market": "Biel Over 2.5 Goals",
-    "prob": 71,
+    "market": "Biel Over 2.0 Goals",
+    "prob": 57,
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
     "category": "National League Team Total",
-    "detail": "proj 3.68 goals \u00b7 season 4.0/gm",
+    "detail": "proj 2.98 goals \u00b7 season 2.0/gm",
     "history": "5/5/0/4/4"
   },
   {
@@ -424,11 +280,11 @@
   {
     "match": "Biel vs Langnau Tigers",
     "subject": "Biel vs Langnau Tigers",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 72,
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 78,
     "hit_rate": null,
     "category": "National League Game Total",
-    "detail": "proj 6.06 goals combined",
+    "detail": "proj 5.36 goals combined",
     "history": null
   },
   {
@@ -468,39 +324,39 @@
     "history": null
   },
   {
-    "match": "Lausanne vs Ambr\u00ec-Piotta",
-    "subject": "Lausanne",
-    "market": "Lausanne Over 1.0 Goals",
-    "prob": 44,
+    "match": "Davos vs Zug",
+    "subject": "Davos",
+    "market": "Davos Over 2.5 Goals",
+    "prob": 68,
     "hit_rate": {
-      "hits": 4,
+      "hits": 3,
       "total": 5
     },
     "category": "National League Team Total",
-    "detail": "proj 1.5 goals \u00b7 season 1.0/gm",
-    "history": "4/2/6/0/2"
+    "detail": "proj 3.52 goals \u00b7 season 4.25/gm",
+    "history": "8/4/2/4/2"
   },
   {
-    "match": "Lausanne vs Ambr\u00ec-Piotta",
-    "subject": "Ambr\u00ec-Piotta",
-    "market": "Ambr\u00ec-Piotta Over 3.0 Goals",
+    "match": "Davos vs Zug",
+    "subject": "Zug",
+    "market": "Zug Over 3.0 Goals",
     "prob": 63,
     "hit_rate": {
-      "hits": 2,
+      "hits": 3,
       "total": 5
     },
     "category": "National League Team Total",
-    "detail": "proj 4.36 goals \u00b7 season 6.0/gm",
-    "history": "5/3/2/3/6"
+    "detail": "proj 4.36 goals \u00b7 season 5.0/gm",
+    "history": "3/4/4/3/5"
   },
   {
-    "match": "Lausanne vs Ambr\u00ec-Piotta",
-    "subject": "Lausanne vs Ambr\u00ec-Piotta",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 70,
+    "match": "Davos vs Zug",
+    "subject": "Davos vs Zug",
+    "market": "Game Over 5.5 Total Goals",
+    "prob": 80,
     "hit_rate": null,
     "category": "National League Game Total",
-    "detail": "proj 5.86 goals combined",
+    "detail": "proj 7.88 goals combined",
     "history": null
   }
 ]
