@@ -153,7 +153,7 @@ def get_live_match_stats(match_id, key):
     """Fetch live match statistics (shots, xG, possession, etc.) from TheStatsAPI.
     Returns a dict with 'home' and 'away' keys, each containing multiple stats.
     Some matches may not have stats available (404) — return None in that case."""
-    data = _get(f"/football/matches/{match_id}/statistics", key)
+    data = _get(f"/football/matches/{match_id}/live-stats", key)
     
     # 404 on stats endpoint — match may be too recent or stats not tracked
     # This is not a fatal error; we'll just use season baselines instead
