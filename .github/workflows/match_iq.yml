@@ -2,8 +2,10 @@ name: Match IQ
 
 on:
   schedule:
-    # Mon/Wed/Fri 06:00 UTC — unchanged from before consolidation.
-    - cron: '0 6 * * 1,3,5'
+    # Daily 06:00 UTC — switched from Mon/Wed/Fri now that Match IQ feeds
+    # the Daily Signals scanners (Over 2.5 / BTTS / Corners), which need
+    # a fresh run each day rather than every other day.
+    - cron: '0 6 * * *'
   workflow_dispatch: {}
 
 permissions:
