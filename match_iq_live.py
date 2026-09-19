@@ -145,28 +145,31 @@ def estimate_remaining_time(match):
 
 
 def get_live_match_stats(match_id, key):
-    """Fetch live match statistics from TheStatsAPI's live-stats endpoint.
-    Response structure:
-    {
-      "data": {
-        "stats": {
-          "ball_possession": {"all": {"home": 48, "away": 52}},
-          "total_shots": {"all": {"home": 7, "away": 9}},
-          "corner_kicks": {"all": {"home": 4, "away": 5}}
-        }
-      }
-    }
-    """
+    """Fetch live match statistics and elapsed minute from TheStatsAPI's live-stats endpoint.
+    Returns a tuple: (stats_dict, elapsed_minutes)
+    stats_dict has 'home' and 'away' keys with shot, possession data.
+    elapsed_minutes is extracted from data.meta.elapsed_minutes"""
     data = _get(f"/football/matches/{match_id}/live-stats", key)
     
     if data is None:
-        return None
+        return None, None
+    
+    # Navigate to the data object
+    if not data.get("data"):
+        return None, None
+    
+    response_data = data["data"]
+    
+    # Extract elapsed minutes from meta
+    elapsed_minutes = None
+    if response_data.get("meta"):
+        elapsed_minutes = response_data["meta"].get("elapsed_minutes")
     
     # Navigate to the stats object
-    if not data.get("data") or not data["data"].get("stats"):
-        return None
+    if not response_data.get("stats"):
+        return None, elapsed_minutes
     
-    stats = data["data"]["stats"]
+    stats = response_data["stats"]
     
     # Extract possession
     possession = stats.get("ball_possession", {}).get("all", {})
@@ -188,7 +191,7 @@ def get_live_match_stats(match_id, key):
     home_corners = corners.get("home")
     away_corners = corners.get("away")
     
-    return {
+    stats_dict = {
         "home": {
             "shots": home_shots,
             "shots_on_target": home_sot,
@@ -204,6 +207,8 @@ def get_live_match_stats(match_id, key):
             "corners": away_corners,
         }
     }
+    
+    return stats_dict, elapsed_minutes
 
 
 def calc_next_goal_prob(home_exp_rate, away_exp_rate, minutes_remaining, 
@@ -357,34 +362,47 @@ def build_live_signals(key):
             home_goals = score.get("home", 0)
             away_goals = score.get("away", 0)
             
-            # Get actual elapsed minute from match status
-            elapsed_minute = estimate_remaining_time(m)
+            # Fetch live match statistics (shots, possession, elapsed minute)
+            # The elapsed_minutes comes from the live-stats endpoint, not the main match object
+            try:
+                live_stats_tuple = get_live_match_stats(m["id"], key)
+                if live_stats_tuple:
+                    live_stats, elapsed_minute_from_stats = live_stats_tuple
+                else:
+                    live_stats, elapsed_minute_from_stats = None, None
+            except Exception as e:
+                print(f"    Warning: couldn't fetch stats for {m['home_team']['name']} vs {m['away_team']['name']}: {e}")
+                live_stats, elapsed_minute_from_stats = None, None
+            
+            # Use elapsed minute from live-stats if available, else fallback to match object
+            elapsed_minute = elapsed_minute_from_stats
             if elapsed_minute is None:
-                # Can't determine minute, skip this match
-                print(f"    Skipping {m['home_team']['name']} vs {m['away_team']['name']} — no minute data")
+                elapsed_minute = estimate_remaining_time(m)
+            
+            if elapsed_minute is None:
+                # Debug: show what's happening
+                print(f"    Skipping {m['home_team']['name']} vs {m['away_team']['name']} — no minute data from live-stats or match object")
                 continue
             
             # Calculate remaining time for probability calculations (assume 90 min match)
             minutes_left = max(0, 90 - elapsed_minute)
             
-            # Fetch live match statistics (shots, xG so far)
-            # Some matches may not have stats available (404) — that's OK, fall back to season baselines
-            try:
-                live_stats = get_live_match_stats(m["id"], key)
-            except Exception as e:
-                print(f"    Warning: couldn't fetch stats for {m['home_team']['name']} vs {m['away_team']['name']}: {e}")
-                live_stats = None
-            
             home_live_xg = live_stats["home"]["xg"] if live_stats else None
             away_live_xg = live_stats["away"]["xg"] if live_stats else None
-            home_shots = live_stats["home"]["shots"] if live_stats else None
-            away_shots = live_stats["away"]["shots"] if live_stats else None
+            home_shots_val = live_stats["home"]["shots"] if live_stats else None
+            away_shots_val = live_stats["away"]["shots"] if live_stats else None
+            home_possession_val = live_stats["home"]["possession"] if live_stats else None
+            away_possession_val = live_stats["away"]["possession"] if live_stats else None
+            home_sot_val = live_stats["home"]["shots_on_target"] if live_stats else None
+            away_sot_val = live_stats["away"]["shots_on_target"] if live_stats else None
+            home_corners_val = live_stats["home"]["corners"] if live_stats else None
+            away_corners_val = live_stats["away"]["corners"] if live_stats else None
             
             # Calculate probabilities using both season baselines and live stats
             next_goal = calc_next_goal_prob(
                 home_stats["goals_for"], away_stats["goals_for"], minutes_left,
                 home_live_xg=home_live_xg, away_live_xg=away_live_xg,
-                home_shots=home_shots, away_shots=away_shots
+                home_shots=home_shots_val, away_shots=away_shots_val
             )
             btts = calc_btts_prob(
                 home_goals, away_goals,
@@ -409,18 +427,18 @@ def build_live_signals(key):
                 "home_season_stats": home_stats,  # season averages (baseline)
                 "away_season_stats": away_stats,  # season averages (baseline)
                 "home_live_stats": {  # live stats this match
-                    "shots": home_shots,
-                    "shots_on_target": live_stats["home"]["shots_on_target"] if live_stats else None,
-                    "xg": live_stats["home"]["xg"] if live_stats else None,
-                    "possession": live_stats["home"]["possession"] if live_stats else None,
-                    "corners": live_stats["home"]["corners"] if live_stats else None,
+                    "shots": home_shots_val,
+                    "shots_on_target": home_sot_val,
+                    "xg": home_live_xg,
+                    "possession": home_possession_val,
+                    "corners": home_corners_val,
                 },
                 "away_live_stats": {  # live stats this match
-                    "shots": away_shots,
-                    "shots_on_target": live_stats["away"]["shots_on_target"] if live_stats else None,
-                    "xg": live_stats["away"]["xg"] if live_stats else None,
-                    "possession": live_stats["away"]["possession"] if live_stats else None,
-                    "corners": live_stats["away"]["corners"] if live_stats else None,
+                    "shots": away_shots_val,
+                    "shots_on_target": away_sot_val,
+                    "xg": away_live_xg,
+                    "possession": away_possession_val,
+                    "corners": away_corners_val,
                 },
             })
     
