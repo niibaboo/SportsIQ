@@ -150,8 +150,8 @@ def estimate_remaining_time(match):
 
 
 def get_live_match_stats(match_id, key):
-    """Fetch live match statistics (shots, xG, etc.) from TheStatsAPI.
-    Returns a dict with 'home' and 'away' keys, each containing shots and xG.
+    """Fetch live match statistics (shots, xG, possession, etc.) from TheStatsAPI.
+    Returns a dict with 'home' and 'away' keys, each containing multiple stats.
     Some matches may not have stats available (404) — return None in that case."""
     data = _get(f"/football/matches/{match_id}/statistics", key)
     
@@ -165,7 +165,7 @@ def get_live_match_stats(match_id, key):
     
     stats = data["data"]
     
-    # TheStatsAPI returns statistics in a specific format with home/away keys
+    # TheStatsAPI returns statistics with home/away keys
     home_stats = stats.get("home", {})
     away_stats = stats.get("away", {})
     
@@ -174,11 +174,19 @@ def get_live_match_stats(match_id, key):
             "shots": home_stats.get("shots", 0),
             "shots_on_target": home_stats.get("shots_on_target", 0),
             "xg": home_stats.get("expected_goals", 0),
+            "possession": home_stats.get("possession", None),
+            "dangerous_attacks": home_stats.get("dangerous_attacks", 0),
+            "passes": home_stats.get("passes", 0),
+            "passes_completed": home_stats.get("passes_completed", 0),
         },
         "away": {
             "shots": away_stats.get("shots", 0),
             "shots_on_target": away_stats.get("shots_on_target", 0),
             "xg": away_stats.get("expected_goals", 0),
+            "possession": away_stats.get("possession", None),
+            "dangerous_attacks": away_stats.get("dangerous_attacks", 0),
+            "passes": away_stats.get("passes", 0),
+            "passes_completed": away_stats.get("passes_completed", 0),
         }
     }
 
@@ -382,11 +390,15 @@ def build_live_signals(key):
                     "shots": home_shots,
                     "shots_on_target": live_stats["home"]["shots_on_target"] if live_stats else None,
                     "xg": home_live_xg,
+                    "possession": live_stats["home"]["possession"] if live_stats else None,
+                    "dangerous_attacks": live_stats["home"]["dangerous_attacks"] if live_stats else None,
                 },
                 "away_live_stats": {  # live stats this match
                     "shots": away_shots,
                     "shots_on_target": live_stats["away"]["shots_on_target"] if live_stats else None,
                     "xg": away_live_xg,
+                    "possession": live_stats["away"]["possession"] if live_stats else None,
+                    "dangerous_attacks": live_stats["away"]["dangerous_attacks"] if live_stats else None,
                 },
             })
     
