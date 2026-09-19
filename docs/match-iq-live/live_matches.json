@@ -1,5 +1,174 @@
 {
-  "generated": "2026-09-19T06:39:30.200964+00:00",
-  "total_live": 0,
-  "matches": []
+  "generated": "2026-09-19T11:35:49.765538+00:00",
+  "total_live": 4,
+  "matches": [
+    {
+      "league": "Premier League",
+      "match_id": "mt_155833448",
+      "home_team": "Tottenham Hotspur",
+      "away_team": "Aston Villa",
+      "home_goals": 0,
+      "away_goals": 0,
+      "elapsed_minute": 45,
+      "minutes_remaining": 45,
+      "status": "live",
+      "kickoff": "2026-09-19T11:30:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "45min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 28,
+        "status": "0-0 (both must score)",
+        "reasoning": "Home 1.50, Away 1.50"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": null,
+        "shots_on_target": null,
+        "xg": null
+      },
+      "away_live_stats": {
+        "shots": null,
+        "shots_on_target": null,
+        "xg": null
+      }
+    },
+    {
+      "league": "Championship",
+      "match_id": "mt_988328626",
+      "home_team": "Stoke City",
+      "away_team": "Sheffield United",
+      "home_goals": 0,
+      "away_goals": 0,
+      "elapsed_minute": 45,
+      "minutes_remaining": 45,
+      "status": "live",
+      "kickoff": "2026-09-19T11:30:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "45min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 28,
+        "status": "0-0 (both must score)",
+        "reasoning": "Home 1.50, Away 1.50"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": null,
+        "shots_on_target": null,
+        "xg": null
+      },
+      "away_live_stats": {
+        "shots": null,
+        "shots_on_target": null,
+        "xg": null
+      }
+    },
+    {
+      "league": "Championship",
+      "match_id": "mt_899709456",
+      "home_team": "Millwall",
+      "away_team": "West Ham United",
+      "home_goals": 0,
+      "away_goals": 0,
+      "elapsed_minute": 45,
+      "minutes_remaining": 45,
+      "status": "live",
+      "kickoff": "2026-09-19T11:30:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "45min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 28,
+        "status": "0-0 (both must score)",
+        "reasoning": "Home 1.50, Away 1.50"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": null,
+        "shots_on_target": null,
+        "xg": null
+      },
+      "away_live_stats": {
+        "shots": null,
+        "shots_on_target": null,
+        "xg": null
+      }
+    },
+    {
+      "league": "Championship",
+      "match_id": "mt_644094133",
+      "home_team": "Cardiff City",
+      "away_team": "Charlton Athletic",
+      "home_goals": 0,
+      "away_goals": 0,
+      "elapsed_minute": 45,
+      "minutes_remaining": 45,
+      "status": "live",
+      "kickoff": "2026-09-19T11:30:00.000Z",
+      "next_goal": {
+        "home": 50,
+        "away": 50,
+        "reasoning": "45min left, season rates 1.50/1.50 (no live stats yet)"
+      },
+      "btts": {
+        "prob": 28,
+        "status": "0-0 (both must score)",
+        "reasoning": "Home 1.50, Away 1.50"
+      },
+      "home_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "away_season_stats": {
+        "goals_for": 1.5,
+        "shots": 12,
+        "xg": 1.2
+      },
+      "home_live_stats": {
+        "shots": null,
+        "shots_on_target": null,
+        "xg": null
+      },
+      "away_live_stats": {
+        "shots": null,
+        "shots_on_target": null,
+        "xg": null
+      }
+    }
+  ]
 }
