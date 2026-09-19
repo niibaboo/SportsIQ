@@ -73,6 +73,17 @@ LEAGUE_SEARCH_NAMES = [
     # "Ligue 1",  # de-listed — found unreliable
     "UEFA Champions League",
     "MLS",
+    "Swiss Super League",  # confirmed via check_swiss_league.py: full shots/SoT/
+                            # corners/cards coverage, xG available, 12 teams,
+                            # ~3.0 goals/match in recent seasons — good Over 2.5
+                            # signal, verified before adding rather than guessed
+    "Danish Superliga",  # confirmed via check_league_coverage.py: full stats
+                          # coverage incl. red_cards, ~3.1 goals/match consistently
+                          # across 2024-25 and 2025-26 seasons
+    "Eliteserien",  # Norway, confirmed via check_league_coverage.py: full stats
+                     # coverage (red_cards missing on the one match checked, same
+                     # "likely just 0" pattern seen elsewhere, not a real gap),
+                     # xG available, 16 teams, ~3.1-3.2 goals/match across 2025-26
 ]
 
 FIXTURE_WINDOW_DAYS = 10
