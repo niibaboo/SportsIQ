@@ -331,7 +331,17 @@ def build_live_signals(key):
         matches = get_live_matches(comp_id, key)
         print(f"  {len(matches)} live match(es)")
         
-        for m in matches:
+        for i, m in enumerate(matches):
+            # DEBUG: Print the first match's structure to see what fields are available
+            if i == 0:
+                print(f"    [DEBUG] First match top-level keys: {list(m.keys())}")
+                print(f"    [DEBUG] Full first match: {m}")
+                status = m.get('status')
+                print(f"    [DEBUG] status value: {status}")
+                print(f"    [DEBUG] status type: {type(status)}")
+                if isinstance(status, dict):
+                    print(f"    [DEBUG] status keys: {list(status.keys())}")
+            
             home_id = m["home_team"]["id"]
             away_id = m["away_team"]["id"]
             
