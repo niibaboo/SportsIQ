@@ -575,13 +575,15 @@
                   const probClass = getProbClass(prob);
                   const legId = `${player.player_name}|${prop}`;
                   return `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--border);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border);">
                       <div style="display: flex; align-items: center; flex: 1;">
                         <input type="checkbox" class="prop-checkbox" data-leg="${legId}" onclick="toggleLeg('${player.player_name}', '${prop}', ${prob})" />
                         <span style="font-size: 13px; color: var(--sub);">${prop.replace(/_/g, ' ')}</span>
                       </div>
-                      <span class="prob ${probClass}">${(prob * 100).toFixed(0)}%</span>
-                      ${hr ? `<span style="font-size: 11px; color: var(--sub);">${hr.hits}/${hr.total}</span>` : ''}
+                      <div style="display: flex; gap: 16px; align-items: center;">
+                        <span class="prob ${probClass}" style="min-width: 50px; text-align: right;">${(prob * 100).toFixed(0)}%</span>
+                        ${hr ? `<span style="font-size: 11px; color: var(--sub); min-width: 40px; text-align: right;">${hr.hits}/${hr.total}</span>` : ''}
+                      </div>
                     </div>
                   `;
                 }).join('')}
@@ -589,13 +591,13 @@
               ${gameLog && Object.keys(gameLog).length > 0 ? `
                 <div class="history">
                   <div style="margin-bottom: 12px; font-weight: 600; color: var(--text);">Last 7 games</div>
-                  ${gameLog.shots ? `<div class="stat-row"><div class="stat-label">Shots:</div> ${gameLog.shots.map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
-                  ${gameLog.shots_on_target ? `<div class="stat-row"><div class="stat-label">SoT:</div> ${gameLog.shots_on_target.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
-                  ${gameLog.goals ? `<div class="stat-row"><div class="stat-label">Goals:</div> ${gameLog.goals.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
-                  ${gameLog.assists ? `<div class="stat-row"><div class="stat-label">Assists:</div> ${gameLog.assists.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
-                  ${gameLog.cards ? `<div class="stat-row"><div class="stat-label">Cards:</div> ${gameLog.cards.map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
-                  ${gameLog.tackles ? `<div class="stat-row"><div class="stat-label">Tackles:</div> ${gameLog.tackles.map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
-                  ${gameLog.fouls ? `<div class="stat-row"><div class="stat-label">Fouls:</div> ${gameLog.fouls.map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.shots ? `<div class="stat-row"><div class="stat-label">Shots:</div> ${gameLog.shots.slice(-7).map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.shots_on_target ? `<div class="stat-row"><div class="stat-label">SoT:</div> ${gameLog.shots_on_target.slice(-7).map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.goals ? `<div class="stat-row"><div class="stat-label">Goals:</div> ${gameLog.goals.slice(-7).map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.assists ? `<div class="stat-row"><div class="stat-label">Assists:</div> ${gameLog.assists.slice(-7).map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.cards ? `<div class="stat-row"><div class="stat-label">Cards:</div> ${gameLog.cards.slice(-7).map((v, i) => `<span class="dot ${v > 0.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.tackles ? `<div class="stat-row"><div class="stat-label">Tackles:</div> ${gameLog.tackles.slice(-7).map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
+                  ${gameLog.fouls ? `<div class="stat-row"><div class="stat-label">Fouls:</div> ${gameLog.fouls.slice(-7).map((v, i) => `<span class="dot ${v > 1.5 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>` : ''}
                 </div>
               ` : ''}
             </div>
