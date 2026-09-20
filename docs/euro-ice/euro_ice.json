@@ -1,41 +1,5 @@
 [
   {
-    "match": "Liberec B\u00edl\u00ed Tyg\u0159i vs Kladno",
-    "subject": "Liberec B\u00edl\u00ed Tyg\u0159i",
-    "market": "Liberec B\u00edl\u00ed Tyg\u0159i Over 1.0 Goals",
-    "prob": 55,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 1.83 goals \u00b7 season 2.0/gm",
-    "history": "3/0/2/6/1"
-  },
-  {
-    "match": "Liberec B\u00edl\u00ed Tyg\u0159i vs Kladno",
-    "subject": "Kladno",
-    "market": "Kladno Over 1.5 Goals",
-    "prob": 65,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 2.22 goals \u00b7 season 1.67/gm",
-    "history": "1/2/2/4/3"
-  },
-  {
-    "match": "Liberec B\u00edl\u00ed Tyg\u0159i vs Kladno",
-    "subject": "Liberec B\u00edl\u00ed Tyg\u0159i vs Kladno",
-    "market": "Game Over 2.5 Total Goals",
-    "prob": 77,
-    "hit_rate": null,
-    "category": "Extraliga Game Total",
-    "detail": "proj 4.05 goals combined",
-    "history": null
-  },
-  {
     "match": "Pardubice Dynamo vs Karlovy Vary",
     "subject": "Pardubice Dynamo",
     "market": "Pardubice Dynamo Over 2.0 Goals",
@@ -72,42 +36,6 @@
     "history": null
   },
   {
-    "match": "Kometa Brno vs Mountfield HK",
-    "subject": "Kometa Brno",
-    "market": "Kometa Brno Over 1.5 Goals",
-    "prob": 67,
-    "hit_rate": {
-      "hits": 2,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 2.32 goals \u00b7 season 3.0/gm",
-    "history": "1/3/1/1/5"
-  },
-  {
-    "match": "Kometa Brno vs Mountfield HK",
-    "subject": "Mountfield HK",
-    "market": "Mountfield HK Over 1.0 Goals",
-    "prob": 55,
-    "hit_rate": {
-      "hits": 2,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 1.86 goals \u00b7 season 2.5/gm",
-    "history": "1/1/3/5/0"
-  },
-  {
-    "match": "Kometa Brno vs Mountfield HK",
-    "subject": "Kometa Brno vs Mountfield HK",
-    "market": "Game Over 3.0 Total Goals",
-    "prob": 60,
-    "hit_rate": null,
-    "category": "Extraliga Game Total",
-    "detail": "proj 4.18 goals combined",
-    "history": null
-  },
-  {
     "match": "\u010cesk\u00e9 Bud\u011bjovice vs Olomouc HC",
     "subject": "\u010cesk\u00e9 Bud\u011bjovice",
     "market": "\u010cesk\u00e9 Bud\u011bjovice Over 2.0 Goals",
@@ -141,6 +69,78 @@
     "hit_rate": null,
     "category": "Extraliga Game Total",
     "detail": "proj 5.52 goals combined",
+    "history": null
+  },
+  {
+    "match": "Liberec B\u00edl\u00ed Tyg\u0159i vs Kladno",
+    "subject": "Liberec B\u00edl\u00ed Tyg\u0159i",
+    "market": "Liberec B\u00edl\u00ed Tyg\u0159i Over 1.0 Goals",
+    "prob": 55,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 1.83 goals \u00b7 season 2.0/gm",
+    "history": "3/0/2/6/1"
+  },
+  {
+    "match": "Liberec B\u00edl\u00ed Tyg\u0159i vs Kladno",
+    "subject": "Kladno",
+    "market": "Kladno Over 1.5 Goals",
+    "prob": 65,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 2.22 goals \u00b7 season 1.67/gm",
+    "history": "1/2/2/4/3"
+  },
+  {
+    "match": "Liberec B\u00edl\u00ed Tyg\u0159i vs Kladno",
+    "subject": "Liberec B\u00edl\u00ed Tyg\u0159i vs Kladno",
+    "market": "Game Over 2.5 Total Goals",
+    "prob": 77,
+    "hit_rate": null,
+    "category": "Extraliga Game Total",
+    "detail": "proj 4.05 goals combined",
+    "history": null
+  },
+  {
+    "match": "Kometa Brno vs Mountfield HK",
+    "subject": "Kometa Brno",
+    "market": "Kometa Brno Over 1.5 Goals",
+    "prob": 67,
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 2.32 goals \u00b7 season 3.0/gm",
+    "history": "1/3/1/1/5"
+  },
+  {
+    "match": "Kometa Brno vs Mountfield HK",
+    "subject": "Mountfield HK",
+    "market": "Mountfield HK Over 1.0 Goals",
+    "prob": 55,
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 1.86 goals \u00b7 season 2.5/gm",
+    "history": "1/1/3/5/0"
+  },
+  {
+    "match": "Kometa Brno vs Mountfield HK",
+    "subject": "Kometa Brno vs Mountfield HK",
+    "market": "Game Over 3.0 Total Goals",
+    "prob": 60,
+    "hit_rate": null,
+    "category": "Extraliga Game Total",
+    "detail": "proj 4.18 goals combined",
     "history": null
   },
   {
@@ -252,42 +252,6 @@
     "history": null
   },
   {
-    "match": "Straubing Tigers vs Krefeld Pinguine",
-    "subject": "Straubing Tigers",
-    "market": "Straubing Tigers Over 1.0 Goals",
-    "prob": 47,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 1.58 goals \u00b7 season 1.33/gm",
-    "history": "3/1/2/1/2"
-  },
-  {
-    "match": "Straubing Tigers vs Krefeld Pinguine",
-    "subject": "Krefeld Pinguine",
-    "market": "Krefeld Pinguine Over 1.0 Goals",
-    "prob": 55,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 1.84 goals \u00b7 season 1.0/gm",
-    "history": "3/3/3/3/1"
-  },
-  {
-    "match": "Straubing Tigers vs Krefeld Pinguine",
-    "subject": "Straubing Tigers vs Krefeld Pinguine",
-    "market": "Game Over 2.0 Total Goals",
-    "prob": 66,
-    "hit_rate": null,
-    "category": "DEL Game Total",
-    "detail": "proj 3.42 goals combined",
-    "history": null
-  },
-  {
     "match": "Grizzly Wolfsburg vs M\u00fcnchen Red Bulls",
     "subject": "Grizzly Wolfsburg",
     "market": "Grizzly Wolfsburg Over 3.5 Goals",
@@ -324,39 +288,39 @@
     "history": null
   },
   {
-    "match": "Bremerhaven vs Iserlohn Roosters",
-    "subject": "Bremerhaven",
-    "market": "Bremerhaven Over 2.0 Goals",
+    "match": "Straubing Tigers vs Krefeld Pinguine",
+    "subject": "Straubing Tigers",
+    "market": "Straubing Tigers Over 1.0 Goals",
+    "prob": 47,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 1.58 goals \u00b7 season 1.33/gm",
+    "history": "3/1/2/1/2"
+  },
+  {
+    "match": "Straubing Tigers vs Krefeld Pinguine",
+    "subject": "Krefeld Pinguine",
+    "market": "Krefeld Pinguine Over 1.0 Goals",
     "prob": 55,
     "hit_rate": {
-      "hits": 3,
+      "hits": 4,
       "total": 5
     },
     "category": "DEL Team Total",
-    "detail": "proj 2.9 goals \u00b7 season 3.0/gm",
-    "history": "2/5/3/2/3"
+    "detail": "proj 1.84 goals \u00b7 season 1.0/gm",
+    "history": "3/3/3/3/1"
   },
   {
-    "match": "Bremerhaven vs Iserlohn Roosters",
-    "subject": "Iserlohn Roosters",
-    "market": "Iserlohn Roosters Over 2.0 Goals",
-    "prob": 62,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 3.19 goals \u00b7 season 3.33/gm",
-    "history": "1/2/4/4/3"
-  },
-  {
-    "match": "Bremerhaven vs Iserlohn Roosters",
-    "subject": "Bremerhaven vs Iserlohn Roosters",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 73,
+    "match": "Straubing Tigers vs Krefeld Pinguine",
+    "subject": "Straubing Tigers vs Krefeld Pinguine",
+    "market": "Game Over 2.0 Total Goals",
+    "prob": 66,
     "hit_rate": null,
     "category": "DEL Game Total",
-    "detail": "proj 6.09 goals combined",
+    "detail": "proj 3.42 goals combined",
     "history": null
   },
   {
@@ -429,6 +393,42 @@
     "hit_rate": null,
     "category": "DEL Game Total",
     "detail": "proj 5.78 goals combined",
+    "history": null
+  },
+  {
+    "match": "Bremerhaven vs Iserlohn Roosters",
+    "subject": "Bremerhaven",
+    "market": "Bremerhaven Over 2.0 Goals",
+    "prob": 55,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 2.9 goals \u00b7 season 3.0/gm",
+    "history": "2/5/3/2/3"
+  },
+  {
+    "match": "Bremerhaven vs Iserlohn Roosters",
+    "subject": "Iserlohn Roosters",
+    "market": "Iserlohn Roosters Over 2.0 Goals",
+    "prob": 62,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "DEL Team Total",
+    "detail": "proj 3.19 goals \u00b7 season 3.33/gm",
+    "history": "1/2/4/4/3"
+  },
+  {
+    "match": "Bremerhaven vs Iserlohn Roosters",
+    "subject": "Bremerhaven vs Iserlohn Roosters",
+    "market": "Game Over 4.0 Total Goals",
+    "prob": 73,
+    "hit_rate": null,
+    "category": "DEL Game Total",
+    "detail": "proj 6.09 goals combined",
     "history": null
   }
 ]
