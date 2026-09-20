@@ -126,7 +126,7 @@ def safe_line(lam, factor=DEFAULT_LINE_FACTOR, round_to=0.5):
 
 
 def win_probs_and_scores(lh, la):
-    """Regulation-time home/away/tie win probabilities plus the top-9
+    """Regulation-time home/away/tie win probabilities plus the top-2
     most likely correct scores, from a Poisson grid over each team's
     projected goals — same approach as Blue Line's per-game card, minus
     OT/SO (no way to model that from goals-only data, so these are NOT
@@ -146,7 +146,7 @@ def win_probs_and_scores(lh, la):
         for j in range(7):
             scores.append(((j, i), poisson_pmf(j, la) * poisson_pmf(i, lh)))
     scores.sort(key=lambda x: x[1], reverse=True)
-    return ph, pa, pt, scores[:9]
+    return ph, pa, pt, scores[:2]
 
 
 def find_league(name):
@@ -301,19 +301,22 @@ def season_start_guess(target_date):
 
 
 def render_match_card(league_name, home_name, away_name, lh, la, tot, o55,
-                       ph, pa, pt, top9, home_proj, away_proj):
-    """Per-match card: win probability bar + correct-score grid, matching
-    Blue Line's card layout. No props section — Highlightly has no
-    player-level data (see module docstring SCOPE NOTE) — replaced here
-    with a last-5-games line for each team, since that data does exist
-    for this source and Blue Line's doesn't have an equivalent to show."""
+                       ph, pa, pt, top2, home_proj, away_proj):
+    """Per-match card: win probability bar + top-2 correct-score picks,
+    matching Blue Line's card layout. No props section — Highlightly has
+    no player-level data (see module docstring SCOPE NOTE) — replaced
+    here with a last-5-games line for each team, since that data does
+    exist for this source and Blue Line's doesn't have an equivalent to
+    show. Correct score trimmed from the original top-9 grid down to the
+    top-2 picks — nine near-identical single-digit percentages was more
+    choice than useful signal."""
 
     def render_scores():
         return "".join(
             f"<div style='background:var(--panel2);border-radius:8px;padding:8px;text-align:center'>"
             f"<div style='font-size:12px;color:var(--sub)'>{away_name} {a}-{h} {home_name}</div>"
             f"<div style='font-weight:700;margin-top:2px'>{p*100:.1f}%</div></div>"
-            for (a, h), p in top9
+            for (a, h), p in top2
         )
 
     win_bar = f"""<div style="margin:10px 0 6px 0">
@@ -341,7 +344,7 @@ def render_match_card(league_name, home_name, away_name, lh, la, tot, o55,
       {win_bar}
       <div style="margin-top:12px">
         <div style="font-size:12px;color:var(--sub);margin-bottom:6px">Correct Score</div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">{render_scores()}</div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px">{render_scores()}</div>
       </div>
       {history_note}
     </div>"""
@@ -412,10 +415,10 @@ def build_legs_and_cards(target_date):
                 lh, la = home_proj["lambda"], away_proj["lambda"]
                 tot = lh + la
                 o55 = prob_over(tot, 5.5)
-                ph, pa, pt, top9 = win_probs_and_scores(lh, la)
+                ph, pa, pt, top2 = win_probs_and_scores(lh, la)
                 cards += render_match_card(
                     league["name"], home["name"], away["name"],
-                    lh, la, tot, o55, ph, pa, pt, top9, home_proj, away_proj,
+                    lh, la, tot, o55, ph, pa, pt, top2, home_proj, away_proj,
                 )
 
     return legs, cards
