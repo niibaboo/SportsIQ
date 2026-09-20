@@ -1098,6 +1098,76 @@ SCANNER_CONFIGS = [
 ]
 
 
+# --- Free-tier Telegram digest --------------------------------------------
+# Posts a short "today's top signal per market" message to the PUBLIC
+# Telegram channel — the free-tier marketing funnel, separate from any
+# future paid-tier alert bot. Reads its config from env vars set as GitHub
+# Actions secrets; if they're not set, this silently does nothing, so it's
+# safe to leave in before the bot is actually configured.
+
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHANNEL_ID = os.environ.get("TELEGRAM_CHANNEL_ID")  # e.g. "@your_channel_name" or a numeric chat id
+
+# Adjust if your GitHub Pages URL structure differs — this assumes the repo's
+# docs/match-iq/ folder is served at <pages-domain>/match-iq/.
+SITE_BASE_URL = "https://niibaboo.github.io/SportsIQ/match-iq"
+
+TELEGRAM_POST_MARKER = "docs/match-iq/.telegram_last_post"
+
+
+def post_daily_digest_to_telegram(all_predictions):
+    """Posts today's top qualifying match per Daily Signals scanner to the
+    free public Telegram channel. Guards against duplicate same-day posts
+    (e.g. a manual workflow_dispatch re-run) via a small marker file
+    committed alongside the predictions — set FORCE_TELEGRAM_POST=1 to
+    bypass that guard deliberately."""
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHANNEL_ID:
+        print("Telegram not configured (TELEGRAM_BOT_TOKEN/TELEGRAM_CHANNEL_ID missing) — skipping post.")
+        return
+
+    today = datetime.now().strftime("%Y-%m-%d")
+    if os.environ.get("FORCE_TELEGRAM_POST") != "1" and os.path.exists(TELEGRAM_POST_MARKER):
+        with open(TELEGRAM_POST_MARKER) as f:
+            if f.read().strip() == today:
+                print(f"Already posted to Telegram today ({today}) — skipping. "
+                      f"Set FORCE_TELEGRAM_POST=1 to override.")
+                return
+
+    lines = [f"📊 SportsIQ Daily Signals — {today}", ""]
+    any_picks = False
+    for cfg in SCANNER_CONFIGS:
+        qualified = [p for p in all_predictions if _scanner_badge_value(p, cfg["market_key"]) >= cfg["min"]]
+        if not qualified:
+            continue
+        top = max(qualified, key=lambda p: _scanner_badge_value(p, cfg["market_key"]))
+        val = _scanner_badge_value(top, cfg["market_key"])
+        lines.append(f"{cfg['icon']} {cfg['badge_label']}: {top['home_team']} vs {top['away_team']} "
+                      f"— {val}% ({top['league']})")
+        any_picks = True
+
+    if not any_picks:
+        lines.append("No qualifying signals today.")
+
+    lines.append("")
+    lines.append(f"Full scanners: {SITE_BASE_URL}/match_iq_index.html")
+
+    text = "\n".join(lines)
+    try:
+        r = requests.post(
+            f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
+            data={"chat_id": TELEGRAM_CHANNEL_ID, "text": text},
+            timeout=15,
+        )
+        if r.status_code == 200:
+            print("Posted daily digest to Telegram.")
+            with open(TELEGRAM_POST_MARKER, "w") as f:
+                f.write(today)
+        else:
+            print(f"Telegram post failed: {r.status_code} {r.text[:300]}")
+    except Exception as e:
+        print(f"Telegram post error: {e}")
+
+
 def build_daily_signals_scanners(all_predictions, base_dir="docs/match-iq/scanners"):
     """Generates the four Daily Signals scanner pages (Over 2.5, BTTS,
     Over 10.5 Corners, Over 4.5), each filtered independently from the FULL
@@ -1190,5 +1260,8 @@ if __name__ == "__main__":
 
     print("\nBuilding Daily Signals scanners...")
     build_daily_signals_scanners(all_predictions)
+
+    print("\nPosting daily digest to Telegram...")
+    post_daily_digest_to_telegram(all_predictions)
 
     print(f"\nDone — {len(all_predictions)} total fixtures projected.")
