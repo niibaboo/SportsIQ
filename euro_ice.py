@@ -319,9 +319,20 @@ def render_match_card(league_name, home_name, away_name, lh, la, tot, o55,
             for (a, h), p in top2
         )
 
+    home_hist = "/".join(str(v) for v in home_proj["last5_gf"]) or "—"
+    away_hist = "/".join(str(v) for v in away_proj["last5_gf"]) or "—"
+
     win_bar = f"""<div style="margin:10px 0 6px 0">
-      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
-        <span>{away_name} {pa*100:.0f}%</span><span>Tie {pt*100:.0f}%</span><span>{home_name} {ph*100:.0f}%</span>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;font-size:12px;margin-bottom:4px">
+        <div>
+          <div>{away_name} {pa*100:.0f}%</div>
+          <div style="font-size:10px;color:var(--sub);margin-top:2px">last 5 (old→new): {away_hist}</div>
+        </div>
+        <span>Tie {pt*100:.0f}%</span>
+        <div style="text-align:right">
+          <div>{home_name} {ph*100:.0f}%</div>
+          <div style="font-size:10px;color:var(--sub);margin-top:2px">last 5 (old→new): {home_hist}</div>
+        </div>
       </div>
       <div style="display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--panel2)">
         <div style="width:{pa*100:.1f}%;background:#ff4d5a"></div>
@@ -330,12 +341,6 @@ def render_match_card(league_name, home_name, away_name, lh, la, tot, o55,
       </div>
     </div>"""
 
-    home_hist = "/".join(str(v) for v in home_proj["last5_gf"]) or "—"
-    away_hist = "/".join(str(v) for v in away_proj["last5_gf"]) or "—"
-    history_note = (
-        f"<div style='font-size:11px;color:var(--sub);margin-top:8px'>"
-        f"last games: {home_name} {home_hist} &nbsp;|&nbsp; {away_name} {away_hist}</div>"
-    )
 
     return f"""<div class="builderPanel">
       <div style="font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:.03em">{league_name}</div>
@@ -346,7 +351,6 @@ def render_match_card(league_name, home_name, away_name, lh, la, tot, o55,
         <div style="font-size:12px;color:var(--sub);margin-bottom:6px">Correct Score</div>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px">{render_scores()}</div>
       </div>
-      {history_note}
     </div>"""
 
 
