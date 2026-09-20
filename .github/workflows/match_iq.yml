@@ -30,6 +30,8 @@ jobs:
       - name: Run Match IQ
         env:
           THESTATSAPI_KEY: ${{ secrets.THESTATSAPI_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
         run: python3 match_iq.py
 
       - name: Commit and push updated predictions
