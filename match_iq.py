@@ -53,6 +53,10 @@ MIN_BTTS_PCT = 55    # ...AND BTTS probability above this (both required — Ove
 SCANNER_OVER25_MIN = 70
 SCANNER_BTTS_MIN = 70
 SCANNER_CORNERS_MIN = 60
+SCANNER_SAFE_CORNERS_MIN = 78  # much stricter than the regular Corners scanner
+SAFE_CORNERS_MIN_SAMPLE = RECENT_GAMES  # both teams need a FULL recent-games
+                                          # sample, not a thin one leaning on
+                                          # shrink()'s league-average fallback
 SCANNER_FH_BTTS_MIN = 60
 SCANNER_OVER45_MIN = 50
 
@@ -658,11 +662,20 @@ def build_all_predictions(key):
             full_corners_proj = predict_full_corners(h_form, a_form)
             fh_btts_proj = predict_fh_btts(h_form, a_form)
             result_1x2 = predict_1x2(proj["exp_home"], proj["exp_away"])
+            # Weakest-link sample size for the corners prediction — the
+            # smaller of the two teams' recent-games counts, since a
+            # shrink()-heavy estimate from one thin-data team makes the
+            # WHOLE match's corners number less trustworthy, not just
+            # that team's half of it. Used by the Safe Corners tier below
+            # to distinguish a well-supported high probability from one
+            # resting mostly on the league-average fallback.
+            corners_sample_n = min(h_form["n_games"], a_form["n_games"])
             merged = {
                 "league": comp["name"], "date": m["utc_date"], "date_key": m["utc_date"][:10],
                 "home_team": m["home_team"]["name"], "away_team": m["away_team"]["name"],
                 "home_form": h_form, "away_form": a_form,
                 "home_props": predict_team_props(h_form), "away_props": predict_team_props(a_form),
+                "corners_sample_n": corners_sample_n,
                 **proj, **fh_corners_proj, **full_corners_proj, **fh_btts_proj, **result_1x2,
             }
             all_predictions.append(merged)
@@ -865,7 +878,7 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
 <h2 style="text-align:center">⚽ MATCH IQ — Full Stats</h2>
 <p style="text-align:center;color:#888;font-size:11px">Powered by TheStatsAPI · {generated}</p>
-<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a></p>
+<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Safe Corners</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a></p>
 {date_bar}
 <p style="text-align:center;margin-bottom:16px"><a href="match_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
 {builder}
@@ -1008,6 +1021,7 @@ SCANNER_CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;pad
     <div style="font-size:11px;color:#999">{league} · {time}</div>
     <div style="font-size:15px;font-weight:bold;margin:2px 0 6px">{home_team} vs {away_team}</div>
     <div style="font-size:11px;color:#aaa">O2.5: <span style="color:#a0e8a0">{over25}%</span> &nbsp;|&nbsp; BTTS: <span style="color:#a0e8a0">{btts}%</span> &nbsp;|&nbsp; Corners 10.5+: <span style="color:#a0e8a0">{corners_disp}%</span></div>
+    {sample_note}
   </div>
 </div>"""
 
@@ -1017,7 +1031,7 @@ SCANNER_HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <p style="text-align:center;margin-bottom:6px"><a href="../../match_iq_index.html" style="color:#7ec8ff;text-decoration:none;font-size:12px">← Match IQ</a></p>
 <h2 style="text-align:center;margin-bottom:2px">{icon} {page_title}</h2>
 <p style="text-align:center;color:#888;font-size:11px;margin-top:0">{subtitle} · {generated}</p>
-<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a>·<a href="../over45/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 4.5</a></p>
+<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a>·<a href="../corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Safe Corners</a>·<a href="../over45/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 4.5</a></p>
 {date_bar}
 <p style="text-align:center;margin-bottom:12px"><a href="{csv_name}" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Export CSV</a></p>
 <p style="text-align:center;color:#888;font-size:12px;margin-bottom:14px">{qualified_count} matches qualified</p>
@@ -1035,11 +1049,19 @@ def render_scanner_cards(predictions, market_key, badge_label):
         return '<p style="text-align:center;color:#888">No fixtures on this date qualified.</p>'
     cards = ""
     for p in predictions:
+        sample_note = ""
+        if market_key == "corners_over105":
+            n = p.get("corners_sample_n")
+            if n is not None:
+                full = "✓ full sample" if n >= SAFE_CORNERS_MIN_SAMPLE else "thin sample"
+                sample_note = (f'<div style="font-size:10px;color:#8b98a8;margin-top:4px">'
+                                f'data: {n}/{SAFE_CORNERS_MIN_SAMPLE} games ({full})</div>')
         cards += SCANNER_CARD_TEMPLATE.format(
             badge_label=badge_label, badge_value=_scanner_badge_value(p, market_key),
             league=p["league"], time=p["date"][:16].replace("T", " "),
             home_team=p["home_team"], away_team=p["away_team"],
             over25=p["over25"], btts=p["btts"], corners_disp=p["corners_over105"],
+            sample_note=sample_note,
         )
     return cards
 
@@ -1068,10 +1090,11 @@ def write_scanner_csv(predictions, path):
     with open(path, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["Date", "League", "HomeTeam", "AwayTeam", "Over25", "Over45", "BTTS",
-                          "ExpCorners", "CornersOver105"])
+                          "ExpCorners", "CornersOver105", "CornersSampleN"])
         for p in predictions:
             writer.writerow([p["date"], p["league"], p["home_team"], p["away_team"],
-                              p["over25"], p["over45"], p["btts"], p["exp_corners"], p["corners_over105"]])
+                              p["over25"], p["over45"], p["btts"], p["exp_corners"], p["corners_over105"],
+                              p.get("corners_sample_n", "")])
 
 
 SCANNER_CONFIGS = [
@@ -1089,6 +1112,16 @@ SCANNER_CONFIGS = [
         "dir": "corners", "market_key": "corners_over105", "min": SCANNER_CORNERS_MIN,
         "title": "Over 10.5 Corners Daily Scanner", "icon": "🚩", "badge_label": "O10.5",
         "subtitle_fmt": f"All matches with ≥{SCANNER_CORNERS_MIN}% Over 10.5 corners probability",
+    },
+    {
+        "dir": "corners_safe", "market_key": "corners_over105", "min": SCANNER_SAFE_CORNERS_MIN,
+        "title": "Safe Corners Daily Scanner", "icon": "🛡️", "badge_label": "Safe",
+        "subtitle_fmt": f"≥{SCANNER_SAFE_CORNERS_MIN}% Over 10.5 corners probability, AND both teams have "
+                         f"a full {SAFE_CORNERS_MIN_SAMPLE}-game sample (not a thin, shrink()-heavy estimate)",
+        # Extra requirement beyond the probability floor — see
+        # corners_sample_n's comment in build_all_predictions for why a
+        # thin-data high number isn't the same thing as a safe one.
+        "extra_filter": lambda p: p["corners_sample_n"] >= SAFE_CORNERS_MIN_SAMPLE,
     },
     {
         "dir": "over45", "market_key": "over45", "min": SCANNER_OVER45_MIN,
@@ -1169,13 +1202,15 @@ def post_daily_digest_to_telegram(all_predictions):
 
 
 def build_daily_signals_scanners(all_predictions, base_dir="docs/match-iq/scanners"):
-    """Generates the four Daily Signals scanner pages (Over 2.5, BTTS,
-    Over 10.5 Corners, Over 4.5), each filtered independently from the FULL
-    unfiltered fixture list — not the main page's filtered set — with
-    its own date-paginated pages and CSV export, mirroring the main
-    Match IQ page's existing date-navigation pattern."""
+    """Generates the five Daily Signals scanner pages (Over 2.5, BTTS,
+    Over 10.5 Corners, Safe Corners, Over 4.5), each filtered independently
+    from the FULL unfiltered fixture list — not the main page's filtered
+    set — with its own date-paginated pages and CSV export, mirroring the
+    main Match IQ page's existing date-navigation pattern."""
     for cfg in SCANNER_CONFIGS:
         qualified = [p for p in all_predictions if _scanner_badge_value(p, cfg["market_key"]) >= cfg["min"]]
+        if "extra_filter" in cfg:
+            qualified = [p for p in qualified if cfg["extra_filter"](p)]
         qualified.sort(key=lambda p: (p["date_key"], -_scanner_badge_value(p, cfg["market_key"])))
 
         out_dir = f"{base_dir}/{cfg['dir']}"
