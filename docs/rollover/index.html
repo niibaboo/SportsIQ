@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Daily Rollover — SportsIQ</title>
+</head>
+<body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:640px;margin:auto">
+
+<h2 style="text-align:center;margin-bottom:2px">🎯 Daily Rollover Acca</h2>
+<p style="text-align:center;color:#888;font-size:11px;margin-top:0">
+  Pulls live from Match IQ, Under IQ &amp; Euro Ice — target range 2.3–3.0
+</p>
+<p style="text-align:center;font-size:11px;margin:4px 0 14px">
+  <a href="../match-iq/match_iq_index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Match IQ</a>·
+  <a href="https://niibaboo.github.io/Under-Goals/under-iq/under_iq_index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Under IQ</a>·
+  <a href="../euro-ice/index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Euro Ice</a>
+</p>
+
+<div id="loadStatus" style="text-align:center;color:#8b98a8;font-size:12px;margin-bottom:14px">Loading today's legs from all three models…</div>
+
+<div id="builderPanel" style="background:#121820;border:1px solid #233040;border-radius:12px;padding:16px;margin:14px 0;display:none">
+  <div style="font-size:15px;font-weight:800;margin-bottom:10px">🎯 Rollover Builder</div>
+  <div id="builderCategoryToggles" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;font-size:11px;max-height:140px;overflow-y:auto"></div>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+    <label style="font-size:12px;color:#8b98a8">Target odds:</label>
+    <input type="number" step="0.05" min="1.1" value="2.65" id="targetOdds" style="width:70px;background:#161d27;border:1px solid #233040;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
+    <label style="font-size:12px;color:#8b98a8">Max legs:</label>
+    <input type="number" step="1" min="2" value="10" id="maxLegs" style="width:70px;background:#161d27;border:1px solid #233040;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
+    <button onclick="buildAcca()" style="background:#22c55e;color:#04140a;font-weight:700;border:none;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">Build</button>
+    <button onclick="buildAcca()" style="background:#161d27;border:1px solid #233040;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">🔀 Shuffle</button>
+  </div>
+  <div id="builderResult" style="font-size:12px;color:#8b98a8">
+    Defaults to your 2.3–3.0 target range, combining every leg currently available across Match IQ, Under IQ
+    and Euro Ice. Same-match/same-team legs are still capped at ONE per subject within each model — a
+    fixture from Match IQ and one from Under IQ can never collide (different sports/leagues), so this only
+    guards within each source, same as each model's own builder already does.
+  </div>
+</div>
+
+<div id="sourceStatus" style="font-size:11px;color:#8b98a8;text-align:center;margin-top:16px;line-height:1.6"></div>
+
+<script>
+const SOURCES = {
+  matchiq: "https://niibaboo.github.io/SportsIQ/match-iq/match_iq.json",
+  underiq: "https://niibaboo.github.io/Under-Goals/under-iq/under_iq.json",
+  euroice: "https://niibaboo.github.io/SportsIQ/euro-ice/euro_ice.json",
+};
+
+let ALL_LEGS = [];
+const sourceStatusMsgs = [];
+
+function legsFromMatchIQ(predictions) {
+  const legs = [];
+  predictions.forEach(p => {
+    const match = `${p.home_team} vs ${p.away_team}`;
+    const add = (prob, marketLabel, category, detail) => {
+      if (prob > 0) legs.push({
+        source: "Match IQ", match, subject: match,
+        market: `${match} ${marketLabel}`, prob, category: `Match IQ — ${category}`,
+        detail: detail || `exp total ${p.exp_total ?? "?"} goals`, league: p.league,
+      });
+    };
+    add(p.over25, "Over 2.5 Goals", "Over 2.5");
+    add(p.btts, "BTTS", "BTTS");
+    add(p.over45, "Over 4.5 Goals", "Over 4.5");
+    if (p.corners_over105 > 0) {
+      const sampleNote = p.corners_sample_n != null ? ` · sample ${p.corners_sample_n}/7 games` : "";
+      add(p.corners_over105, "Over 10.5 Corners", "Corners 10.5+", `exp ${p.exp_corners ?? "?"} corners${sampleNote}`);
+    }
+  });
+  return legs;
+}
+
+function legsFromUnderIQ(predictions) {
+  const legs = [];
+  predictions.forEach(p => {
+    const match = `${p.home_team} vs ${p.away_team}`;
+    const add = (prob, marketLabel, category, subject, detail) => {
+      if (prob > 0) legs.push({
+        source: "Under IQ", match, subject,
+        market: `${subject === match ? match : subject} ${marketLabel}`, prob,
+        category: `Under IQ — ${category}`, detail: detail || `exp total ${p.exp_total ?? "?"} goals`,
+        league: p.league,
+      });
+    };
+    add(p.under25, "Under 2.5 Goals", "Under 2.5", match);
+    add(p.under35, "Under 3.5 Goals", "Under 3.5", match);
+    add(p.home_under15, "Under 1.5 Goals", "Team Under 1.5", p.home_team, `exp ${p.exp_home ?? "?"} goals`);
+    add(p.away_under15, "Under 1.5 Goals", "Team Under 1.5", p.away_team, `exp ${p.exp_away ?? "?"} goals`);
+  });
+  return legs;
+}
+
+function legsFromEuroIce(rawLegs) {
+  return rawLegs.filter(l => l.prob > 0).map(l => ({
+    source: "Euro Ice", match: l.match, subject: l.subject, market: l.market,
+    prob: l.prob, category: `Euro Ice — ${l.category}`, detail: l.detail, league: null,
+  }));
+}
+
+async function fetchSource(name, url, parseFn) {
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const legs = parseFn(data);
+    sourceStatusMsgs.push(`${name}: ✓ ${legs.length} legs`);
+    return legs;
+  } catch (err) {
+    sourceStatusMsgs.push(`${name}: ✗ couldn't load (${err.message})`);
+    return [];
+  }
+}
+
+async function loadAll() {
+  const [mi, ui, ei] = await Promise.all([
+    fetchSource("Match IQ", SOURCES.matchiq, legsFromMatchIQ),
+    fetchSource("Under IQ", SOURCES.underiq, legsFromUnderIQ),
+    fetchSource("Euro Ice", SOURCES.euroice, legsFromEuroIce),
+  ]);
+  ALL_LEGS = [...mi, ...ui, ...ei];
+
+  document.getElementById("sourceStatus").innerHTML = sourceStatusMsgs.join(" &nbsp;|&nbsp; ");
+
+  if (!ALL_LEGS.length) {
+    document.getElementById("loadStatus").innerHTML =
+      "No legs available from any source right now — check back after the next run, or check the source status below.";
+    return;
+  }
+
+  document.getElementById("loadStatus").style.display = "none";
+  document.getElementById("builderPanel").style.display = "block";
+  initToggles();
+}
+
+function initToggles() {
+  const container = document.getElementById('builderCategoryToggles');
+  const cats = [...new Set(ALL_LEGS.map(l => l.category))].sort();
+  container.innerHTML = cats.map(c => `
+    <label style="display:flex;align-items:center;gap:4px;color:white;cursor:pointer"><input type="checkbox" class="catToggle" value="${c}" checked> ${c}</label>
+  `).join('');
+}
+
+function shuffleArr(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+function tieredShuffle(legs, bandSize) {
+  const bands = {};
+  legs.forEach(l => {
+    const band = Math.floor(l.prob / bandSize);
+    (bands[band] = bands[band] || []).push(l);
+  });
+  const keys = Object.keys(bands).map(Number).sort((a, b) => b - a);
+  let result = [];
+  keys.forEach(k => { result = result.concat(shuffleArr(bands[k])); });
+  return result;
+}
+
+function buildAcca() {
+  const target = parseFloat(document.getElementById('targetOdds').value) || 2.65;
+  const maxLegs = parseInt(document.getElementById('maxLegs').value) || 10;
+  const activeCats = [...document.querySelectorAll('.catToggle:checked')].map(el => el.value);
+
+  const byCategory = {};
+  ALL_LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category)).forEach(l => {
+    (byCategory[l.category] = byCategory[l.category] || []).push(l);
+  });
+  const categories = Object.keys(byCategory);
+  categories.forEach(c => { byCategory[c] = tieredShuffle(byCategory[c], 5); });
+  const cursor = {};
+  categories.forEach(c => cursor[c] = 0);
+
+  const chosen = [];
+  const subjectCount = {};
+  let combinedOdds = 1;
+  let addedThisPass = true;
+
+  while (addedThisPass && combinedOdds < target && chosen.length < maxLegs) {
+    addedThisPass = false;
+    for (const cat of categories) {
+      if (combinedOdds >= target || chosen.length >= maxLegs) break;
+      const arr = byCategory[cat];
+      while (cursor[cat] < arr.length) {
+        const leg = arr[cursor[cat]];
+        cursor[cat]++;
+        if (subjectCount[leg.subject]) continue;
+        chosen.push(leg);
+        combinedOdds *= 100 / leg.prob;
+        subjectCount[leg.subject] = 1;
+        addedThisPass = true;
+        break;
+      }
+    }
+  }
+
+  const out = document.getElementById('builderResult');
+  if (!chosen.length) { out.innerHTML = 'No legs available to build from with the current filters.'; return; }
+
+  const rows = chosen.map(l => `
+    <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #233040">
+      <span>
+        <span style="background:#0f1318;border:1px solid #2a3038;border-radius:4px;padding:1px 6px;font-size:10px;color:#7ec8ff;margin-right:4px">${l.source}</span>
+        ${l.match}<br><span style="color:#facc15">${l.category.split(' — ')[1] || l.category}</span> <span style="color:#8b98a8">· ${l.league || ''}</span>
+        ${l.detail ? `<br><span style="color:#8b98a8;font-size:10px">${l.detail}</span>` : ''}
+      </span>
+      <span style="text-align:right;flex-shrink:0;margin-left:8px"><span style="color:#facc15;font-weight:bold">${l.prob}%</span></span>
+    </div>
+  `).join('');
+
+  const inRange = combinedOdds >= 2.3 && combinedOdds <= 3.0;
+  const rangeNote = inRange
+    ? ' <span style="color:#22c55e">(in your 2.3–3.0 target range)</span>'
+    : ' <span style="color:#facc15">(outside 2.3–3.0 — adjust Target odds or Max legs)</span>';
+  const capNote = chosen.length >= maxLegs && combinedOdds < target
+    ? ' (hit the leg cap before reaching target)'
+    : (combinedOdds < target ? ' (ran out of legs before reaching target)' : '');
+
+  out.innerHTML = `
+    <div style="color:white;font-size:13px;margin-bottom:6px">
+      ${chosen.length} legs across ${new Set(chosen.map(l => l.source)).size} model(s) · est. combined odds ~<b>${combinedOdds.toFixed(2)}</b>${rangeNote}${capNote}
+    </div>
+    ${rows}
+    <div style="color:#8b98a8;font-size:10px;margin-top:8px;line-height:1.4">
+      Estimate multiplies each leg's fair odds (100/probability) — real sportsbook odds include their margin,
+      so treat this as a ranking tool, not a firm price. Rebuild each day as fresh predictions land.
+    </div>
+  `;
+}
+
+loadAll();
+</script>
+</body>
+</html>
