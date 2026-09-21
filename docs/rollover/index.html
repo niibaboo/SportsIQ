@@ -142,60 +142,48 @@ function initToggles() {
   `).join('');
 }
 
-function shuffleArr(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-function tieredShuffle(legs, bandSize) {
-  const bands = {};
-  legs.forEach(l => {
-    const band = Math.floor(l.prob / bandSize);
-    (bands[band] = bands[band] || []).push(l);
-  });
-  const keys = Object.keys(bands).map(Number).sort((a, b) => b - a);
-  let result = [];
-  keys.forEach(k => { result = result.concat(shuffleArr(bands[k])); });
-  return result;
-}
-
 function buildAcca() {
   const target = parseFloat(document.getElementById('targetOdds').value) || 2.65;
   const maxLegs = parseInt(document.getElementById('maxLegs').value) || 10;
   const activeCats = [...document.querySelectorAll('.catToggle:checked')].map(el => el.value);
 
-  const byCategory = {};
-  ALL_LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category)).forEach(l => {
-    (byCategory[l.category] = byCategory[l.category] || []).push(l);
-  });
-  const categories = Object.keys(byCategory);
-  categories.forEach(c => { byCategory[c] = tieredShuffle(byCategory[c], 5); });
-  const cursor = {};
-  categories.forEach(c => cursor[c] = 0);
+  const pool = ALL_LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category));
 
   const chosen = [];
   const subjectCount = {};
   let combinedOdds = 1;
-  let addedThisPass = true;
 
-  while (addedThisPass && combinedOdds < target && chosen.length < maxLegs) {
-    addedThisPass = false;
-    for (const cat of categories) {
-      if (combinedOdds >= target || chosen.length >= maxLegs) break;
-      const arr = byCategory[cat];
-      while (cursor[cat] < arr.length) {
-        const leg = arr[cursor[cat]];
-        cursor[cat]++;
-        if (subjectCount[leg.subject]) continue;
-        chosen.push(leg);
-        combinedOdds *= 100 / leg.prob;
-        subjectCount[leg.subject] = 1;
-        addedThisPass = true;
-        break;
-      }
+  // Best-fit greedy: at each step, prefer whichever remaining leg gets
+  // closest to target WITHOUT overshooting past target*1.05. Only when
+  // nothing fits cleanly does it accept a leg — and even then it picks
+  // whichever produces the SMALLEST overshoot, rather than just
+  // whatever happened to come up next. This avoids the old category
+  // round-robin's failure mode, where a single weak leg from an
+  // under-populated category could jump the total odds far past target
+  // in one step with no way to course-correct.
+  while (chosen.length < maxLegs) {
+    const candidates = pool.filter(l => !subjectCount[l.subject]);
+    if (!candidates.length) break;
+    if (combinedOdds >= target) break;
+
+    const fitsCleanly = candidates.filter(l => combinedOdds * (100 / l.prob) <= target * 1.05);
+    let pick;
+    if (fitsCleanly.length) {
+      pick = fitsCleanly.reduce((best, l) => {
+        const resultOdds = combinedOdds * (100 / l.prob);
+        const bestOdds = combinedOdds * (100 / best.prob);
+        return resultOdds > bestOdds ? l : best;
+      });
+    } else {
+      pick = candidates.reduce((best, l) => {
+        const resultOdds = combinedOdds * (100 / l.prob);
+        const bestOdds = combinedOdds * (100 / best.prob);
+        return resultOdds < bestOdds ? l : best;
+      });
     }
+    chosen.push(pick);
+    combinedOdds *= 100 / pick.prob;
+    subjectCount[pick.subject] = 1;
   }
 
   const out = document.getElementById('builderResult');
