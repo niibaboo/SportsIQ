@@ -878,7 +878,7 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
 <h2 style="text-align:center">⚽ MATCH IQ — Full Stats</h2>
 <p style="text-align:center;color:#888;font-size:11px">Powered by TheStatsAPI · {generated}</p>
-<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Safe Corners</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a></p>
+<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Safe Corners</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a>·<a href="scanners/goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Goal Streak</a></p>
 {date_bar}
 <p style="text-align:center;margin-bottom:16px"><a href="match_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
 {builder}
@@ -1031,7 +1031,7 @@ SCANNER_HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <p style="text-align:center;margin-bottom:6px"><a href="../../match_iq_index.html" style="color:#7ec8ff;text-decoration:none;font-size:12px">← Match IQ</a></p>
 <h2 style="text-align:center;margin-bottom:2px">{icon} {page_title}</h2>
 <p style="text-align:center;color:#888;font-size:11px;margin-top:0">{subtitle} · {generated}</p>
-<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a>·<a href="../corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Safe Corners</a>·<a href="../over45/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 4.5</a></p>
+<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a>·<a href="../corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Safe Corners</a>·<a href="../over45/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 4.5</a>·<a href="../goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Goal Streak</a></p>
 {date_bar}
 <p style="text-align:center;margin-bottom:12px"><a href="{csv_name}" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Export CSV</a></p>
 <p style="text-align:center;color:#888;font-size:12px;margin-bottom:14px">{qualified_count} matches qualified</p>
@@ -1095,6 +1095,156 @@ def write_scanner_csv(predictions, path):
             writer.writerow([p["date"], p["league"], p["home_team"], p["away_team"],
                               p["over25"], p["over45"], p["btts"], p["exp_corners"], p["corners_over105"],
                               p.get("corners_sample_n", "")])
+
+
+GOAL_STREAK_MIN = 2.0
+GOAL_STREAK_MIN_GAMES = 5
+
+
+def _last5_goal_avg(form):
+    """Genuine last-5-GAME average — deliberately NOT the same as
+    avg_scored, which is a shrinkage-blended figure over up to
+    RECENT_GAMES (7). goals_list is newest-first (see fetch_form), so
+    the first 5 entries ARE the most recent 5 games. Returns None with
+    fewer than 5 games available — averaging 2-3 games and calling it
+    a "5-game streak" would be a materially different, weaker claim."""
+    gl = form.get("goals_list") or []
+    if len(gl) < GOAL_STREAK_MIN_GAMES:
+        return None
+    last5 = gl[:GOAL_STREAK_MIN_GAMES]
+    return round(sum(last5) / len(last5), 2), last5
+
+
+def build_goal_streak_entries(all_predictions):
+    """One entry per TEAM (not per match) whose last 5 games average
+    >= GOAL_STREAK_MIN goals scored, paired with their upcoming fixture
+    in this run's window. A raw recent-form screen, not a probabilistic
+    match prediction — this flags teams who've actually been scoring,
+    regardless of who they're about to play."""
+    entries = []
+    for p in all_predictions:
+        for team_key, opp_key, form_key, is_home in [
+            ("home_team", "away_team", "home_form", True),
+            ("away_team", "home_team", "away_form", False),
+        ]:
+            result = _last5_goal_avg(p[form_key])
+            if not result:
+                continue
+            avg5, last5 = result
+            if avg5 >= GOAL_STREAK_MIN:
+                entries.append({
+                    "team": p[team_key], "opponent": p[opp_key], "is_home": is_home,
+                    "league": p["league"], "date": p["date"], "date_key": p["date_key"],
+                    "last5_avg": avg5, "last5_goals": last5,
+                })
+    entries.sort(key=lambda e: (e["date_key"], -e["last5_avg"]))
+    return entries
+
+
+STREAK_CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;padding:14px;margin:10px 0;border:1px solid #2a3038;display:flex;gap:12px;align-items:flex-start">
+  <div style="min-width:72px;text-align:center;background:#0f1318;border:1px solid #2a3038;border-radius:10px;padding:8px 6px;flex-shrink:0">
+    <div style="font-size:10px;color:#888">L5 AVG</div>
+    <div style="font-size:20px;font-weight:bold;color:#a0e8a0">{last5_avg}</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:11px;color:#999">{league} · {time}</div>
+    <div style="font-size:15px;font-weight:bold;margin:2px 0 6px">{team} <span style="color:#8b98a8;font-weight:normal;font-size:12px">({home_away})</span> vs {opponent}</div>
+    <div style="font-size:10px;color:#8b98a8">last 5 (old→new): {last5_str}</div>
+  </div>
+</div>"""
+
+STREAK_HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Goal Streak — Match IQ</title></head>
+<body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
+<p style="text-align:center;margin-bottom:6px"><a href="../../match_iq_index.html" style="color:#7ec8ff;text-decoration:none;font-size:12px">← Match IQ</a></p>
+<h2 style="text-align:center;margin-bottom:2px">🔥 Goal Streak Daily Scanner</h2>
+<p style="text-align:center;color:#888;font-size:11px;margin-top:0">Teams averaging ≥{min_avg} goals over their last {min_games} games · {generated}</p>
+<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a>·<a href="../corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Safe Corners</a>·<a href="../over45/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 4.5</a>·<a href="../goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Goal Streak</a></p>
+{date_bar}
+<p style="text-align:center;margin:8px 0 4px"><a href="{csv_name}" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Export CSV</a></p>
+<p style="text-align:center;color:#888;font-size:12px;margin-bottom:14px">{qualified_count} team(s) on a streak</p>
+{cards}
+<div style="font-size:11px;color:#8b98a8;text-align:center;margin-top:20px;line-height:1.6">
+  This is a raw recent-FORM screen, not a probabilistic prediction like the other scanners —
+  it only asks "has this team actually been scoring lately", regardless of who they're about
+  to play. Cross-check against Over 2.5/BTTS for that team's specific upcoming matchup before
+  treating a streak alone as a signal.
+</div>
+</body></html>"""
+
+
+def render_streak_cards(entries):
+    if not entries:
+        return '<p style="text-align:center;color:#888">No teams currently on a qualifying streak.</p>'
+    cards = ""
+    for e in entries:
+        last5_display = list(reversed(e["last5_goals"]))  # goals_list is newest-first;
+                                                             # reverse for old→new display,
+                                                             # same convention as Euro Ice/Under IQ
+        cards += STREAK_CARD_TEMPLATE.format(
+            last5_avg=e["last5_avg"], league=e["league"], time=e["date"][:16].replace("T", " "),
+            team=e["team"], home_away="Home" if e["is_home"] else "Away", opponent=e["opponent"],
+            last5_str="/".join(str(v) for v in last5_display),
+        )
+    return cards
+
+
+def make_streak_html(entries, date_label=None, prev_href=None, next_href=None):
+    prev_link = f'<a href="{prev_href}" style="color:#7ec8ff;text-decoration:none;font-size:20px">◀</a>' if prev_href else '<span style="color:#444;font-size:20px">◀</span>'
+    next_link = f'<a href="{next_href}" style="color:#7ec8ff;text-decoration:none;font-size:20px">▶</a>' if next_href else '<span style="color:#444;font-size:20px">▶</span>'
+    date_bar = f"""
+<div style="display:flex;align-items:center;justify-content:center;gap:20px;margin:10px 0 4px">
+  {prev_link}
+  <span style="font-size:15px;font-weight:bold">{date_label or ''}</span>
+  {next_link}
+</div>""" if date_label else ""
+
+    return STREAK_HTML_TEMPLATE.format(
+        min_avg=GOAL_STREAK_MIN, min_games=GOAL_STREAK_MIN_GAMES,
+        generated=datetime.now().strftime("%d %b %H:%M"),
+        date_bar=date_bar, csv_name="goal_streak_predictions.csv",
+        qualified_count=len(entries), cards=render_streak_cards(entries),
+    )
+
+
+def write_streak_csv(entries, path):
+    with open(path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Date", "League", "Team", "HomeAway", "Opponent", "Last5Avg", "Last5Goals"])
+        for e in entries:
+            last5_display = list(reversed(e["last5_goals"]))
+            writer.writerow([e["date"], e["league"], e["team"], "Home" if e["is_home"] else "Away",
+                              e["opponent"], e["last5_avg"], "/".join(str(v) for v in last5_display)])
+
+
+def build_goal_streak_scanner(all_predictions, base_dir="docs/match-iq/scanners"):
+    entries = build_goal_streak_entries(all_predictions)
+    out_dir = f"{base_dir}/goal_streak"
+    os.makedirs(out_dir, exist_ok=True)
+
+    by_date = group_by_date(entries)
+    date_keys = list(by_date.keys())
+
+    if not date_keys:
+        with open(f"{out_dir}/index.html", "w") as f:
+            f.write(make_streak_html([]))
+    else:
+        for i, date_key in enumerate(date_keys):
+            prev_href = date_page_filename(date_keys[i - 1]) if i > 0 else None
+            next_href = date_page_filename(date_keys[i + 1]) if i < len(date_keys) - 1 else None
+            page_html = make_streak_html(
+                by_date[date_key], date_label=format_date_label(date_key),
+                prev_href=prev_href, next_href=next_href,
+            )
+            with open(f"{out_dir}/{date_page_filename(date_key)}", "w") as f:
+                f.write(page_html)
+        with open(f"{out_dir}/{date_page_filename(date_keys[0])}") as f:
+            soonest_html = f.read()
+        with open(f"{out_dir}/index.html", "w") as f:
+            f.write(soonest_html)
+
+    write_streak_csv(entries, f"{out_dir}/goal_streak_predictions.csv")
+    print(f"  Goal Streak Scanner: {len(entries)} team-entries across {len(date_keys)} date(s)")
 
 
 SCANNER_CONFIGS = [
@@ -1243,6 +1393,8 @@ def build_daily_signals_scanners(all_predictions, base_dir="docs/match-iq/scanne
 
         write_scanner_csv(qualified, f"{out_dir}/{cfg['dir']}_predictions.csv")
         print(f"  {cfg['title']}: {len(qualified)} fixtures across {len(date_keys)} date(s)")
+
+    build_goal_streak_scanner(all_predictions, base_dir)
 
 
 if __name__ == "__main__":
