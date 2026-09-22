@@ -883,7 +883,7 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
 <h2 style="text-align:center">⚽ MATCH IQ — Full Stats</h2>
 <p style="text-align:center;color:#888;font-size:11px">Powered by TheStatsAPI · {generated}</p>
-<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Safe Corners</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a>·<a href="scanners/goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Goal Streak</a></p>
+<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Safe Corners</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a>·<a href="scanners/goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Hot Form/Streak</a></p>
 {date_bar}
 <p style="text-align:center;margin-bottom:16px"><a href="match_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
 {builder}
@@ -1036,7 +1036,7 @@ SCANNER_HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <p style="text-align:center;margin-bottom:6px"><a href="../../match_iq_index.html" style="color:#7ec8ff;text-decoration:none;font-size:12px">← Match IQ</a></p>
 <h2 style="text-align:center;margin-bottom:2px">{icon} {page_title}</h2>
 <p style="text-align:center;color:#888;font-size:11px;margin-top:0">{subtitle} · {generated}</p>
-<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a>·<a href="../corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Safe Corners</a>·<a href="../over45/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 4.5</a>·<a href="../goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Goal Streak</a></p>
+<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a>·<a href="../corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Safe Corners</a>·<a href="../over45/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 4.5</a>·<a href="../goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Hot Form/Streak</a></p>
 {date_bar}
 <p style="text-align:center;margin-bottom:12px"><a href="{csv_name}" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Export CSV</a></p>
 <p style="text-align:center;color:#888;font-size:12px;margin-bottom:14px">{qualified_count} matches qualified</p>
@@ -1105,6 +1105,32 @@ def write_scanner_csv(predictions, path):
 GOAL_STREAK_MIN = 2.0
 GOAL_STREAK_MIN_GAMES = 5
 
+# Real Streak — a genuine CONSECUTIVE-games count, walking backward from
+# the most recent game and stopping at the first one that breaks the
+# per-game threshold. This is what "streak" actually means in sports
+# (see e.g. DiMaggio's 56-game hitting streak) — distinct from the
+# average-based "Hot Form" section above/below, which can flag a team
+# whose most recent game was actually bad, as long as earlier games in
+# the window pulled the average up. Both are legitimate signals; they're
+# just different claims, so both are shown, clearly separated.
+REAL_STREAK_THRESHOLD = 2   # per-game goals needed to extend the streak
+REAL_STREAK_MIN_LENGTH = 3  # shortest run that counts as "a streak"
+
+
+def _current_goal_streak(form, threshold=REAL_STREAK_THRESHOLD):
+    """goals_list is newest-first (see fetch_form), so walking it in
+    order from index 0 IS walking backward from the most recent game —
+    exactly what a real streak needs. Stops at the first game that
+    doesn't clear the threshold; returns how many in a row did."""
+    gl = form.get("goals_list") or []
+    streak = 0
+    for g in gl:
+        if g >= threshold:
+            streak += 1
+        else:
+            break
+    return streak
+
 
 def _last5_goal_avg(form):
     """Genuine last-5-GAME average — deliberately NOT the same as
@@ -1112,7 +1138,7 @@ def _last5_goal_avg(form):
     RECENT_GAMES (7). goals_list is newest-first (see fetch_form), so
     the first 5 entries ARE the most recent 5 games. Returns None with
     fewer than 5 games available — averaging 2-3 games and calling it
-    a "5-game streak" would be a materially different, weaker claim."""
+    a "5-game" figure would be a materially different, weaker claim."""
     gl = form.get("goals_list") or []
     if len(gl) < GOAL_STREAK_MIN_GAMES:
         return None
@@ -1121,11 +1147,14 @@ def _last5_goal_avg(form):
 
 
 def build_goal_streak_entries(all_predictions):
-    """One entry per TEAM (not per match) whose last 5 games average
-    >= GOAL_STREAK_MIN goals scored, paired with their upcoming fixture
-    in this run's window. A raw recent-form screen, not a probabilistic
-    match prediction — this flags teams who've actually been scoring,
-    regardless of who they're about to play."""
+    """HOT FORM — one entry per TEAM (not per match) whose last 5 games
+    AVERAGE >= GOAL_STREAK_MIN goals scored, paired with their upcoming
+    fixture in this run's window. A raw recent-form screen, not a
+    probabilistic match prediction — and importantly NOT a real streak:
+    a team can qualify here even if their most recent game was quiet, as
+    long as earlier games in the window were strong enough to carry the
+    average. See build_real_streak_entries for the consecutive-games
+    version."""
     entries = []
     for p in all_predictions:
         for team_key, opp_key, form_key, is_home in [
@@ -1146,6 +1175,34 @@ def build_goal_streak_entries(all_predictions):
     return entries
 
 
+def build_real_streak_entries(all_predictions):
+    """REAL STREAK — one entry per TEAM currently on a genuine
+    CONSECUTIVE run of >= REAL_STREAK_MIN_LENGTH games scoring
+    >= REAL_STREAK_THRESHOLD goals each, with no break. Unlike Hot
+    Form above, a bad most-recent game disqualifies a team immediately,
+    exactly like a real sports streak would end."""
+    entries = []
+    for p in all_predictions:
+        for team_key, opp_key, form_key, is_home in [
+            ("home_team", "away_team", "home_form", True),
+            ("away_team", "home_team", "away_form", False),
+        ]:
+            form = p[form_key]
+            streak_len = _current_goal_streak(form)
+            if streak_len >= REAL_STREAK_MIN_LENGTH:
+                gl = form.get("goals_list") or []
+                streak_games = list(reversed(gl[:streak_len]))  # oldest->newest for display
+                entries.append({
+                    "team": p[team_key], "opponent": p[opp_key], "is_home": is_home,
+                    "league": p["league"], "date": p["date"], "date_key": p["date_key"],
+                    "streak_len": streak_len, "streak_games": streak_games,
+                    "full_sample": streak_len >= len(gl),  # streak might extend further
+                                                              # back than we have data for
+                })
+    entries.sort(key=lambda e: (e["date_key"], -e["streak_len"]))
+    return entries
+
+
 STREAK_CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;padding:14px;margin:10px 0;border:1px solid #2a3038;display:flex;gap:12px;align-items:flex-start">
   <div style="min-width:72px;text-align:center;background:#0f1318;border:1px solid #2a3038;border-radius:10px;padding:8px 6px;flex-shrink:0">
     <div style="font-size:10px;color:#888">L5 AVG</div>
@@ -1158,29 +1215,48 @@ STREAK_CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;padd
   </div>
 </div>"""
 
+REAL_STREAK_CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;padding:14px;margin:10px 0;border:1px solid #2a3038;display:flex;gap:12px;align-items:flex-start">
+  <div style="min-width:72px;text-align:center;background:#0f1318;border:1px solid #f59e0b;border-radius:10px;padding:8px 6px;flex-shrink:0">
+    <div style="font-size:10px;color:#888">STREAK</div>
+    <div style="font-size:20px;font-weight:bold;color:#f59e0b">{streak_len}{plus}</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:11px;color:#999">{league} · {time}</div>
+    <div style="font-size:15px;font-weight:bold;margin:2px 0 6px">{team} <span style="color:#8b98a8;font-weight:normal;font-size:12px">({home_away})</span> vs {opponent}</div>
+    <div style="font-size:10px;color:#8b98a8">{streak_len} straight game{s} scoring {threshold}+ (old→new): {streak_str}</div>
+  </div>
+</div>"""
+
 STREAK_HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>Goal Streak — Match IQ</title></head>
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Hot Form &amp; Streaks — Match IQ</title></head>
 <body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
 <p style="text-align:center;margin-bottom:6px"><a href="../../match_iq_index.html" style="color:#7ec8ff;text-decoration:none;font-size:12px">← Match IQ</a></p>
-<h2 style="text-align:center;margin-bottom:2px">🔥 Goal Streak Daily Scanner</h2>
-<p style="text-align:center;color:#888;font-size:11px;margin-top:0">Teams averaging ≥{min_avg} goals over their last {min_games} games · {generated}</p>
-<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a>·<a href="../corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Safe Corners</a>·<a href="../over45/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 4.5</a>·<a href="../goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Goal Streak</a></p>
+<h2 style="text-align:center;margin-bottom:2px">🔥 Hot Form &amp; Streaks</h2>
+<p style="text-align:center;color:#888;font-size:11px;margin-top:0">{generated}</p>
+<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a>·<a href="../corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Safe Corners</a>·<a href="../over45/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 4.5</a>·<a href="../goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Hot Form/Streak</a></p>
 {date_bar}
 <p style="text-align:center;margin:8px 0 4px"><a href="{csv_name}" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Export CSV</a></p>
-<p style="text-align:center;color:#888;font-size:12px;margin-bottom:14px">{qualified_count} team(s) on a streak</p>
-{cards}
+
+<h3 style="margin:18px 0 2px;font-size:15px">📊 Hot Form <span style="color:#8b98a8;font-weight:normal;font-size:11px">(avg ≥{min_avg} over last {min_games} games — most recent game may not itself have been strong)</span></h3>
+<p style="text-align:center;color:#888;font-size:12px;margin:2px 0 10px">{hot_form_count} team(s)</p>
+{hot_form_cards}
+
+<h3 style="margin:22px 0 2px;font-size:15px">🔥 Real Streak <span style="color:#8b98a8;font-weight:normal;font-size:11px">(≥{min_streak}+ CONSECUTIVE games scoring {streak_threshold}+, no break)</span></h3>
+<p style="text-align:center;color:#888;font-size:12px;margin:2px 0 10px">{streak_count} team(s)</p>
+{streak_cards}
+
 <div style="font-size:11px;color:#8b98a8;text-align:center;margin-top:20px;line-height:1.6">
-  This is a raw recent-FORM screen, not a probabilistic prediction like the other scanners —
-  it only asks "has this team actually been scoring lately", regardless of who they're about
-  to play. Cross-check against Over 2.5/BTTS for that team's specific upcoming matchup before
-  treating a streak alone as a signal.
+  Both sections are raw recent-FORM screens, not probabilistic predictions like the other
+  scanners. Hot Form and Real Streak measure genuinely different things — a team can appear
+  in one, both, or neither. Cross-check against Over 2.5/BTTS for that team's specific
+  upcoming matchup before treating either alone as a signal.
 </div>
 </body></html>"""
 
 
 def render_streak_cards(entries):
     if not entries:
-        return '<p style="text-align:center;color:#888">No teams currently on a qualifying streak.</p>'
+        return '<p style="text-align:center;color:#888">No teams currently qualify.</p>'
     cards = ""
     for e in entries:
         last5_display = list(reversed(e["last5_goals"]))  # goals_list is newest-first;
@@ -1194,7 +1270,22 @@ def render_streak_cards(entries):
     return cards
 
 
-def make_streak_html(entries, date_label=None, prev_href=None, next_href=None):
+def render_real_streak_cards(entries):
+    if not entries:
+        return '<p style="text-align:center;color:#888">No teams currently on a qualifying streak.</p>'
+    cards = ""
+    for e in entries:
+        cards += REAL_STREAK_CARD_TEMPLATE.format(
+            streak_len=e["streak_len"], plus="+" if e["full_sample"] else "",
+            league=e["league"], time=e["date"][:16].replace("T", " "),
+            team=e["team"], home_away="Home" if e["is_home"] else "Away", opponent=e["opponent"],
+            s="" if e["streak_len"] == 1 else "s", threshold=REAL_STREAK_THRESHOLD,
+            streak_str="/".join(str(v) for v in e["streak_games"]),
+        )
+    return cards
+
+
+def make_streak_html(hot_form_entries, streak_entries, date_label=None, prev_href=None, next_href=None):
     prev_link = f'<a href="{prev_href}" style="color:#7ec8ff;text-decoration:none;font-size:20px">◀</a>' if prev_href else '<span style="color:#444;font-size:20px">◀</span>'
     next_link = f'<a href="{next_href}" style="color:#7ec8ff;text-decoration:none;font-size:20px">▶</a>' if next_href else '<span style="color:#444;font-size:20px">▶</span>'
     date_bar = f"""
@@ -1206,39 +1297,49 @@ def make_streak_html(entries, date_label=None, prev_href=None, next_href=None):
 
     return STREAK_HTML_TEMPLATE.format(
         min_avg=GOAL_STREAK_MIN, min_games=GOAL_STREAK_MIN_GAMES,
+        min_streak=REAL_STREAK_MIN_LENGTH, streak_threshold=REAL_STREAK_THRESHOLD,
         generated=datetime.now().strftime("%d %b %H:%M"),
         date_bar=date_bar, csv_name="goal_streak_predictions.csv",
-        qualified_count=len(entries), cards=render_streak_cards(entries),
+        hot_form_count=len(hot_form_entries), hot_form_cards=render_streak_cards(hot_form_entries),
+        streak_count=len(streak_entries), streak_cards=render_real_streak_cards(streak_entries),
     )
 
 
-def write_streak_csv(entries, path):
+def write_streak_csv(hot_form_entries, streak_entries, path):
     with open(path, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["Date", "League", "Team", "HomeAway", "Opponent", "Last5Avg", "Last5Goals"])
-        for e in entries:
+        writer.writerow(["Type", "Date", "League", "Team", "HomeAway", "Opponent", "Value", "Games"])
+        for e in hot_form_entries:
             last5_display = list(reversed(e["last5_goals"]))
-            writer.writerow([e["date"], e["league"], e["team"], "Home" if e["is_home"] else "Away",
-                              e["opponent"], e["last5_avg"], "/".join(str(v) for v in last5_display)])
+            writer.writerow(["Hot Form (avg)", e["date"], e["league"], e["team"],
+                              "Home" if e["is_home"] else "Away", e["opponent"],
+                              e["last5_avg"], "/".join(str(v) for v in last5_display)])
+        for e in streak_entries:
+            writer.writerow(["Real Streak (consecutive)", e["date"], e["league"], e["team"],
+                              "Home" if e["is_home"] else "Away", e["opponent"],
+                              e["streak_len"], "/".join(str(v) for v in e["streak_games"])])
 
 
 def build_goal_streak_scanner(all_predictions, base_dir="docs/match-iq/scanners"):
-    entries = build_goal_streak_entries(all_predictions)
+    hot_form_entries = build_goal_streak_entries(all_predictions)
+    streak_entries = build_real_streak_entries(all_predictions)
     out_dir = f"{base_dir}/goal_streak"
     os.makedirs(out_dir, exist_ok=True)
 
-    by_date = group_by_date(entries)
-    date_keys = list(by_date.keys())
+    hot_form_by_date = group_by_date(hot_form_entries)
+    streak_by_date = group_by_date(streak_entries)
+    date_keys = sorted(set(hot_form_by_date.keys()) | set(streak_by_date.keys()))
 
     if not date_keys:
         with open(f"{out_dir}/index.html", "w") as f:
-            f.write(make_streak_html([]))
+            f.write(make_streak_html([], []))
     else:
         for i, date_key in enumerate(date_keys):
             prev_href = date_page_filename(date_keys[i - 1]) if i > 0 else None
             next_href = date_page_filename(date_keys[i + 1]) if i < len(date_keys) - 1 else None
             page_html = make_streak_html(
-                by_date[date_key], date_label=format_date_label(date_key),
+                hot_form_by_date.get(date_key, []), streak_by_date.get(date_key, []),
+                date_label=format_date_label(date_key),
                 prev_href=prev_href, next_href=next_href,
             )
             with open(f"{out_dir}/{date_page_filename(date_key)}", "w") as f:
@@ -1248,8 +1349,9 @@ def build_goal_streak_scanner(all_predictions, base_dir="docs/match-iq/scanners"
         with open(f"{out_dir}/index.html", "w") as f:
             f.write(soonest_html)
 
-    write_streak_csv(entries, f"{out_dir}/goal_streak_predictions.csv")
-    print(f"  Goal Streak Scanner: {len(entries)} team-entries across {len(date_keys)} date(s)")
+    write_streak_csv(hot_form_entries, streak_entries, f"{out_dir}/goal_streak_predictions.csv")
+    print(f"  Hot Form: {len(hot_form_entries)} team-entries · Real Streak: {len(streak_entries)} "
+          f"team-entries across {len(date_keys)} date(s)")
 
 
 SCANNER_CONFIGS = [
