@@ -51,26 +51,12 @@ def poisson_pmf(k, lam):
 
 def winsorize_iqr(values, cap_multiplier=1.5):
     """Caps any single game at 1.5x the median of the last-5 sample before
-    recency-weighting. Built for team runs/hits, where a single blowout game
-    (e.g. a 12-run outburst) can otherwise dominate a small-sample weighted
-    average and produce a wildly overconfident projection.
-
-    (Note: an IQR/Tukey-fence approach was tried first but turned out too
-    loose on a 5-value sample to reliably catch real outliers — a median
-    cap is simpler and more predictable at this sample size.)
-    Only the high end is capped, since a big scoring game is the case that
-    actually distorts these projections; a shutout (0) is a normal, bounded
-    outcome that doesn't need correcting the same way.
-    """
+    recency-weighting."""
     if len(values) < 3:
         return list(values)
     med = sorted(values)[len(values) // 2]
     cap = med * cap_multiplier
     return [min(v, cap) for v in values]
-
-
-def get_season(season_year):
-    return season_year
 
 
 team_k_cache = {}
@@ -119,9 +105,6 @@ def get_team_hitting_stat(team_id, season):
 
 
 def get_team_pitching_stat(team_id, season):
-    """Full team-level season pitching stat dict (ERA, hitsPer9Inn, etc.),
-    used as a bullpen-quality proxy for the innings the opposing starter
-    doesn't cover."""
     if team_id in team_pitching_stat_cache:
         return team_pitching_stat_cache[team_id]
     r = requests.get(f"{BASE}/teams/{team_id}/stats",
@@ -144,8 +127,6 @@ def get_team_pitching_hits9(team_id, season):
 
 
 def get_team_gamelog_splits(team_id, season):
-    """Cached per-game hitting log for a team — shared source for both the
-    runs and hits last-5 projections so we only fetch it once per team."""
     if team_id in team_gamelog_cache:
         return team_gamelog_cache[team_id]
     r = requests.get(f"{BASE}/teams/{team_id}/stats",
@@ -167,14 +148,69 @@ def get_team_hits_last5(team_id, season):
     return [s["stat"]["hits"] for s in splits[-5:]]
 
 
-def project_team_runs(team_id, season, opp_starter_era, starter_proj_ip, opp_team_id, weight=RECENT_WEIGHT):
-    """Expected team runs = blended (season + recency) offense rate,
-    adjusted for the specific opposing starter's quality for the innings
-    he's projected to pitch, and the opposing team's overall staff ERA
-    (as an approximation for bullpen quality) for the remaining innings.
-    This is a coarser model than the pitcher props — it can't see bullpen
-    matchups, park factors, or lineup-specific splits, so treat edges here
-    with more skepticism than the K/outs props.
+# --- xFIP-based opponent-starter quality -----------------------------
+# CONFIRMED via check_mlb_sabermetrics.py against a live pitcher: MLB
+# Stats API's stats=sabermetrics&group=pitching returns real fip/xfip
+# fields (e.g. fip=3.91, xfip=3.67 for the tested pitcher) -- no auth
+# needed, same endpoint family already used everywhere else in this
+# script. xFIP strips out defense/sequencing/BABIP luck that raw ERA
+# bakes in, making it a sharper proxy for the opposing starter's true
+# quality than ERA alone -- same category of fix as Match IQ's
+# corners-conceded improvement (swap a noisy outcome stat for a
+# cleaner underlying-quality stat).
+#
+# No hardcoded "league average xFIP" -- same reasoning as Match IQ's
+# corners running-average: rather than guess a constant that could be
+# stale or wrong, this tracks the actual xFIP values seen across
+# pitchers processed THIS run and averages them. Falls back to
+# LEAGUE_AVG_ERA (a reasonable ballpark for league-average xFIP) only
+# when zero samples exist yet.
+pitcher_saber_cache = {}
+_xfip_samples = []
+
+
+def get_pitcher_sabermetrics(pitcher_id, season):
+    if pitcher_id in pitcher_saber_cache:
+        return pitcher_saber_cache[pitcher_id]
+    try:
+        r = requests.get(f"{BASE}/people/{pitcher_id}/stats",
+                          params={"stats": "sabermetrics", "group": "pitching", "season": season})
+        r.raise_for_status()
+        data = r.json()
+        stats_list = data.get("stats", [])
+        splits = stats_list[0].get("splits", []) if stats_list else []
+        stat = splits[0]["stat"] if splits else {}
+        result = {
+            "fip": stat.get("fip"),
+            "xfip": stat.get("xfip"),
+            "eraMinus": stat.get("eraMinus"),
+        }
+    except Exception:
+        result = {"fip": None, "xfip": None, "eraMinus": None}
+    pitcher_saber_cache[pitcher_id] = result
+    if result.get("xfip") is not None:
+        _xfip_samples.append(float(result["xfip"]))
+    return result
+
+
+def _lg_avg_xfip():
+    if not _xfip_samples:
+        return LEAGUE_AVG_ERA
+    return sum(_xfip_samples) / len(_xfip_samples)
+
+
+def project_team_runs(team_id, season, opp_starter_era, opp_starter_xfip, starter_proj_ip, opp_team_id, weight=RECENT_WEIGHT):
+    """Expected team runs, adjusted for the opposing starter's quality
+    (his projected innings) and the opposing team's overall staff ERA
+    (bullpen proxy) for the rest.
+
+    Starter quality now blends TWO signals: raw ERA (recent, real
+    results, but noisy -- includes luck/defense/sequencing) and xFIP
+    (peripheral-based, strips that noise out, more predictive of true
+    talent going forward). Weighted 60% xFIP / 40% ERA -- xFIP is the
+    stronger signal, but a full switch away from ERA would throw away
+    real recent-form information the model shouldn't ignore either.
+    Falls back to ERA-only if xFIP wasn't available for this pitcher.
     """
     hstat = get_team_hitting_stat(team_id, season)
     if not hstat:
@@ -196,7 +232,12 @@ def project_team_runs(team_id, season, opp_starter_era, starter_proj_ip, opp_tea
     starter_share = max(0.0, min(1.0, (starter_proj_ip or 5.5) / 9))
     bullpen_share = 1 - starter_share
     opp_team_era = get_team_pitching_era(opp_team_id, season) or LEAGUE_AVG_ERA
-    starter_adj = (opp_starter_era / LEAGUE_AVG_ERA) if opp_starter_era else 1.0
+    starter_adj_era = (opp_starter_era / LEAGUE_AVG_ERA) if opp_starter_era else 1.0
+    if opp_starter_xfip:
+        starter_adj_xfip = opp_starter_xfip / _lg_avg_xfip()
+        starter_adj = 0.6 * starter_adj_xfip + 0.4 * starter_adj_era
+    else:
+        starter_adj = starter_adj_era
     bullpen_adj = (opp_team_era / LEAGUE_AVG_ERA)
     run_factor = starter_share * starter_adj + bullpen_share * bullpen_adj
 
@@ -211,19 +252,14 @@ def project_team_runs(team_id, season, opp_starter_era, starter_proj_ip, opp_tea
             hi = i
             break
 
-    l5_str = "·".join(str(r) for r in last5_runs) if last5_runs else "—"
+    l5_str = "\u00b7".join(str(r) for r in last5_runs) if last5_runs else "\u2014"
     return {"lambda": round(lam, 2), "lo": lo, "hi": hi, "l5_str": l5_str,
             "last5_runs": last5_runs,
-            "season_rpg": round(season_rpg, 2), "run_factor": round(run_factor, 2)}
+            "season_rpg": round(season_rpg, 2), "run_factor": round(run_factor, 2),
+            "xfip_used": opp_starter_xfip is not None}
 
 
 def project_team_hits(team_id, season, opp_starter_hits9, starter_proj_ip, opp_team_id, weight=RECENT_WEIGHT):
-    """Same structure as project_team_runs but for team hits allowed —
-    generally more reliable than runs since it doesn't depend on hit
-    *sequencing* (stranding runners doesn't erase a hit the way it erases
-    a run), though it's still a whole-lineup, multi-pitcher stat, so treat
-    it as less reliable than the single-pitcher K/outs props.
-    """
     hstat = get_team_hitting_stat(team_id, season)
     if not hstat:
         return None
@@ -259,7 +295,7 @@ def project_team_hits(team_id, season, opp_starter_hits9, starter_proj_ip, opp_t
             hi = i
             break
 
-    l5_str = "·".join(str(h) for h in last5_hits) if last5_hits else "—"
+    l5_str = "\u00b7".join(str(h) for h in last5_hits) if last5_hits else "\u2014"
     return {"lambda": round(lam, 2), "lo": lo, "hi": hi, "l5_str": l5_str,
             "last5_hits": last5_hits,
             "season_hpg": round(season_hpg, 2), "hit_factor": round(hit_factor, 2)}
@@ -286,23 +322,14 @@ def get_pitcher_data(pitcher_id, season):
     last5_parsed = []
     for s in last5:
         raw_ip = bb_ip_to_decimal(s["stat"]["inningsPitched"])
-        # SANITY CLAMP: a single MLB start cannot exceed 9 innings (a
-        # complete game) under any normal circumstance — modern bullpen
-        # usage makes even that vanishingly rare. Observed live: a
-        # corrupted/misparsed gameLog entry produced a ~17.8 IP average
-        # for one pitcher, which then inflated both his K and outs
-        # projections to physically impossible numbers (13+ projected
-        # strikeouts against a real recent average of ~2/start). This
-        # mirrors winsorize_iqr()'s outlier protection for team
-        # runs/hits — that existed already, this same protection had
-        # just never been applied to pitcher IP data specifically.
         ip = min(raw_ip, 9.0)
         if raw_ip > 9.0:
             print(f"    [!] {s['date']}: raw inningsPitched={s['stat']['inningsPitched']!r} "
-                  f"parsed to {raw_ip} IP — implausible for a single start, clamped to 9.0. "
-                  f"Worth checking this game's raw MLB Stats API data directly.")
+                  f"parsed to {raw_ip} IP -- implausible for a single start, clamped to 9.0.")
         last5_parsed.append({"k": s["stat"]["strikeOuts"], "ip": ip, "date": s["date"]})
-    return {"season": season_stat, "last5": last5_parsed}
+
+    saber = get_pitcher_sabermetrics(pitcher_id, season)
+    return {"season": season_stat, "last5": last5_parsed, "saber": saber}
 
 
 def project(season_stat, last5, opp_k_pct, weight=RECENT_WEIGHT, bf_per_ip=BF_PER_IP):
@@ -325,16 +352,6 @@ def project(season_stat, last5, opp_k_pct, weight=RECENT_WEIGHT, bf_per_ip=BF_PE
         recent_k_rate = num_ / den_ if den_ else season_k_rate
         avg_recent_ip = sum(s["ip"] for s in last5) / n
 
-    # SANITY CLAMP, take two: the per-game clamp added in get_pitcher_data()
-    # only guards the len(last5) >= 2 branch above. When a pitcher has
-    # FEWER than 2 qualifying starts in this season's game log, this
-    # function falls back to season IP / games started (line above) —
-    # a completely different code path that never touches last5 at all,
-    # so the earlier fix couldn't reach it. Observed live: this exact
-    # fallback produced ~17.8 "IP per start" for a pitcher with very few
-    # logged starts, surviving the first fix untouched. Clamping the
-    # final avg_recent_ip here, after both branches resolve, covers
-    # both paths with one guard instead of duplicating it.
     avg_recent_ip = min(avg_recent_ip, 9.0)
 
     blended = weight * recent_k_rate + (1 - weight) * season_k_rate
@@ -360,10 +377,9 @@ def project(season_stat, last5, opp_k_pct, weight=RECENT_WEIGHT, bf_per_ip=BF_PE
             hi = i
             break
 
-    l5_str = "·".join(str(s["k"]) for s in last5) if last5 else "—"
+    l5_str = "\u00b7".join(str(s["k"]) for s in last5) if last5 else "\u2014"
     l5_vs_season = ((recent_k_rate / season_k_rate - 1) * 100) if season_k_rate else 0
 
-    # Outs-recorded projection reuses the same projected IP — outs = IP * 3.
     outs_lambda = proj_ip * 3
     outs_lo = outs_hi = 0
     cum = 0.0
@@ -413,7 +429,7 @@ def build_slate(target_date):
             if not prob:
                 entry["pitchers"].append({"side": side_name, "name": None})
                 continue
-            print(f"  Fetching {prob['fullName']}…")
+            print(f"  Fetching {prob['fullName']}...")
             try:
                 pdata = get_pitcher_data(prob["id"], season)
                 opp_kpct = None
@@ -423,10 +439,12 @@ def build_slate(target_date):
                     pass
                 if pdata:
                     proj = project(pdata["season"], pdata["last5"], opp_kpct)
+                    saber = pdata.get("saber") or {}
                     entry["pitchers"].append({
                         "side": side_name, "name": prob["fullName"],
                         "team": side["team"]["name"], "opp": opp["team"]["name"],
                         "opp_kpct": round(opp_kpct, 1) if opp_kpct else None,
+                        "fip": saber.get("fip"), "xfip": saber.get("xfip"),
                         **proj
                     })
                 else:
@@ -436,7 +454,6 @@ def build_slate(target_date):
 
         slate.append(entry)
 
-        # Team run + hit projections: each team's offense vs. the OPPOSING starter (+ that team's bullpen)
         entry["team_runs"] = {}
         entry["team_hits"] = {}
         pitcher_by_side = {p.get("side"): p for p in entry["pitchers"]}
@@ -445,13 +462,15 @@ def build_slate(target_date):
             opp_pitcher = pitcher_by_side.get(opp_side, {})
             opp_era = opp_pitcher.get("season_era")
             opp_era = float(opp_era) if opp_era not in (None, "-") else None
+            opp_xfip = opp_pitcher.get("xfip")
+            opp_xfip = float(opp_xfip) if opp_xfip not in (None, "-") else None
             opp_hits9 = opp_pitcher.get("season_hits9")
             opp_hits9 = float(opp_hits9) if opp_hits9 not in (None, "-") else None
             opp_proj_ip = opp_pitcher.get("proj_ip")
 
             try:
                 tr = project_team_runs(
-                    side["team"]["id"], season, opp_era, opp_proj_ip, opp["team"]["id"]
+                    side["team"]["id"], season, opp_era, opp_xfip, opp_proj_ip, opp["team"]["id"]
                 )
                 if tr:
                     entry["team_runs"][side_name] = {
@@ -477,7 +496,7 @@ def build_slate(target_date):
 HTML_TEMPLATE = """<!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Strike Zone — Slate for {date}</title>
+<title>Strike Zone -- Slate for {date}</title>
 <style>
   :root{{--bg:#0b0f14; --panel:#121820; --panel2:#161d27; --border:#233040; --text:#e8edf2; --sub:#8b98a8; --yellow:#facc15; --green:#22c55e;}}
   body{{margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; padding:16px; max-width:640px; margin:0 auto;}}
@@ -524,14 +543,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <body>
 <div class="topBar">
   <div>
-    <h1>⚾ Strike Zone — Daily Slate</h1>
+    <h1>Strike Zone -- Daily Slate</h1>
     <div class="sub">{date} · generated {generated}</div>
   </div>
-  <button class="downloadBtn" onclick="exportCSV()">⬇ Download CSV</button>
+  <button class="downloadBtn" onclick="exportCSV()">Download CSV</button>
 </div>
 {builder_html}
 {games_html}
-<div class="footnote">Projections blend season K-rate/batter-faced with a recency-weighted last-5 rate ({weight}% recent), adjust for opponent K% and BB/9-driven outing length, then use a Poisson distribution for the range. Enter a book's line/odds under any pitcher to compute a de-vigged edge — that math runs entirely in your browser, no data leaves the page.</div>
+<div class="footnote">Projections blend season K-rate/batter-faced with a recency-weighted last-5 rate ({weight}% recent), adjust for opponent K% and BB/9-driven outing length, then use a Poisson distribution for the range. Team run projections now blend opposing-starter xFIP (peripheral-based, strips out defense/luck) with raw ERA. Enter a book's line/odds under any pitcher to compute a de-vigged edge -- that math runs entirely in your browser, no data leaves the page.</div>
 <script>
 const REPORT_DATE = "{date}";
 const LEGS = {legs_json};
@@ -542,15 +561,12 @@ function poissonCDF(threshold, lambda){{
   return cum;
 }}
 function classifyEdge(kind, bestEdge){{
-  // Pitcher props (K, outs) get more benefit of the doubt than whole-team
-  // props (runs, hits) — a whole-lineup stat has more blind spots, so it
-  // needs a bigger edge to earn the same confidence label.
   const isTeamProp = (kind === 'runs_lambda' || kind === 'hits_lambda');
   const t = isTeamProp ? {{skip:8, lean:15, play:25}} : {{skip:5, lean:12, play:20}};
   if(bestEdge < t.skip)  return {{label:'SKIP',    cls:'badge-skip'}};
   if(bestEdge < t.lean)  return {{label:'LEAN',    cls:'badge-lean'}};
   if(bestEdge < t.play)  return {{label:'PLAY',    cls:'badge-play'}};
-  return {{label:'⚠ VERIFY', cls:'badge-verify'}};
+  return {{label:'VERIFY', cls:'badge-verify'}};
 }}
 
 function calcEdge(btn){{
@@ -566,7 +582,7 @@ function calcEdge(btn){{
   const threshold = Math.floor(line);
   const pUnder = poissonCDF(threshold, lambda);
   const pOver = 1 - pUnder;
-  let text = `Model: Over ${{(pOver*100).toFixed(1)}}% · Under ${{(pUnder*100).toFixed(1)}}%`;
+  let text = `Model: Over ${{(pOver*100).toFixed(1)}}% . Under ${{(pUnder*100).toFixed(1)}}%`;
   let badgeHtml = '';
   if(!isNaN(overOdds) && !isNaN(underOdds) && overOdds>0 && underOdds>0){{
     const rawOver = 1/overOdds, rawUnder = 1/underOdds;
@@ -578,7 +594,7 @@ function calcEdge(btn){{
     const pick = edgeOver >= edgeUnder
       ? `Over edge ${{edgeOver>=0?'+':''}}${{edgeOver.toFixed(1)}}%`
       : `Under edge ${{edgeUnder>=0?'+':''}}${{edgeUnder.toFixed(1)}}%`;
-    text += ` · ${{pick}}`;
+    text += ` . ${{pick}}`;
     const {{label, cls}} = classifyEdge(kind, bestEdge);
     badgeHtml = `<span class="edgeBadge ${{cls}}">${{label}}</span> `;
     out.style.color = bestEdge >= 8 ? 'var(--green)' : (bestEdge >= 3 ? 'var(--yellow)' : 'var(--sub)');
@@ -631,7 +647,6 @@ function exportCSV(){{
   URL.revokeObjectURL(url);
 }}
 
-// ---- Safest Bet Builder ----
 function initBuilderToggles() {{
   const container = document.getElementById('builderToggles');
   if (!container) return;
@@ -673,7 +688,7 @@ function buildSafestSZ() {{
   categories.forEach(c => cursor[c] = 0);
 
   const chosen = [];
-  const subjectCount = {{}};  // capped per pitcher/team, not per game
+  const subjectCount = {{}};
   let combinedOdds = 1;
   let addedThisPass = true;
 
@@ -701,7 +716,7 @@ function buildSafestSZ() {{
 
   const rows = chosen.map(l => `
     <div class="legRow">
-      <span>${{l.match}}<br><span style="color:var(--yellow)">${{l.market}}</span> <span style="color:var(--sub)">· ${{l.category}}</span>
+      <span>${{l.match}}<br><span style="color:var(--yellow)">${{l.market}}</span> <span style="color:var(--sub)">. ${{l.category}}</span>
       ${{l.detail ? `<br><span style="color:var(--sub);font-size:10px">${{l.detail}}</span>` : ''}}
       ${{l.history ? `<br><span style="color:var(--sub);font-size:10px">last games: ${{l.history}}</span>` : ''}}</span>
       <span style="text-align:right"><span style="color:var(--yellow);font-weight:bold">${{l.prob}}%</span>${{l.hit_rate ? `<br><span style="color:var(--sub);font-size:11px">${{l.hit_rate.hits}}/${{l.hit_rate.total}}</span>` : ''}}</span>
@@ -709,16 +724,16 @@ function buildSafestSZ() {{
   `).join('');
 
   const capNote = chosen.length >= maxLegs && combinedOdds < target
-    ? ' (hit the leg cap before reaching target — raise Max legs or lower Target odds)'
+    ? ' (hit the leg cap before reaching target -- raise Max legs or lower Target odds)'
     : (combinedOdds < target ? ' (ran out of legs before reaching target)' : '');
 
   out.innerHTML = `
     <div style="color:var(--text);font-size:13px;margin-bottom:6px">
-      ${{chosen.length}} legs · est. combined odds ~<b>${{combinedOdds.toFixed(2)}}</b>${{capNote}}
+      ${{chosen.length}} legs . est. combined odds ~<b>${{combinedOdds.toFixed(2)}}</b>${{capNote}}
     </div>
     ${{rows}}
     <div style="color:var(--sub);font-size:10px;margin-top:8px;line-height:1.4">
-      Estimate multiplies each leg's fair odds (100/probability) — real sportsbook odds
+      Estimate multiplies each leg's fair odds (100/probability) -- real sportsbook odds
       include their margin and legs from the same pitcher/team aren't fully independent,
       so treat this as a ranking tool, not a firm price. All lines are set automatically
       below the model's projection for a safety margin.
@@ -731,7 +746,7 @@ initBuilderToggles();
 """
 
 BUILDER_TEMPLATE = """<div class="builderPanel">
-  <div class="builderTitle">🎯 Safest Bet Builder</div>
+  <div class="builderTitle">Safest Bet Builder</div>
   <div class="builderToggles" id="builderToggles"></div>
   <div class="builderControls">
     <label>Target odds:</label>
@@ -739,7 +754,7 @@ BUILDER_TEMPLATE = """<div class="builderPanel">
     <label>Max legs:</label>
     <input type="number" step="1" min="2" value="8" id="szMaxLegs">
     <button class="builderBtn" onclick="buildSafestSZ()">Build</button>
-    <button class="builderBtnAlt" onclick="buildSafestSZ()">🔀 Shuffle</button>
+    <button class="builderBtnAlt" onclick="buildSafestSZ()">Shuffle</button>
   </div>
   <div class="builderResult" id="builderResult">
     Untick any market you don't want considered, set a target odds and leg cap, then tap
@@ -760,12 +775,12 @@ GAME_TEMPLATE = """<div class="gameGroup">
 TEAM_RUN_ROW = """<div class="pitcherRow" data-runs_lambda="{lam}">
   <div class="pTop">
     <div>
-      <div class="pName">{team} — Total Runs</div>
-      <div class="pMeta">vs {opp} · L5 runs: {l5_str} · season {season_rpg}/gm · pitching-adj ×{run_factor}</div>
+      <div class="pName">{team} -- Total Runs</div>
+      <div class="pMeta">vs {opp} · L5 runs: {l5_str} · season {season_rpg}/gm · pitching-adj x{run_factor}{xfip_note}</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">{lam}</div>
-      <div class="pProjSub">{lo}–{hi} range</div>
+      <div class="pProjSub">{lo}-{hi} range</div>
     </div>
   </div>
   <div class="propLabel">Team Total Runs (full game)</div>
@@ -781,12 +796,12 @@ TEAM_RUN_ROW = """<div class="pitcherRow" data-runs_lambda="{lam}">
 TEAM_HIT_ROW = """<div class="pitcherRow" data-hits_lambda="{lam}">
   <div class="pTop">
     <div>
-      <div class="pName">{team} — Total Hits</div>
-      <div class="pMeta">vs {opp} · L5 hits: {l5_str} · season {season_hpg}/gm · pitching-adj ×{hit_factor}</div>
+      <div class="pName">{team} -- Total Hits</div>
+      <div class="pMeta">vs {opp} · L5 hits: {l5_str} · season {season_hpg}/gm · pitching-adj x{hit_factor}</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">{lam}</div>
-      <div class="pProjSub">{lo}–{hi} range</div>
+      <div class="pProjSub">{lo}-{hi} range</div>
     </div>
   </div>
   <div class="propLabel">Team Total Hits (full game)</div>
@@ -803,11 +818,11 @@ PITCHER_ROW = """<div class="pitcherRow" data-lambda="{lam}" data-outs_lambda="{
   <div class="pTop">
     <div>
       <div class="pName">{name}</div>
-      <div class="pMeta">{team} vs {opp} · L5 Ks: {l5_str} ({l5_delta}) · BB/9 {bb9}</div>
+      <div class="pMeta">{team} vs {opp} · L5 Ks: {l5_str} ({l5_delta}) · BB/9 {bb9}{fip_note}</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">{lam}</div>
-      <div class="pProjSub">{lo}–{hi} range · {proj_ip} IP</div>
+      <div class="pProjSub">{lo}-{hi} range · {proj_ip} IP</div>
     </div>
   </div>
   <div class="propLabel">Strikeouts</div>
@@ -818,7 +833,7 @@ PITCHER_ROW = """<div class="pitcherRow" data-lambda="{lam}" data-outs_lambda="{
     <button class="edgeBtn" data-kind="lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-  <div class="propLabel">Outs Recorded <span class="pProjSub">(proj {outs_lam} · {outs_lo}–{outs_hi} range)</span></div>
+  <div class="propLabel">Outs Recorded <span class="pProjSub">(proj {outs_lam} · {outs_lo}-{outs_hi} range)</span></div>
   <div class="edgeRow">
     <input type="number" step="0.5" class="lineInput" placeholder="Line">
     <input type="number" step="0.01" class="overInput" placeholder="Over odds">
@@ -830,16 +845,6 @@ PITCHER_ROW = """<div class="pitcherRow" data-lambda="{lam}" data-outs_lambda="{
 
 NO_PITCHER_ROW = """<div class="noPitcher">Probable pitcher not yet announced</div>"""
 
-
-# ----------------------------------------------------------------------
-# Safest Bet Builder — same pattern as Match IQ/Blitz IQ/Blue Line/Player
-# Stat Model: every prop the model prices gets a safety-margin line set
-# below the projection, turned into a real probability plus an empirical
-# hit-rate from the same raw last-5 values, flattened into legs the HTML
-# panel round-robins through. Capped per PITCHER/TEAM (a pitcher's own
-# Strikeouts and Outs Recorded legs are obviously correlated — same
-# outing), not per game the way Match IQ caps per match.
-# ----------------------------------------------------------------------
 
 def safe_line(lam, factor=0.72, round_to=0.5):
     if lam is None:
@@ -858,9 +863,6 @@ def prob_over(lam, line):
 
 
 def hit_rate(values, line):
-    """(hits, total) from the same raw last-5 values feeding the
-    projection — a model-free empirical cross-check, same idea as the
-    other predictor tools' hit-rate."""
     if not values:
         return None
     hits = sum(1 for v in values if v > line)
@@ -938,10 +940,16 @@ def render_html(slate, target_date):
                 rows.append(f'<div class="noPitcher">{p["name"]}: no stats available</div>')
             else:
                 delta = f'{"+" if p["l5_vs_season"]>=0 else ""}{p["l5_vs_season"]:.0f}% vs season'
+                fip_note = ""
+                if p.get("fip") is not None or p.get("xfip") is not None:
+                    fip_val = f"{p['fip']:.2f}" if p.get("fip") is not None else "-"
+                    xfip_val = f"{p['xfip']:.2f}" if p.get("xfip") is not None else "-"
+                    fip_note = f" · FIP {fip_val} · xFIP {xfip_val}"
                 rows.append(PITCHER_ROW.format(
                     name=p["name"], team=p["team"], opp=p["opp"],
                     l5_str=p["l5_str"], l5_delta=delta,
-                    bb9=p["bb9"] if p["bb9"] is not None else "—",
+                    bb9=p["bb9"] if p["bb9"] is not None else "-",
+                    fip_note=fip_note,
                     lam=p["lambda"], lo=p["lo"], hi=p["hi"], proj_ip=p["proj_ip"],
                     outs_lam=p["outs_lambda"], outs_lo=p["outs_lo"], outs_hi=p["outs_hi"],
                 ))
@@ -950,9 +958,11 @@ def render_html(slate, target_date):
         for side_name in ("away", "home"):
             tr = g.get("team_runs", {}).get(side_name)
             if tr and "lambda" in tr:
+                xfip_note = " (xFIP-blended)" if tr.get("xfip_used") else ""
                 team_rows.append(TEAM_RUN_ROW.format(
                     team=tr["team"], opp=tr["opp"], l5_str=tr["l5_str"],
                     season_rpg=tr["season_rpg"], run_factor=tr["run_factor"],
+                    xfip_note=xfip_note,
                     lam=tr["lambda"], lo=tr["lo"], hi=tr["hi"],
                 ))
             th = g.get("team_hits", {}).get(side_name)
@@ -984,7 +994,7 @@ if __name__ == "__main__":
     else:
         target = date.today()
 
-    print(f"Fetching slate for {target.isoformat()}…")
+    print(f"Fetching slate for {target.isoformat()}...")
     slate = build_slate(target)
     html = render_html(slate, target)
 
@@ -993,8 +1003,7 @@ if __name__ == "__main__":
     os.makedirs("docs/strike-zone", exist_ok=True)
     with open(out_path, "w") as f:
         f.write(html)
-    print(f"\nDone. {len(slate)} games written to {out_path} — open it in your browser.")
+    print(f"\nDone. {len(slate)} games written to {out_path} -- open it in your browser.")
 
-    # also dump raw JSON in case you want to feed it into another tool
     with open("docs/strike-zone/slate_report.json", "w") as f:
         json.dump(slate, f, indent=2, default=str)
