@@ -12,7 +12,7 @@
         "opp_kpct": 24.5,
         "fip": 3.98417,
         "xfip": 4.455,
-        "lambda": 4.83,
+        "lambda": 4.84,
         "lo": 2,
         "hi": 8,
         "proj_ip": 6.0,
@@ -52,17 +52,17 @@
         "lambda": 5.2,
         "lo": 2,
         "hi": 8,
-        "proj_ip": 5.7,
-        "outs_lambda": 17.21,
+        "proj_ip": 5.8,
+        "outs_lambda": 17.43,
         "outs_lo": 12,
         "outs_hi": 23,
-        "season_era": "2.70",
-        "season_k9": "9.72",
-        "season_hits9": "5.51",
-        "bb9": 4.1,
-        "whip": "1.07",
+        "season_era": "2.67",
+        "season_k9": "9.71",
+        "season_hits9": "5.44",
+        "bb9": 4.06,
+        "whip": "1.06",
         "l5_str": "5\u00b77\u00b78\u00b75\u00b78",
-        "l5_vs_season": -1.0,
+        "l5_vs_season": -3.0,
         "k_last5": [
           5,
           7,
@@ -75,7 +75,7 @@
           15,
           19,
           18,
-          23
+          24
         ]
       }
     ],
@@ -83,7 +83,7 @@
       "away": {
         "team": "Tampa Bay Rays",
         "opp": "New York Yankees",
-        "lambda": 2.21,
+        "lambda": 2.2,
         "lo": 1,
         "hi": 4,
         "l5_str": "10\u00b72\u00b72\u00b75\u00b70",
@@ -121,7 +121,7 @@
       "away": {
         "team": "Tampa Bay Rays",
         "opp": "New York Yankees",
-        "lambda": 4.44,
+        "lambda": 4.39,
         "lo": 2,
         "hi": 7,
         "l5_str": "7\u00b75\u00b78\u00b74\u00b73",
@@ -133,7 +133,7 @@
           3
         ],
         "season_hpg": 8.64,
-        "hit_factor": 0.73
+        "hit_factor": 0.72
       },
       "home": {
         "team": "New York Yankees",
