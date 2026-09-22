@@ -767,25 +767,49 @@ BUILDER_TEMPLATE = """<div class="builderPanel">
   </div>
 </div>"""
 
-# --- Run Streak / K Streak --------------------------------------------
-# Same "raw recent-form screen" concept as Match IQ/Euro Ice's Goal
-# Streak -- flags teams/pitchers who've genuinely been hot lately,
-# regardless of today's specific matchup. Not a probabilistic
-# prediction like the rest of the slate. Thresholds are MLB-calibrated
-# judgment calls (league-average team runs/game sits around 4.3-4.6;
-# league-average K/start is roughly 5-6), set meaningfully above
-# average rather than at it -- easy to tune later once there's real
-# results data to check them against.
+# --- Run Form / K Form (average-based) + Real Run/K Streak (consecutive) --
+# Same "raw recent-form screen" concept as Match IQ/Euro Ice -- flags
+# teams/pitchers who've genuinely been hot lately, regardless of today's
+# specific matchup. Not a probabilistic prediction like the rest of the
+# slate. IMPORTANT DISTINCTION: "Form" below is an AVERAGE over the last
+# N games/starts -- a team/pitcher can qualify even if their most recent
+# outing was quiet, as long as earlier ones pulled the average up. That's
+# not what "streak" means in sports (see e.g. DiMaggio's 56-game hitting
+# streak), so "Real Streak" is a SEPARATE, stricter check: walking
+# backward from the most recent game/start and counting how many in a
+# ROW cleared a per-game threshold, stopping at the first one that
+# didn't. Thresholds are MLB-calibrated judgment calls (league-average
+# team runs/game sits around 4.3-4.6; league-average K/start is roughly
+# 5-6), easy to tune later once there's real results data to check them
+# against.
 RUN_STREAK_MIN = 5.5
 RUN_STREAK_MIN_GAMES = 5
 K_STREAK_MIN = 7.0
 K_STREAK_MIN_STARTS = 5
 
+REAL_RUN_STREAK_THRESHOLD = 5   # per-game runs needed to extend the streak
+REAL_RUN_STREAK_MIN_LENGTH = 3  # shortest run that counts as "a streak"
+REAL_K_STREAK_THRESHOLD = 6     # per-start K's needed to extend the streak
+REAL_K_STREAK_MIN_LENGTH = 3
+
+
+def _current_run_streak(values, threshold=REAL_RUN_STREAK_THRESHOLD):
+    """last5_runs/k_last5 are oldest-first (see get_team_gamelog_splits
+    and get_pitcher_data), so walking in REVERSE goes from the most
+    recent game/start backward -- exactly what a real streak needs."""
+    streak = 0
+    for v in reversed(values):
+        if v >= threshold:
+            streak += 1
+        else:
+            break
+    return streak
+
 
 def build_run_streak_entries(slate):
-    """Reuses last5_runs already computed by project_team_runs() --
-    no new fetches needed, just a post-processing pass over the
-    already-built slate."""
+    """RUN FORM -- average over last 5 games. Reuses last5_runs already
+    computed by project_team_runs() -- no new fetches needed, just a
+    post-processing pass over the already-built slate."""
     entries = []
     for g in slate:
         for side_name in ("away", "home"):
@@ -806,9 +830,31 @@ def build_run_streak_entries(slate):
     return entries
 
 
+def build_real_run_streak_entries(slate):
+    """REAL RUN STREAK -- genuine consecutive-games count."""
+    entries = []
+    for g in slate:
+        for side_name in ("away", "home"):
+            tr = g.get("team_runs", {}).get(side_name)
+            if not tr or "last5_runs" not in tr:
+                continue
+            l5 = tr["last5_runs"]
+            streak_len = _current_run_streak(l5, REAL_RUN_STREAK_THRESHOLD)
+            if streak_len >= REAL_RUN_STREAK_MIN_LENGTH:
+                entries.append({
+                    "team": tr["team"], "opponent": tr["opp"],
+                    "streak_len": streak_len, "streak_games": l5[-streak_len:],
+                    "full_sample": streak_len >= len(l5),
+                    "away": g["away"], "home": g["home"], "time": g["time"],
+                })
+    entries.sort(key=lambda e: -e["streak_len"])
+    return entries
+
+
 def build_k_streak_entries(slate):
-    """Reuses k_last5 already computed by project() for each starting
-    pitcher -- same free reuse of existing data as the run streak."""
+    """K FORM -- average over last 5 starts. Reuses k_last5 already
+    computed by project() for each starting pitcher -- same free reuse
+    of existing data as the run form."""
     entries = []
     for g in slate:
         for p in g.get("pitchers", []):
@@ -828,6 +874,26 @@ def build_k_streak_entries(slate):
     return entries
 
 
+def build_real_k_streak_entries(slate):
+    """REAL K STREAK -- genuine consecutive-starts count."""
+    entries = []
+    for g in slate:
+        for p in g.get("pitchers", []):
+            if not p.get("name") or p.get("error") or p.get("no_stats"):
+                continue
+            l5 = p.get("k_last5") or []
+            streak_len = _current_run_streak(l5, REAL_K_STREAK_THRESHOLD)
+            if streak_len >= REAL_K_STREAK_MIN_LENGTH:
+                entries.append({
+                    "name": p["name"], "team": p["team"], "opp": p["opp"],
+                    "streak_len": streak_len, "streak_games": l5[-streak_len:],
+                    "full_sample": streak_len >= len(l5),
+                    "away": g["away"], "home": g["home"], "time": g["time"],
+                })
+    entries.sort(key=lambda e: -e["streak_len"])
+    return entries
+
+
 STREAK_ENTRY_TEMPLATE = """<div style="background:var(--panel2);border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
   <div style="min-width:56px;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 4px;flex-shrink:0">
     <div style="font-size:9px;color:var(--sub)">L5 AVG</div>
@@ -840,50 +906,78 @@ STREAK_ENTRY_TEMPLATE = """<div style="background:var(--panel2);border-radius:8p
   </div>
 </div>"""
 
+REAL_STREAK_ENTRY_TEMPLATE = """<div style="background:var(--panel2);border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:var(--bg);border:1px solid #f59e0b;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:var(--sub)">STREAK</div>
+    <div style="font-size:17px;font-weight:bold;color:#f59e0b">{streak_len}{plus}</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:var(--sub)">{away} @ {home} · {time}</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{subject}</div>
+    <div style="font-size:10px;color:var(--sub)">{streak_len} straight ≥{threshold} (old→new): {streak_str}</div>
+  </div>
+</div>"""
+
 STREAK_PANEL_TEMPLATE = """<div class="builderPanel">
-  <div class="builderTitle">🔥 Hot Streaks</div>
+  <div class="builderTitle">🔥 Hot Form &amp; Streaks</div>
   <div style="font-size:11px;color:var(--sub);margin-bottom:10px">
-    Raw recent-FORM screens, not probabilistic predictions like the rest of the slate --
-    these only ask "has this team/pitcher actually been hot lately", regardless of today's
-    specific matchup. Cross-check against that team's/pitcher's own prop line above before
-    treating a streak alone as a signal.
+    Raw recent-FORM screens, not probabilistic predictions like the rest of the slate.
+    Form (average) and Real Streak (consecutive, no break) measure genuinely different
+    things -- a team/pitcher can appear in one, both, or neither. Cross-check against
+    that team's/pitcher's own prop line above before treating either alone as a signal.
   </div>
   {run_section}
+  {real_run_section}
   {k_section}
+  {real_k_section}
 </div>"""
 
 
-def render_streak_panel(run_entries, k_entries):
-    if not run_entries and not k_entries:
+def _render_section(entries, template, icon, label, subtitle, subject_fn):
+    if not entries:
+        return ""
+    cards = "".join(
+        template.format(
+            last5_avg=e.get("last5_avg"), streak_len=e.get("streak_len"),
+            plus="+" if e.get("full_sample") else "",
+            away=e["away"], home=e["home"], time=e["time"],
+            subject=subject_fn(e), threshold=REAL_RUN_STREAK_THRESHOLD if "Run" in label else REAL_K_STREAK_THRESHOLD,
+            last5_str="·".join(str(v) for v in e.get("last5", [])),
+            streak_str="·".join(str(v) for v in e.get("streak_games", [])),
+        ) for e in entries
+    )
+    return f'<div style="font-size:12px;font-weight:700;color:var(--text);margin:10px 0 4px">{icon} {label} <span style="color:var(--sub);font-weight:normal;font-size:10px">{subtitle}</span></div>{cards}'
+
+
+def render_streak_panel(run_entries, real_run_entries, k_entries, real_k_entries):
+    if not any([run_entries, real_run_entries, k_entries, real_k_entries]):
         return ""
 
-    run_section = ""
-    if run_entries:
-        run_cards = "".join(
-            STREAK_ENTRY_TEMPLATE.format(
-                last5_avg=e["last5_avg"], away=e["away"], home=e["home"], time=e["time"],
-                subject=f"{e['team']} Run Streak (vs {e['opponent']})",
-                last5_str="·".join(str(v) for v in e["last5"]),
-            ) for e in run_entries
-        )
-        run_section = (f'<div style="font-size:12px;font-weight:700;color:var(--text);'
-                        f'margin:10px 0 4px">⚾ Run Streak (≥{RUN_STREAK_MIN}/gm over last '
-                        f'{RUN_STREAK_MIN_GAMES})</div>{run_cards}')
+    run_section = _render_section(
+        run_entries, STREAK_ENTRY_TEMPLATE, "⚾", "Run Form",
+        f"(avg ≥{RUN_STREAK_MIN}/gm over last {RUN_STREAK_MIN_GAMES})",
+        lambda e: f"{e['team']} (vs {e['opponent']})",
+    )
+    real_run_section = _render_section(
+        real_run_entries, REAL_STREAK_ENTRY_TEMPLATE, "🔥", "Real Run Streak",
+        f"(≥{REAL_RUN_STREAK_MIN_LENGTH}+ CONSECUTIVE games ≥{REAL_RUN_STREAK_THRESHOLD} runs)",
+        lambda e: f"{e['team']} (vs {e['opponent']})",
+    )
+    k_section = _render_section(
+        k_entries, STREAK_ENTRY_TEMPLATE, "🎯", "K Form",
+        f"(avg ≥{K_STREAK_MIN}/start over last {K_STREAK_MIN_STARTS})",
+        lambda e: f"{e['name']} ({e['team']} vs {e['opp']})",
+    )
+    real_k_section = _render_section(
+        real_k_entries, REAL_STREAK_ENTRY_TEMPLATE, "🔥", "Real K Streak",
+        f"(≥{REAL_K_STREAK_MIN_LENGTH}+ CONSECUTIVE starts ≥{REAL_K_STREAK_THRESHOLD} K's)",
+        lambda e: f"{e['name']} ({e['team']} vs {e['opp']})",
+    )
 
-    k_section = ""
-    if k_entries:
-        k_cards = "".join(
-            STREAK_ENTRY_TEMPLATE.format(
-                last5_avg=e["last5_avg"], away=e["away"], home=e["home"], time=e["time"],
-                subject=f"{e['name']} K Streak ({e['team']} vs {e['opp']})",
-                last5_str="·".join(str(v) for v in e["last5"]),
-            ) for e in k_entries
-        )
-        k_section = (f'<div style="font-size:12px;font-weight:700;color:var(--text);'
-                      f'margin:10px 0 4px">🎯 K Streak (≥{K_STREAK_MIN}/start over last '
-                      f'{K_STREAK_MIN_STARTS})</div>{k_cards}')
-
-    return STREAK_PANEL_TEMPLATE.format(run_section=run_section, k_section=k_section)
+    return STREAK_PANEL_TEMPLATE.format(
+        run_section=run_section, real_run_section=real_run_section,
+        k_section=k_section, real_k_section=real_k_section,
+    )
 
 
 GAME_TEMPLATE = """<div class="gameGroup">
@@ -1102,8 +1196,10 @@ def render_html(slate, target_date):
     builder_html = BUILDER_TEMPLATE if legs else ""
 
     run_entries = build_run_streak_entries(slate)
+    real_run_entries = build_real_run_streak_entries(slate)
     k_entries = build_k_streak_entries(slate)
-    streak_html = render_streak_panel(run_entries, k_entries)
+    real_k_entries = build_real_k_streak_entries(slate)
+    streak_html = render_streak_panel(run_entries, real_run_entries, k_entries, real_k_entries)
 
     return HTML_TEMPLATE.format(
         date=target_date.isoformat(), generated=datetime.now().strftime("%Y-%m-%d %H:%M"),
