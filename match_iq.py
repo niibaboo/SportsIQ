@@ -72,8 +72,13 @@ LEAGUE_SEARCH_NAMES = [
                       # actually calls it
     "Bundesliga",
     "Eredivisie",
-    "Primeira Liga",
-    "La Liga",
+    "Liga Portugal Betclic",  # was "Primeira Liga" -- TheStatsAPI's exact name
+                                # changed to the sponsor-branded version (same
+                                # pattern as Greek Super League/"Stoiximan Super
+                                # League"). Confirmed via check_iberian_leagues.py
+                                # (id comp_8385, country Portugal).
+    "LaLiga",  # was "La Liga" -- exact name has no space. Confirmed via
+                # check_iberian_leagues.py (id comp_8814, country Spain).
     # "Ligue 1",  # de-listed — found unreliable
     "UEFA Champions League",
     "MLS",
