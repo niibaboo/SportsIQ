@@ -549,6 +549,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <button class="downloadBtn" onclick="exportCSV()">Download CSV</button>
 </div>
 {builder_html}
+{streak_html}
 {games_html}
 <div class="footnote">Projections blend season K-rate/batter-faced with a recency-weighted last-5 rate ({weight}% recent), adjust for opponent K% and BB/9-driven outing length, then use a Poisson distribution for the range. Team run projections now blend opposing-starter xFIP (peripheral-based, strips out defense/luck) with raw ERA. Enter a book's line/odds under any pitcher to compute a de-vigged edge -- that math runs entirely in your browser, no data leaves the page.</div>
 <script>
@@ -766,6 +767,125 @@ BUILDER_TEMPLATE = """<div class="builderPanel">
   </div>
 </div>"""
 
+# --- Run Streak / K Streak --------------------------------------------
+# Same "raw recent-form screen" concept as Match IQ/Euro Ice's Goal
+# Streak -- flags teams/pitchers who've genuinely been hot lately,
+# regardless of today's specific matchup. Not a probabilistic
+# prediction like the rest of the slate. Thresholds are MLB-calibrated
+# judgment calls (league-average team runs/game sits around 4.3-4.6;
+# league-average K/start is roughly 5-6), set meaningfully above
+# average rather than at it -- easy to tune later once there's real
+# results data to check them against.
+RUN_STREAK_MIN = 5.5
+RUN_STREAK_MIN_GAMES = 5
+K_STREAK_MIN = 7.0
+K_STREAK_MIN_STARTS = 5
+
+
+def build_run_streak_entries(slate):
+    """Reuses last5_runs already computed by project_team_runs() --
+    no new fetches needed, just a post-processing pass over the
+    already-built slate."""
+    entries = []
+    for g in slate:
+        for side_name in ("away", "home"):
+            tr = g.get("team_runs", {}).get(side_name)
+            if not tr or "last5_runs" not in tr:
+                continue
+            l5 = tr["last5_runs"]
+            if len(l5) < RUN_STREAK_MIN_GAMES:
+                continue
+            avg5 = round(sum(l5) / len(l5), 2)
+            if avg5 >= RUN_STREAK_MIN:
+                entries.append({
+                    "team": tr["team"], "opponent": tr["opp"],
+                    "last5_avg": avg5, "last5": l5,
+                    "away": g["away"], "home": g["home"], "time": g["time"],
+                })
+    entries.sort(key=lambda e: -e["last5_avg"])
+    return entries
+
+
+def build_k_streak_entries(slate):
+    """Reuses k_last5 already computed by project() for each starting
+    pitcher -- same free reuse of existing data as the run streak."""
+    entries = []
+    for g in slate:
+        for p in g.get("pitchers", []):
+            if not p.get("name") or p.get("error") or p.get("no_stats"):
+                continue
+            l5 = p.get("k_last5") or []
+            if len(l5) < K_STREAK_MIN_STARTS:
+                continue
+            avg5 = round(sum(l5) / len(l5), 2)
+            if avg5 >= K_STREAK_MIN:
+                entries.append({
+                    "name": p["name"], "team": p["team"], "opp": p["opp"],
+                    "last5_avg": avg5, "last5": l5,
+                    "away": g["away"], "home": g["home"], "time": g["time"],
+                })
+    entries.sort(key=lambda e: -e["last5_avg"])
+    return entries
+
+
+STREAK_ENTRY_TEMPLATE = """<div style="background:var(--panel2);border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:var(--sub)">L5 AVG</div>
+    <div style="font-size:17px;font-weight:bold;color:var(--green)">{last5_avg}</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:var(--sub)">{away} @ {home} · {time}</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{subject}</div>
+    <div style="font-size:10px;color:var(--sub)">last 5 (old→new): {last5_str}</div>
+  </div>
+</div>"""
+
+STREAK_PANEL_TEMPLATE = """<div class="builderPanel">
+  <div class="builderTitle">🔥 Hot Streaks</div>
+  <div style="font-size:11px;color:var(--sub);margin-bottom:10px">
+    Raw recent-FORM screens, not probabilistic predictions like the rest of the slate --
+    these only ask "has this team/pitcher actually been hot lately", regardless of today's
+    specific matchup. Cross-check against that team's/pitcher's own prop line above before
+    treating a streak alone as a signal.
+  </div>
+  {run_section}
+  {k_section}
+</div>"""
+
+
+def render_streak_panel(run_entries, k_entries):
+    if not run_entries and not k_entries:
+        return ""
+
+    run_section = ""
+    if run_entries:
+        run_cards = "".join(
+            STREAK_ENTRY_TEMPLATE.format(
+                last5_avg=e["last5_avg"], away=e["away"], home=e["home"], time=e["time"],
+                subject=f"{e['team']} Run Streak (vs {e['opponent']})",
+                last5_str="·".join(str(v) for v in e["last5"]),
+            ) for e in run_entries
+        )
+        run_section = (f'<div style="font-size:12px;font-weight:700;color:var(--text);'
+                        f'margin:10px 0 4px">⚾ Run Streak (≥{RUN_STREAK_MIN}/gm over last '
+                        f'{RUN_STREAK_MIN_GAMES})</div>{run_cards}')
+
+    k_section = ""
+    if k_entries:
+        k_cards = "".join(
+            STREAK_ENTRY_TEMPLATE.format(
+                last5_avg=e["last5_avg"], away=e["away"], home=e["home"], time=e["time"],
+                subject=f"{e['name']} K Streak ({e['team']} vs {e['opp']})",
+                last5_str="·".join(str(v) for v in e["last5"]),
+            ) for e in k_entries
+        )
+        k_section = (f'<div style="font-size:12px;font-weight:700;color:var(--text);'
+                      f'margin:10px 0 4px">🎯 K Streak (≥{K_STREAK_MIN}/start over last '
+                      f'{K_STREAK_MIN_STARTS})</div>{k_cards}')
+
+    return STREAK_PANEL_TEMPLATE.format(run_section=run_section, k_section=k_section)
+
+
 GAME_TEMPLATE = """<div class="gameGroup">
   <div class="gameHead"><span>{away} @ {home}</span><span>{time}</span></div>
   {team_run_rows}
@@ -981,10 +1101,14 @@ def render_html(slate, target_date):
     legs = build_legs(slate)
     builder_html = BUILDER_TEMPLATE if legs else ""
 
+    run_entries = build_run_streak_entries(slate)
+    k_entries = build_k_streak_entries(slate)
+    streak_html = render_streak_panel(run_entries, k_entries)
+
     return HTML_TEMPLATE.format(
         date=target_date.isoformat(), generated=datetime.now().strftime("%Y-%m-%d %H:%M"),
         games_html="".join(games_html), weight=int(RECENT_WEIGHT * 100),
-        builder_html=builder_html, legs_json=json.dumps(legs),
+        builder_html=builder_html, streak_html=streak_html, legs_json=json.dumps(legs),
     )
 
 
