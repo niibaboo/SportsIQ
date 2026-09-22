@@ -355,11 +355,15 @@ def render_match_card(league_name, home_name, away_name, lh, la, tot, o55,
 
 
 def build_legs_and_cards(target_date):
-    """Returns (legs, cards_html). legs feeds the Safest Bet Builder;
-    cards_html is the per-match win-prob/correct-score breakdown that
-    was previously missing entirely from this tool's output."""
+    """Returns (legs, cards_html, streak_entries). legs feeds the Safest
+    Bet Builder; cards_html is the per-match win-prob/correct-score
+    breakdown; streak_entries feeds the Goal Streak panel — teams whose
+    last 5 games average >= GOAL_STREAK_MIN goals, same raw-form-screen
+    concept as Match IQ's Goal Streak scanner, recalibrated for hockey's
+    higher scoring rate (3.0 here vs football's 2.0)."""
     legs = []
     cards = ""
+    streak_entries = []
     from_date = season_start_guess(target_date)
 
     for league in LEAGUE_TARGETS:
@@ -374,24 +378,33 @@ def build_legs_and_cards(target_date):
             home_proj = project_team_goals(home["id"], from_date)
             away_proj = project_team_goals(away["id"], from_date)
 
-            for team, proj in ((home, home_proj), (away, away_proj)):
+            for team, proj, opp, is_home in ((home, home_proj, away, True), (away, away_proj, home, False)):
                 if not proj:
                     continue
                 line = safe_line(proj["lambda"])
-                if not line:
-                    continue
-                prob = prob_over(proj["lambda"], line)
-                legs.append({
-                    "match": match_label,
-                    "subject": team["name"],
-                    "market": f"{team['name']} Over {line} Goals",
-                    "prob": round(prob * 100),
-                    "hit_rate": hit_rate(proj["last5_gf"], line),
-                    "category": f"{league['name']} Team Total",
-                    "detail": f"proj {proj['lambda']} goals" +
-                              (f" · season {proj['season_gpg']}/gm" if proj["season_gpg"] is not None else ""),
-                    "history": "/".join(str(v) for v in proj["last5_gf"]) or None,
-                })
+                if line:
+                    prob = prob_over(proj["lambda"], line)
+                    legs.append({
+                        "match": match_label,
+                        "subject": team["name"],
+                        "market": f"{team['name']} Over {line} Goals",
+                        "prob": round(prob * 100),
+                        "hit_rate": hit_rate(proj["last5_gf"], line),
+                        "category": f"{league['name']} Team Total",
+                        "detail": f"proj {proj['lambda']} goals" +
+                                  (f" · season {proj['season_gpg']}/gm" if proj["season_gpg"] is not None else ""),
+                        "history": "/".join(str(v) for v in proj["last5_gf"]) or None,
+                    })
+
+                l5 = proj.get("last5_gf") or []
+                if len(l5) >= GOAL_STREAK_MIN_GAMES:
+                    avg5 = round(sum(l5) / len(l5), 2)
+                    if avg5 >= GOAL_STREAK_MIN:
+                        streak_entries.append({
+                            "team": team["name"], "opponent": opp["name"], "is_home": is_home,
+                            "league": league["name"], "date": m.get("date", ""),
+                            "last5_avg": avg5, "last5_goals": l5,
+                        })
 
             if home_proj and away_proj:
                 total_lambda = home_proj["lambda"] + away_proj["lambda"]
@@ -425,7 +438,54 @@ def build_legs_and_cards(target_date):
                     lh, la, tot, o55, ph, pa, pt, top2, home_proj, away_proj,
                 )
 
-    return legs, cards
+    streak_entries.sort(key=lambda e: -e["last5_avg"])
+    return legs, cards, streak_entries
+
+
+GOAL_STREAK_MIN = 3.0  # hockey-appropriate bar — higher than Match IQ's
+                        # football threshold (2.0), since a single team's
+                        # own goals per game runs higher in hockey
+GOAL_STREAK_MIN_GAMES = 5  # matches this endpoint's fixed sample size —
+                            # get_last_five() always returns up to 5 games,
+                            # so this really just checks "has this team
+                            # played at least 5 games yet"
+
+STREAK_ENTRY_TEMPLATE = """<div style="background:var(--panel2);border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:var(--sub)">L5 AVG</div>
+    <div style="font-size:17px;font-weight:bold;color:var(--green)">{last5_avg}</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:var(--sub)">{league}</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{team} <span style="color:var(--sub);font-weight:normal;font-size:11px">({home_away})</span> vs {opponent}</div>
+    <div style="font-size:10px;color:var(--sub)">last 5 (old→new): {last5_str}</div>
+  </div>
+</div>"""
+
+STREAK_PANEL_TEMPLATE = """<div class="builderPanel">
+  <div class="builderTitle">🔥 Goal Streak</div>
+  <div style="font-size:11px;color:var(--sub);margin-bottom:10px">
+    Teams averaging ≥{min_avg} goals over their last {min_games} games — a raw recent-FORM
+    screen, not a probabilistic prediction like the Team/Game Totals above. Cross-check
+    against a team's own Over line for their specific upcoming matchup before treating a
+    streak alone as a signal.
+  </div>
+  {entries}
+</div>"""
+
+
+def render_streak_panel(streak_entries):
+    if not streak_entries:
+        return ""
+    entries_html = "".join(
+        STREAK_ENTRY_TEMPLATE.format(
+            last5_avg=e["last5_avg"], league=e["league"],
+            team=e["team"], home_away="Home" if e["is_home"] else "Away", opponent=e["opponent"],
+            last5_str="/".join(str(v) for v in e["last5_goals"]),  # already oldest-first, no reversal needed
+        )
+        for e in streak_entries
+    )
+    return STREAK_PANEL_TEMPLATE.format(min_avg=GOAL_STREAK_MIN, min_games=GOAL_STREAK_MIN_GAMES, entries=entries_html)
 
 
 HTML_TEMPLATE = """<!DOCTYPE html>
@@ -472,6 +532,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       data source. Tap Shuffle for a fresh pick without changing your settings.
     </div>
   </div>
+
+  {streak_panel}
 
   {cards}
 
@@ -589,11 +651,12 @@ initToggles();
 """
 
 
-def render_html(legs, cards, target_date):
+def render_html(legs, cards, streak_entries, target_date):
     return HTML_TEMPLATE.format(
         date=target_date.isoformat(),
         generated=datetime.now().strftime("%Y-%m-%d %H:%M"),
         weight=int(RECENT_WEIGHT * 100),
+        streak_panel=render_streak_panel(streak_entries),
         cards=cards or "<p style='color:var(--sub);text-align:center'>No matchups had enough data for a full card today.</p>",
         legs_json=json.dumps(legs),
     )
@@ -606,7 +669,7 @@ if __name__ == "__main__":
         target = date.today()
 
     print(f"Fetching Euro Ice slate for {target.isoformat()}…")
-    legs, cards = build_legs_and_cards(target)
+    legs, cards, streak_entries = build_legs_and_cards(target)
 
     if not legs:
         print("No usable legs today — either no fixtures found for the configured "
@@ -614,7 +677,9 @@ if __name__ == "__main__":
               "docs/ left as whatever the last successful run published.")
         raise SystemExit(0)
 
-    html = render_html(legs, cards, target)
+    print(f"  Goal Streak: {len(streak_entries)} team-entries")
+
+    html = render_html(legs, cards, streak_entries, target)
     os.makedirs("docs/euro-ice", exist_ok=True)
     with open("docs/euro-ice/index.html", "w") as f:
         f.write(html)
