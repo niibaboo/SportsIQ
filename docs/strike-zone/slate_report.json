@@ -12,33 +12,33 @@
         "opp_kpct": 24.5,
         "fip": 3.98417,
         "xfip": 4.455,
-        "lambda": 4.59,
+        "lambda": 4.83,
         "lo": 2,
-        "hi": 7,
-        "proj_ip": 5.9,
-        "outs_lambda": 17.59,
-        "outs_lo": 12,
-        "outs_hi": 23,
-        "season_era": "2.96",
-        "season_k9": "5.46",
-        "season_hits9": "8.37",
-        "bb9": 1.28,
+        "hi": 8,
+        "proj_ip": 6.0,
+        "outs_lambda": 17.99,
+        "outs_lo": 13,
+        "outs_hi": 24,
+        "season_era": "2.94",
+        "season_k9": "5.48",
+        "season_hits9": "8.32",
+        "bb9": 1.27,
         "whip": "1.07",
-        "l5_str": "4\u00b74\u00b73\u00b73\u00b76",
-        "l5_vs_season": 25.0,
+        "l5_str": "4\u00b74\u00b73\u00b73\u00b77",
+        "l5_vs_season": 30.0,
         "k_last5": [
           4,
           4,
           3,
           3,
-          6
+          7
         ],
         "outs_last5": [
           18,
           19,
           19,
           15,
-          16
+          18
         ]
       },
       {
@@ -49,33 +49,33 @@
         "opp_kpct": 18.6,
         "fip": 3.68653,
         "xfip": 4.1774,
-        "lambda": 4.85,
+        "lambda": 5.2,
         "lo": 2,
         "hi": 8,
-        "proj_ip": 5.4,
-        "outs_lambda": 16.22,
-        "outs_lo": 11,
-        "outs_hi": 21,
-        "season_era": "2.73",
-        "season_k9": "9.73",
-        "season_hits9": "5.47",
-        "bb9": 4.15,
+        "proj_ip": 5.7,
+        "outs_lambda": 17.21,
+        "outs_lo": 12,
+        "outs_hi": 23,
+        "season_era": "2.70",
+        "season_k9": "9.72",
+        "season_hits9": "5.51",
+        "bb9": 4.1,
         "whip": "1.07",
-        "l5_str": "5\u00b77\u00b78\u00b75\u00b76",
-        "l5_vs_season": -2.0,
+        "l5_str": "5\u00b77\u00b78\u00b75\u00b78",
+        "l5_vs_season": -1.0,
         "k_last5": [
           5,
           7,
           8,
           5,
-          6
+          8
         ],
         "outs_last5": [
           14,
           15,
           19,
           18,
-          18
+          23
         ]
       }
     ],
@@ -101,7 +101,7 @@
       "home": {
         "team": "New York Yankees",
         "opp": "Tampa Bay Rays",
-        "lambda": 3.49,
+        "lambda": 3.48,
         "lo": 1,
         "hi": 6,
         "l5_str": "4\u00b79\u00b73\u00b74\u00b72",
@@ -121,24 +121,24 @@
       "away": {
         "team": "Tampa Bay Rays",
         "opp": "New York Yankees",
-        "lambda": 4.3,
+        "lambda": 4.44,
         "lo": 2,
         "hi": 7,
-        "l5_str": "7\u00b75\u00b78\u00b74\u00b72",
+        "l5_str": "7\u00b75\u00b78\u00b74\u00b73",
         "last5_hits": [
           7,
           5,
           8,
           4,
-          2
+          3
         ],
-        "season_hpg": 8.63,
-        "hit_factor": 0.74
+        "season_hpg": 8.64,
+        "hit_factor": 0.73
       },
       "home": {
         "team": "New York Yankees",
         "opp": "Tampa Bay Rays",
-        "lambda": 6.76,
+        "lambda": 6.74,
         "lo": 4,
         "hi": 10,
         "l5_str": "9\u00b78\u00b76\u00b78\u00b75",
@@ -150,7 +150,7 @@
           5
         ],
         "season_hpg": 7.76,
-        "hit_factor": 0.96
+        "hit_factor": 0.95
       }
     }
   },
@@ -167,7 +167,7 @@
         "opp_kpct": 24.5,
         "fip": 2.87927,
         "xfip": 3.25025,
-        "lambda": 5.73,
+        "lambda": 5.74,
         "lo": 3,
         "hi": 9,
         "proj_ip": 6.2,
@@ -256,7 +256,7 @@
       "home": {
         "team": "New York Yankees",
         "opp": "Tampa Bay Rays",
-        "lambda": 3.13,
+        "lambda": 3.12,
         "lo": 1,
         "hi": 5,
         "l5_str": "4\u00b79\u00b73\u00b74\u00b72",
@@ -276,18 +276,18 @@
       "away": {
         "team": "Tampa Bay Rays",
         "opp": "New York Yankees",
-        "lambda": 4.65,
+        "lambda": 4.83,
         "lo": 2,
-        "hi": 7,
-        "l5_str": "7\u00b75\u00b78\u00b74\u00b72",
+        "hi": 8,
+        "l5_str": "7\u00b75\u00b78\u00b74\u00b73",
         "last5_hits": [
           7,
           5,
           8,
           4,
-          2
+          3
         ],
-        "season_hpg": 8.63,
+        "season_hpg": 8.64,
         "hit_factor": 0.8
       },
       "home": {
