@@ -12,20 +12,20 @@
         "opp_kpct": 22.8,
         "fip": 5.057935918367347,
         "xfip": 4.9450222448979595,
-        "lambda": 0.83,
+        "lambda": 0.82,
         "lo": 1,
         "hi": 2,
         "proj_ip": 1.2,
-        "outs_lambda": 3.5,
+        "outs_lambda": 3.66,
         "outs_lo": 1,
         "outs_hi": 6,
-        "season_era": "3.74",
-        "season_k9": "8.02",
-        "season_hits9": "10.69",
-        "bb9": 5.61,
-        "whip": "1.81",
+        "season_era": "3.71",
+        "season_k9": "7.94",
+        "season_hits9": "10.59",
+        "bb9": 5.82,
+        "whip": "1.82",
         "l5_str": "1\u00b70\u00b72\u00b71\u00b70",
-        "l5_vs_season": -35.0,
+        "l5_vs_season": -40.0,
         "k_last5": [
           1,
           0,
@@ -38,7 +38,7 @@
           3,
           6,
           3,
-          3
+          4
         ]
       },
       {
@@ -49,33 +49,33 @@
         "opp_kpct": 21.8,
         "fip": 4.18966,
         "xfip": 4.16484,
-        "lambda": 4.51,
+        "lambda": 5.04,
         "lo": 2,
-        "hi": 7,
-        "proj_ip": 5.1,
-        "outs_lambda": 15.42,
-        "outs_lo": 11,
-        "outs_hi": 21,
-        "season_era": "4.01",
-        "season_k9": "6.96",
-        "season_hits9": "8.75",
-        "bb9": 3.38,
-        "whip": "1.35",
-        "l5_str": "5\u00b73\u00b72\u00b78\u00b73",
-        "l5_vs_season": 23.0,
+        "hi": 8,
+        "proj_ip": 5.8,
+        "outs_lambda": 17.35,
+        "outs_lo": 12,
+        "outs_hi": 23,
+        "season_era": "4.03",
+        "season_k9": "6.98",
+        "season_hits9": "8.79",
+        "bb9": 3.47,
+        "whip": "1.36",
+        "l5_str": "5\u00b73\u00b72\u00b78\u00b76",
+        "l5_vs_season": 21.0,
         "k_last5": [
           5,
           3,
           2,
           8,
-          3
+          6
         ],
         "outs_last5": [
           18,
           21,
           18,
           15,
-          6
+          16
         ]
       }
     ],
@@ -83,37 +83,37 @@
       "away": {
         "team": "Washington Nationals",
         "opp": "Detroit Tigers",
-        "lambda": 2.8,
+        "lambda": 3.68,
         "lo": 1,
-        "hi": 5,
-        "l5_str": "8\u00b73\u00b72\u00b73\u00b70",
+        "hi": 6,
+        "l5_str": "8\u00b73\u00b72\u00b73\u00b74",
         "last5_runs": [
           8,
           3,
           2,
           3,
-          0
+          4
         ],
-        "season_rpg": 5.05,
-        "run_factor": 0.93,
+        "season_rpg": 5.08,
+        "run_factor": 0.94,
         "xfip_used": true
       },
       "home": {
         "team": "Detroit Tigers",
         "opp": "Washington Nationals",
-        "lambda": 2.34,
+        "lambda": 2.73,
         "lo": 1,
-        "hi": 4,
-        "l5_str": "1\u00b71\u00b79\u00b71\u00b70",
+        "hi": 5,
+        "l5_str": "1\u00b71\u00b79\u00b71\u00b72",
         "last5_runs": [
           1,
           1,
           9,
           1,
-          0
+          2
         ],
-        "season_rpg": 4.45,
-        "run_factor": 1.15,
+        "season_rpg": 4.46,
+        "run_factor": 1.14,
         "xfip_used": true
       }
     },
@@ -121,35 +121,35 @@
       "away": {
         "team": "Washington Nationals",
         "opp": "Detroit Tigers",
-        "lambda": 5.73,
-        "lo": 3,
-        "hi": 9,
-        "l5_str": "12\u00b77\u00b75\u00b77\u00b70",
+        "lambda": 7.17,
+        "lo": 4,
+        "hi": 11,
+        "l5_str": "12\u00b77\u00b75\u00b77\u00b76",
         "last5_hits": [
           12,
           7,
           5,
           7,
-          0
+          6
         ],
-        "season_hpg": 8.35,
-        "hit_factor": 0.98
+        "season_hpg": 8.38,
+        "hit_factor": 0.99
       },
       "home": {
         "team": "Detroit Tigers",
         "opp": "Washington Nationals",
-        "lambda": 6.76,
-        "lo": 4,
-        "hi": 10,
-        "l5_str": "8\u00b76\u00b712\u00b77\u00b71",
+        "lambda": 8.63,
+        "lo": 5,
+        "hi": 12,
+        "l5_str": "8\u00b76\u00b712\u00b77\u00b78",
         "last5_hits": [
           8,
           6,
           12,
           7,
-          1
+          8
         ],
-        "season_hpg": 8.08,
+        "season_hpg": 8.13,
         "hit_factor": 1.06
       }
     }
@@ -167,31 +167,31 @@
         "opp_kpct": 24.9,
         "fip": 5.47948,
         "xfip": 5.46804,
-        "lambda": 4.37,
-        "lo": 2,
-        "hi": 7,
+        "lambda": 5.34,
+        "lo": 3,
+        "hi": 8,
         "proj_ip": 5.4,
-        "outs_lambda": 16.18,
+        "outs_lambda": 16.13,
         "outs_lo": 11,
         "outs_hi": 21,
-        "season_era": "6.07",
-        "season_k9": "6.69",
-        "season_hits9": "8.42",
-        "bb9": 3.84,
+        "season_era": "6.14",
+        "season_k9": "7.07",
+        "season_hits9": "8.34",
+        "bb9": 3.94,
         "whip": "1.36",
-        "l5_str": "4\u00b710\u00b72\u00b73\u00b73",
-        "l5_vs_season": -5.0,
+        "l5_str": "10\u00b72\u00b73\u00b73\u00b77",
+        "l5_vs_season": 19.0,
         "k_last5": [
-          4,
           10,
           2,
           3,
-          3
+          3,
+          7
         ],
         "outs_last5": [
-          15,
           21,
           17,
+          15,
           15,
           15
         ]
@@ -204,33 +204,33 @@
         "opp_kpct": 19.0,
         "fip": 4.3771,
         "xfip": 4.62445,
-        "lambda": 4.29,
-        "lo": 2,
-        "hi": 7,
-        "proj_ip": 5.9,
-        "outs_lambda": 17.57,
+        "lambda": 3.56,
+        "lo": 1,
+        "hi": 6,
+        "proj_ip": 5.5,
+        "outs_lambda": 16.62,
         "outs_lo": 12,
-        "outs_hi": 23,
-        "season_era": "4.64",
-        "season_k9": "6.68",
-        "season_hits9": "10.48",
-        "bb9": 3.43,
+        "outs_hi": 22,
+        "season_era": "4.59",
+        "season_k9": "6.53",
+        "season_hits9": "10.59",
+        "bb9": 3.35,
         "whip": "1.55",
-        "l5_str": "5\u00b74\u00b76\u00b75\u00b76",
-        "l5_vs_season": 22.0,
+        "l5_str": "4\u00b76\u00b75\u00b76\u00b72",
+        "l5_vs_season": 5.0,
         "k_last5": [
-          5,
           4,
           6,
           5,
-          6
+          6,
+          2
         ],
         "outs_last5": [
-          20,
           17,
           17,
           15,
-          20
+          20,
+          15
         ]
       }
     ],
@@ -238,33 +238,33 @@
       "away": {
         "team": "Toronto Blue Jays",
         "opp": "Baltimore Orioles",
-        "lambda": 3.54,
+        "lambda": 3.02,
         "lo": 1,
-        "hi": 6,
-        "l5_str": "5\u00b71\u00b72\u00b77\u00b73",
+        "hi": 5,
+        "l5_str": "1\u00b72\u00b77\u00b73\u00b72",
         "last5_runs": [
-          5,
           1,
           2,
           7,
-          3
+          3,
+          2
         ],
-        "season_rpg": 4.03,
-        "run_factor": 1.04,
+        "season_rpg": 4.01,
+        "run_factor": 1.03,
         "xfip_used": true
       },
       "home": {
         "team": "Baltimore Orioles",
         "opp": "Toronto Blue Jays",
-        "lambda": 3.78,
-        "lo": 1,
-        "hi": 6,
-        "l5_str": "7\u00b75\u00b70\u00b70\u00b74",
+        "lambda": 3.99,
+        "lo": 2,
+        "hi": 7,
+        "l5_str": "5\u00b70\u00b70\u00b74\u00b74",
         "last5_runs": [
-          7,
           5,
           0,
           0,
+          4,
           4
         ],
         "season_rpg": 4.44,
@@ -276,36 +276,36 @@
       "away": {
         "team": "Toronto Blue Jays",
         "opp": "Baltimore Orioles",
-        "lambda": 8.59,
+        "lambda": 9.04,
         "lo": 5,
-        "hi": 12,
-        "l5_str": "9\u00b75\u00b76\u00b711\u00b76",
+        "hi": 13,
+        "l5_str": "5\u00b76\u00b711\u00b76\u00b710",
         "last5_hits": [
-          9,
           5,
           6,
           11,
-          6
+          6,
+          10
         ],
-        "season_hpg": 8.35,
+        "season_hpg": 8.36,
         "hit_factor": 1.16
       },
       "home": {
         "team": "Baltimore Orioles",
         "opp": "Toronto Blue Jays",
-        "lambda": 6.29,
+        "lambda": 5.85,
         "lo": 3,
-        "hi": 10,
-        "l5_str": "9\u00b712\u00b74\u00b74\u00b76",
+        "hi": 9,
+        "l5_str": "12\u00b74\u00b74\u00b76\u00b75",
         "last5_hits": [
-          9,
           12,
           4,
           4,
-          6
+          6,
+          5
         ],
-        "season_hpg": 7.8,
-        "hit_factor": 0.97
+        "season_hpg": 7.78,
+        "hit_factor": 0.96
       }
     }
   },
@@ -327,33 +327,33 @@
       "away": {
         "team": "Toronto Blue Jays",
         "opp": "Baltimore Orioles",
-        "lambda": 3.45,
+        "lambda": 2.95,
         "lo": 1,
-        "hi": 6,
-        "l5_str": "5\u00b71\u00b72\u00b77\u00b73",
+        "hi": 5,
+        "l5_str": "1\u00b72\u00b77\u00b73\u00b72",
         "last5_runs": [
-          5,
           1,
           2,
           7,
-          3
+          3,
+          2
         ],
-        "season_rpg": 4.03,
+        "season_rpg": 4.01,
         "run_factor": 1.01,
         "xfip_used": false
       },
       "home": {
         "team": "Baltimore Orioles",
         "opp": "Toronto Blue Jays",
-        "lambda": 3.21,
+        "lambda": 3.38,
         "lo": 1,
         "hi": 6,
-        "l5_str": "7\u00b75\u00b70\u00b70\u00b74",
+        "l5_str": "5\u00b70\u00b70\u00b74\u00b74",
         "last5_runs": [
-          7,
           5,
           0,
           0,
+          4,
           4
         ],
         "season_rpg": 4.44,
@@ -365,35 +365,35 @@
       "away": {
         "team": "Toronto Blue Jays",
         "opp": "Baltimore Orioles",
-        "lambda": 7.47,
+        "lambda": 7.87,
         "lo": 4,
-        "hi": 11,
-        "l5_str": "9\u00b75\u00b76\u00b711\u00b76",
+        "hi": 12,
+        "l5_str": "5\u00b76\u00b711\u00b76\u00b710",
         "last5_hits": [
-          9,
           5,
           6,
           11,
-          6
+          6,
+          10
         ],
-        "season_hpg": 8.35,
+        "season_hpg": 8.36,
         "hit_factor": 1.01
       },
       "home": {
         "team": "Baltimore Orioles",
         "opp": "Toronto Blue Jays",
-        "lambda": 6.33,
+        "lambda": 5.93,
         "lo": 3,
-        "hi": 10,
-        "l5_str": "9\u00b712\u00b74\u00b74\u00b76",
+        "hi": 9,
+        "l5_str": "12\u00b74\u00b74\u00b76\u00b75",
         "last5_hits": [
-          9,
           12,
           4,
           4,
-          6
+          6,
+          5
         ],
-        "season_hpg": 7.8,
+        "season_hpg": 7.78,
         "hit_factor": 0.97
       }
     }
@@ -408,36 +408,36 @@
         "name": "Connor Prielipp",
         "team": "Minnesota Twins",
         "opp": "San Francisco Giants",
-        "opp_kpct": 21.9,
+        "opp_kpct": 21.8,
         "fip": 3.75526,
         "xfip": 3.91145,
-        "lambda": 5.37,
-        "lo": 3,
-        "hi": 8,
-        "proj_ip": 5.7,
-        "outs_lambda": 17.13,
-        "outs_lo": 12,
-        "outs_hi": 23,
-        "season_era": "4.94",
-        "season_k9": "9.35",
-        "season_hits9": "8.53",
-        "bb9": 3.14,
-        "whip": "1.30",
-        "l5_str": "6\u00b77\u00b75\u00b71\u00b78",
-        "l5_vs_season": -13.0,
+        "lambda": 4.26,
+        "lo": 2,
+        "hi": 7,
+        "proj_ip": 5.1,
+        "outs_lambda": 15.36,
+        "outs_lo": 10,
+        "outs_hi": 20,
+        "season_era": "4.86",
+        "season_k9": "9.20",
+        "season_hits9": "8.39",
+        "bb9": 3.09,
+        "whip": "1.28",
+        "l5_str": "7\u00b75\u00b71\u00b78\u00b70",
+        "l5_vs_season": -27.0,
         "k_last5": [
-          6,
           7,
           5,
           1,
-          8
+          8,
+          0
         ],
         "outs_last5": [
-          15,
           18,
           16,
           16,
-          21
+          21,
+          6
         ]
       },
       {
@@ -448,29 +448,31 @@
         "opp_kpct": 21.2,
         "fip": 4.96082,
         "xfip": 4.73965,
-        "lambda": 2.54,
+        "lambda": 2.1,
         "lo": 1,
-        "hi": 5,
-        "proj_ip": 5.1,
-        "outs_lambda": 15.21,
-        "outs_lo": 10,
-        "outs_hi": 20,
-        "season_era": "3.72",
-        "season_k9": "5.59",
-        "season_hits9": "10.24",
-        "bb9": 3.26,
-        "whip": "1.50",
-        "l5_str": "4\u00b73\u00b71",
-        "l5_vs_season": -24.0,
+        "hi": 4,
+        "proj_ip": 4.4,
+        "outs_lambda": 13.25,
+        "outs_lo": 9,
+        "outs_hi": 18,
+        "season_era": "3.38",
+        "season_k9": "5.06",
+        "season_hits9": "9.70",
+        "bb9": 2.95,
+        "whip": "1.41",
+        "l5_str": "4\u00b73\u00b71\u00b71",
+        "l5_vs_season": -18.0,
         "k_last5": [
           4,
           3,
+          1,
           1
         ],
         "outs_last5": [
           18,
           14,
-          14
+          14,
+          7
         ]
       }
     ],
@@ -478,37 +480,37 @@
       "away": {
         "team": "Minnesota Twins",
         "opp": "San Francisco Giants",
-        "lambda": 3.79,
+        "lambda": 3.24,
         "lo": 1,
         "hi": 6,
-        "l5_str": "3\u00b75\u00b78\u00b72\u00b73",
+        "l5_str": "5\u00b78\u00b72\u00b73\u00b71",
         "last5_runs": [
-          3,
           5,
           8,
           2,
-          3
+          3,
+          1
         ],
-        "season_rpg": 4.54,
-        "run_factor": 1.03,
+        "season_rpg": 4.52,
+        "run_factor": 1.02,
         "xfip_used": true
       },
       "home": {
         "team": "San Francisco Giants",
         "opp": "Minnesota Twins",
-        "lambda": 3.05,
+        "lambda": 2.53,
         "lo": 1,
         "hi": 5,
-        "l5_str": "2\u00b74\u00b71\u00b75\u00b72",
+        "l5_str": "4\u00b71\u00b75\u00b72\u00b70",
         "last5_runs": [
-          2,
           4,
           1,
           5,
-          2
+          2,
+          0
         ],
-        "season_rpg": 4.2,
-        "run_factor": 1.05,
+        "season_rpg": 4.17,
+        "run_factor": 1.06,
         "xfip_used": true
       }
     },
@@ -516,36 +518,36 @@
       "away": {
         "team": "Minnesota Twins",
         "opp": "San Francisco Giants",
-        "lambda": 8.76,
-        "lo": 5,
-        "hi": 13,
-        "l5_str": "9\u00b711\u00b713\u00b74\u00b76",
+        "lambda": 6.45,
+        "lo": 3,
+        "hi": 10,
+        "l5_str": "11\u00b713\u00b74\u00b76\u00b72",
         "last5_hits": [
-          9,
           11,
           13,
           4,
-          6
+          6,
+          2
         ],
-        "season_hpg": 8.22,
-        "hit_factor": 1.11
+        "season_hpg": 8.18,
+        "hit_factor": 1.07
       },
       "home": {
         "team": "San Francisco Giants",
         "opp": "Minnesota Twins",
-        "lambda": 7.0,
-        "lo": 4,
-        "hi": 10,
-        "l5_str": "5\u00b78\u00b72\u00b710\u00b76",
+        "lambda": 5.55,
+        "lo": 3,
+        "hi": 9,
+        "l5_str": "8\u00b72\u00b710\u00b76\u00b70",
         "last5_hits": [
-          5,
           8,
           2,
           10,
-          6
+          6,
+          0
         ],
-        "season_hpg": 8.35,
-        "hit_factor": 1.01
+        "season_hpg": 8.3,
+        "hit_factor": 1.0
       }
     }
   },
@@ -866,38 +868,34 @@
     "pitchers": [
       {
         "side": "away",
-        "name": "Ian Seymour",
+        "name": "Mason Englert",
         "team": "Tampa Bay Rays",
         "opp": "New York Yankees",
         "opp_kpct": 24.6,
-        "fip": 4.18252,
-        "xfip": 3.52722,
-        "lambda": 7.21,
-        "lo": 4,
-        "hi": 11,
-        "proj_ip": 5.1,
-        "outs_lambda": 15.2,
+        "fip": 5.34174,
+        "xfip": 4.26248,
+        "lambda": 5.3,
+        "lo": 2,
+        "hi": 8,
+        "proj_ip": 4.8,
+        "outs_lambda": 14.33,
         "outs_lo": 10,
-        "outs_hi": 20,
-        "season_era": "4.38",
-        "season_k9": "10.96",
-        "season_hits9": "7.99",
-        "bb9": 2.54,
-        "whip": "1.17",
-        "l5_str": "8\u00b710\u00b72\u00b710\u00b75",
-        "l5_vs_season": 8.0,
+        "outs_hi": 19,
+        "season_era": "4.54",
+        "season_k9": "8.07",
+        "season_hits9": "10.85",
+        "bb9": 2.02,
+        "whip": "1.43",
+        "l5_str": "2\u00b79\u00b74",
+        "l5_vs_season": 17.0,
         "k_last5": [
-          8,
-          10,
           2,
-          10,
-          5
+          9,
+          4
         ],
         "outs_last5": [
-          15,
-          19,
-          9,
-          18,
+          11,
+          17,
           15
         ]
       },
@@ -943,7 +941,7 @@
       "away": {
         "team": "Tampa Bay Rays",
         "opp": "New York Yankees",
-        "lambda": 2.49,
+        "lambda": 2.48,
         "lo": 1,
         "hi": 5,
         "l5_str": "2\u00b72\u00b75\u00b70\u00b76",
@@ -955,13 +953,13 @@
           6
         ],
         "season_rpg": 4.54,
-        "run_factor": 0.86,
+        "run_factor": 0.85,
         "xfip_used": true
       },
       "home": {
         "team": "New York Yankees",
         "opp": "Tampa Bay Rays",
-        "lambda": 2.92,
+        "lambda": 3.1,
         "lo": 1,
         "hi": 5,
         "l5_str": "9\u00b73\u00b74\u00b72\u00b71",
@@ -973,7 +971,7 @@
           1
         ],
         "season_rpg": 4.56,
-        "run_factor": 0.93,
+        "run_factor": 0.99,
         "xfip_used": true
       }
     },
@@ -998,9 +996,9 @@
       "home": {
         "team": "New York Yankees",
         "opp": "Tampa Bay Rays",
-        "lambda": 5.64,
-        "lo": 3,
-        "hi": 9,
+        "lambda": 6.73,
+        "lo": 4,
+        "hi": 10,
         "l5_str": "8\u00b76\u00b78\u00b75\u00b73",
         "last5_hits": [
           8,
@@ -1010,7 +1008,7 @@
           3
         ],
         "season_hpg": 7.73,
-        "hit_factor": 0.92
+        "hit_factor": 1.1
       }
     }
   },
@@ -1098,7 +1096,7 @@
       "away": {
         "team": "Cleveland Guardians",
         "opp": "Boston Red Sox",
-        "lambda": 3.32,
+        "lambda": 3.3,
         "lo": 1,
         "hi": 6,
         "l5_str": "6\u00b75\u00b712\u00b71\u00b73",
@@ -1116,7 +1114,7 @@
       "home": {
         "team": "Boston Red Sox",
         "opp": "Cleveland Guardians",
-        "lambda": 2.5,
+        "lambda": 2.49,
         "lo": 1,
         "hi": 5,
         "l5_str": "4\u00b74\u00b71\u00b71\u00b72",
@@ -1253,7 +1251,7 @@
       "away": {
         "team": "Cincinnati Reds",
         "opp": "Atlanta Braves",
-        "lambda": 2.03,
+        "lambda": 2.02,
         "lo": 1,
         "hi": 4,
         "l5_str": "2\u00b76\u00b72\u00b71\u00b74",
@@ -1271,7 +1269,7 @@
       "home": {
         "team": "Atlanta Braves",
         "opp": "Cincinnati Reds",
-        "lambda": 4.46,
+        "lambda": 4.45,
         "lo": 2,
         "hi": 7,
         "l5_str": "4\u00b76\u00b76\u00b74\u00b70",
@@ -1283,7 +1281,7 @@
           0
         ],
         "season_rpg": 4.6,
-        "run_factor": 1.21,
+        "run_factor": 1.2,
         "xfip_used": true
       }
     },
@@ -1408,7 +1406,7 @@
       "away": {
         "team": "Chicago White Sox",
         "opp": "Kansas City Royals",
-        "lambda": 8.06,
+        "lambda": 8.04,
         "lo": 5,
         "hi": 12,
         "l5_str": "3\u00b78\u00b73\u00b78\u00b714",
@@ -1563,7 +1561,7 @@
       "away": {
         "team": "Miami Marlins",
         "opp": "Chicago Cubs",
-        "lambda": 4.55,
+        "lambda": 4.54,
         "lo": 2,
         "hi": 7,
         "l5_str": "4\u00b72\u00b76\u00b73\u00b78",
@@ -1575,13 +1573,13 @@
           8
         ],
         "season_rpg": 4.46,
-        "run_factor": 1.01,
+        "run_factor": 1.0,
         "xfip_used": true
       },
       "home": {
         "team": "Chicago Cubs",
         "opp": "Miami Marlins",
-        "lambda": 5.15,
+        "lambda": 5.14,
         "lo": 2,
         "hi": 8,
         "l5_str": "8\u00b74\u00b75\u00b79\u00b72",
@@ -1718,7 +1716,7 @@
       "away": {
         "team": "New York Mets",
         "opp": "Texas Rangers",
-        "lambda": 5.35,
+        "lambda": 5.33,
         "lo": 3,
         "hi": 8,
         "l5_str": "0\u00b76\u00b710\u00b72\u00b76",
@@ -1730,13 +1728,13 @@
           6
         ],
         "season_rpg": 4.29,
-        "run_factor": 1.13,
+        "run_factor": 1.12,
         "xfip_used": true
       },
       "home": {
         "team": "Texas Rangers",
         "opp": "New York Mets",
-        "lambda": 3.25,
+        "lambda": 3.24,
         "lo": 1,
         "hi": 6,
         "l5_str": "3\u00b77\u00b76\u00b72\u00b73",
@@ -1748,7 +1746,7 @@
           3
         ],
         "season_rpg": 4.18,
-        "run_factor": 0.92,
+        "run_factor": 0.91,
         "xfip_used": true
       }
     },
@@ -1773,13 +1771,13 @@
       "home": {
         "team": "Texas Rangers",
         "opp": "New York Mets",
-        "lambda": 5.44,
+        "lambda": 5.4,
         "lo": 3,
-        "hi": 9,
-        "l5_str": "4\u00b78\u00b75\u00b78\u00b73",
+        "hi": 8,
+        "l5_str": "4\u00b77\u00b75\u00b78\u00b73",
         "last5_hits": [
           4,
-          8,
+          7,
           5,
           8,
           3
@@ -1873,7 +1871,7 @@
       "away": {
         "team": "Arizona Diamondbacks",
         "opp": "Colorado Rockies",
-        "lambda": 6.78,
+        "lambda": 6.77,
         "lo": 4,
         "hi": 10,
         "l5_str": "3\u00b72\u00b75\u00b78\u00b77",
@@ -1891,7 +1889,7 @@
       "home": {
         "team": "Colorado Rockies",
         "opp": "Arizona Diamondbacks",
-        "lambda": 3.35,
+        "lambda": 3.34,
         "lo": 1,
         "hi": 6,
         "l5_str": "2\u00b74\u00b75\u00b71\u00b72",
@@ -2028,7 +2026,7 @@
       "away": {
         "team": "Los Angeles Angels",
         "opp": "Athletics",
-        "lambda": 5.38,
+        "lambda": 5.37,
         "lo": 3,
         "hi": 8,
         "l5_str": "5\u00b70\u00b76\u00b70\u00b77",
@@ -2058,7 +2056,7 @@
           9
         ],
         "season_rpg": 4.32,
-        "run_factor": 0.91,
+        "run_factor": 0.9,
         "xfip_used": true
       }
     },
@@ -2183,7 +2181,7 @@
       "away": {
         "team": "San Diego Padres",
         "opp": "Los Angeles Dodgers",
-        "lambda": 3.58,
+        "lambda": 3.57,
         "lo": 1,
         "hi": 6,
         "l5_str": "9\u00b78\u00b77\u00b77\u00b70",
@@ -2201,7 +2199,7 @@
       "home": {
         "team": "Los Angeles Dodgers",
         "opp": "San Diego Padres",
-        "lambda": 6.31,
+        "lambda": 6.3,
         "lo": 3,
         "hi": 10,
         "l5_str": "8\u00b78\u00b710\u00b73\u00b77",
@@ -2213,7 +2211,7 @@
           7
         ],
         "season_rpg": 5.01,
-        "run_factor": 1.03,
+        "run_factor": 1.02,
         "xfip_used": true
       }
     },
@@ -2336,7 +2334,7 @@
       "away": {
         "team": "Houston Astros",
         "opp": "Seattle Mariners",
-        "lambda": 3.71,
+        "lambda": 3.7,
         "lo": 1,
         "hi": 6,
         "l5_str": "6\u00b72\u00b73\u00b72\u00b77",
@@ -2348,13 +2346,13 @@
           7
         ],
         "season_rpg": 4.43,
-        "run_factor": 1.01,
+        "run_factor": 1.0,
         "xfip_used": true
       },
       "home": {
         "team": "Seattle Mariners",
         "opp": "Houston Astros",
-        "lambda": 3.09,
+        "lambda": 3.08,
         "lo": 1,
         "hi": 5,
         "l5_str": "7\u00b75\u00b73\u00b72\u00b70",
