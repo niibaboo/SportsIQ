@@ -676,6 +676,8 @@ def build_all_predictions(key):
             # resting mostly on the league-average fallback.
             corners_sample_n = min(h_form["n_games"], a_form["n_games"])
             merged = {
+                "match_id": m["id"],  # needed later to look up the real final
+                                        # result for the results tracker
                 "league": comp["name"], "date": m["utc_date"], "date_key": m["utc_date"][:10],
                 "home_team": m["home_team"]["name"], "away_team": m["away_team"]["name"],
                 "home_form": h_form, "away_form": a_form,
@@ -884,6 +886,7 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <h2 style="text-align:center">⚽ MATCH IQ — Full Stats</h2>
 <p style="text-align:center;color:#888;font-size:11px">Powered by TheStatsAPI · {generated}</p>
 <p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Safe Corners</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a>·<a href="scanners/goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Hot Form/Streak</a></p>
+<p style="text-align:center;margin:4px 0 0;font-size:12px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none">📊 Results Tracker</a></p>
 {date_bar}
 <p style="text-align:center;margin-bottom:16px"><a href="match_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
 {builder}
@@ -1557,5 +1560,26 @@ if __name__ == "__main__":
 
     print("\nPosting daily digest to Telegram...")
     post_daily_digest_to_telegram(all_predictions)
+
+    try:
+        import results_tracker
+        results_tracker.run_results_tracker(
+            all_predictions,
+            build_goal_streak_entries(all_predictions),
+            build_real_streak_entries(all_predictions),
+            api_key,
+            thresholds={
+                "over25_min": SCANNER_OVER25_MIN, "btts_min": SCANNER_BTTS_MIN,
+                "corners_min": SCANNER_CORNERS_MIN, "safe_corners_min": SCANNER_SAFE_CORNERS_MIN,
+                "safe_corners_min_sample": SAFE_CORNERS_MIN_SAMPLE, "over45_min": SCANNER_OVER45_MIN,
+                "real_streak_threshold": REAL_STREAK_THRESHOLD,
+            },
+        )
+    except Exception as e:
+        # Results tracking is a nice-to-have layered on top of everything
+        # above, which has already succeeded by this point -- a failure
+        # here (e.g. a transient API hiccup during verification) should
+        # never take down an otherwise-successful run.
+        print(f"\n[!] Results tracker failed, but the rest of this run succeeded: {e}")
 
     print(f"\nDone — {len(all_predictions)} total fixtures projected.")
