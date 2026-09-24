@@ -16,21 +16,11 @@ def over_prob(line,lam):
   return 1-sum(pois(i,lam) for i in range(thr))
 
 def safe_line(lam, factor=0.55):
-  # Same "safety margin" line-setting as the soccer/NFL siblings, but with
-  # a lower factor than their 0.72 default. Team goals are a low-count
-  # Poisson stat (lambda ~2-4), so 0.72 was landing the line too close to
-  # the mean — team totals were coming out at 53-76% in testing, notably
-  # weaker than the 80-90%+ range shots/passing-yards-type legs get
-  # elsewhere. 0.55 pushes the line down further for more real margin;
-  # a team projected at only ~2 goals will still show a thinner number
-  # than a team projected at 4 — that's the model being honest about a
-  # genuinely thinner safety margin, not something to paper over.
   raw=lam*factor
   line=math.floor(raw*2)/2
   if line<0.5: line=0.5
   return line
 
-# standings + projections
 try:
   sd=fetch(f"{BASE}/standings/now")
   standings={r["teamAbbrev"]["default"]:r for r in sd["standings"]}
@@ -39,12 +29,10 @@ try:
 
   def pred(home,away):
     h=standings[home]; a=standings[away]
-    # FIXED: combined-total clamp - was double-clamping to 6 which killed totals
     raw_h = (h["homeGoalsFor"]/max(h["homeGamesPlayed"],1)) * (a["roadGoalsAgainst"]/max(a["roadGamesPlayed"],1)) / avg_r
     raw_a = (a["roadGoalsFor"]/max(a["roadGamesPlayed"],1)) * (h["homeGoalsAgainst"]/max(h["homeGamesPlayed"],1)) / avg_h
-    lh = min(max(raw_h, 0.8), 5.5) # was 0.5-6, now 0.8-5.5 more realistic
+    lh = min(max(raw_h, 0.8), 5.5)
     la = min(max(raw_a, 0.8), 5.5)
-    # re-normalize total so we don't get 1-1 spin nobody trusts
     tot = lh+la
     if tot < 4.5:
       scale = 5.2 / tot
@@ -90,6 +78,10 @@ def get_props(team, opp, is_home):
       gpg=p["goals"]/gp; ppg=p["points"]/gp; spg=p["shots"]/gp
       lam_g=gpg*pace; lam_p=ppg*pace; lam_s=spg*shot_fac
       props.append({
+        "player_id": p.get("playerId"),  # NEW: needed to match this player's
+                                            # actual boxscore line later for
+                                            # the results tracker -- name-only
+                                            # matching is too fragile
         "name": f"{p['firstName']['default']} {p['lastName']['default']}",
         "pos": p.get("positionCode",""),
         "any": 1-pois(0,lam_g),
@@ -104,20 +96,6 @@ def get_props(team, opp, is_home):
     print(f"get_props {team} logic error: {e}", file=sys.stderr)
     return []
 
-# ---------------------------------------------------------------------------
-# Safest Bet Builder — same pattern as Corner Flag/Match IQ (soccer) and
-# Blitz IQ (NFL): every market below gets a real probability, tagged with a
-# category, collected into all_legs as the game loop runs. NOTE: unlike the
-# soccer/NFL siblings, this script has no per-game history list (club-stats
-# is a season aggregate, not a game log) so legs here carry no "last games"
-# sequence — detail only.
-#
-# Deliberately NOT included: moneyline/win-market legs. ph/pa/pt below are
-# REGULATION-time probabilities only (the Poisson grid has no way to model
-# overtime/shootout), so they'd understate a favorite's true moneyline win
-# probability, which includes OT/SO. Including them as "safe" legs would be
-# misleading in a way the goals/props markets aren't.
-# ---------------------------------------------------------------------------
 all_legs=[]
 
 BUILDER_TEMPLATE = """
@@ -292,19 +270,24 @@ for g in games:
 
     cards+=f"""<div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0"><h3 style="margin:0 0 4px 0">{away} @ {home} — Total {tot:.2f}</h3><p style="margin:0;color:#b7c5e6;font-size:13px">Proj: {away} {la:.2f} - {lh:.2f} {home} | O5.5 {o55*100:.0f}%</p>{win_bar}<div style="margin-top:12px"><div style="font-size:12px;color:#8aa;margin-bottom:6px">Correct Score</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">{render_scores()}</div></div><details style="margin-top:12px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">{home} Props</summary><div style="margin-top:8px">{render_props(props_h) or 'No data'}</div></details><details style="margin-top:8px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">{away} Props</summary><div style="margin-top:8px">{render_props(props_a) or 'No data'}</div></details></div>"""
 
-    # --- Safest Bet Builder legs for this game ---
     match_label = f"{away} @ {home}"
+    game_id = g.get("id")  # NEW: needed later to look up the real final
+                             # result for the results tracker
+    game_date = g.get("startTimeUTC", "")[:10]
     for team_label, lam in [(home, lh), (away, la)]:
       line = safe_line(lam)
       all_legs.append({
         "match": match_label, "market": f"{team_label} Over {line} Goals",
         "prob": round(over_prob(line, lam)*100), "category": "Team Total",
         "detail": f"proj {lam:.2f} goals",
+        "game_id": game_id, "game_date": game_date,
+        "is_home": team_label == home, "line": line,
       })
     all_legs.append({
       "match": match_label, "market": "Game Over 5.5 Total Goals",
       "prob": round(o55*100), "category": "Game Total",
       "detail": f"proj {tot:.2f} goals",
+      "game_id": game_id, "game_date": game_date, "line": 5.5,
     })
     for team_label, props in [(home, props_h), (away, props_a)]:
       for x in props:
@@ -312,22 +295,38 @@ for g in games:
           "match": match_label, "market": f"{x['name']} Anytime Goal",
           "prob": round(x["any"]*100), "category": "Anytime Goalscorer",
           "detail": f"{team_label} · {x['pos']}",
+          "game_id": game_id, "game_date": game_date, "player_id": x.get("player_id"),
+          "is_home": team_label == home,
         })
         all_legs.append({
           "match": match_label, "market": f"{x['name']} Over 0.5 Points",
           "prob": round(x["pts"]*100), "category": "To Record a Point",
           "detail": f"{team_label} · {x['pos']}",
+          "game_id": game_id, "game_date": game_date, "player_id": x.get("player_id"),
+          "is_home": team_label == home,
         })
         all_legs.append({
           "match": match_label, "market": f"{x['name']} Over 1.5 SOG",
           "prob": round(x["o1"]*100), "category": "Shots on Goal",
           "detail": f"{team_label} · {x['pos']} · proj {x['sog']:.1f} SOG",
+          "game_id": game_id, "game_date": game_date, "player_id": x.get("player_id"), "line": 1.5,
+          "is_home": team_label == home,
         })
   except Exception as e: print(f"game loop {e}", file=sys.stderr); continue
 
 builder = BUILDER_TEMPLATE.format(legs_json=json.dumps(all_legs)) if all_legs else ""
 
-html=f"""<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blue Line v2 Clean</title><style>body{{background:#081229;color:#fff;font-family:-apple-system,system-ui,sans-serif;padding:16px;max-width:800px;margin:0 auto}}h1{{color:#4ea1ff;font-size:22px}}</style></head><body><h1>🔵 Blue Line v2 — Patched</h1><p style="color:#8aa;font-size:12px">Last: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} | Games: {len(games)}</p>{builder}{cards or '<p>No games today — model ready.</p>'}<p style="font-size:11px;color:#5a6a8a;margin-top:24px">Fixes: cached club-stats, logged excepts, utcnow→now(utc), total clamp 4.5-8.0. Added: Safest Bet Builder (goals/props markets only — no moneyline, since ph/pa are regulation-time only and would understate a favorite's true win odds through OT/SO).</p></body></html>"""
+html=f"""<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blue Line v2 Clean</title><style>body{{background:#081229;color:#fff;font-family:-apple-system,system-ui,sans-serif;padding:16px;max-width:800px;margin:0 auto}}h1{{color:#4ea1ff;font-size:22px}}</style></head><body><h1>🔵 Blue Line v2 — Patched</h1><p style="color:#8aa;font-size:12px">Last: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} | Games: {len(games)}</p><p style="margin:4px 0 0"><a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a></p>{builder}{cards or '<p>No games today — model ready.</p>'}<p style="font-size:11px;color:#5a6a8a;margin-top:24px">Fixes: cached club-stats, logged excepts, utcnow→now(utc), total clamp 4.5-8.0. Added: Safest Bet Builder (goals/props markets only — no moneyline, since ph/pa are regulation-time only and would understate a favorite's true win odds through OT/SO).</p></body></html>"""
 import os as _os; _os.makedirs("docs/blue-line", exist_ok=True)
 with open("docs/blue-line/index.html","w") as f: f.write(html)
+
+try:
+  import results_tracker_blue_line
+  results_tracker_blue_line.run_results_tracker(all_legs)
+except Exception as e:
+  # Results tracking sits on top of everything above, which has already
+  # succeeded by this point -- a failure here should never take down an
+  # otherwise-successful run.
+  print(f"[!] Results tracker failed, but the rest of this run succeeded: {e}", file=sys.stderr)
+
 print(f"Done {len(games)}")
