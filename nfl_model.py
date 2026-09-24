@@ -127,7 +127,6 @@ def get_team_form(team_id):
             print(f"  [!] couldn't parse schedule for team {team_id}: {e}")
 
     if not scored:
-        # Nothing yet this season — try last season's final games instead.
         current_year = datetime.now().year
         prior_season = current_year - 1
         r2 = _get(f"{BASE}/teams/{team_id}/schedule", params={"season": prior_season})
@@ -159,21 +158,18 @@ def recency_weighted(values):
     n = len(values)
     if n == 0:
         return None
-    wts = [1.3 ** i for i in range(n)]  # most recent (last index) weighted highest; gentler than the
-    return sum(w * v for w, v in zip(wts, values)) / sum(wts)  # 1.4 used elsewhere — NFL samples are smaller
+    wts = [1.3 ** i for i in range(n)]
+    return sum(w * v for w, v in zip(wts, values)) / sum(wts)
 
 
 def shrink(value, n, league_avg, prior=PRIOR_STRENGTH):
-    """Same small-sample protection as MLB/soccer — a team with only 1-2
-    games on record leans mostly on the league average; by 5 games their
-    own form dominates."""
     return (n * value + prior * league_avg) / (n + prior)
 
 
 def league_averages(all_forms):
     scored = [f['avg_scored'] for f in all_forms if f]
     allowed = [f['avg_allowed'] for f in all_forms if f]
-    lg_scored = sum(scored) / len(scored) if scored else 22.0  # ~league-average NFL score, sane fallback
+    lg_scored = sum(scored) / len(scored) if scored else 22.0
     lg_allowed = sum(allowed) / len(allowed) if allowed else 22.0
     return lg_scored, lg_allowed
 
@@ -193,9 +189,6 @@ def predict(h_form, a_form, lg_scored, lg_allowed):
     exp_away = a_scored * (h_allowed / lg_allowed)
     exp_total = round(exp_home + exp_away, 1)
 
-    # Combined-game stdev from two independent-ish team stdevs (rough
-    # approximation — real NFL totals correlate slightly by pace/weather,
-    # not modeled here).
     total_std = math.sqrt(DEFAULT_TEAM_STD ** 2 + DEFAULT_TEAM_STD ** 2)
 
     return {
@@ -220,24 +213,7 @@ def get_week_scoreboard():
         return []
 
 
-# ---------------------------------------------------------------------------
-# Player props — QB passing yards, RB rushing yards, WR/TE receptions.
-# This section is the least-tested part of the whole script: ESPN's docs
-# confirm these endpoints exist for NFL, but not their exact JSON field
-# names. Every parse step below is defensive (try a few plausible field
-# names, print a diagnostic and return None rather than crashing if none
-# match) so a wrong guess fails safely and shows up clearly in the Actions
-# log instead of silently producing garbage or stopping the whole run.
-# ---------------------------------------------------------------------------
-
 PLAYER_STAT_CONFIG = {
-    # 'stat' values confirmed against a real ESPN response: root-level
-    # labels are short codes ('YDS', 'REC', etc.), not the descriptive
-    # names originally guessed ('passingYards'). Note 'YDS' can appear
-    # twice in one player's combined stat block (e.g. a QB's passing AND
-    # rushing yards both labeled 'YDS') — .index() takes the FIRST match,
-    # which is correct for QB (passing comes first) but would be WRONG if
-    # a position's category ever led with a different 'YDS' stat first.
     'QB': {'stat': 'YDS', 'label': 'Passing Yards', 'dist': 'normal', 'std': 55, 'prior': 235},
     'RB': {'stat': 'YDS', 'label': 'Rushing Yards', 'dist': 'normal', 'std': 28, 'prior': 60},
     'WR': {'stat': 'REC', 'label': 'Receptions', 'dist': 'poisson', 'std': None, 'prior': 4.0},
@@ -248,10 +224,6 @@ depth_chart_cache = {}
 
 
 def get_starters(team_id):
-    """Best-effort read of a team's starting QB/RB/top WR/top TE. ESPN's
-    depth chart schema isn't documented in detail, so this tries a couple
-    of plausible shapes and gives up cleanly (returning {}) if neither
-    matches, rather than guessing wrong silently."""
     if team_id in depth_chart_cache:
         return depth_chart_cache[team_id]
     r = _get(f"{BASE}/teams/{team_id}/depthcharts")
@@ -263,11 +235,10 @@ def get_starters(team_id):
     try:
         data = r.json()
         top_keys = list(data.keys())
-        depthchart_raw = data.get('depthchart')  # confirmed via live log: this is the real key
+        depthchart_raw = data.get('depthchart')
         if isinstance(depthchart_raw, list):
             groups = depthchart_raw
         elif isinstance(depthchart_raw, dict):
-            # Might be one more level nested (e.g. {"items": [...]}) — try common wrapper keys.
             groups = depthchart_raw.get('items') or depthchart_raw.get('athletes') or []
             if not groups:
                 print(f"    [!] depth chart for team {team_id}: 'depthchart' is a dict with keys {list(depthchart_raw.keys())} — none matched expected wrapper keys")
@@ -283,7 +254,7 @@ def get_starters(team_id):
                 if pos_abbr not in PLAYER_STAT_CONFIG:
                     continue
                 if pos_abbr in starters:
-                    continue  # already have this position's starter
+                    continue
                 slots = pos_data.get('athletes', [])
                 if slots:
                     athlete = slots[0].get('athlete', slots[0])
@@ -305,9 +276,6 @@ player_gamelog_cache = {}
 
 
 def _fetch_gamelog_values(athlete_id, stat_key, season):
-    """One season's worth of values for a stat — factored out so both the
-    current-season attempt and the prior-season fallback share the same
-    parsing logic."""
     r = _get(f"https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/{athlete_id}/gamelog",
              params={"season": season})
     values = []
@@ -323,11 +291,6 @@ def _fetch_gamelog_values(athlete_id, stat_key, season):
         if not season_data and top_keys != ['filters']:
             print(f"    [!] gamelog for athlete {athlete_id}, season {season}: no 'seasonTypes' key. Top-level keys were: {top_keys}")
 
-        # Confirmed via live log: categories have keys
-        # ['displayName', 'type', 'splitType', 'events', 'totals'] — no
-        # per-category labels/names. The labels describing each position in
-        # a game's 'stats' list live at the ROOT of the response instead,
-        # parallel to 'seasonTypes'. Try the plausible root-level key names.
         root_labels = data.get('labels') or data.get('names') or data.get('displayNames')
         if season_data and not root_labels:
             print(f"    [DIAG] athlete {athlete_id}, season {season}: no root-level labels/names/displayNames found. Full top-level keys: {top_keys}")
@@ -362,17 +325,6 @@ def _fetch_gamelog_values(athlete_id, stat_key, season):
 
 
 def get_player_gamelog(athlete_id, stat_key):
-    """Last N games' value for one stat (passing yards, rushing yards,
-    receptions) for a given player. Same Week-1 problem as team form —
-    the current season may have zero games played yet, so this falls back
-    to last season if so.
-
-    NOTE: the chronological order of the returned list is NOT verified —
-    ESPN's gamelog 'events' array order isn't documented, so unlike
-    team form's scored_list/allowed_list (confirmed oldest→newest by this
-    script's own sort), player recent_values may or may not be in date
-    order. Treat any "trend" read from this list with more caution than
-    the team-level lists."""
     cache_key = (athlete_id, stat_key)
     if cache_key in player_gamelog_cache:
         return player_gamelog_cache[cache_key]
@@ -399,6 +351,9 @@ def project_player_stat(pos_abbr, athlete_id, name):
         'name': name, 'position': pos_abbr, 'label': cfg['label'],
         'dist': cfg['dist'], 'std': cfg['std'],
         'projected': round(shrunk, 1), 'n_games': n, 'recent_values': values,
+        'athlete_id': athlete_id,  # NEW: needed later to look up this
+                                     # player's actual boxscore line for
+                                     # the results tracker
     }
 
 
@@ -434,18 +389,7 @@ def poisson_cdf(k, lam):
     return sum(poisson_pmf(i, lam) for i in range(int(k) + 1))
 
 
-# ---------------------------------------------------------------------------
-# Safest Bet Builder — same pattern as Match IQ (soccer): every market the
-# model can price gets a "safe" line set below the projection, turned into
-# an actual probability, and the HTML gets a builder panel that rotates
-# through market categories and shuffles among near-tied legs so it draws
-# from more of the week's games instead of fixating on the same few.
-# ---------------------------------------------------------------------------
-
 def normal_prop(mean, std, factor=0.72, round_to=0.5):
-    """Safety-margin line for a normally-distributed stat (team points,
-    QB passing yards, RB rushing yards) — same 72%-of-projection idea as
-    Match IQ's shots/SoT lines, adapted from Poisson to Normal math."""
     if mean is None or std is None:
         return None
     raw_line = mean * factor
@@ -457,8 +401,6 @@ def normal_prop(mean, std, factor=0.72, round_to=0.5):
 
 
 def poisson_prop(mean, factor=0.72):
-    """Safety-margin line for a Poisson-distributed stat (WR/TE
-    receptions) — identical math to Match IQ's shots/corners props."""
     if mean is None:
         return None
     raw_line = mean * factor
@@ -471,14 +413,6 @@ def poisson_prop(mean, factor=0.72):
 
 
 def hit_rate(values, line):
-    """Empirical count of how many recent games cleared a line — e.g.
-    (5, 7) means 5 of the last 7 games had a value over `line`. A
-    model-free cross-check alongside the Normal/Poisson probability,
-    computed from the exact same raw values. Order-independent (just a
-    count), so this is safe to compute even for player recent_values,
-    whose chronological order is unverified — unlike a "trend" read
-    from the sequence, a hit-count doesn't care what order the games
-    came in."""
     if not values:
         return None
     hits = sum(1 for v in values if v > line)
@@ -486,26 +420,18 @@ def hit_rate(values, line):
 
 
 def format_history(lst):
-    """Render a stat's recent-games list as a slash-separated string for
-    display. Team scored_list/allowed_list are confirmed oldest→newest by
-    get_team_form's own sort, so shown as-is (left-to-right = chronological).
-    Player recent_values order is UNVERIFIED (see get_player_gamelog's
-    docstring) — shown as returned, not re-ordered, since re-ordering
-    something of unknown order would be a guess dressed up as a fact."""
     if not lst:
         return None
     return "/".join(str(v) for v in lst)
 
 
 def build_legs(predictions):
-    """Flatten every game's probability-priced markets into one list of
-    individual bet-builder legs. Covers: each team's total points, the
-    combined game total, and every player prop the model has data for.
-    Tagged with a "category" so the builder can rotate market types."""
     legs = []
     for p in predictions:
         match_label = p["match"]
         hf, af = p["home_form"], p["away_form"]
+        game_id = p.get("game_id")  # NEW
+        game_date = (p.get("date") or "")[:10]  # NEW
 
         home_total = normal_prop(p["exp_home"], DEFAULT_TEAM_STD)
         if home_total:
@@ -516,6 +442,7 @@ def build_legs(predictions):
                 "hit_rate": hit_rate(hf.get("scored_list"), home_total["line"]),
                 "detail": f"proj {home_total['avg']} pts ({hf['n_games']}gm{' · last season' if hf.get('source') == 'prior_season' else ''})",
                 "history": format_history(hf.get("scored_list")),
+                "game_id": game_id, "game_date": game_date, "is_home": True, "line": home_total["line"],
             })
         away_total = normal_prop(p["exp_away"], DEFAULT_TEAM_STD)
         if away_total:
@@ -526,6 +453,7 @@ def build_legs(predictions):
                 "hit_rate": hit_rate(af.get("scored_list"), away_total["line"]),
                 "detail": f"proj {away_total['avg']} pts ({af['n_games']}gm{' · last season' if af.get('source') == 'prior_season' else ''})",
                 "history": format_history(af.get("scored_list")),
+                "game_id": game_id, "game_date": game_date, "is_home": False, "line": away_total["line"],
             })
 
         game_total = normal_prop(p["exp_total"], p["total_std"])
@@ -534,16 +462,10 @@ def build_legs(predictions):
                 "match": match_label,
                 "market": f"Game Over {game_total['line']} Total Points",
                 "prob": game_total["prob"], "category": "Game Total",
-                # No hit_rate here deliberately: unlike a team's own
-                # scored_list (that team's real history), there's no
-                # paired "these two teams' actual combined score" history
-                # to count against — each team's recent games were
-                # against different opponents. Fabricating one from two
-                # unrelated teams' separate histories would look like a
-                # real empirical check when it isn't one.
                 "hit_rate": None,
                 "detail": f"proj {game_total['avg']} pts ({hf['n_games']}v{af['n_games']}gm)",
                 "history": None,
+                "game_id": game_id, "game_date": game_date, "line": game_total["line"],
             })
 
         for team_name, props in [(p["home_team"], p.get("home_props") or []),
@@ -562,6 +484,9 @@ def build_legs(predictions):
                     "hit_rate": hit_rate(prop.get("recent_values"), result["line"]),
                     "detail": f"proj {result['avg']} ({prop['n_games']}gm)",
                     "history": format_history(prop.get("recent_values")),
+                    "game_id": game_id, "game_date": game_date, "line": result["line"],
+                    "athlete_id": prop.get("athlete_id"), "stat_key": PLAYER_STAT_CONFIG[prop["position"]]["stat"],
+                    "is_home": team_name == p["home_team"],
                 })
     return legs
 
@@ -619,11 +544,6 @@ function shuffle(arr) {{
   return arr;
 }}
 
-// Sorts safest-first at a coarse level (5-point probability bands) but
-// shuffles legs WITHIN each band, so several legs sitting at similar
-// probabilities get picked in a different order each time instead of
-// always the same one — lets the builder draw from the full pool of
-// games instead of fixating on whichever leg is a fraction ahead.
 function tieredShuffle(legs, bandSize) {{
   const bands = {{}};
   legs.forEach(l => {{
@@ -664,7 +584,7 @@ function buildSafest() {{
         const leg = arr[cursor[cat]];
         cursor[cat]++;
         const count = matchCount[leg.match] || 0;
-        if (count >= 2) continue;  // cap legs per game to limit correlation risk
+        if (count >= 2) continue;
         chosen.push(leg);
         combinedOdds *= 100 / leg.prob;
         matchCount[leg.match] = count + 1;
@@ -744,7 +664,7 @@ def build_predictions():
         if not home or not away:
             continue
         if comp.get('status', {}).get('type', {}).get('completed'):
-            continue  # already played — skip, this is a predictor not a results page
+            continue
 
         h_id, a_id = home['team']['id'], away['team']['id']
         h_form, a_form = all_forms.get(h_id), all_forms.get(a_id)
@@ -758,6 +678,8 @@ def build_predictions():
         away_props = get_team_player_props(a_id)
         predictions.append({
             'date': e.get('date', ''),
+            'game_id': e.get('id'),  # NEW: needed later to look up the real
+                                       # final result for the results tracker
             'match': f"{away['team']['displayName']} @ {home['team']['displayName']}",
             'home_team': home['team']['displayName'], 'away_team': away['team']['displayName'],
             'home_form': h_form, 'away_form': a_form,
@@ -775,6 +697,7 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <h2 style="text-align:center">🏈 BLITZ IQ — NFL Team Points</h2>
 <p style="text-align:center;color:#888;font-size:11px">Recency-weighted scoring/allowed rates, Normal-distribution projected · {generated}</p>
 <p style="text-align:center;margin-bottom:16px"><a href="blitz_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
+<p style="text-align:center;margin-bottom:16px"><a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a></p>
 {builder}
 {cards}
 <p style="text-align:center;color:#666;font-size:10px;margin-top:20px">Enter your book's Over/Under line and odds to compute an edge the same way as the MLB/soccer tools — this page shows the model's own projection only.</p>
@@ -854,8 +777,8 @@ def write_csv(predictions, path):
                 p['home_form']['avg_scored'], p['home_form']['avg_allowed'], p['home_form']['n_games'],
                 p['away_form']['avg_scored'], p['away_form']['avg_allowed'], p['away_form']['n_games'],
                 p['exp_home'], p['exp_away'], p['exp_total'], p['total_std'],
-                '', '', '',  # blank — fill in the book's line/odds yourself
-                '', '', '',  # blank — fill in after the game
+                '', '', '',
+                '', '', '',
             ])
 
 
@@ -887,4 +810,11 @@ if __name__ == "__main__":
     write_player_props_csv(predictions, 'docs/blitz-iq/blitz_iq_player_props.csv')
     with open('docs/blitz-iq/blitz_iq.json', 'w') as f:
         json.dump(predictions, f, indent=2, default=str)
+
+    try:
+        import blitz_iq_results_tracker
+        blitz_iq_results_tracker.run_results_tracker(build_legs(predictions))
+    except Exception as e:
+        print(f"[!] Results tracker failed, but the rest of this run succeeded: {e}")
+
     print(f"\nDone — {len(predictions)} games projected.")
