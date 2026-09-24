@@ -117,6 +117,30 @@ def hit_rate(values, line):
     return {"hits": hits, "total": len(values)}
 
 
+# Real Streak — a genuine CONSECUTIVE-games count, distinct from the
+# average-based Hot Form panel below. A team can qualify for Hot Form
+# even if their most recent game was quiet, as long as earlier games in
+# the window pulled the average up — that's a real gap between what
+# "streak" implies and what an average measures. This walks backward
+# from the most recent game and stops at the first one that breaks the
+# per-game threshold, same concept applied to Match IQ.
+REAL_STREAK_THRESHOLD = 2   # per-game goals needed to extend the streak
+REAL_STREAK_MIN_LENGTH = 3  # shortest run that counts as "a streak"
+
+
+def _current_goal_streak(last5_gf, threshold=REAL_STREAK_THRESHOLD):
+    """last5_gf is oldest-first (see get_last_five), so walking it in
+    REVERSE goes from most recent backward — exactly what a real streak
+    needs."""
+    streak = 0
+    for g in reversed(last5_gf):
+        if g >= threshold:
+            streak += 1
+        else:
+            break
+    return streak
+
+
 def safe_line(lam, factor=DEFAULT_LINE_FACTOR, round_to=0.5):
     if lam is None:
         return None
@@ -364,6 +388,7 @@ def build_legs_and_cards(target_date):
     legs = []
     cards = ""
     streak_entries = []
+    real_streak_entries = []
     from_date = season_start_guess(target_date)
 
     for league in LEAGUE_TARGETS:
@@ -394,6 +419,13 @@ def build_legs_and_cards(target_date):
                         "detail": f"proj {proj['lambda']} goals" +
                                   (f" · season {proj['season_gpg']}/gm" if proj["season_gpg"] is not None else ""),
                         "history": "/".join(str(v) for v in proj["last5_gf"]) or None,
+                        # Fields below aren't used by the builder UI --
+                        # they exist purely so the results tracker can
+                        # look this match back up later and pull the
+                        # right side's actual score.
+                        "line": line, "is_home": is_home, "league_id": league["id"],
+                        "home_name": home["name"], "away_name": away["name"],
+                        "match_date": m.get("date", ""),
                     })
 
                 l5 = proj.get("last5_gf") or []
@@ -402,9 +434,20 @@ def build_legs_and_cards(target_date):
                     if avg5 >= GOAL_STREAK_MIN:
                         streak_entries.append({
                             "team": team["name"], "opponent": opp["name"], "is_home": is_home,
-                            "league": league["name"], "date": m.get("date", ""),
+                            "league": league["name"], "league_id": league["id"], "date": m.get("date", ""),
                             "last5_avg": avg5, "last5_goals": l5,
+                            "home_name": home["name"], "away_name": away["name"],
                         })
+
+                streak_len = _current_goal_streak(l5)
+                if streak_len >= REAL_STREAK_MIN_LENGTH:
+                    real_streak_entries.append({
+                        "team": team["name"], "opponent": opp["name"], "is_home": is_home,
+                        "league": league["name"], "league_id": league["id"], "date": m.get("date", ""),
+                        "streak_len": streak_len, "streak_games": l5[-streak_len:],  # already old->new
+                        "full_sample": streak_len >= len(l5),
+                        "home_name": home["name"], "away_name": away["name"],
+                    })
 
             if home_proj and away_proj:
                 total_lambda = home_proj["lambda"] + away_proj["lambda"]
@@ -439,7 +482,8 @@ def build_legs_and_cards(target_date):
                 )
 
     streak_entries.sort(key=lambda e: -e["last5_avg"])
-    return legs, cards, streak_entries
+    real_streak_entries.sort(key=lambda e: -e["streak_len"])
+    return legs, cards, streak_entries, real_streak_entries
 
 
 GOAL_STREAK_MIN = 3.0  # hockey-appropriate bar — higher than Match IQ's
@@ -462,30 +506,58 @@ STREAK_ENTRY_TEMPLATE = """<div style="background:var(--panel2);border-radius:8p
   </div>
 </div>"""
 
-STREAK_PANEL_TEMPLATE = """<div class="builderPanel">
-  <div class="builderTitle">🔥 Goal Streak</div>
-  <div style="font-size:11px;color:var(--sub);margin-bottom:10px">
-    Teams averaging ≥{min_avg} goals over their last {min_games} games — a raw recent-FORM
-    screen, not a probabilistic prediction like the Team/Game Totals above. Cross-check
-    against a team's own Over line for their specific upcoming matchup before treating a
-    streak alone as a signal.
+REAL_STREAK_ENTRY_TEMPLATE = """<div style="background:var(--panel2);border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:var(--bg);border:1px solid #f59e0b;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:var(--sub)">STREAK</div>
+    <div style="font-size:17px;font-weight:bold;color:#f59e0b">{streak_len}{plus}</div>
   </div>
-  {entries}
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:var(--sub)">{league}</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{team} <span style="color:var(--sub);font-weight:normal;font-size:11px">({home_away})</span> vs {opponent}</div>
+    <div style="font-size:10px;color:var(--sub)">{streak_len} straight scoring {threshold}+ (old→new): {streak_str}</div>
+  </div>
+</div>"""
+
+STREAK_PANEL_TEMPLATE = """<div class="builderPanel">
+  <div class="builderTitle">🔥 Hot Form &amp; Streaks</div>
+  <div style="font-size:11px;color:var(--sub);margin-bottom:10px">
+    Raw recent-FORM screens, not probabilistic predictions like the Team/Game Totals above.
+    Hot Form and Real Streak measure genuinely different things — a team can appear in one,
+    both, or neither. Cross-check against a team's own Over line for their specific upcoming
+    matchup before treating either alone as a signal.
+  </div>
+  <div style="font-size:12px;font-weight:700;margin:8px 0 2px">📊 Hot Form <span style="color:var(--sub);font-weight:normal;font-size:10px">(avg ≥{min_avg} over last {min_games} — most recent game may not itself be strong)</span></div>
+  {hot_form_entries}
+  <div style="font-size:12px;font-weight:700;margin:14px 0 2px">🔥 Real Streak <span style="color:var(--sub);font-weight:normal;font-size:10px">(≥{min_streak}+ CONSECUTIVE games ≥{streak_threshold}, no break)</span></div>
+  {streak_entries}
 </div>"""
 
 
-def render_streak_panel(streak_entries):
-    if not streak_entries:
+def render_streak_panel(hot_form_entries, real_streak_entries):
+    if not hot_form_entries and not real_streak_entries:
         return ""
-    entries_html = "".join(
+    hot_form_html = "".join(
         STREAK_ENTRY_TEMPLATE.format(
             last5_avg=e["last5_avg"], league=e["league"],
             team=e["team"], home_away="Home" if e["is_home"] else "Away", opponent=e["opponent"],
             last5_str="/".join(str(v) for v in e["last5_goals"]),  # already oldest-first, no reversal needed
         )
-        for e in streak_entries
+        for e in hot_form_entries
+    ) or '<p style="color:var(--sub);font-size:11px">None currently.</p>'
+    streak_html = "".join(
+        REAL_STREAK_ENTRY_TEMPLATE.format(
+            streak_len=e["streak_len"], plus="+" if e["full_sample"] else "",
+            league=e["league"], team=e["team"], home_away="Home" if e["is_home"] else "Away",
+            opponent=e["opponent"], threshold=REAL_STREAK_THRESHOLD,
+            streak_str="/".join(str(v) for v in e["streak_games"]),
+        )
+        for e in real_streak_entries
+    ) or '<p style="color:var(--sub);font-size:11px">None currently.</p>'
+    return STREAK_PANEL_TEMPLATE.format(
+        min_avg=GOAL_STREAK_MIN, min_games=GOAL_STREAK_MIN_GAMES,
+        min_streak=REAL_STREAK_MIN_LENGTH, streak_threshold=REAL_STREAK_THRESHOLD,
+        hot_form_entries=hot_form_html, streak_entries=streak_html,
     )
-    return STREAK_PANEL_TEMPLATE.format(min_avg=GOAL_STREAK_MIN, min_games=GOAL_STREAK_MIN_GAMES, entries=entries_html)
 
 
 HTML_TEMPLATE = """<!DOCTYPE html>
@@ -513,6 +585,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <body>
   <h1>🧊 Euro Ice — Team &amp; Game Totals</h1>
   <div class="sub">SHL · Czech Extraliga · DEL — {date} · generated {generated}</div>
+  <p style="text-align:center;margin:4px 0 0;font-size:12px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none">📊 Results Tracker</a></p>
 
   <div id="builderPanel" class="builderPanel">
     <div class="builderTitle">🎯 Safest Bet Builder</div>
@@ -651,12 +724,12 @@ initToggles();
 """
 
 
-def render_html(legs, cards, streak_entries, target_date):
+def render_html(legs, cards, streak_entries, real_streak_entries, target_date):
     return HTML_TEMPLATE.format(
         date=target_date.isoformat(),
         generated=datetime.now().strftime("%Y-%m-%d %H:%M"),
         weight=int(RECENT_WEIGHT * 100),
-        streak_panel=render_streak_panel(streak_entries),
+        streak_panel=render_streak_panel(streak_entries, real_streak_entries),
         cards=cards or "<p style='color:var(--sub);text-align:center'>No matchups had enough data for a full card today.</p>",
         legs_json=json.dumps(legs),
     )
@@ -669,7 +742,7 @@ if __name__ == "__main__":
         target = date.today()
 
     print(f"Fetching Euro Ice slate for {target.isoformat()}…")
-    legs, cards, streak_entries = build_legs_and_cards(target)
+    legs, cards, streak_entries, real_streak_entries = build_legs_and_cards(target)
 
     if not legs:
         print("No usable legs today — either no fixtures found for the configured "
@@ -677,12 +750,22 @@ if __name__ == "__main__":
               "docs/ left as whatever the last successful run published.")
         raise SystemExit(0)
 
-    print(f"  Goal Streak: {len(streak_entries)} team-entries")
+    print(f"  Hot Form: {len(streak_entries)} team-entries · Real Streak: {len(real_streak_entries)} team-entries")
 
-    html = render_html(legs, cards, streak_entries, target)
+    html = render_html(legs, cards, streak_entries, real_streak_entries, target)
     os.makedirs("docs/euro-ice", exist_ok=True)
     with open("docs/euro-ice/index.html", "w") as f:
         f.write(html)
     with open("docs/euro-ice/euro_ice.json", "w") as f:
         json.dump(legs, f, indent=2, default=str)
+
+    try:
+        import euro_ice_results_tracker as results_tracker
+        results_tracker.run_results_tracker(legs, streak_entries, real_streak_entries, API_KEY, REAL_STREAK_THRESHOLD)
+    except Exception as e:
+        # Results tracking sits on top of everything above, which has
+        # already succeeded by this point -- a failure here should
+        # never take down an otherwise-successful run.
+        print(f"\n[!] Results tracker failed, but the rest of this run succeeded: {e}")
+
     print(f"\nDone. {len(legs)} legs written to docs/euro-ice/index.html")
