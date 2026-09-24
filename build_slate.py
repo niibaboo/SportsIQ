@@ -422,7 +422,11 @@ def build_slate(target_date):
             t = uk_dt.strftime("%I:%M %p").lstrip("0") + f" {uk_dt.tzname()}"
         except Exception:
             t = ""
-        entry = {"away": away["team"]["name"], "home": home["team"]["name"], "time": t, "pitchers": []}
+        entry = {"away": away["team"]["name"], "home": home["team"]["name"], "time": t, "pitchers": [],
+                 "game_pk": g.get("gamePk"), "game_date": target_date.isoformat()}  # needed later
+                                                                                       # to look up the
+                                                                                       # real final result
+                                                                                       # for the results tracker
 
         for side_name, side, opp in (("away", away, home), ("home", home, away)):
             prob = side.get("probablePitcher")
@@ -441,7 +445,7 @@ def build_slate(target_date):
                     proj = project(pdata["season"], pdata["last5"], opp_kpct)
                     saber = pdata.get("saber") or {}
                     entry["pitchers"].append({
-                        "side": side_name, "name": prob["fullName"],
+                        "side": side_name, "name": prob["fullName"], "pitcher_id": prob["id"],
                         "team": side["team"]["name"], "opp": opp["team"]["name"],
                         "opp_kpct": round(opp_kpct, 1) if opp_kpct else None,
                         "fip": saber.get("fip"), "xfip": saber.get("xfip"),
@@ -545,6 +549,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <div>
     <h1>Strike Zone -- Daily Slate</h1>
     <div class="sub">{date} · generated {generated}</div>
+    <div style="margin-top:4px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none;font-size:12px">📊 Results Tracker</a></div>
   </div>
   <button class="downloadBtn" onclick="exportCSV()">Download CSV</button>
 </div>
@@ -825,6 +830,8 @@ def build_run_streak_entries(slate):
                     "team": tr["team"], "opponent": tr["opp"],
                     "last5_avg": avg5, "last5": l5,
                     "away": g["away"], "home": g["home"], "time": g["time"],
+                    "game_pk": g.get("game_pk"), "game_date": g.get("game_date"),
+                    "is_home": side_name == "home",
                 })
     entries.sort(key=lambda e: -e["last5_avg"])
     return entries
@@ -846,6 +853,8 @@ def build_real_run_streak_entries(slate):
                     "streak_len": streak_len, "streak_games": l5[-streak_len:],
                     "full_sample": streak_len >= len(l5),
                     "away": g["away"], "home": g["home"], "time": g["time"],
+                    "game_pk": g.get("game_pk"), "game_date": g.get("game_date"),
+                    "is_home": side_name == "home",
                 })
     entries.sort(key=lambda e: -e["streak_len"])
     return entries
@@ -869,6 +878,8 @@ def build_k_streak_entries(slate):
                     "name": p["name"], "team": p["team"], "opp": p["opp"],
                     "last5_avg": avg5, "last5": l5,
                     "away": g["away"], "home": g["home"], "time": g["time"],
+                    "game_pk": g.get("game_pk"), "game_date": g.get("game_date"),
+                    "pitcher_id": p.get("pitcher_id"),
                 })
     entries.sort(key=lambda e: -e["last5_avg"])
     return entries
@@ -889,6 +900,8 @@ def build_real_k_streak_entries(slate):
                     "streak_len": streak_len, "streak_games": l5[-streak_len:],
                     "full_sample": streak_len >= len(l5),
                     "away": g["away"], "home": g["home"], "time": g["time"],
+                    "game_pk": g.get("game_pk"), "game_date": g.get("game_date"),
+                    "pitcher_id": p.get("pitcher_id"),
                 })
     entries.sort(key=lambda e: -e["streak_len"])
     return entries
@@ -1100,6 +1113,9 @@ def build_legs(slate):
                     "hit_rate": hit_rate(p.get("k_last5"), k_line),
                     "detail": f"{p['team']} vs {p['opp']} · proj {p['lambda']} K",
                     "history": "/".join(str(v) for v in p.get("k_last5", [])) or None,
+                    # Verification-only fields, unused by the builder UI:
+                    "game_pk": g.get("game_pk"), "game_date": g.get("game_date"),
+                    "pitcher_id": p.get("pitcher_id"), "line": k_line,
                 })
             outs_line = safe_line(p.get("outs_lambda"))
             if outs_line:
@@ -1111,6 +1127,8 @@ def build_legs(slate):
                     "hit_rate": hit_rate(p.get("outs_last5"), outs_line),
                     "detail": f"{p['team']} vs {p['opp']} · proj {p['proj_ip']} IP",
                     "history": "/".join(str(v) for v in p.get("outs_last5", [])) or None,
+                    "game_pk": g.get("game_pk"), "game_date": g.get("game_date"),
+                    "pitcher_id": p.get("pitcher_id"), "line": outs_line,
                 })
 
         for side in ("away", "home"):
@@ -1126,6 +1144,8 @@ def build_legs(slate):
                         "hit_rate": hit_rate(tr.get("last5_runs"), line),
                         "detail": f"vs {tr['opp']} · proj {tr['lambda']} runs",
                         "history": "/".join(str(v) for v in tr.get("last5_runs", [])) or None,
+                        "game_pk": g.get("game_pk"), "game_date": g.get("game_date"),
+                        "is_home": side == "home", "line": line,
                     })
             th = g.get("team_hits", {}).get(side)
             if th and "lambda" in th:
@@ -1139,6 +1159,8 @@ def build_legs(slate):
                         "hit_rate": hit_rate(th.get("last5_hits"), line),
                         "detail": f"vs {th['opp']} · proj {th['lambda']} hits",
                         "history": "/".join(str(v) for v in th.get("last5_hits", [])) or None,
+                        "game_pk": g.get("game_pk"), "game_date": g.get("game_date"),
+                        "is_home": side == "home", "line": line,
                     })
     return legs
 
@@ -1227,3 +1249,17 @@ if __name__ == "__main__":
 
     with open("docs/strike-zone/slate_report.json", "w") as f:
         json.dump(slate, f, indent=2, default=str)
+
+    try:
+        import strike_zone_results_tracker as results_tracker
+        results_tracker.run_results_tracker(
+            build_legs(slate),
+            build_run_streak_entries(slate), build_real_run_streak_entries(slate),
+            build_k_streak_entries(slate), build_real_k_streak_entries(slate),
+            REAL_RUN_STREAK_THRESHOLD, REAL_K_STREAK_THRESHOLD,
+        )
+    except Exception as e:
+        # Results tracking sits on top of everything above, which has
+        # already succeeded by this point -- a failure here should
+        # never take down an otherwise-successful run.
+        print(f"\n[!] Results tracker failed, but the rest of this run succeeded: {e}")
