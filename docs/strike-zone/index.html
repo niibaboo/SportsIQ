@@ -49,7 +49,7 @@
 <div class="topBar">
   <div>
     <h1>Strike Zone -- Daily Slate</h1>
-    <div class="sub">2026-09-24 · generated 2026-09-24 06:11</div>
+    <div class="sub">2026-09-24 · generated 2026-09-24 17:38</div>
     <div style="margin-top:4px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none;font-size:12px">📊 Results Tracker</a></div>
   </div>
   <button class="downloadBtn" onclick="exportCSV()">Download CSV</button>
@@ -189,14 +189,14 @@
 </div>
 <div class="gameGroup">
   <div class="gameHead"><span>St. Louis Cardinals @ Pittsburgh Pirates</span><span>5:35 PM BST</span></div>
-  <div class="pitcherRow" data-runs_lambda="3.75">
+  <div class="pitcherRow" data-runs_lambda="3.31">
   <div class="pTop">
     <div>
       <div class="pName">St. Louis Cardinals -- Total Runs</div>
-      <div class="pMeta">vs Pittsburgh Pirates · L5 runs: 1·5·5·0·5 · season 4.49/gm · pitching-adj x1.0 (xFIP-blended)</div>
+      <div class="pMeta">vs Pittsburgh Pirates · L5 runs: 5·5·0·5·1 · season 4.47/gm · pitching-adj x1.0 (xFIP-blended)</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">3.75</div>
+      <div class="pProjNum">3.31</div>
       <div class="pProjSub">1-6 range</div>
     </div>
   </div>
@@ -208,14 +208,52 @@
     <button class="edgeBtn" data-kind="runs_lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-</div><div class="pitcherRow" data-hits_lambda="6.69">
+</div><div class="pitcherRow" data-hits_lambda="5.41">
   <div class="pTop">
     <div>
       <div class="pName">St. Louis Cardinals -- Total Hits</div>
-      <div class="pMeta">vs Pittsburgh Pirates · L5 hits: 7·14·6·1·10 · season 8.15/gm · pitching-adj x0.92</div>
+      <div class="pMeta">vs Pittsburgh Pirates · L5 hits: 14·6·1·10·2 · season 8.11/gm · pitching-adj x0.92</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">6.69</div>
+      <div class="pProjNum">5.41</div>
+      <div class="pProjSub">3-8 range</div>
+    </div>
+  </div>
+  <div class="propLabel">Team Total Hits (full game)</div>
+  <div class="edgeRow">
+    <input type="number" step="0.5" class="lineInput" placeholder="Line">
+    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
+    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
+    <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
+    <div class="edgeOut"></div>
+  </div>
+</div><div class="pitcherRow" data-runs_lambda="2.82">
+  <div class="pTop">
+    <div>
+      <div class="pName">Pittsburgh Pirates -- Total Runs</div>
+      <div class="pMeta">vs St. Louis Cardinals · L5 runs: 6·4·2·1·1 · season 4.73/gm · pitching-adj x1.04 (xFIP-blended)</div>
+    </div>
+    <div class="pProj">
+      <div class="pProjNum">2.82</div>
+      <div class="pProjSub">1-5 range</div>
+    </div>
+  </div>
+  <div class="propLabel">Team Total Runs (full game)</div>
+  <div class="edgeRow">
+    <input type="number" step="0.5" class="lineInput" placeholder="Line">
+    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
+    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
+    <button class="edgeBtn" data-kind="runs_lambda" onclick="calcEdge(this)">Edge</button>
+    <div class="edgeOut"></div>
+  </div>
+</div><div class="pitcherRow" data-hits_lambda="6.77">
+  <div class="pTop">
+    <div>
+      <div class="pName">Pittsburgh Pirates -- Total Hits</div>
+      <div class="pMeta">vs St. Louis Cardinals · L5 hits: 9·8·5·6·3 · season 8.66/gm · pitching-adj x1.05</div>
+    </div>
+    <div class="pProj">
+      <div class="pProjNum">6.77</div>
       <div class="pProjSub">4-10 range</div>
     </div>
   </div>
@@ -227,54 +265,16 @@
     <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-</div><div class="pitcherRow" data-runs_lambda="3.67">
-  <div class="pTop">
-    <div>
-      <div class="pName">Pittsburgh Pirates -- Total Runs</div>
-      <div class="pMeta">vs St. Louis Cardinals · L5 runs: 8·6·4·2·1 · season 4.75/gm · pitching-adj x1.04 (xFIP-blended)</div>
-    </div>
-    <div class="pProj">
-      <div class="pProjNum">3.67</div>
-      <div class="pProjSub">1-6 range</div>
-    </div>
-  </div>
-  <div class="propLabel">Team Total Runs (full game)</div>
-  <div class="edgeRow">
-    <input type="number" step="0.5" class="lineInput" placeholder="Line">
-    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
-    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
-    <button class="edgeBtn" data-kind="runs_lambda" onclick="calcEdge(this)">Edge</button>
-    <div class="edgeOut"></div>
-  </div>
-</div><div class="pitcherRow" data-hits_lambda="7.98">
-  <div class="pTop">
-    <div>
-      <div class="pName">Pittsburgh Pirates -- Total Hits</div>
-      <div class="pMeta">vs St. Louis Cardinals · L5 hits: 15·9·8·5·6 · season 8.7/gm · pitching-adj x1.05</div>
-    </div>
-    <div class="pProj">
-      <div class="pProjNum">7.98</div>
-      <div class="pProjSub">4-12 range</div>
-    </div>
-  </div>
-  <div class="propLabel">Team Total Hits (full game)</div>
-  <div class="edgeRow">
-    <input type="number" step="0.5" class="lineInput" placeholder="Line">
-    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
-    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
-    <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
-    <div class="edgeOut"></div>
-  </div>
 </div>
-  <div class="pitcherRow" data-lambda="3.43" data-outs_lambda="9.4">
+  <div class="pitcherRow" data-lambda="3.25" data-outs_lambda="8.2">
   <div class="pTop">
     <div>
       <div class="pName">Kyle Leahy</div>
-      <div class="pMeta">St. Louis Cardinals vs Pittsburgh Pirates · L5 Ks: 4·3·6·4·1 (+12% vs season) · BB/9 2.67 · FIP 3.64 · xFIP 3.67</div>
+      <div class="pMeta">St. Louis Cardinals vs Pittsburgh Pirates · L5 Ks: 3·6·4·1·3 (+25% vs season) · BB/9 2.64 · FIP 3.64 · xFIP 3.67</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">3.43</div>
-      <div class="pProjSub">1-6 range · 3.1 IP</div>
+      <div class="pProjNum">3.25</div>
+      <div class="pProjSub">1-6 range · 2.7 IP</div>
     </div>
   </div>
   <div class="propLabel">Strikeouts</div>
@@ -285,7 +285,7 @@
     <button class="edgeBtn" data-kind="lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-  <div class="propLabel">Outs Recorded <span class="pProjSub">(proj 9.4 · 6-13 range)</span></div>
+  <div class="propLabel">Outs Recorded <span class="pProjSub">(proj 8.2 · 5-12 range)</span></div>
   <div class="edgeRow">
     <input type="number" step="0.5" class="lineInput" placeholder="Line">
     <input type="number" step="0.01" class="overInput" placeholder="Over odds">
@@ -293,15 +293,15 @@
     <button class="edgeBtn" data-kind="outs_lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-</div><div class="pitcherRow" data-lambda="5.01" data-outs_lambda="17.4">
+</div><div class="pitcherRow" data-lambda="5.37" data-outs_lambda="16.0">
   <div class="pTop">
     <div>
       <div class="pName">Paul Skenes</div>
-      <div class="pMeta">Pittsburgh Pirates vs St. Louis Cardinals · L5 Ks: 4·4·2·4·7 (-31% vs season) · BB/9 2.52 · FIP 3.32 · xFIP 3.42</div>
+      <div class="pMeta">Pittsburgh Pirates vs St. Louis Cardinals · L5 Ks: 4·2·4·7·6 (-13% vs season) · BB/9 2.57 · FIP 3.32 · xFIP 3.42</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">5.01</div>
-      <div class="pProjSub">2-8 range · 5.8 IP</div>
+      <div class="pProjNum">5.37</div>
+      <div class="pProjSub">3-8 range · 5.3 IP</div>
     </div>
   </div>
   <div class="propLabel">Strikeouts</div>
@@ -312,7 +312,7 @@
     <button class="edgeBtn" data-kind="lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-  <div class="propLabel">Outs Recorded <span class="pProjSub">(proj 17.4 · 12-23 range)</span></div>
+  <div class="propLabel">Outs Recorded <span class="pProjSub">(proj 16.0 · 11-21 range)</span></div>
   <div class="edgeRow">
     <input type="number" step="0.5" class="lineInput" placeholder="Line">
     <input type="number" step="0.01" class="overInput" placeholder="Over odds">
@@ -431,7 +431,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Randy Dobnak</div>
-      <div class="pMeta">Kansas City Royals vs Chicago White Sox · L5 Ks: 5·6·3·4·1 (-7% vs season) · BB/9 3.08 · FIP 4.18 · xFIP 4.28</div>
+      <div class="pMeta">Kansas City Royals vs Chicago White Sox · L5 Ks: 5·6·3·4·1 (-7% vs season) · BB/9 3.08 · FIP 4.18 · xFIP 4.27</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">3.75</div>
@@ -538,7 +538,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Tyler Phillips</div>
-      <div class="pMeta">Miami Marlins vs Chicago Cubs · L5 Ks: 7·4·3·3·3 (+4% vs season) · BB/9 3.82 · FIP 4.63 · xFIP 4.37</div>
+      <div class="pMeta">Miami Marlins vs Chicago Cubs · L5 Ks: 7·4·3·3·3 (+4% vs season) · BB/9 3.82 · FIP 4.63 · xFIP 4.36</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">3.4</div>
@@ -565,7 +565,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Matthew Boyd</div>
-      <div class="pMeta">Chicago Cubs vs Miami Marlins · L5 Ks: 5·3·7·3·4 (-2% vs season) · BB/9 2.78 · FIP 4.28 · xFIP 4.30</div>
+      <div class="pMeta">Chicago Cubs vs Miami Marlins · L5 Ks: 5·3·7·3·4 (-2% vs season) · BB/9 2.78 · FIP 4.27 · xFIP 4.30</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">4.39</div>
@@ -672,7 +672,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Zac Thornton</div>
-      <div class="pMeta">New York Mets vs Texas Rangers · L5 Ks: 4·5·6·4·4 (+1% vs season) · BB/9 1.93 · FIP 4.50 · xFIP 4.14</div>
+      <div class="pMeta">New York Mets vs Texas Rangers · L5 Ks: 4·5·6·4·4 (+1% vs season) · BB/9 1.93 · FIP 4.50 · xFIP 4.13</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">4.53</div>
@@ -699,7 +699,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Kumar Rocker</div>
-      <div class="pMeta">Texas Rangers vs New York Mets · L5 Ks: 3·8·7·5·2 (+13% vs season) · BB/9 3.71 · FIP 4.36 · xFIP 4.29</div>
+      <div class="pMeta">Texas Rangers vs New York Mets · L5 Ks: 3·8·7·5·2 (+13% vs season) · BB/9 3.71 · FIP 4.36 · xFIP 4.28</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">4.41</div>
@@ -806,7 +806,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Eduardo Rodriguez</div>
-      <div class="pMeta">Arizona Diamondbacks vs Colorado Rockies · L5 Ks: 9·3·6·7·5 (+37% vs season) · BB/9 3.04 · FIP 3.88 · xFIP 4.41</div>
+      <div class="pMeta">Arizona Diamondbacks vs Colorado Rockies · L5 Ks: 9·3·6·7·5 (+37% vs season) · BB/9 3.04 · FIP 3.87 · xFIP 4.41</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">5.58</div>
@@ -859,15 +859,15 @@
 </div>
 </div><div class="gameGroup">
   <div class="gameHead"><span>Milwaukee Brewers @ Philadelphia Phillies</span><span>11:05 PM BST</span></div>
-  <div class="pitcherRow" data-runs_lambda="4.66">
+  <div class="pitcherRow" data-runs_lambda="4.64">
   <div class="pTop">
     <div>
       <div class="pName">Milwaukee Brewers -- Total Runs</div>
       <div class="pMeta">vs Philadelphia Phillies · L5 runs: 6·1·3·4·4 · season 5.13/gm · pitching-adj x1.12 (xFIP-blended)</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">4.66</div>
-      <div class="pProjSub">2-8 range</div>
+      <div class="pProjNum">4.64</div>
+      <div class="pProjSub">2-7 range</div>
     </div>
   </div>
   <div class="propLabel">Team Total Runs (full game)</div>
@@ -897,15 +897,15 @@
     <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-</div><div class="pitcherRow" data-runs_lambda="3.04">
+</div><div class="pitcherRow" data-runs_lambda="3.27">
   <div class="pTop">
     <div>
       <div class="pName">Philadelphia Phillies -- Total Runs</div>
-      <div class="pMeta">vs Milwaukee Brewers · L5 runs: 3·3·7·6·1 · season 4.46/gm · pitching-adj x0.88 (xFIP-blended)</div>
+      <div class="pMeta">vs Milwaukee Brewers · L5 runs: 3·3·7·6·1 · season 4.46/gm · pitching-adj x0.94 (xFIP-blended)</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">3.04</div>
-      <div class="pProjSub">1-5 range</div>
+      <div class="pProjNum">3.27</div>
+      <div class="pProjSub">1-6 range</div>
     </div>
   </div>
   <div class="propLabel">Team Total Runs (full game)</div>
@@ -916,15 +916,15 @@
     <button class="edgeBtn" data-kind="runs_lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-</div><div class="pitcherRow" data-hits_lambda="9.38">
+</div><div class="pitcherRow" data-hits_lambda="7.12">
   <div class="pTop">
     <div>
       <div class="pName">Philadelphia Phillies -- Total Hits</div>
-      <div class="pMeta">vs Milwaukee Brewers · L5 hits: 6·9·7·8·6 · season 8.06/gm · pitching-adj x1.26</div>
+      <div class="pMeta">vs Milwaukee Brewers · L5 hits: 6·9·7·8·6 · season 8.06/gm · pitching-adj x0.96</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">9.38</div>
-      <div class="pProjSub">6-13 range</div>
+      <div class="pProjNum">7.12</div>
+      <div class="pProjSub">4-11 range</div>
     </div>
   </div>
   <div class="propLabel">Team Total Hits (full game)</div>
@@ -936,15 +936,15 @@
     <div class="edgeOut"></div>
   </div>
 </div>
-  <div class="pitcherRow" data-lambda="7.9" data-outs_lambda="27.49">
+  <div class="pitcherRow" data-lambda="4.88" data-outs_lambda="13.74">
   <div class="pTop">
     <div>
-      <div class="pName">Bryse Wilson</div>
-      <div class="pMeta">Milwaukee Brewers vs Philadelphia Phillies · L5 Ks: — (+0% vs season) · BB/9 0.79 · FIP 2.92 · xFIP 3.46</div>
+      <div class="pName">Shane Drohan</div>
+      <div class="pMeta">Milwaukee Brewers vs Philadelphia Phillies · L5 Ks: 5·5·6·5·4 (+11% vs season) · BB/9 3.14 · FIP 3.77 · xFIP 3.94</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">7.9</div>
-      <div class="pProjSub">4-12 range · 9.2 IP</div>
+      <div class="pProjNum">4.88</div>
+      <div class="pProjSub">2-8 range · 4.6 IP</div>
     </div>
   </div>
   <div class="propLabel">Strikeouts</div>
@@ -955,7 +955,7 @@
     <button class="edgeBtn" data-kind="lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-  <div class="propLabel">Outs Recorded <span class="pProjSub">(proj 27.49 · 21-34 range)</span></div>
+  <div class="propLabel">Outs Recorded <span class="pProjSub">(proj 13.74 · 9-19 range)</span></div>
   <div class="edgeRow">
     <input type="number" step="0.5" class="lineInput" placeholder="Line">
     <input type="number" step="0.01" class="overInput" placeholder="Over odds">
@@ -967,7 +967,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Andrew Painter</div>
-      <div class="pMeta">Philadelphia Phillies vs Milwaukee Brewers · L5 Ks: 6·6·6·3·7 (+16% vs season) · BB/9 3.28 · FIP 4.81 · xFIP 4.35</div>
+      <div class="pMeta">Philadelphia Phillies vs Milwaukee Brewers · L5 Ks: 6·6·6·3·7 (+16% vs season) · BB/9 3.28 · FIP 4.80 · xFIP 4.34</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">5.45</div>
@@ -993,14 +993,14 @@
 </div>
 </div><div class="gameGroup">
   <div class="gameHead"><span>Cleveland Guardians @ Boston Red Sox</span><span>11:45 PM BST</span></div>
-  <div class="pitcherRow" data-runs_lambda="2.4">
+  <div class="pitcherRow" data-runs_lambda="2.39">
   <div class="pTop">
     <div>
       <div class="pName">Cleveland Guardians -- Total Runs</div>
       <div class="pMeta">vs Boston Red Sox · L5 runs: 5·12·1·3·0 · season 4.13/gm · pitching-adj x0.89 (xFIP-blended)</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">2.4</div>
+      <div class="pProjNum">2.39</div>
       <div class="pProjSub">1-4 range</div>
     </div>
   </div>
@@ -1165,14 +1165,14 @@
     <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-</div><div class="pitcherRow" data-runs_lambda="3.4">
+</div><div class="pitcherRow" data-runs_lambda="3.39">
   <div class="pTop">
     <div>
       <div class="pName">New York Yankees -- Total Runs</div>
       <div class="pMeta">vs Tampa Bay Rays · L5 runs: 3·4·2·1·9 · season 4.59/gm · pitching-adj x0.96 (xFIP-blended)</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">3.4</div>
+      <div class="pProjNum">3.39</div>
       <div class="pProjSub">1-6 range</div>
     </div>
   </div>
@@ -1208,7 +1208,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Ian Seymour</div>
-      <div class="pMeta">Tampa Bay Rays vs New York Yankees · L5 Ks: 8·10·2·10·5 (+8% vs season) · BB/9 2.54 · FIP 4.18 · xFIP 3.53</div>
+      <div class="pMeta">Tampa Bay Rays vs New York Yankees · L5 Ks: 8·10·2·10·5 (+8% vs season) · BB/9 2.54 · FIP 4.18 · xFIP 3.52</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">7.21</div>
@@ -1261,14 +1261,14 @@
 </div>
 </div><div class="gameGroup">
   <div class="gameHead"><span>Cincinnati Reds @ Atlanta Braves</span><span>12:15 AM BST</span></div>
-  <div class="pitcherRow" data-runs_lambda="2.69">
+  <div class="pitcherRow" data-runs_lambda="2.68">
   <div class="pTop">
     <div>
       <div class="pName">Cincinnati Reds -- Total Runs</div>
-      <div class="pMeta">vs Atlanta Braves · L5 runs: 6·2·1·4·2 · season 4.1/gm · pitching-adj x0.95 (xFIP-blended)</div>
+      <div class="pMeta">vs Atlanta Braves · L5 runs: 6·2·1·4·2 · season 4.1/gm · pitching-adj x0.94 (xFIP-blended)</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">2.69</div>
+      <div class="pProjNum">2.68</div>
       <div class="pProjSub">1-5 range</div>
     </div>
   </div>
@@ -1299,14 +1299,14 @@
     <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-</div><div class="pitcherRow" data-runs_lambda="4.5">
+</div><div class="pitcherRow" data-runs_lambda="4.49">
   <div class="pTop">
     <div>
       <div class="pName">Atlanta Braves -- Total Runs</div>
-      <div class="pMeta">vs Cincinnati Reds · L5 runs: 6·6·4·0·3 · season 4.59/gm · pitching-adj x1.25 (xFIP-blended)</div>
+      <div class="pMeta">vs Cincinnati Reds · L5 runs: 6·6·4·0·3 · season 4.59/gm · pitching-adj x1.24 (xFIP-blended)</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">4.5</div>
+      <div class="pProjNum">4.49</div>
       <div class="pProjSub">2-7 range</div>
     </div>
   </div>
@@ -1369,7 +1369,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Tyler Mahle</div>
-      <div class="pMeta">Atlanta Braves vs Cincinnati Reds · L5 Ks: 4·9·3·3·6 (-15% vs season) · BB/9 2.75 · FIP 3.86 · xFIP 3.81</div>
+      <div class="pMeta">Atlanta Braves vs Cincinnati Reds · L5 Ks: 4·9·3·3·6 (-15% vs season) · BB/9 2.75 · FIP 3.85 · xFIP 3.81</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">5.91</div>
@@ -1395,14 +1395,14 @@
 </div>
 </div><div class="gameGroup">
   <div class="gameHead"><span>Houston Astros @ Athletics</span><span>2:40 AM BST</span></div>
-  <div class="pitcherRow" data-runs_lambda="5.53">
+  <div class="pitcherRow" data-runs_lambda="5.52">
   <div class="pTop">
     <div>
       <div class="pName">Houston Astros -- Total Runs</div>
       <div class="pMeta">vs Athletics · L5 runs: 2·3·2·7·5 · season 4.43/gm · pitching-adj x1.41 (xFIP-blended)</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">5.53</div>
+      <div class="pProjNum">5.52</div>
       <div class="pProjSub">3-9 range</div>
     </div>
   </div>
@@ -1433,14 +1433,14 @@
     <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-</div><div class="pitcherRow" data-runs_lambda="5.62">
+</div><div class="pitcherRow" data-runs_lambda="5.6">
   <div class="pTop">
     <div>
       <div class="pName">Athletics -- Total Runs</div>
       <div class="pMeta">vs Houston Astros · L5 runs: 3·6·0·9·7 · season 4.34/gm · pitching-adj x1.07 (xFIP-blended)</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">5.62</div>
+      <div class="pProjNum">5.6</div>
       <div class="pProjSub">3-9 range</div>
     </div>
   </div>
@@ -1503,7 +1503,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Mason Barnett</div>
-      <div class="pMeta">Athletics vs Houston Astros · L5 Ks: 6·7·0·2·4 (-2% vs season) · BB/9 5.73 · FIP 6.78 · xFIP 5.23</div>
+      <div class="pMeta">Athletics vs Houston Astros · L5 Ks: 6·7·0·2·4 (-2% vs season) · BB/9 5.73 · FIP 6.78 · xFIP 5.22</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">3.32</div>
@@ -1533,7 +1533,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Los Angeles Angels -- Total Runs</div>
-      <div class="pMeta">vs Seattle Mariners · L5 runs: 0·6·0·7·3 · season 4.02/gm · pitching-adj x0.98 (xFIP-blended)</div>
+      <div class="pMeta">vs Seattle Mariners · L5 runs: 0·6·0·7·3 · season 4.02/gm · pitching-adj x0.97 (xFIP-blended)</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">3.12</div>
@@ -1567,14 +1567,14 @@
     <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-</div><div class="pitcherRow" data-runs_lambda="3.79">
+</div><div class="pitcherRow" data-runs_lambda="3.78">
   <div class="pTop">
     <div>
       <div class="pName">Seattle Mariners -- Total Runs</div>
-      <div class="pMeta">vs Los Angeles Angels · L5 runs: 5·3·2·0·6 · season 4.05/gm · pitching-adj x1.19 (xFIP-blended)</div>
+      <div class="pMeta">vs Los Angeles Angels · L5 runs: 5·3·2·0·6 · season 4.05/gm · pitching-adj x1.18 (xFIP-blended)</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">3.79</div>
+      <div class="pProjNum">3.78</div>
       <div class="pProjSub">1-6 range</div>
     </div>
   </div>
@@ -1610,7 +1610,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Grayson Rodriguez</div>
-      <div class="pMeta">Los Angeles Angels vs Seattle Mariners · L5 Ks: 4·7·3·4·4 (-16% vs season) · BB/9 3.65 · FIP 4.85 · xFIP 4.48</div>
+      <div class="pMeta">Los Angeles Angels vs Seattle Mariners · L5 Ks: 4·7·3·4·4 (-16% vs season) · BB/9 3.65 · FIP 4.85 · xFIP 4.47</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">4.48</div>
@@ -1663,14 +1663,14 @@
 </div>
 </div><div class="gameGroup">
   <div class="gameHead"><span>San Diego Padres @ Los Angeles Dodgers</span><span>3:10 AM BST</span></div>
-  <div class="pitcherRow" data-runs_lambda="3.81">
+  <div class="pitcherRow" data-runs_lambda="3.8">
   <div class="pTop">
     <div>
       <div class="pName">San Diego Padres -- Total Runs</div>
-      <div class="pMeta">vs Los Angeles Dodgers · L5 runs: 8·7·7·0·5 · season 4.4/gm · pitching-adj x0.84 (xFIP-blended)</div>
+      <div class="pMeta">vs Los Angeles Dodgers · L5 runs: 8·7·7·0·5 · season 4.4/gm · pitching-adj x0.83 (xFIP-blended)</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">3.81</div>
+      <div class="pProjNum">3.8</div>
       <div class="pProjSub">1-6 range</div>
     </div>
   </div>
@@ -1701,14 +1701,14 @@
     <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
-</div><div class="pitcherRow" data-runs_lambda="4.43">
+</div><div class="pitcherRow" data-runs_lambda="4.42">
   <div class="pTop">
     <div>
       <div class="pName">Los Angeles Dodgers -- Total Runs</div>
       <div class="pMeta">vs San Diego Padres · L5 runs: 8·10·3·7·1 · season 4.99/gm · pitching-adj x0.93 (xFIP-blended)</div>
     </div>
     <div class="pProj">
-      <div class="pProjNum">4.43</div>
+      <div class="pProjNum">4.42</div>
       <div class="pProjSub">2-7 range</div>
     </div>
   </div>
@@ -1744,7 +1744,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Nick Pivetta</div>
-      <div class="pMeta">San Diego Padres vs Los Angeles Dodgers · L5 Ks: 8·4·2·5·4 (-19% vs season) · BB/9 2.1 · FIP 2.33 · xFIP 3.53</div>
+      <div class="pMeta">San Diego Padres vs Los Angeles Dodgers · L5 Ks: 8·4·2·5·4 (-19% vs season) · BB/9 2.1 · FIP 2.33 · xFIP 3.52</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">4.14</div>
@@ -1771,7 +1771,7 @@
   <div class="pTop">
     <div>
       <div class="pName">Tyler Glasnow</div>
-      <div class="pMeta">Los Angeles Dodgers vs San Diego Padres · L5 Ks: 7·6·8·7·10 (+14% vs season) · BB/9 3.06 · FIP 2.94 · xFIP 2.97</div>
+      <div class="pMeta">Los Angeles Dodgers vs San Diego Padres · L5 Ks: 7·6·8·7·10 (+14% vs season) · BB/9 3.06 · FIP 2.93 · xFIP 2.97</div>
     </div>
     <div class="pProj">
       <div class="pProjNum">7.62</div>
@@ -1799,7 +1799,7 @@
 <div class="footnote">Projections blend season K-rate/batter-faced with a recency-weighted last-5 rate (65% recent), adjust for opponent K% and BB/9-driven outing length, then use a Poisson distribution for the range. Team run projections now blend opposing-starter xFIP (peripheral-based, strips out defense/luck) with raw ERA. Enter a book's line/odds under any pitcher to compute a de-vigged edge -- that math runs entirely in your browser, no data leaves the page.</div>
 <script>
 const REPORT_DATE = "2026-09-24";
-const LEGS = [{"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "Kyle Leahy", "market": "Kyle Leahy Over 2.0 Strikeouts", "prob": 67, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "St. Louis Cardinals vs Pittsburgh Pirates \u00b7 proj 3.43 K", "history": "4/3/6/4/1", "game_pk": 823326, "game_date": "2026-09-24", "pitcher_id": 681517, "line": 2.0}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "Kyle Leahy", "market": "Kyle Leahy Over 6.5 Outs Recorded", "prob": 83, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "St. Louis Cardinals vs Pittsburgh Pirates \u00b7 proj 3.1 IP", "history": "12/9/8/9/9", "game_pk": 823326, "game_date": "2026-09-24", "pitcher_id": 681517, "line": 6.5}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "Paul Skenes", "market": "Paul Skenes Over 3.5 Strikeouts", "prob": 74, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Pittsburgh Pirates vs St. Louis Cardinals \u00b7 proj 5.01 K", "history": "4/4/2/4/7", "game_pk": 823326, "game_date": "2026-09-24", "pitcher_id": 694973, "line": 3.5}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "Paul Skenes", "market": "Paul Skenes Over 12.5 Outs Recorded", "prob": 88, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Pittsburgh Pirates vs St. Louis Cardinals \u00b7 proj 5.8 IP", "history": "18/14/16/21/18", "game_pk": 823326, "game_date": "2026-09-24", "pitcher_id": 694973, "line": 12.5}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "St. Louis Cardinals", "market": "St. Louis Cardinals Over 2.5 Runs", "prob": 72, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Pittsburgh Pirates \u00b7 proj 3.75 runs", "history": "1/5/5/0/5", "game_pk": 823326, "game_date": "2026-09-24", "is_home": false, "line": 2.5}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "St. Louis Cardinals", "market": "St. Louis Cardinals Over 4.5 Hits", "prob": 80, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Pittsburgh Pirates \u00b7 proj 6.69 hits", "history": "7/14/6/1/10", "game_pk": 823326, "game_date": "2026-09-24", "is_home": false, "line": 4.5}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "Pittsburgh Pirates", "market": "Pittsburgh Pirates Over 2.5 Runs", "prob": 71, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs St. Louis Cardinals \u00b7 proj 3.67 runs", "history": "8/6/4/2/1", "game_pk": 823326, "game_date": "2026-09-24", "is_home": true, "line": 2.5}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "Pittsburgh Pirates", "market": "Pittsburgh Pirates Over 5.5 Hits", "prob": 81, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs St. Louis Cardinals \u00b7 proj 7.98 hits", "history": "15/9/8/5/6", "game_pk": 823326, "game_date": "2026-09-24", "is_home": true, "line": 5.5}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "David Sandlin", "market": "David Sandlin Over 3.0 Strikeouts", "prob": 66, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "Chicago White Sox vs Kansas City Royals \u00b7 proj 4.52 K", "history": "4/4/6/5/4", "game_pk": 824059, "game_date": "2026-09-24", "pitcher_id": 689818, "line": 3.0}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "David Sandlin", "market": "David Sandlin Over 10.5 Outs Recorded", "prob": 89, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Chicago White Sox vs Kansas City Royals \u00b7 proj 5.1 IP", "history": "18/12/18/17/12", "game_pk": 824059, "game_date": "2026-09-24", "pitcher_id": 689818, "line": 10.5}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "Randy Dobnak", "market": "Randy Dobnak Over 2.5 Strikeouts", "prob": 72, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Kansas City Royals vs Chicago White Sox \u00b7 proj 3.75 K", "history": "5/6/3/4/1", "game_pk": 824059, "game_date": "2026-09-24", "pitcher_id": 677976, "line": 2.5}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "Randy Dobnak", "market": "Randy Dobnak Over 11.5 Outs Recorded", "prob": 89, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Kansas City Royals vs Chicago White Sox \u00b7 proj 5.5 IP", "history": "18/18/18/17/11", "game_pk": 824059, "game_date": "2026-09-24", "pitcher_id": 677976, "line": 11.5}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "Chicago White Sox", "market": "Chicago White Sox Over 4.5 Runs", "prob": 78, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Kansas City Royals \u00b7 proj 6.57 runs", "history": "8/3/8/14/4", "game_pk": 824059, "game_date": "2026-09-24", "is_home": false, "line": 4.5}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "Chicago White Sox", "market": "Chicago White Sox Over 6.5 Hits", "prob": 82, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Kansas City Royals \u00b7 proj 9.26 hits", "history": "7/4/10/13/9", "game_pk": 824059, "game_date": "2026-09-24", "is_home": false, "line": 6.5}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "Kansas City Royals", "market": "Kansas City Royals Over 4.0 Runs", "prob": 66, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Chicago White Sox \u00b7 proj 5.62 runs", "history": "5/5/3/11/5", "game_pk": 824059, "game_date": "2026-09-24", "is_home": true, "line": 4.0}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "Kansas City Royals", "market": "Kansas City Royals Over 7.0 Hits", "prob": 78, "category": "Team Hits", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs Chicago White Sox \u00b7 proj 9.97 hits", "history": "8/13/9/13/12", "game_pk": 824059, "game_date": "2026-09-24", "is_home": true, "line": 7.0}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Tyler Phillips", "market": "Tyler Phillips Over 2.0 Strikeouts", "prob": 66, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "Miami Marlins vs Chicago Cubs \u00b7 proj 3.4 K", "history": "7/4/3/3/3", "game_pk": 824623, "game_date": "2026-09-24", "pitcher_id": 663969, "line": 2.0}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Tyler Phillips", "market": "Tyler Phillips Over 9.0 Outs Recorded", "prob": 83, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Miami Marlins vs Chicago Cubs \u00b7 proj 4.3 IP", "history": "14/15/15/11/11", "game_pk": 824623, "game_date": "2026-09-24", "pitcher_id": 663969, "line": 9.0}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Matthew Boyd", "market": "Matthew Boyd Over 3.0 Strikeouts", "prob": 64, "category": "Strikeouts", "hit_rate": {"hits": 3, "total": 5}, "detail": "Chicago Cubs vs Miami Marlins \u00b7 proj 4.39 K", "history": "5/3/7/3/4", "game_pk": 824623, "game_date": "2026-09-24", "pitcher_id": 571510, "line": 3.0}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Matthew Boyd", "market": "Matthew Boyd Over 12.0 Outs Recorded", "prob": 87, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Chicago Cubs vs Miami Marlins \u00b7 proj 5.7 IP", "history": "18/16/21/16/15", "game_pk": 824623, "game_date": "2026-09-24", "pitcher_id": 571510, "line": 12.0}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Miami Marlins", "market": "Miami Marlins Over 2.5 Runs", "prob": 76, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Chicago Cubs \u00b7 proj 4.01 runs", "history": "2/6/3/8/3", "game_pk": 824623, "game_date": "2026-09-24", "is_home": false, "line": 2.5}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Miami Marlins", "market": "Miami Marlins Over 6.0 Hits", "prob": 75, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Chicago Cubs \u00b7 proj 8.6 hits", "history": "10/10/4/11/10", "game_pk": 824623, "game_date": "2026-09-24", "is_home": false, "line": 6.0}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Chicago Cubs", "market": "Chicago Cubs Over 2.5 Runs", "prob": 77, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Miami Marlins \u00b7 proj 4.06 runs", "history": "4/5/9/2/2", "game_pk": 824623, "game_date": "2026-09-24", "is_home": true, "line": 2.5}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Chicago Cubs", "market": "Chicago Cubs Over 5.5 Hits", "prob": 82, "category": "Team Hits", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs Miami Marlins \u00b7 proj 8.1 hits", "history": "9/8/13/7/8", "game_pk": 824623, "game_date": "2026-09-24", "is_home": true, "line": 5.5}, {"match": "New York Mets @ Texas Rangers", "subject": "Zac Thornton", "market": "Zac Thornton Over 3.0 Strikeouts", "prob": 66, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "New York Mets vs Texas Rangers \u00b7 proj 4.53 K", "history": "4/5/6/4/4", "game_pk": 822842, "game_date": "2026-09-24", "pitcher_id": 804267, "line": 3.0}, {"match": "New York Mets @ Texas Rangers", "subject": "Zac Thornton", "market": "Zac Thornton Over 12.5 Outs Recorded", "prob": 88, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "New York Mets vs Texas Rangers \u00b7 proj 5.8 IP", "history": "18/15/15/21/18", "game_pk": 822842, "game_date": "2026-09-24", "pitcher_id": 804267, "line": 12.5}, {"match": "New York Mets @ Texas Rangers", "subject": "Kumar Rocker", "market": "Kumar Rocker Over 3.0 Strikeouts", "prob": 64, "category": "Strikeouts", "hit_rate": {"hits": 3, "total": 5}, "detail": "Texas Rangers vs New York Mets \u00b7 proj 4.41 K", "history": "3/8/7/5/2", "game_pk": 822842, "game_date": "2026-09-24", "pitcher_id": 677958, "line": 3.0}, {"match": "New York Mets @ Texas Rangers", "subject": "Kumar Rocker", "market": "Kumar Rocker Over 9.0 Outs Recorded", "prob": 83, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Texas Rangers vs New York Mets \u00b7 proj 4.3 IP", "history": "15/17/9/12/13", "game_pk": 822842, "game_date": "2026-09-24", "pitcher_id": 677958, "line": 9.0}, {"match": "New York Mets @ Texas Rangers", "subject": "New York Mets", "market": "New York Mets Over 4.0 Runs", "prob": 69, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Texas Rangers \u00b7 proj 5.85 runs", "history": "6/10/2/6/7", "game_pk": 822842, "game_date": "2026-09-24", "is_home": false, "line": 4.0}, {"match": "New York Mets @ Texas Rangers", "subject": "New York Mets", "market": "New York Mets Over 6.5 Hits", "prob": 83, "category": "Team Hits", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs Texas Rangers \u00b7 proj 9.46 hits", "history": "13/11/10/10/8", "game_pk": 822842, "game_date": "2026-09-24", "is_home": false, "line": 6.5}, {"match": "New York Mets @ Texas Rangers", "subject": "Texas Rangers", "market": "Texas Rangers Over 2.0 Runs", "prob": 63, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs New York Mets \u00b7 proj 3.23 runs", "history": "7/6/2/3/2", "game_pk": 822842, "game_date": "2026-09-24", "is_home": true, "line": 2.0}, {"match": "New York Mets @ Texas Rangers", "subject": "Texas Rangers", "market": "Texas Rangers Over 4.0 Hits", "prob": 68, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs New York Mets \u00b7 proj 5.77 hits", "history": "7/5/8/3/4", "game_pk": 822842, "game_date": "2026-09-24", "is_home": true, "line": 4.0}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Eduardo Rodriguez", "market": "Eduardo Rodriguez Over 4.0 Strikeouts", "prob": 65, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Arizona Diamondbacks vs Colorado Rockies \u00b7 proj 5.58 K", "history": "9/3/6/7/5", "game_pk": 824298, "game_date": "2026-09-24", "pitcher_id": 593958, "line": 4.0}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Eduardo Rodriguez", "market": "Eduardo Rodriguez Over 12.0 Outs Recorded", "prob": 87, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Arizona Diamondbacks vs Colorado Rockies \u00b7 proj 5.7 IP", "history": "21/15/18/16/16", "game_pk": 824298, "game_date": "2026-09-24", "pitcher_id": 593958, "line": 12.0}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Tanner Gordon", "market": "Tanner Gordon Over 2.5 Strikeouts", "prob": 72, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "Colorado Rockies vs Arizona Diamondbacks \u00b7 proj 3.76 K", "history": "5/3/4/5/3", "game_pk": 824298, "game_date": "2026-09-24", "pitcher_id": 685299, "line": 2.5}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Tanner Gordon", "market": "Tanner Gordon Over 10.0 Outs Recorded", "prob": 84, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Colorado Rockies vs Arizona Diamondbacks \u00b7 proj 4.7 IP", "history": "21/15/14/12/9", "game_pk": 824298, "game_date": "2026-09-24", "pitcher_id": 685299, "line": 10.0}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Arizona Diamondbacks", "market": "Arizona Diamondbacks Over 4.5 Runs", "prob": 82, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Colorado Rockies \u00b7 proj 6.91 runs", "history": "2/5/8/7/5", "game_pk": 824298, "game_date": "2026-09-24", "is_home": false, "line": 4.5}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Arizona Diamondbacks", "market": "Arizona Diamondbacks Over 8.5 Hits", "prob": 84, "category": "Team Hits", "hit_rate": {"hits": 2, "total": 5}, "detail": "vs Colorado Rockies \u00b7 proj 11.88 hits", "history": "7/7/11/13/8", "game_pk": 824298, "game_date": "2026-09-24", "is_home": false, "line": 8.5}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Colorado Rockies", "market": "Colorado Rockies Over 2.0 Runs", "prob": 63, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Arizona Diamondbacks \u00b7 proj 3.24 runs", "history": "4/5/1/2/3", "game_pk": 824298, "game_date": "2026-09-24", "is_home": true, "line": 2.0}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Colorado Rockies", "market": "Colorado Rockies Over 4.5 Hits", "prob": 81, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Arizona Diamondbacks \u00b7 proj 6.79 hits", "history": "15/9/5/3/7", "game_pk": 824298, "game_date": "2026-09-24", "is_home": true, "line": 4.5}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Bryse Wilson", "market": "Bryse Wilson Over 5.5 Strikeouts", "prob": 80, "category": "Strikeouts", "hit_rate": null, "detail": "Milwaukee Brewers vs Philadelphia Phillies \u00b7 proj 7.9 K", "history": null, "game_pk": 823411, "game_date": "2026-09-24", "pitcher_id": 669060, "line": 5.5}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Bryse Wilson", "market": "Bryse Wilson Over 19.5 Outs Recorded", "prob": 94, "category": "Outs Recorded", "hit_rate": null, "detail": "Milwaukee Brewers vs Philadelphia Phillies \u00b7 proj 9.2 IP", "history": null, "game_pk": 823411, "game_date": "2026-09-24", "pitcher_id": 669060, "line": 19.5}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Andrew Painter", "market": "Andrew Painter Over 3.5 Strikeouts", "prob": 79, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Philadelphia Phillies vs Milwaukee Brewers \u00b7 proj 5.45 K", "history": "6/6/6/3/7", "game_pk": 823411, "game_date": "2026-09-24", "pitcher_id": 691725, "line": 3.5}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Andrew Painter", "market": "Andrew Painter Over 12.0 Outs Recorded", "prob": 86, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Philadelphia Phillies vs Milwaukee Brewers \u00b7 proj 5.6 IP", "history": "18/21/15/15/16", "game_pk": 823411, "game_date": "2026-09-24", "pitcher_id": 691725, "line": 12.0}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Milwaukee Brewers", "market": "Milwaukee Brewers Over 3.0 Runs", "prob": 68, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Philadelphia Phillies \u00b7 proj 4.66 runs", "history": "6/1/3/4/4", "game_pk": 823411, "game_date": "2026-09-24", "is_home": false, "line": 3.0}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Milwaukee Brewers", "market": "Milwaukee Brewers Over 5.0 Hits", "prob": 75, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Philadelphia Phillies \u00b7 proj 7.38 hits", "history": "10/3/6/6/6", "game_pk": 823411, "game_date": "2026-09-24", "is_home": false, "line": 5.0}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Philadelphia Phillies", "market": "Philadelphia Phillies Over 2.0 Runs", "prob": 59, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Milwaukee Brewers \u00b7 proj 3.04 runs", "history": "3/3/7/6/1", "game_pk": 823411, "game_date": "2026-09-24", "is_home": true, "line": 2.0}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Philadelphia Phillies", "market": "Philadelphia Phillies Over 6.5 Hits", "prob": 83, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Milwaukee Brewers \u00b7 proj 9.38 hits", "history": "6/9/7/8/6", "game_pk": 823411, "game_date": "2026-09-24", "is_home": true, "line": 6.5}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Daniel Espino", "market": "Daniel Espino Over 1.0 Strikeouts", "prob": 51, "category": "Strikeouts", "hit_rate": {"hits": 1, "total": 2}, "detail": "Cleveland Guardians vs Boston Red Sox \u00b7 proj 1.71 K", "history": "2/1", "game_pk": 824707, "game_date": "2026-09-24", "pitcher_id": 682982, "line": 1.0}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Daniel Espino", "market": "Daniel Espino Over 3.0 Outs Recorded", "prob": 62, "category": "Outs Recorded", "hit_rate": {"hits": 1, "total": 2}, "detail": "Cleveland Guardians vs Boston Red Sox \u00b7 proj 1.4 IP", "history": "6/3", "game_pk": 824707, "game_date": "2026-09-24", "pitcher_id": 682982, "line": 3.0}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Ranger Suarez", "market": "Ranger Suarez Over 3.0 Strikeouts", "prob": 71, "category": "Strikeouts", "hit_rate": {"hits": 3, "total": 5}, "detail": "Boston Red Sox vs Cleveland Guardians \u00b7 proj 4.85 K", "history": "4/2/3/8/5", "game_pk": 824707, "game_date": "2026-09-24", "pitcher_id": 624133, "line": 3.0}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Ranger Suarez", "market": "Ranger Suarez Over 12.5 Outs Recorded", "prob": 91, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Boston Red Sox vs Cleveland Guardians \u00b7 proj 6.0 IP", "history": "15/16/21/21/17", "game_pk": 824707, "game_date": "2026-09-24", "pitcher_id": 624133, "line": 12.5}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Cleveland Guardians", "market": "Cleveland Guardians Over 1.5 Runs", "prob": 69, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Boston Red Sox \u00b7 proj 2.4 runs", "history": "5/12/1/3/0", "game_pk": 824707, "game_date": "2026-09-24", "is_home": false, "line": 1.5}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Cleveland Guardians", "market": "Cleveland Guardians Over 5.5 Hits", "prob": 82, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Boston Red Sox \u00b7 proj 8.07 hits", "history": "10/15/7/12/5", "game_pk": 824707, "game_date": "2026-09-24", "is_home": false, "line": 5.5}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Boston Red Sox", "market": "Boston Red Sox Over 1.5 Runs", "prob": 62, "category": "Team Runs", "hit_rate": {"hits": 2, "total": 5}, "detail": "vs Cleveland Guardians \u00b7 proj 2.11 runs", "history": "4/1/1/2/1", "game_pk": 824707, "game_date": "2026-09-24", "is_home": true, "line": 1.5}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Boston Red Sox", "market": "Boston Red Sox Over 6.0 Hits", "prob": 73, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Cleveland Guardians \u00b7 proj 8.36 hits", "history": "9/8/6/8/12", "game_pk": 824707, "game_date": "2026-09-24", "is_home": true, "line": 6.0}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "Ian Seymour", "market": "Ian Seymour Over 5.0 Strikeouts", "prob": 73, "category": "Strikeouts", "hit_rate": {"hits": 3, "total": 5}, "detail": "Tampa Bay Rays vs New York Yankees \u00b7 proj 7.21 K", "history": "8/10/2/10/5", "game_pk": 823493, "game_date": "2026-09-24", "pitcher_id": 693855, "line": 5.0}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "Ian Seymour", "market": "Ian Seymour Over 10.5 Outs Recorded", "prob": 89, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Tampa Bay Rays vs New York Yankees \u00b7 proj 5.1 IP", "history": "15/19/9/18/15", "game_pk": 823493, "game_date": "2026-09-24", "pitcher_id": 693855, "line": 10.5}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "Cam Schlittler", "market": "Cam Schlittler Over 4.5 Strikeouts", "prob": 80, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "New York Yankees vs Tampa Bay Rays \u00b7 proj 6.72 K", "history": "8/9/10/8/6", "game_pk": 823493, "game_date": "2026-09-24", "pitcher_id": 693645, "line": 4.5}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "Cam Schlittler", "market": "Cam Schlittler Over 14.0 Outs Recorded", "prob": 88, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "New York Yankees vs Tampa Bay Rays \u00b7 proj 6.5 IP", "history": "17/24/21/18/18", "game_pk": 823493, "game_date": "2026-09-24", "pitcher_id": 693645, "line": 14.0}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "Tampa Bay Rays", "market": "Tampa Bay Rays Over 1.0 Runs", "prob": 59, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs New York Yankees \u00b7 proj 1.98 runs", "history": "2/5/0/6/2", "game_pk": 823493, "game_date": "2026-09-24", "is_home": false, "line": 1.0}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "Tampa Bay Rays", "market": "Tampa Bay Rays Over 3.5 Hits", "prob": 77, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs New York Yankees \u00b7 proj 5.26 hits", "history": "8/4/3/11/6", "game_pk": 823493, "game_date": "2026-09-24", "is_home": false, "line": 3.5}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "New York Yankees", "market": "New York Yankees Over 2.0 Runs", "prob": 66, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Tampa Bay Rays \u00b7 proj 3.4 runs", "history": "3/4/2/1/9", "game_pk": 823493, "game_date": "2026-09-24", "is_home": true, "line": 2.0}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "New York Yankees", "market": "New York Yankees Over 4.5 Hits", "prob": 76, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Tampa Bay Rays \u00b7 proj 6.35 hits", "history": "6/8/5/3/12", "game_pk": 823493, "game_date": "2026-09-24", "is_home": true, "line": 4.5}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Brady Singer", "market": "Brady Singer Over 2.0 Strikeouts", "prob": 62, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Cincinnati Reds vs Atlanta Braves \u00b7 proj 3.18 K", "history": "5/5/3/5/0", "game_pk": 824866, "game_date": "2026-09-24", "pitcher_id": 663903, "line": 2.0}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Brady Singer", "market": "Brady Singer Over 9.0 Outs Recorded", "prob": 85, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Cincinnati Reds vs Atlanta Braves \u00b7 proj 4.4 IP", "history": "17/13/15/12/10", "game_pk": 824866, "game_date": "2026-09-24", "pitcher_id": 663903, "line": 9.0}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Tyler Mahle", "market": "Tyler Mahle Over 4.0 Strikeouts", "prob": 70, "category": "Strikeouts", "hit_rate": {"hits": 2, "total": 5}, "detail": "Atlanta Braves vs Cincinnati Reds \u00b7 proj 5.91 K", "history": "4/9/3/3/6", "game_pk": 824866, "game_date": "2026-09-24", "pitcher_id": 641816, "line": 4.0}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Tyler Mahle", "market": "Tyler Mahle Over 13.0 Outs Recorded", "prob": 88, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Atlanta Braves vs Cincinnati Reds \u00b7 proj 6.1 IP", "history": "15/20/18/21/18", "game_pk": 824866, "game_date": "2026-09-24", "pitcher_id": 641816, "line": 13.0}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Cincinnati Reds", "market": "Cincinnati Reds Over 1.5 Runs", "prob": 75, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Atlanta Braves \u00b7 proj 2.69 runs", "history": "6/2/1/4/2", "game_pk": 824866, "game_date": "2026-09-24", "is_home": false, "line": 1.5}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Cincinnati Reds", "market": "Cincinnati Reds Over 4.0 Hits", "prob": 71, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Atlanta Braves \u00b7 proj 5.99 hits", "history": "8/4/4/10/5", "game_pk": 824866, "game_date": "2026-09-24", "is_home": false, "line": 4.0}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Atlanta Braves", "market": "Atlanta Braves Over 3.0 Runs", "prob": 66, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Cincinnati Reds \u00b7 proj 4.5 runs", "history": "6/6/4/0/3", "game_pk": 824866, "game_date": "2026-09-24", "is_home": true, "line": 3.0}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Atlanta Braves", "market": "Atlanta Braves Over 6.0 Hits", "prob": 79, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Cincinnati Reds \u00b7 proj 8.94 hits", "history": "11/11/6/7/7", "game_pk": 824866, "game_date": "2026-09-24", "is_home": true, "line": 6.0}, {"match": "Houston Astros @ Athletics", "subject": "Peter Lambert", "market": "Peter Lambert Over 3.5 Strikeouts", "prob": 79, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "Houston Astros vs Athletics \u00b7 proj 5.46 K", "history": "5/6/6/4/6", "game_pk": 824950, "game_date": "2026-09-24", "pitcher_id": 663567, "line": 3.5}, {"match": "Houston Astros @ Athletics", "subject": "Peter Lambert", "market": "Peter Lambert Over 12.0 Outs Recorded", "prob": 86, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Houston Astros vs Athletics \u00b7 proj 5.7 IP", "history": "17/14/21/18/16", "game_pk": 824950, "game_date": "2026-09-24", "pitcher_id": 663567, "line": 12.0}, {"match": "Houston Astros @ Athletics", "subject": "Mason Barnett", "market": "Mason Barnett Over 2.0 Strikeouts", "prob": 64, "category": "Strikeouts", "hit_rate": {"hits": 3, "total": 5}, "detail": "Athletics vs Houston Astros \u00b7 proj 3.32 K", "history": "6/7/0/2/4", "game_pk": 824950, "game_date": "2026-09-24", "pitcher_id": 686930, "line": 2.0}, {"match": "Houston Astros @ Athletics", "subject": "Mason Barnett", "market": "Mason Barnett Over 7.5 Outs Recorded", "prob": 83, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Athletics vs Houston Astros \u00b7 proj 3.5 IP", "history": "15/13/12/8/10", "game_pk": 824950, "game_date": "2026-09-24", "pitcher_id": 686930, "line": 7.5}, {"match": "Houston Astros @ Athletics", "subject": "Houston Astros", "market": "Houston Astros Over 3.5 Runs", "prob": 80, "category": "Team Runs", "hit_rate": {"hits": 2, "total": 5}, "detail": "vs Athletics \u00b7 proj 5.53 runs", "history": "2/3/2/7/5", "game_pk": 824950, "game_date": "2026-09-24", "is_home": false, "line": 3.5}, {"match": "Houston Astros @ Athletics", "subject": "Houston Astros", "market": "Houston Astros Over 7.5 Hits", "prob": 82, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Athletics \u00b7 proj 10.45 hits", "history": "5/10/8/12/10", "game_pk": 824950, "game_date": "2026-09-24", "is_home": false, "line": 7.5}, {"match": "Houston Astros @ Athletics", "subject": "Athletics", "market": "Athletics Over 4.0 Runs", "prob": 66, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Houston Astros \u00b7 proj 5.62 runs", "history": "3/6/0/9/7", "game_pk": 824950, "game_date": "2026-09-24", "is_home": true, "line": 4.0}, {"match": "Houston Astros @ Athletics", "subject": "Athletics", "market": "Athletics Over 6.5 Hits", "prob": 81, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Houston Astros \u00b7 proj 9.17 hits", "history": "3/12/6/14/13", "game_pk": 824950, "game_date": "2026-09-24", "is_home": true, "line": 6.5}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Grayson Rodriguez", "market": "Grayson Rodriguez Over 3.0 Strikeouts", "prob": 65, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Los Angeles Angels vs Seattle Mariners \u00b7 proj 4.48 K", "history": "4/7/3/4/4", "game_pk": 823087, "game_date": "2026-09-24", "pitcher_id": 680570, "line": 3.0}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Grayson Rodriguez", "market": "Grayson Rodriguez Over 11.5 Outs Recorded", "prob": 89, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Los Angeles Angels vs Seattle Mariners \u00b7 proj 5.4 IP", "history": "17/18/12/16/20", "game_pk": 823087, "game_date": "2026-09-24", "pitcher_id": 680570, "line": 11.5}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Bryan Woo", "market": "Bryan Woo Over 4.5 Strikeouts", "prob": 78, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Seattle Mariners vs Los Angeles Angels \u00b7 proj 6.51 K", "history": "5/7/9/5/4", "game_pk": 823087, "game_date": "2026-09-24", "pitcher_id": 693433, "line": 4.5}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Bryan Woo", "market": "Bryan Woo Over 12.5 Outs Recorded", "prob": 89, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Seattle Mariners vs Los Angeles Angels \u00b7 proj 5.9 IP", "history": "12/18/24/18/16", "game_pk": 823087, "game_date": "2026-09-24", "pitcher_id": 693433, "line": 12.5}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Los Angeles Angels", "market": "Los Angeles Angels Over 2.0 Runs", "prob": 60, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Seattle Mariners \u00b7 proj 3.12 runs", "history": "0/6/0/7/3", "game_pk": 823087, "game_date": "2026-09-24", "is_home": false, "line": 2.0}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Los Angeles Angels", "market": "Los Angeles Angels Over 5.0 Hits", "prob": 76, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Seattle Mariners \u00b7 proj 7.51 hits", "history": "4/11/2/15/8", "game_pk": 823087, "game_date": "2026-09-24", "is_home": false, "line": 5.0}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Seattle Mariners", "market": "Seattle Mariners Over 2.5 Runs", "prob": 73, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Los Angeles Angels \u00b7 proj 3.79 runs", "history": "5/3/2/0/6", "game_pk": 823087, "game_date": "2026-09-24", "is_home": true, "line": 2.5}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Seattle Mariners", "market": "Seattle Mariners Over 5.5 Hits", "prob": 79, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Los Angeles Angels \u00b7 proj 7.78 hits", "history": "9/8/4/4/9", "game_pk": 823087, "game_date": "2026-09-24", "is_home": true, "line": 5.5}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "Nick Pivetta", "market": "Nick Pivetta Over 2.5 Strikeouts", "prob": 78, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "San Diego Padres vs Los Angeles Dodgers \u00b7 proj 4.14 K", "history": "8/4/2/5/4", "game_pk": 823895, "game_date": "2026-09-24", "pitcher_id": 601713, "line": 2.5}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "Nick Pivetta", "market": "Nick Pivetta Over 9.5 Outs Recorded", "prob": 85, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "San Diego Padres vs Los Angeles Dodgers \u00b7 proj 4.4 IP", "history": "15/9/15/12/15", "game_pk": 823895, "game_date": "2026-09-24", "pitcher_id": 601713, "line": 9.5}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "Tyler Glasnow", "market": "Tyler Glasnow Over 5.0 Strikeouts", "prob": 77, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "Los Angeles Dodgers vs San Diego Padres \u00b7 proj 7.62 K", "history": "7/6/8/7/10", "game_pk": 823895, "game_date": "2026-09-24", "pitcher_id": 607192, "line": 5.0}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "Tyler Glasnow", "market": "Tyler Glasnow Over 12.0 Outs Recorded", "prob": 85, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Los Angeles Dodgers vs San Diego Padres \u00b7 proj 5.6 IP", "history": "15/21/18/12/18", "game_pk": 823895, "game_date": "2026-09-24", "pitcher_id": 607192, "line": 12.0}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "San Diego Padres", "market": "San Diego Padres Over 2.5 Runs", "prob": 73, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Los Angeles Dodgers \u00b7 proj 3.81 runs", "history": "8/7/7/0/5", "game_pk": 823895, "game_date": "2026-09-24", "is_home": false, "line": 2.5}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "San Diego Padres", "market": "San Diego Padres Over 4.0 Hits", "prob": 72, "category": "Team Hits", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs Los Angeles Dodgers \u00b7 proj 6.06 hits", "history": "12/11/10/5/8", "game_pk": 823895, "game_date": "2026-09-24", "is_home": false, "line": 4.0}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "Los Angeles Dodgers", "market": "Los Angeles Dodgers Over 3.0 Runs", "prob": 65, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs San Diego Padres \u00b7 proj 4.43 runs", "history": "8/10/3/7/1", "game_pk": 823895, "game_date": "2026-09-24", "is_home": true, "line": 3.0}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "Los Angeles Dodgers", "market": "Los Angeles Dodgers Over 6.0 Hits", "prob": 78, "category": "Team Hits", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs San Diego Padres \u00b7 proj 8.84 hits", "history": "11/15/11/9/10", "game_pk": 823895, "game_date": "2026-09-24", "is_home": true, "line": 6.0}];
+const LEGS = [{"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "Kyle Leahy", "market": "Kyle Leahy Over 2.0 Strikeouts", "prob": 63, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "St. Louis Cardinals vs Pittsburgh Pirates \u00b7 proj 3.25 K", "history": "3/6/4/1/3", "game_pk": 823326, "game_date": "2026-09-24", "pitcher_id": 681517, "line": 2.0}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "Kyle Leahy", "market": "Kyle Leahy Over 5.5 Outs Recorded", "prob": 83, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "St. Louis Cardinals vs Pittsburgh Pirates \u00b7 proj 2.7 IP", "history": "9/8/9/9/6", "game_pk": 823326, "game_date": "2026-09-24", "pitcher_id": 681517, "line": 5.5}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "Paul Skenes", "market": "Paul Skenes Over 3.5 Strikeouts", "prob": 78, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Pittsburgh Pirates vs St. Louis Cardinals \u00b7 proj 5.37 K", "history": "4/2/4/7/6", "game_pk": 823326, "game_date": "2026-09-24", "pitcher_id": 694973, "line": 3.5}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "Paul Skenes", "market": "Paul Skenes Over 11.5 Outs Recorded", "prob": 87, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Pittsburgh Pirates vs St. Louis Cardinals \u00b7 proj 5.3 IP", "history": "14/16/21/18/11", "game_pk": 823326, "game_date": "2026-09-24", "pitcher_id": 694973, "line": 11.5}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "St. Louis Cardinals", "market": "St. Louis Cardinals Over 2.0 Runs", "prob": 64, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Pittsburgh Pirates \u00b7 proj 3.31 runs", "history": "5/5/0/5/1", "game_pk": 823326, "game_date": "2026-09-24", "is_home": false, "line": 2.0}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "St. Louis Cardinals", "market": "St. Louis Cardinals Over 3.5 Hits", "prob": 79, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Pittsburgh Pirates \u00b7 proj 5.41 hits", "history": "14/6/1/10/2", "game_pk": 823326, "game_date": "2026-09-24", "is_home": false, "line": 3.5}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "Pittsburgh Pirates", "market": "Pittsburgh Pirates Over 2.0 Runs", "prob": 54, "category": "Team Runs", "hit_rate": {"hits": 2, "total": 5}, "detail": "vs St. Louis Cardinals \u00b7 proj 2.82 runs", "history": "6/4/2/1/1", "game_pk": 823326, "game_date": "2026-09-24", "is_home": true, "line": 2.0}, {"match": "St. Louis Cardinals @ Pittsburgh Pirates", "subject": "Pittsburgh Pirates", "market": "Pittsburgh Pirates Over 4.5 Hits", "prob": 80, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs St. Louis Cardinals \u00b7 proj 6.77 hits", "history": "9/8/5/6/3", "game_pk": 823326, "game_date": "2026-09-24", "is_home": true, "line": 4.5}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "David Sandlin", "market": "David Sandlin Over 3.0 Strikeouts", "prob": 66, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "Chicago White Sox vs Kansas City Royals \u00b7 proj 4.52 K", "history": "4/4/6/5/4", "game_pk": 824059, "game_date": "2026-09-24", "pitcher_id": 689818, "line": 3.0}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "David Sandlin", "market": "David Sandlin Over 10.5 Outs Recorded", "prob": 89, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Chicago White Sox vs Kansas City Royals \u00b7 proj 5.1 IP", "history": "18/12/18/17/12", "game_pk": 824059, "game_date": "2026-09-24", "pitcher_id": 689818, "line": 10.5}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "Randy Dobnak", "market": "Randy Dobnak Over 2.5 Strikeouts", "prob": 72, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Kansas City Royals vs Chicago White Sox \u00b7 proj 3.75 K", "history": "5/6/3/4/1", "game_pk": 824059, "game_date": "2026-09-24", "pitcher_id": 677976, "line": 2.5}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "Randy Dobnak", "market": "Randy Dobnak Over 11.5 Outs Recorded", "prob": 89, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Kansas City Royals vs Chicago White Sox \u00b7 proj 5.5 IP", "history": "18/18/18/17/11", "game_pk": 824059, "game_date": "2026-09-24", "pitcher_id": 677976, "line": 11.5}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "Chicago White Sox", "market": "Chicago White Sox Over 4.5 Runs", "prob": 78, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Kansas City Royals \u00b7 proj 6.57 runs", "history": "8/3/8/14/4", "game_pk": 824059, "game_date": "2026-09-24", "is_home": false, "line": 4.5}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "Chicago White Sox", "market": "Chicago White Sox Over 6.5 Hits", "prob": 82, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Kansas City Royals \u00b7 proj 9.26 hits", "history": "7/4/10/13/9", "game_pk": 824059, "game_date": "2026-09-24", "is_home": false, "line": 6.5}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "Kansas City Royals", "market": "Kansas City Royals Over 4.0 Runs", "prob": 66, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Chicago White Sox \u00b7 proj 5.62 runs", "history": "5/5/3/11/5", "game_pk": 824059, "game_date": "2026-09-24", "is_home": true, "line": 4.0}, {"match": "Chicago White Sox @ Kansas City Royals", "subject": "Kansas City Royals", "market": "Kansas City Royals Over 7.0 Hits", "prob": 78, "category": "Team Hits", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs Chicago White Sox \u00b7 proj 9.97 hits", "history": "8/13/9/13/12", "game_pk": 824059, "game_date": "2026-09-24", "is_home": true, "line": 7.0}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Tyler Phillips", "market": "Tyler Phillips Over 2.0 Strikeouts", "prob": 66, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "Miami Marlins vs Chicago Cubs \u00b7 proj 3.4 K", "history": "7/4/3/3/3", "game_pk": 824623, "game_date": "2026-09-24", "pitcher_id": 663969, "line": 2.0}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Tyler Phillips", "market": "Tyler Phillips Over 9.0 Outs Recorded", "prob": 83, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Miami Marlins vs Chicago Cubs \u00b7 proj 4.3 IP", "history": "14/15/15/11/11", "game_pk": 824623, "game_date": "2026-09-24", "pitcher_id": 663969, "line": 9.0}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Matthew Boyd", "market": "Matthew Boyd Over 3.0 Strikeouts", "prob": 64, "category": "Strikeouts", "hit_rate": {"hits": 3, "total": 5}, "detail": "Chicago Cubs vs Miami Marlins \u00b7 proj 4.39 K", "history": "5/3/7/3/4", "game_pk": 824623, "game_date": "2026-09-24", "pitcher_id": 571510, "line": 3.0}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Matthew Boyd", "market": "Matthew Boyd Over 12.0 Outs Recorded", "prob": 87, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Chicago Cubs vs Miami Marlins \u00b7 proj 5.7 IP", "history": "18/16/21/16/15", "game_pk": 824623, "game_date": "2026-09-24", "pitcher_id": 571510, "line": 12.0}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Miami Marlins", "market": "Miami Marlins Over 2.5 Runs", "prob": 76, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Chicago Cubs \u00b7 proj 4.01 runs", "history": "2/6/3/8/3", "game_pk": 824623, "game_date": "2026-09-24", "is_home": false, "line": 2.5}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Miami Marlins", "market": "Miami Marlins Over 6.0 Hits", "prob": 75, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Chicago Cubs \u00b7 proj 8.6 hits", "history": "10/10/4/11/10", "game_pk": 824623, "game_date": "2026-09-24", "is_home": false, "line": 6.0}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Chicago Cubs", "market": "Chicago Cubs Over 2.5 Runs", "prob": 77, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Miami Marlins \u00b7 proj 4.06 runs", "history": "4/5/9/2/2", "game_pk": 824623, "game_date": "2026-09-24", "is_home": true, "line": 2.5}, {"match": "Miami Marlins @ Chicago Cubs", "subject": "Chicago Cubs", "market": "Chicago Cubs Over 5.5 Hits", "prob": 82, "category": "Team Hits", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs Miami Marlins \u00b7 proj 8.1 hits", "history": "9/8/13/7/8", "game_pk": 824623, "game_date": "2026-09-24", "is_home": true, "line": 5.5}, {"match": "New York Mets @ Texas Rangers", "subject": "Zac Thornton", "market": "Zac Thornton Over 3.0 Strikeouts", "prob": 66, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "New York Mets vs Texas Rangers \u00b7 proj 4.53 K", "history": "4/5/6/4/4", "game_pk": 822842, "game_date": "2026-09-24", "pitcher_id": 804267, "line": 3.0}, {"match": "New York Mets @ Texas Rangers", "subject": "Zac Thornton", "market": "Zac Thornton Over 12.5 Outs Recorded", "prob": 88, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "New York Mets vs Texas Rangers \u00b7 proj 5.8 IP", "history": "18/15/15/21/18", "game_pk": 822842, "game_date": "2026-09-24", "pitcher_id": 804267, "line": 12.5}, {"match": "New York Mets @ Texas Rangers", "subject": "Kumar Rocker", "market": "Kumar Rocker Over 3.0 Strikeouts", "prob": 64, "category": "Strikeouts", "hit_rate": {"hits": 3, "total": 5}, "detail": "Texas Rangers vs New York Mets \u00b7 proj 4.41 K", "history": "3/8/7/5/2", "game_pk": 822842, "game_date": "2026-09-24", "pitcher_id": 677958, "line": 3.0}, {"match": "New York Mets @ Texas Rangers", "subject": "Kumar Rocker", "market": "Kumar Rocker Over 9.0 Outs Recorded", "prob": 83, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Texas Rangers vs New York Mets \u00b7 proj 4.3 IP", "history": "15/17/9/12/13", "game_pk": 822842, "game_date": "2026-09-24", "pitcher_id": 677958, "line": 9.0}, {"match": "New York Mets @ Texas Rangers", "subject": "New York Mets", "market": "New York Mets Over 4.0 Runs", "prob": 69, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Texas Rangers \u00b7 proj 5.85 runs", "history": "6/10/2/6/7", "game_pk": 822842, "game_date": "2026-09-24", "is_home": false, "line": 4.0}, {"match": "New York Mets @ Texas Rangers", "subject": "New York Mets", "market": "New York Mets Over 6.5 Hits", "prob": 83, "category": "Team Hits", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs Texas Rangers \u00b7 proj 9.46 hits", "history": "13/11/10/10/8", "game_pk": 822842, "game_date": "2026-09-24", "is_home": false, "line": 6.5}, {"match": "New York Mets @ Texas Rangers", "subject": "Texas Rangers", "market": "Texas Rangers Over 2.0 Runs", "prob": 63, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs New York Mets \u00b7 proj 3.23 runs", "history": "7/6/2/3/2", "game_pk": 822842, "game_date": "2026-09-24", "is_home": true, "line": 2.0}, {"match": "New York Mets @ Texas Rangers", "subject": "Texas Rangers", "market": "Texas Rangers Over 4.0 Hits", "prob": 68, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs New York Mets \u00b7 proj 5.77 hits", "history": "7/5/8/3/4", "game_pk": 822842, "game_date": "2026-09-24", "is_home": true, "line": 4.0}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Eduardo Rodriguez", "market": "Eduardo Rodriguez Over 4.0 Strikeouts", "prob": 65, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Arizona Diamondbacks vs Colorado Rockies \u00b7 proj 5.58 K", "history": "9/3/6/7/5", "game_pk": 824298, "game_date": "2026-09-24", "pitcher_id": 593958, "line": 4.0}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Eduardo Rodriguez", "market": "Eduardo Rodriguez Over 12.0 Outs Recorded", "prob": 87, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Arizona Diamondbacks vs Colorado Rockies \u00b7 proj 5.7 IP", "history": "21/15/18/16/16", "game_pk": 824298, "game_date": "2026-09-24", "pitcher_id": 593958, "line": 12.0}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Tanner Gordon", "market": "Tanner Gordon Over 2.5 Strikeouts", "prob": 72, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "Colorado Rockies vs Arizona Diamondbacks \u00b7 proj 3.76 K", "history": "5/3/4/5/3", "game_pk": 824298, "game_date": "2026-09-24", "pitcher_id": 685299, "line": 2.5}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Tanner Gordon", "market": "Tanner Gordon Over 10.0 Outs Recorded", "prob": 84, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Colorado Rockies vs Arizona Diamondbacks \u00b7 proj 4.7 IP", "history": "21/15/14/12/9", "game_pk": 824298, "game_date": "2026-09-24", "pitcher_id": 685299, "line": 10.0}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Arizona Diamondbacks", "market": "Arizona Diamondbacks Over 4.5 Runs", "prob": 82, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Colorado Rockies \u00b7 proj 6.91 runs", "history": "2/5/8/7/5", "game_pk": 824298, "game_date": "2026-09-24", "is_home": false, "line": 4.5}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Arizona Diamondbacks", "market": "Arizona Diamondbacks Over 8.5 Hits", "prob": 84, "category": "Team Hits", "hit_rate": {"hits": 2, "total": 5}, "detail": "vs Colorado Rockies \u00b7 proj 11.88 hits", "history": "7/7/11/13/8", "game_pk": 824298, "game_date": "2026-09-24", "is_home": false, "line": 8.5}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Colorado Rockies", "market": "Colorado Rockies Over 2.0 Runs", "prob": 63, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Arizona Diamondbacks \u00b7 proj 3.24 runs", "history": "4/5/1/2/3", "game_pk": 824298, "game_date": "2026-09-24", "is_home": true, "line": 2.0}, {"match": "Arizona Diamondbacks @ Colorado Rockies", "subject": "Colorado Rockies", "market": "Colorado Rockies Over 4.5 Hits", "prob": 81, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Arizona Diamondbacks \u00b7 proj 6.79 hits", "history": "15/9/5/3/7", "game_pk": 824298, "game_date": "2026-09-24", "is_home": true, "line": 4.5}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Shane Drohan", "market": "Shane Drohan Over 3.5 Strikeouts", "prob": 72, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "Milwaukee Brewers vs Philadelphia Phillies \u00b7 proj 4.88 K", "history": "5/5/6/5/4", "game_pk": 823411, "game_date": "2026-09-24", "pitcher_id": 675660, "line": 3.5}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Shane Drohan", "market": "Shane Drohan Over 9.5 Outs Recorded", "prob": 88, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Milwaukee Brewers vs Philadelphia Phillies \u00b7 proj 4.6 IP", "history": "16/15/15/12/11", "game_pk": 823411, "game_date": "2026-09-24", "pitcher_id": 675660, "line": 9.5}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Andrew Painter", "market": "Andrew Painter Over 3.5 Strikeouts", "prob": 79, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Philadelphia Phillies vs Milwaukee Brewers \u00b7 proj 5.45 K", "history": "6/6/6/3/7", "game_pk": 823411, "game_date": "2026-09-24", "pitcher_id": 691725, "line": 3.5}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Andrew Painter", "market": "Andrew Painter Over 12.0 Outs Recorded", "prob": 86, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Philadelphia Phillies vs Milwaukee Brewers \u00b7 proj 5.6 IP", "history": "18/21/15/15/16", "game_pk": 823411, "game_date": "2026-09-24", "pitcher_id": 691725, "line": 12.0}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Milwaukee Brewers", "market": "Milwaukee Brewers Over 3.0 Runs", "prob": 68, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Philadelphia Phillies \u00b7 proj 4.64 runs", "history": "6/1/3/4/4", "game_pk": 823411, "game_date": "2026-09-24", "is_home": false, "line": 3.0}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Milwaukee Brewers", "market": "Milwaukee Brewers Over 5.0 Hits", "prob": 75, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Philadelphia Phillies \u00b7 proj 7.38 hits", "history": "10/3/6/6/6", "game_pk": 823411, "game_date": "2026-09-24", "is_home": false, "line": 5.0}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Philadelphia Phillies", "market": "Philadelphia Phillies Over 2.0 Runs", "prob": 63, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Milwaukee Brewers \u00b7 proj 3.27 runs", "history": "3/3/7/6/1", "game_pk": 823411, "game_date": "2026-09-24", "is_home": true, "line": 2.0}, {"match": "Milwaukee Brewers @ Philadelphia Phillies", "subject": "Philadelphia Phillies", "market": "Philadelphia Phillies Over 5.0 Hits", "prob": 71, "category": "Team Hits", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs Milwaukee Brewers \u00b7 proj 7.12 hits", "history": "6/9/7/8/6", "game_pk": 823411, "game_date": "2026-09-24", "is_home": true, "line": 5.0}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Daniel Espino", "market": "Daniel Espino Over 1.0 Strikeouts", "prob": 51, "category": "Strikeouts", "hit_rate": {"hits": 1, "total": 2}, "detail": "Cleveland Guardians vs Boston Red Sox \u00b7 proj 1.71 K", "history": "2/1", "game_pk": 824707, "game_date": "2026-09-24", "pitcher_id": 682982, "line": 1.0}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Daniel Espino", "market": "Daniel Espino Over 3.0 Outs Recorded", "prob": 62, "category": "Outs Recorded", "hit_rate": {"hits": 1, "total": 2}, "detail": "Cleveland Guardians vs Boston Red Sox \u00b7 proj 1.4 IP", "history": "6/3", "game_pk": 824707, "game_date": "2026-09-24", "pitcher_id": 682982, "line": 3.0}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Ranger Suarez", "market": "Ranger Suarez Over 3.0 Strikeouts", "prob": 71, "category": "Strikeouts", "hit_rate": {"hits": 3, "total": 5}, "detail": "Boston Red Sox vs Cleveland Guardians \u00b7 proj 4.85 K", "history": "4/2/3/8/5", "game_pk": 824707, "game_date": "2026-09-24", "pitcher_id": 624133, "line": 3.0}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Ranger Suarez", "market": "Ranger Suarez Over 12.5 Outs Recorded", "prob": 91, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Boston Red Sox vs Cleveland Guardians \u00b7 proj 6.0 IP", "history": "15/16/21/21/17", "game_pk": 824707, "game_date": "2026-09-24", "pitcher_id": 624133, "line": 12.5}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Cleveland Guardians", "market": "Cleveland Guardians Over 1.5 Runs", "prob": 69, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Boston Red Sox \u00b7 proj 2.39 runs", "history": "5/12/1/3/0", "game_pk": 824707, "game_date": "2026-09-24", "is_home": false, "line": 1.5}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Cleveland Guardians", "market": "Cleveland Guardians Over 5.5 Hits", "prob": 82, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Boston Red Sox \u00b7 proj 8.07 hits", "history": "10/15/7/12/5", "game_pk": 824707, "game_date": "2026-09-24", "is_home": false, "line": 5.5}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Boston Red Sox", "market": "Boston Red Sox Over 1.5 Runs", "prob": 62, "category": "Team Runs", "hit_rate": {"hits": 2, "total": 5}, "detail": "vs Cleveland Guardians \u00b7 proj 2.11 runs", "history": "4/1/1/2/1", "game_pk": 824707, "game_date": "2026-09-24", "is_home": true, "line": 1.5}, {"match": "Cleveland Guardians @ Boston Red Sox", "subject": "Boston Red Sox", "market": "Boston Red Sox Over 6.0 Hits", "prob": 73, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Cleveland Guardians \u00b7 proj 8.36 hits", "history": "9/8/6/8/12", "game_pk": 824707, "game_date": "2026-09-24", "is_home": true, "line": 6.0}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "Ian Seymour", "market": "Ian Seymour Over 5.0 Strikeouts", "prob": 73, "category": "Strikeouts", "hit_rate": {"hits": 3, "total": 5}, "detail": "Tampa Bay Rays vs New York Yankees \u00b7 proj 7.21 K", "history": "8/10/2/10/5", "game_pk": 823493, "game_date": "2026-09-24", "pitcher_id": 693855, "line": 5.0}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "Ian Seymour", "market": "Ian Seymour Over 10.5 Outs Recorded", "prob": 89, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Tampa Bay Rays vs New York Yankees \u00b7 proj 5.1 IP", "history": "15/19/9/18/15", "game_pk": 823493, "game_date": "2026-09-24", "pitcher_id": 693855, "line": 10.5}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "Cam Schlittler", "market": "Cam Schlittler Over 4.5 Strikeouts", "prob": 80, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "New York Yankees vs Tampa Bay Rays \u00b7 proj 6.72 K", "history": "8/9/10/8/6", "game_pk": 823493, "game_date": "2026-09-24", "pitcher_id": 693645, "line": 4.5}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "Cam Schlittler", "market": "Cam Schlittler Over 14.0 Outs Recorded", "prob": 88, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "New York Yankees vs Tampa Bay Rays \u00b7 proj 6.5 IP", "history": "17/24/21/18/18", "game_pk": 823493, "game_date": "2026-09-24", "pitcher_id": 693645, "line": 14.0}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "Tampa Bay Rays", "market": "Tampa Bay Rays Over 1.0 Runs", "prob": 59, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs New York Yankees \u00b7 proj 1.98 runs", "history": "2/5/0/6/2", "game_pk": 823493, "game_date": "2026-09-24", "is_home": false, "line": 1.0}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "Tampa Bay Rays", "market": "Tampa Bay Rays Over 3.5 Hits", "prob": 77, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs New York Yankees \u00b7 proj 5.26 hits", "history": "8/4/3/11/6", "game_pk": 823493, "game_date": "2026-09-24", "is_home": false, "line": 3.5}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "New York Yankees", "market": "New York Yankees Over 2.0 Runs", "prob": 66, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Tampa Bay Rays \u00b7 proj 3.39 runs", "history": "3/4/2/1/9", "game_pk": 823493, "game_date": "2026-09-24", "is_home": true, "line": 2.0}, {"match": "Tampa Bay Rays @ New York Yankees", "subject": "New York Yankees", "market": "New York Yankees Over 4.5 Hits", "prob": 76, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Tampa Bay Rays \u00b7 proj 6.35 hits", "history": "6/8/5/3/12", "game_pk": 823493, "game_date": "2026-09-24", "is_home": true, "line": 4.5}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Brady Singer", "market": "Brady Singer Over 2.0 Strikeouts", "prob": 62, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Cincinnati Reds vs Atlanta Braves \u00b7 proj 3.18 K", "history": "5/5/3/5/0", "game_pk": 824866, "game_date": "2026-09-24", "pitcher_id": 663903, "line": 2.0}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Brady Singer", "market": "Brady Singer Over 9.0 Outs Recorded", "prob": 85, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Cincinnati Reds vs Atlanta Braves \u00b7 proj 4.4 IP", "history": "17/13/15/12/10", "game_pk": 824866, "game_date": "2026-09-24", "pitcher_id": 663903, "line": 9.0}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Tyler Mahle", "market": "Tyler Mahle Over 4.0 Strikeouts", "prob": 70, "category": "Strikeouts", "hit_rate": {"hits": 2, "total": 5}, "detail": "Atlanta Braves vs Cincinnati Reds \u00b7 proj 5.91 K", "history": "4/9/3/3/6", "game_pk": 824866, "game_date": "2026-09-24", "pitcher_id": 641816, "line": 4.0}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Tyler Mahle", "market": "Tyler Mahle Over 13.0 Outs Recorded", "prob": 88, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Atlanta Braves vs Cincinnati Reds \u00b7 proj 6.1 IP", "history": "15/20/18/21/18", "game_pk": 824866, "game_date": "2026-09-24", "pitcher_id": 641816, "line": 13.0}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Cincinnati Reds", "market": "Cincinnati Reds Over 1.5 Runs", "prob": 75, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Atlanta Braves \u00b7 proj 2.68 runs", "history": "6/2/1/4/2", "game_pk": 824866, "game_date": "2026-09-24", "is_home": false, "line": 1.5}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Cincinnati Reds", "market": "Cincinnati Reds Over 4.0 Hits", "prob": 71, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Atlanta Braves \u00b7 proj 5.99 hits", "history": "8/4/4/10/5", "game_pk": 824866, "game_date": "2026-09-24", "is_home": false, "line": 4.0}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Atlanta Braves", "market": "Atlanta Braves Over 3.0 Runs", "prob": 66, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Cincinnati Reds \u00b7 proj 4.49 runs", "history": "6/6/4/0/3", "game_pk": 824866, "game_date": "2026-09-24", "is_home": true, "line": 3.0}, {"match": "Cincinnati Reds @ Atlanta Braves", "subject": "Atlanta Braves", "market": "Atlanta Braves Over 6.0 Hits", "prob": 79, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Cincinnati Reds \u00b7 proj 8.94 hits", "history": "11/11/6/7/7", "game_pk": 824866, "game_date": "2026-09-24", "is_home": true, "line": 6.0}, {"match": "Houston Astros @ Athletics", "subject": "Peter Lambert", "market": "Peter Lambert Over 3.5 Strikeouts", "prob": 79, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "Houston Astros vs Athletics \u00b7 proj 5.46 K", "history": "5/6/6/4/6", "game_pk": 824950, "game_date": "2026-09-24", "pitcher_id": 663567, "line": 3.5}, {"match": "Houston Astros @ Athletics", "subject": "Peter Lambert", "market": "Peter Lambert Over 12.0 Outs Recorded", "prob": 86, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Houston Astros vs Athletics \u00b7 proj 5.7 IP", "history": "17/14/21/18/16", "game_pk": 824950, "game_date": "2026-09-24", "pitcher_id": 663567, "line": 12.0}, {"match": "Houston Astros @ Athletics", "subject": "Mason Barnett", "market": "Mason Barnett Over 2.0 Strikeouts", "prob": 64, "category": "Strikeouts", "hit_rate": {"hits": 3, "total": 5}, "detail": "Athletics vs Houston Astros \u00b7 proj 3.32 K", "history": "6/7/0/2/4", "game_pk": 824950, "game_date": "2026-09-24", "pitcher_id": 686930, "line": 2.0}, {"match": "Houston Astros @ Athletics", "subject": "Mason Barnett", "market": "Mason Barnett Over 7.5 Outs Recorded", "prob": 83, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Athletics vs Houston Astros \u00b7 proj 3.5 IP", "history": "15/13/12/8/10", "game_pk": 824950, "game_date": "2026-09-24", "pitcher_id": 686930, "line": 7.5}, {"match": "Houston Astros @ Athletics", "subject": "Houston Astros", "market": "Houston Astros Over 3.5 Runs", "prob": 80, "category": "Team Runs", "hit_rate": {"hits": 2, "total": 5}, "detail": "vs Athletics \u00b7 proj 5.52 runs", "history": "2/3/2/7/5", "game_pk": 824950, "game_date": "2026-09-24", "is_home": false, "line": 3.5}, {"match": "Houston Astros @ Athletics", "subject": "Houston Astros", "market": "Houston Astros Over 7.5 Hits", "prob": 82, "category": "Team Hits", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Athletics \u00b7 proj 10.45 hits", "history": "5/10/8/12/10", "game_pk": 824950, "game_date": "2026-09-24", "is_home": false, "line": 7.5}, {"match": "Houston Astros @ Athletics", "subject": "Athletics", "market": "Athletics Over 4.0 Runs", "prob": 66, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Houston Astros \u00b7 proj 5.6 runs", "history": "3/6/0/9/7", "game_pk": 824950, "game_date": "2026-09-24", "is_home": true, "line": 4.0}, {"match": "Houston Astros @ Athletics", "subject": "Athletics", "market": "Athletics Over 6.5 Hits", "prob": 81, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Houston Astros \u00b7 proj 9.17 hits", "history": "3/12/6/14/13", "game_pk": 824950, "game_date": "2026-09-24", "is_home": true, "line": 6.5}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Grayson Rodriguez", "market": "Grayson Rodriguez Over 3.0 Strikeouts", "prob": 65, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Los Angeles Angels vs Seattle Mariners \u00b7 proj 4.48 K", "history": "4/7/3/4/4", "game_pk": 823087, "game_date": "2026-09-24", "pitcher_id": 680570, "line": 3.0}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Grayson Rodriguez", "market": "Grayson Rodriguez Over 11.5 Outs Recorded", "prob": 89, "category": "Outs Recorded", "hit_rate": {"hits": 5, "total": 5}, "detail": "Los Angeles Angels vs Seattle Mariners \u00b7 proj 5.4 IP", "history": "17/18/12/16/20", "game_pk": 823087, "game_date": "2026-09-24", "pitcher_id": 680570, "line": 11.5}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Bryan Woo", "market": "Bryan Woo Over 4.5 Strikeouts", "prob": 78, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Seattle Mariners vs Los Angeles Angels \u00b7 proj 6.51 K", "history": "5/7/9/5/4", "game_pk": 823087, "game_date": "2026-09-24", "pitcher_id": 693433, "line": 4.5}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Bryan Woo", "market": "Bryan Woo Over 12.5 Outs Recorded", "prob": 89, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Seattle Mariners vs Los Angeles Angels \u00b7 proj 5.9 IP", "history": "12/18/24/18/16", "game_pk": 823087, "game_date": "2026-09-24", "pitcher_id": 693433, "line": 12.5}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Los Angeles Angels", "market": "Los Angeles Angels Over 2.0 Runs", "prob": 60, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Seattle Mariners \u00b7 proj 3.12 runs", "history": "0/6/0/7/3", "game_pk": 823087, "game_date": "2026-09-24", "is_home": false, "line": 2.0}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Los Angeles Angels", "market": "Los Angeles Angels Over 5.0 Hits", "prob": 76, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Seattle Mariners \u00b7 proj 7.51 hits", "history": "4/11/2/15/8", "game_pk": 823087, "game_date": "2026-09-24", "is_home": false, "line": 5.0}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Seattle Mariners", "market": "Seattle Mariners Over 2.5 Runs", "prob": 73, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Los Angeles Angels \u00b7 proj 3.78 runs", "history": "5/3/2/0/6", "game_pk": 823087, "game_date": "2026-09-24", "is_home": true, "line": 2.5}, {"match": "Los Angeles Angels @ Seattle Mariners", "subject": "Seattle Mariners", "market": "Seattle Mariners Over 5.5 Hits", "prob": 79, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Los Angeles Angels \u00b7 proj 7.78 hits", "history": "9/8/4/4/9", "game_pk": 823087, "game_date": "2026-09-24", "is_home": true, "line": 5.5}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "Nick Pivetta", "market": "Nick Pivetta Over 2.5 Strikeouts", "prob": 78, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "San Diego Padres vs Los Angeles Dodgers \u00b7 proj 4.14 K", "history": "8/4/2/5/4", "game_pk": 823895, "game_date": "2026-09-24", "pitcher_id": 601713, "line": 2.5}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "Nick Pivetta", "market": "Nick Pivetta Over 9.5 Outs Recorded", "prob": 85, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "San Diego Padres vs Los Angeles Dodgers \u00b7 proj 4.4 IP", "history": "15/9/15/12/15", "game_pk": 823895, "game_date": "2026-09-24", "pitcher_id": 601713, "line": 9.5}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "Tyler Glasnow", "market": "Tyler Glasnow Over 5.0 Strikeouts", "prob": 77, "category": "Strikeouts", "hit_rate": {"hits": 5, "total": 5}, "detail": "Los Angeles Dodgers vs San Diego Padres \u00b7 proj 7.62 K", "history": "7/6/8/7/10", "game_pk": 823895, "game_date": "2026-09-24", "pitcher_id": 607192, "line": 5.0}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "Tyler Glasnow", "market": "Tyler Glasnow Over 12.0 Outs Recorded", "prob": 85, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Los Angeles Dodgers vs San Diego Padres \u00b7 proj 5.6 IP", "history": "15/21/18/12/18", "game_pk": 823895, "game_date": "2026-09-24", "pitcher_id": 607192, "line": 12.0}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "San Diego Padres", "market": "San Diego Padres Over 2.5 Runs", "prob": 73, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Los Angeles Dodgers \u00b7 proj 3.8 runs", "history": "8/7/7/0/5", "game_pk": 823895, "game_date": "2026-09-24", "is_home": false, "line": 2.5}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "San Diego Padres", "market": "San Diego Padres Over 4.0 Hits", "prob": 72, "category": "Team Hits", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs Los Angeles Dodgers \u00b7 proj 6.06 hits", "history": "12/11/10/5/8", "game_pk": 823895, "game_date": "2026-09-24", "is_home": false, "line": 4.0}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "Los Angeles Dodgers", "market": "Los Angeles Dodgers Over 3.0 Runs", "prob": 64, "category": "Team Runs", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs San Diego Padres \u00b7 proj 4.42 runs", "history": "8/10/3/7/1", "game_pk": 823895, "game_date": "2026-09-24", "is_home": true, "line": 3.0}, {"match": "San Diego Padres @ Los Angeles Dodgers", "subject": "Los Angeles Dodgers", "market": "Los Angeles Dodgers Over 6.0 Hits", "prob": 78, "category": "Team Hits", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs San Diego Padres \u00b7 proj 8.84 hits", "history": "11/15/11/9/10", "game_pk": 823895, "game_date": "2026-09-24", "is_home": true, "line": 6.0}];
 
 function poissonCDF(threshold, lambda){
   let p = Math.exp(-lambda), cum = p;
