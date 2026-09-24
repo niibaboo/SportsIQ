@@ -1,50 +1,50 @@
 [
   {
-    "match": "Djurg\u00e5rden vs V\u00e4xj\u00f6 Lakers",
-    "subject": "Djurg\u00e5rden",
-    "market": "Djurg\u00e5rden Over 0.5 Goals",
-    "prob": 73,
+    "match": "HV71 vs Skellefte\u00e5 AIK",
+    "subject": "HV71",
+    "market": "HV71 Over 2.0 Goals",
+    "prob": 67,
     "hit_rate": {
-      "hits": 4,
+      "hits": 3,
       "total": 5
     },
     "category": "SHL Team Total",
-    "detail": "proj 1.32 goals \u00b7 season 0.5/gm",
-    "history": "4/4/3/0/1",
-    "line": 0.5,
+    "detail": "proj 3.43 goals \u00b7 season 4.0/gm",
+    "history": "2/0/3/4/4",
+    "line": 2.0,
     "is_home": true,
     "league_id": 40781,
-    "home_name": "Djurg\u00e5rden",
-    "away_name": "V\u00e4xj\u00f6 Lakers",
+    "home_name": "HV71",
+    "away_name": "Skellefte\u00e5 AIK",
     "match_date": "2026-09-24T17:00:00.000Z"
   },
   {
-    "match": "Djurg\u00e5rden vs V\u00e4xj\u00f6 Lakers",
-    "subject": "V\u00e4xj\u00f6 Lakers",
-    "market": "V\u00e4xj\u00f6 Lakers Over 2.5 Goals",
-    "prob": 75,
+    "match": "HV71 vs Skellefte\u00e5 AIK",
+    "subject": "Skellefte\u00e5 AIK",
+    "market": "Skellefte\u00e5 AIK Over 4.0 Goals",
+    "prob": 71,
     "hit_rate": {
-      "hits": 4,
+      "hits": 3,
       "total": 5
     },
     "category": "SHL Team Total",
-    "detail": "proj 3.92 goals \u00b7 season 4.0/gm",
-    "history": "3/1/6/4/4",
-    "line": 2.5,
+    "detail": "proj 5.98 goals \u00b7 season 7.0/gm",
+    "history": "6/3/3/6/7",
+    "line": 4.0,
     "is_home": false,
     "league_id": 40781,
-    "home_name": "Djurg\u00e5rden",
-    "away_name": "V\u00e4xj\u00f6 Lakers",
+    "home_name": "HV71",
+    "away_name": "Skellefte\u00e5 AIK",
     "match_date": "2026-09-24T17:00:00.000Z"
   },
   {
-    "match": "Djurg\u00e5rden vs V\u00e4xj\u00f6 Lakers",
-    "subject": "Djurg\u00e5rden vs V\u00e4xj\u00f6 Lakers",
-    "market": "Game Over 3.5 Total Goals",
-    "prob": 77,
+    "match": "HV71 vs Skellefte\u00e5 AIK",
+    "subject": "HV71 vs Skellefte\u00e5 AIK",
+    "market": "Game Over 6.5 Total Goals",
+    "prob": 83,
     "hit_rate": null,
     "category": "SHL Game Total",
-    "detail": "proj 5.24 goals combined",
+    "detail": "proj 9.41 goals combined",
     "history": null
   },
   {
@@ -144,6 +144,54 @@
     "history": null
   },
   {
+    "match": "Djurg\u00e5rden vs V\u00e4xj\u00f6 Lakers",
+    "subject": "Djurg\u00e5rden",
+    "market": "Djurg\u00e5rden Over 0.5 Goals",
+    "prob": 73,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "SHL Team Total",
+    "detail": "proj 1.32 goals \u00b7 season 0.5/gm",
+    "history": "4/4/3/0/1",
+    "line": 0.5,
+    "is_home": true,
+    "league_id": 40781,
+    "home_name": "Djurg\u00e5rden",
+    "away_name": "V\u00e4xj\u00f6 Lakers",
+    "match_date": "2026-09-24T17:00:00.000Z"
+  },
+  {
+    "match": "Djurg\u00e5rden vs V\u00e4xj\u00f6 Lakers",
+    "subject": "V\u00e4xj\u00f6 Lakers",
+    "market": "V\u00e4xj\u00f6 Lakers Over 2.5 Goals",
+    "prob": 75,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "SHL Team Total",
+    "detail": "proj 3.92 goals \u00b7 season 4.0/gm",
+    "history": "3/1/6/4/4",
+    "line": 2.5,
+    "is_home": false,
+    "league_id": 40781,
+    "home_name": "Djurg\u00e5rden",
+    "away_name": "V\u00e4xj\u00f6 Lakers",
+    "match_date": "2026-09-24T17:00:00.000Z"
+  },
+  {
+    "match": "Djurg\u00e5rden vs V\u00e4xj\u00f6 Lakers",
+    "subject": "Djurg\u00e5rden vs V\u00e4xj\u00f6 Lakers",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 77,
+    "hit_rate": null,
+    "category": "SHL Game Total",
+    "detail": "proj 5.24 goals combined",
+    "history": null
+  },
+  {
     "match": "Orebro HK vs IF Bj\u00f6rkl\u00f6ven",
     "subject": "Orebro HK",
     "market": "Orebro HK Over 2.0 Goals",
@@ -189,54 +237,6 @@
     "hit_rate": null,
     "category": "SHL Game Total",
     "detail": "proj 5.37 goals combined",
-    "history": null
-  },
-  {
-    "match": "HV71 vs Skellefte\u00e5 AIK",
-    "subject": "HV71",
-    "market": "HV71 Over 2.0 Goals",
-    "prob": 67,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 3.43 goals \u00b7 season 4.0/gm",
-    "history": "2/0/3/4/4",
-    "line": 2.0,
-    "is_home": true,
-    "league_id": 40781,
-    "home_name": "HV71",
-    "away_name": "Skellefte\u00e5 AIK",
-    "match_date": "2026-09-24T17:00:00.000Z"
-  },
-  {
-    "match": "HV71 vs Skellefte\u00e5 AIK",
-    "subject": "Skellefte\u00e5 AIK",
-    "market": "Skellefte\u00e5 AIK Over 4.0 Goals",
-    "prob": 71,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 5.98 goals \u00b7 season 7.0/gm",
-    "history": "6/3/3/6/7",
-    "line": 4.0,
-    "is_home": false,
-    "league_id": 40781,
-    "home_name": "HV71",
-    "away_name": "Skellefte\u00e5 AIK",
-    "match_date": "2026-09-24T17:00:00.000Z"
-  },
-  {
-    "match": "HV71 vs Skellefte\u00e5 AIK",
-    "subject": "HV71 vs Skellefte\u00e5 AIK",
-    "market": "Game Over 6.5 Total Goals",
-    "prob": 83,
-    "hit_rate": null,
-    "category": "SHL Game Total",
-    "detail": "proj 9.41 goals combined",
     "history": null
   },
   {
