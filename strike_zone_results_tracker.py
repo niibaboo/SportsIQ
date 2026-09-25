@@ -131,13 +131,14 @@ def log_todays_signals(legs, run_entries, real_run_entries, k_entries, real_k_en
 
 
 def _get_final_linescore(game_pk):
-    data = _get(f"/game/{game_pk}/linescore")
-    if not data or data.get("currentInningOrdinal") is None:
-        # MLB's linescore endpoint doesn't carry a clean "is final"
-        # flag on its own -- cross-check against the schedule status
-        # for this specific game instead.
-        pass
-    sched = _get("/schedule", {"gamePk": game_pk})
+    # BUG FIX: this was fetching /schedule WITHOUT hydrate=linescore,
+    # which means MLB Stats API returns an empty linescore every time --
+    # game.get("linescore", {}) was always {}, so home_runs/away_runs
+    # were always None, and this function returned None on EVERY call.
+    # That's what was silently keeping Team Runs, Team Hits, Run Form
+    # and Real Run Streak permanently stuck at 0/0 verified -- not a
+    # timing issue, a genuine missing parameter.
+    sched = _get("/schedule", {"gamePk": game_pk, "hydrate": "linescore"})
     if not sched or not sched.get("dates"):
         return None
     games = sched["dates"][0].get("games", [])
@@ -216,7 +217,11 @@ def _verify_team_streak_entry(entry, threshold):
     return {"actual": actual, "result": "hit" if actual >= threshold else "miss"}
 
 
-def verify_pending_results(log, real_run_streak_threshold, real_k_streak_threshold, max_checks=60):
+def verify_pending_results(log, real_run_streak_threshold, real_k_streak_threshold, max_checks=150):
+    # Raised from 60 -- MLB runs far more games/day than the other sports
+    # this pattern was built for, so this tracker genuinely logs more
+    # picks per run than a 60-cap could keep pace with, independent of
+    # the linescore bug fixed above.
     today = datetime.now(timezone.utc).date().isoformat()
     checked = 0
     updated = 0
