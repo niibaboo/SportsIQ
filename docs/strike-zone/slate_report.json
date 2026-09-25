@@ -2095,7 +2095,7 @@
       "away": {
         "team": "Arizona Diamondbacks",
         "opp": "San Diego Padres",
-        "lambda": 6.51,
+        "lambda": 6.52,
         "lo": 3,
         "hi": 10,
         "l5_str": "5\u00b78\u00b77\u00b75\u00b712",
@@ -2407,18 +2407,18 @@
       "away": {
         "team": "Los Angeles Dodgers",
         "opp": "San Francisco Giants",
-        "lambda": 3.71,
-        "lo": 1,
-        "hi": 6,
-        "l5_str": "10\u00b73\u00b77\u00b71\u00b71",
+        "lambda": 3.98,
+        "lo": 2,
+        "hi": 7,
+        "l5_str": "10\u00b73\u00b77\u00b71\u00b72",
         "last5_runs": [
           10,
           3,
           7,
           1,
-          1
+          2
         ],
-        "season_rpg": 4.96,
+        "season_rpg": 4.97,
         "run_factor": 1.17,
         "xfip_used": true
       },
@@ -2445,18 +2445,18 @@
       "away": {
         "team": "Los Angeles Dodgers",
         "opp": "San Francisco Giants",
-        "lambda": 8.8,
+        "lambda": 9.03,
         "lo": 5,
         "hi": 13,
-        "l5_str": "15\u00b711\u00b79\u00b710\u00b76",
+        "l5_str": "15\u00b711\u00b79\u00b710\u00b77",
         "last5_hits": [
           15,
           11,
           9,
           10,
-          6
+          7
         ],
-        "season_hpg": 8.64,
+        "season_hpg": 8.65,
         "hit_factor": 0.99
       },
       "home": {
