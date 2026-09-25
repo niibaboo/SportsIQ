@@ -502,5 +502,41 @@
     "status": "pending",
     "result": null,
     "actual": null
+  },
+  {
+    "id": "07e8fa9dcaba999e",
+    "scanner": "btts",
+    "subject": "Columbus Crew vs Inter Miami CF",
+    "market": "BTTS",
+    "value": 70,
+    "detail": null,
+    "match_id": "mt_986139617",
+    "match_date": "2026-09-27T23:00:00.000Z",
+    "date_key": "2026-09-27",
+    "league": "MLS",
+    "home_team": "Columbus Crew",
+    "away_team": "Inter Miami CF",
+    "logged_at": "2026-09-25T11:17:41.437979+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "75d4d756e7f7a6f3",
+    "scanner": "corners",
+    "subject": "Real Salt Lake vs New England Revolution",
+    "market": "Over 10.5 Corners",
+    "value": 60,
+    "detail": "exp 11.54 corners",
+    "match_id": "mt_517295721",
+    "match_date": "2026-09-27T01:30:00.000Z",
+    "date_key": "2026-09-27",
+    "league": "MLS",
+    "home_team": "Real Salt Lake",
+    "away_team": "New England Revolution",
+    "logged_at": "2026-09-25T11:17:41.438011+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
   }
 ]
