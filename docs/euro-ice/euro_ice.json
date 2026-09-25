@@ -144,150 +144,6 @@
     "history": null
   },
   {
-    "match": "Litv\u00ednov vs Sparta Prague",
-    "subject": "Litv\u00ednov",
-    "market": "Litv\u00ednov Over 1.0 Goals",
-    "prob": 58,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 1.95 goals \u00b7 season 2.0/gm",
-    "history": "0/2/2/1/3",
-    "line": 1.0,
-    "is_home": true,
-    "league_id": 9294,
-    "home_name": "Litv\u00ednov",
-    "away_name": "Sparta Prague",
-    "match_date": "2026-09-25T15:30:00.000Z"
-  },
-  {
-    "match": "Litv\u00ednov vs Sparta Prague",
-    "subject": "Sparta Prague",
-    "market": "Sparta Prague Over 2.0 Goals",
-    "prob": 63,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 3.25 goals \u00b7 season 3.67/gm",
-    "history": "5/2/5/2/3",
-    "line": 2.0,
-    "is_home": false,
-    "league_id": 9294,
-    "home_name": "Litv\u00ednov",
-    "away_name": "Sparta Prague",
-    "match_date": "2026-09-25T15:30:00.000Z"
-  },
-  {
-    "match": "Litv\u00ednov vs Sparta Prague",
-    "subject": "Litv\u00ednov vs Sparta Prague",
-    "market": "Game Over 3.5 Total Goals",
-    "prob": 76,
-    "hit_rate": null,
-    "category": "Extraliga Game Total",
-    "detail": "proj 5.2 goals combined",
-    "history": null
-  },
-  {
-    "match": "Mlada Boleslav vs Pardubice Dynamo",
-    "subject": "Mlada Boleslav",
-    "market": "Mlada Boleslav Over 1.5 Goals",
-    "prob": 64,
-    "hit_rate": {
-      "hits": 2,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 2.16 goals \u00b7 season 2.33/gm",
-    "history": "1/1/3/1/5",
-    "line": 1.5,
-    "is_home": true,
-    "league_id": 9294,
-    "home_name": "Mlada Boleslav",
-    "away_name": "Pardubice Dynamo",
-    "match_date": "2026-09-25T15:30:00.000Z"
-  },
-  {
-    "match": "Mlada Boleslav vs Pardubice Dynamo",
-    "subject": "Pardubice Dynamo",
-    "market": "Pardubice Dynamo Over 2.5 Goals",
-    "prob": 76,
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 3.99 goals \u00b7 season 3.75/gm",
-    "history": "6/3/3/5/4",
-    "line": 2.5,
-    "is_home": false,
-    "league_id": 9294,
-    "home_name": "Mlada Boleslav",
-    "away_name": "Pardubice Dynamo",
-    "match_date": "2026-09-25T15:30:00.000Z"
-  },
-  {
-    "match": "Mlada Boleslav vs Pardubice Dynamo",
-    "subject": "Mlada Boleslav vs Pardubice Dynamo",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 73,
-    "hit_rate": null,
-    "category": "Extraliga Game Total",
-    "detail": "proj 6.15 goals combined",
-    "history": null
-  },
-  {
-    "match": "T\u0159inec vs V\u00edtkovice",
-    "subject": "T\u0159inec",
-    "market": "T\u0159inec Over 2.0 Goals",
-    "prob": 64,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 3.31 goals \u00b7 season 3.5/gm",
-    "history": "1/6/2/6/3",
-    "line": 2.0,
-    "is_home": true,
-    "league_id": 9294,
-    "home_name": "T\u0159inec",
-    "away_name": "V\u00edtkovice",
-    "match_date": "2026-09-25T15:00:00.000Z"
-  },
-  {
-    "match": "T\u0159inec vs V\u00edtkovice",
-    "subject": "V\u00edtkovice",
-    "market": "V\u00edtkovice Over 1.5 Goals",
-    "prob": 74,
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 2.66 goals \u00b7 season 2.5/gm",
-    "history": "4/3/3/3/2",
-    "line": 1.5,
-    "is_home": false,
-    "league_id": 9294,
-    "home_name": "T\u0159inec",
-    "away_name": "V\u00edtkovice",
-    "match_date": "2026-09-25T15:00:00.000Z"
-  },
-  {
-    "match": "T\u0159inec vs V\u00edtkovice",
-    "subject": "T\u0159inec vs V\u00edtkovice",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 71,
-    "hit_rate": null,
-    "category": "Extraliga Game Total",
-    "detail": "proj 5.97 goals combined",
-    "history": null
-  },
-  {
     "match": "Adler Mannheim vs Krefeld Pinguine",
     "subject": "Adler Mannheim",
     "market": "Adler Mannheim Over 2.0 Goals",
@@ -720,54 +576,6 @@
     "history": null
   },
   {
-    "match": "Langnau Tigers vs Zug",
-    "subject": "Langnau Tigers",
-    "market": "Langnau Tigers Over 2.0 Goals",
-    "prob": 60,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "National League Team Total",
-    "detail": "proj 3.11 goals \u00b7 season 3.5/gm",
-    "history": "2/1/3/4/3",
-    "line": 2.0,
-    "is_home": true,
-    "league_id": 44185,
-    "home_name": "Langnau Tigers",
-    "away_name": "Zug",
-    "match_date": "2026-09-25T17:45:00.000Z"
-  },
-  {
-    "match": "Langnau Tigers vs Zug",
-    "subject": "Zug",
-    "market": "Zug Over 2.5 Goals",
-    "prob": 76,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "National League Team Total",
-    "detail": "proj 4.02 goals \u00b7 season 4.33/gm",
-    "history": "4/3/5/6/2",
-    "line": 2.5,
-    "is_home": false,
-    "league_id": 44185,
-    "home_name": "Langnau Tigers",
-    "away_name": "Zug",
-    "match_date": "2026-09-25T17:45:00.000Z"
-  },
-  {
-    "match": "Langnau Tigers vs Zug",
-    "subject": "Langnau Tigers vs Zug",
-    "market": "Game Over 5.0 Total Goals",
-    "prob": 72,
-    "hit_rate": null,
-    "category": "National League Game Total",
-    "detail": "proj 7.13 goals combined",
-    "history": null
-  },
-  {
     "match": "Ambr\u00ec-Piotta vs Z\u00fcrich Lions",
     "subject": "Ambr\u00ec-Piotta",
     "market": "Ambr\u00ec-Piotta Over 2.0 Goals",
@@ -813,6 +621,54 @@
     "hit_rate": null,
     "category": "National League Game Total",
     "detail": "proj 6.93 goals combined",
+    "history": null
+  },
+  {
+    "match": "Langnau Tigers vs Zug",
+    "subject": "Langnau Tigers",
+    "market": "Langnau Tigers Over 2.0 Goals",
+    "prob": 60,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 3.11 goals \u00b7 season 3.5/gm",
+    "history": "2/1/3/4/3",
+    "line": 2.0,
+    "is_home": true,
+    "league_id": 44185,
+    "home_name": "Langnau Tigers",
+    "away_name": "Zug",
+    "match_date": "2026-09-25T17:45:00.000Z"
+  },
+  {
+    "match": "Langnau Tigers vs Zug",
+    "subject": "Zug",
+    "market": "Zug Over 2.5 Goals",
+    "prob": 76,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 4.02 goals \u00b7 season 4.33/gm",
+    "history": "4/3/5/6/2",
+    "line": 2.5,
+    "is_home": false,
+    "league_id": 44185,
+    "home_name": "Langnau Tigers",
+    "away_name": "Zug",
+    "match_date": "2026-09-25T17:45:00.000Z"
+  },
+  {
+    "match": "Langnau Tigers vs Zug",
+    "subject": "Langnau Tigers vs Zug",
+    "market": "Game Over 5.0 Total Goals",
+    "prob": 72,
+    "hit_rate": null,
+    "category": "National League Game Total",
+    "detail": "proj 7.13 goals combined",
     "history": null
   }
 ]
