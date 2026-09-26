@@ -292,7 +292,14 @@ def project_team_corners(form, opp_form):
     opp_factor = (opp_conceded_rate / lg_conceded) if lg_conceded else 1.0
 
     lam = round(own_rate * opp_factor, 2)
-    return {"lambda": lam, "corners_list": form.get("corners_list") or []}
+    line = safe_line(lam)
+    prob = round(prob_over(lam, line) * 100) if line is not None else None
+    # line/prob are computed here (not just inside build_legs) so every
+    # consumer of the JSON dump -- e.g. the cross-model Daily Rollover
+    # page -- gets the exact same safety-margined line and probability
+    # the page itself shows, rather than each downstream page having to
+    # reimplement safe_line/prob_over in its own JS.
+    return {"lambda": lam, "corners_list": form.get("corners_list") or [], "line": line, "prob": prob}
 
 
 def project_team_cards(form):
@@ -307,7 +314,9 @@ def project_team_cards(form):
     _record_samples(form)
     lg_cards = _lg_avg(_cards_samples, 1.8)
     lam = round(shrink(form.get("avg_yellow_cards"), form["n_games"], lg_cards), 2)
-    return {"lambda": lam, "yellow_cards_list": form.get("yellow_cards_list") or []}
+    line = safe_line(lam)
+    prob = round(prob_over(lam, line) * 100) if line is not None else None
+    return {"lambda": lam, "yellow_cards_list": form.get("yellow_cards_list") or [], "line": line, "prob": prob}
 
 
 def safe_line(lam, factor=0.72, round_to=0.5):
@@ -431,13 +440,13 @@ def build_legs(predictions):
             ("home", p["home_team"], p["home_corners"], "corners_list"),
             ("away", p["away_team"], p["away_corners"], "corners_list"),
         ):
-            line = safe_line(proj["lambda"])
+            line = proj.get("line")
             if not line:
                 continue
             legs.append({
                 "match": match_label, "subject": team_name,
                 "market": f"{team_name} Over {line} Corners",
-                "prob": round(prob_over(proj["lambda"], line) * 100),
+                "prob": proj["prob"],
                 "category": "Team Corners",
                 "hit_rate": hit_rate(proj[list_key], line),
                 "detail": f"{p['league']} · proj {proj['lambda']} corners",
@@ -447,13 +456,13 @@ def build_legs(predictions):
             ("home", p["home_team"], p["home_cards"], "yellow_cards_list"),
             ("away", p["away_team"], p["away_cards"], "yellow_cards_list"),
         ):
-            line = safe_line(proj["lambda"])
+            line = proj.get("line")
             if not line:
                 continue
             legs.append({
                 "match": match_label, "subject": team_name,
                 "market": f"{team_name} Over {line} Cards",
-                "prob": round(prob_over(proj["lambda"], line) * 100),
+                "prob": proj["prob"],
                 "category": "Team Cards",
                 "hit_rate": hit_rate(proj[list_key], line),
                 "detail": f"{p['league']} · proj {proj['lambda']} yellow cards",
