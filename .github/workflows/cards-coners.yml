@@ -1,0 +1,42 @@
+name: Cards & Corners IQ
+
+on:
+  schedule:
+    # Mon/Wed/Fri 07:00 UTC — same cadence as Match IQ (fixtures pull up to
+    # FIXTURE_WINDOW_DAYS/10 days ahead, so 3x/week keeps things current),
+    # offset by 1 hour from Match IQ's own 06:00 run so the two scripts
+    # never hit TheStatsAPI's rate limit at the same moment.
+    - cron: '0 7 * * 1,3,5'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Cards & Corners IQ
+        env:
+          THESTATSAPI_KEY: ${{ secrets.THESTATSAPI_KEY }}
+        run: python3 cards_corners_iq.py
+
+      - name: Commit and push updated predictions
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/cards-corners/
+          git diff --staged --quiet || git commit -m "Update Cards & Corners IQ predictions"
+          git pull --rebase --autostash origin main
+          git push
