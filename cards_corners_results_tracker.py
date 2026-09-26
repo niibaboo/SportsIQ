@@ -84,9 +84,15 @@ def _get(path, key, params=None, timeout=15):
 
 
 def safe_line(lam, factor=0.72, round_to=0.5):
-    """Duplicated verbatim from cards_corners_iq.py so the line this
-    tracker grades against always matches the line actually shown on the
-    page -- see that file's own copy for the reasoning."""
+    """Duplicated verbatim from cards_corners_iq.py -- kept ONLY as a
+    fallback for predictions built by an older version of that script
+    that didn't yet attach its own 'line' field onto each projection
+    dict. log_todays_signals() below prefers the projection's own
+    p[...]['line'] (the exact value cards_corners_iq.py computed and
+    used to build its own page/legs) and only falls back to recomputing
+    here if that field is missing, so there's a single source of truth
+    whenever it's available rather than two independent calculations
+    that could quietly drift apart."""
     if lam is None:
         return None
     raw = lam * factor
@@ -148,17 +154,17 @@ def log_todays_signals(predictions, log):
         base = dict(match_id=p["match_id"], league=p["league"], date=p["date"], date_key=p["date_key"],
                     home_team=p["home_team"], away_team=p["away_team"])
 
-        home_corners_line = safe_line(p["home_corners"]["lambda"])
+        home_corners_line = p["home_corners"].get("line") or safe_line(p["home_corners"]["lambda"])
         add("Team Corners", team=p["home_team"], is_home=True,
             line=home_corners_line, lam=p["home_corners"]["lambda"], **base)
-        away_corners_line = safe_line(p["away_corners"]["lambda"])
+        away_corners_line = p["away_corners"].get("line") or safe_line(p["away_corners"]["lambda"])
         add("Team Corners", team=p["away_team"], is_home=False,
             line=away_corners_line, lam=p["away_corners"]["lambda"], **base)
 
-        home_cards_line = safe_line(p["home_cards"]["lambda"])
+        home_cards_line = p["home_cards"].get("line") or safe_line(p["home_cards"]["lambda"])
         add("Team Cards", team=p["home_team"], is_home=True,
             line=home_cards_line, lam=p["home_cards"]["lambda"], **base)
-        away_cards_line = safe_line(p["away_cards"]["lambda"])
+        away_cards_line = p["away_cards"].get("line") or safe_line(p["away_cards"]["lambda"])
         add("Team Cards", team=p["away_team"], is_home=False,
             line=away_cards_line, lam=p["away_cards"]["lambda"], **base)
 
