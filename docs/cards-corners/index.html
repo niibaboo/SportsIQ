@@ -1,0 +1,709 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cards &amp; Corners IQ</title>
+<style>
+  :root{--bg:#0b0f14; --panel:#121820; --panel2:#161d27; --border:#233040; --text:#e8edf2; --sub:#8b98a8; --amber:#facc15; --green:#22c55e;}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; padding:16px; max-width:640px; margin:0 auto;}
+  h1{font-size:20px; margin-bottom:4px;}
+  .sub{color:var(--sub); font-size:13px; margin-bottom:18px;}
+  .builderPanel{background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:14px;}
+  .builderTitle{font-size:15px; font-weight:800; margin-bottom:10px;}
+  .builderToggles{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px; font-size:12px;}
+  .builderToggles label{display:flex; align-items:center; gap:4px; color:var(--text); cursor:pointer;}
+  .builderControls{display:flex; gap:8px; align-items:center; margin-bottom:6px; flex-wrap:wrap;}
+  .builderControls label{font-size:12px; color:var(--sub);}
+  .builderControls input{width:70px; background:var(--panel2); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:6px 8px; font-size:13px;}
+  .builderBtn{background:var(--green); color:#04140a; font-weight:700; border:none; padding:7px 14px; border-radius:6px; font-size:13px; cursor:pointer;}
+  .builderBtnAlt{background:var(--panel2); border:1px solid var(--border); color:var(--text); padding:7px 14px; border-radius:6px; font-size:13px; cursor:pointer;}
+  .builderResult{font-size:12px; color:var(--sub);}
+  .legRow{display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid var(--border);}
+  .footnote{font-size:11px; color:var(--sub); text-align:center; margin-top:20px; line-height:1.6;}
+</style></head>
+<body>
+  <h1>🚩 Cards &amp; Corners IQ</h1>
+  <div class="sub">Per-team Corners &amp; Yellow Cards · generated 2026-09-26 17:13</div>
+
+  <div class="builderPanel">
+  <div class="builderTitle">🎯 Safest Bet Builder</div>
+  <div id="builderCategoryToggles" class="builderToggles"></div>
+  <div class="builderControls">
+    <label>Target odds:</label>
+    <input type="number" step="0.1" min="1.1" value="5.0" id="targetOdds">
+    <label>Max legs:</label>
+    <input type="number" step="1" min="2" value="8" id="maxLegs">
+    <button class="builderBtn" onclick="buildSafest()">Build</button>
+    <button class="builderBtnAlt" onclick="buildSafest()">🔀 Shuffle</button>
+  </div>
+  <div id="builderResult" class="builderResult">
+    Untick a market you don't want considered, set a target odds and leg cap, then tap Build.
+    Caps at 2 legs per team to avoid stacking a team's own Corners and Cards legs from the same match.
+  </div>
+</div>
+  <div style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:6px">📊 Corners Hot Form</div>
+  <div style="font-size:11px;color:#998;margin-bottom:10px">Average over the last 7 games — can mask a bad most recent game. Not a streak.</div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Los Angeles FC</b><br><span style="color:#998">FC Dallas vs Los Angeles FC · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">8.14 avg</span><br><span style="color:#998">7gm · 4/12/8/8/9/13/3</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Vancouver Whitecaps</b><br><span style="color:#998">Vancouver Whitecaps vs DC United · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">6.71 avg</span><br><span style="color:#998">7gm · 8/9/4/6/7/6/7</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Nashville SC</b><br><span style="color:#998">Nashville SC vs Toronto FC · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">6.14 avg</span><br><span style="color:#998">7gm · 10/8/6/3/8/3/5</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Atlanta United</b><br><span style="color:#998">Atlanta United vs New York City FC · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">5.86 avg</span><br><span style="color:#998">7gm · 4/2/11/6/7/8/3</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Seattle Sounders FC</b><br><span style="color:#998">Seattle Sounders FC vs Sporting Kansas City · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">5.71 avg</span><br><span style="color:#998">7gm · 7/4/4/9/3/6/7</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>San Jose Earthquakes</b><br><span style="color:#998">San Jose Earthquakes vs Portland Timbers · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">5.71 avg</span><br><span style="color:#998">7gm · 5/3/4/7/3/1/17</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Seattle Sounders FC</b><br><span style="color:#998">Seattle Sounders FC vs Minnesota United · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">5.71 avg</span><br><span style="color:#998">7gm · 7/4/4/9/3/6/7</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>FC Cincinnati</b><br><span style="color:#998">CF Montréal vs FC Cincinnati · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">5.71 avg</span><br><span style="color:#998">7gm · 5/2/9/4/1/12/7</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Philadelphia Union</b><br><span style="color:#998">Philadelphia Union vs Orlando City SC · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">5.43 avg</span><br><span style="color:#998">7gm · 4/6/7/6/7/4/4</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>LA Galaxy</b><br><span style="color:#998">LA Galaxy vs Colorado Rapids · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">5.29 avg</span><br><span style="color:#998">7gm · 2/5/7/5/5/5/8</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Real Salt Lake</b><br><span style="color:#998">Real Salt Lake vs New England Revolution · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">5.14 avg</span><br><span style="color:#998">7gm · 4/1/5/4/10/6/6</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Austin FC</b><br><span style="color:#998">Austin FC vs San Diego FC · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">5.0 avg</span><br><span style="color:#998">7gm · 5/6/3/7/8/0/6</span></div>
+</div>
+</div>
+  <div style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:6px">🔥 Real Corner Streak</div>
+  <div style="font-size:11px;color:#998;margin-bottom:10px">Genuinely CONSECUTIVE recent games with 5+ corners, walking back from the most recent.</div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>LA Galaxy</b><br><span style="color:#998">LA Galaxy vs Colorado Rapids · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">6+ straight</span><br><span style="color:#998">2/5/7/5/5/5/8</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Vancouver Whitecaps</b><br><span style="color:#998">Vancouver Whitecaps vs DC United · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">4+ straight</span><br><span style="color:#998">8/9/4/6/7/6/7</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Real Salt Lake</b><br><span style="color:#998">Real Salt Lake vs New England Revolution · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">3+ straight</span><br><span style="color:#998">4/1/5/4/10/6/6</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>FC Dallas</b><br><span style="color:#998">FC Dallas vs Los Angeles FC · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">3+ straight</span><br><span style="color:#998">3/3/3/3/6/8/8</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Portland Timbers</b><br><span style="color:#998">San Jose Earthquakes vs Portland Timbers · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">3+ straight</span><br><span style="color:#998">0/0/6/4/9/5/5</span></div>
+</div>
+</div>
+  <div style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:6px">📊 Cards Hot Form</div>
+  <div style="font-size:11px;color:#998;margin-bottom:10px">Average over the last 7 games — can mask a bad most recent game. Not a streak.</div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Real Salt Lake</b><br><span style="color:#998">Real Salt Lake vs New England Revolution · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">3.0 avg</span><br><span style="color:#998">7gm · 3/5/3/4/2/2/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Inter Miami CF</b><br><span style="color:#998">Columbus Crew vs Inter Miami CF · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.71 avg</span><br><span style="color:#998">7gm · 2/2/1/6/3/3/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Philadelphia Union</b><br><span style="color:#998">Philadelphia Union vs Orlando City SC · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.57 avg</span><br><span style="color:#998">7gm · 4/2/2/4/0/2/4</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>San Jose Earthquakes</b><br><span style="color:#998">San Jose Earthquakes vs Portland Timbers · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.43 avg</span><br><span style="color:#998">7gm · 3/1/1/1/6/3/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>CF Montréal</b><br><span style="color:#998">CF Montréal vs FC Cincinnati · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.43 avg</span><br><span style="color:#998">7gm · 4/2/2/4/2/1/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>DC United</b><br><span style="color:#998">Vancouver Whitecaps vs DC United · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.33 avg</span><br><span style="color:#998">7gm · 2/1/3/3/3/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Vancouver Whitecaps</b><br><span style="color:#998">Vancouver Whitecaps vs DC United · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.29 avg</span><br><span style="color:#998">7gm · 1/1/2/4/1/2/5</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>St.Louis City</b><br><span style="color:#998">New York Red Bulls vs St.Louis City · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.29 avg</span><br><span style="color:#998">7gm · 2/4/1/3/4/0/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Sporting Kansas City</b><br><span style="color:#998">Seattle Sounders FC vs Sporting Kansas City · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.14 avg</span><br><span style="color:#998">7gm · 3/2/1/2/2/2/3</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Colorado Rapids</b><br><span style="color:#998">LA Galaxy vs Colorado Rapids · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.14 avg</span><br><span style="color:#998">7gm · 3/3/3/0/2/2/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>New England Revolution</b><br><span style="color:#998">Real Salt Lake vs New England Revolution · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.14 avg</span><br><span style="color:#998">7gm · 2/1/1/3/2/2/4</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Minnesota United</b><br><span style="color:#998">Seattle Sounders FC vs Minnesota United · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.14 avg</span><br><span style="color:#998">7gm · 4/0/2/3/2/3/1</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Sporting Kansas City</b><br><span style="color:#998">Houston Dynamo vs Sporting Kansas City · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.14 avg</span><br><span style="color:#998">7gm · 3/2/1/2/2/2/3</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>San Diego FC</b><br><span style="color:#998">Austin FC vs San Diego FC · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.14 avg</span><br><span style="color:#998">7gm · 1/0/5/2/4/2/1</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>FC Dallas</b><br><span style="color:#998">FC Dallas vs Los Angeles FC · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.0 avg</span><br><span style="color:#998">7gm · 3/4/2/0/2/1/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Atlanta United</b><br><span style="color:#998">Atlanta United vs New York City FC · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.0 avg</span><br><span style="color:#998">7gm · 3/2/1/3/1/2/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>FC Cincinnati</b><br><span style="color:#998">CF Montréal vs FC Cincinnati · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">2.0 avg</span><br><span style="color:#998">7gm · 2/3/1/2/2/2</span></div>
+</div>
+</div>
+  <div style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:6px">🔥 Real Card Streak</div>
+  <div style="font-size:11px;color:#998;margin-bottom:10px">Genuinely CONSECUTIVE recent games with 2+ yellow cards, walking back from the most recent.</div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Real Salt Lake</b><br><span style="color:#998">Real Salt Lake vs New England Revolution · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">7+ straight</span><br><span style="color:#998">3/5/3/4/2/2/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>New York Red Bulls</b><br><span style="color:#998">New York Red Bulls vs St.Louis City · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">4+ straight</span><br><span style="color:#998">1/1/1/3/2/2/3</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Sporting Kansas City</b><br><span style="color:#998">Seattle Sounders FC vs Sporting Kansas City · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">4+ straight</span><br><span style="color:#998">3/2/1/2/2/2/3</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Inter Miami CF</b><br><span style="color:#998">Columbus Crew vs Inter Miami CF · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">4+ straight</span><br><span style="color:#998">2/2/1/6/3/3/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>DC United</b><br><span style="color:#998">Vancouver Whitecaps vs DC United · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">4+ straight</span><br><span style="color:#998">2/1/3/3/3/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>New England Revolution</b><br><span style="color:#998">Real Salt Lake vs New England Revolution · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">4+ straight</span><br><span style="color:#998">2/1/1/3/2/2/4</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Sporting Kansas City</b><br><span style="color:#998">Houston Dynamo vs Sporting Kansas City · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">4+ straight</span><br><span style="color:#998">3/2/1/2/2/2/3</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>San Jose Earthquakes</b><br><span style="color:#998">San Jose Earthquakes vs Portland Timbers · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">3+ straight</span><br><span style="color:#998">3/1/1/1/6/3/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Colorado Rapids</b><br><span style="color:#998">LA Galaxy vs Colorado Rapids · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">3+ straight</span><br><span style="color:#998">3/3/3/0/2/2/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>Los Angeles FC</b><br><span style="color:#998">FC Dallas vs Los Angeles FC · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">3+ straight</span><br><span style="color:#998">3/2/0/2/2/2</span></div>
+</div><div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+  <div><b>FC Cincinnati</b><br><span style="color:#998">CF Montréal vs FC Cincinnati · MLS</span></div>
+  <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">3+ straight</span><br><span style="color:#998">2/3/1/2/2/2</span></div>
+</div>
+</div>
+  <div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">Sporting Kansas City @ Seattle Sounders FC</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Seattle Sounders FC — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.06</div>
+      <div style="font-size:10px;color:#998">last: 7/4/4/9/3/6/7</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Sporting Kansas City — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.3</div>
+      <div style="font-size:10px;color:#998">last: 2/9/6/1/7/6/3</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Seattle Sounders FC — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.63</div>
+      <div style="font-size:10px;color:#998">last: 1/2/1/1/2/0/4</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Sporting Kansas City — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.05</div>
+      <div style="font-size:10px;color:#998">last: 3/2/1/2/2/2/3</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">Inter Miami CF @ Columbus Crew</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Columbus Crew — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">2.97</div>
+      <div style="font-size:10px;color:#998">last: 5/1/5/1/5/7/1</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Inter Miami CF — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">3.88</div>
+      <div style="font-size:10px;color:#998">last: 1/3/6/6/5/4/4</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Columbus Crew — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.9</div>
+      <div style="font-size:10px;color:#998">last: 2/1/1/4/2/2/1</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Inter Miami CF — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.52</div>
+      <div style="font-size:10px;color:#998">last: 2/2/1/6/3/3/2</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">Colorado Rapids @ LA Galaxy</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">LA Galaxy — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">3.98</div>
+      <div style="font-size:10px;color:#998">last: 2/5/7/5/5/5/8</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Colorado Rapids — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">4.72</div>
+      <div style="font-size:10px;color:#998">last: 4/3/7/3/4/5/4</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">LA Galaxy — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.8</div>
+      <div style="font-size:10px;color:#998">last: 4/0/2/2/3/0/1</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Colorado Rapids — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.1</div>
+      <div style="font-size:10px;color:#998">last: 3/3/3/0/2/2/2</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">DC United @ Vancouver Whitecaps</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Vancouver Whitecaps — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">7.11</div>
+      <div style="font-size:10px;color:#998">last: 8/9/4/6/7/6/7</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">DC United — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">3.34</div>
+      <div style="font-size:10px;color:#998">last: 3/4/9/5/3/4/4</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Vancouver Whitecaps — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.23</div>
+      <div style="font-size:10px;color:#998">last: 1/1/2/4/1/2/5</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">DC United — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.26</div>
+      <div style="font-size:10px;color:#998">last: 2/1/3/3/3/2</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">Portland Timbers @ San Jose Earthquakes</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">San Jose Earthquakes — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">6.37</div>
+      <div style="font-size:10px;color:#998">last: 5/3/4/7/3/1/17</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Portland Timbers — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">3.85</div>
+      <div style="font-size:10px;color:#998">last: 0/0/6/4/9/5/5</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">San Jose Earthquakes — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.33</div>
+      <div style="font-size:10px;color:#998">last: 3/1/1/1/6/3/2</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Portland Timbers — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.62</div>
+      <div style="font-size:10px;color:#998">last: 2/3/1/1/1/0/2</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">New England Revolution @ Real Salt Lake</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Real Salt Lake — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">6.7</div>
+      <div style="font-size:10px;color:#998">last: 4/1/5/4/10/6/6</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">New England Revolution — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.16</div>
+      <div style="font-size:10px;color:#998">last: 5/6/5/3/4/0/10</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Real Salt Lake — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.74</div>
+      <div style="font-size:10px;color:#998">last: 3/5/3/4/2/2/2</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">New England Revolution — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.14</div>
+      <div style="font-size:10px;color:#998">last: 2/1/1/3/2/2/4</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">Toronto FC @ Nashville SC</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Nashville SC — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.84</div>
+      <div style="font-size:10px;color:#998">last: 10/8/6/3/8/3/5</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Toronto FC — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">3.74</div>
+      <div style="font-size:10px;color:#998">last: 6/2/7/6/3/3/4</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Nashville SC — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.93</div>
+      <div style="font-size:10px;color:#998">last: 2/1/3/4/0/2/1</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Toronto FC — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.83</div>
+      <div style="font-size:10px;color:#998">last: 1/1/3/2/1/2/2</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">Minnesota United @ Seattle Sounders FC</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Seattle Sounders FC — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.41</div>
+      <div style="font-size:10px;color:#998">last: 7/4/4/9/3/6/7</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Minnesota United — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.73</div>
+      <div style="font-size:10px;color:#998">last: 6/3/8/3/2/5/5</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Seattle Sounders FC — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.72</div>
+      <div style="font-size:10px;color:#998">last: 1/2/1/1/2/0/4</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Minnesota United — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.12</div>
+      <div style="font-size:10px;color:#998">last: 4/0/2/3/2/3/1</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">Sporting Kansas City @ Houston Dynamo</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Houston Dynamo — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">4.46</div>
+      <div style="font-size:10px;color:#998">last: 2/5/7/6/1/3/3</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Sporting Kansas City — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">4.88</div>
+      <div style="font-size:10px;color:#998">last: 2/9/6/1/7/6/3</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Houston Dynamo — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.9</div>
+      <div style="font-size:10px;color:#998">last: 2/3/0/4/1/1</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Sporting Kansas City — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.11</div>
+      <div style="font-size:10px;color:#998">last: 3/2/1/2/2/2/3</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">Los Angeles FC @ FC Dallas</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">FC Dallas — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.56</div>
+      <div style="font-size:10px;color:#998">last: 3/3/3/3/6/8/8</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Los Angeles FC — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">8.33</div>
+      <div style="font-size:10px;color:#998">last: 4/12/8/8/9/13/3</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">FC Dallas — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.01</div>
+      <div style="font-size:10px;color:#998">last: 3/4/2/0/2/1/2</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Los Angeles FC — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.89</div>
+      <div style="font-size:10px;color:#998">last: 3/2/0/2/2/2</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">San Diego FC @ Austin FC</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Austin FC — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">4.29</div>
+      <div style="font-size:10px;color:#998">last: 5/6/3/7/8/0/6</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">San Diego FC — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.82</div>
+      <div style="font-size:10px;color:#998">last: 7/2/7/4/1/11/1</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Austin FC — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.91</div>
+      <div style="font-size:10px;color:#998">last: 0/1/4/1/0/5/2</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">San Diego FC — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.11</div>
+      <div style="font-size:10px;color:#998">last: 1/0/5/2/4/2/1</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">Orlando City SC @ Philadelphia Union</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Philadelphia Union — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.89</div>
+      <div style="font-size:10px;color:#998">last: 4/6/7/6/7/4/4</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Orlando City SC — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">3.61</div>
+      <div style="font-size:10px;color:#998">last: 3/5/1/6/5/4/3</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Philadelphia Union — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.42</div>
+      <div style="font-size:10px;color:#998">last: 4/2/2/4/0/2/4</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Orlando City SC — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.92</div>
+      <div style="font-size:10px;color:#998">last: 2/1/2/3/2/3/0</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">St.Louis City @ New York Red Bulls</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">New York Red Bulls — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.59</div>
+      <div style="font-size:10px;color:#998">last: 7/3/4/7/3/3/7</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">St.Louis City — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.53</div>
+      <div style="font-size:10px;color:#998">last: 2/1/6/2/2/6/8</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">New York Red Bulls — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.92</div>
+      <div style="font-size:10px;color:#998">last: 1/1/1/3/2/2/3</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">St.Louis City — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.22</div>
+      <div style="font-size:10px;color:#998">last: 2/4/1/3/4/0/2</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">FC Cincinnati @ CF Montréal</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">CF Montréal — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.1</div>
+      <div style="font-size:10px;color:#998">last: 3/6/6/1/11/1/5</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">FC Cincinnati — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.07</div>
+      <div style="font-size:10px;color:#998">last: 5/2/9/4/1/12/7</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">CF Montréal — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.32</div>
+      <div style="font-size:10px;color:#998">last: 4/2/2/4/2/1/2</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">FC Cincinnati — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.02</div>
+      <div style="font-size:10px;color:#998">last: 2/3/1/2/2/2</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">Chicago Fire @ Charlotte FC</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Charlotte FC — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">3.91</div>
+      <div style="font-size:10px;color:#998">last: 5/4/7/8/3/3/3</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Chicago Fire — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">6.94</div>
+      <div style="font-size:10px;color:#998">last: 3/2/7/3/2/13/2</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Charlotte FC — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.81</div>
+      <div style="font-size:10px;color:#998">last: 0/2/1/5/1/1/2</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Chicago Fire — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.71</div>
+      <div style="font-size:10px;color:#998">last: 2/2/0/2/2/2/1</div>
+    </div>
+  </div>
+</div><div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">MLS</div>
+  <h3 style="margin:2px 0 10px 0;font-size:16px">New York City FC @ Atlanta United</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Atlanta United — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">6.0</div>
+      <div style="font-size:10px;color:#998">last: 4/2/11/6/7/8/3</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">New York City FC — Corners</div>
+      <div style="font-size:20px;font-weight:800;color:#7dd3a8">5.13</div>
+      <div style="font-size:10px;color:#998">last: 5/4/2/3/12/1/6</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">Atlanta United — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">2.01</div>
+      <div style="font-size:10px;color:#998">last: 3/2/1/3/1/2/2</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">New York City FC — Cards</div>
+      <div style="font-size:20px;font-weight:800;color:#ffeb3b">1.91</div>
+      <div style="font-size:10px;color:#998">last: 3/1/3/2/0/2/2</div>
+    </div>
+  </div>
+</div>
+
+  <div class="footnote">
+    Corners: each team's own recency-weighted+season corner-winning rate, adjusted by the
+    OPPONENT'S corner-conceding rate vs. league average. Cards: each team's own recency-weighted+
+    season YELLOW card rate (red cards excluded entirely — see the page's build notes), with no
+    opponent adjustment. Hot Form = average over the last 7 games (can mask a bad most
+    recent game). Real Streak = genuinely CONSECUTIVE recent games clearing the threshold, walking
+    backward from the most recent game. Lines are set automatically below the model's projection for
+    a safety margin.
+  </div>
+
+<script>
+const LEGS = [{"match": "Seattle Sounders FC vs Sporting Kansas City", "subject": "Seattle Sounders FC", "market": "Seattle Sounders FC Over 3.5 Corners", "prob": 74, "category": "Team Corners", "hit_rate": {"hits": 6, "total": 7}, "detail": "MLS \u00b7 proj 5.06 corners", "history": "7/4/4/9/3/6/7"}, {"match": "Seattle Sounders FC vs Sporting Kansas City", "subject": "Sporting Kansas City", "market": "Sporting Kansas City Over 3.5 Corners", "prob": 77, "category": "Team Corners", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 5.3 corners", "history": "2/9/6/1/7/6/3"}, {"match": "Seattle Sounders FC vs Sporting Kansas City", "subject": "Seattle Sounders FC", "market": "Seattle Sounders FC Over 1.0 Cards", "prob": 48, "category": "Team Cards", "hit_rate": {"hits": 3, "total": 7}, "detail": "MLS \u00b7 proj 1.63 yellow cards", "history": "1/2/1/1/2/0/4"}, {"match": "Seattle Sounders FC vs Sporting Kansas City", "subject": "Sporting Kansas City", "market": "Sporting Kansas City Over 1.0 Cards", "prob": 61, "category": "Team Cards", "hit_rate": {"hits": 6, "total": 7}, "detail": "MLS \u00b7 proj 2.05 yellow cards", "history": "3/2/1/2/2/2/3"}, {"match": "Columbus Crew vs Inter Miami CF", "subject": "Columbus Crew", "market": "Columbus Crew Over 2.0 Corners", "prob": 57, "category": "Team Corners", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 2.97 corners", "history": "5/1/5/1/5/7/1"}, {"match": "Columbus Crew vs Inter Miami CF", "subject": "Inter Miami CF", "market": "Inter Miami CF Over 2.5 Corners", "prob": 74, "category": "Team Corners", "hit_rate": {"hits": 6, "total": 7}, "detail": "MLS \u00b7 proj 3.88 corners", "history": "1/3/6/6/5/4/4"}, {"match": "Columbus Crew vs Inter Miami CF", "subject": "Columbus Crew", "market": "Columbus Crew Over 1.0 Cards", "prob": 57, "category": "Team Cards", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 1.9 yellow cards", "history": "2/1/1/4/2/2/1"}, {"match": "Columbus Crew vs Inter Miami CF", "subject": "Inter Miami CF", "market": "Inter Miami CF Over 1.5 Cards", "prob": 72, "category": "Team Cards", "hit_rate": {"hits": 6, "total": 7}, "detail": "MLS \u00b7 proj 2.52 yellow cards", "history": "2/2/1/6/3/3/2"}, {"match": "LA Galaxy vs Colorado Rapids", "subject": "LA Galaxy", "market": "LA Galaxy Over 2.5 Corners", "prob": 76, "category": "Team Corners", "hit_rate": {"hits": 6, "total": 7}, "detail": "MLS \u00b7 proj 3.98 corners", "history": "2/5/7/5/5/5/8"}, {"match": "LA Galaxy vs Colorado Rapids", "subject": "Colorado Rapids", "market": "Colorado Rapids Over 3.0 Corners", "prob": 69, "category": "Team Corners", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 4.72 corners", "history": "4/3/7/3/4/5/4"}, {"match": "LA Galaxy vs Colorado Rapids", "subject": "LA Galaxy", "market": "LA Galaxy Over 1.0 Cards", "prob": 54, "category": "Team Cards", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 1.8 yellow cards", "history": "4/0/2/2/3/0/1"}, {"match": "LA Galaxy vs Colorado Rapids", "subject": "Colorado Rapids", "market": "Colorado Rapids Over 1.5 Cards", "prob": 62, "category": "Team Cards", "hit_rate": {"hits": 6, "total": 7}, "detail": "MLS \u00b7 proj 2.1 yellow cards", "history": "3/3/3/0/2/2/2"}, {"match": "Vancouver Whitecaps vs DC United", "subject": "Vancouver Whitecaps", "market": "Vancouver Whitecaps Over 5.0 Corners", "prob": 71, "category": "Team Corners", "hit_rate": {"hits": 6, "total": 7}, "detail": "MLS \u00b7 proj 7.11 corners", "history": "8/9/4/6/7/6/7"}, {"match": "Vancouver Whitecaps vs DC United", "subject": "DC United", "market": "DC United Over 2.0 Corners", "prob": 65, "category": "Team Corners", "hit_rate": {"hits": 7, "total": 7}, "detail": "MLS \u00b7 proj 3.34 corners", "history": "3/4/9/5/3/4/4"}, {"match": "Vancouver Whitecaps vs DC United", "subject": "Vancouver Whitecaps", "market": "Vancouver Whitecaps Over 1.5 Cards", "prob": 65, "category": "Team Cards", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 2.23 yellow cards", "history": "1/1/2/4/1/2/5"}, {"match": "Vancouver Whitecaps vs DC United", "subject": "DC United", "market": "DC United Over 1.5 Cards", "prob": 66, "category": "Team Cards", "hit_rate": {"hits": 5, "total": 6}, "detail": "MLS \u00b7 proj 2.26 yellow cards", "history": "2/1/3/3/3/2"}, {"match": "San Jose Earthquakes vs Portland Timbers", "subject": "San Jose Earthquakes", "market": "San Jose Earthquakes Over 4.5 Corners", "prob": 76, "category": "Team Corners", "hit_rate": {"hits": 3, "total": 7}, "detail": "MLS \u00b7 proj 6.37 corners", "history": "5/3/4/7/3/1/17"}, {"match": "San Jose Earthquakes vs Portland Timbers", "subject": "Portland Timbers", "market": "Portland Timbers Over 2.5 Corners", "prob": 74, "category": "Team Corners", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 3.85 corners", "history": "0/0/6/4/9/5/5"}, {"match": "San Jose Earthquakes vs Portland Timbers", "subject": "San Jose Earthquakes", "market": "San Jose Earthquakes Over 1.5 Cards", "prob": 68, "category": "Team Cards", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 2.33 yellow cards", "history": "3/1/1/1/6/3/2"}, {"match": "San Jose Earthquakes vs Portland Timbers", "subject": "Portland Timbers", "market": "Portland Timbers Over 1.0 Cards", "prob": 48, "category": "Team Cards", "hit_rate": {"hits": 3, "total": 7}, "detail": "MLS \u00b7 proj 1.62 yellow cards", "history": "2/3/1/1/1/0/2"}, {"match": "Real Salt Lake vs New England Revolution", "subject": "Real Salt Lake", "market": "Real Salt Lake Over 4.5 Corners", "prob": 80, "category": "Team Corners", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 6.7 corners", "history": "4/1/5/4/10/6/6"}, {"match": "Real Salt Lake vs New England Revolution", "subject": "New England Revolution", "market": "New England Revolution Over 3.5 Corners", "prob": 76, "category": "Team Corners", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 5.16 corners", "history": "5/6/5/3/4/0/10"}, {"match": "Real Salt Lake vs New England Revolution", "subject": "Real Salt Lake", "market": "Real Salt Lake Over 1.5 Cards", "prob": 76, "category": "Team Cards", "hit_rate": {"hits": 7, "total": 7}, "detail": "MLS \u00b7 proj 2.74 yellow cards", "history": "3/5/3/4/2/2/2"}, {"match": "Real Salt Lake vs New England Revolution", "subject": "New England Revolution", "market": "New England Revolution Over 1.5 Cards", "prob": 63, "category": "Team Cards", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 2.14 yellow cards", "history": "2/1/1/3/2/2/4"}, {"match": "Nashville SC vs Toronto FC", "subject": "Nashville SC", "market": "Nashville SC Over 4.0 Corners", "prob": 69, "category": "Team Corners", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 5.84 corners", "history": "10/8/6/3/8/3/5"}, {"match": "Nashville SC vs Toronto FC", "subject": "Toronto FC", "market": "Toronto FC Over 2.5 Corners", "prob": 72, "category": "Team Corners", "hit_rate": {"hits": 6, "total": 7}, "detail": "MLS \u00b7 proj 3.74 corners", "history": "6/2/7/6/3/3/4"}, {"match": "Nashville SC vs Toronto FC", "subject": "Nashville SC", "market": "Nashville SC Over 1.0 Cards", "prob": 57, "category": "Team Cards", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 1.93 yellow cards", "history": "2/1/3/4/0/2/1"}, {"match": "Nashville SC vs Toronto FC", "subject": "Toronto FC", "market": "Toronto FC Over 1.0 Cards", "prob": 55, "category": "Team Cards", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 1.83 yellow cards", "history": "1/1/3/2/1/2/2"}, {"match": "Seattle Sounders FC vs Minnesota United", "subject": "Seattle Sounders FC", "market": "Seattle Sounders FC Over 3.5 Corners", "prob": 79, "category": "Team Corners", "hit_rate": {"hits": 6, "total": 7}, "detail": "MLS \u00b7 proj 5.41 corners", "history": "7/4/4/9/3/6/7"}, {"match": "Seattle Sounders FC vs Minnesota United", "subject": "Minnesota United", "market": "Minnesota United Over 4.0 Corners", "prob": 68, "category": "Team Corners", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 5.73 corners", "history": "6/3/8/3/2/5/5"}, {"match": "Seattle Sounders FC vs Minnesota United", "subject": "Seattle Sounders FC", "market": "Seattle Sounders FC Over 1.0 Cards", "prob": 51, "category": "Team Cards", "hit_rate": {"hits": 3, "total": 7}, "detail": "MLS \u00b7 proj 1.72 yellow cards", "history": "1/2/1/1/2/0/4"}, {"match": "Seattle Sounders FC vs Minnesota United", "subject": "Minnesota United", "market": "Minnesota United Over 1.5 Cards", "prob": 63, "category": "Team Cards", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 2.12 yellow cards", "history": "4/0/2/3/2/3/1"}, {"match": "Houston Dynamo vs Sporting Kansas City", "subject": "Houston Dynamo", "market": "Houston Dynamo Over 3.0 Corners", "prob": 65, "category": "Team Corners", "hit_rate": {"hits": 3, "total": 7}, "detail": "MLS \u00b7 proj 4.46 corners", "history": "2/5/7/6/1/3/3"}, {"match": "Houston Dynamo vs Sporting Kansas City", "subject": "Sporting Kansas City", "market": "Sporting Kansas City Over 3.5 Corners", "prob": 72, "category": "Team Corners", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 4.88 corners", "history": "2/9/6/1/7/6/3"}, {"match": "Houston Dynamo vs Sporting Kansas City", "subject": "Houston Dynamo", "market": "Houston Dynamo Over 1.0 Cards", "prob": 57, "category": "Team Cards", "hit_rate": {"hits": 3, "total": 6}, "detail": "MLS \u00b7 proj 1.9 yellow cards", "history": "2/3/0/4/1/1"}, {"match": "Houston Dynamo vs Sporting Kansas City", "subject": "Sporting Kansas City", "market": "Sporting Kansas City Over 1.5 Cards", "prob": 62, "category": "Team Cards", "hit_rate": {"hits": 6, "total": 7}, "detail": "MLS \u00b7 proj 2.11 yellow cards", "history": "3/2/1/2/2/2/3"}, {"match": "FC Dallas vs Los Angeles FC", "subject": "FC Dallas", "market": "FC Dallas Over 4.0 Corners", "prob": 65, "category": "Team Corners", "hit_rate": {"hits": 3, "total": 7}, "detail": "MLS \u00b7 proj 5.56 corners", "history": "3/3/3/3/6/8/8"}, {"match": "FC Dallas vs Los Angeles FC", "subject": "Los Angeles FC", "market": "Los Angeles FC Over 5.5 Corners", "prob": 84, "category": "Team Corners", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 8.33 corners", "history": "4/12/8/8/9/13/3"}, {"match": "FC Dallas vs Los Angeles FC", "subject": "FC Dallas", "market": "FC Dallas Over 1.0 Cards", "prob": 60, "category": "Team Cards", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 2.01 yellow cards", "history": "3/4/2/0/2/1/2"}, {"match": "FC Dallas vs Los Angeles FC", "subject": "Los Angeles FC", "market": "Los Angeles FC Over 1.0 Cards", "prob": 56, "category": "Team Cards", "hit_rate": {"hits": 5, "total": 6}, "detail": "MLS \u00b7 proj 1.89 yellow cards", "history": "3/2/0/2/2/2"}, {"match": "Austin FC vs San Diego FC", "subject": "Austin FC", "market": "Austin FC Over 3.0 Corners", "prob": 62, "category": "Team Corners", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 4.29 corners", "history": "5/6/3/7/8/0/6"}, {"match": "Austin FC vs San Diego FC", "subject": "San Diego FC", "market": "San Diego FC Over 4.0 Corners", "prob": 69, "category": "Team Corners", "hit_rate": {"hits": 3, "total": 7}, "detail": "MLS \u00b7 proj 5.82 corners", "history": "7/2/7/4/1/11/1"}, {"match": "Austin FC vs San Diego FC", "subject": "Austin FC", "market": "Austin FC Over 1.0 Cards", "prob": 57, "category": "Team Cards", "hit_rate": {"hits": 3, "total": 7}, "detail": "MLS \u00b7 proj 1.91 yellow cards", "history": "0/1/4/1/0/5/2"}, {"match": "Austin FC vs San Diego FC", "subject": "San Diego FC", "market": "San Diego FC Over 1.5 Cards", "prob": 62, "category": "Team Cards", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 2.11 yellow cards", "history": "1/0/5/2/4/2/1"}, {"match": "Philadelphia Union vs Orlando City SC", "subject": "Philadelphia Union", "market": "Philadelphia Union Over 4.0 Corners", "prob": 70, "category": "Team Corners", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 5.89 corners", "history": "4/6/7/6/7/4/4"}, {"match": "Philadelphia Union vs Orlando City SC", "subject": "Orlando City SC", "market": "Orlando City SC Over 2.5 Corners", "prob": 70, "category": "Team Corners", "hit_rate": {"hits": 6, "total": 7}, "detail": "MLS \u00b7 proj 3.61 corners", "history": "3/5/1/6/5/4/3"}, {"match": "Philadelphia Union vs Orlando City SC", "subject": "Philadelphia Union", "market": "Philadelphia Union Over 1.5 Cards", "prob": 70, "category": "Team Cards", "hit_rate": {"hits": 6, "total": 7}, "detail": "MLS \u00b7 proj 2.42 yellow cards", "history": "4/2/2/4/0/2/4"}, {"match": "Philadelphia Union vs Orlando City SC", "subject": "Orlando City SC", "market": "Orlando City SC Over 1.0 Cards", "prob": 57, "category": "Team Cards", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 1.92 yellow cards", "history": "2/1/2/3/2/3/0"}, {"match": "New York Red Bulls vs St.Louis City", "subject": "New York Red Bulls", "market": "New York Red Bulls Over 4.0 Corners", "prob": 66, "category": "Team Corners", "hit_rate": {"hits": 3, "total": 7}, "detail": "MLS \u00b7 proj 5.59 corners", "history": "7/3/4/7/3/3/7"}, {"match": "New York Red Bulls vs St.Louis City", "subject": "St.Louis City", "market": "St.Louis City Over 3.5 Corners", "prob": 80, "category": "Team Corners", "hit_rate": {"hits": 3, "total": 7}, "detail": "MLS \u00b7 proj 5.53 corners", "history": "2/1/6/2/2/6/8"}, {"match": "New York Red Bulls vs St.Louis City", "subject": "New York Red Bulls", "market": "New York Red Bulls Over 1.0 Cards", "prob": 57, "category": "Team Cards", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 1.92 yellow cards", "history": "1/1/1/3/2/2/3"}, {"match": "New York Red Bulls vs St.Louis City", "subject": "St.Louis City", "market": "St.Louis City Over 1.5 Cards", "prob": 65, "category": "Team Cards", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 2.22 yellow cards", "history": "2/4/1/3/4/0/2"}, {"match": "CF Montr\u00e9al vs FC Cincinnati", "subject": "CF Montr\u00e9al", "market": "CF Montr\u00e9al Over 3.5 Corners", "prob": 75, "category": "Team Corners", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 5.1 corners", "history": "3/6/6/1/11/1/5"}, {"match": "CF Montr\u00e9al vs FC Cincinnati", "subject": "FC Cincinnati", "market": "FC Cincinnati Over 3.5 Corners", "prob": 74, "category": "Team Corners", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 5.07 corners", "history": "5/2/9/4/1/12/7"}, {"match": "CF Montr\u00e9al vs FC Cincinnati", "subject": "CF Montr\u00e9al", "market": "CF Montr\u00e9al Over 1.5 Cards", "prob": 67, "category": "Team Cards", "hit_rate": {"hits": 6, "total": 7}, "detail": "MLS \u00b7 proj 2.32 yellow cards", "history": "4/2/2/4/2/1/2"}, {"match": "CF Montr\u00e9al vs FC Cincinnati", "subject": "FC Cincinnati", "market": "FC Cincinnati Over 1.0 Cards", "prob": 60, "category": "Team Cards", "hit_rate": {"hits": 5, "total": 6}, "detail": "MLS \u00b7 proj 2.02 yellow cards", "history": "2/3/1/2/2/2"}, {"match": "Charlotte FC vs Chicago Fire", "subject": "Charlotte FC", "market": "Charlotte FC Over 2.5 Corners", "prob": 75, "category": "Team Corners", "hit_rate": {"hits": 7, "total": 7}, "detail": "MLS \u00b7 proj 3.91 corners", "history": "5/4/7/8/3/3/3"}, {"match": "Charlotte FC vs Chicago Fire", "subject": "Chicago Fire", "market": "Chicago Fire Over 4.5 Corners", "prob": 82, "category": "Team Corners", "hit_rate": {"hits": 2, "total": 7}, "detail": "MLS \u00b7 proj 6.94 corners", "history": "3/2/7/3/2/13/2"}, {"match": "Charlotte FC vs Chicago Fire", "subject": "Charlotte FC", "market": "Charlotte FC Over 1.0 Cards", "prob": 54, "category": "Team Cards", "hit_rate": {"hits": 3, "total": 7}, "detail": "MLS \u00b7 proj 1.81 yellow cards", "history": "0/2/1/5/1/1/2"}, {"match": "Charlotte FC vs Chicago Fire", "subject": "Chicago Fire", "market": "Chicago Fire Over 1.0 Cards", "prob": 51, "category": "Team Cards", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 1.71 yellow cards", "history": "2/2/0/2/2/2/1"}, {"match": "Atlanta United vs New York City FC", "subject": "Atlanta United", "market": "Atlanta United Over 4.0 Corners", "prob": 71, "category": "Team Corners", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 6.0 corners", "history": "4/2/11/6/7/8/3"}, {"match": "Atlanta United vs New York City FC", "subject": "New York City FC", "market": "New York City FC Over 3.5 Corners", "prob": 75, "category": "Team Corners", "hit_rate": {"hits": 4, "total": 7}, "detail": "MLS \u00b7 proj 5.13 corners", "history": "5/4/2/3/12/1/6"}, {"match": "Atlanta United vs New York City FC", "subject": "Atlanta United", "market": "Atlanta United Over 1.0 Cards", "prob": 60, "category": "Team Cards", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 2.01 yellow cards", "history": "3/2/1/3/1/2/2"}, {"match": "Atlanta United vs New York City FC", "subject": "New York City FC", "market": "New York City FC Over 1.0 Cards", "prob": 57, "category": "Team Cards", "hit_rate": {"hits": 5, "total": 7}, "detail": "MLS \u00b7 proj 1.91 yellow cards", "history": "3/1/3/2/0/2/2"}];
+
+function poissonCDF(threshold, lambda){
+  let p = Math.exp(-lambda), cum = p;
+  for(let i=1;i<=threshold;i++){ p = p*lambda/i; cum += p; }
+  return cum;
+}
+function initToggles() {
+  const container = document.getElementById('builderCategoryToggles');
+  const cats = [...new Set(LEGS.map(l => l.category))];
+  container.innerHTML = cats.map(c => `
+    <label><input type="checkbox" class="catToggle" value="${c}" checked> ${c}</label>
+  `).join('');
+}
+function shuffleArr(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+function tieredShuffle(legs, bandSize) {
+  const bands = {};
+  legs.forEach(l => {
+    const band = Math.floor(l.prob / bandSize);
+    (bands[band] = bands[band] || []).push(l);
+  });
+  const keys = Object.keys(bands).map(Number).sort((a,b) => b-a);
+  let result = [];
+  keys.forEach(k => { result = result.concat(shuffleArr(bands[k])); });
+  return result;
+}
+function buildSafest() {
+  const target = parseFloat(document.getElementById('targetOdds').value) || 5.0;
+  const maxLegs = parseInt(document.getElementById('maxLegs').value) || 8;
+  const activeCats = [...document.querySelectorAll('.catToggle:checked')].map(el => el.value);
+
+  const byCategory = {};
+  LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category)).forEach(l => {
+    (byCategory[l.category] = byCategory[l.category] || []).push(l);
+  });
+  const categories = Object.keys(byCategory);
+  categories.forEach(c => { byCategory[c] = tieredShuffle(byCategory[c], 5); });
+  const cursor = {};
+  categories.forEach(c => cursor[c] = 0);
+
+  const chosen = [];
+  const subjectCount = {};
+  let combinedOdds = 1;
+  let addedThisPass = true;
+
+  while (addedThisPass && combinedOdds < target && chosen.length < maxLegs) {
+    addedThisPass = false;
+    for (const cat of categories) {
+      if (combinedOdds >= target || chosen.length >= maxLegs) break;
+      const arr = byCategory[cat];
+      while (cursor[cat] < arr.length) {
+        const leg = arr[cursor[cat]];
+        cursor[cat]++;
+        const count = subjectCount[leg.subject] || 0;
+        if (count >= 2) continue;
+        chosen.push(leg);
+        combinedOdds *= 100 / leg.prob;
+        subjectCount[leg.subject] = count + 1;
+        addedThisPass = true;
+        break;
+      }
+    }
+  }
+
+  const out = document.getElementById('builderResult');
+  if (!chosen.length) { out.innerHTML = 'No legs available to build from.'; return; }
+
+  const rows = chosen.map(l => `
+    <div class="legRow">
+      <span>${l.match}<br><span style="color:var(--amber)">${l.market}</span> <span style="color:var(--sub)">· ${l.category}</span>
+      ${l.detail ? `<br><span style="color:var(--sub);font-size:10px">${l.detail}</span>` : ''}
+      ${l.history ? `<br><span style="color:var(--sub);font-size:10px">last games: ${l.history}</span>` : ''}</span>
+      <span style="text-align:right"><span style="color:var(--amber);font-weight:bold">${l.prob}%</span>${l.hit_rate ? `<br><span style="color:var(--sub);font-size:11px">${l.hit_rate.hits}/${l.hit_rate.total}</span>` : ''}</span>
+    </div>
+  `).join('');
+
+  const capNote = chosen.length >= maxLegs && combinedOdds < target
+    ? ' (hit the leg cap before reaching target — raise Max legs or lower Target odds)'
+    : (combinedOdds < target ? ' (ran out of legs before reaching target)' : '');
+
+  out.innerHTML = `
+    <div style="color:var(--text);font-size:13px;margin-bottom:6px">
+      ${chosen.length} legs · est. combined odds ~<b>${combinedOdds.toFixed(2)}</b>${capNote}
+    </div>
+    ${rows}
+    <div style="color:var(--sub);font-size:10px;margin-top:8px;line-height:1.4">
+      Estimate multiplies each leg's fair odds (100/probability) — real sportsbook odds
+      include their margin, so treat this as a ranking tool, not a firm price.
+    </div>
+  `;
+}
+initToggles();
+</script>
+</body></html>
