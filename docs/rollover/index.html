@@ -9,15 +9,16 @@
 
 <h2 style="text-align:center;margin-bottom:2px">🎯 Daily Rollover Acca</h2>
 <p style="text-align:center;color:#888;font-size:11px;margin-top:0">
-  Pulls live from Match IQ, Under IQ &amp; Euro Ice — target range 2.3–3.0
+  Pulls live from Match IQ, Under IQ, Euro Ice &amp; Cards &amp; Corners IQ — target range 2.3–3.0
 </p>
 <p style="text-align:center;font-size:11px;margin:4px 0 14px">
   <a href="../match-iq/match_iq_index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Match IQ</a>·
   <a href="https://niibaboo.github.io/Under-Goals/under-iq/under_iq_index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Under IQ</a>·
-  <a href="../euro-ice/index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Euro Ice</a>
+  <a href="../euro-ice/index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Euro Ice</a>·
+  <a href="../cards-corners/index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Cards &amp; Corners IQ</a>
 </p>
 
-<div id="loadStatus" style="text-align:center;color:#8b98a8;font-size:12px;margin-bottom:14px">Loading today's legs from all three models…</div>
+<div id="loadStatus" style="text-align:center;color:#8b98a8;font-size:12px;margin-bottom:14px">Loading today's legs from all four models…</div>
 
 <div id="builderPanel" style="background:#121820;border:1px solid #233040;border-radius:12px;padding:16px;margin:14px 0;display:none">
   <div style="font-size:15px;font-weight:800;margin-bottom:10px">🎯 Rollover Builder</div>
@@ -31,10 +32,11 @@
     <button onclick="buildAcca()" style="background:#161d27;border:1px solid #233040;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">🔀 Shuffle</button>
   </div>
   <div id="builderResult" style="font-size:12px;color:#8b98a8">
-    Defaults to your 2.3–3.0 target range, combining every leg currently available across Match IQ, Under IQ
-    and Euro Ice. Same-match/same-team legs are still capped at ONE per subject within each model — a
-    fixture from Match IQ and one from Under IQ can never collide (different sports/leagues), so this only
-    guards within each source, same as each model's own builder already does.
+    Defaults to your 2.3–3.0 target range, combining every leg currently available across Match IQ, Under IQ,
+    Euro Ice and Cards &amp; Corners IQ. Same-subject legs are still capped at ONE across the whole combined
+    pool — a fixture from Match IQ and a team pick from Cards &amp; Corners IQ can normally coexist since their
+    subjects are named differently (a match string vs. a single team name), but two legs naming the exact same
+    subject (e.g. that team's own Corners and Cards picks) will only ever contribute one to a single acca.
   </div>
 </div>
 
@@ -45,6 +47,7 @@ const SOURCES = {
   matchiq: "https://niibaboo.github.io/SportsIQ/match-iq/match_iq.json",
   underiq: "https://niibaboo.github.io/Under-Goals/under-iq/under_iq.json",
   euroice: "https://niibaboo.github.io/SportsIQ/euro-ice/euro_ice.json",
+  cardscorners: "https://niibaboo.github.io/SportsIQ/cards-corners/cards_corners.json",
 };
 
 let ALL_LEGS = [];
@@ -99,6 +102,36 @@ function legsFromEuroIce(rawLegs) {
   }));
 }
 
+// Cards & Corners IQ's own JSON dump stores raw predictions (each team's
+// projected lambda + safety-margined line + probability, added onto the
+// prediction dict at build time in cards_corners_iq.py — same "compute
+// once in Python, reuse everywhere" approach as Match IQ's over25/btts/
+// corners_over105 fields already use), NOT a pre-built legs array like
+// Euro Ice's JSON. So this parses it the same shape-conversion way
+// legsFromMatchIQ/legsFromUnderIQ do, rather than the passthrough
+// legsFromEuroIce uses.
+function legsFromCardsCorners(predictions) {
+  const legs = [];
+  predictions.forEach(p => {
+    const match = `${p.home_team} vs ${p.away_team}`;
+    const addLeg = (teamName, proj, statLabel) => {
+      if (!proj || proj.line == null || !(proj.prob > 0)) return;
+      legs.push({
+        source: "Cards & Corners IQ", match, subject: teamName,
+        market: `${teamName} Over ${proj.line} ${statLabel}`, prob: proj.prob,
+        category: `Cards & Corners IQ — Team ${statLabel}`,
+        detail: `${p.league} · proj ${proj.lambda} ${statLabel.toLowerCase()}`,
+        league: p.league,
+      });
+    };
+    addLeg(p.home_team, p.home_corners, "Corners");
+    addLeg(p.away_team, p.away_corners, "Corners");
+    addLeg(p.home_team, p.home_cards, "Cards");
+    addLeg(p.away_team, p.away_cards, "Cards");
+  });
+  return legs;
+}
+
 async function fetchSource(name, url, parseFn) {
   try {
     const res = await fetch(url, { cache: "no-store" });
@@ -114,12 +147,13 @@ async function fetchSource(name, url, parseFn) {
 }
 
 async function loadAll() {
-  const [mi, ui, ei] = await Promise.all([
+  const [mi, ui, ei, cc] = await Promise.all([
     fetchSource("Match IQ", SOURCES.matchiq, legsFromMatchIQ),
     fetchSource("Under IQ", SOURCES.underiq, legsFromUnderIQ),
     fetchSource("Euro Ice", SOURCES.euroice, legsFromEuroIce),
+    fetchSource("Cards & Corners IQ", SOURCES.cardscorners, legsFromCardsCorners),
   ]);
-  ALL_LEGS = [...mi, ...ui, ...ei];
+  ALL_LEGS = [...mi, ...ui, ...ei, ...cc];
 
   document.getElementById("sourceStatus").innerHTML = sourceStatusMsgs.join(" &nbsp;|&nbsp; ");
 
