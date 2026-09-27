@@ -310,17 +310,211 @@
     }
   },
   {
+    "away": "Tampa Bay Rays",
+    "home": "Philadelphia Phillies",
+    "time": "7:30 PM BST",
+    "pitchers": [
+      {
+        "side": "away",
+        "name": "Nick Martinez",
+        "pitcher_id": 607259,
+        "team": "Tampa Bay Rays",
+        "opp": "Philadelphia Phillies",
+        "opp_kpct": 21.7,
+        "fip": 3.97072,
+        "xfip": 4.43431,
+        "lambda": 4.29,
+        "lo": 2,
+        "hi": 7,
+        "proj_ip": 6.0,
+        "outs_lambda": 17.99,
+        "outs_lo": 13,
+        "outs_hi": 24,
+        "season_era": "2.94",
+        "season_k9": "5.48",
+        "season_hits9": "8.32",
+        "bb9": 1.27,
+        "whip": "1.07",
+        "l5_str": "4\u00b74\u00b73\u00b73\u00b77",
+        "l5_vs_season": 30.0,
+        "k_last5": [
+          4,
+          4,
+          3,
+          3,
+          7
+        ],
+        "outs_last5": [
+          18,
+          19,
+          19,
+          15,
+          18
+        ]
+      },
+      {
+        "side": "home",
+        "name": "Zack Wheeler",
+        "pitcher_id": 554430,
+        "team": "Philadelphia Phillies",
+        "opp": "Tampa Bay Rays",
+        "opp_kpct": 18.7,
+        "fip": 3.33948,
+        "xfip": 3.02709,
+        "lambda": 6.92,
+        "lo": 4,
+        "hi": 10,
+        "proj_ip": 6.3,
+        "outs_lambda": 19.0,
+        "outs_lo": 14,
+        "outs_hi": 25,
+        "season_era": "3.06",
+        "season_k9": "10.85",
+        "season_hits9": "6.81",
+        "bb9": 2.71,
+        "whip": "1.06",
+        "l5_str": "6\u00b79\u00b79\u00b75\u00b711",
+        "l5_vs_season": 11.0,
+        "k_last5": [
+          6,
+          9,
+          9,
+          5,
+          11
+        ],
+        "outs_last5": [
+          18,
+          18,
+          21,
+          21,
+          17
+        ]
+      }
+    ],
+    "game_pk": 823408,
+    "game_date": "2026-09-27",
+    "team_runs": {
+      "away": {
+        "team": "Tampa Bay Rays",
+        "opp": "Philadelphia Phillies",
+        "lambda": 3.44,
+        "lo": 1,
+        "hi": 6,
+        "l5_str": "6\u00b72\u00b74\u00b72\u00b712",
+        "last5_runs": [
+          6,
+          2,
+          4,
+          2,
+          12
+        ],
+        "season_rpg": 4.55,
+        "run_factor": 0.8,
+        "xfip_used": true
+      },
+      "home": {
+        "team": "Philadelphia Phillies",
+        "opp": "Tampa Bay Rays",
+        "lambda": 1.85,
+        "lo": 1,
+        "hi": 4,
+        "l5_str": "6\u00b71\u00b71\u00b70\u00b71",
+        "last5_runs": [
+          6,
+          1,
+          1,
+          0,
+          1
+        ],
+        "season_rpg": 4.39,
+        "run_factor": 0.9,
+        "xfip_used": true
+      }
+    },
+    "team_hits": {
+      "away": {
+        "team": "Tampa Bay Rays",
+        "opp": "Philadelphia Phillies",
+        "lambda": 8.02,
+        "lo": 5,
+        "hi": 12,
+        "l5_str": "11\u00b76\u00b79\u00b76\u00b717",
+        "last5_hits": [
+          11,
+          6,
+          9,
+          6,
+          17
+        ],
+        "season_hpg": 8.68,
+        "hit_factor": 0.86
+      },
+      "home": {
+        "team": "Philadelphia Phillies",
+        "opp": "Tampa Bay Rays",
+        "lambda": 6.19,
+        "lo": 3,
+        "hi": 9,
+        "l5_str": "8\u00b76\u00b74\u00b74\u00b77",
+        "last5_hits": [
+          8,
+          6,
+          4,
+          4,
+          7
+        ],
+        "season_hpg": 8.01,
+        "hit_factor": 0.95
+      }
+    }
+  },
+  {
     "away": "Chicago Cubs",
     "home": "Boston Red Sox",
     "time": "8:05 PM BST",
     "pitchers": [
       {
         "side": "away",
-        "name": null
+        "name": "Shota Imanaga",
+        "pitcher_id": 684007,
+        "team": "Chicago Cubs",
+        "opp": "Boston Red Sox",
+        "opp_kpct": 21.7,
+        "fip": 4.44076,
+        "xfip": 3.77127,
+        "lambda": 5.8,
+        "lo": 3,
+        "hi": 9,
+        "proj_ip": 5.6,
+        "outs_lambda": 16.82,
+        "outs_lo": 12,
+        "outs_hi": 22,
+        "season_era": "3.74",
+        "season_k9": "8.88",
+        "season_hits9": "7.94",
+        "bb9": 1.92,
+        "whip": "1.10",
+        "l5_str": "4\u00b74\u00b74\u00b78\u00b77",
+        "l5_vs_season": 10.0,
+        "k_last5": [
+          4,
+          4,
+          4,
+          8,
+          7
+        ],
+        "outs_last5": [
+          15,
+          18,
+          18,
+          18,
+          15
+        ]
       },
       {
         "side": "home",
-        "name": null
+        "name": "Tanner Houck",
+        "error": "list index out of range"
       }
     ],
     "game_pk": 824705,
@@ -347,7 +541,7 @@
       "home": {
         "team": "Boston Red Sox",
         "opp": "Chicago Cubs",
-        "lambda": 2.67,
+        "lambda": 2.5,
         "lo": 1,
         "hi": 5,
         "l5_str": "2\u00b71\u00b70\u00b74\u00b72",
@@ -359,8 +553,8 @@
           2
         ],
         "season_rpg": 4.27,
-        "run_factor": 1.01,
-        "xfip_used": false
+        "run_factor": 0.95,
+        "xfip_used": true
       }
     },
     "team_hits": {
@@ -384,8 +578,8 @@
       "home": {
         "team": "Boston Red Sox",
         "opp": "Chicago Cubs",
-        "lambda": 6.88,
-        "lo": 4,
+        "lambda": 6.59,
+        "lo": 3,
         "hi": 10,
         "l5_str": "8\u00b712\u00b72\u00b79\u00b74",
         "last5_hits": [
@@ -396,7 +590,7 @@
           4
         ],
         "season_hpg": 8.2,
-        "hit_factor": 0.99
+        "hit_factor": 0.95
       }
     }
   },
@@ -476,9 +670,9 @@
       "away": {
         "team": "Houston Astros",
         "opp": "Athletics",
-        "lambda": 7.72,
+        "lambda": 7.96,
         "lo": 4,
-        "hi": 11,
+        "hi": 12,
         "l5_str": "7\u00b75\u00b77\u00b75\u00b713",
         "last5_runs": [
           7,
@@ -488,13 +682,13 @@
           13
         ],
         "season_rpg": 4.5,
-        "run_factor": 1.2,
+        "run_factor": 1.24,
         "xfip_used": true
       },
       "home": {
         "team": "Athletics",
         "opp": "Houston Astros",
-        "lambda": 4.76,
+        "lambda": 4.86,
         "lo": 2,
         "hi": 8,
         "l5_str": "9\u00b77\u00b75\u00b76\u00b72",
@@ -506,7 +700,7 @@
           2
         ],
         "season_rpg": 4.34,
-        "run_factor": 1.02,
+        "run_factor": 1.05,
         "xfip_used": true
       }
     },
@@ -554,7 +748,35 @@
     "pitchers": [
       {
         "side": "away",
-        "name": null
+        "name": "Jack Dreyer",
+        "pitcher_id": 676263,
+        "team": "Los Angeles Dodgers",
+        "opp": "San Francisco Giants",
+        "opp_kpct": 22.0,
+        "fip": 3.48528,
+        "xfip": 3.45391,
+        "lambda": 1.57,
+        "lo": 1,
+        "hi": 3,
+        "proj_ip": 1.0,
+        "outs_lambda": 2.97,
+        "outs_lo": 1,
+        "outs_hi": 5,
+        "season_era": "3.16",
+        "season_k9": "10.20",
+        "season_hits9": "6.61",
+        "bb9": 3.3,
+        "whip": "1.10",
+        "l5_str": "3\u00b71",
+        "l5_vs_season": 62.0,
+        "k_last5": [
+          3,
+          1
+        ],
+        "outs_last5": [
+          3,
+          3
+        ]
       },
       {
         "side": "home",
@@ -563,8 +785,8 @@
         "team": "San Francisco Giants",
         "opp": "Los Angeles Dodgers",
         "opp_kpct": 20.4,
-        "fip": 6.0322,
-        "xfip": 4.92707,
+        "fip": 5.87404,
+        "xfip": 4.80681,
         "lambda": 5.67,
         "lo": 3,
         "hi": 9,
@@ -589,7 +811,7 @@
       "away": {
         "team": "Los Angeles Dodgers",
         "opp": "San Francisco Giants",
-        "lambda": 3.55,
+        "lambda": 3.67,
         "lo": 1,
         "hi": 6,
         "l5_str": "7\u00b71\u00b72\u00b72\u00b74",
@@ -601,15 +823,15 @@
           4
         ],
         "season_rpg": 4.94,
-        "run_factor": 1.1,
+        "run_factor": 1.13,
         "xfip_used": true
       },
       "home": {
         "team": "San Francisco Giants",
         "opp": "Los Angeles Dodgers",
-        "lambda": 2.6,
+        "lambda": 2.39,
         "lo": 1,
-        "hi": 5,
+        "hi": 4,
         "l5_str": "5\u00b72\u00b72\u00b70\u00b73",
         "last5_runs": [
           5,
@@ -619,8 +841,8 @@
           3
         ],
         "season_rpg": 4.15,
-        "run_factor": 0.96,
-        "xfip_used": false
+        "run_factor": 0.88,
+        "xfip_used": true
       }
     },
     "team_hits": {
@@ -644,9 +866,9 @@
       "home": {
         "team": "San Francisco Giants",
         "opp": "Los Angeles Dodgers",
-        "lambda": 6.67,
+        "lambda": 5.99,
         "lo": 3,
-        "hi": 10,
+        "hi": 9,
         "l5_str": "10\u00b76\u00b75\u00b73\u00b79",
         "last5_hits": [
           10,
@@ -656,166 +878,7 @@
           9
         ],
         "season_hpg": 8.3,
-        "hit_factor": 0.94
-      }
-    }
-  },
-  {
-    "away": "Tampa Bay Rays",
-    "home": "Philadelphia Phillies",
-    "time": "8:05 PM BST",
-    "pitchers": [
-      {
-        "side": "away",
-        "name": "Nick Martinez",
-        "pitcher_id": 607259,
-        "team": "Tampa Bay Rays",
-        "opp": "Philadelphia Phillies",
-        "opp_kpct": 21.7,
-        "fip": 3.96803,
-        "xfip": 4.42901,
-        "lambda": 4.29,
-        "lo": 2,
-        "hi": 7,
-        "proj_ip": 6.0,
-        "outs_lambda": 17.99,
-        "outs_lo": 13,
-        "outs_hi": 24,
-        "season_era": "2.94",
-        "season_k9": "5.48",
-        "season_hits9": "8.32",
-        "bb9": 1.27,
-        "whip": "1.07",
-        "l5_str": "4\u00b74\u00b73\u00b73\u00b77",
-        "l5_vs_season": 30.0,
-        "k_last5": [
-          4,
-          4,
-          3,
-          3,
-          7
-        ],
-        "outs_last5": [
-          18,
-          19,
-          19,
-          15,
-          18
-        ]
-      },
-      {
-        "side": "home",
-        "name": "Zack Wheeler",
-        "pitcher_id": 554430,
-        "team": "Philadelphia Phillies",
-        "opp": "Tampa Bay Rays",
-        "opp_kpct": 18.7,
-        "fip": 3.33679,
-        "xfip": 3.0227,
-        "lambda": 6.92,
-        "lo": 4,
-        "hi": 10,
-        "proj_ip": 6.3,
-        "outs_lambda": 19.0,
-        "outs_lo": 14,
-        "outs_hi": 25,
-        "season_era": "3.06",
-        "season_k9": "10.85",
-        "season_hits9": "6.81",
-        "bb9": 2.71,
-        "whip": "1.06",
-        "l5_str": "6\u00b79\u00b79\u00b75\u00b711",
-        "l5_vs_season": 11.0,
-        "k_last5": [
-          6,
-          9,
-          9,
-          5,
-          11
-        ],
-        "outs_last5": [
-          18,
-          18,
-          21,
-          21,
-          17
-        ]
-      }
-    ],
-    "game_pk": 823408,
-    "game_date": "2026-09-27",
-    "team_runs": {
-      "away": {
-        "team": "Tampa Bay Rays",
-        "opp": "Philadelphia Phillies",
-        "lambda": 3.42,
-        "lo": 1,
-        "hi": 6,
-        "l5_str": "6\u00b72\u00b74\u00b72\u00b712",
-        "last5_runs": [
-          6,
-          2,
-          4,
-          2,
-          12
-        ],
-        "season_rpg": 4.55,
-        "run_factor": 0.8,
-        "xfip_used": true
-      },
-      "home": {
-        "team": "Philadelphia Phillies",
-        "opp": "Tampa Bay Rays",
-        "lambda": 1.84,
-        "lo": 1,
-        "hi": 4,
-        "l5_str": "6\u00b71\u00b71\u00b70\u00b71",
-        "last5_runs": [
-          6,
-          1,
-          1,
-          0,
-          1
-        ],
-        "season_rpg": 4.39,
-        "run_factor": 0.9,
-        "xfip_used": true
-      }
-    },
-    "team_hits": {
-      "away": {
-        "team": "Tampa Bay Rays",
-        "opp": "Philadelphia Phillies",
-        "lambda": 8.02,
-        "lo": 5,
-        "hi": 12,
-        "l5_str": "11\u00b76\u00b79\u00b76\u00b717",
-        "last5_hits": [
-          11,
-          6,
-          9,
-          6,
-          17
-        ],
-        "season_hpg": 8.68,
-        "hit_factor": 0.86
-      },
-      "home": {
-        "team": "Philadelphia Phillies",
-        "opp": "Tampa Bay Rays",
-        "lambda": 6.19,
-        "lo": 3,
-        "hi": 9,
-        "l5_str": "8\u00b76\u00b74\u00b74\u00b77",
-        "last5_hits": [
-          8,
-          6,
-          4,
-          4,
-          7
-        ],
-        "season_hpg": 8.01,
-        "hit_factor": 0.95
+        "hit_factor": 0.85
       }
     }
   },
@@ -869,8 +932,8 @@
         "team": "Toronto Blue Jays",
         "opp": "Cincinnati Reds",
         "opp_kpct": 25.6,
-        "fip": 5.43009,
-        "xfip": 5.38384,
+        "fip": 5.43277,
+        "xfip": 5.38964,
         "lambda": 5.48,
         "lo": 3,
         "hi": 9,
@@ -907,9 +970,9 @@
       "away": {
         "team": "Cincinnati Reds",
         "opp": "Toronto Blue Jays",
-        "lambda": 5.42,
+        "lambda": 5.5,
         "lo": 3,
-        "hi": 8,
+        "hi": 9,
         "l5_str": "4\u00b72\u00b77\u00b75\u00b75",
         "last5_runs": [
           4,
@@ -919,13 +982,13 @@
           5
         ],
         "season_rpg": 4.13,
-        "run_factor": 1.17,
+        "run_factor": 1.19,
         "xfip_used": true
       },
       "home": {
         "team": "Toronto Blue Jays",
         "opp": "Cincinnati Reds",
-        "lambda": 3.25,
+        "lambda": 3.29,
         "lo": 1,
         "hi": 6,
         "l5_str": "3\u00b72\u00b72\u00b76\u00b71",
@@ -937,7 +1000,7 @@
           1
         ],
         "season_rpg": 3.99,
-        "run_factor": 1.21,
+        "run_factor": 1.22,
         "xfip_used": true
       }
     },
@@ -990,8 +1053,8 @@
         "team": "Cleveland Guardians",
         "opp": "Kansas City Royals",
         "opp_kpct": 20.9,
-        "fip": 3.07234,
-        "xfip": 3.33842,
+        "fip": 3.07503,
+        "xfip": 3.34296,
         "lambda": 6.15,
         "lo": 3,
         "hi": 9,
@@ -1066,7 +1129,7 @@
       "away": {
         "team": "Cleveland Guardians",
         "opp": "Kansas City Royals",
-        "lambda": 3.91,
+        "lambda": 3.94,
         "lo": 2,
         "hi": 7,
         "l5_str": "3\u00b70\u00b71\u00b712\u00b711",
@@ -1078,13 +1141,13 @@
           11
         ],
         "season_rpg": 4.2,
-        "run_factor": 1.11,
+        "run_factor": 1.12,
         "xfip_used": true
       },
       "home": {
         "team": "Kansas City Royals",
         "opp": "Cleveland Guardians",
-        "lambda": 3.79,
+        "lambda": 3.84,
         "lo": 1,
         "hi": 6,
         "l5_str": "11\u00b75\u00b71\u00b79\u00b75",
@@ -1096,7 +1159,7 @@
           5
         ],
         "season_rpg": 4.27,
-        "run_factor": 0.78,
+        "run_factor": 0.79,
         "xfip_used": true
       }
     },
@@ -1217,7 +1280,7 @@
       "away": {
         "team": "Pittsburgh Pirates",
         "opp": "Detroit Tigers",
-        "lambda": 2.89,
+        "lambda": 2.9,
         "lo": 1,
         "hi": 5,
         "l5_str": "2\u00b71\u00b72\u00b77\u00b73",
@@ -1229,13 +1292,13 @@
           3
         ],
         "season_rpg": 4.74,
-        "run_factor": 0.88,
+        "run_factor": 0.89,
         "xfip_used": true
       },
       "home": {
         "team": "Detroit Tigers",
         "opp": "Pittsburgh Pirates",
-        "lambda": 3.8,
+        "lambda": 3.83,
         "lo": 1,
         "hi": 6,
         "l5_str": "9\u00b71\u00b72\u00b78\u00b74",
@@ -1247,7 +1310,7 @@
           4
         ],
         "season_rpg": 4.48,
-        "run_factor": 0.92,
+        "run_factor": 0.93,
         "xfip_used": true
       }
     },
@@ -1338,8 +1401,8 @@
         "team": "San Diego Padres",
         "opp": "Arizona Diamondbacks",
         "opp_kpct": 19.5,
-        "fip": 4.31743,
-        "xfip": 4.80978,
+        "fip": 4.32012,
+        "xfip": 4.81503,
         "lambda": 2.45,
         "lo": 1,
         "hi": 5,
@@ -1376,7 +1439,7 @@
       "away": {
         "team": "Arizona Diamondbacks",
         "opp": "San Diego Padres",
-        "lambda": 7.21,
+        "lambda": 7.27,
         "lo": 4,
         "hi": 11,
         "l5_str": "7\u00b75\u00b712\u00b711\u00b77",
@@ -1394,7 +1457,7 @@
       "home": {
         "team": "San Diego Padres",
         "opp": "Arizona Diamondbacks",
-        "lambda": 4.09,
+        "lambda": 4.11,
         "lo": 2,
         "hi": 7,
         "l5_str": "0\u00b75\u00b74\u00b74\u00b710",
@@ -1535,7 +1598,7 @@
       "away": {
         "team": "Los Angeles Angels",
         "opp": "Seattle Mariners",
-        "lambda": 4.57,
+        "lambda": 4.59,
         "lo": 2,
         "hi": 7,
         "l5_str": "7\u00b73\u00b76\u00b77\u00b74",
@@ -1547,14 +1610,14 @@
           4
         ],
         "season_rpg": 4.05,
-        "run_factor": 0.94,
+        "run_factor": 0.95,
         "xfip_used": true
       },
       "home": {
         "team": "Seattle Mariners",
         "opp": "Los Angeles Angels",
-        "lambda": 5.32,
-        "lo": 2,
+        "lambda": 5.35,
+        "lo": 3,
         "hi": 8,
         "l5_str": "0\u00b76\u00b74\u00b75\u00b78",
         "last5_runs": [
@@ -1565,7 +1628,7 @@
           8
         ],
         "season_rpg": 4.08,
-        "run_factor": 1.08,
+        "run_factor": 1.09,
         "xfip_used": true
       }
     },
@@ -1656,8 +1719,8 @@
         "team": "Minnesota Twins",
         "opp": "Texas Rangers",
         "opp_kpct": 23.0,
-        "fip": 4.86361056,
-        "xfip": 4.07445616,
+        "fip": 4.86630056,
+        "xfip": 4.07948776,
         "lambda": 5.22,
         "lo": 2,
         "hi": 8,
@@ -1694,7 +1757,7 @@
       "away": {
         "team": "Texas Rangers",
         "opp": "Minnesota Twins",
-        "lambda": 3.85,
+        "lambda": 3.86,
         "lo": 1,
         "hi": 6,
         "l5_str": "3\u00b72\u00b73\u00b72\u00b76",
@@ -1712,7 +1775,7 @@
       "home": {
         "team": "Minnesota Twins",
         "opp": "Texas Rangers",
-        "lambda": 3.82,
+        "lambda": 3.84,
         "lo": 1,
         "hi": 6,
         "l5_str": "2\u00b73\u00b74\u00b710\u00b72",
@@ -1853,7 +1916,7 @@
       "away": {
         "team": "Colorado Rockies",
         "opp": "Chicago White Sox",
-        "lambda": 3.96,
+        "lambda": 3.97,
         "lo": 2,
         "hi": 7,
         "l5_str": "2\u00b73\u00b78\u00b71\u00b79",
@@ -1871,7 +1934,7 @@
       "home": {
         "team": "Chicago White Sox",
         "opp": "Colorado Rockies",
-        "lambda": 7.87,
+        "lambda": 7.89,
         "lo": 4,
         "hi": 12,
         "l5_str": "14\u00b74\u00b79\u00b76\u00b76",
@@ -1883,7 +1946,7 @@
           6
         ],
         "season_rpg": 4.8,
-        "run_factor": 1.32,
+        "run_factor": 1.33,
         "xfip_used": true
       }
     },
@@ -2012,7 +2075,7 @@
       "away": {
         "team": "Atlanta Braves",
         "opp": "Miami Marlins",
-        "lambda": 3.54,
+        "lambda": 3.55,
         "lo": 1,
         "hi": 6,
         "l5_str": "0\u00b73\u00b76\u00b70\u00b78",
@@ -2030,7 +2093,7 @@
       "home": {
         "team": "Miami Marlins",
         "opp": "Atlanta Braves",
-        "lambda": 3.4,
+        "lambda": 3.42,
         "lo": 1,
         "hi": 6,
         "l5_str": "8\u00b73\u00b71\u00b73\u00b73",
@@ -2133,8 +2196,8 @@
         "team": "Milwaukee Brewers",
         "opp": "St. Louis Cardinals",
         "opp_kpct": 21.3,
-        "fip": 2.16064,
-        "xfip": 2.2251,
+        "fip": 2.16332,
+        "xfip": 2.22922,
         "lambda": 6.42,
         "lo": 3,
         "hi": 10,
@@ -2189,7 +2252,7 @@
       "home": {
         "team": "Milwaukee Brewers",
         "opp": "St. Louis Cardinals",
-        "lambda": 4.51,
+        "lambda": 4.53,
         "lo": 2,
         "hi": 7,
         "l5_str": "4\u00b74\u00b75\u00b78\u00b73",
