@@ -47,6 +47,17 @@ STAT_LABEL_TO_SCANNER = {"YDS": None, "REC": "receptions"}  # YDS is ambiguous
                                                                 # (passing vs rushing) --
                                                                 # resolved via category instead
 
+# Hot Form / Real Streak scanners (added 2026-09-27) -- these don't come
+# from build_legs()'s betting-line legs at all, they come from
+# blitz_iq.py's build_team_form_entries()/build_player_form_entries().
+# Verified differently too: not "did the actual value clear a betting
+# line", but "did the team/player clear the SAME threshold that got them
+# flagged, in the very game the flag was made for" -- the direct test of
+# whether being hot/streaking coming in says anything about the next
+# game, same question Match IQ's own tracker asks of its hot_form/
+# real_streak categories.
+FORM_SCANNERS = {"team_hot_form", "team_real_streak", "player_hot_form", "player_real_streak"}
+
 
 def _get(params):
     try:
@@ -90,10 +101,17 @@ def save_log(entries):
         json.dump(entries, f, indent=2, default=str)
 
 
-def log_todays_signals(legs, log):
+def log_todays_signals(legs, team_hot_form, team_real_streak, player_hot_form, player_real_streak, log):
     """Legs already carry game_id, game_date, is_home, line, and (for
     player props) athlete_id/stat_key -- added specifically for this
-    tracker when the legs were built."""
+    tracker when the legs were built.
+
+    team_hot_form/team_real_streak/player_hot_form/player_real_streak are
+    the entries from blitz_iq.py's build_team_form_entries()/
+    build_player_form_entries() -- a different shape from legs (no
+    betting line/prob, but a 'threshold' each entry was flagged against),
+    so they're logged through their own path below rather than being
+    forced into the leg-shaped block above."""
     existing_ids = {e["id"] for e in log}
     added = 0
 
@@ -115,6 +133,50 @@ def log_todays_signals(legs, log):
         })
         existing_ids.add(eid)
         added += 1
+
+    def _add_form(scanner, subject, match, date_key, game_id, threshold, market, extra=None):
+        nonlocal added
+        if game_id is None:
+            return  # can't verify a pick with no game to look up later
+        eid = _entry_id(scanner, subject, date_key, match)
+        if eid in existing_ids:
+            return
+        entry = {
+            "id": eid, "scanner": scanner, "match": match, "market": market,
+            "value": None, "detail": None, "line": None, "threshold": threshold,
+            "game_id": game_id, "game_date": date_key, "date_key": date_key,
+            "logged_at": datetime.now(timezone.utc).isoformat(),
+            "status": "pending", "result": None, "actual": None,
+        }
+        if extra:
+            entry.update(extra)
+        log.append(entry)
+        existing_ids.add(eid)
+        added += 1
+
+    for e in (team_hot_form or []):
+        date_key = (e.get("date") or "")[:10]
+        _add_form("team_hot_form", e["team"], e["match"], date_key, e.get("game_id"), e["threshold"],
+                  f"{e['team']} Hot Form (avg {e['avg']} pts, {e['n_games']}gm)",
+                  extra={"is_home": e.get("is_home")})
+
+    for e in (team_real_streak or []):
+        date_key = (e.get("date") or "")[:10]
+        _add_form("team_real_streak", e["team"], e["match"], date_key, e.get("game_id"), e["threshold"],
+                  f"{e['team']} Real Streak ({e['streak']}+ straight {e['threshold']}+ pt games)",
+                  extra={"is_home": e.get("is_home")})
+
+    for e in (player_hot_form or []):
+        date_key = (e.get("date") or "")[:10]
+        _add_form("player_hot_form", e["name"], e["match"], date_key, e.get("game_id"), e["threshold"],
+                  f"{e['name']} Hot Form (avg {e['avg']} {e['label'].lower()}, {e['n_games']}gm)",
+                  extra={"athlete_id": e.get("athlete_id"), "stat_key": e.get("stat_key"), "label": e.get("label")})
+
+    for e in (player_real_streak or []):
+        date_key = (e.get("date") or "")[:10]
+        _add_form("player_real_streak", e["name"], e["match"], date_key, e.get("game_id"), e["threshold"],
+                  f"{e['name']} Real Streak ({e['streak']}+ straight games ≥{e['threshold']} {e['label'].lower()})",
+                  extra={"athlete_id": e.get("athlete_id"), "stat_key": e.get("stat_key"), "label": e.get("label")})
 
     print(f"  Results log: {added} new pick(s) logged, {len(log)} total in log")
     return log
@@ -226,6 +288,43 @@ def _verify_player_leg(entry):
     return {"actual": actual, "result": "hit" if actual > entry["line"] else "miss"}
 
 
+def _verify_team_form_entry(entry):
+    """Hot Form / Real Streak for a TEAM -- checks whether that team's
+    actual score in the very game the pick was flagged for cleared the
+    same threshold (24+ pts by default) that got them flagged in the
+    first place. Reuses _get_summary/_is_final/_team_scores exactly as
+    the team_total/game_total scanners already do."""
+    summary = _get_summary(entry["game_id"])
+    if not summary or not _is_final(summary):
+        return None
+    home_score, away_score = _team_scores(summary)
+    if home_score is None or away_score is None:
+        return None
+    actual = home_score if entry.get("is_home") else away_score
+    return {"actual": actual, "result": "hit" if actual >= entry["threshold"] else "miss"}
+
+
+PREFER_KEYWORD_BY_LABEL = {"Passing Yards": "passing", "Rushing Yards": "rushing", "Receptions": "receiving"}
+
+
+def _verify_player_form_entry(entry):
+    """Hot Form / Real Streak for a PLAYER -- same boxscore lookup as
+    _verify_player_leg, just checked against the flagged threshold
+    instead of a betting line."""
+    if not entry.get("athlete_id") or not entry.get("stat_key"):
+        return None
+    summary = _get_summary(entry["game_id"])
+    if not summary or not _is_final(summary):
+        return None
+    actual = _find_player_boxscore_stat(
+        summary, entry["athlete_id"], entry["stat_key"],
+        prefer_keyword=PREFER_KEYWORD_BY_LABEL.get(entry.get("label")),
+    )
+    if actual is None:
+        return None
+    return {"actual": actual, "result": "hit" if actual >= entry["threshold"] else "miss"}
+
+
 def verify_pending_results(log, max_checks=60):
     today = datetime.now(timezone.utc).date().isoformat()
     checked = 0
@@ -246,6 +345,10 @@ def verify_pending_results(log, max_checks=60):
                 result = _verify_team_leg(entry)
             elif entry["scanner"] in ("passing_yards", "rushing_yards", "receptions"):
                 result = _verify_player_leg(entry)
+            elif entry["scanner"] in ("team_hot_form", "team_real_streak"):
+                result = _verify_team_form_entry(entry)
+            elif entry["scanner"] in ("player_hot_form", "player_real_streak"):
+                result = _verify_player_form_entry(entry)
         except Exception as e:
             print(f"    [!] verification error for entry {entry['id']} ({entry['scanner']}): {e}")
             result = None
@@ -274,6 +377,8 @@ def build_results_dashboard(log):
         "team_total": "Team Total", "game_total": "Game Total",
         "passing_yards": "Passing Yards", "rushing_yards": "Rushing Yards",
         "receptions": "Receptions",
+        "team_hot_form": "Team Hot Form", "team_real_streak": "Team Real Streak",
+        "player_hot_form": "Player Hot Form", "player_real_streak": "Player Real Streak",
     }
 
     total_hit = sum(d["hit"] for d in by_scanner.values())
@@ -339,11 +444,15 @@ def build_results_dashboard(log):
     print(f"  Results dashboard: {total} verified, {overall_pct}% overall" if total else "  Results dashboard: no verified picks yet")
 
 
-def run_results_tracker(legs):
-    """Single entry point called from nfl_model.py's main()."""
+def run_results_tracker(legs, team_hot_form=None, team_real_streak=None,
+                          player_hot_form=None, player_real_streak=None):
+    """Single entry point called from blitz_iq.py's main(). The four
+    form/streak args are optional (default to nothing logged) so this
+    stays callable the old way too, but blitz_iq.py's __main__ block
+    always passes all four now."""
     print("\nRunning results tracker...")
     log = load_log()
-    log = log_todays_signals(legs, log)
+    log = log_todays_signals(legs, team_hot_form, team_real_streak, player_hot_form, player_real_streak, log)
     log = verify_pending_results(log)
     save_log(log)
     build_results_dashboard(log)
