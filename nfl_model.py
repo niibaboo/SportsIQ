@@ -14,6 +14,12 @@ for NFL scoring:
   for small samples (same small-sample protection built for MLB/soccer,
   since NFL teams only play ~17 games/season — "last 5" is meaningfully
   more of the season than in MLB or soccer).
+- Hot Form / Real Streak screens (added 2026-09-27), for both team scoring
+  and player props — same distinction fixed across every other tool in the
+  suite: Hot Form is an average over the recent-games window (can mask a
+  bad MOST RECENT game); Real Streak is a genuine CONSECUTIVE run above a
+  threshold, walking backward from the most recent game and stopping at
+  the first break.
 
 Setup:
     pip3 install requests --break-system-packages
@@ -82,7 +88,11 @@ team_form_cache = {}
 
 def _extract_completed_games(events, team_id):
     """Shared parsing logic for a schedule response — pulls each completed
-    game's scored/allowed for one team."""
+    game's scored/allowed for one team. NOTE: events are sorted ASCENDING
+    by date before slicing, so the resulting scored/allowed lists are
+    OLDEST-FIRST — this is the ordering recency_weighted() (below) and the
+    Hot Form / Real Streak helpers (further below) both rely on: higher
+    weight / streak-priority goes to the LATER index in the list."""
     completed = [e for e in events if e.get('competitions', [{}])[0].get('status', {})
                  .get('type', {}).get('completed')]
     completed.sort(key=lambda e: e.get('date', ''))
@@ -425,6 +435,119 @@ def format_history(lst):
     return "/".join(str(v) for v in lst)
 
 
+# ---------------------------------------------------------------------
+# Hot Form (average) vs Real Streak (genuine consecutive run) -- same
+# fix already applied to Match IQ, Euro Ice, Strike Zone, Under IQ,
+# Orange Line, and Cards & Corners IQ after the Guardians-style edge case
+# (high average, but the MOST RECENT game breaks the pattern). Applied
+# here to BOTH team scoring and player props, since Blitz IQ's own model
+# spans a team-facing market (Team Total) and a player-facing one
+# (QB/RB/WR/TE props).
+# ---------------------------------------------------------------------
+
+TEAM_HOT_FORM_MIN = 24.0
+TEAM_HOT_FORM_MIN_GAMES = 3
+TEAM_REAL_STREAK_THRESHOLD = 24
+TEAM_REAL_STREAK_MIN_LENGTH = 3
+
+# Starting guesses, NOT backtested -- roughly "a clearly good game" for
+# each stat, set a bit above that position's own PLAYER_STAT_CONFIG prior
+# so a "hot" or "streaking" tag means genuinely above the typical game,
+# not just an ordinary one. Tune once there's tracked results data to
+# check these against (the same reasoning as FORM_ADJUST_WEIGHT in the
+# Horse Racing tool, and every other unvalidated threshold in this suite).
+PLAYER_STREAK_THRESHOLDS = {
+    'QB': 250,  # passing yards
+    'RB': 75,   # rushing yards
+    'WR': 5,    # receptions
+    'TE': 4,    # receptions
+}
+PLAYER_HOT_FORM_MIN_GAMES = 3
+PLAYER_REAL_STREAK_MIN_LENGTH = 3
+
+
+def _current_streak(values_oldest_first, threshold):
+    """Walks backward from the most recent value, counting consecutive
+    values >= threshold, stopping at the first break. Both team
+    scored_list (see _extract_completed_games -- sorted ascending by
+    date, then sliced from the end) and player recent_values (see
+    get_player_gamelog) are already oldest-first -- the same ordering
+    recency_weighted() already relies on (higher weight for a later
+    index) -- so this reuses that existing assumption instead of
+    re-sorting anything."""
+    streak = 0
+    for v in reversed(values_oldest_first):
+        if v >= threshold:
+            streak += 1
+        else:
+            break
+    return streak
+
+
+def build_team_form_entries(predictions):
+    """game_id/is_home are carried on every entry (even though the HTML
+    panels don't display them) specifically so blitz_iq_results_tracker.py
+    can look up the real final score for the exact game each pick was
+    flagged alongside -- same as build_legs() already does for its own
+    Team Total / Game Total legs."""
+    hot_form, real_streak = [], []
+    for p in predictions:
+        for team_name, form, opponent, is_home in (
+            (p['home_team'], p['home_form'], p['away_team'], True),
+            (p['away_team'], p['away_form'], p['home_team'], False),
+        ):
+            scored = form.get('scored_list') or []
+            n = form.get('n_games', 0)
+            avg = form.get('avg_scored')
+            entry_base = {
+                'team': team_name, 'opponent': opponent, 'match': p['match'],
+                'date': p['date'], 'n_games': n, 'list': scored,
+                'source_tag': ' · last season' if form.get('source') == 'prior_season' else '',
+                'game_id': p.get('game_id'), 'is_home': is_home,
+            }
+            if n >= TEAM_HOT_FORM_MIN_GAMES and avg is not None and avg >= TEAM_HOT_FORM_MIN:
+                hot_form.append({**entry_base, 'avg': avg, 'threshold': TEAM_HOT_FORM_MIN})
+            streak = _current_streak(scored, TEAM_REAL_STREAK_THRESHOLD)
+            if streak >= TEAM_REAL_STREAK_MIN_LENGTH:
+                real_streak.append({**entry_base, 'streak': streak, 'threshold': TEAM_REAL_STREAK_THRESHOLD})
+    hot_form.sort(key=lambda e: -e['avg'])
+    real_streak.sort(key=lambda e: -e['streak'])
+    return hot_form, real_streak
+
+
+def build_player_form_entries(predictions):
+    """game_id/athlete_id/stat_key are carried on every entry so the
+    results tracker can pull that exact player's real boxscore line for
+    that exact game -- same fields build_legs() already attaches to its
+    own player-prop legs."""
+    hot_form, real_streak = [], []
+    for p in predictions:
+        for team_name, props in ((p['home_team'], p.get('home_props') or []),
+                                   (p['away_team'], p.get('away_props') or [])):
+            for prop in props:
+                threshold = PLAYER_STREAK_THRESHOLDS.get(prop['position'])
+                if threshold is None:
+                    continue
+                values = prop.get('recent_values') or []
+                n = prop.get('n_games', 0)
+                entry_base = {
+                    'name': prop['name'], 'position': prop['position'], 'label': prop['label'],
+                    'team': team_name, 'match': p['match'], 'date': p['date'],
+                    'n_games': n, 'list': values, 'threshold': threshold,
+                    'game_id': p.get('game_id'), 'athlete_id': prop.get('athlete_id'),
+                    'stat_key': PLAYER_STAT_CONFIG[prop['position']]['stat'],
+                }
+                avg = (sum(values) / len(values)) if values else None
+                if n >= PLAYER_HOT_FORM_MIN_GAMES and avg is not None and avg >= threshold:
+                    hot_form.append({**entry_base, 'avg': round(avg, 1)})
+                streak = _current_streak(values, threshold)
+                if streak >= PLAYER_REAL_STREAK_MIN_LENGTH:
+                    real_streak.append({**entry_base, 'streak': streak})
+    hot_form.sort(key=lambda e: -e['avg'])
+    real_streak.sort(key=lambda e: -e['streak'])
+    return hot_form, real_streak
+
+
 def build_legs(predictions):
     legs = []
     for p in predictions:
@@ -631,6 +754,42 @@ function buildSafest() {{
 </script>
 """
 
+TEAM_STREAK_ROW = """<div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #232a33">
+  <div><b>{team}</b><br><span style="color:#888">{match}{source_tag}</span></div>
+  <div style="text-align:right"><span style="color:{color};font-weight:bold">{value}</span><br><span style="color:#666;font-size:10px">{history}</span></div>
+</div>"""
+
+PLAYER_STREAK_ROW = """<div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #232a33">
+  <div><b>{name}</b> ({position})<br><span style="color:#888">{team} · {label} · {match}</span></div>
+  <div style="text-align:right"><span style="color:{color};font-weight:bold">{value}</span><br><span style="color:#666;font-size:10px">{history}</span></div>
+</div>"""
+
+STREAK_PANEL = """<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:6px">{icon} {title}</div>
+  <div style="font-size:11px;color:#888;margin-bottom:10px">{note}</div>
+  {rows}
+</div>"""
+
+
+def _team_streak_panel(entries, icon, title, note, color, value_fn):
+    if not entries:
+        return ""
+    rows = "".join(TEAM_STREAK_ROW.format(
+        team=e['team'], match=e['match'], source_tag=e.get('source_tag', ''),
+        color=color, value=value_fn(e), history=format_history(e['list']) or '—',
+    ) for e in entries)
+    return STREAK_PANEL.format(icon=icon, title=title, note=note, rows=rows)
+
+
+def _player_streak_panel(entries, icon, title, note, color, value_fn):
+    if not entries:
+        return ""
+    rows = "".join(PLAYER_STREAK_ROW.format(
+        name=e['name'], position=e['position'], team=e['team'], label=e['label'], match=e['match'],
+        color=color, value=value_fn(e), history=format_history(e['list']) or '—',
+    ) for e in entries)
+    return STREAK_PANEL.format(icon=icon, title=title, note=note, rows=rows)
+
 
 def build_predictions():
     print("Fetching teams…")
@@ -699,8 +858,12 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <p style="text-align:center;margin-bottom:16px"><a href="blitz_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
 <p style="text-align:center;margin-bottom:16px"><a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a></p>
 {builder}
+{team_hot_form}
+{team_real_streak}
+{player_hot_form}
+{player_real_streak}
 {cards}
-<p style="text-align:center;color:#666;font-size:10px;margin-top:20px">Enter your book's Over/Under line and odds to compute an edge the same way as the MLB/soccer tools — this page shows the model's own projection only.</p>
+<p style="text-align:center;color:#666;font-size:10px;margin-top:20px">Enter your book's Over/Under line and odds to compute an edge the same way as the MLB/soccer tools — this page shows the model's own projection only. Hot Form = average over the last {recent_games} games (can mask a bad most recent game). Real Streak = genuinely CONSECUTIVE recent games clearing the threshold, walking backward from the most recent game.</p>
 </body></html>"""
 
 CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
@@ -755,8 +918,35 @@ def make_html(predictions):
     legs = build_legs(predictions)
     builder = BUILDER_TEMPLATE.format(legs_json=json.dumps(legs)) if legs else ""
 
+    team_hot_form_entries, team_real_streak_entries = build_team_form_entries(predictions)
+    player_hot_form_entries, player_real_streak_entries = build_player_form_entries(predictions)
+
+    team_hot_form_html = _team_streak_panel(
+        team_hot_form_entries, "📊", "Team Hot Form",
+        f"Averaging {TEAM_HOT_FORM_MIN}+ points over the last {RECENT_GAMES} games — can mask a bad most recent game. Not a streak.",
+        "#a0e8a0", lambda e: f"{e['avg']} avg",
+    )
+    team_real_streak_html = _team_streak_panel(
+        team_real_streak_entries, "🔥", "Team Real Scoring Streak",
+        f"Genuinely CONSECUTIVE recent games scoring {TEAM_REAL_STREAK_THRESHOLD}+ points, walking back from the most recent.",
+        "#ff9a2e", lambda e: f"{e['streak']}+ straight",
+    )
+    player_hot_form_html = _player_streak_panel(
+        player_hot_form_entries, "📊", "Player Hot Form",
+        f"Averaging above this stat's own hot-form threshold over the last {RECENT_GAMES} games — can mask a bad most recent game.",
+        "#a0e8a0", lambda e: f"{e['avg']} avg",
+    )
+    player_real_streak_html = _player_streak_panel(
+        player_real_streak_entries, "🔥", "Player Real Streak",
+        "Genuinely CONSECUTIVE recent games clearing that stat's threshold, walking back from the most recent.",
+        "#ff9a2e", lambda e: f"{e['streak']}+ straight (≥{e['threshold']})",
+    )
+
     return HTML_TEMPLATE.format(
-        generated=datetime.now().strftime('%d %b %H:%M'), builder=builder, cards=cards,
+        generated=datetime.now().strftime('%d %b %H:%M'), builder=builder,
+        team_hot_form=team_hot_form_html, team_real_streak=team_real_streak_html,
+        player_hot_form=player_hot_form_html, player_real_streak=player_real_streak_html,
+        cards=cards, recent_games=RECENT_GAMES,
     )
 
 
@@ -813,7 +1003,12 @@ if __name__ == "__main__":
 
     try:
         import blitz_iq_results_tracker
-        blitz_iq_results_tracker.run_results_tracker(build_legs(predictions))
+        team_hot_form, team_real_streak = build_team_form_entries(predictions)
+        player_hot_form, player_real_streak = build_player_form_entries(predictions)
+        blitz_iq_results_tracker.run_results_tracker(
+            build_legs(predictions), team_hot_form, team_real_streak,
+            player_hot_form, player_real_streak,
+        )
     except Exception as e:
         print(f"[!] Results tracker failed, but the rest of this run succeeded: {e}")
 
