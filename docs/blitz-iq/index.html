@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Blitz IQ — NFL</title></head>
 <body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
 <h2 style="text-align:center">🏈 BLITZ IQ — NFL Team Points</h2>
-<p style="text-align:center;color:#888;font-size:11px">Recency-weighted scoring/allowed rates, Normal-distribution projected · 27 Sep 13:34</p>
+<p style="text-align:center;color:#888;font-size:11px">Recency-weighted scoring/allowed rates, Normal-distribution projected · 27 Sep 15:40</p>
 <p style="text-align:center;margin-bottom:16px"><a href="blitz_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
 <p style="text-align:center;margin-bottom:16px"><a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a></p>
 
@@ -144,6 +144,24 @@ function buildSafest() {
 }
 </script>
 
+
+
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:6px">📊 Player Hot Form</div>
+  <div style="font-size:11px;color:#888;margin-bottom:10px">Averaging above this stat's own hot-form threshold over the last 5 games — can mask a bad most recent game.</div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #232a33">
+  <div><b>Brock Bowers</b> (TE)<br><span style="color:#888">Las Vegas Raiders · Receptions · Las Vegas Raiders @ New Orleans Saints</span></div>
+  <div style="text-align:right"><span style="color:#a0e8a0;font-weight:bold">6.2 avg</span><br><span style="color:#666;font-size:10px">12.0/5.0/4.0/5.0/5.0</span></div>
+</div>
+</div>
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:6px">🔥 Player Real Streak</div>
+  <div style="font-size:11px;color:#888;margin-bottom:10px">Genuinely CONSECUTIVE recent games clearing that stat's threshold, walking back from the most recent.</div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #232a33">
+  <div><b>Brock Bowers</b> (TE)<br><span style="color:#888">Las Vegas Raiders · Receptions · Las Vegas Raiders @ New Orleans Saints</span></div>
+  <div style="text-align:right"><span style="color:#ff9a2e;font-weight:bold">5+ straight (≥4)</span><br><span style="color:#666;font-size:10px">12.0/5.0/4.0/5.0/5.0</span></div>
+</div>
+</div>
 <div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
   <div style="font-size:11px;color:#999;margin-bottom:4px">2026-09-27 17:00</div>
   <div style="font-size:17px;font-weight:bold;margin-bottom:10px">Los Angeles Chargers @ Buffalo Bills</div>
@@ -730,5 +748,5 @@ function buildSafest() {
   <div style="color:#c792ea;font-weight:bold">62.2 <span style="color:#666;font-weight:normal">(2gm)</span></div>
 </div></div>
 </div>
-<p style="text-align:center;color:#666;font-size:10px;margin-top:20px">Enter your book's Over/Under line and odds to compute an edge the same way as the MLB/soccer tools — this page shows the model's own projection only.</p>
+<p style="text-align:center;color:#666;font-size:10px;margin-top:20px">Enter your book's Over/Under line and odds to compute an edge the same way as the MLB/soccer tools — this page shows the model's own projection only. Hot Form = average over the last 5 games (can mask a bad most recent game). Real Streak = genuinely CONSECUTIVE recent games clearing the threshold, walking backward from the most recent game.</p>
 </body></html>
