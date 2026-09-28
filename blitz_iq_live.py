@@ -5,7 +5,7 @@ progress, same "Model Signal" pattern as Match IQ Live (a green-dot signal
 that only qualifies once its probability clears 70%, same bar as the
 suite's Daily Signals scanners).
 
-Reuses blitz_iq.py's existing season-form model (last-5-games scored/allowed
+Reuses nfl_model.py's existing season-form model (last-5-games scored/allowed
 rates, shrunk toward league average) as the baseline, then adjusts each
 team's remaining expected points for how their actual scoring pace THIS
 game compares to what that model expected by now — same idea as Match IQ
@@ -22,7 +22,7 @@ Two live signals per game:
 
 Setup:
     python3 blitz_iq_live.py
-    (blitz_iq.py must be importable — same folder / on PYTHONPATH — this
+    (nfl_model.py must be importable — same folder / on PYTHONPATH — this
     script reuses its team-form fetching and pregame projection model
     rather than duplicating them)
 
@@ -35,7 +35,7 @@ import json
 import math
 from datetime import datetime, timezone
 
-import blitz_iq  # reuse the existing season-form model rather than duplicate it
+import nfl_model  # reuse the existing season-form model rather than duplicate it
 
 MODEL_SIGNAL_THRESHOLD = 70  # same bar as Match IQ Live / Daily Signals scanners
 GAME_MINUTES = 60  # regulation; overtime is handled as bonus time, see elapsed_minutes()
@@ -44,7 +44,7 @@ GAME_MINUTES = 60  # regulation; overtime is handled as bonus time, see elapsed_
 def elapsed_minutes(status):
     """ESPN's scoreboard gives 'period' (quarter: 1-4, 5+ = OT) and
     'displayClock' (mm:ss REMAINING in that period) directly on the same
-    response blitz_iq.get_week_scoreboard() already fetches — no extra
+    response nfl_model.get_week_scoreboard() already fetches — no extra
     per-game API call needed, unlike Match IQ Live's separate live-stats
     endpoint."""
     period = status.get('period')
@@ -106,7 +106,7 @@ def calc_game_total_pace(actual_total, exp_total_pregame, total_std, minutes_rem
     remaining_std = total_std * math.sqrt(max(remaining_fraction, 0.05))
     remaining_mean = exp_total_pregame * remaining_fraction
     needed = exp_total_pregame - actual_total
-    prob_over = round((1 - blitz_iq.norm_cdf(needed, remaining_mean, remaining_std)) * 100)
+    prob_over = round((1 - nfl_model.norm_cdf(needed, remaining_mean, remaining_std)) * 100)
     status = "On Pace: Over" if prob_over >= 50 else "On Pace: Under"
     return {"prob": prob_over, "status": status}
 
@@ -136,8 +136,8 @@ def calc_model_signal(next_score, total_pace):
 def build_live_signals():
     """Fetch live NFL games, calculate next-score and game-total-pace
     signals, return list of live game objects."""
-    print("Fetching teams & season form (same model as blitz_iq.py)...")
-    teams = blitz_iq.get_teams()
+    print("Fetching teams & season form (same model as nfl_model.py)...")
+    teams = nfl_model.get_teams()
     if not teams:
         print("No teams returned — aborting.")
         return []
@@ -145,11 +145,11 @@ def build_live_signals():
     all_forms = {}
     for t in teams:
         tid = t['team']['id']
-        all_forms[tid] = blitz_iq.get_team_form(tid)
-    lg_scored, lg_allowed = blitz_iq.league_averages(all_forms.values())
+        all_forms[tid] = nfl_model.get_team_form(tid)
+    lg_scored, lg_allowed = nfl_model.league_averages(all_forms.values())
 
     print("Fetching scoreboard for live games...")
-    events = blitz_iq.get_week_scoreboard()
+    events = nfl_model.get_week_scoreboard()
     live_games = []
 
     for e in events:
@@ -184,7 +184,7 @@ def build_live_signals():
         minutes_left = max(0, GAME_MINUTES - elapsed)
         elapsed_fraction = min(elapsed / GAME_MINUTES, 1.0) if elapsed > 0 else 0.0
 
-        proj = blitz_iq.predict(h_form, a_form, lg_scored, lg_allowed)
+        proj = nfl_model.predict(h_form, a_form, lg_scored, lg_allowed)
 
         home_adj = calc_pace_adjustment(home_score, proj['exp_home'], elapsed_fraction)
         away_adj = calc_pace_adjustment(away_score, proj['exp_away'], elapsed_fraction)
