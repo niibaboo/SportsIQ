@@ -14,9 +14,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325359+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 24.0,
+    "verified_at": "2026-09-28T16:25:50.004997+00:00"
   },
   {
     "id": "66e33c8b357dac2b",
@@ -33,9 +34,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325376+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 16.0,
+    "verified_at": "2026-09-28T16:25:50.005012+00:00"
   },
   {
     "id": "29af509ac195ab9b",
@@ -52,9 +54,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325381+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 40.0,
+    "verified_at": "2026-09-28T16:25:50.005019+00:00"
   },
   {
     "id": "cfa69b067b9ef76f",
@@ -71,9 +74,10 @@
     "athlete_id": "3915416",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325384+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 6.0,
+    "verified_at": "2026-09-28T16:25:50.005040+00:00"
   },
   {
     "id": "91ef829c09a63cd5",
@@ -90,9 +94,10 @@
     "athlete_id": "3918298",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325388+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 204.0,
+    "verified_at": "2026-09-28T16:25:50.005053+00:00"
   },
   {
     "id": "ca1b632f04a70a43",
@@ -109,9 +114,10 @@
     "athlete_id": "4385690",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325391+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-09-28T16:25:50.005064+00:00"
   },
   {
     "id": "3af4b4083dd3e77e",
@@ -128,9 +134,10 @@
     "athlete_id": "4379399",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325394+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 154.0,
+    "verified_at": "2026-09-28T16:25:50.005074+00:00"
   },
   {
     "id": "7b26969b39a26bb6",
@@ -147,9 +154,10 @@
     "athlete_id": "4612826",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325401+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4.0,
+    "verified_at": "2026-09-28T16:25:50.005084+00:00"
   },
   {
     "id": "70320519026d5227",
@@ -166,9 +174,10 @@
     "athlete_id": "4038941",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325406+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 226.0,
+    "verified_at": "2026-09-28T16:25:50.005091+00:00"
   },
   {
     "id": "e6c15c180db44cb7",
@@ -204,9 +213,10 @@
     "athlete_id": "4685382",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325412+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 56.0,
+    "verified_at": "2026-09-28T16:25:50.005264+00:00"
   },
   {
     "id": "fa296af18c622831",
@@ -223,9 +233,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325415+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 19.0,
+    "verified_at": "2026-09-28T16:25:50.092084+00:00"
   },
   {
     "id": "5309836861d04cf3",
@@ -242,9 +253,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325418+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 17.0,
+    "verified_at": "2026-09-28T16:25:50.092178+00:00"
   },
   {
     "id": "41ff3541c0398764",
@@ -261,9 +273,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325421+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 36.0,
+    "verified_at": "2026-09-28T16:25:50.092187+00:00"
   },
   {
     "id": "4c6abd3bc0f105ec",
@@ -280,9 +293,10 @@
     "athlete_id": "4688813",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325424+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5.0,
+    "verified_at": "2026-09-28T16:25:50.092222+00:00"
   },
   {
     "id": "ffd2bd238eccc3ff",
@@ -299,9 +313,10 @@
     "athlete_id": "3917792",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325426+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 235.0,
+    "verified_at": "2026-09-28T16:25:50.092237+00:00"
   },
   {
     "id": "d06ac128fbeff79a",
@@ -318,9 +333,10 @@
     "athlete_id": "4431459",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325429+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 9.0,
+    "verified_at": "2026-09-28T16:25:50.092251+00:00"
   },
   {
     "id": "2ea9e19a22b07318",
@@ -337,9 +353,10 @@
     "athlete_id": "4242335",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325432+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 68.0,
+    "verified_at": "2026-09-28T16:25:50.092266+00:00"
   },
   {
     "id": "bedef2903e1b7c97",
@@ -375,9 +392,10 @@
     "athlete_id": "4432577",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325438+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 167.0,
+    "verified_at": "2026-09-28T16:25:50.092288+00:00"
   },
   {
     "id": "f2616bc95fdb130e",
@@ -394,9 +412,10 @@
     "athlete_id": "3117256",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325441+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 3.0,
+    "verified_at": "2026-09-28T16:25:50.092295+00:00"
   },
   {
     "id": "f037e84403d3840a",
@@ -413,9 +432,10 @@
     "athlete_id": "4035538",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325444+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 33.0,
+    "verified_at": "2026-09-28T16:25:50.092311+00:00"
   },
   {
     "id": "d91b9ee0d7e677f2",
@@ -432,9 +452,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325447+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 21.0,
+    "verified_at": "2026-09-28T16:25:50.180287+00:00"
   },
   {
     "id": "ef0946423ed70219",
@@ -451,9 +472,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325450+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 18.0,
+    "verified_at": "2026-09-28T16:25:50.180304+00:00"
   },
   {
     "id": "9dc3036bf9936a6c",
@@ -470,9 +492,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325453+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 39.0,
+    "verified_at": "2026-09-28T16:25:50.180311+00:00"
   },
   {
     "id": "f9d5af37e40a06e6",
@@ -489,9 +512,10 @@
     "athlete_id": "4832800",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325456+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-09-28T16:25:50.180326+00:00"
   },
   {
     "id": "6e10aa82128c70f1",
@@ -508,9 +532,10 @@
     "athlete_id": "3122840",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325458+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 144.0,
+    "verified_at": "2026-09-28T16:25:50.180337+00:00"
   },
   {
     "id": "fa7cb8699724c8ea",
@@ -527,9 +552,10 @@
     "athlete_id": "5083076",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325461+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 7.0,
+    "verified_at": "2026-09-28T16:25:50.180347+00:00"
   },
   {
     "id": "2a8ead45a0b27f33",
@@ -546,9 +572,10 @@
     "athlete_id": "4685702",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325463+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 70.0,
+    "verified_at": "2026-09-28T16:25:50.180358+00:00"
   },
   {
     "id": "e6bfb294c454dd3b",
@@ -565,9 +592,10 @@
     "athlete_id": "4685472",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325466+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-09-28T16:25:50.180363+00:00"
   },
   {
     "id": "c75f6ccf782e9dbb",
@@ -584,9 +612,10 @@
     "athlete_id": "4685720",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325469+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 291.0,
+    "verified_at": "2026-09-28T16:25:50.180368+00:00"
   },
   {
     "id": "9cecb9608194337f",
@@ -603,9 +632,10 @@
     "athlete_id": "4372780",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325471+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3.0,
+    "verified_at": "2026-09-28T16:25:50.180372+00:00"
   },
   {
     "id": "8bfc85c085455a8f",
@@ -622,9 +652,10 @@
     "athlete_id": "4241416",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325474+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 82.0,
+    "verified_at": "2026-09-28T16:25:50.180377+00:00"
   },
   {
     "id": "16a7e35fa18dc22b",
@@ -641,9 +672,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325477+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 31.0,
+    "verified_at": "2026-09-28T16:25:50.280089+00:00"
   },
   {
     "id": "d65646940e7bf596",
@@ -660,9 +692,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325480+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 34.0,
+    "verified_at": "2026-09-28T16:25:50.280102+00:00"
   },
   {
     "id": "6a166b05c393eb29",
@@ -679,9 +712,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325483+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 65.0,
+    "verified_at": "2026-09-28T16:25:50.280109+00:00"
   },
   {
     "id": "7de36e34acdaa647",
@@ -698,9 +732,10 @@
     "athlete_id": "4241389",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325486+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 7.0,
+    "verified_at": "2026-09-28T16:25:50.280122+00:00"
   },
   {
     "id": "8af8e85a95b116bb",
@@ -717,9 +752,10 @@
     "athlete_id": "2577417",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325489+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 276.0,
+    "verified_at": "2026-09-28T16:25:50.280132+00:00"
   },
   {
     "id": "cdabd9519834faff",
@@ -736,9 +772,10 @@
     "athlete_id": "4242355",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325491+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3.0,
+    "verified_at": "2026-09-28T16:25:50.280141+00:00"
   },
   {
     "id": "a3577143a3f0e5f8",
@@ -755,9 +792,10 @@
     "athlete_id": "4361579",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325494+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 98.0,
+    "verified_at": "2026-09-28T16:25:50.280151+00:00"
   },
   {
     "id": "bc68128f7351189e",
@@ -774,9 +812,10 @@
     "athlete_id": "4429615",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325497+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5.0,
+    "verified_at": "2026-09-28T16:25:50.280155+00:00"
   },
   {
     "id": "54f7ba845c159720",
@@ -793,9 +832,10 @@
     "athlete_id": "3916387",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325499+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 186.0,
+    "verified_at": "2026-09-28T16:25:50.280158+00:00"
   },
   {
     "id": "414880bc7c221001",
@@ -812,9 +852,10 @@
     "athlete_id": "3116365",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325502+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3.0,
+    "verified_at": "2026-09-28T16:25:50.280163+00:00"
   },
   {
     "id": "5150587b7a3c458d",
@@ -831,9 +872,10 @@
     "athlete_id": "3043078",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325505+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 89.0,
+    "verified_at": "2026-09-28T16:25:50.280167+00:00"
   },
   {
     "id": "6b932554d8caa676",
@@ -850,9 +892,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325508+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 31.0,
+    "verified_at": "2026-09-28T16:25:50.354815+00:00"
   },
   {
     "id": "a9256272d3959462",
@@ -869,9 +912,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325510+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 24.0,
+    "verified_at": "2026-09-28T16:25:50.354837+00:00"
   },
   {
     "id": "a4978b4d2f87a309",
@@ -888,9 +932,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325513+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 55.0,
+    "verified_at": "2026-09-28T16:25:50.354844+00:00"
   },
   {
     "id": "0b2eb3eb63adf132",
@@ -907,9 +952,10 @@
     "athlete_id": "4374302",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325516+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 4.0,
+    "verified_at": "2026-09-28T16:25:50.354858+00:00"
   },
   {
     "id": "2ba10fdc797d12a6",
@@ -926,9 +972,10 @@
     "athlete_id": "3046779",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325519+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 269.0,
+    "verified_at": "2026-09-28T16:25:50.354871+00:00"
   },
   {
     "id": "cd26bf56a4d6d579",
@@ -945,9 +992,10 @@
     "athlete_id": "4430027",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325522+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 3.0,
+    "verified_at": "2026-09-28T16:25:50.354882+00:00"
   },
   {
     "id": "d970ca8e43807aa6",
@@ -964,9 +1012,10 @@
     "athlete_id": "4429795",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325524+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 99.0,
+    "verified_at": "2026-09-28T16:25:50.354892+00:00"
   },
   {
     "id": "7ab41548667a7e15",
@@ -983,9 +1032,10 @@
     "athlete_id": "4569618",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325527+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 10.0,
+    "verified_at": "2026-09-28T16:25:50.354897+00:00"
   },
   {
     "id": "485bdfad520bfc59",
@@ -1002,9 +1052,10 @@
     "athlete_id": "15864",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325530+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 321.0,
+    "verified_at": "2026-09-28T16:25:50.354901+00:00"
   },
   {
     "id": "6264b3cc0686ba64",
@@ -1021,9 +1072,10 @@
     "athlete_id": "5083315",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325533+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 7.0,
+    "verified_at": "2026-09-28T16:25:50.354906+00:00"
   },
   {
     "id": "a68641ccd6159727",
@@ -1040,9 +1092,10 @@
     "athlete_id": "4427366",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325535+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 32.0,
+    "verified_at": "2026-09-28T16:25:50.354911+00:00"
   },
   {
     "id": "10f2bdb31a5d9c5c",
@@ -1059,9 +1112,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325538+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 10.0,
+    "verified_at": "2026-09-28T16:25:50.433064+00:00"
   },
   {
     "id": "eef0d35d5815e9f1",
@@ -1078,9 +1132,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325541+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 24.0,
+    "verified_at": "2026-09-28T16:25:50.433076+00:00"
   },
   {
     "id": "19227f3ecde5df3d",
@@ -1097,9 +1152,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-09-27T13:34:39.325543+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 34.0,
+    "verified_at": "2026-09-28T16:25:50.433084+00:00"
   },
   {
     "id": "e30d0345347fb365",
@@ -1116,9 +1172,10 @@
     "athlete_id": "4569603",
     "stat_key": "REC",
     "logged_at": "2026-09-27T13:34:39.325546+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5.0,
+    "verified_at": "2026-09-28T16:25:50.433098+00:00"
   },
   {
     "id": "8a275a3108784798",
@@ -1135,9 +1192,10 @@
     "athlete_id": "4242512",
     "stat_key": "YDS",
     "logged_at": "2026-09-27T13:34:39.325549+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 210.0,
+    "verified_at": "2026-09-28T16:25:50.433109+00:00"
   },
   {
     "id": "6899b3ca73d6de59",
