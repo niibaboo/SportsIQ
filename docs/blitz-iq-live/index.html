@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Blitz IQ — Live Signals</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #1a1f26;
+      --panel2: #0f1318;
+      --border: #2a3038;
+      --text: #e8edf2;
+      --sub: #8b98a8;
+      --accent: #ffeb3b;
+      --green: #7ec8ff;
+      --warn: #ff6b6b;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 12px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--green);
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .meta {
+      text-align: center;
+      color: var(--sub);
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+
+    .match-card {
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 16px 0;
+      border: 1px solid var(--border);
+    }
+
+    .match-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .match-info { flex: 1; }
+
+    .league {
+      font-size: 11px;
+      color: var(--sub);
+      margin-bottom: 2px;
+    }
+
+    .match-title {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .elapsed {
+      font-size: 12px;
+      color: var(--sub);
+      text-align: right;
+    }
+
+    .score-section {
+      text-align: center;
+      margin: 16px 0;
+    }
+
+    .score {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .probabilities {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .prob-card {
+      background: var(--panel2);
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .prob-label {
+      font-size: 11px;
+      color: var(--sub);
+      margin-bottom: 6px;
+    }
+
+    .prob-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .prob-sub {
+      font-size: 10px;
+      color: var(--green);
+      margin-top: 4px;
+    }
+
+    .signal-banner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin: 16px 0;
+    }
+
+    .signal-banner.qualifies {
+      border-color: #2ecc71;
+      background: rgba(46, 204, 113, 0.08);
+    }
+
+    .signal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--sub);
+      flex-shrink: 0;
+    }
+
+    .signal-banner.qualifies .signal-dot {
+      background: #2ecc71;
+      box-shadow: 0 0 6px rgba(46, 204, 113, 0.7);
+    }
+
+    .signal-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--sub);
+    }
+
+    .signal-banner.qualifies .signal-text { color: var(--text); }
+
+    .signal-prob {
+      margin-left: auto;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--sub);
+    }
+
+    .signal-banner.qualifies .signal-prob { color: #2ecc71; }
+
+    .pregame-baseline {
+      font-size: 10px;
+      color: var(--sub);
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      line-height: 1.5;
+    }
+
+    .no-matches {
+      text-align: center;
+      color: var(--sub);
+      padding: 40px 20px;
+    }
+
+    .loading {
+      text-align: center;
+      color: var(--sub);
+      padding: 20px;
+    }
+
+    .last-update {
+      text-align: center;
+      color: var(--sub);
+      font-size: 11px;
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .live-badge {
+      display: inline-block;
+      background: var(--warn);
+      color: #000;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+    }
+  </style>
+</head>
+<body>
+  <a href="../" class="back-link">← Back to SportsIQ</a>
+  <h1>⚡ Blitz IQ Live</h1>
+  <div class="meta">Live in-game next-score & total-pace signals · Updates every 60s</div>
+
+  <div id="container">
+    <div class="loading">Loading live games...</div>
+  </div>
+
+  <div class="last-update">Last update: <span id="lastUpdate">—</span></div>
+
+  <script>
+    async function fetchAndRender() {
+      try {
+        const resp = await fetch('https://raw.githubusercontent.com/niibaboo/SportsIQ/main/docs/blitz-iq-live/live_games.json?t=' + Date.now());
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+
+        const container = document.getElementById('container');
+
+        if (!data.games || data.games.length === 0) {
+          container.innerHTML = '<div class="no-matches">No live NFL games at the moment.<br><br>Check back on game day (Thu/Sun/Mon).</div>';
+          updateTime();
+          return;
+        }
+
+        let html = '';
+        for (const g of data.games) {
+          const nextScore = g.next_score || {};
+          const totalPace = g.game_total_pace || {};
+          const signal = g.model_signal || {};
+          const proj = g.pregame_projection || {};
+
+          const signalHtml = signal.label
+            ? `
+              <div class="signal-banner${signal.qualifies ? ' qualifies' : ''}">
+                <div class="signal-dot"></div>
+                <div class="signal-text">${signal.qualifies ? '⚡ MODEL SIGNAL: ' : 'Best signal: '}${signal.label}</div>
+                <div class="signal-prob">${signal.prob}%</div>
+              </div>
+            `
+            : '';
+
+          html += `
+            <div class="match-card">
+              <div class="match-header">
+                <div class="match-info">
+                  <div class="league">NFL</div>
+                  <div class="match-title">${g.away_team} @ ${g.home_team}<span class="live-badge">LIVE</span></div>
+                </div>
+                <div class="elapsed">${g.display_clock || ''} · Q${g.period || '?'}<br>${g.status || ''}</div>
+              </div>
+
+              <div class="score-section">
+                <div class="score">${g.away_score}-${g.home_score}</div>
+              </div>
+
+              <div class="probabilities">
+                <div class="prob-card">
+                  <div class="prob-label">Next Score<br>${g.away_team}</div>
+                  <div class="prob-value">${nextScore.away ?? '—'}%</div>
+                </div>
+                <div class="prob-card">
+                  <div class="prob-label">Next Score<br>${g.home_team}</div>
+                  <div class="prob-value">${nextScore.home ?? '—'}%</div>
+                </div>
+              </div>
+
+              <div class="prob-card" style="margin-bottom:16px">
+                <div class="prob-label">Game Total Pace</div>
+                <div class="prob-value">${totalPace.prob ?? '—'}%</div>
+                <div class="prob-sub">${totalPace.status || ''}</div>
+              </div>
+
+              ${signalHtml}
+
+              <div class="pregame-baseline">
+                <strong>Pregame Projection:</strong><br>
+                ${g.away_team}: ${proj.exp_away ?? '—'} pts · ${g.home_team}: ${proj.exp_home ?? '—'} pts · Total: ${proj.exp_total ?? '—'}
+              </div>
+            </div>
+          `;
+        }
+
+        container.innerHTML = html;
+        updateTime();
+      } catch (err) {
+        document.getElementById('container').innerHTML = `<div class="no-matches">Error loading live data.<br><br>${err.message}</div>`;
+      }
+    }
+
+    function updateTime() {
+      const now = new Date();
+      document.getElementById('lastUpdate').textContent = now.toLocaleTimeString();
+    }
+
+    fetchAndRender();
+    setInterval(fetchAndRender, 60000);
+  </script>
+</body>
+</html>
