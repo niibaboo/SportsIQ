@@ -410,7 +410,14 @@ def build_slate(target_date):
     })
     r.raise_for_status()
     data = r.json()
-    games = data.get("dates", [{}])[0].get("games", [])
+    # FIX (2026-09-28): data.get("dates", [{}]) only falls back to [{}]
+    # when the "dates" KEY is missing entirely -- but on an MLB off-day
+    # (no games scheduled), the API returns "dates": [] (present, just
+    # empty), so the old code's [0] indexed into an empty list and
+    # crashed with IndexError instead of gracefully finding 0 games.
+    # `or [{}]` catches both cases, since an empty list is falsy too.
+    dates = data.get("dates") or [{}]
+    games = dates[0].get("games", [])
 
     slate = []
     for g in games:
