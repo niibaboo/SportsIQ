@@ -30,7 +30,7 @@ jobs:
         run: pip3 install requests --break-system-packages
 
       - name: Run Blitz IQ Live Signals
-        run: python3 blitz_iq_live.py
+        run: python3 "blitz-iq-live.py"
 
       - name: Commit and push live signals
         run: |
