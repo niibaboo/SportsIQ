@@ -227,6 +227,56 @@
       border-radius: 4px;
       margin-left: 6px;
     }
+
+    .signal-banner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin: 16px 0;
+    }
+
+    .signal-banner.qualifies {
+      border-color: #2ecc71;
+      background: rgba(46, 204, 113, 0.08);
+    }
+
+    .signal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--sub);
+      flex-shrink: 0;
+    }
+
+    .signal-banner.qualifies .signal-dot {
+      background: #2ecc71;
+      box-shadow: 0 0 6px rgba(46, 204, 113, 0.7);
+    }
+
+    .signal-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--sub);
+    }
+
+    .signal-banner.qualifies .signal-text {
+      color: var(--text);
+    }
+
+    .signal-prob {
+      margin-left: auto;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--sub);
+    }
+
+    .signal-banner.qualifies .signal-prob {
+      color: #2ecc71;
+    }
   </style>
 </head>
 <body>
@@ -276,7 +326,18 @@
           const awaySoT = awayLive.shots_on_target !== null ? awayLive.shots_on_target : '—';
           
           const hasLiveData = (homeLive.possession !== null) || (awayLive.possession !== null);
-          
+
+          const signal = m.model_signal || {};
+          const signalHtml = signal.label
+            ? `
+              <div class="signal-banner${signal.qualifies ? ' qualifies' : ''}">
+                <div class="signal-dot"></div>
+                <div class="signal-text">${signal.qualifies ? '⚡ MODEL SIGNAL: ' : 'Best signal: '}${signal.label}</div>
+                <div class="signal-prob">${signal.prob}%</div>
+              </div>
+            `
+            : '';
+
           html += `
             <div class="match-card">
               <div class="match-header">
@@ -356,7 +417,9 @@
                   <div class="prob-value">${nextGoal.away || '—'}%</div>
                 </div>
               </div>
-              
+
+              ${signalHtml}
+
               <!-- Season Baseline -->
               <div class="season-baseline">
                 <strong>Season Avg:</strong><br>
