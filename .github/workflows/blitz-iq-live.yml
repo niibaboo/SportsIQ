@@ -16,27 +16,26 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: blitz-iq
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip3 install requests --break-system-packages
+        run: pip install requests
 
       - name: Run Blitz IQ Live Signals
-        run: python3 "blitz-iq-live.py"
+        run: python3 blitz_iq_live.py
 
       - name: Commit and push live signals
         run: |
-          cd "$GITHUB_WORKSPACE"
-          git config user.name "auto-bot"
-          git config user.email "auto-bot@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/blitz-iq-live/
-          git diff --cached --quiet || git commit -m "Update Blitz IQ live signals"
+          git diff --staged --quiet || git commit -m "Update Blitz IQ live signals"
+          git pull --rebase --autostash origin main
           git push
