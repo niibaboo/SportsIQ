@@ -321,6 +321,36 @@ def calc_btts_prob(home_score, away_score, home_exp_rate, away_exp_rate, minutes
     return {"prob": round(btts_prob * 100), "status": "0-0 (both must score)", "reasoning": f"Home {home_exp_rate:.2f}, Away {away_exp_rate:.2f}{xg_note}"}
 
 
+MODEL_SIGNAL_THRESHOLD = 70  # same bar as the Daily Signals BTTS/Over2.5 scanners
+
+
+def calc_model_signal(next_goal, btts):
+    """Pick the single highest-confidence qualifying signal for this live match,
+    matching the Daily Signals scanner convention: a signal only "qualifies"
+    (green dot) once its probability clears MODEL_SIGNAL_THRESHOLD (70%).
+    Considers BTTS YES and each team's Next Goal probability; returns the best
+    one even if it doesn't qualify, so the frontend can show it dimmed/grey."""
+    candidates = []
+
+    if btts.get("prob") is not None and btts.get("status") not in ("BTTS Already Hit", "BTTS Failed"):
+        candidates.append({"label": "BTTS YES", "prob": btts["prob"]})
+
+    if next_goal.get("home") is not None:
+        candidates.append({"label": "Home Next Goal", "prob": next_goal["home"]})
+    if next_goal.get("away") is not None:
+        candidates.append({"label": "Away Next Goal", "prob": next_goal["away"]})
+
+    if not candidates:
+        return {"label": None, "prob": None, "qualifies": False}
+
+    best = max(candidates, key=lambda c: c["prob"])
+    return {
+        "label": best["label"],
+        "prob": best["prob"],
+        "qualifies": best["prob"] >= MODEL_SIGNAL_THRESHOLD,
+    }
+
+
 def build_live_signals(key):
     """Fetch live matches across all 9 leagues, calculate next-goal and BTTS
     probabilities, return list of live match objects."""
@@ -410,7 +440,8 @@ def build_live_signals(key):
                 minutes_left,
                 home_live_xg=home_live_xg, away_live_xg=away_live_xg
             )
-            
+            model_signal = calc_model_signal(next_goal, btts)
+
             live_matches.append({
                 "league": league_name,
                 "match_id": m["id"],
@@ -424,6 +455,7 @@ def build_live_signals(key):
                 "kickoff": m.get("utc_date", ""),
                 "next_goal": next_goal,
                 "btts": btts,
+                "model_signal": model_signal,
                 "home_season_stats": home_stats,  # season averages (baseline)
                 "away_season_stats": away_stats,  # season averages (baseline)
                 "home_live_stats": {  # live stats this match
