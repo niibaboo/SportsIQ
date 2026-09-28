@@ -1,0 +1,42 @@
+name: Blitz IQ Live Signals
+
+on:
+  schedule:
+    # Every 10 minutes on Thu/Sun/Mon (NFL game days across all UTC kickoff
+    # windows). ESPN's public API needs no key and publishes no rate limit,
+    # so — unlike the RapidAPI/TheStatsAPI tools — there's no quota to
+    # budget against here; off-slot runs just find 0 live games and write
+    # an empty list, which is harmless.
+    - cron: '*/10 * * * 0,1,4'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: blitz-iq
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip3 install requests --break-system-packages
+
+      - name: Run Blitz IQ Live Signals
+        run: python3 blitz_iq_live.py
+
+      - name: Commit and push live signals
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          git config user.name "auto-bot"
+          git config user.email "auto-bot@users.noreply.github.com"
+          git add docs/blitz-iq-live/
+          git diff --cached --quiet || git commit -m "Update Blitz IQ live signals"
+          git push
