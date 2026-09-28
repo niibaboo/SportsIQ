@@ -1,50 +1,50 @@
 [
   {
-    "match": "ERC Ingolstadt vs Adler Mannheim",
-    "subject": "ERC Ingolstadt",
-    "market": "ERC Ingolstadt Over 1.5 Goals",
-    "prob": 68,
+    "match": "Sparta Prague vs Karlovy Vary",
+    "subject": "Sparta Prague",
+    "market": "Sparta Prague Over 2.0 Goals",
+    "prob": 67,
     "hit_rate": {
-      "hits": 4,
+      "hits": 3,
       "total": 5
     },
-    "category": "DEL Team Total",
-    "detail": "proj 2.35 goals \u00b7 season 2.33/gm",
-    "history": "5/3/4/2/1",
-    "line": 1.5,
+    "category": "Extraliga Team Total",
+    "detail": "proj 3.44 goals \u00b7 season 3.75/gm",
+    "history": "2/5/2/3/4",
+    "line": 2.0,
     "is_home": true,
-    "league_id": 16953,
-    "home_name": "ERC Ingolstadt",
-    "away_name": "Adler Mannheim",
-    "match_date": "2026-09-27T17:00:00.000Z"
+    "league_id": 9294,
+    "home_name": "Sparta Prague",
+    "away_name": "Karlovy Vary",
+    "match_date": "2026-09-28T14:00:00.000Z"
   },
   {
-    "match": "ERC Ingolstadt vs Adler Mannheim",
-    "subject": "Adler Mannheim",
-    "market": "Adler Mannheim Over 2.5 Goals",
-    "prob": 71,
+    "match": "Sparta Prague vs Karlovy Vary",
+    "subject": "Karlovy Vary",
+    "market": "Karlovy Vary Over 2.0 Goals",
+    "prob": 57,
     "hit_rate": {
-      "hits": 5,
+      "hits": 3,
       "total": 5
     },
-    "category": "DEL Team Total",
-    "detail": "proj 3.67 goals \u00b7 season 3.75/gm",
-    "history": "4/3/4/3/4",
-    "line": 2.5,
+    "category": "Extraliga Team Total",
+    "detail": "proj 2.96 goals \u00b7 season 2.75/gm",
+    "history": "3/0/4/2/5",
+    "line": 2.0,
     "is_home": false,
-    "league_id": 16953,
-    "home_name": "ERC Ingolstadt",
-    "away_name": "Adler Mannheim",
-    "match_date": "2026-09-27T17:00:00.000Z"
+    "league_id": 9294,
+    "home_name": "Sparta Prague",
+    "away_name": "Karlovy Vary",
+    "match_date": "2026-09-28T14:00:00.000Z"
   },
   {
-    "match": "ERC Ingolstadt vs Adler Mannheim",
-    "subject": "ERC Ingolstadt vs Adler Mannheim",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 72,
+    "match": "Sparta Prague vs Karlovy Vary",
+    "subject": "Sparta Prague vs Karlovy Vary",
+    "market": "Game Over 4.5 Total Goals",
+    "prob": 76,
     "hit_rate": null,
-    "category": "DEL Game Total",
-    "detail": "proj 6.02 goals combined",
+    "category": "Extraliga Game Total",
+    "detail": "proj 6.4 goals combined",
     "history": null
   }
 ]
