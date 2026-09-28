@@ -856,7 +856,11 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <h2 style="text-align:center">🏈 BLITZ IQ — NFL Team Points</h2>
 <p style="text-align:center;color:#888;font-size:11px">Recency-weighted scoring/allowed rates, Normal-distribution projected · {generated}</p>
 <p style="text-align:center;margin-bottom:16px"><a href="blitz_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
-<p style="text-align:center;margin-bottom:16px"><a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a></p>
+<p style="text-align:center;margin-bottom:16px">
+  <a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a>
+  &nbsp;·&nbsp;
+  <a href="../blitz-iq-live/index.html" style="color:#7ec8ff;text-decoration:none;font-size:12px">⚡ Live Signals</a>
+</p>
 {builder}
 {team_hot_form}
 {team_real_streak}
