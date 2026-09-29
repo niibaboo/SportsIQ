@@ -130,6 +130,49 @@
       margin-top: 4px;
     }
 
+    .section-label {
+      font-size: 11px;
+      color: var(--sub);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin: 14px 0 6px;
+    }
+
+    .three-way-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .three-way-cell {
+      flex: 1;
+      text-align: center;
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 4px;
+    }
+
+    .three-way-pct {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .three-way-label {
+      font-size: 10px;
+      color: var(--sub);
+      margin-top: 2px;
+    }
+
+    .info-only-note {
+      font-size: 9px;
+      color: var(--sub);
+      font-style: italic;
+      margin-top: -8px;
+      margin-bottom: 12px;
+    }
+
     .signal-banner {
       display: flex;
       align-items: center;
@@ -264,8 +307,29 @@
         for (const g of data.games) {
           const nextRun = g.next_run || {};
           const totalPace = g.game_total_pace || {};
+          const inningWinner = g.inning_winner || null;
+          const inningHits = g.inning_hits || null;
           const signal = g.model_signal || {};
           const proj = g.pregame_projection || {};
+          const inningLabel = `${ordinalInning(g.inning)} Inning`;
+
+          const inningWinnerHtml = inningWinner ? `
+            <div class="section-label">${inningLabel} Winner</div>
+            <div class="three-way-row">
+              <div class="three-way-cell"><div class="three-way-pct">${inningWinner.away}%</div><div class="three-way-label">${g.away_team}</div></div>
+              <div class="three-way-cell"><div class="three-way-pct">${inningWinner.tie}%</div><div class="three-way-label">Tie</div></div>
+              <div class="three-way-cell"><div class="three-way-pct">${inningWinner.home}%</div><div class="three-way-label">${g.home_team}</div></div>
+            </div>
+          ` : '';
+
+          const inningHitsHtml = inningHits ? `
+            <div class="section-label">${inningLabel} Most Hits</div>
+            <div class="three-way-row">
+              <div class="three-way-cell"><div class="three-way-pct">${inningHits.away}%</div><div class="three-way-label">${g.away_team}</div></div>
+              <div class="three-way-cell"><div class="three-way-pct">${inningHits.tie}%</div><div class="three-way-label">Tie</div></div>
+              <div class="three-way-cell"><div class="three-way-pct">${inningHits.home}%</div><div class="three-way-label">${g.home_team}</div></div>
+            </div>
+          ` : '';
 
           const signalHtml = signal.label
             ? `
@@ -301,12 +365,16 @@
                   <div class="prob-value">${nextRun.home ?? '—'}%</div>
                 </div>
               </div>
+              <div class="info-only-note">Next Run is informational only — most books don't offer this as a bettable market for baseball.</div>
 
               <div class="prob-card" style="margin-bottom:16px">
                 <div class="prob-label">Game Total Pace</div>
                 <div class="prob-value">${totalPace.prob ?? '—'}%</div>
                 <div class="prob-sub">${totalPace.status || ''}</div>
               </div>
+
+              ${inningWinnerHtml}
+              ${inningHitsHtml}
 
               ${signalHtml}
 
