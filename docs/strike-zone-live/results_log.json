@@ -14,5 +14,21 @@
     "logged_away_runs": 1.0,
     "pregame_total": 5.11,
     "status": "pending"
+  },
+  "849845_Game_Total_Over": {
+    "id": "849845_Game_Total_Over",
+    "game_pk": 849845,
+    "home_team": "Atlanta Braves",
+    "away_team": "Philadelphia Phillies",
+    "label": "Game Total Over",
+    "prob": 100,
+    "logged_at": "2026-09-29T20:40:39.478014+00:00",
+    "logged_inning": 9,
+    "logged_inning_state": "Top",
+    "logged_half_index": 16,
+    "logged_home_runs": 5.0,
+    "logged_away_runs": 3.0,
+    "pregame_total": 5.11,
+    "status": "pending"
   }
 }
