@@ -198,6 +198,8 @@ def build_live_signals():
 
         live_games.append({
             "game_id": e.get('id'),
+            "home_id": h_id,
+            "away_id": a_id,
             "home_team": home['team']['displayName'],
             "away_team": away['team']['displayName'],
             "home_score": home_score,
@@ -233,5 +235,11 @@ if __name__ == "__main__":
 
     with open("docs/blitz-iq-live/live_games.json", "w") as f:
         json.dump(output, f, indent=2, default=str)
+
+    try:
+        import blitz_iq_live_results_tracker
+        blitz_iq_live_results_tracker.run_results_tracker(live)
+    except Exception as e:
+        print(f"[!] Results tracker failed, but the rest of this run succeeded: {e}")
 
     print(f"\nDone — {len(live)} live game(s) found and written to live_games.json")
