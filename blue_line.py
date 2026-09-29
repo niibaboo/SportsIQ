@@ -21,37 +21,77 @@ def safe_line(lam, factor=0.55):
   if line<0.5: line=0.5
   return line
 
+# Schedule and standings are fetched independently now -- a bad/thin
+# standings sample (e.g. preseason, when every team shows 0 GP for the new
+# season) used to be caught by one shared try/except that also swallowed
+# the schedule fetch, so a standings-side ZeroDivisionError silently wiped
+# out games we'd already found. That's wrong: the schedule doesn't depend
+# on standings being usable, so it shouldn't die with it.
+
+games=[]
 try:
-  sd=fetch(f"{BASE}/standings/now")
-  standings={r["teamAbbrev"]["default"]:r for r in sd["standings"]}
-  avg_h=sum(t["homeGoalsFor"] for t in standings.values())/sum(t["homeGamesPlayed"] for t in standings.values())
-  avg_r=sum(t["roadGoalsFor"] for t in standings.values())/sum(t["roadGamesPlayed"] for t in standings.values())
-
-  def pred(home,away):
-    h=standings[home]; a=standings[away]
-    raw_h = (h["homeGoalsFor"]/max(h["homeGamesPlayed"],1)) * (a["roadGoalsAgainst"]/max(a["roadGamesPlayed"],1)) / avg_r
-    raw_a = (a["roadGoalsFor"]/max(a["roadGamesPlayed"],1)) * (h["homeGoalsAgainst"]/max(h["homeGamesPlayed"],1)) / avg_h
-    lh = min(max(raw_h, 0.8), 5.5)
-    la = min(max(raw_a, 0.8), 5.5)
-    tot = lh+la
-    if tot < 4.5:
-      scale = 5.2 / tot
-      lh *= scale; la *= scale
-    if tot > 8.0:
-      scale = 7.2 / tot
-      lh *= scale; la *= scale
-    return lh,la
-
   sched=fetch(f"{BASE}/schedule/now")
-  games=[]
   for wk in sched.get("gameWeek",[]):
     for g in wk.get("games",[]): games.append(g)
   if games:
     first=games[0]["startTimeUTC"][:10]
     games=[g for g in games if g["startTimeUTC"].startswith(first)]
 except Exception as e:
-  print(f"standings/schedule error: {e}", file=sys.stderr)
-  games=[]; standings={}
+  print(f"schedule error: {e}", file=sys.stderr)
+  games=[]
+
+MIN_AVG_GP = 3  # avg games played per team before we trust this season's own numbers
+
+def _avg_gp(st):
+  return sum(t.get("gamesPlayed",0) for t in st.values())/len(st) if st else 0
+
+standings={}
+using_fallback_standings=False
+try:
+  sd=fetch(f"{BASE}/standings/now")
+  cur={r["teamAbbrev"]["default"]:r for r in sd["standings"]}
+  if _avg_gp(cur) < MIN_AVG_GP:
+    raise ValueError(f"current season too thin (avg {_avg_gp(cur):.1f} GP/team) -- likely preseason")
+  standings=cur
+except Exception as e:
+  print(f"current-season standings unusable ({e}); falling back to last season's final standings", file=sys.stderr)
+  try:
+    # Mid-April of the most recently *completed* regular season. NHL seasons
+    # span two calendar years, so from Aug-Dec we want April of this same
+    # year (that season just finished); from Jan-Jul the prior season ended
+    # in April of the previous year.
+    now=datetime.now(timezone.utc)
+    fallback_year = now.year if now.month >= 8 else now.year - 1
+    sd=fetch(f"{BASE}/standings/{fallback_year}-04-15")
+    standings={r["teamAbbrev"]["default"]:r for r in sd["standings"]}
+    using_fallback_standings=True
+  except Exception as e2:
+    print(f"fallback standings also failed: {e2}", file=sys.stderr)
+    standings={}
+
+avg_h=avg_r=3.0
+if standings:
+  try:
+    avg_h=sum(t["homeGoalsFor"] for t in standings.values())/sum(t["homeGamesPlayed"] for t in standings.values())
+    avg_r=sum(t["roadGoalsFor"] for t in standings.values())/sum(t["roadGamesPlayed"] for t in standings.values())
+  except ZeroDivisionError as e:
+    print(f"standings averages error even after fallback: {e}", file=sys.stderr)
+    standings={}
+
+def pred(home,away):
+  h=standings[home]; a=standings[away]
+  raw_h = (h["homeGoalsFor"]/max(h["homeGamesPlayed"],1)) * (a["roadGoalsAgainst"]/max(a["roadGamesPlayed"],1)) / avg_r
+  raw_a = (a["roadGoalsFor"]/max(a["roadGamesPlayed"],1)) * (h["homeGoalsAgainst"]/max(h["homeGamesPlayed"],1)) / avg_h
+  lh = min(max(raw_h, 0.8), 5.5)
+  la = min(max(raw_a, 0.8), 5.5)
+  tot = lh+la
+  if tot < 4.5:
+    scale = 5.2 / tot
+    lh *= scale; la *= scale
+  if tot > 8.0:
+    scale = 7.2 / tot
+    lh *= scale; la *= scale
+  return lh,la
 
 def get_props(team, opp, is_home):
   if team not in standings: return []
@@ -316,7 +356,10 @@ for g in games:
 
 builder = BUILDER_TEMPLATE.format(legs_json=json.dumps(all_legs)) if all_legs else ""
 
-html=f"""<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blue Line v2 Clean</title><style>body{{background:#081229;color:#fff;font-family:-apple-system,system-ui,sans-serif;padding:16px;max-width:800px;margin:0 auto}}h1{{color:#4ea1ff;font-size:22px}}</style></head><body><h1>🔵 Blue Line v2 — Patched</h1><p style="color:#8aa;font-size:12px">Last: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} | Games: {len(games)}</p><p style="margin:4px 0 0"><a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a></p>{builder}{cards or '<p>No games today — model ready.</p>'}<p style="font-size:11px;color:#5a6a8a;margin-top:24px">Fixes: cached club-stats, logged excepts, utcnow→now(utc), total clamp 4.5-8.0. Added: Safest Bet Builder (goals/props markets only — no moneyline, since ph/pa are regulation-time only and would understate a favorite's true win odds through OT/SO).</p></body></html>"""
+fallback_note = ('<p style="margin:4px 0 0;color:#ffb84e;font-size:12px">⚠️ Early season — projections use last season\'s final standings '
+                  'until this season has a few games of its own on the board.</p>') if using_fallback_standings else ""
+
+html=f"""<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blue Line v2 Clean</title><style>body{{background:#081229;color:#fff;font-family:-apple-system,system-ui,sans-serif;padding:16px;max-width:800px;margin:0 auto}}h1{{color:#4ea1ff;font-size:22px}}</style></head><body><h1>🔵 Blue Line v2 — Patched</h1><p style="color:#8aa;font-size:12px">Last: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} | Games: {len(games)}</p>{fallback_note}<p style="margin:4px 0 0"><a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a></p>{builder}{cards or '<p>No games today — model ready.</p>'}<p style="font-size:11px;color:#5a6a8a;margin-top:24px">Fixes: cached club-stats, logged excepts, utcnow→now(utc), total clamp 4.5-8.0. Added: Safest Bet Builder (goals/props markets only — no moneyline, since ph/pa are regulation-time only and would understate a favorite's true win odds through OT/SO). Games and standings are now fetched/validated independently so a thin preseason sample can't wipe out a valid schedule.</p></body></html>"""
 import os as _os; _os.makedirs("docs/blue-line", exist_ok=True)
 with open("docs/blue-line/index.html","w") as f: f.write(html)
 
