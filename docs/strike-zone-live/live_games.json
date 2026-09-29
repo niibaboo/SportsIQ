@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-29T18:51:25.937647+00:00",
+  "generated": "2026-09-29T19:24:17.985018+00:00",
   "total_live": 1,
   "games": [
     {
@@ -8,22 +8,34 @@
       "away_team": "Philadelphia Phillies",
       "home_runs": 1.0,
       "away_runs": 1.0,
-      "inning": 3,
+      "home_hits": 3.0,
+      "away_hits": 1.0,
+      "inning": 5,
       "inning_state": "Top",
       "status": "In Progress",
-      "half_innings_remaining": 14,
+      "half_innings_remaining": 10,
       "next_run": {
-        "home": 65,
-        "away": 35
+        "home": 55,
+        "away": 45
       },
       "game_total_pace": {
-        "prob": 56,
-        "status": "On Pace: Over"
+        "prob": 19,
+        "status": "On Pace: Under"
+      },
+      "inning_winner": {
+        "home": 19,
+        "away": 15,
+        "tie": 67
+      },
+      "inning_hits": {
+        "home": 42,
+        "away": 15,
+        "tie": 43
       },
       "model_signal": {
-        "label": "Home Next Run",
-        "prob": 65,
-        "qualifies": false
+        "label": "Game Total Under",
+        "prob": 81,
+        "qualifies": true
       },
       "pregame_projection": {
         "home_lambda": 3.3,
