@@ -1,0 +1,44 @@
+name: Strike Zone Live Signals
+
+on:
+  schedule:
+    # Every 10 minutes, every day — MLB plays most days during the season
+    # (unlike NFL's fixed Thu/Sun/Mon), so unlike Blitz IQ Live this isn't
+    # restricted to specific days of the week. The MLB Stats API is public
+    # and needs no key, so off-slot runs (no live games) just find 0 and
+    # write an empty list — harmless, same reasoning as Blitz IQ Live.
+    # Depends on docs/strike-zone/slate_report.json already existing from
+    # today's Strike Zone run (see strike_zone.yml), so this only produces
+    # useful output after that has run.
+    - cron: '*/10 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Strike Zone Live Signals
+        run: python3 strike_zone_live.py
+
+      - name: Commit and push live signals
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/strike-zone-live/
+          git diff --staged --quiet || git commit -m "Update Strike Zone live signals"
+          git pull --rebase --autostash origin main
+          git push
