@@ -556,7 +556,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <div>
     <h1>Strike Zone -- Daily Slate</h1>
     <div class="sub">{date} · generated {generated}</div>
-    <div style="margin-top:4px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none;font-size:12px">📊 Results Tracker</a></div>
+    <div style="margin-top:4px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none;font-size:12px">📊 Results Tracker</a>&nbsp;·&nbsp;<a href="../strike-zone-live/index.html" style="color:#7ec8ff;text-decoration:none;font-size:12px">⚡ Live Signals</a></div>
   </div>
   <button class="downloadBtn" onclick="exportCSV()">Download CSV</button>
 </div>
