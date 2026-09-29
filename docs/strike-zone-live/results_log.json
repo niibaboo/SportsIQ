@@ -13,7 +13,9 @@
     "logged_home_runs": 1.0,
     "logged_away_runs": 1.0,
     "pregame_total": 5.11,
-    "status": "pending"
+    "status": "miss",
+    "final_home_runs": 5.0,
+    "final_away_runs": 3.0
   },
   "849845_Game_Total_Over": {
     "id": "849845_Game_Total_Over",
@@ -29,6 +31,24 @@
     "logged_home_runs": 5.0,
     "logged_away_runs": 3.0,
     "pregame_total": 5.11,
+    "status": "hit",
+    "final_home_runs": 5.0,
+    "final_away_runs": 3.0
+  },
+  "849849_Game_Total_Under": {
+    "id": "849849_Game_Total_Under",
+    "game_pk": 849849,
+    "home_team": "Houston Astros",
+    "away_team": "Chicago White Sox",
+    "label": "Game Total Under",
+    "prob": 71,
+    "logged_at": "2026-09-29T21:32:38.958900+00:00",
+    "logged_inning": 1,
+    "logged_inning_state": "Bottom",
+    "logged_half_index": 1,
+    "logged_home_runs": 0.0,
+    "logged_away_runs": 1.0,
+    "pregame_total": 10.86,
     "status": "pending"
   }
 }

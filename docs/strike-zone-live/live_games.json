@@ -1,46 +1,46 @@
 {
-  "generated": "2026-09-29T20:40:39.475524+00:00",
+  "generated": "2026-09-29T21:32:38.955475+00:00",
   "total_live": 1,
   "games": [
     {
-      "game_pk": 849845,
-      "home_team": "Atlanta Braves",
-      "away_team": "Philadelphia Phillies",
-      "home_runs": 5.0,
-      "away_runs": 3.0,
-      "home_hits": 7.0,
-      "away_hits": 6.0,
-      "inning": 9,
-      "inning_state": "Top",
+      "game_pk": 849849,
+      "home_team": "Houston Astros",
+      "away_team": "Chicago White Sox",
+      "home_runs": 0.0,
+      "away_runs": 1.0,
+      "home_hits": 1.0,
+      "away_hits": 0.0,
+      "inning": 1,
+      "inning_state": "Bottom",
       "status": "In Progress",
-      "half_innings_remaining": 2,
+      "half_innings_remaining": 17,
       "next_run": {
-        "home": 62,
-        "away": 38
+        "home": 27,
+        "away": 73
       },
       "game_total_pace": {
-        "prob": 100,
-        "status": "On Pace: Over"
+        "prob": 29,
+        "status": "On Pace: Under"
       },
       "inning_winner": {
-        "home": 35,
-        "away": 19,
+        "home": 12,
+        "away": 42,
         "tie": 46
       },
       "inning_hits": {
-        "home": 36,
-        "away": 29,
-        "tie": 35
+        "home": 29,
+        "away": 22,
+        "tie": 49
       },
       "model_signal": {
-        "label": "Game Total Over",
-        "prob": 100,
+        "label": "Game Total Under",
+        "prob": 71,
         "qualifies": true
       },
       "pregame_projection": {
-        "home_lambda": 3.3,
-        "away_lambda": 1.81,
-        "pregame_total": 5.11
+        "home_lambda": 4.6,
+        "away_lambda": 6.26,
+        "pregame_total": 10.86
       }
     }
   ]
