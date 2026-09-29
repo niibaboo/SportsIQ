@@ -1,29 +1,29 @@
 {
-  "generated": "2026-09-29T01:18:18.643458+00:00",
+  "generated": "2026-09-29T02:03:33.418353+00:00",
   "total_live": 1,
   "games": [
     {
       "game_id": "401872963",
       "home_team": "Chicago Bears",
       "away_team": "Philadelphia Eagles",
-      "home_score": 7.0,
-      "away_score": 0.0,
-      "period": 2,
-      "display_clock": "6:13",
-      "status": "6:13 - 2nd",
-      "elapsed_minute": 23.8,
-      "minutes_remaining": 36.2,
+      "home_score": 10.0,
+      "away_score": 7.0,
+      "period": 3,
+      "display_clock": "10:22",
+      "status": "10:22 - 3rd",
+      "elapsed_minute": 34.6,
+      "minutes_remaining": 25.4,
       "next_score": {
-        "home": 61,
-        "away": 39
+        "home": 59,
+        "away": 41
       },
       "game_total_pace": {
-        "prob": 15,
+        "prob": 14,
         "status": "On Pace: Under"
       },
       "model_signal": {
         "label": "Game Total Under",
-        "prob": 85,
+        "prob": 86,
         "qualifies": true
       },
       "pregame_projection": {
