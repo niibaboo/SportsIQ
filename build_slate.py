@@ -689,7 +689,7 @@ function poissonCDF(threshold, lambda){{
   return cum;
 }}
 function classifyEdge(kind, bestEdge){{
-  const isTeamProp = (kind === 'runs_lambda' || kind === 'hits_lambda' || kind === 'runs_f5_lambda');
+  const isTeamProp = (kind === 'runs_lambda' || kind === 'hits_lambda' || kind === 'runs_f5_lambda' || kind === 'f5_total_lambda');
   const t = isTeamProp ? {{skip:8, lean:15, play:25}} : {{skip:5, lean:12, play:20}};
   if(bestEdge < t.skip)  return {{label:'SKIP',    cls:'badge-skip'}};
   if(bestEdge < t.lean)  return {{label:'LEAN',    cls:'badge-lean'}};
@@ -729,6 +729,43 @@ function calcEdge(btn){{
   }} else {{
     out.style.color = 'var(--sub)';
   }}
+  out.innerHTML = badgeHtml + text.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+}}
+
+function calcF5Moneyline(btn){{
+  const row = btn.closest('.pitcherRow');
+  const homePct = parseFloat(row.dataset.f5_home_pct);
+  const awayPct = parseFloat(row.dataset.f5_away_pct);
+  const tiePct = parseFloat(row.dataset.f5_tie_pct);
+  const wrap = btn.closest('.edgeRow');
+  const awayOdds = parseFloat(wrap.querySelector('.awayOddsInput').value);
+  const homeOdds = parseFloat(wrap.querySelector('.homeOddsInput').value);
+  const out = wrap.querySelector('.edgeOut');
+  if(isNaN(awayOdds) || isNaN(homeOdds) || awayOdds<=0 || homeOdds<=0){{
+    out.textContent = 'Enter both odds first.'; return;
+  }}
+  // "Run Line 0" / F5 Moneyline books typically VOID the bet on a tie
+  // after 5, rather than settling it -- so the fair comparison is each
+  // side's SHARE of the non-tie outcomes, not its raw win%.
+  const nonTie = homePct + awayPct;
+  const modelHome = nonTie > 0 ? homePct / nonTie : 0.5;
+  const modelAway = nonTie > 0 ? awayPct / nonTie : 0.5;
+
+  const rawHome = 1/homeOdds, rawAway = 1/awayOdds;
+  const overround = rawHome + rawAway;
+  const mktHome = rawHome/overround, mktAway = rawAway/overround;
+
+  const edgeHome = (modelHome - mktHome) * 100;
+  const edgeAway = (modelAway - mktAway) * 100;
+  const bestEdge = Math.max(edgeHome, edgeAway);
+  const pick = edgeHome >= edgeAway
+    ? `Home edge ${{edgeHome>=0?'+':''}}${{edgeHome.toFixed(1)}}%`
+    : `Away edge ${{edgeAway>=0?'+':''}}${{edgeAway.toFixed(1)}}%`;
+
+  const text = `Model (excl. tie): Home ${{(modelHome*100).toFixed(1)}}% . Away ${{(modelAway*100).toFixed(1)}}% . Tie voids (~${{tiePct.toFixed(0)}}% of sims) . ${{pick}}`;
+  const {{label, cls}} = classifyEdge('runs_lambda', bestEdge);
+  const badgeHtml = `<span class="edgeBadge ${{cls}}">${{label}}</span> `;
+  out.style.color = bestEdge >= 8 ? 'var(--green)' : (bestEdge >= 3 ? 'var(--yellow)' : 'var(--sub)');
   out.innerHTML = badgeHtml + text.replace(/&/g,'&amp;').replace(/</g,'&lt;');
 }}
 
@@ -1184,7 +1221,7 @@ TEAM_RUN_F5_ROW = """<div class="pitcherRow" data-runs_f5_lambda="{lam}">
   </div>
 </div>"""
 
-F5_MATCHUP_ROW = """<div class="pitcherRow">
+F5_MATCHUP_ROW = """<div class="pitcherRow" data-f5_total_lambda="{total_lam}" data-f5_home_pct="{home_pct}" data-f5_away_pct="{away_pct}" data-f5_tie_pct="{tie_pct}">
   <div class="pTop">
     <div>
       <div class="pName">First 5 Innings -- Matchup</div>
@@ -1196,6 +1233,23 @@ F5_MATCHUP_ROW = """<div class="pitcherRow">
     <div class="f5WinCell"><div class="f5WinPct">{away_pct}%</div><div class="f5WinLabel">{away}</div></div>
     <div class="f5WinCell"><div class="f5WinPct">{tie_pct}%</div><div class="f5WinLabel">Tie</div></div>
     <div class="f5WinCell"><div class="f5WinPct">{home_pct}%</div><div class="f5WinLabel">{home}</div></div>
+  </div>
+
+  <div class="propLabel">F5 Game Total (combined runs)</div>
+  <div class="edgeRow">
+    <input type="number" step="0.5" class="lineInput" placeholder="Line">
+    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
+    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
+    <button class="edgeBtn" data-kind="f5_total_lambda" onclick="calcEdge(this)">Edge</button>
+    <div class="edgeOut"></div>
+  </div>
+
+  <div class="propLabel">F5 Moneyline (Run Line 0 / void-on-tie style)</div>
+  <div class="edgeRow">
+    <input type="number" step="0.01" class="awayOddsInput" placeholder="{away} odds">
+    <input type="number" step="0.01" class="homeOddsInput" placeholder="{home} odds">
+    <button class="edgeBtn" onclick="calcF5Moneyline(this)">Edge</button>
+    <div class="edgeOut"></div>
   </div>
 </div>"""
 
