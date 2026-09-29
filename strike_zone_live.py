@@ -1,26 +1,41 @@
 #!/usr/bin/env python3
 """
-Strike Zone Live Signals — live in-game next-run & total-pace signals for
-MLB games in progress. Same "Model Signal" pattern as Match IQ Live /
-Blitz IQ Live: a green-dot signal that only qualifies once its probability
-clears 70%, same bar used everywhere else in the suite.
+Strike Zone Live Signals — live in-game signals for MLB games in progress.
+Same "Model Signal" pattern as Match IQ Live / Blitz IQ Live: a green-dot
+signal that only qualifies once its probability clears 70%, same bar used
+everywhere else in the suite.
 
-Reuses build_slate.py's own pregame run projections (docs/strike-zone/
+Reuses build_slate.py's own pregame run/hits projections (docs/strike-zone/
 slate_report.json — the same lambda values shown on the main Strike Zone
 page) as the baseline, rather than refetching each team's hitting/pitching
 stats every 10 minutes. That file is written once a day by build_slate.py's
 own run, so this script just reads it and matches games by gamePk.
 
-Each team's remaining expected runs is adjusted for how their actual
-scoring pace THIS game compares to what the pregame projection implied by
-now — same idea as Match IQ Live's live-xG adjustment and Blitz IQ Live's
-pace adjustment.
+Each team's remaining/per-inning expected runs (and hits) is adjusted for
+how their actual pace THIS game compares to what the pregame projection
+implied by now — same idea as Match IQ Live's live-xG adjustment and
+Blitz IQ Live's pace adjustment.
 
-Two live signals per game:
-  - Next Run: which team is more likely to score next, given innings
-    remaining and each team's pace-adjusted remaining run rate.
+Live signals per game:
+  - Next Run: which team is more likely to score next. INFORMATIONAL
+    ONLY -- unlike soccer's "next goal" or NFL's "next score", books
+    generally don't offer a bettable "next team to score" market for
+    baseball, so this is excluded from Model Signal (nothing to bet).
   - Game Total Pace: whether the combined runs are tracking clearly
     above/below the pregame total projection (sum of both teams' lambdas).
+    A real, bettable live market (Live Total).
+  - Inning Winner: 3-way (Home/Away/Tie) odds on which team outscores
+    the other in the CURRENT inning specifically -- matches books'
+    "Nth Inning Lines: Winner" market.
+  - Inning Most Hits: 3-way (Home/Away/Tie) odds on which team gets more
+    hits in the current inning -- matches books' "Nth Inning Lines: Most
+    Hits" market. Needs each team's pregame HITS projection (from
+    build_slate.py's project_team_hits); skipped for a game if that
+    wasn't available in today's slate.
+  Both inning markets use each team's PER-INNING share of their full-game
+  pregame rate (lambda/9), pace-adjusted -- a simplification that doesn't
+  account for outs already recorded in a half-inning already underway,
+  same level of approximation as the rest of the live suite.
 
 Setup:
     python3 strike_zone_live.py
@@ -110,6 +125,10 @@ def calc_pace_adjustment(actual_runs, exp_runs_pregame, elapsed_fraction):
 
 
 def calc_next_run_prob(home_exp_remaining, away_exp_remaining):
+    """INFORMATIONAL ONLY -- see module docstring. Kept for display since
+    it's still a genuinely informative number, just excluded from
+    calc_model_signal's candidates because books don't offer this as a
+    bettable market for baseball."""
     total = home_exp_remaining + away_exp_remaining
     if total <= 0:
         return {"home": 50, "away": 50}
@@ -117,6 +136,49 @@ def calc_next_run_prob(home_exp_remaining, away_exp_remaining):
         "home": round((home_exp_remaining / total) * 100),
         "away": round((away_exp_remaining / total) * 100),
     }
+
+
+def _ordinal(n):
+    if n is None:
+        return "?"
+    if 10 <= n % 100 <= 20:
+        suffix = "th"
+    else:
+        suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
+
+
+def inning_three_way_probs(home_exp, away_exp, max_n=10):
+    """Home/Away/Tie probabilities for a SINGLE inning, from a Poisson
+    grid over each team's per-inning expected runs (or hits) -- same
+    grid approach as Euro Ice's win_probs_and_scores / Strike Zone's
+    F5 matchup card, just scoped to one inning instead of a full game
+    or 5-inning window. Per-inning counts are small, so max_n=10 leaves
+    negligible tail probability."""
+    ph = pa = pt = 0.0
+    for i in range(max_n):
+        for j in range(max_n):
+            p = poisson_pmf(i, home_exp) * poisson_pmf(j, away_exp)
+            if i > j:
+                ph += p
+            elif j > i:
+                pa += p
+            else:
+                pt += p
+    return {"home": round(ph * 100), "away": round(pa * 100), "tie": round(pt * 100)}
+
+
+def best_of_three(label_prefix, home_team, away_team, probs):
+    """Collapse a 3-way Home/Away/Tie market down to its single highest-
+    probability outcome, as one Model-Signal-ready candidate -- same
+    "pick the best side of this market" idea as calc_game_total_pace
+    picking Over vs Under."""
+    candidates = [
+        {"label": f"{label_prefix}: {home_team}", "prob": probs["home"]},
+        {"label": f"{label_prefix}: {away_team}", "prob": probs["away"]},
+        {"label": f"{label_prefix}: Tie", "prob": probs["tie"]},
+    ]
+    return max(candidates, key=lambda c: c["prob"])
 
 
 def calc_game_total_pace(actual_total, pregame_total, remaining_mean):
@@ -137,15 +199,21 @@ def calc_game_total_pace(actual_total, pregame_total, remaining_mean):
     return {"prob": prob_over, "status": status}
 
 
-def calc_model_signal(next_run, total_pace):
+def calc_model_signal(total_pace, inning_winner_best, inning_hits_best):
+    """Picks the single highest-confidence signal from only the markets
+    that are actually bettable in-play: Game Total, Inning Winner, and
+    Inning Most Hits. Next Run is deliberately excluded -- see module
+    docstring -- since there's no market to place it against."""
     total_direction = total_pace["status"].split(": ")[-1] if ": " in total_pace["status"] else total_pace["status"]
     total_confidence = total_pace["prob"] if "Over" in total_direction else (100 - total_pace["prob"])
 
     candidates = [
-        {"label": "Home Next Run", "prob": next_run["home"]},
-        {"label": "Away Next Run", "prob": next_run["away"]},
         {"label": f"Game Total {total_direction}", "prob": total_confidence},
+        inning_winner_best,
     ]
+    if inning_hits_best is not None:
+        candidates.append(inning_hits_best)
+
     best = max(candidates, key=lambda c: c["prob"])
     return {
         "label": best["label"],
@@ -176,10 +244,19 @@ def load_slate_projections():
         away_lam = (team_runs.get("away") or {}).get("lambda")
         if pk is None or home_lam is None or away_lam is None:
             continue
+
+        # Hits projections are used for the Inning Most Hits market --
+        # optional: a game without them still gets Next Run / Game Total /
+        # Inning Winner, just not Inning Most Hits.
+        team_hits = entry.get("team_hits") or {}
+        home_hits_lam = (team_hits.get("home") or {}).get("lambda")
+        away_hits_lam = (team_hits.get("away") or {}).get("lambda")
+
         by_pk[pk] = {
             "home_team": entry.get("home"), "away_team": entry.get("away"),
             "home_lambda": home_lam, "away_lambda": away_lam,
             "pregame_total": round(home_lam + away_lam, 2),
+            "home_hits_lambda": home_hits_lam, "away_hits_lambda": away_hits_lam,
         }
     return by_pk
 
@@ -213,12 +290,17 @@ def build_live_signals():
         remaining_innings = innings_remaining(half_elapsed)
         elapsed_fraction = min((half_elapsed or 0) / TOTAL_HALF_INNINGS, 1.0)
 
-        teams_runs = (linescore.get("teams") or {})
+        teams_data = (linescore.get("teams") or {})
         try:
-            home_runs = float((teams_runs.get("home") or {}).get("runs") or 0)
-            away_runs = float((teams_runs.get("away") or {}).get("runs") or 0)
+            home_runs = float((teams_data.get("home") or {}).get("runs") or 0)
+            away_runs = float((teams_data.get("away") or {}).get("runs") or 0)
         except (TypeError, ValueError):
             home_runs, away_runs = 0.0, 0.0
+        try:
+            home_hits = float((teams_data.get("home") or {}).get("hits") or 0)
+            away_hits = float((teams_data.get("away") or {}).get("hits") or 0)
+        except (TypeError, ValueError):
+            home_hits, away_hits = 0.0, 0.0
 
         home_adj = calc_pace_adjustment(home_runs, proj["home_lambda"], elapsed_fraction)
         away_adj = calc_pace_adjustment(away_runs, proj["away_lambda"], elapsed_fraction)
@@ -230,7 +312,36 @@ def build_live_signals():
         total_pace = calc_game_total_pace(
             home_runs + away_runs, proj["pregame_total"], home_exp_remaining + away_exp_remaining
         )
-        model_signal = calc_model_signal(next_run, total_pace)
+
+        # Inning Winner: each team's per-inning share of their full-game
+        # pregame run rate, pace-adjusted by the same home_adj/away_adj
+        # already computed above (today's hot/cold factor applied evenly
+        # per inning, not just to the remaining-game total).
+        home_run_per_inning = proj["home_lambda"] / TOTAL_INNINGS * home_adj
+        away_run_per_inning = proj["away_lambda"] / TOTAL_INNINGS * away_adj
+        inning_winner = inning_three_way_probs(home_run_per_inning, away_run_per_inning)
+        inning_winner_best = best_of_three(
+            f"{_ordinal(inning)} Inning Winner", proj["home_team"], proj["away_team"], inning_winner
+        )
+
+        # Inning Most Hits: same idea, using each team's pregame HITS
+        # projection instead of runs -- skipped if that game had no hits
+        # projection in today's slate.
+        inning_hits = None
+        inning_hits_best = None
+        home_hits_lam = proj.get("home_hits_lambda")
+        away_hits_lam = proj.get("away_hits_lambda")
+        if home_hits_lam is not None and away_hits_lam is not None:
+            home_hits_adj = calc_pace_adjustment(home_hits, home_hits_lam, elapsed_fraction)
+            away_hits_adj = calc_pace_adjustment(away_hits, away_hits_lam, elapsed_fraction)
+            home_hits_per_inning = home_hits_lam / TOTAL_INNINGS * home_hits_adj
+            away_hits_per_inning = away_hits_lam / TOTAL_INNINGS * away_hits_adj
+            inning_hits = inning_three_way_probs(home_hits_per_inning, away_hits_per_inning)
+            inning_hits_best = best_of_three(
+                f"{_ordinal(inning)} Inning Most Hits", proj["home_team"], proj["away_team"], inning_hits
+            )
+
+        model_signal = calc_model_signal(total_pace, inning_winner_best, inning_hits_best)
 
         live_games.append({
             "game_pk": game_pk,
@@ -238,12 +349,16 @@ def build_live_signals():
             "away_team": proj["away_team"],
             "home_runs": home_runs,
             "away_runs": away_runs,
+            "home_hits": home_hits,
+            "away_hits": away_hits,
             "inning": inning,
             "inning_state": inning_state,
             "status": game.get("status", {}).get("detailedState", "Live"),
             "half_innings_remaining": round(remaining_innings * 2) if remaining_innings else 0,
             "next_run": next_run,
             "game_total_pace": total_pace,
+            "inning_winner": inning_winner,
+            "inning_hits": inning_hits,
             "model_signal": model_signal,
             "pregame_projection": {
                 "home_lambda": proj["home_lambda"],
