@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-29T19:24:17.985018+00:00",
+  "generated": "2026-09-29T19:40:59.542323+00:00",
   "total_live": 1,
   "games": [
     {
@@ -9,32 +9,32 @@
       "home_runs": 1.0,
       "away_runs": 1.0,
       "home_hits": 3.0,
-      "away_hits": 1.0,
-      "inning": 5,
+      "away_hits": 2.0,
+      "inning": 6,
       "inning_state": "Top",
       "status": "In Progress",
-      "half_innings_remaining": 10,
+      "half_innings_remaining": 8,
       "next_run": {
-        "home": 55,
-        "away": 45
+        "home": 50,
+        "away": 50
       },
       "game_total_pace": {
-        "prob": 19,
+        "prob": 8,
         "status": "On Pace: Under"
       },
       "inning_winner": {
-        "home": 19,
+        "home": 15,
         "away": 15,
-        "tie": 67
+        "tie": 70
       },
       "inning_hits": {
-        "home": 42,
-        "away": 15,
-        "tie": 43
+        "home": 34,
+        "away": 20,
+        "tie": 46
       },
       "model_signal": {
         "label": "Game Total Under",
-        "prob": 81,
+        "prob": 92,
         "qualifies": true
       },
       "pregame_projection": {
