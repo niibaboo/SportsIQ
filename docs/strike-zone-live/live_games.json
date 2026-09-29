@@ -1,41 +1,41 @@
 {
-  "generated": "2026-09-29T21:32:38.955475+00:00",
+  "generated": "2026-09-29T23:13:53.516101+00:00",
   "total_live": 1,
   "games": [
     {
       "game_pk": 849849,
       "home_team": "Houston Astros",
       "away_team": "Chicago White Sox",
-      "home_runs": 0.0,
-      "away_runs": 1.0,
-      "home_hits": 1.0,
-      "away_hits": 0.0,
-      "inning": 1,
+      "home_runs": 2.0,
+      "away_runs": 5.0,
+      "home_hits": 4.0,
+      "away_hits": 8.0,
+      "inning": 6,
       "inning_state": "Bottom",
       "status": "In Progress",
-      "half_innings_remaining": 17,
+      "half_innings_remaining": 7,
       "next_run": {
-        "home": 27,
-        "away": 73
+        "home": 29,
+        "away": 71
       },
       "game_total_pace": {
-        "prob": 29,
-        "status": "On Pace: Under"
+        "prob": 65,
+        "status": "On Pace: Over"
       },
       "inning_winner": {
-        "home": 12,
-        "away": 42,
-        "tie": 46
+        "home": 14,
+        "away": 48,
+        "tie": 38
       },
       "inning_hits": {
-        "home": 29,
-        "away": 22,
-        "tie": 49
+        "home": 19,
+        "away": 55,
+        "tie": 27
       },
       "model_signal": {
-        "label": "Game Total Under",
-        "prob": 71,
-        "qualifies": true
+        "label": "Game Total Over",
+        "prob": 65,
+        "qualifies": false
       },
       "pregame_projection": {
         "home_lambda": 4.6,
