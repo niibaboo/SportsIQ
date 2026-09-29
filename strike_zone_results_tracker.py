@@ -66,6 +66,7 @@ def save_log(entries):
 LEG_CATEGORY_SCANNER = {
     "Strikeouts": "strikeouts", "Outs Recorded": "outs",
     "Team Runs": "team_runs", "Team Hits": "team_hits",
+    "Team Runs (F5)": "team_runs_f5",
 }
 
 
@@ -159,6 +160,49 @@ def _get_final_linescore(game_pk):
     return {"home_runs": home_runs, "away_runs": away_runs, "home_hits": home_hits, "away_hits": away_hits}
 
 
+def _get_final_linescore_f5(game_pk):
+    """Same idea as _get_final_linescore, but sums only the first 5
+    innings' runs per side from the linescore's innings array -- needed
+    to grade Team Runs (F5) legs, since the final/total runs field
+    doesn't isolate the F5 window. If fewer than 5 innings were actually
+    played (game called early), returns None -- F5 can't be graded
+    against an incomplete first 5."""
+    sched = _get("/schedule", {"gamePk": game_pk, "hydrate": "linescore"})
+    if not sched or not sched.get("dates"):
+        return None
+    games = sched["dates"][0].get("games", [])
+    if not games:
+        return None
+    game = games[0]
+    status = game.get("status", {}).get("abstractGameState")
+    if status != "Final":
+        return None
+    ls = game.get("linescore", {})
+    innings = ls.get("innings") or []
+    if len(innings) < 5:
+        return None  # game ended before/at the 5th -- no clean F5 result
+
+    home_f5 = away_f5 = 0
+    for inn in innings[:5]:
+        h = (inn.get("home") or {}).get("runs")
+        a = (inn.get("away") or {}).get("runs")
+        if h is None or a is None:
+            return None  # incomplete inning data -- don't guess
+        home_f5 += h
+        away_f5 += a
+    return {"home_runs": home_f5, "away_runs": away_f5}
+
+
+def _verify_team_leg_f5(entry):
+    ls = _get_final_linescore_f5(entry["game_pk"])
+    if not ls:
+        return None
+    actual = ls["home_runs"] if entry["is_home"] else ls["away_runs"]
+    if actual is None:
+        return None
+    return {"actual": actual, "result": "hit" if actual > entry["line"] else "miss"}
+
+
 def _get_pitcher_boxscore_line(game_pk, pitcher_id):
     data = _get(f"/game/{game_pk}/boxscore")
     if not data:
@@ -243,6 +287,8 @@ def verify_pending_results(log, real_run_streak_threshold, real_k_streak_thresho
                 result = _verify_pitcher_streak_entry(entry, real_k_streak_threshold)
             elif entry["scanner"] in ("team_runs", "team_hits"):
                 result = _verify_team_leg(entry)
+            elif entry["scanner"] == "team_runs_f5":
+                result = _verify_team_leg_f5(entry)
             elif entry["scanner"] in ("run_form", "k_form"):
                 # Form entries use the SAME "did they hit their own
                 # numbers threshold in this game" check as the streak
@@ -282,6 +328,7 @@ def build_results_dashboard(log):
     SCANNER_LABELS = {
         "strikeouts": "Strikeouts", "outs": "Outs Recorded",
         "team_runs": "Team Runs", "team_hits": "Team Hits",
+        "team_runs_f5": "Team Runs (F5)",
         "run_form": "Run Form", "real_run_streak": "Real Run Streak",
         "k_form": "K Form", "real_k_streak": "Real K Streak",
     }
