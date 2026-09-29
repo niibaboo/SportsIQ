@@ -18,6 +18,14 @@ what actually happened, build a win-rate dashboard.
     from build_slate.py) vs. the actual final combined runs. An exact
     push is void.
 
+  - Inning Winner / Inning Most Hits signals (e.g. "5th Inning Winner:
+    Atlanta Braves") are verified against that SPECIFIC inning's entry
+    in the final linescore's innings array (runs for Winner, hits for
+    Most Hits) -- home vs away in that inning alone, not the whole game.
+    An exact tie in that inning is void ONLY if the signal itself wasn't
+    predicting a tie (a correctly-predicted tie is a hit). If the game
+    ended before reaching that inning, it's void -- nothing to grade.
+
 Wrapped in try/except by strike_zone_live.py's __main__, same as every
 other tracker in the suite.
 """
@@ -146,6 +154,46 @@ def _verify_next_run_entry(entry, linescore):
     return 'void'  # nobody scored again after the signal fired
 
 
+def _verify_inning_market_entry(entry, linescore):
+    """Grades a "{Nth} Inning Winner: <team>" or "{Nth} Inning Most Hits:
+    <team>" signal against that SPECIFIC inning's linescore entry, not
+    the game total. entry['logged_inning'] is the inning number the
+    signal was about (1-indexed, matching MLB's inning numbering)."""
+    logged_inning = entry.get('logged_inning')
+    if not logged_inning:
+        return 'void'
+
+    innings = linescore.get('innings') or []
+    idx = logged_inning - 1
+    if idx < 0 or idx >= len(innings):
+        return 'void'  # game ended before/without reaching that inning
+
+    inn = innings[idx]
+    stat_key = 'hits' if 'Most Hits' in entry['label'] else 'runs'
+    home_val = (inn.get('home') or {}).get(stat_key)
+    away_val = (inn.get('away') or {}).get(stat_key)
+    if home_val is None or away_val is None:
+        return 'void'
+
+    if home_val > away_val:
+        actual_side = 'home'
+    elif away_val > home_val:
+        actual_side = 'away'
+    else:
+        actual_side = 'tie'
+
+    if 'Tie' in entry['label']:
+        predicted_side = 'tie'
+    elif entry.get('home_team') and entry['home_team'] in entry['label']:
+        predicted_side = 'home'
+    elif entry.get('away_team') and entry['away_team'] in entry['label']:
+        predicted_side = 'away'
+    else:
+        return 'void'  # couldn't determine which side was predicted
+
+    return 'hit' if predicted_side == actual_side else 'miss'
+
+
 def _verify_game_total_entry(entry, final_home, final_away):
     pregame_total = entry.get('pregame_total')
     if final_home is None or final_away is None or pregame_total is None:
@@ -191,6 +239,8 @@ def verify_pending_results(log):
 
         if 'Next Run' in entry['label']:
             result = _verify_next_run_entry(entry, linescore)
+        elif 'Inning Winner' in entry['label'] or 'Inning Most Hits' in entry['label']:
+            result = _verify_inning_market_entry(entry, linescore)
         else:
             result = _verify_game_total_entry(entry, final_home, final_away)
 
@@ -212,7 +262,7 @@ DASHBOARD_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 {summary}
 {rows}
 <p style="text-align:center;color:#666;font-size:10px;margin-top:20px">
-Next Run signals grade against the actual next half-inning with a run after the signal fired; if nobody scores again, it's marked Void (not a loss). Game Total signals grade against the pregame run projection; an exact push is Void.
+Next Run signals grade against the actual next half-inning with a run after the signal fired; if nobody scores again, it's marked Void (not a loss). Game Total signals grade against the pregame run projection; an exact push is Void. Inning Winner / Inning Most Hits signals grade against that SPECIFIC inning's actual runs/hits; Void means the game ended before reaching that inning.
 </p>
 </body></html>"""
 
@@ -237,10 +287,18 @@ def build_results_dashboard(log):
     entries = list(log.values())
     graded = [e for e in entries if e['status'] in ('hit', 'miss')]
 
+    def _category(label):
+        if 'Next Run' in label:
+            return 'Next Run'
+        if 'Inning Winner' in label:
+            return 'Inning Winner'
+        if 'Inning Most Hits' in label:
+            return 'Inning Most Hits'
+        return 'Game Total Pace'
+
     by_category = {}
     for e in graded:
-        cat = 'Next Run' if 'Next Run' in e['label'] else 'Game Total Pace'
-        by_category.setdefault(cat, []).append(e)
+        by_category.setdefault(_category(e['label']), []).append(e)
 
     summary_rows = ""
     for cat, cat_entries in sorted(by_category.items()):
