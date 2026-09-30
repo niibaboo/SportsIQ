@@ -103,6 +103,24 @@
     "logged_home_runs": 1.0,
     "logged_away_runs": 1.0,
     "pregame_total": 5.32,
+    "status": "miss",
+    "final_home_runs": 3.0,
+    "final_away_runs": 4.0
+  },
+  "849848_Game_Total_Under": {
+    "id": "849848_Game_Total_Under",
+    "game_pk": 849848,
+    "home_team": "New York Yankees",
+    "away_team": "Boston Red Sox",
+    "label": "Game Total Under",
+    "prob": 95,
+    "logged_at": "2026-09-30T23:43:41.215633+00:00",
+    "logged_inning": 1,
+    "logged_inning_state": "Top",
+    "logged_half_index": 0,
+    "logged_home_runs": 0.0,
+    "logged_away_runs": 0.0,
+    "pregame_total": 6.57,
     "status": "pending"
   }
 }
