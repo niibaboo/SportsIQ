@@ -259,95 +259,6 @@ def project_team_runs(team_id, season, opp_starter_era, opp_starter_xfip, starte
             "xfip_used": opp_starter_xfip is not None}
 
 
-def project_team_runs_f5(team_id, season, opp_starter_era, opp_starter_xfip, starter_proj_ip, opp_team_id, weight=RECENT_WEIGHT):
-    """First 5 Innings (F5) version of project_team_runs -- same recency
-    blend, rescoped to a 5-inning window and weighted MUCH more heavily
-    toward the opposing starter than the full-game model.
-
-    F5 markets are essentially a starter-vs-starter bet: as long as the
-    starter covers the first 5, the bullpen never factors in at all. So
-    starter weight here is his share of the F5 WINDOW ITSELF
-    (proj_ip / 5), not his share of the full game (proj_ip / 9) like
-    project_team_runs uses -- a starter projected for 5.3 IP gets ~100%
-    starter-weight for F5, not the ~59% he'd get in the 9-inning model.
-    A starter projected short of 5 IP still blends in the opposing
-    team's bullpen ERA for the innings he's not expected to finish.
-
-    Team scoring rate is scaled 5/9 of the full-game blended rate as the
-    baseline -- a simplifying assumption (bullpen innings 6-9 aren't
-    identical in scoring environment to innings 1-5), but a reasonable
-    one absent per-game linescore splits, and consistent with the "don't
-    add API calls" approach used everywhere else in this file.
-    """
-    hstat = get_team_hitting_stat(team_id, season)
-    if not hstat:
-        return None
-    games = hstat.get("gamesPlayed") or 1
-    season_rpg = hstat.get("runs", 0) / games
-
-    last5_runs = get_team_runs_last5(team_id, season)
-    if len(last5_runs) >= 2:
-        n = len(last5_runs)
-        clipped_runs = winsorize_iqr(last5_runs)
-        wts = [1.4 ** i for i in range(n)]
-        recent_rpg = sum(w * r for w, r in zip(wts, clipped_runs)) / sum(wts)
-    else:
-        recent_rpg = season_rpg
-
-    blended_rpg = weight * recent_rpg + (1 - weight) * season_rpg
-    f5_rpg = blended_rpg * (5 / 9)
-
-    starter_share = max(0.0, min(1.0, (starter_proj_ip or 5.5) / 5.0))
-    bullpen_share = 1 - starter_share
-    opp_team_era = get_team_pitching_era(opp_team_id, season) or LEAGUE_AVG_ERA
-    starter_adj_era = (opp_starter_era / LEAGUE_AVG_ERA) if opp_starter_era else 1.0
-    if opp_starter_xfip:
-        starter_adj_xfip = opp_starter_xfip / _lg_avg_xfip()
-        starter_adj = 0.6 * starter_adj_xfip + 0.4 * starter_adj_era
-    else:
-        starter_adj = starter_adj_era
-    bullpen_adj = (opp_team_era / LEAGUE_AVG_ERA)
-    f5_run_factor = starter_share * starter_adj + bullpen_share * bullpen_adj
-
-    lam = f5_rpg * f5_run_factor
-    lo = hi = 0
-    cum = 0.0
-    for i in range(15):
-        cum += poisson_pmf(i, lam)
-        if cum >= 0.10 and lo == 0:
-            lo = i
-        if cum >= 0.90:
-            hi = i
-            break
-
-    l5_str = "·".join(str(r) for r in last5_runs) if last5_runs else "—"
-    return {"lambda": round(lam, 2), "lo": lo, "hi": hi, "l5_str": l5_str,
-            "last5_runs": last5_runs,
-            "season_rpg": round(season_rpg, 2), "run_factor": round(f5_run_factor, 2),
-            "starter_share": round(starter_share, 2),
-            "xfip_used": opp_starter_xfip is not None}
-
-
-def f5_win_probs(lh, la):
-    """Home/away/tie probabilities after 5 innings from a Poisson grid
-    over each team's F5 lambda -- same approach as Euro Ice's
-    win_probs_and_scores. Unlike a full-game moneyline, a tie after 5 is
-    a real, commonly-traded F5 outcome (not resolved the way OT would
-    resolve a hockey tie), so it's kept as its own bucket rather than
-    split or dropped."""
-    ph = pa = pt = 0.0
-    for i in range(12):
-        for j in range(12):
-            p = poisson_pmf(i, lh) * poisson_pmf(j, la)
-            if i > j:
-                ph += p
-            elif j > i:
-                pa += p
-            else:
-                pt += p
-    return round(ph * 100), round(pa * 100), round(pt * 100)
-
-
 def project_team_hits(team_id, season, opp_starter_hits9, starter_proj_ip, opp_team_id, weight=RECENT_WEIGHT):
     hstat = get_team_hitting_stat(team_id, season)
     if not hstat:
@@ -556,7 +467,6 @@ def build_slate(target_date):
 
         entry["team_runs"] = {}
         entry["team_hits"] = {}
-        entry["team_runs_f5"] = {}
         pitcher_by_side = {p.get("side"): p for p in entry["pitchers"]}
         for side_name, side, opp in (("away", away, home), ("home", home, away)):
             opp_side = "home" if side_name == "away" else "away"
@@ -590,27 +500,6 @@ def build_slate(target_date):
                     }
             except Exception as e:
                 entry["team_hits"][side_name] = {"team": side["team"]["name"], "error": str(e)}
-
-            try:
-                trf5 = project_team_runs_f5(
-                    side["team"]["id"], season, opp_era, opp_xfip, opp_proj_ip, opp["team"]["id"]
-                )
-                if trf5:
-                    entry["team_runs_f5"][side_name] = {
-                        "team": side["team"]["name"], "opp": opp["team"]["name"], **trf5
-                    }
-            except Exception as e:
-                entry["team_runs_f5"][side_name] = {"team": side["team"]["name"], "error": str(e)}
-
-        home_f5 = entry["team_runs_f5"].get("home")
-        away_f5 = entry["team_runs_f5"].get("away")
-        if home_f5 and away_f5 and "lambda" in home_f5 and "lambda" in away_f5:
-            home_pct, away_pct, tie_pct = f5_win_probs(home_f5["lambda"], away_f5["lambda"])
-            entry["f5_matchup"] = {
-                "home_lambda": home_f5["lambda"], "away_lambda": away_f5["lambda"],
-                "total_lambda": round(home_f5["lambda"] + away_f5["lambda"], 2),
-                "home_win_pct": home_pct, "away_win_pct": away_pct, "tie_pct": tie_pct,
-            }
 
     return slate
 
@@ -661,10 +550,6 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   .builderBtnAlt{{background:var(--panel2); border:1px solid var(--border); color:var(--text); padding:7px 14px; border-radius:6px; font-size:13px; cursor:pointer;}}
   .builderResult{{font-size:12px; color:var(--sub);}}
   .legRow{{display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid var(--border);}}
-  .f5WinRow{{display:flex; gap:8px; margin-top:8px;}}
-  .f5WinCell{{flex:1; text-align:center; background:var(--panel2); border:1px solid var(--border); border-radius:8px; padding:8px 4px;}}
-  .f5WinPct{{font-size:18px; font-weight:700; color:var(--text);}}
-  .f5WinLabel{{font-size:11px; color:var(--sub); margin-top:2px;}}
 </style></head>
 <body>
 <div class="topBar">
@@ -678,7 +563,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 {builder_html}
 {streak_html}
 {games_html}
-<div class="footnote">Projections blend season K-rate/batter-faced with a recency-weighted last-5 rate ({weight}% recent), adjust for opponent K% and BB/9-driven outing length, then use a Poisson distribution for the range. Team run projections now blend opposing-starter xFIP (peripheral-based, strips out defense/luck) with raw ERA. First 5 Innings (F5) runs use the same blend rescoped to a 5-inning window, weighted almost entirely on the opposing starter (not the bullpen) since F5 markets resolve before relievers normally enter. Enter a book's line/odds under any pitcher or team row to compute a de-vigged edge -- that math runs entirely in your browser, no data leaves the page.</div>
+<div class="footnote">Projections blend season K-rate/batter-faced with a recency-weighted last-5 rate ({weight}% recent), adjust for opponent K% and BB/9-driven outing length, then use a Poisson distribution for the range. Team run projections now blend opposing-starter xFIP (peripheral-based, strips out defense/luck) with raw ERA. Enter a book's line/odds under any pitcher to compute a de-vigged edge -- that math runs entirely in your browser, no data leaves the page.</div>
 <script>
 const REPORT_DATE = "{date}";
 const LEGS = {legs_json};
@@ -689,7 +574,7 @@ function poissonCDF(threshold, lambda){{
   return cum;
 }}
 function classifyEdge(kind, bestEdge){{
-  const isTeamProp = (kind === 'runs_lambda' || kind === 'hits_lambda' || kind === 'runs_f5_lambda' || kind === 'f5_total_lambda');
+  const isTeamProp = (kind === 'runs_lambda' || kind === 'hits_lambda');
   const t = isTeamProp ? {{skip:8, lean:15, play:25}} : {{skip:5, lean:12, play:20}};
   if(bestEdge < t.skip)  return {{label:'SKIP',    cls:'badge-skip'}};
   if(bestEdge < t.lean)  return {{label:'LEAN',    cls:'badge-lean'}};
@@ -729,43 +614,6 @@ function calcEdge(btn){{
   }} else {{
     out.style.color = 'var(--sub)';
   }}
-  out.innerHTML = badgeHtml + text.replace(/&/g,'&amp;').replace(/</g,'&lt;');
-}}
-
-function calcF5Moneyline(btn){{
-  const row = btn.closest('.pitcherRow');
-  const homePct = parseFloat(row.dataset.f5_home_pct);
-  const awayPct = parseFloat(row.dataset.f5_away_pct);
-  const tiePct = parseFloat(row.dataset.f5_tie_pct);
-  const wrap = btn.closest('.edgeRow');
-  const awayOdds = parseFloat(wrap.querySelector('.awayOddsInput').value);
-  const homeOdds = parseFloat(wrap.querySelector('.homeOddsInput').value);
-  const out = wrap.querySelector('.edgeOut');
-  if(isNaN(awayOdds) || isNaN(homeOdds) || awayOdds<=0 || homeOdds<=0){{
-    out.textContent = 'Enter both odds first.'; return;
-  }}
-  // "Run Line 0" / F5 Moneyline books typically VOID the bet on a tie
-  // after 5, rather than settling it -- so the fair comparison is each
-  // side's SHARE of the non-tie outcomes, not its raw win%.
-  const nonTie = homePct + awayPct;
-  const modelHome = nonTie > 0 ? homePct / nonTie : 0.5;
-  const modelAway = nonTie > 0 ? awayPct / nonTie : 0.5;
-
-  const rawHome = 1/homeOdds, rawAway = 1/awayOdds;
-  const overround = rawHome + rawAway;
-  const mktHome = rawHome/overround, mktAway = rawAway/overround;
-
-  const edgeHome = (modelHome - mktHome) * 100;
-  const edgeAway = (modelAway - mktAway) * 100;
-  const bestEdge = Math.max(edgeHome, edgeAway);
-  const pick = edgeHome >= edgeAway
-    ? `Home edge ${{edgeHome>=0?'+':''}}${{edgeHome.toFixed(1)}}%`
-    : `Away edge ${{edgeAway>=0?'+':''}}${{edgeAway.toFixed(1)}}%`;
-
-  const text = `Model (excl. tie): Home ${{(modelHome*100).toFixed(1)}}% . Away ${{(modelAway*100).toFixed(1)}}% . Tie voids (~${{tiePct.toFixed(0)}}% of sims) . ${{pick}}`;
-  const {{label, cls}} = classifyEdge('runs_lambda', bestEdge);
-  const badgeHtml = `<span class="edgeBadge ${{cls}}">${{label}}</span> `;
-  out.style.color = bestEdge >= 8 ? 'var(--green)' : (bestEdge >= 3 ? 'var(--yellow)' : 'var(--sub)');
   out.innerHTML = badgeHtml + text.replace(/&/g,'&amp;').replace(/</g,'&lt;');
 }}
 
@@ -950,11 +798,20 @@ RUN_STREAK_MIN = 5.5
 RUN_STREAK_MIN_GAMES = 5
 K_STREAK_MIN = 7.0
 K_STREAK_MIN_STARTS = 5
+# Team Hits has been the tracker's best-performing category (80% hit rate
+# on the "Over X.5 hits" leg) -- these mirror Run/K Form's calibration
+# logic: MLB team hits/game runs a bit above 8.5 league-average, so the
+# Form (average) bar sits ~1.5 above that and the Real Streak (per-game,
+# consecutive) bar sits ~1 above it, same spacing as Run/K above.
+HIT_STREAK_MIN = 10.0
+HIT_STREAK_MIN_GAMES = 5
 
 REAL_RUN_STREAK_THRESHOLD = 5   # per-game runs needed to extend the streak
 REAL_RUN_STREAK_MIN_LENGTH = 3  # shortest run that counts as "a streak"
 REAL_K_STREAK_THRESHOLD = 6     # per-start K's needed to extend the streak
 REAL_K_STREAK_MIN_LENGTH = 3
+REAL_HIT_STREAK_THRESHOLD = 9   # per-game hits needed to extend the streak
+REAL_HIT_STREAK_MIN_LENGTH = 3
 
 
 def _current_run_streak(values, threshold=REAL_RUN_STREAK_THRESHOLD):
@@ -1009,6 +866,54 @@ def build_real_run_streak_entries(slate):
             if streak_len >= REAL_RUN_STREAK_MIN_LENGTH:
                 entries.append({
                     "team": tr["team"], "opponent": tr["opp"],
+                    "streak_len": streak_len, "streak_games": l5[-streak_len:],
+                    "full_sample": streak_len >= len(l5),
+                    "away": g["away"], "home": g["home"], "time": g["time"],
+                    "game_pk": g.get("game_pk"), "game_date": g.get("game_date"),
+                    "is_home": side_name == "home",
+                })
+    entries.sort(key=lambda e: -e["streak_len"])
+    return entries
+
+
+def build_hit_streak_entries(slate):
+    """HIT FORM -- average over last 5 games. Reuses last5_hits already
+    computed by project_team_hits() -- same free reuse as run/K form."""
+    entries = []
+    for g in slate:
+        for side_name in ("away", "home"):
+            th = g.get("team_hits", {}).get(side_name)
+            if not th or "last5_hits" not in th:
+                continue
+            l5 = th["last5_hits"]
+            if len(l5) < HIT_STREAK_MIN_GAMES:
+                continue
+            avg5 = round(sum(l5) / len(l5), 2)
+            if avg5 >= HIT_STREAK_MIN:
+                entries.append({
+                    "team": th["team"], "opponent": th["opp"],
+                    "last5_avg": avg5, "last5": l5,
+                    "away": g["away"], "home": g["home"], "time": g["time"],
+                    "game_pk": g.get("game_pk"), "game_date": g.get("game_date"),
+                    "is_home": side_name == "home",
+                })
+    entries.sort(key=lambda e: -e["last5_avg"])
+    return entries
+
+
+def build_real_hit_streak_entries(slate):
+    """REAL HIT STREAK -- genuine consecutive-games count."""
+    entries = []
+    for g in slate:
+        for side_name in ("away", "home"):
+            th = g.get("team_hits", {}).get(side_name)
+            if not th or "last5_hits" not in th:
+                continue
+            l5 = th["last5_hits"]
+            streak_len = _current_run_streak(l5, REAL_HIT_STREAK_THRESHOLD)
+            if streak_len >= REAL_HIT_STREAK_MIN_LENGTH:
+                entries.append({
+                    "team": th["team"], "opponent": th["opp"],
                     "streak_len": streak_len, "streak_games": l5[-streak_len:],
                     "full_sample": streak_len >= len(l5),
                     "away": g["away"], "home": g["home"], "time": g["time"],
@@ -1100,12 +1005,14 @@ STREAK_PANEL_TEMPLATE = """<div class="builderPanel">
   </div>
   {run_section}
   {real_run_section}
+  {hit_section}
+  {real_hit_section}
   {k_section}
   {real_k_section}
 </div>"""
 
 
-def _render_section(entries, template, icon, label, subtitle, subject_fn):
+def _render_section(entries, template, icon, label, subtitle, subject_fn, threshold=None):
     if not entries:
         return ""
     cards = "".join(
@@ -1113,7 +1020,7 @@ def _render_section(entries, template, icon, label, subtitle, subject_fn):
             last5_avg=e.get("last5_avg"), streak_len=e.get("streak_len"),
             plus="+" if e.get("full_sample") else "",
             away=e["away"], home=e["home"], time=e["time"],
-            subject=subject_fn(e), threshold=REAL_RUN_STREAK_THRESHOLD if "Run" in label else REAL_K_STREAK_THRESHOLD,
+            subject=subject_fn(e), threshold=threshold,
             last5_str="·".join(str(v) for v in e.get("last5", [])),
             streak_str="·".join(str(v) for v in e.get("streak_games", [])),
         ) for e in entries
@@ -1121,8 +1028,12 @@ def _render_section(entries, template, icon, label, subtitle, subject_fn):
     return f'<div style="font-size:12px;font-weight:700;color:var(--text);margin:10px 0 4px">{icon} {label} <span style="color:var(--sub);font-weight:normal;font-size:10px">{subtitle}</span></div>{cards}'
 
 
-def render_streak_panel(run_entries, real_run_entries, k_entries, real_k_entries):
-    if not any([run_entries, real_run_entries, k_entries, real_k_entries]):
+def render_streak_panel(run_entries, real_run_entries, k_entries, real_k_entries,
+                         hit_entries=None, real_hit_entries=None):
+    hit_entries = hit_entries or []
+    real_hit_entries = real_hit_entries or []
+    if not any([run_entries, real_run_entries, k_entries, real_k_entries,
+                hit_entries, real_hit_entries]):
         return ""
 
     run_section = _render_section(
@@ -1133,7 +1044,17 @@ def render_streak_panel(run_entries, real_run_entries, k_entries, real_k_entries
     real_run_section = _render_section(
         real_run_entries, REAL_STREAK_ENTRY_TEMPLATE, "🔥", "Real Run Streak",
         f"(≥{REAL_RUN_STREAK_MIN_LENGTH}+ CONSECUTIVE games ≥{REAL_RUN_STREAK_THRESHOLD} runs)",
+        lambda e: f"{e['team']} (vs {e['opponent']})", threshold=REAL_RUN_STREAK_THRESHOLD,
+    )
+    hit_section = _render_section(
+        hit_entries, STREAK_ENTRY_TEMPLATE, "📊", "Hit Form",
+        f"(avg ≥{HIT_STREAK_MIN}/gm over last {HIT_STREAK_MIN_GAMES})",
         lambda e: f"{e['team']} (vs {e['opponent']})",
+    )
+    real_hit_section = _render_section(
+        real_hit_entries, REAL_STREAK_ENTRY_TEMPLATE, "🔥", "Real Hit Streak",
+        f"(≥{REAL_HIT_STREAK_MIN_LENGTH}+ CONSECUTIVE games ≥{REAL_HIT_STREAK_THRESHOLD} hits)",
+        lambda e: f"{e['team']} (vs {e['opponent']})", threshold=REAL_HIT_STREAK_THRESHOLD,
     )
     k_section = _render_section(
         k_entries, STREAK_ENTRY_TEMPLATE, "🎯", "K Form",
@@ -1143,11 +1064,12 @@ def render_streak_panel(run_entries, real_run_entries, k_entries, real_k_entries
     real_k_section = _render_section(
         real_k_entries, REAL_STREAK_ENTRY_TEMPLATE, "🔥", "Real K Streak",
         f"(≥{REAL_K_STREAK_MIN_LENGTH}+ CONSECUTIVE starts ≥{REAL_K_STREAK_THRESHOLD} K's)",
-        lambda e: f"{e['name']} ({e['team']} vs {e['opp']})",
+        lambda e: f"{e['name']} ({e['team']} vs {e['opp']})", threshold=REAL_K_STREAK_THRESHOLD,
     )
 
     return STREAK_PANEL_TEMPLATE.format(
         run_section=run_section, real_run_section=real_run_section,
+        hit_section=hit_section, real_hit_section=real_hit_section,
         k_section=k_section, real_k_section=real_k_section,
     )
 
@@ -1196,59 +1118,6 @@ TEAM_HIT_ROW = """<div class="pitcherRow" data-hits_lambda="{lam}">
     <input type="number" step="0.01" class="overInput" placeholder="Over odds">
     <input type="number" step="0.01" class="underInput" placeholder="Under odds">
     <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
-    <div class="edgeOut"></div>
-  </div>
-</div>"""
-
-TEAM_RUN_F5_ROW = """<div class="pitcherRow" data-runs_f5_lambda="{lam}">
-  <div class="pTop">
-    <div>
-      <div class="pName">{team} -- Total Runs (F5)</div>
-      <div class="pMeta">vs {opp} · season {season_rpg}/gm (full game) · starter-weighted x{run_factor}{xfip_note}</div>
-    </div>
-    <div class="pProj">
-      <div class="pProjNum">{lam}</div>
-      <div class="pProjSub">{lo}-{hi} range</div>
-    </div>
-  </div>
-  <div class="propLabel">Team Total Runs (First 5 Innings)</div>
-  <div class="edgeRow">
-    <input type="number" step="0.5" class="lineInput" placeholder="Line">
-    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
-    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
-    <button class="edgeBtn" data-kind="runs_f5_lambda" onclick="calcEdge(this)">Edge</button>
-    <div class="edgeOut"></div>
-  </div>
-</div>"""
-
-F5_MATCHUP_ROW = """<div class="pitcherRow" data-f5_total_lambda="{total_lam}" data-f5_home_pct="{home_pct}" data-f5_away_pct="{away_pct}" data-f5_tie_pct="{tie_pct}">
-  <div class="pTop">
-    <div>
-      <div class="pName">First 5 Innings -- Matchup</div>
-      <div class="pMeta">{away} {away_lam} · {home} {home_lam} · F5 total {total_lam}</div>
-    </div>
-  </div>
-  <div class="propLabel">Leading After 5 Innings</div>
-  <div class="f5WinRow">
-    <div class="f5WinCell"><div class="f5WinPct">{away_pct}%</div><div class="f5WinLabel">{away}</div></div>
-    <div class="f5WinCell"><div class="f5WinPct">{tie_pct}%</div><div class="f5WinLabel">Tie</div></div>
-    <div class="f5WinCell"><div class="f5WinPct">{home_pct}%</div><div class="f5WinLabel">{home}</div></div>
-  </div>
-
-  <div class="propLabel">F5 Game Total (combined runs)</div>
-  <div class="edgeRow">
-    <input type="number" step="0.5" class="lineInput" placeholder="Line">
-    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
-    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
-    <button class="edgeBtn" data-kind="f5_total_lambda" onclick="calcEdge(this)">Edge</button>
-    <div class="edgeOut"></div>
-  </div>
-
-  <div class="propLabel">F5 Moneyline (Run Line 0 / void-on-tie style)</div>
-  <div class="edgeRow">
-    <input type="number" step="0.01" class="awayOddsInput" placeholder="{away} odds">
-    <input type="number" step="0.01" class="homeOddsInput" placeholder="{home} odds">
-    <button class="edgeBtn" onclick="calcF5Moneyline(this)">Edge</button>
     <div class="edgeOut"></div>
   </div>
 </div>"""
@@ -1374,26 +1243,6 @@ def build_legs(slate):
                         "game_pk": g.get("game_pk"), "game_date": g.get("game_date"),
                         "is_home": side == "home", "line": line,
                     })
-            trf5 = g.get("team_runs_f5", {}).get(side)
-            if trf5 and "lambda" in trf5:
-                line = safe_line(trf5["lambda"])
-                if line:
-                    # NOTE: hit_rate below uses the team's FULL-GAME last-5
-                    # runs (last5_runs), same as Team Runs -- there's no
-                    # tracked per-game F5-only run history to check the F5
-                    # line against, so this is a rough continuity indicator,
-                    # not a true "hit this F5 line in X of last 5" stat.
-                    legs.append({
-                        "match": match_label, "subject": trf5["team"],
-                        "market": f"{trf5['team']} Over {line} Runs (F5)",
-                        "prob": round(prob_over(trf5["lambda"], line) * 100),
-                        "category": "Team Runs (F5)",
-                        "hit_rate": hit_rate(trf5.get("last5_runs"), line),
-                        "detail": f"vs {trf5['opp']} · proj {trf5['lambda']} runs (first 5)",
-                        "history": "/".join(str(v) for v in trf5.get("last5_runs", [])) or None,
-                        "game_pk": g.get("game_pk"), "game_date": g.get("game_date"),
-                        "is_home": side == "home", "line": line,
-                    })
     return legs
 
 
@@ -1440,24 +1289,6 @@ def render_html(slate, target_date):
                     season_hpg=th["season_hpg"], hit_factor=th["hit_factor"],
                     lam=th["lambda"], lo=th["lo"], hi=th["hi"],
                 ))
-            trf5 = g.get("team_runs_f5", {}).get(side_name)
-            if trf5 and "lambda" in trf5:
-                xfip_note = " (xFIP-blended)" if trf5.get("xfip_used") else ""
-                team_rows.append(TEAM_RUN_F5_ROW.format(
-                    team=trf5["team"], opp=trf5["opp"],
-                    season_rpg=trf5["season_rpg"], run_factor=trf5["run_factor"],
-                    xfip_note=xfip_note,
-                    lam=trf5["lambda"], lo=trf5["lo"], hi=trf5["hi"],
-                ))
-
-        f5m = g.get("f5_matchup")
-        if f5m:
-            team_rows.append(F5_MATCHUP_ROW.format(
-                away=g["away"], home=g["home"],
-                away_lam=f5m["away_lambda"], home_lam=f5m["home_lambda"],
-                total_lam=f5m["total_lambda"],
-                away_pct=f5m["away_win_pct"], tie_pct=f5m["tie_pct"], home_pct=f5m["home_win_pct"],
-            ))
 
         games_html.append(GAME_TEMPLATE.format(
             away=g["away"], home=g["home"], time=g["time"],
@@ -1469,9 +1300,12 @@ def render_html(slate, target_date):
 
     run_entries = build_run_streak_entries(slate)
     real_run_entries = build_real_run_streak_entries(slate)
+    hit_entries = build_hit_streak_entries(slate)
+    real_hit_entries = build_real_hit_streak_entries(slate)
     k_entries = build_k_streak_entries(slate)
     real_k_entries = build_real_k_streak_entries(slate)
-    streak_html = render_streak_panel(run_entries, real_run_entries, k_entries, real_k_entries)
+    streak_html = render_streak_panel(run_entries, real_run_entries, k_entries, real_k_entries,
+                                       hit_entries, real_hit_entries)
 
     return HTML_TEMPLATE.format(
         date=target_date.isoformat(), generated=datetime.now().strftime("%Y-%m-%d %H:%M"),
@@ -1507,6 +1341,8 @@ if __name__ == "__main__":
             build_run_streak_entries(slate), build_real_run_streak_entries(slate),
             build_k_streak_entries(slate), build_real_k_streak_entries(slate),
             REAL_RUN_STREAK_THRESHOLD, REAL_K_STREAK_THRESHOLD,
+            build_hit_streak_entries(slate), build_real_hit_streak_entries(slate),
+            REAL_HIT_STREAK_THRESHOLD,
         )
     except Exception as e:
         # Results tracking sits on top of everything above, which has
