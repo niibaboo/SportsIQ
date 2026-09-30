@@ -627,7 +627,41 @@
     "pitchers": [
       {
         "side": "away",
-        "name": null
+        "name": "Kevin Gausman",
+        "pitcher_id": 592332,
+        "team": "Chicago Cubs",
+        "opp": "San Diego Padres",
+        "opp_kpct": 21.6,
+        "fip": 3.7421637523452156,
+        "xfip": 3.581805966228893,
+        "lambda": 6.26,
+        "lo": 3,
+        "hi": 10,
+        "proj_ip": 5.5,
+        "outs_lambda": 16.4,
+        "outs_lo": 11,
+        "outs_hi": 22,
+        "season_era": "4.51",
+        "season_k9": "9.32",
+        "season_hits9": "9.07",
+        "bb9": 2.38,
+        "whip": "1.27",
+        "l5_str": "7\u00b79\u00b76\u00b76\u00b77",
+        "l5_vs_season": 20.0,
+        "k_last5": [
+          7,
+          9,
+          6,
+          6,
+          7
+        ],
+        "outs_last5": [
+          15,
+          21,
+          12,
+          17,
+          17
+        ]
       },
       {
         "side": "home",
@@ -692,7 +726,7 @@
       "home": {
         "team": "San Diego Padres",
         "opp": "Chicago Cubs",
-        "lambda": 5.65,
+        "lambda": 5.85,
         "lo": 3,
         "hi": 9,
         "l5_str": "5\u00b74\u00b74\u00b710\u00b79",
@@ -704,8 +738,8 @@
           9
         ],
         "season_rpg": 4.46,
-        "run_factor": 1.01,
-        "xfip_used": false
+        "run_factor": 1.05,
+        "xfip_used": true
       }
     },
     "team_hits": {
@@ -729,7 +763,7 @@
       "home": {
         "team": "San Diego Padres",
         "opp": "Chicago Cubs",
-        "lambda": 9.49,
+        "lambda": 9.88,
         "lo": 6,
         "hi": 14,
         "l5_str": "8\u00b76\u00b710\u00b713\u00b711",
@@ -741,7 +775,7 @@
           11
         ],
         "season_hpg": 8.11,
-        "hit_factor": 0.99
+        "hit_factor": 1.03
       }
     },
     "team_runs_f5": {
@@ -767,9 +801,9 @@
       "home": {
         "team": "San Diego Padres",
         "opp": "Chicago Cubs",
-        "lambda": 3.1,
+        "lambda": 3.28,
         "lo": 1,
-        "hi": 5,
+        "hi": 6,
         "l5_str": "5\u00b74\u00b74\u00b710\u00b79",
         "last5_runs": [
           5,
@@ -779,18 +813,18 @@
           9
         ],
         "season_rpg": 4.46,
-        "run_factor": 1.0,
+        "run_factor": 1.06,
         "starter_share": 1.0,
-        "xfip_used": false
+        "xfip_used": true
       }
     },
     "f5_matchup": {
-      "home_lambda": 3.1,
+      "home_lambda": 3.28,
       "away_lambda": 1.56,
-      "total_lambda": 4.66,
-      "home_win_pct": 68,
-      "away_win_pct": 17,
-      "tie_pct": 15
+      "total_lambda": 4.84,
+      "home_win_pct": 71,
+      "away_win_pct": 15,
+      "tie_pct": 14
     }
   }
 ]

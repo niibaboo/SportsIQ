@@ -10457,9 +10457,10 @@
     "game_date": "2026-09-29",
     "date_key": "2026-09-29",
     "logged_at": "2026-09-29T08:14:18.360069+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0,
+    "verified_at": "2026-09-30T06:28:48.094617+00:00"
   },
   {
     "id": "d27005b9eb263b23",
@@ -10476,9 +10477,10 @@
     "game_date": "2026-09-29",
     "date_key": "2026-09-29",
     "logged_at": "2026-09-29T08:14:18.360073+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 3,
+    "verified_at": "2026-09-30T06:28:48.126610+00:00"
   },
   {
     "id": "d0cd61a18f9338f7",
@@ -10495,9 +10497,10 @@
     "game_date": "2026-09-29",
     "date_key": "2026-09-29",
     "logged_at": "2026-09-29T08:14:18.360076+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 8,
+    "verified_at": "2026-09-30T06:28:48.158292+00:00"
   },
   {
     "id": "aaf55d26ec620828",
@@ -10514,9 +10517,10 @@
     "game_date": "2026-09-29",
     "date_key": "2026-09-29",
     "logged_at": "2026-09-29T08:14:18.360083+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 13,
+    "verified_at": "2026-09-30T06:28:48.190085+00:00"
   },
   {
     "id": "2462dced6c71e64b",
@@ -10553,9 +10557,10 @@
     "game_date": "2026-09-29",
     "date_key": "2026-09-29",
     "logged_at": "2026-09-29T08:14:18.360097+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 8,
+    "verified_at": "2026-09-30T06:28:48.219371+00:00"
   },
   {
     "id": "4aad12dd0e8a4305",
@@ -10852,9 +10857,10 @@
     "game_date": "2026-09-29",
     "date_key": "2026-09-29",
     "logged_at": "2026-09-29T10:27:51.447635+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0,
+    "verified_at": "2026-09-30T06:28:48.250061+00:00"
   },
   {
     "id": "3ee7ec4631b4fde9",
@@ -10871,9 +10877,10 @@
     "game_date": "2026-09-29",
     "date_key": "2026-09-29",
     "logged_at": "2026-09-29T10:27:51.447643+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 7,
+    "verified_at": "2026-09-30T06:28:48.282880+00:00"
   },
   {
     "id": "5caf92dc4403229c",
@@ -11688,6 +11695,101 @@
     "game_date": "2026-09-30",
     "date_key": "2026-09-30",
     "logged_at": "2026-09-30T04:33:47.618222+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "740f77568bd9c638",
+    "scanner": "strikeouts",
+    "subject": "Kevin Gausman",
+    "market": "Kevin Gausman Over 4.5 Strikeouts",
+    "value": 75,
+    "detail": "Chicago Cubs vs San Diego Padres \u00b7 proj 6.26 K",
+    "game_pk": 849842,
+    "pitcher_id": 592332,
+    "is_home": null,
+    "line": 4.5,
+    "threshold": null,
+    "game_date": "2026-09-30",
+    "date_key": "2026-09-30",
+    "logged_at": "2026-09-30T06:28:47.401865+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "44c623dc5e652835",
+    "scanner": "outs",
+    "subject": "Kevin Gausman",
+    "market": "Kevin Gausman Over 11.5 Outs Recorded",
+    "value": 89,
+    "detail": "Chicago Cubs vs San Diego Padres \u00b7 proj 5.5 IP",
+    "game_pk": 849842,
+    "pitcher_id": 592332,
+    "is_home": null,
+    "line": 11.5,
+    "threshold": null,
+    "game_date": "2026-09-30",
+    "date_key": "2026-09-30",
+    "logged_at": "2026-09-30T06:28:47.401882+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "68bc4879ac01b822",
+    "scanner": "team_hits",
+    "subject": "San Diego Padres",
+    "market": "San Diego Padres Over 7.0 Hits",
+    "value": 77,
+    "detail": "vs Chicago Cubs \u00b7 proj 9.88 hits",
+    "game_pk": 849842,
+    "pitcher_id": null,
+    "is_home": true,
+    "line": 7.0,
+    "threshold": null,
+    "game_date": "2026-09-30",
+    "date_key": "2026-09-30",
+    "logged_at": "2026-09-30T06:28:47.401895+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "f24dbcd0f0cd6b2f",
+    "scanner": "k_form",
+    "subject": "Kevin Gausman",
+    "market": "K Form (Chicago Cubs vs San Diego Padres)",
+    "value": 7.0,
+    "detail": null,
+    "game_pk": 849842,
+    "pitcher_id": 592332,
+    "is_home": null,
+    "line": null,
+    "threshold": null,
+    "game_date": "2026-09-30",
+    "date_key": "2026-09-30",
+    "logged_at": "2026-09-30T06:28:47.401910+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "edb5d89e0ebdbad1",
+    "scanner": "real_k_streak",
+    "subject": "Kevin Gausman",
+    "market": "Real K Streak (Chicago Cubs vs San Diego Padres)",
+    "value": 5,
+    "detail": null,
+    "game_pk": 849842,
+    "pitcher_id": 592332,
+    "is_home": null,
+    "line": null,
+    "threshold": 6,
+    "game_date": "2026-09-30",
+    "date_key": "2026-09-30",
+    "logged_at": "2026-09-30T06:28:47.401914+00:00",
     "status": "pending",
     "result": null,
     "actual": null
