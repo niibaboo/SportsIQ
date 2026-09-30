@@ -28,6 +28,14 @@ BASE = "https://statsapi.mlb.com/api/v1"
 LOG_PATH = "docs/strike-zone/results/log.json"
 DASHBOARD_PATH = "docs/strike-zone/results/index.html"
 
+# These get overwritten by run_results_tracker() with the live thresholds
+# from build_slate.py, but need a module-level default so log_todays_signals
+# / verify_pending_results don't NameError if ever called before that (e.g.
+# directly, in a test) -- they were previously undefined until first set.
+REAL_RUN_STREAK_THRESHOLD = None
+REAL_K_STREAK_THRESHOLD = None
+REAL_HIT_STREAK_THRESHOLD = None
+
 
 def _get(path, params=None):
     try:
@@ -66,14 +74,17 @@ def save_log(entries):
 LEG_CATEGORY_SCANNER = {
     "Strikeouts": "strikeouts", "Outs Recorded": "outs",
     "Team Runs": "team_runs", "Team Hits": "team_hits",
-    "Team Runs (F5)": "team_runs_f5",
 }
 
 
-def log_todays_signals(legs, run_entries, real_run_entries, k_entries, real_k_entries, log):
-    """Logs every Safest-Bet-Builder leg plus every Run/K Form and Real
-    Run/K Streak entry. Each already carries game_pk (+ pitcher_id where
-    relevant) added specifically for this tracker when they were built."""
+def log_todays_signals(legs, run_entries, real_run_entries, k_entries, real_k_entries, log,
+                        hit_entries=None, real_hit_entries=None):
+    """Logs every Safest-Bet-Builder leg plus every Run/K/Hit Form and Real
+    Run/K/Hit Streak entry. Each already carries game_pk (+ pitcher_id
+    where relevant) added specifically for this tracker when they were
+    built."""
+    hit_entries = hit_entries or []
+    real_hit_entries = real_hit_entries or []
     existing_ids = {e["id"] for e in log}
     added = 0
 
@@ -114,6 +125,18 @@ def log_todays_signals(legs, run_entries, real_run_entries, k_entries, real_k_en
             continue
         add("real_run_streak", e["team"], f"Real Run Streak vs {e['opponent']}", e["streak_len"],
             e["game_pk"], e["game_date"], is_home=e["is_home"], threshold=REAL_RUN_STREAK_THRESHOLD)
+
+    for e in hit_entries:
+        if not e.get("game_pk"):
+            continue
+        add("hit_form", e["team"], f"Hit Form vs {e['opponent']}", e["last5_avg"],
+            e["game_pk"], e["game_date"], is_home=e["is_home"])
+
+    for e in real_hit_entries:
+        if not e.get("game_pk"):
+            continue
+        add("real_hit_streak", e["team"], f"Real Hit Streak vs {e['opponent']}", e["streak_len"],
+            e["game_pk"], e["game_date"], is_home=e["is_home"], threshold=REAL_HIT_STREAK_THRESHOLD)
 
     for e in k_entries:
         if not e.get("game_pk"):
@@ -158,49 +181,6 @@ def _get_final_linescore(game_pk):
     if home_runs is None or away_runs is None:
         return None
     return {"home_runs": home_runs, "away_runs": away_runs, "home_hits": home_hits, "away_hits": away_hits}
-
-
-def _get_final_linescore_f5(game_pk):
-    """Same idea as _get_final_linescore, but sums only the first 5
-    innings' runs per side from the linescore's innings array -- needed
-    to grade Team Runs (F5) legs, since the final/total runs field
-    doesn't isolate the F5 window. If fewer than 5 innings were actually
-    played (game called early), returns None -- F5 can't be graded
-    against an incomplete first 5."""
-    sched = _get("/schedule", {"gamePk": game_pk, "hydrate": "linescore"})
-    if not sched or not sched.get("dates"):
-        return None
-    games = sched["dates"][0].get("games", [])
-    if not games:
-        return None
-    game = games[0]
-    status = game.get("status", {}).get("abstractGameState")
-    if status != "Final":
-        return None
-    ls = game.get("linescore", {})
-    innings = ls.get("innings") or []
-    if len(innings) < 5:
-        return None  # game ended before/at the 5th -- no clean F5 result
-
-    home_f5 = away_f5 = 0
-    for inn in innings[:5]:
-        h = (inn.get("home") or {}).get("runs")
-        a = (inn.get("away") or {}).get("runs")
-        if h is None or a is None:
-            return None  # incomplete inning data -- don't guess
-        home_f5 += h
-        away_f5 += a
-    return {"home_runs": home_f5, "away_runs": away_f5}
-
-
-def _verify_team_leg_f5(entry):
-    ls = _get_final_linescore_f5(entry["game_pk"])
-    if not ls:
-        return None
-    actual = ls["home_runs"] if entry["is_home"] else ls["away_runs"]
-    if actual is None:
-        return None
-    return {"actual": actual, "result": "hit" if actual > entry["line"] else "miss"}
 
 
 def _get_pitcher_boxscore_line(game_pk, pitcher_id):
@@ -251,17 +231,19 @@ def _verify_team_leg(entry):
     return {"actual": actual, "result": "hit" if actual > entry["line"] else "miss"}
 
 
-def _verify_team_streak_entry(entry, threshold):
+def _verify_team_streak_entry(entry, threshold, stat="runs"):
     ls = _get_final_linescore(entry["game_pk"])
     if not ls:
         return None
-    actual = ls["home_runs"] if entry["is_home"] else ls["away_runs"]
+    key = f"home_{stat}" if entry["is_home"] else f"away_{stat}"
+    actual = ls.get(key)
     if actual is None:
         return None
     return {"actual": actual, "result": "hit" if actual >= threshold else "miss"}
 
 
-def verify_pending_results(log, real_run_streak_threshold, real_k_streak_threshold, max_checks=150):
+def verify_pending_results(log, real_run_streak_threshold, real_k_streak_threshold,
+                            real_hit_streak_threshold=None, max_checks=150):
     # Raised from 60 -- MLB runs far more games/day than the other sports
     # this pattern was built for, so this tracker genuinely logs more
     # picks per run than a 60-cap could keep pace with, independent of
@@ -287,20 +269,22 @@ def verify_pending_results(log, real_run_streak_threshold, real_k_streak_thresho
                 result = _verify_pitcher_streak_entry(entry, real_k_streak_threshold)
             elif entry["scanner"] in ("team_runs", "team_hits"):
                 result = _verify_team_leg(entry)
-            elif entry["scanner"] == "team_runs_f5":
-                result = _verify_team_leg_f5(entry)
-            elif entry["scanner"] in ("run_form", "k_form"):
+            elif entry["scanner"] in ("run_form", "hit_form", "k_form"):
                 # Form entries use the SAME "did they hit their own
                 # numbers threshold in this game" check as the streak
                 # entries, since Form isn't tied to a specific betting
                 # line -- reuses the streak verifiers with the entry's
                 # own historical avg as a rough continuity check instead.
                 if entry["scanner"] == "run_form":
-                    result = _verify_team_streak_entry(entry, entry["value"])
+                    result = _verify_team_streak_entry(entry, entry["value"], stat="runs")
+                elif entry["scanner"] == "hit_form":
+                    result = _verify_team_streak_entry(entry, entry["value"], stat="hits")
                 else:
                     result = _verify_pitcher_streak_entry(entry, entry["value"])
             elif entry["scanner"] == "real_run_streak":
-                result = _verify_team_streak_entry(entry, real_run_streak_threshold)
+                result = _verify_team_streak_entry(entry, real_run_streak_threshold, stat="runs")
+            elif entry["scanner"] == "real_hit_streak":
+                result = _verify_team_streak_entry(entry, real_hit_streak_threshold, stat="hits")
         except Exception as e:
             print(f"    [!] verification error for entry {entry['id']} ({entry['scanner']}): {e}")
             result = None
@@ -328,8 +312,8 @@ def build_results_dashboard(log):
     SCANNER_LABELS = {
         "strikeouts": "Strikeouts", "outs": "Outs Recorded",
         "team_runs": "Team Runs", "team_hits": "Team Hits",
-        "team_runs_f5": "Team Runs (F5)",
         "run_form": "Run Form", "real_run_streak": "Real Run Streak",
+        "hit_form": "Hit Form", "real_hit_streak": "Real Hit Streak",
         "k_form": "K Form", "real_k_streak": "Real K Streak",
     }
 
@@ -396,15 +380,19 @@ def build_results_dashboard(log):
 
 
 def run_results_tracker(legs, run_entries, real_run_entries, k_entries, real_k_entries,
-                          real_run_streak_threshold, real_k_streak_threshold):
+                          real_run_streak_threshold, real_k_streak_threshold,
+                          hit_entries=None, real_hit_entries=None, real_hit_streak_threshold=None):
     """Single entry point called from build_slate.py's main()."""
-    global REAL_RUN_STREAK_THRESHOLD, REAL_K_STREAK_THRESHOLD
+    global REAL_RUN_STREAK_THRESHOLD, REAL_K_STREAK_THRESHOLD, REAL_HIT_STREAK_THRESHOLD
     REAL_RUN_STREAK_THRESHOLD = real_run_streak_threshold
     REAL_K_STREAK_THRESHOLD = real_k_streak_threshold
+    REAL_HIT_STREAK_THRESHOLD = real_hit_streak_threshold
 
     print("\nRunning results tracker...")
     log = load_log()
-    log = log_todays_signals(legs, run_entries, real_run_entries, k_entries, real_k_entries, log)
-    log = verify_pending_results(log, real_run_streak_threshold, real_k_streak_threshold)
+    log = log_todays_signals(legs, run_entries, real_run_entries, k_entries, real_k_entries, log,
+                              hit_entries, real_hit_entries)
+    log = verify_pending_results(log, real_run_streak_threshold, real_k_streak_threshold,
+                                  real_hit_streak_threshold)
     save_log(log)
     build_results_dashboard(log)
