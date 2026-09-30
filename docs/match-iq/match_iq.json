@@ -251,11 +251,11 @@
     "over25": 68,
     "over45": 27,
     "btts": 66,
-    "exp_fh_corners": 5.15,
-    "fh_corners_over35": 76,
-    "fh_corners_over45": 59,
-    "exp_corners": 11.87,
-    "corners_over105": 64,
+    "exp_fh_corners": 4.9,
+    "fh_corners_over35": 72,
+    "fh_corners_over45": 54,
+    "exp_corners": 11.4,
+    "corners_over105": 59,
     "exp_fh_home": 0.55,
     "exp_fh_away": 0.55,
     "fh_btts": 18,
@@ -515,16 +515,5732 @@
     "over25": 73,
     "over45": 33,
     "btts": 64,
-    "exp_fh_corners": 3.66,
-    "fh_corners_over35": 50,
-    "fh_corners_over45": 31,
-    "exp_corners": 11.6,
-    "corners_over105": 61,
+    "exp_fh_corners": 3.32,
+    "fh_corners_over35": 42,
+    "fh_corners_over45": 24,
+    "exp_corners": 9.53,
+    "corners_over105": 36,
     "exp_fh_home": 0.55,
     "exp_fh_away": 0.55,
     "fh_btts": 18,
     "home_win_pct": 15,
     "draw_pct": 17,
     "away_win_pct": 69
+  },
+  {
+    "match_id": "mt_377263864",
+    "league": "Eredivisie",
+    "date": "2026-10-09T15:00:00.000Z",
+    "date_key": "2026-10-09",
+    "home_team": "PSV Eindhoven",
+    "away_team": "SC Heerenveen",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 3.43,
+      "avg_conceded": 1.43,
+      "goals_list": [
+        2,
+        4,
+        3,
+        6,
+        5,
+        2,
+        2
+      ],
+      "avg_shots": 21.0,
+      "shots_list": [
+        11,
+        28,
+        13,
+        30,
+        24,
+        20,
+        21
+      ],
+      "avg_shots_on_target": 8.4,
+      "sot_list": [
+        4,
+        10,
+        5,
+        14,
+        12,
+        8,
+        6
+      ],
+      "avg_corners": 7.6,
+      "corners_list": [
+        5,
+        9,
+        1,
+        13,
+        9,
+        7,
+        9
+      ],
+      "avg_corners_conceded": 2.4,
+      "corners_conceded_list": [
+        6,
+        5,
+        1,
+        0,
+        4,
+        1,
+        0
+      ],
+      "avg_saves": 2.6,
+      "saves_list": [
+        2,
+        4,
+        5,
+        0,
+        2,
+        1,
+        4
+      ],
+      "avg_fh_corners": 3.9,
+      "fh_corners_list": [
+        3,
+        5,
+        1,
+        7,
+        2,
+        3,
+        6
+      ],
+      "avg_fh_corners_conceded": 0.6,
+      "fh_corners_conceded_list": [
+        2,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 17.1,
+      "avg_cards": 1.7,
+      "cards_list": [
+        2,
+        1,
+        6,
+        1,
+        1,
+        0,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 1.57,
+      "avg_conceded": 1.29,
+      "goals_list": [
+        4,
+        0,
+        2,
+        2,
+        0,
+        2,
+        1
+      ],
+      "avg_shots": 16.0,
+      "shots_list": [
+        23,
+        23,
+        14,
+        13,
+        18,
+        14,
+        7
+      ],
+      "avg_shots_on_target": 6.0,
+      "sot_list": [
+        9,
+        6,
+        5,
+        5,
+        5,
+        8,
+        4
+      ],
+      "avg_corners": 5.1,
+      "corners_list": [
+        6,
+        8,
+        4,
+        7,
+        5,
+        2,
+        4
+      ],
+      "avg_corners_conceded": 5.6,
+      "corners_conceded_list": [
+        3,
+        6,
+        3,
+        9,
+        3,
+        7,
+        8
+      ],
+      "avg_saves": 3.0,
+      "saves_list": [
+        0,
+        2,
+        5,
+        2,
+        5,
+        4,
+        3
+      ],
+      "avg_fh_corners": 2.3,
+      "fh_corners_list": [
+        6,
+        2,
+        3,
+        1,
+        4,
+        0,
+        0
+      ],
+      "avg_fh_corners_conceded": 2.0,
+      "fh_corners_conceded_list": [
+        2,
+        2,
+        1,
+        4,
+        0,
+        3,
+        2
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 12.1,
+      "avg_cards": 1.2,
+      "cards_list": [
+        0,
+        2,
+        1,
+        1,
+        1,
+        2
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 15.0,
+        "prob": 89,
+        "avg": 21.0
+      },
+      "sot_prop": {
+        "line": 6.0,
+        "prob": 73,
+        "avg": 8.4
+      },
+      "corners_prop": {
+        "line": 5.0,
+        "prob": 77,
+        "avg": 7.6
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 82,
+        "avg": 1.7
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 11.5,
+        "prob": 87,
+        "avg": 16.0
+      },
+      "sot_prop": {
+        "line": 4.0,
+        "prob": 71,
+        "avg": 6.0
+      },
+      "corners_prop": {
+        "line": 3.5,
+        "prob": 75,
+        "avg": 5.1
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 70,
+        "avg": 1.2
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 2.29,
+    "exp_away": 1.38,
+    "exp_total": 3.67,
+    "over25": 71,
+    "over45": 31,
+    "btts": 67,
+    "exp_fh_corners": 4.35,
+    "fh_corners_over35": 63,
+    "fh_corners_over45": 44,
+    "exp_corners": 10.82,
+    "corners_over105": 52,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 58,
+    "draw_pct": 20,
+    "away_win_pct": 22
+  },
+  {
+    "match_id": "mt_894652290",
+    "league": "Eliteserien",
+    "date": "2026-10-09T17:00:00.000Z",
+    "date_key": "2026-10-09",
+    "home_team": "SK Brann",
+    "away_team": "Viking FK",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 1.57,
+      "avg_conceded": 1.43,
+      "goals_list": [
+        2,
+        0,
+        1,
+        0,
+        3,
+        3,
+        2
+      ],
+      "avg_shots": 16.6,
+      "shots_list": [
+        6,
+        14,
+        24,
+        13,
+        31,
+        12,
+        16
+      ],
+      "avg_shots_on_target": 5.4,
+      "sot_list": [
+        2,
+        4,
+        3,
+        4,
+        13,
+        5,
+        7
+      ],
+      "avg_corners": 7.1,
+      "corners_list": [
+        3,
+        7,
+        12,
+        3,
+        10,
+        5,
+        10
+      ],
+      "avg_corners_conceded": 5.6,
+      "corners_conceded_list": [
+        6,
+        9,
+        0,
+        5,
+        1,
+        12,
+        6
+      ],
+      "avg_saves": 4.4,
+      "saves_list": [
+        7,
+        4,
+        2,
+        5,
+        0,
+        4,
+        9
+      ],
+      "avg_fh_corners": 2.4,
+      "fh_corners_list": [
+        3,
+        4,
+        2,
+        0,
+        5,
+        1,
+        2
+      ],
+      "avg_fh_corners_conceded": 2.9,
+      "fh_corners_conceded_list": [
+        1,
+        5,
+        0,
+        2,
+        0,
+        7,
+        5
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 16.4,
+      "avg_cards": 1.7,
+      "cards_list": [
+        2,
+        3,
+        1,
+        3,
+        1,
+        2,
+        0
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 2.86,
+      "avg_conceded": 0.86,
+      "goals_list": [
+        3,
+        8,
+        1,
+        2,
+        1,
+        2,
+        3
+      ],
+      "avg_shots": 18.0,
+      "shots_list": [
+        23,
+        28,
+        18,
+        22,
+        6,
+        17,
+        12
+      ],
+      "avg_shots_on_target": 6.9,
+      "sot_list": [
+        9,
+        13,
+        4,
+        6,
+        1,
+        8,
+        7
+      ],
+      "avg_corners": 7.9,
+      "corners_list": [
+        7,
+        7,
+        5,
+        14,
+        6,
+        11,
+        5
+      ],
+      "avg_corners_conceded": 6.3,
+      "corners_conceded_list": [
+        6,
+        5,
+        7,
+        3,
+        9,
+        8,
+        6
+      ],
+      "avg_saves": 2.9,
+      "saves_list": [
+        5,
+        1,
+        0,
+        2,
+        5,
+        2,
+        5
+      ],
+      "avg_fh_corners": 4.6,
+      "fh_corners_list": [
+        6,
+        2,
+        3,
+        6,
+        4,
+        8,
+        3
+      ],
+      "avg_fh_corners_conceded": 2.1,
+      "fh_corners_conceded_list": [
+        2,
+        3,
+        1,
+        1,
+        4,
+        1,
+        3
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 15.7,
+      "avg_cards": 1.5,
+      "cards_list": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        3
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 11.5,
+        "prob": 90,
+        "avg": 16.6
+      },
+      "sot_prop": {
+        "line": 3.5,
+        "prob": 79,
+        "avg": 5.4
+      },
+      "corners_prop": {
+        "line": 5.0,
+        "prob": 71,
+        "avg": 7.1
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 82,
+        "avg": 1.7
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 12.5,
+        "prob": 91,
+        "avg": 18.0
+      },
+      "sot_prop": {
+        "line": 4.5,
+        "prob": 82,
+        "avg": 6.9
+      },
+      "corners_prop": {
+        "line": 5.5,
+        "prob": 80,
+        "avg": 7.9
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 78,
+        "avg": 1.5
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 1.07,
+    "exp_away": 2.32,
+    "exp_total": 3.4,
+    "over25": 66,
+    "over45": 26,
+    "btts": 59,
+    "exp_fh_corners": 6.96,
+    "fh_corners_over35": 92,
+    "fh_corners_over45": 82,
+    "exp_corners": 15.31,
+    "corners_over105": 90,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 16,
+    "draw_pct": 19,
+    "away_win_pct": 65
+  },
+  {
+    "match_id": "mt_022015137",
+    "league": "Bundesliga",
+    "date": "2026-10-10T13:30:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "1. FC Union Berlin",
+    "away_team": "SV 07 Elversberg",
+    "home_form": {
+      "n_games": 4,
+      "avg_scored": 1.0,
+      "avg_conceded": 4.25,
+      "goals_list": [
+        0,
+        1,
+        0,
+        3
+      ],
+      "avg_shots": 11.8,
+      "shots_list": [
+        3,
+        20,
+        5,
+        19
+      ],
+      "avg_shots_on_target": 5.0,
+      "sot_list": [
+        2,
+        8,
+        0,
+        10
+      ],
+      "avg_corners": 3.0,
+      "corners_list": [
+        2,
+        4,
+        1,
+        5
+      ],
+      "avg_corners_conceded": 6.8,
+      "corners_conceded_list": [
+        9,
+        5,
+        11,
+        2
+      ],
+      "avg_saves": 4.5,
+      "saves_list": [
+        6,
+        6,
+        6,
+        0
+      ],
+      "avg_fh_corners": 0.5,
+      "fh_corners_list": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "avg_fh_corners_conceded": 4.0,
+      "fh_corners_conceded_list": [
+        5,
+        5,
+        5,
+        1
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 17.2,
+      "avg_cards": 2.5,
+      "cards_list": [
+        3,
+        3,
+        2,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 4,
+      "avg_scored": 2.0,
+      "avg_conceded": 1.75,
+      "goals_list": [
+        0,
+        1,
+        4,
+        3
+      ],
+      "avg_shots": 10.2,
+      "shots_list": [
+        11,
+        5,
+        14,
+        11
+      ],
+      "avg_shots_on_target": 4.5,
+      "sot_list": [
+        1,
+        1,
+        10,
+        6
+      ],
+      "avg_corners": 3.8,
+      "corners_list": [
+        4,
+        3,
+        4,
+        4
+      ],
+      "avg_corners_conceded": 7.2,
+      "corners_conceded_list": [
+        4,
+        9,
+        13,
+        3
+      ],
+      "avg_saves": 2.2,
+      "saves_list": [
+        2,
+        3,
+        2,
+        2
+      ],
+      "avg_fh_corners": 2.2,
+      "fh_corners_list": [
+        1,
+        2,
+        2,
+        4
+      ],
+      "avg_fh_corners_conceded": 2.2,
+      "fh_corners_conceded_list": [
+        3,
+        1,
+        4,
+        1
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 12.8,
+      "avg_cards": 2.0,
+      "cards_list": [
+        2,
+        2,
+        1,
+        3
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 8.0,
+        "prob": 83,
+        "avg": 11.8
+      },
+      "sot_prop": {
+        "line": 3.5,
+        "prob": 73,
+        "avg": 5.0
+      },
+      "corners_prop": {
+        "line": 2.0,
+        "prob": 58,
+        "avg": 3.0
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 92,
+        "avg": 2.5
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 7.0,
+        "prob": 80,
+        "avg": 10.2
+      },
+      "sot_prop": {
+        "line": 3.0,
+        "prob": 66,
+        "avg": 4.5
+      },
+      "corners_prop": {
+        "line": 2.5,
+        "prob": 73,
+        "avg": 3.8
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 86,
+        "avg": 2.0
+      }
+    },
+    "corners_sample_n": 4,
+    "exp_home": 1.33,
+    "exp_away": 3.34,
+    "exp_total": 4.67,
+    "over25": 84,
+    "over45": 50,
+    "btts": 71,
+    "exp_fh_corners": 4.47,
+    "fh_corners_over35": 65,
+    "fh_corners_over45": 46,
+    "exp_corners": 10.18,
+    "corners_over105": 44,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 11,
+    "draw_pct": 13,
+    "away_win_pct": 75
+  },
+  {
+    "match_id": "mt_153704458",
+    "league": "Eliteserien",
+    "date": "2026-10-10T14:00:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "Bod\u00f8/Glimt",
+    "away_team": "Kristiansund BK",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 2.71,
+      "avg_conceded": 1.14,
+      "goals_list": [
+        1,
+        3,
+        2,
+        4,
+        2,
+        4,
+        3
+      ],
+      "avg_shots": 18.4,
+      "shots_list": [
+        17,
+        28,
+        17,
+        26,
+        14,
+        12,
+        15
+      ],
+      "avg_shots_on_target": 6.7,
+      "sot_list": [
+        8,
+        10,
+        3,
+        7,
+        4,
+        7,
+        8
+      ],
+      "avg_corners": 8.1,
+      "corners_list": [
+        6,
+        10,
+        5,
+        12,
+        8,
+        10,
+        6
+      ],
+      "avg_corners_conceded": 3.1,
+      "corners_conceded_list": [
+        3,
+        2,
+        3,
+        2,
+        8,
+        2,
+        2
+      ],
+      "avg_saves": 1.6,
+      "saves_list": [
+        0,
+        2,
+        3,
+        1,
+        2,
+        2,
+        1
+      ],
+      "avg_fh_corners": 4.0,
+      "fh_corners_list": [
+        1,
+        6,
+        2,
+        6,
+        5,
+        7,
+        1
+      ],
+      "avg_fh_corners_conceded": 1.9,
+      "fh_corners_conceded_list": [
+        3,
+        1,
+        2,
+        2,
+        3,
+        2,
+        0
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 14.4,
+      "avg_cards": 0.6,
+      "cards_list": [
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 1.29,
+      "avg_conceded": 2.43,
+      "goals_list": [
+        1,
+        1,
+        2,
+        2,
+        0,
+        2,
+        1
+      ],
+      "avg_shots": 14.1,
+      "shots_list": [
+        15,
+        12,
+        9,
+        19,
+        18,
+        10,
+        16
+      ],
+      "avg_shots_on_target": 3.7,
+      "sot_list": [
+        7,
+        2,
+        2,
+        5,
+        3,
+        2,
+        5
+      ],
+      "avg_corners": 4.4,
+      "corners_list": [
+        4,
+        5,
+        4,
+        4,
+        10,
+        1,
+        3
+      ],
+      "avg_corners_conceded": 6.6,
+      "corners_conceded_list": [
+        6,
+        7,
+        7,
+        9,
+        2,
+        12,
+        3
+      ],
+      "avg_saves": 4.3,
+      "saves_list": [
+        3,
+        5,
+        3,
+        3,
+        3,
+        9,
+        4
+      ],
+      "avg_fh_corners": 2.1,
+      "fh_corners_list": [
+        2,
+        3,
+        2,
+        1,
+        4,
+        1,
+        2
+      ],
+      "avg_fh_corners_conceded": 3.7,
+      "fh_corners_conceded_list": [
+        6,
+        2,
+        3,
+        6,
+        1,
+        6,
+        2
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 14.6,
+      "avg_cards": 1.4,
+      "cards_list": [
+        1,
+        1,
+        1,
+        1,
+        3,
+        2,
+        1
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 13.0,
+        "prob": 88,
+        "avg": 18.4
+      },
+      "sot_prop": {
+        "line": 4.5,
+        "prob": 80,
+        "avg": 6.7
+      },
+      "corners_prop": {
+        "line": 5.5,
+        "prob": 82,
+        "avg": 8.1
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 45,
+        "avg": 0.6
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 10.0,
+        "prob": 83,
+        "avg": 14.1
+      },
+      "sot_prop": {
+        "line": 2.5,
+        "prob": 71,
+        "avg": 3.7
+      },
+      "corners_prop": {
+        "line": 3.0,
+        "prob": 64,
+        "avg": 4.4
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 75,
+        "avg": 1.4
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 3.27,
+    "exp_away": 1.11,
+    "exp_total": 4.38,
+    "over25": 81,
+    "over45": 44,
+    "btts": 64,
+    "exp_fh_corners": 6.96,
+    "fh_corners_over35": 92,
+    "fh_corners_over45": 82,
+    "exp_corners": 12.18,
+    "corners_over105": 67,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 78,
+    "draw_pct": 12,
+    "away_win_pct": 9
+  },
+  {
+    "match_id": "mt_155833431",
+    "league": "Premier League",
+    "date": "2026-10-10T14:00:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "Sunderland",
+    "away_team": "Brighton & Hove Albion",
+    "home_form": {
+      "n_games": 5,
+      "avg_scored": 1.2,
+      "avg_conceded": 2.0,
+      "goals_list": [
+        3,
+        0,
+        1,
+        1,
+        1
+      ],
+      "avg_shots": 13.2,
+      "shots_list": [
+        17,
+        12,
+        14,
+        12,
+        11
+      ],
+      "avg_shots_on_target": 5.0,
+      "sot_list": [
+        9,
+        3,
+        5,
+        4,
+        4
+      ],
+      "avg_corners": 4.0,
+      "corners_list": [
+        5,
+        4,
+        3,
+        3,
+        5
+      ],
+      "avg_corners_conceded": 3.8,
+      "corners_conceded_list": [
+        6,
+        2,
+        4,
+        4,
+        3
+      ],
+      "avg_saves": 1.2,
+      "saves_list": [
+        1,
+        3,
+        1,
+        0,
+        1
+      ],
+      "avg_fh_corners": 3.0,
+      "fh_corners_list": [
+        3,
+        2,
+        3,
+        3,
+        4
+      ],
+      "avg_fh_corners_conceded": 1.4,
+      "fh_corners_conceded_list": [
+        2,
+        1,
+        3,
+        1,
+        0
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 15.6,
+      "avg_cards": 2.6,
+      "cards_list": [
+        1,
+        7,
+        2,
+        0,
+        3
+      ]
+    },
+    "away_form": {
+      "n_games": 5,
+      "avg_scored": 3.2,
+      "avg_conceded": 1.0,
+      "goals_list": [
+        3,
+        5,
+        1,
+        3,
+        4
+      ],
+      "avg_shots": 19.0,
+      "shots_list": [
+        17,
+        22,
+        20,
+        15,
+        21
+      ],
+      "avg_shots_on_target": 5.8,
+      "sot_list": [
+        5,
+        7,
+        5,
+        6,
+        6
+      ],
+      "avg_corners": 5.4,
+      "corners_list": [
+        5,
+        3,
+        7,
+        7,
+        5
+      ],
+      "avg_corners_conceded": 4.6,
+      "corners_conceded_list": [
+        6,
+        5,
+        6,
+        4,
+        2
+      ],
+      "avg_saves": 2.4,
+      "saves_list": [
+        2,
+        6,
+        3,
+        1,
+        0
+      ],
+      "avg_fh_corners": 2.6,
+      "fh_corners_list": [
+        2,
+        3,
+        2,
+        4,
+        2
+      ],
+      "avg_fh_corners_conceded": 2.2,
+      "fh_corners_conceded_list": [
+        0,
+        4,
+        4,
+        2,
+        1
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 13.4,
+      "avg_cards": 2.4,
+      "cards_list": [
+        4,
+        0,
+        3,
+        3,
+        2
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 9.5,
+        "prob": 85,
+        "avg": 13.2
+      },
+      "sot_prop": {
+        "line": 3.5,
+        "prob": 73,
+        "avg": 5.0
+      },
+      "corners_prop": {
+        "line": 2.5,
+        "prob": 76,
+        "avg": 4.0
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 93,
+        "avg": 2.6
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 13.5,
+        "prob": 90,
+        "avg": 19.0
+      },
+      "sot_prop": {
+        "line": 4.0,
+        "prob": 69,
+        "avg": 5.8
+      },
+      "corners_prop": {
+        "line": 3.5,
+        "prob": 79,
+        "avg": 5.4
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 91,
+        "avg": 2.4
+      }
+    },
+    "corners_sample_n": 5,
+    "exp_home": 1.04,
+    "exp_away": 3.19,
+    "exp_total": 4.24,
+    "over25": 79,
+    "over45": 42,
+    "btts": 62,
+    "exp_fh_corners": 5.37,
+    "fh_corners_over35": 78,
+    "fh_corners_over45": 62,
+    "exp_corners": 10.36,
+    "corners_over105": 46,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 9,
+    "draw_pct": 12,
+    "away_win_pct": 79
+  },
+  {
+    "match_id": "mt_200852605",
+    "league": "Eredivisie",
+    "date": "2026-10-10T14:30:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "Go Ahead Eagles",
+    "away_team": "Sparta Rotterdam",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 2.29,
+      "avg_conceded": 2.0,
+      "goals_list": [
+        1,
+        1,
+        3,
+        2,
+        3,
+        2,
+        4
+      ],
+      "avg_shots": 15.1,
+      "shots_list": [
+        14,
+        24,
+        13,
+        10,
+        11,
+        14,
+        20
+      ],
+      "avg_shots_on_target": 6.3,
+      "sot_list": [
+        6,
+        6,
+        7,
+        4,
+        5,
+        6,
+        10
+      ],
+      "avg_corners": 6.0,
+      "corners_list": [
+        7,
+        9,
+        5,
+        4,
+        5,
+        6,
+        6
+      ],
+      "avg_corners_conceded": 4.4,
+      "corners_conceded_list": [
+        5,
+        0,
+        7,
+        8,
+        3,
+        6,
+        2
+      ],
+      "avg_saves": 2.6,
+      "saves_list": [
+        4,
+        1,
+        4,
+        3,
+        2,
+        4,
+        0
+      ],
+      "avg_fh_corners": 1.7,
+      "fh_corners_list": [
+        2,
+        4,
+        3,
+        0,
+        1,
+        1,
+        1
+      ],
+      "avg_fh_corners_conceded": 1.3,
+      "fh_corners_conceded_list": [
+        1,
+        0,
+        1,
+        1,
+        2,
+        3,
+        1
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 10.9,
+      "avg_cards": 1.4,
+      "cards_list": [
+        2,
+        1,
+        1,
+        1,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 1.43,
+      "avg_conceded": 2.43,
+      "goals_list": [
+        0,
+        1,
+        2,
+        1,
+        3,
+        3,
+        0
+      ],
+      "avg_shots": 13.1,
+      "shots_list": [
+        11,
+        10,
+        21,
+        10,
+        14,
+        16,
+        10
+      ],
+      "avg_shots_on_target": 4.3,
+      "sot_list": [
+        0,
+        6,
+        8,
+        2,
+        5,
+        9,
+        0
+      ],
+      "avg_corners": 6.0,
+      "corners_list": [
+        3,
+        5,
+        15,
+        4,
+        5,
+        5,
+        5
+      ],
+      "avg_corners_conceded": 7.0,
+      "corners_conceded_list": [
+        6,
+        9,
+        4,
+        6,
+        7,
+        7,
+        10
+      ],
+      "avg_saves": 3.6,
+      "saves_list": [
+        5,
+        6,
+        4,
+        3,
+        1,
+        0,
+        6
+      ],
+      "avg_fh_corners": 3.0,
+      "fh_corners_list": [
+        2,
+        0,
+        7,
+        2,
+        4,
+        4,
+        2
+      ],
+      "avg_fh_corners_conceded": 4.7,
+      "fh_corners_conceded_list": [
+        6,
+        5,
+        3,
+        3,
+        6,
+        4,
+        6
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 17.0,
+      "avg_cards": 1.3,
+      "cards_list": [
+        2,
+        1,
+        0,
+        1,
+        1,
+        3
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 10.5,
+        "prob": 89,
+        "avg": 15.1
+      },
+      "sot_prop": {
+        "line": 4.5,
+        "prob": 75,
+        "avg": 6.3
+      },
+      "corners_prop": {
+        "line": 4.0,
+        "prob": 71,
+        "avg": 6.0
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 75,
+        "avg": 1.4
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 9.0,
+        "prob": 84,
+        "avg": 13.1
+      },
+      "sot_prop": {
+        "line": 3.0,
+        "prob": 62,
+        "avg": 4.3
+      },
+      "corners_prop": {
+        "line": 4.0,
+        "prob": 71,
+        "avg": 6.0
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 73,
+        "avg": 1.3
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 2.59,
+    "exp_away": 1.62,
+    "exp_total": 4.21,
+    "over25": 79,
+    "over45": 41,
+    "btts": 74,
+    "exp_fh_corners": 5.32,
+    "fh_corners_over35": 78,
+    "fh_corners_over45": 61,
+    "exp_corners": 12.68,
+    "corners_over105": 72,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 58,
+    "draw_pct": 18,
+    "away_win_pct": 23
+  },
+  {
+    "match_id": "mt_466402085",
+    "league": "Bundesliga",
+    "date": "2026-10-10T16:30:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "RB Leipzig",
+    "away_team": "Eintracht Frankfurt",
+    "home_form": {
+      "n_games": 4,
+      "avg_scored": 2.25,
+      "avg_conceded": 1.25,
+      "goals_list": [
+        0,
+        5,
+        1,
+        3
+      ],
+      "avg_shots": 18.8,
+      "shots_list": [
+        12,
+        19,
+        19,
+        25
+      ],
+      "avg_shots_on_target": 6.2,
+      "sot_list": [
+        3,
+        6,
+        5,
+        11
+      ],
+      "avg_corners": 6.8,
+      "corners_list": [
+        6,
+        7,
+        7,
+        7
+      ],
+      "avg_corners_conceded": 6.0,
+      "corners_conceded_list": [
+        9,
+        7,
+        2,
+        6
+      ],
+      "avg_saves": 4.0,
+      "saves_list": [
+        4,
+        4,
+        4,
+        4
+      ],
+      "avg_fh_corners": 3.2,
+      "fh_corners_list": [
+        3,
+        3,
+        4,
+        3
+      ],
+      "avg_fh_corners_conceded": 1.8,
+      "fh_corners_conceded_list": [
+        1,
+        4,
+        0,
+        2
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 11.8,
+      "avg_cards": 1.2,
+      "cards_list": [
+        3,
+        1,
+        0,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 4,
+      "avg_scored": 2.25,
+      "avg_conceded": 2.5,
+      "goals_list": [
+        2,
+        3,
+        1,
+        3
+      ],
+      "avg_shots": 13.8,
+      "shots_list": [
+        10,
+        11,
+        22,
+        12
+      ],
+      "avg_shots_on_target": 4.8,
+      "sot_list": [
+        3,
+        5,
+        8,
+        3
+      ],
+      "avg_corners": 4.8,
+      "corners_list": [
+        3,
+        5,
+        9,
+        2
+      ],
+      "avg_corners_conceded": 4.5,
+      "corners_conceded_list": [
+        5,
+        4,
+        4,
+        5
+      ],
+      "avg_saves": 5.2,
+      "saves_list": [
+        5,
+        4,
+        4,
+        8
+      ],
+      "avg_fh_corners": 2.5,
+      "fh_corners_list": [
+        1,
+        4,
+        4,
+        1
+      ],
+      "avg_fh_corners_conceded": 2.2,
+      "fh_corners_conceded_list": [
+        5,
+        1,
+        2,
+        1
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 15.2,
+      "avg_cards": 2.2,
+      "cards_list": [
+        2,
+        2,
+        1,
+        4
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 13.5,
+        "prob": 89,
+        "avg": 18.8
+      },
+      "sot_prop": {
+        "line": 4.0,
+        "prob": 74,
+        "avg": 6.2
+      },
+      "corners_prop": {
+        "line": 4.5,
+        "prob": 81,
+        "avg": 6.8
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 70,
+        "avg": 1.2
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 9.5,
+        "prob": 88,
+        "avg": 13.8
+      },
+      "sot_prop": {
+        "line": 3.0,
+        "prob": 71,
+        "avg": 4.8
+      },
+      "corners_prop": {
+        "line": 3.0,
+        "prob": 71,
+        "avg": 4.8
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 89,
+        "avg": 2.2
+      }
+    },
+    "corners_sample_n": 4,
+    "exp_home": 2.47,
+    "exp_away": 1.69,
+    "exp_total": 4.16,
+    "over25": 78,
+    "over45": 40,
+    "btts": 75,
+    "exp_fh_corners": 5.0,
+    "fh_corners_over35": 73,
+    "fh_corners_over45": 56,
+    "exp_corners": 11.22,
+    "corners_over105": 57,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 55,
+    "draw_pct": 19,
+    "away_win_pct": 26
+  },
+  {
+    "match_id": "mt_466104761",
+    "league": "Eredivisie",
+    "date": "2026-10-10T19:00:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "AFC Ajax",
+    "away_team": "NEC Nijmegen",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 3.0,
+      "avg_conceded": 1.29,
+      "goals_list": [
+        2,
+        5,
+        5,
+        1,
+        4,
+        2,
+        2
+      ],
+      "avg_shots": 24.7,
+      "shots_list": [
+        33,
+        33,
+        27,
+        19,
+        12,
+        23,
+        26
+      ],
+      "avg_shots_on_target": 8.0,
+      "sot_list": [
+        8,
+        12,
+        11,
+        6,
+        9,
+        4,
+        6
+      ],
+      "avg_corners": 8.0,
+      "corners_list": [
+        9,
+        14,
+        11,
+        1,
+        4,
+        7,
+        10
+      ],
+      "avg_corners_conceded": 2.1,
+      "corners_conceded_list": [
+        0,
+        2,
+        3,
+        1,
+        5,
+        2,
+        2
+      ],
+      "avg_saves": 3.0,
+      "saves_list": [
+        0,
+        3,
+        3,
+        2,
+        5,
+        6,
+        2
+      ],
+      "avg_fh_corners": 3.4,
+      "fh_corners_list": [
+        2,
+        6,
+        6,
+        0,
+        3,
+        3,
+        4
+      ],
+      "avg_fh_corners_conceded": 0.9,
+      "fh_corners_conceded_list": [
+        0,
+        1,
+        1,
+        1,
+        2,
+        0,
+        1
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 13.4,
+      "avg_cards": 2.8,
+      "cards_list": [
+        1,
+        5,
+        3,
+        3,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 1.71,
+      "avg_conceded": 1.86,
+      "goals_list": [
+        1,
+        0,
+        2,
+        1,
+        3,
+        4,
+        1
+      ],
+      "avg_shots": 15.1,
+      "shots_list": [
+        17,
+        10,
+        11,
+        12,
+        8,
+        21,
+        27
+      ],
+      "avg_shots_on_target": 4.1,
+      "sot_list": [
+        5,
+        1,
+        3,
+        2,
+        4,
+        10,
+        4
+      ],
+      "avg_corners": 5.0,
+      "corners_list": [
+        5,
+        5,
+        2,
+        1,
+        7,
+        2,
+        13
+      ],
+      "avg_corners_conceded": 3.7,
+      "corners_conceded_list": [
+        7,
+        4,
+        4,
+        1,
+        6,
+        1,
+        3
+      ],
+      "avg_saves": 2.4,
+      "saves_list": [
+        5,
+        4,
+        3,
+        2,
+        1,
+        1,
+        1
+      ],
+      "avg_fh_corners": 1.9,
+      "fh_corners_list": [
+        1,
+        2,
+        1,
+        1,
+        1,
+        0,
+        7
+      ],
+      "avg_fh_corners_conceded": 1.3,
+      "fh_corners_conceded_list": [
+        2,
+        1,
+        0,
+        1,
+        2,
+        0,
+        3
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 15.6,
+      "avg_cards": 1.6,
+      "cards_list": [
+        0,
+        4,
+        1,
+        1,
+        3,
+        0,
+        2
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 17.5,
+        "prob": 93,
+        "avg": 24.7
+      },
+      "sot_prop": {
+        "line": 5.5,
+        "prob": 81,
+        "avg": 8.0
+      },
+      "corners_prop": {
+        "line": 5.5,
+        "prob": 81,
+        "avg": 8.0
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 94,
+        "avg": 2.8
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 10.5,
+        "prob": 89,
+        "avg": 15.1
+      },
+      "sot_prop": {
+        "line": 2.5,
+        "prob": 78,
+        "avg": 4.1
+      },
+      "corners_prop": {
+        "line": 3.5,
+        "prob": 73,
+        "avg": 5.0
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 80,
+        "avg": 1.6
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 2.62,
+    "exp_away": 1.37,
+    "exp_total": 3.99,
+    "over25": 76,
+    "over45": 37,
+    "btts": 69,
+    "exp_fh_corners": 3.34,
+    "fh_corners_over35": 43,
+    "fh_corners_over45": 24,
+    "exp_corners": 8.84,
+    "corners_over105": 28,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 64,
+    "draw_pct": 17,
+    "away_win_pct": 18
+  },
+  {
+    "match_id": "mt_200133868",
+    "league": "Swiss Super League",
+    "date": "2026-10-10T16:00:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "FC Z\u00fcrich",
+    "away_team": "FC Thun",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 1.57,
+      "avg_conceded": 2.43,
+      "goals_list": [
+        1,
+        2,
+        2,
+        2,
+        3,
+        1,
+        0
+      ],
+      "avg_shots": 13.1,
+      "shots_list": [
+        15,
+        17,
+        11,
+        16,
+        11,
+        13,
+        9
+      ],
+      "avg_shots_on_target": 4.4,
+      "sot_list": [
+        2,
+        6,
+        6,
+        7,
+        4,
+        5,
+        1
+      ],
+      "avg_corners": 4.4,
+      "corners_list": [
+        5,
+        7,
+        4,
+        3,
+        6,
+        4,
+        2
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        5,
+        2,
+        8,
+        3,
+        6,
+        6,
+        5
+      ],
+      "avg_saves": 2.9,
+      "saves_list": [
+        3,
+        2,
+        5,
+        2,
+        1,
+        4,
+        3
+      ],
+      "avg_fh_corners": 1.7,
+      "fh_corners_list": [
+        2,
+        2,
+        1,
+        1,
+        2,
+        3,
+        1
+      ],
+      "avg_fh_corners_conceded": 3.3,
+      "fh_corners_conceded_list": [
+        3,
+        0,
+        7,
+        2,
+        3,
+        4,
+        4
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 17.4,
+      "avg_cards": 2.6,
+      "cards_list": [
+        0,
+        0,
+        6,
+        2,
+        3,
+        4,
+        3
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 1.71,
+      "avg_conceded": 2.29,
+      "goals_list": [
+        2,
+        2,
+        0,
+        2,
+        0,
+        4,
+        2
+      ],
+      "avg_shots": 15.7,
+      "shots_list": [
+        15,
+        17,
+        20,
+        15,
+        22,
+        7,
+        14
+      ],
+      "avg_shots_on_target": 3.6,
+      "sot_list": [
+        6,
+        2,
+        1,
+        4,
+        5,
+        5,
+        2
+      ],
+      "avg_corners": 5.7,
+      "corners_list": [
+        7,
+        7,
+        10,
+        4,
+        6,
+        1,
+        5
+      ],
+      "avg_corners_conceded": 4.7,
+      "corners_conceded_list": [
+        3,
+        5,
+        5,
+        11,
+        2,
+        6,
+        1
+      ],
+      "avg_saves": 3.0,
+      "saves_list": [
+        2,
+        3,
+        3,
+        3,
+        4,
+        3
+      ],
+      "avg_fh_corners": 1.7,
+      "fh_corners_list": [
+        3,
+        1,
+        4,
+        1,
+        2,
+        1,
+        0
+      ],
+      "avg_fh_corners_conceded": 2.6,
+      "fh_corners_conceded_list": [
+        2,
+        2,
+        3,
+        7,
+        1,
+        3,
+        0
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 18.1,
+      "avg_cards": 2.9,
+      "cards_list": [
+        4,
+        2,
+        4,
+        2,
+        3,
+        2,
+        3
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 9.0,
+        "prob": 84,
+        "avg": 13.1
+      },
+      "sot_prop": {
+        "line": 3.0,
+        "prob": 64,
+        "avg": 4.4
+      },
+      "corners_prop": {
+        "line": 3.0,
+        "prob": 64,
+        "avg": 4.4
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 93,
+        "avg": 2.6
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 11.0,
+        "prob": 86,
+        "avg": 15.7
+      },
+      "sot_prop": {
+        "line": 2.5,
+        "prob": 70,
+        "avg": 3.6
+      },
+      "corners_prop": {
+        "line": 4.0,
+        "prob": 67,
+        "avg": 5.7
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 94,
+        "avg": 2.9
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 1.89,
+    "exp_away": 2.1,
+    "exp_total": 3.99,
+    "over25": 76,
+    "over45": 37,
+    "btts": 75,
+    "exp_fh_corners": 4.59,
+    "fh_corners_over35": 67,
+    "fh_corners_over45": 48,
+    "exp_corners": 9.94,
+    "corners_over105": 41,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 36,
+    "draw_pct": 21,
+    "away_win_pct": 44
+  },
+  {
+    "match_id": "mt_644680316",
+    "league": "LaLiga",
+    "date": "2026-10-10T19:00:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "Real Madrid",
+    "away_team": "Villarreal",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 2.57,
+      "avg_conceded": 1.14,
+      "goals_list": [
+        1,
+        3,
+        4,
+        0,
+        4,
+        4,
+        2
+      ],
+      "avg_shots": 18.9,
+      "shots_list": [
+        8,
+        20,
+        24,
+        20,
+        19,
+        20,
+        21
+      ],
+      "avg_shots_on_target": 7.6,
+      "sot_list": [
+        3,
+        4,
+        11,
+        8,
+        8,
+        11,
+        8
+      ],
+      "avg_corners": 6.9,
+      "corners_list": [
+        1,
+        5,
+        11,
+        10,
+        9,
+        4,
+        8
+      ],
+      "avg_corners_conceded": 4.1,
+      "corners_conceded_list": [
+        3,
+        2,
+        5,
+        6,
+        6,
+        7,
+        0
+      ],
+      "avg_saves": 3.0,
+      "saves_list": [
+        5,
+        1,
+        6,
+        4,
+        1,
+        2,
+        2
+      ],
+      "avg_fh_corners": 3.4,
+      "fh_corners_list": [
+        1,
+        4,
+        4,
+        6,
+        6,
+        0,
+        3
+      ],
+      "avg_fh_corners_conceded": 1.6,
+      "fh_corners_conceded_list": [
+        0,
+        1,
+        2,
+        4,
+        1,
+        3,
+        0
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 15.1,
+      "avg_cards": 1.9,
+      "cards_list": [
+        3,
+        2,
+        0,
+        4,
+        0,
+        3,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 1.86,
+      "avg_conceded": 1.71,
+      "goals_list": [
+        3,
+        3,
+        1,
+        2,
+        0,
+        2,
+        2
+      ],
+      "avg_shots": 16.0,
+      "shots_list": [
+        21,
+        16,
+        14,
+        17,
+        19,
+        13,
+        12
+      ],
+      "avg_shots_on_target": 6.6,
+      "sot_list": [
+        7,
+        7,
+        8,
+        5,
+        6,
+        6,
+        7
+      ],
+      "avg_corners": 7.3,
+      "corners_list": [
+        7,
+        8,
+        7,
+        7,
+        9,
+        3,
+        10
+      ],
+      "avg_corners_conceded": 3.7,
+      "corners_conceded_list": [
+        1,
+        4,
+        4,
+        1,
+        5,
+        5,
+        6
+      ],
+      "avg_saves": 2.3,
+      "saves_list": [
+        0,
+        0,
+        10,
+        0,
+        1,
+        2,
+        3
+      ],
+      "avg_fh_corners": 4.6,
+      "fh_corners_list": [
+        4,
+        5,
+        5,
+        5,
+        4,
+        2,
+        7
+      ],
+      "avg_fh_corners_conceded": 1.9,
+      "fh_corners_conceded_list": [
+        0,
+        0,
+        3,
+        1,
+        3,
+        4,
+        2
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 15.0,
+      "avg_cards": 1.7,
+      "cards_list": [
+        1,
+        1,
+        1,
+        2,
+        1,
+        2,
+        4
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 13.5,
+        "prob": 90,
+        "avg": 18.9
+      },
+      "sot_prop": {
+        "line": 5.0,
+        "prob": 77,
+        "avg": 7.6
+      },
+      "corners_prop": {
+        "line": 4.5,
+        "prob": 82,
+        "avg": 6.9
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 85,
+        "avg": 1.9
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 11.5,
+        "prob": 87,
+        "avg": 16.0
+      },
+      "sot_prop": {
+        "line": 4.5,
+        "prob": 79,
+        "avg": 6.6
+      },
+      "corners_prop": {
+        "line": 5.0,
+        "prob": 74,
+        "avg": 7.3
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 82,
+        "avg": 1.7
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 2.44,
+    "exp_away": 1.45,
+    "exp_total": 3.89,
+    "over25": 75,
+    "over45": 35,
+    "btts": 70,
+    "exp_fh_corners": 6.02,
+    "fh_corners_over35": 85,
+    "fh_corners_over45": 72,
+    "exp_corners": 11.25,
+    "corners_over105": 57,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 59,
+    "draw_pct": 19,
+    "away_win_pct": 22
+  },
+  {
+    "match_id": "mt_733654993",
+    "league": "Championship",
+    "date": "2026-10-10T14:00:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "Middlesbrough",
+    "away_team": "Wolverhampton",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 2.0,
+      "avg_conceded": 1.57,
+      "goals_list": [
+        2,
+        2,
+        4,
+        1,
+        1,
+        3,
+        1
+      ],
+      "avg_shots": 16.7,
+      "shots_list": [
+        15,
+        22,
+        17,
+        16,
+        10,
+        15,
+        22
+      ],
+      "avg_shots_on_target": 4.9,
+      "sot_list": [
+        4,
+        7,
+        6,
+        6,
+        2,
+        6,
+        3
+      ],
+      "avg_corners": 5.9,
+      "corners_list": [
+        3,
+        14,
+        3,
+        3,
+        1,
+        7,
+        10
+      ],
+      "avg_corners_conceded": 5.1,
+      "corners_conceded_list": [
+        5,
+        1,
+        5,
+        12,
+        5,
+        6,
+        2
+      ],
+      "avg_saves": 2.9,
+      "saves_list": [
+        5,
+        2,
+        2,
+        5,
+        2,
+        2,
+        2
+      ],
+      "avg_fh_corners": 2.1,
+      "fh_corners_list": [
+        2,
+        7,
+        0,
+        2,
+        0,
+        2,
+        2
+      ],
+      "avg_fh_corners_conceded": 2.6,
+      "fh_corners_conceded_list": [
+        2,
+        1,
+        4,
+        4,
+        3,
+        4,
+        0
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 17.0,
+      "avg_cards": 1.1,
+      "cards_list": [
+        0,
+        1,
+        2,
+        2,
+        2,
+        0,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 2.14,
+      "avg_conceded": 1.43,
+      "goals_list": [
+        1,
+        1,
+        2,
+        2,
+        4,
+        3,
+        2
+      ],
+      "avg_shots": 16.0,
+      "shots_list": [
+        15,
+        17,
+        10,
+        18,
+        18,
+        16,
+        18
+      ],
+      "avg_shots_on_target": 4.6,
+      "sot_list": [
+        6,
+        3,
+        4,
+        3,
+        8,
+        5,
+        3
+      ],
+      "avg_corners": 6.3,
+      "corners_list": [
+        8,
+        9,
+        4,
+        7,
+        7,
+        4,
+        5
+      ],
+      "avg_corners_conceded": 4.6,
+      "corners_conceded_list": [
+        7,
+        0,
+        8,
+        6,
+        1,
+        5,
+        5
+      ],
+      "avg_saves": 2.1,
+      "saves_list": [
+        2,
+        2,
+        4,
+        2,
+        2,
+        0,
+        3
+      ],
+      "avg_fh_corners": 3.3,
+      "fh_corners_list": [
+        6,
+        5,
+        3,
+        3,
+        1,
+        2,
+        3
+      ],
+      "avg_fh_corners_conceded": 1.6,
+      "fh_corners_conceded_list": [
+        1,
+        0,
+        2,
+        3,
+        1,
+        2,
+        2
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 15.6,
+      "avg_cards": 1.0,
+      "cards_list": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 12.0,
+        "prob": 85,
+        "avg": 16.7
+      },
+      "sot_prop": {
+        "line": 3.5,
+        "prob": 72,
+        "avg": 4.9
+      },
+      "corners_prop": {
+        "line": 4.0,
+        "prob": 70,
+        "avg": 5.9
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 67,
+        "avg": 1.1
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 11.5,
+        "prob": 87,
+        "avg": 16.0
+      },
+      "sot_prop": {
+        "line": 3.0,
+        "prob": 67,
+        "avg": 4.6
+      },
+      "corners_prop": {
+        "line": 4.5,
+        "prob": 75,
+        "avg": 6.3
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 63,
+        "avg": 1.0
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 1.82,
+    "exp_away": 2.05,
+    "exp_total": 3.87,
+    "over25": 74,
+    "over45": 35,
+    "btts": 73,
+    "exp_fh_corners": 5.05,
+    "fh_corners_over35": 74,
+    "fh_corners_over45": 57,
+    "exp_corners": 11.27,
+    "corners_over105": 57,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 35,
+    "draw_pct": 21,
+    "away_win_pct": 44
+  },
+  {
+    "match_id": "mt_377364617",
+    "league": "Bundesliga",
+    "date": "2026-10-10T13:30:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "FC Augsburg",
+    "away_team": "FC Bayern M\u00fcnchen",
+    "home_form": {
+      "n_games": 4,
+      "avg_scored": 2.75,
+      "avg_conceded": 1.5,
+      "goals_list": [
+        2,
+        2,
+        4,
+        3
+      ],
+      "avg_shots": 14.0,
+      "shots_list": [
+        7,
+        8,
+        17,
+        24
+      ],
+      "avg_shots_on_target": 7.2,
+      "sot_list": [
+        4,
+        5,
+        7,
+        13
+      ],
+      "avg_corners": 4.8,
+      "corners_list": [
+        2,
+        2,
+        4,
+        11
+      ],
+      "avg_corners_conceded": 7.0,
+      "corners_conceded_list": [
+        2,
+        14,
+        9,
+        3
+      ],
+      "avg_saves": 5.2,
+      "saves_list": [
+        7,
+        3,
+        7,
+        4
+      ],
+      "avg_fh_corners": 1.8,
+      "fh_corners_list": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "avg_fh_corners_conceded": 3.5,
+      "fh_corners_conceded_list": [
+        2,
+        5,
+        4,
+        3
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 16.2,
+      "avg_cards": 1.2,
+      "cards_list": [
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 4,
+      "avg_scored": 3.5,
+      "avg_conceded": 0.5,
+      "goals_list": [
+        7,
+        2,
+        0,
+        5
+      ],
+      "avg_shots": 21.8,
+      "shots_list": [
+        23,
+        28,
+        15,
+        21
+      ],
+      "avg_shots_on_target": 8.8,
+      "sot_list": [
+        15,
+        6,
+        5,
+        9
+      ],
+      "avg_corners": 9.5,
+      "corners_list": [
+        9,
+        9,
+        11,
+        9
+      ],
+      "avg_corners_conceded": 2.0,
+      "corners_conceded_list": [
+        2,
+        3,
+        0,
+        3
+      ],
+      "avg_saves": 1.5,
+      "saves_list": [
+        2,
+        0,
+        1,
+        3
+      ],
+      "avg_fh_corners": 3.8,
+      "fh_corners_list": [
+        5,
+        1,
+        4,
+        5
+      ],
+      "avg_fh_corners_conceded": 1.0,
+      "fh_corners_conceded_list": [
+        0,
+        2,
+        0,
+        2
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 12.8,
+      "avg_cards": 1.0,
+      "cards_list": [
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 10.0,
+        "prob": 82,
+        "avg": 14.0
+      },
+      "sot_prop": {
+        "line": 5.0,
+        "prob": 72,
+        "avg": 7.2
+      },
+      "corners_prop": {
+        "line": 3.0,
+        "prob": 71,
+        "avg": 4.8
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 70,
+        "avg": 1.2
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 15.5,
+        "prob": 92,
+        "avg": 21.8
+      },
+      "sot_prop": {
+        "line": 6.0,
+        "prob": 77,
+        "avg": 8.8
+      },
+      "corners_prop": {
+        "line": 6.5,
+        "prob": 84,
+        "avg": 9.5
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 63,
+        "avg": 1.0
+      }
+    },
+    "corners_sample_n": 4,
+    "exp_home": 1.38,
+    "exp_away": 2.48,
+    "exp_total": 3.86,
+    "over25": 74,
+    "over45": 34,
+    "btts": 69,
+    "exp_fh_corners": 5.65,
+    "fh_corners_over35": 81,
+    "fh_corners_over45": 67,
+    "exp_corners": 12.78,
+    "corners_over105": 73,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 20,
+    "draw_pct": 18,
+    "away_win_pct": 61
+  },
+  {
+    "match_id": "mt_644620292",
+    "league": "Bundesliga",
+    "date": "2026-10-10T13:30:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "TSG Hoffenheim",
+    "away_team": "Hamburger SV",
+    "home_form": {
+      "n_games": 4,
+      "avg_scored": 1.75,
+      "avg_conceded": 2.5,
+      "goals_list": [
+        1,
+        2,
+        2,
+        2
+      ],
+      "avg_shots": 19.0,
+      "shots_list": [
+        23,
+        20,
+        18,
+        15
+      ],
+      "avg_shots_on_target": 5.0,
+      "sot_list": [
+        2,
+        8,
+        6,
+        4
+      ],
+      "avg_corners": 6.8,
+      "corners_list": [
+        5,
+        5,
+        10,
+        7
+      ],
+      "avg_corners_conceded": 5.5,
+      "corners_conceded_list": [
+        6,
+        7,
+        3,
+        6
+      ],
+      "avg_saves": 2.8,
+      "saves_list": [
+        2,
+        4,
+        2,
+        3
+      ],
+      "avg_fh_corners": 1.2,
+      "fh_corners_list": [
+        0,
+        1,
+        3,
+        1
+      ],
+      "avg_fh_corners_conceded": 2.2,
+      "fh_corners_conceded_list": [
+        5,
+        0,
+        2,
+        2
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 15.8,
+      "avg_cards": 2.0,
+      "cards_list": [
+        1,
+        1,
+        4,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 4,
+      "avg_scored": 0.5,
+      "avg_conceded": 3.25,
+      "goals_list": [
+        2,
+        0,
+        0,
+        0
+      ],
+      "avg_shots": 9.5,
+      "shots_list": [
+        12,
+        10,
+        8,
+        8
+      ],
+      "avg_shots_on_target": 3.8,
+      "sot_list": [
+        7,
+        4,
+        1,
+        3
+      ],
+      "avg_corners": 3.8,
+      "corners_list": [
+        3,
+        7,
+        4,
+        1
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        5,
+        7,
+        5,
+        3
+      ],
+      "avg_saves": 3.2,
+      "saves_list": [
+        4,
+        1,
+        3,
+        5
+      ],
+      "avg_fh_corners": 1.8,
+      "fh_corners_list": [
+        2,
+        4,
+        1,
+        0
+      ],
+      "avg_fh_corners_conceded": 2.5,
+      "fh_corners_conceded_list": [
+        3,
+        3,
+        2,
+        2
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 14.2,
+      "avg_cards": 1.5,
+      "cards_list": [
+        2,
+        2,
+        1,
+        1
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 13.5,
+        "prob": 90,
+        "avg": 19.0
+      },
+      "sot_prop": {
+        "line": 3.5,
+        "prob": 73,
+        "avg": 5.0
+      },
+      "corners_prop": {
+        "line": 4.5,
+        "prob": 81,
+        "avg": 6.8
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 86,
+        "avg": 2.0
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 6.5,
+        "prob": 84,
+        "avg": 9.5
+      },
+      "sot_prop": {
+        "line": 2.5,
+        "prob": 73,
+        "avg": 3.8
+      },
+      "corners_prop": {
+        "line": 2.5,
+        "prob": 73,
+        "avg": 3.8
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 78,
+        "avg": 1.5
+      }
+    },
+    "corners_sample_n": 4,
+    "exp_home": 2.55,
+    "exp_away": 1.29,
+    "exp_total": 3.85,
+    "over25": 74,
+    "over45": 34,
+    "btts": 67,
+    "exp_fh_corners": 3.83,
+    "fh_corners_over35": 53,
+    "fh_corners_over45": 34,
+    "exp_corners": 10.89,
+    "corners_over105": 53,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 65,
+    "draw_pct": 18,
+    "away_win_pct": 18
+  },
+  {
+    "match_id": "mt_511977677",
+    "league": "Premier League",
+    "date": "2026-10-10T14:00:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "Chelsea",
+    "away_team": "Bournemouth",
+    "home_form": {
+      "n_games": 5,
+      "avg_scored": 2.0,
+      "avg_conceded": 2.4,
+      "goals_list": [
+        0,
+        2,
+        1,
+        4,
+        3
+      ],
+      "avg_shots": 14.4,
+      "shots_list": [
+        12,
+        12,
+        13,
+        17,
+        18
+      ],
+      "avg_shots_on_target": 5.2,
+      "sot_list": [
+        2,
+        7,
+        5,
+        6,
+        6
+      ],
+      "avg_corners": 6.6,
+      "corners_list": [
+        12,
+        10,
+        3,
+        4,
+        4
+      ],
+      "avg_corners_conceded": 5.2,
+      "corners_conceded_list": [
+        4,
+        4,
+        5,
+        7,
+        6
+      ],
+      "avg_saves": 4.4,
+      "saves_list": [
+        3,
+        3,
+        8,
+        4,
+        4
+      ],
+      "avg_fh_corners": 2.8,
+      "fh_corners_list": [
+        3,
+        6,
+        0,
+        2,
+        3
+      ],
+      "avg_fh_corners_conceded": 2.8,
+      "fh_corners_conceded_list": [
+        2,
+        2,
+        2,
+        4,
+        4
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 15.6,
+      "avg_cards": 1.8,
+      "cards_list": [
+        0,
+        1,
+        4,
+        1,
+        3
+      ]
+    },
+    "away_form": {
+      "n_games": 5,
+      "avg_scored": 1.2,
+      "avg_conceded": 1.6,
+      "goals_list": [
+        0,
+        2,
+        2,
+        1,
+        1
+      ],
+      "avg_shots": 13.6,
+      "shots_list": [
+        9,
+        20,
+        17,
+        17,
+        5
+      ],
+      "avg_shots_on_target": 5.2,
+      "sot_list": [
+        2,
+        10,
+        5,
+        5,
+        4
+      ],
+      "avg_corners": 4.2,
+      "corners_list": [
+        3,
+        2,
+        3,
+        10,
+        3
+      ],
+      "avg_corners_conceded": 4.6,
+      "corners_conceded_list": [
+        3,
+        1,
+        4,
+        7,
+        8
+      ],
+      "avg_saves": 2.2,
+      "saves_list": [
+        2,
+        0,
+        0,
+        5,
+        4
+      ],
+      "avg_fh_corners": 1.8,
+      "fh_corners_list": [
+        2,
+        1,
+        2,
+        3,
+        1
+      ],
+      "avg_fh_corners_conceded": 2.2,
+      "fh_corners_conceded_list": [
+        1,
+        0,
+        2,
+        4,
+        4
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 16.0,
+      "avg_cards": 2.8,
+      "cards_list": [
+        1,
+        5,
+        3,
+        3,
+        2
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 10.0,
+        "prob": 85,
+        "avg": 14.4
+      },
+      "sot_prop": {
+        "line": 3.5,
+        "prob": 76,
+        "avg": 5.2
+      },
+      "corners_prop": {
+        "line": 4.5,
+        "prob": 79,
+        "avg": 6.6
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 83,
+        "avg": 1.8
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 9.5,
+        "prob": 87,
+        "avg": 13.6
+      },
+      "sot_prop": {
+        "line": 3.5,
+        "prob": 76,
+        "avg": 5.2
+      },
+      "corners_prop": {
+        "line": 3.0,
+        "prob": 60,
+        "avg": 4.2
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 94,
+        "avg": 2.8
+      }
+    },
+    "corners_sample_n": 5,
+    "exp_home": 1.93,
+    "exp_away": 1.84,
+    "exp_total": 3.77,
+    "over25": 73,
+    "over45": 33,
+    "btts": 72,
+    "exp_fh_corners": 4.97,
+    "fh_corners_over35": 73,
+    "fh_corners_over45": 55,
+    "exp_corners": 11.24,
+    "corners_over105": 57,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 41,
+    "draw_pct": 21,
+    "away_win_pct": 38
+  },
+  {
+    "match_id": "mt_899837305",
+    "league": "Bundesliga",
+    "date": "2026-10-10T13:30:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "1. FSV Mainz 05",
+    "away_team": "Bayer 04 Leverkusen",
+    "home_form": {
+      "n_games": 4,
+      "avg_scored": 2.5,
+      "avg_conceded": 1.5,
+      "goals_list": [
+        4,
+        1,
+        5,
+        0
+      ],
+      "avg_shots": 18.2,
+      "shots_list": [
+        17,
+        18,
+        17,
+        21
+      ],
+      "avg_shots_on_target": 6.2,
+      "sot_list": [
+        8,
+        5,
+        8,
+        4
+      ],
+      "avg_corners": 6.0,
+      "corners_list": [
+        4,
+        4,
+        5,
+        11
+      ],
+      "avg_corners_conceded": 4.2,
+      "corners_conceded_list": [
+        6,
+        5,
+        4,
+        2
+      ],
+      "avg_saves": 1.8,
+      "saves_list": [
+        4,
+        2,
+        1,
+        0
+      ],
+      "avg_fh_corners": 2.0,
+      "fh_corners_list": [
+        1,
+        1,
+        2,
+        4
+      ],
+      "avg_fh_corners_conceded": 2.5,
+      "fh_corners_conceded_list": [
+        3,
+        4,
+        1,
+        2
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 16.8,
+      "avg_cards": 2.2,
+      "cards_list": [
+        5,
+        0,
+        3,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 4,
+      "avg_scored": 2.5,
+      "avg_conceded": 1.25,
+      "goals_list": [
+        2,
+        2,
+        4,
+        2
+      ],
+      "avg_shots": 22.5,
+      "shots_list": [
+        18,
+        30,
+        21,
+        21
+      ],
+      "avg_shots_on_target": 6.2,
+      "sot_list": [
+        6,
+        5,
+        10,
+        4
+      ],
+      "avg_corners": 9.2,
+      "corners_list": [
+        9,
+        14,
+        11,
+        3
+      ],
+      "avg_corners_conceded": 3.2,
+      "corners_conceded_list": [
+        6,
+        2,
+        1,
+        4
+      ],
+      "avg_saves": 2.2,
+      "saves_list": [
+        3,
+        3,
+        0,
+        3
+      ],
+      "avg_fh_corners": 3.0,
+      "fh_corners_list": [
+        1,
+        5,
+        5,
+        1
+      ],
+      "avg_fh_corners_conceded": 2.0,
+      "fh_corners_conceded_list": [
+        3,
+        1,
+        0,
+        4
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 13.5,
+      "avg_cards": 1.8,
+      "cards_list": [
+        2,
+        1,
+        2,
+        2
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 13.0,
+        "prob": 87,
+        "avg": 18.2
+      },
+      "sot_prop": {
+        "line": 4.0,
+        "prob": 74,
+        "avg": 6.2
+      },
+      "corners_prop": {
+        "line": 4.0,
+        "prob": 71,
+        "avg": 6.0
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 89,
+        "avg": 2.2
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 16.0,
+        "prob": 90,
+        "avg": 22.5
+      },
+      "sot_prop": {
+        "line": 4.0,
+        "prob": 74,
+        "avg": 6.2
+      },
+      "corners_prop": {
+        "line": 6.5,
+        "prob": 81,
+        "avg": 9.2
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 83,
+        "avg": 1.8
+      }
+    },
+    "corners_sample_n": 4,
+    "exp_home": 1.8,
+    "exp_away": 1.97,
+    "exp_total": 3.77,
+    "over25": 73,
+    "over45": 33,
+    "btts": 72,
+    "exp_fh_corners": 4.96,
+    "fh_corners_over35": 73,
+    "fh_corners_over45": 55,
+    "exp_corners": 11.3,
+    "corners_over105": 58,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 36,
+    "draw_pct": 21,
+    "away_win_pct": 43
+  },
+  {
+    "match_id": "mt_028450833",
+    "league": "MLS",
+    "date": "2026-10-10T23:30:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "Orlando City SC",
+    "away_team": "Columbus Crew",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 2.29,
+      "avg_conceded": 2.0,
+      "goals_list": [
+        2,
+        2,
+        3,
+        3,
+        1,
+        3,
+        2
+      ],
+      "avg_shots": 11.6,
+      "shots_list": [
+        11,
+        11,
+        13,
+        14,
+        15,
+        6,
+        11
+      ],
+      "avg_shots_on_target": 5.0,
+      "sot_list": [
+        2,
+        5,
+        8,
+        7,
+        5,
+        5,
+        3
+      ],
+      "avg_corners": 4.4,
+      "corners_list": [
+        7,
+        3,
+        4,
+        5,
+        6,
+        1,
+        5
+      ],
+      "avg_corners_conceded": 6.1,
+      "corners_conceded_list": [
+        7,
+        10,
+        3,
+        7,
+        4,
+        8,
+        4
+      ],
+      "avg_saves": 3.6,
+      "saves_list": [
+        5,
+        5,
+        4,
+        1,
+        2,
+        6,
+        2
+      ],
+      "avg_fh_corners": 1.9,
+      "fh_corners_list": [
+        3,
+        1,
+        3,
+        4,
+        1,
+        0,
+        1
+      ],
+      "avg_fh_corners_conceded": 3.3,
+      "fh_corners_conceded_list": [
+        5,
+        6,
+        2,
+        5,
+        2,
+        2,
+        1
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 14.6,
+      "avg_cards": 2.1,
+      "cards_list": [
+        4,
+        0,
+        3,
+        2,
+        3,
+        2,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 1.57,
+      "avg_conceded": 1.43,
+      "goals_list": [
+        2,
+        2,
+        0,
+        1,
+        3,
+        1,
+        2
+      ],
+      "avg_shots": 11.4,
+      "shots_list": [
+        14,
+        13,
+        12,
+        16,
+        15,
+        7,
+        3
+      ],
+      "avg_shots_on_target": 3.7,
+      "sot_list": [
+        6,
+        3,
+        4,
+        4,
+        6,
+        1,
+        2
+      ],
+      "avg_corners": 4.1,
+      "corners_list": [
+        9,
+        1,
+        7,
+        5,
+        1,
+        5,
+        1
+      ],
+      "avg_corners_conceded": 4.0,
+      "corners_conceded_list": [
+        1,
+        5,
+        3,
+        3,
+        3,
+        5,
+        8
+      ],
+      "avg_saves": 3.4,
+      "saves_list": [
+        2,
+        2,
+        4,
+        3,
+        2,
+        8,
+        3
+      ],
+      "avg_fh_corners": 1.9,
+      "fh_corners_list": [
+        4,
+        0,
+        2,
+        3,
+        1,
+        2,
+        1
+      ],
+      "avg_fh_corners_conceded": 2.3,
+      "fh_corners_conceded_list": [
+        0,
+        2,
+        2,
+        1,
+        3,
+        3,
+        5
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 15.1,
+      "avg_cards": 2.1,
+      "cards_list": [
+        4,
+        1,
+        2,
+        2,
+        4,
+        1,
+        1
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 8.0,
+        "prob": 82,
+        "avg": 11.6
+      },
+      "sot_prop": {
+        "line": 3.5,
+        "prob": 73,
+        "avg": 5.0
+      },
+      "corners_prop": {
+        "line": 3.0,
+        "prob": 64,
+        "avg": 4.4
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 88,
+        "avg": 2.1
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 8.0,
+        "prob": 80,
+        "avg": 11.4
+      },
+      "sot_prop": {
+        "line": 2.5,
+        "prob": 71,
+        "avg": 3.7
+      },
+      "corners_prop": {
+        "line": 2.5,
+        "prob": 78,
+        "avg": 4.1
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 88,
+        "avg": 2.1
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 1.93,
+    "exp_away": 1.84,
+    "exp_total": 3.77,
+    "over25": 73,
+    "over45": 33,
+    "btts": 72,
+    "exp_fh_corners": 4.86,
+    "fh_corners_over35": 71,
+    "fh_corners_over45": 53,
+    "exp_corners": 9.24,
+    "corners_over105": 32,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 41,
+    "draw_pct": 21,
+    "away_win_pct": 38
+  },
+  {
+    "match_id": "mt_155844706",
+    "league": "Swiss Super League",
+    "date": "2026-10-10T18:30:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "FC Lugano",
+    "away_team": "FC Luzern",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 3.0,
+      "avg_conceded": 0.71,
+      "goals_list": [
+        4,
+        4,
+        2,
+        3,
+        1,
+        2,
+        5
+      ],
+      "avg_shots": 16.6,
+      "shots_list": [
+        21,
+        12,
+        17,
+        23,
+        20,
+        7,
+        16
+      ],
+      "avg_shots_on_target": 5.7,
+      "sot_list": [
+        5,
+        8,
+        7,
+        5,
+        3,
+        4,
+        8
+      ],
+      "avg_corners": 5.6,
+      "corners_list": [
+        6,
+        2,
+        4,
+        7,
+        11,
+        4,
+        5
+      ],
+      "avg_corners_conceded": 3.9,
+      "corners_conceded_list": [
+        1,
+        8,
+        4,
+        1,
+        3,
+        8,
+        2
+      ],
+      "avg_saves": 2.7,
+      "saves_list": [
+        4,
+        4,
+        3,
+        1,
+        2,
+        4,
+        1
+      ],
+      "avg_fh_corners": 3.1,
+      "fh_corners_list": [
+        3,
+        2,
+        3,
+        4,
+        3,
+        3,
+        4
+      ],
+      "avg_fh_corners_conceded": 1.9,
+      "fh_corners_conceded_list": [
+        0,
+        2,
+        3,
+        0,
+        2,
+        5,
+        1
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 17.4,
+      "avg_cards": 2.9,
+      "cards_list": [
+        3,
+        4,
+        3,
+        5,
+        2,
+        3,
+        0
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 2.29,
+      "avg_conceded": 1.71,
+      "goals_list": [
+        5,
+        2,
+        3,
+        2,
+        1,
+        1,
+        2
+      ],
+      "avg_shots": 16.9,
+      "shots_list": [
+        23,
+        19,
+        17,
+        23,
+        7,
+        17,
+        12
+      ],
+      "avg_shots_on_target": 5.9,
+      "sot_list": [
+        11,
+        3,
+        7,
+        8,
+        2,
+        7,
+        3
+      ],
+      "avg_corners": 4.7,
+      "corners_list": [
+        5,
+        6,
+        2,
+        3,
+        1,
+        7,
+        9
+      ],
+      "avg_corners_conceded": 6.3,
+      "corners_conceded_list": [
+        8,
+        3,
+        8,
+        4,
+        13,
+        2,
+        6
+      ],
+      "avg_saves": 4.4,
+      "saves_list": [
+        5,
+        2,
+        7,
+        3,
+        4,
+        2,
+        8
+      ],
+      "avg_fh_corners": 1.9,
+      "fh_corners_list": [
+        1,
+        3,
+        0,
+        2,
+        0,
+        2,
+        5
+      ],
+      "avg_fh_corners_conceded": 2.4,
+      "fh_corners_conceded_list": [
+        1,
+        3,
+        2,
+        4,
+        3,
+        1,
+        3
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 17.0,
+      "avg_cards": 3.1,
+      "cards_list": [
+        2,
+        1,
+        5,
+        5,
+        1,
+        2,
+        6
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 11.5,
+        "prob": 90,
+        "avg": 16.6
+      },
+      "sot_prop": {
+        "line": 4.0,
+        "prob": 67,
+        "avg": 5.7
+      },
+      "corners_prop": {
+        "line": 4.0,
+        "prob": 66,
+        "avg": 5.6
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 94,
+        "avg": 2.9
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 12.0,
+        "prob": 86,
+        "avg": 16.9
+      },
+      "sot_prop": {
+        "line": 4.0,
+        "prob": 70,
+        "avg": 5.9
+      },
+      "corners_prop": {
+        "line": 3.0,
+        "prob": 69,
+        "avg": 4.7
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 95,
+        "avg": 3.1
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 2.47,
+    "exp_away": 1.22,
+    "exp_total": 3.68,
+    "over25": 71,
+    "over45": 31,
+    "btts": 64,
+    "exp_fh_corners": 4.82,
+    "fh_corners_over35": 71,
+    "fh_corners_over45": 53,
+    "exp_corners": 10.53,
+    "corners_over105": 48,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 65,
+    "draw_pct": 18,
+    "away_win_pct": 17
+  },
+  {
+    "match_id": "mt_988327114",
+    "league": "Championship",
+    "date": "2026-10-10T14:00:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "Preston North End",
+    "away_team": "Millwall",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 1.0,
+      "avg_conceded": 1.86,
+      "goals_list": [
+        2,
+        0,
+        1,
+        2,
+        1,
+        0,
+        1
+      ],
+      "avg_shots": 13.4,
+      "shots_list": [
+        14,
+        11,
+        18,
+        8,
+        18,
+        12,
+        13
+      ],
+      "avg_shots_on_target": 3.1,
+      "sot_list": [
+        3,
+        3,
+        6,
+        3,
+        4,
+        1,
+        2
+      ],
+      "avg_corners": 5.7,
+      "corners_list": [
+        3,
+        16,
+        4,
+        3,
+        5,
+        4,
+        5
+      ],
+      "avg_corners_conceded": 5.6,
+      "corners_conceded_list": [
+        10,
+        3,
+        2,
+        11,
+        2,
+        7,
+        4
+      ],
+      "avg_saves": 3.3,
+      "saves_list": [
+        5,
+        3,
+        3,
+        5,
+        4,
+        1,
+        2
+      ],
+      "avg_fh_corners": 2.4,
+      "fh_corners_list": [
+        1,
+        7,
+        3,
+        2,
+        1,
+        1,
+        2
+      ],
+      "avg_fh_corners_conceded": 2.7,
+      "fh_corners_conceded_list": [
+        4,
+        2,
+        1,
+        6,
+        2,
+        2,
+        2
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 13.7,
+      "avg_cards": 2.3,
+      "cards_list": [
+        2,
+        1,
+        2,
+        4,
+        2,
+        1,
+        4
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 1.86,
+      "avg_conceded": 2.14,
+      "goals_list": [
+        2,
+        2,
+        1,
+        4,
+        0,
+        1,
+        3
+      ],
+      "avg_shots": 13.7,
+      "shots_list": [
+        19,
+        11,
+        16,
+        12,
+        4,
+        15,
+        19
+      ],
+      "avg_shots_on_target": 4.3,
+      "sot_list": [
+        7,
+        4,
+        2,
+        5,
+        0,
+        5,
+        7
+      ],
+      "avg_corners": 4.1,
+      "corners_list": [
+        3,
+        1,
+        2,
+        3,
+        1,
+        11,
+        8
+      ],
+      "avg_corners_conceded": 7.6,
+      "corners_conceded_list": [
+        11,
+        14,
+        6,
+        9,
+        2,
+        8,
+        3
+      ],
+      "avg_saves": 2.7,
+      "saves_list": [
+        4,
+        5,
+        1,
+        4,
+        1,
+        2,
+        2
+      ],
+      "avg_fh_corners": 2.1,
+      "fh_corners_list": [
+        2,
+        1,
+        0,
+        2,
+        1,
+        4,
+        5
+      ],
+      "avg_fh_corners_conceded": 3.0,
+      "fh_corners_conceded_list": [
+        0,
+        7,
+        5,
+        3,
+        0,
+        6,
+        0
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 14.6,
+      "avg_cards": 1.4,
+      "cards_list": [
+        1,
+        1,
+        3,
+        1,
+        2,
+        1,
+        1
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 9.5,
+        "prob": 86,
+        "avg": 13.4
+      },
+      "sot_prop": {
+        "line": 2.0,
+        "prob": 60,
+        "avg": 3.1
+      },
+      "corners_prop": {
+        "line": 4.0,
+        "prob": 67,
+        "avg": 5.7
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 90,
+        "avg": 2.3
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 9.5,
+        "prob": 88,
+        "avg": 13.7
+      },
+      "sot_prop": {
+        "line": 3.0,
+        "prob": 62,
+        "avg": 4.3
+      },
+      "corners_prop": {
+        "line": 2.5,
+        "prob": 78,
+        "avg": 4.1
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 75,
+        "avg": 1.4
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 1.52,
+    "exp_away": 2.08,
+    "exp_total": 3.59,
+    "over25": 70,
+    "over45": 29,
+    "btts": 68,
+    "exp_fh_corners": 5.33,
+    "fh_corners_over35": 78,
+    "fh_corners_over45": 62,
+    "exp_corners": 12.09,
+    "corners_over105": 66,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 28,
+    "draw_pct": 21,
+    "away_win_pct": 51
+  },
+  {
+    "match_id": "mt_899638538",
+    "league": "Eredivisie",
+    "date": "2026-10-10T16:45:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "Feyenoord",
+    "away_team": "AZ Alkmaar",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 3.57,
+      "avg_conceded": 1.0,
+      "goals_list": [
+        5,
+        7,
+        3,
+        2,
+        5,
+        2,
+        1
+      ],
+      "avg_shots": 22.3,
+      "shots_list": [
+        23,
+        26,
+        11,
+        33,
+        14,
+        27,
+        22
+      ],
+      "avg_shots_on_target": 8.7,
+      "sot_list": [
+        12,
+        12,
+        6,
+        12,
+        7,
+        6,
+        6
+      ],
+      "avg_corners": 6.1,
+      "corners_list": [
+        6,
+        6,
+        1,
+        11,
+        3,
+        6,
+        10
+      ],
+      "avg_corners_conceded": 3.7,
+      "corners_conceded_list": [
+        3,
+        5,
+        1,
+        3,
+        3,
+        6,
+        5
+      ],
+      "avg_saves": 1.9,
+      "saves_list": [
+        1,
+        3,
+        1,
+        1,
+        2,
+        4,
+        1
+      ],
+      "avg_fh_corners": 3.4,
+      "fh_corners_list": [
+        1,
+        6,
+        1,
+        5,
+        2,
+        3,
+        6
+      ],
+      "avg_fh_corners_conceded": 1.0,
+      "fh_corners_conceded_list": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 14.7,
+      "avg_cards": 1.2,
+      "cards_list": [
+        2,
+        2,
+        0,
+        1,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 2.57,
+      "avg_conceded": 0.86,
+      "goals_list": [
+        1,
+        1,
+        3,
+        5,
+        2,
+        4,
+        2
+      ],
+      "avg_shots": 19.4,
+      "shots_list": [
+        17,
+        22,
+        15,
+        20,
+        26,
+        24,
+        12
+      ],
+      "avg_shots_on_target": 7.6,
+      "sot_list": [
+        8,
+        5,
+        8,
+        8,
+        11,
+        9,
+        4
+      ],
+      "avg_corners": 8.6,
+      "corners_list": [
+        5,
+        11,
+        3,
+        8,
+        15,
+        9,
+        9
+      ],
+      "avg_corners_conceded": 3.3,
+      "corners_conceded_list": [
+        2,
+        2,
+        4,
+        4,
+        1,
+        3,
+        7
+      ],
+      "avg_saves": 1.6,
+      "saves_list": [
+        1,
+        1,
+        3,
+        2,
+        2,
+        1,
+        1
+      ],
+      "avg_fh_corners": 3.7,
+      "fh_corners_list": [
+        0,
+        4,
+        1,
+        1,
+        6,
+        7,
+        7
+      ],
+      "avg_fh_corners_conceded": 1.4,
+      "fh_corners_conceded_list": [
+        1,
+        1,
+        3,
+        0,
+        0,
+        2,
+        3
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 16.6,
+      "avg_cards": 1.0,
+      "cards_list": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 16.0,
+        "prob": 89,
+        "avg": 22.3
+      },
+      "sot_prop": {
+        "line": 6.0,
+        "prob": 76,
+        "avg": 8.7
+      },
+      "corners_prop": {
+        "line": 4.0,
+        "prob": 73,
+        "avg": 6.1
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 70,
+        "avg": 1.2
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 13.5,
+        "prob": 92,
+        "avg": 19.4
+      },
+      "sot_prop": {
+        "line": 5.0,
+        "prob": 77,
+        "avg": 7.6
+      },
+      "corners_prop": {
+        "line": 6.0,
+        "prob": 75,
+        "avg": 8.6
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 63,
+        "avg": 1.0
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 1.89,
+    "exp_away": 1.58,
+    "exp_total": 3.47,
+    "over25": 67,
+    "over45": 27,
+    "btts": 67,
+    "exp_fh_corners": 4.31,
+    "fh_corners_over35": 62,
+    "fh_corners_over45": 43,
+    "exp_corners": 10.67,
+    "corners_over105": 50,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 45,
+    "draw_pct": 22,
+    "away_win_pct": 33
+  },
+  {
+    "match_id": "mt_894578458",
+    "league": "MLS",
+    "date": "2026-10-10T17:00:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "Toronto FC",
+    "away_team": "CF Montr\u00e9al",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 1.43,
+      "avg_conceded": 2.14,
+      "goals_list": [
+        0,
+        1,
+        0,
+        2,
+        4,
+        1,
+        2
+      ],
+      "avg_shots": 13.4,
+      "shots_list": [
+        11,
+        10,
+        18,
+        16,
+        18,
+        14,
+        7
+      ],
+      "avg_shots_on_target": 4.7,
+      "sot_list": [
+        3,
+        2,
+        4,
+        7,
+        8,
+        6,
+        3
+      ],
+      "avg_corners": 4.0,
+      "corners_list": [
+        3,
+        4,
+        3,
+        3,
+        6,
+        7,
+        2
+      ],
+      "avg_corners_conceded": 5.3,
+      "corners_conceded_list": [
+        9,
+        8,
+        4,
+        8,
+        3,
+        2,
+        3
+      ],
+      "avg_saves": 4.3,
+      "saves_list": [
+        9,
+        5,
+        5,
+        5,
+        3,
+        1,
+        2
+      ],
+      "avg_fh_corners": 1.7,
+      "fh_corners_list": [
+        0,
+        0,
+        2,
+        3,
+        1,
+        4,
+        2
+      ],
+      "avg_fh_corners_conceded": 2.6,
+      "fh_corners_conceded_list": [
+        6,
+        4,
+        3,
+        1,
+        2,
+        1,
+        1
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 12.3,
+      "avg_cards": 1.6,
+      "cards_list": [
+        0,
+        2,
+        2,
+        1,
+        2,
+        3,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 1.0,
+      "avg_conceded": 2.43,
+      "goals_list": [
+        3,
+        0,
+        0,
+        1,
+        0,
+        1,
+        2
+      ],
+      "avg_shots": 11.7,
+      "shots_list": [
+        15,
+        9,
+        11,
+        17,
+        5,
+        10,
+        15
+      ],
+      "avg_shots_on_target": 4.3,
+      "sot_list": [
+        5,
+        2,
+        5,
+        5,
+        2,
+        5,
+        6
+      ],
+      "avg_corners": 4.9,
+      "corners_list": [
+        4,
+        5,
+        1,
+        11,
+        1,
+        6,
+        6
+      ],
+      "avg_corners_conceded": 4.6,
+      "corners_conceded_list": [
+        6,
+        1,
+        5,
+        3,
+        6,
+        6,
+        5
+      ],
+      "avg_saves": 3.7,
+      "saves_list": [
+        3,
+        1,
+        6,
+        2,
+        6,
+        5,
+        3
+      ],
+      "avg_fh_corners": 2.0,
+      "fh_corners_list": [
+        1,
+        2,
+        0,
+        6,
+        1,
+        0,
+        4
+      ],
+      "avg_fh_corners_conceded": 2.4,
+      "fh_corners_conceded_list": [
+        2,
+        0,
+        3,
+        1,
+        3,
+        4,
+        4
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 13.9,
+      "avg_cards": 2.1,
+      "cards_list": [
+        2,
+        2,
+        1,
+        2,
+        4,
+        2,
+        2
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 9.5,
+        "prob": 86,
+        "avg": 13.4
+      },
+      "sot_prop": {
+        "line": 3.0,
+        "prob": 69,
+        "avg": 4.7
+      },
+      "corners_prop": {
+        "line": 2.5,
+        "prob": 76,
+        "avg": 4.0
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 80,
+        "avg": 1.6
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 8.0,
+        "prob": 82,
+        "avg": 11.7
+      },
+      "sot_prop": {
+        "line": 3.0,
+        "prob": 62,
+        "avg": 4.3
+      },
+      "corners_prop": {
+        "line": 3.5,
+        "prob": 72,
+        "avg": 4.9
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 88,
+        "avg": 2.1
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 2.01,
+    "exp_away": 1.45,
+    "exp_total": 3.46,
+    "over25": 67,
+    "over45": 27,
+    "btts": 66,
+    "exp_fh_corners": 4.32,
+    "fh_corners_over35": 63,
+    "fh_corners_over45": 43,
+    "exp_corners": 9.32,
+    "corners_over105": 33,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 51,
+    "draw_pct": 22,
+    "away_win_pct": 28
+  },
+  {
+    "match_id": "mt_209612975",
+    "league": "MLS",
+    "date": "2026-10-10T23:30:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "Inter Miami CF",
+    "away_team": "DC United",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 2.29,
+      "avg_conceded": 1.71,
+      "goals_list": [
+        1,
+        2,
+        2,
+        1,
+        2,
+        7,
+        1
+      ],
+      "avg_shots": 14.1,
+      "shots_list": [
+        5,
+        19,
+        14,
+        20,
+        11,
+        20,
+        10
+      ],
+      "avg_shots_on_target": 5.7,
+      "sot_list": [
+        3,
+        8,
+        5,
+        7,
+        3,
+        11,
+        3
+      ],
+      "avg_corners": 4.1,
+      "corners_list": [
+        1,
+        4,
+        4,
+        5,
+        6,
+        6,
+        3
+      ],
+      "avg_corners_conceded": 4.1,
+      "corners_conceded_list": [
+        9,
+        1,
+        3,
+        2,
+        6,
+        6,
+        2
+      ],
+      "avg_saves": 2.1,
+      "saves_list": [
+        4,
+        1,
+        1,
+        2,
+        4,
+        3,
+        0
+      ],
+      "avg_fh_corners": 2.0,
+      "fh_corners_list": [
+        0,
+        1,
+        3,
+        3,
+        2,
+        4,
+        1
+      ],
+      "avg_fh_corners_conceded": 1.6,
+      "fh_corners_conceded_list": [
+        4,
+        1,
+        3,
+        0,
+        1,
+        0,
+        2
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 17.7,
+      "avg_cards": 3.6,
+      "cards_list": [
+        8,
+        2,
+        3,
+        3,
+        6,
+        1,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 1.0,
+      "avg_conceded": 1.71,
+      "goals_list": [
+        3,
+        1,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "avg_shots": 16.0,
+      "shots_list": [
+        21,
+        31,
+        4,
+        10,
+        14,
+        17,
+        15
+      ],
+      "avg_shots_on_target": 5.1,
+      "sot_list": [
+        8,
+        11,
+        0,
+        5,
+        4,
+        5,
+        3
+      ],
+      "avg_corners": 5.6,
+      "corners_list": [
+        10,
+        4,
+        4,
+        3,
+        5,
+        9,
+        4
+      ],
+      "avg_corners_conceded": 5.7,
+      "corners_conceded_list": [
+        7,
+        3,
+        8,
+        5,
+        8,
+        4,
+        5
+      ],
+      "avg_saves": 3.4,
+      "saves_list": [
+        6,
+        5,
+        3,
+        3,
+        1,
+        2,
+        4
+      ],
+      "avg_fh_corners": 2.6,
+      "fh_corners_list": [
+        4,
+        1,
+        3,
+        1,
+        2,
+        6,
+        1
+      ],
+      "avg_fh_corners_conceded": 2.6,
+      "fh_corners_conceded_list": [
+        3,
+        3,
+        2,
+        3,
+        3,
+        3,
+        1
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 17.4,
+      "avg_cards": 2.2,
+      "cards_list": [
+        1,
+        2,
+        3,
+        3,
+        3,
+        1
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 10.0,
+        "prob": 83,
+        "avg": 14.1
+      },
+      "sot_prop": {
+        "line": 4.0,
+        "prob": 67,
+        "avg": 5.7
+      },
+      "corners_prop": {
+        "line": 2.5,
+        "prob": 78,
+        "avg": 4.1
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 97,
+        "avg": 3.6
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 11.5,
+        "prob": 87,
+        "avg": 16.0
+      },
+      "sot_prop": {
+        "line": 3.5,
+        "prob": 75,
+        "avg": 5.1
+      },
+      "corners_prop": {
+        "line": 4.0,
+        "prob": 66,
+        "avg": 5.6
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 89,
+        "avg": 2.2
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 2.18,
+    "exp_away": 1.23,
+    "exp_total": 3.4,
+    "over25": 66,
+    "over45": 26,
+    "btts": 63,
+    "exp_fh_corners": 4.4,
+    "fh_corners_over35": 64,
+    "fh_corners_over45": 45,
+    "exp_corners": 9.71,
+    "corners_over105": 38,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 59,
+    "draw_pct": 20,
+    "away_win_pct": 21
+  },
+  {
+    "match_id": "mt_644094199",
+    "league": "Championship",
+    "date": "2026-10-10T14:00:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "Bolton Wanderers",
+    "away_team": "Stoke City",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 1.29,
+      "avg_conceded": 2.0,
+      "goals_list": [
+        4,
+        1,
+        2,
+        0,
+        2,
+        0,
+        0
+      ],
+      "avg_shots": 11.9,
+      "shots_list": [
+        9,
+        7,
+        13,
+        13,
+        18,
+        21,
+        2
+      ],
+      "avg_shots_on_target": 4.6,
+      "sot_list": [
+        5,
+        5,
+        6,
+        4,
+        6,
+        6,
+        0
+      ],
+      "avg_corners": 5.4,
+      "corners_list": [
+        2,
+        2,
+        4,
+        9,
+        5,
+        14,
+        2
+      ],
+      "avg_corners_conceded": 5.3,
+      "corners_conceded_list": [
+        4,
+        10,
+        4,
+        3,
+        5,
+        2,
+        9
+      ],
+      "avg_saves": 4.0,
+      "saves_list": [
+        1,
+        10,
+        4,
+        1,
+        1,
+        1,
+        10
+      ],
+      "avg_fh_corners": 2.1,
+      "fh_corners_list": [
+        1,
+        2,
+        1,
+        3,
+        2,
+        5,
+        1
+      ],
+      "avg_fh_corners_conceded": 2.1,
+      "fh_corners_conceded_list": [
+        1,
+        4,
+        2,
+        2,
+        3,
+        0,
+        3
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 16.4,
+      "avg_cards": 1.8,
+      "cards_list": [
+        5,
+        0,
+        2,
+        2,
+        0,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 1.71,
+      "avg_conceded": 1.43,
+      "goals_list": [
+        2,
+        2,
+        1,
+        4,
+        1,
+        1,
+        1
+      ],
+      "avg_shots": 12.9,
+      "shots_list": [
+        12,
+        18,
+        12,
+        17,
+        6,
+        10,
+        15
+      ],
+      "avg_shots_on_target": 4.3,
+      "sot_list": [
+        5,
+        6,
+        4,
+        8,
+        2,
+        3,
+        2
+      ],
+      "avg_corners": 4.6,
+      "corners_list": [
+        8,
+        8,
+        5,
+        5,
+        3,
+        1,
+        2
+      ],
+      "avg_corners_conceded": 4.6,
+      "corners_conceded_list": [
+        1,
+        5,
+        7,
+        3,
+        5,
+        7,
+        4
+      ],
+      "avg_saves": 3.3,
+      "saves_list": [
+        2,
+        1,
+        6,
+        3,
+        5,
+        4,
+        2
+      ],
+      "avg_fh_corners": 3.3,
+      "fh_corners_list": [
+        6,
+        6,
+        4,
+        5,
+        1,
+        1,
+        0
+      ],
+      "avg_fh_corners_conceded": 1.7,
+      "fh_corners_conceded_list": [
+        1,
+        2,
+        4,
+        2,
+        1,
+        1,
+        1
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 16.4,
+      "avg_cards": 3.0,
+      "cards_list": [
+        4,
+        2,
+        2,
+        1,
+        2,
+        4,
+        6
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 8.5,
+        "prob": 84,
+        "avg": 11.9
+      },
+      "sot_prop": {
+        "line": 3.0,
+        "prob": 67,
+        "avg": 4.6
+      },
+      "corners_prop": {
+        "line": 3.5,
+        "prob": 79,
+        "avg": 5.4
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 83,
+        "avg": 1.8
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 9.0,
+        "prob": 83,
+        "avg": 12.9
+      },
+      "sot_prop": {
+        "line": 3.0,
+        "prob": 62,
+        "avg": 4.3
+      },
+      "corners_prop": {
+        "line": 3.0,
+        "prob": 67,
+        "avg": 4.6
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 95,
+        "avg": 3.0
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 1.32,
+    "exp_away": 2.07,
+    "exp_total": 3.39,
+    "over25": 66,
+    "over45": 25,
+    "btts": 64,
+    "exp_fh_corners": 4.91,
+    "fh_corners_over35": 72,
+    "fh_corners_over45": 54,
+    "exp_corners": 10.53,
+    "corners_over105": 48,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 24,
+    "draw_pct": 21,
+    "away_win_pct": 55
+  },
+  {
+    "match_id": "mt_899638552",
+    "league": "Eredivisie",
+    "date": "2026-10-10T18:00:00.000Z",
+    "date_key": "2026-10-10",
+    "home_team": "Fortuna Sittard",
+    "away_team": "FC Twente",
+    "home_form": {
+      "n_games": 7,
+      "avg_scored": 1.86,
+      "avg_conceded": 2.0,
+      "goals_list": [
+        1,
+        1,
+        3,
+        3,
+        0,
+        3,
+        2
+      ],
+      "avg_shots": 10.1,
+      "shots_list": [
+        17,
+        8,
+        8,
+        9,
+        4,
+        17,
+        8
+      ],
+      "avg_shots_on_target": 4.6,
+      "sot_list": [
+        3,
+        4,
+        5,
+        5,
+        2,
+        7,
+        6
+      ],
+      "avg_corners": 2.1,
+      "corners_list": [
+        3,
+        3,
+        0,
+        2,
+        1,
+        6,
+        0
+      ],
+      "avg_corners_conceded": 8.0,
+      "corners_conceded_list": [
+        5,
+        11,
+        2,
+        7,
+        15,
+        7,
+        9
+      ],
+      "avg_saves": 4.3,
+      "saves_list": [
+        3,
+        6,
+        1,
+        1,
+        9,
+        6,
+        4
+      ],
+      "avg_fh_corners": 0.6,
+      "fh_corners_list": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        2,
+        0
+      ],
+      "avg_fh_corners_conceded": 3.3,
+      "fh_corners_conceded_list": [
+        1,
+        6,
+        1,
+        2,
+        6,
+        1,
+        6
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 11.7,
+      "avg_cards": 1.7,
+      "cards_list": [
+        1,
+        1,
+        4,
+        4,
+        1,
+        0,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_scored": 2.14,
+      "avg_conceded": 1.0,
+      "goals_list": [
+        3,
+        2,
+        1,
+        2,
+        4,
+        3,
+        0
+      ],
+      "avg_shots": 21.6,
+      "shots_list": [
+        21,
+        24,
+        22,
+        16,
+        23,
+        27,
+        18
+      ],
+      "avg_shots_on_target": 7.6,
+      "sot_list": [
+        5,
+        12,
+        8,
+        5,
+        10,
+        10,
+        3
+      ],
+      "avg_corners": 7.4,
+      "corners_list": [
+        6,
+        12,
+        9,
+        2,
+        9,
+        6,
+        8
+      ],
+      "avg_corners_conceded": 3.7,
+      "corners_conceded_list": [
+        5,
+        2,
+        2,
+        8,
+        2,
+        3,
+        4
+      ],
+      "avg_saves": 2.6,
+      "saves_list": [
+        2,
+        5,
+        2,
+        2,
+        2,
+        2,
+        3
+      ],
+      "avg_fh_corners": 3.1,
+      "fh_corners_list": [
+        2,
+        5,
+        2,
+        1,
+        5,
+        5,
+        2
+      ],
+      "avg_fh_corners_conceded": 1.7,
+      "fh_corners_conceded_list": [
+        3,
+        2,
+        1,
+        4,
+        1,
+        1,
+        0
+      ],
+      "avg_fh_xg": null,
+      "fh_xg_list": [],
+      "avg_tackles": 13.1,
+      "avg_cards": 1.0,
+      "cards_list": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "home_props": {
+      "shots_prop": {
+        "line": 7.0,
+        "prob": 79,
+        "avg": 10.1
+      },
+      "sot_prop": {
+        "line": 3.0,
+        "prob": 67,
+        "avg": 4.6
+      },
+      "corners_prop": {
+        "line": 1.5,
+        "prob": 62,
+        "avg": 2.1
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 82,
+        "avg": 1.7
+      }
+    },
+    "away_props": {
+      "shots_prop": {
+        "line": 15.5,
+        "prob": 91,
+        "avg": 21.6
+      },
+      "sot_prop": {
+        "line": 5.0,
+        "prob": 77,
+        "avg": 7.6
+      },
+      "corners_prop": {
+        "line": 5.0,
+        "prob": 75,
+        "avg": 7.4
+      },
+      "cards_prop": {
+        "line": 0.5,
+        "prob": 63,
+        "avg": 1.0
+      }
+    },
+    "corners_sample_n": 7,
+    "exp_home": 1.25,
+    "exp_away": 2.14,
+    "exp_total": 3.39,
+    "over25": 66,
+    "over45": 25,
+    "btts": 63,
+    "exp_fh_corners": 4.71,
+    "fh_corners_over35": 69,
+    "fh_corners_over45": 51,
+    "exp_corners": 11.95,
+    "corners_over105": 65,
+    "exp_fh_home": 0.55,
+    "exp_fh_away": 0.55,
+    "fh_btts": 18,
+    "home_win_pct": 22,
+    "draw_pct": 21,
+    "away_win_pct": 58
   }
 ]
