@@ -88,5 +88,21 @@
     "status": "hit",
     "final_home_runs": 8.0,
     "final_away_runs": 0.0
+  },
+  "849841_Game_Total_Under": {
+    "id": "849841_Game_Total_Under",
+    "game_pk": 849841,
+    "home_team": "Atlanta Braves",
+    "away_team": "Philadelphia Phillies",
+    "label": "Game Total Under",
+    "prob": 99,
+    "logged_at": "2026-09-30T20:05:33.909643+00:00",
+    "logged_inning": 7,
+    "logged_inning_state": "Middle",
+    "logged_half_index": 13,
+    "logged_home_runs": 1.0,
+    "logged_away_runs": 1.0,
+    "pregame_total": 5.32,
+    "status": "pending"
   }
 }

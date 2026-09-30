@@ -1,5 +1,47 @@
 {
-  "generated": "2026-09-30T15:15:28.093379+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-09-30T20:05:33.906329+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_pk": 849841,
+      "home_team": "Atlanta Braves",
+      "away_team": "Philadelphia Phillies",
+      "home_runs": 1.0,
+      "away_runs": 1.0,
+      "home_hits": 5.0,
+      "away_hits": 6.0,
+      "inning": 7,
+      "inning_state": "Middle",
+      "status": "In Progress",
+      "half_innings_remaining": 5,
+      "next_run": {
+        "home": 52,
+        "away": 48
+      },
+      "game_total_pace": {
+        "prob": 1,
+        "status": "On Pace: Under"
+      },
+      "inning_winner": {
+        "home": 13,
+        "away": 12,
+        "tie": 74
+      },
+      "inning_hits": {
+        "home": 29,
+        "away": 37,
+        "tie": 34
+      },
+      "model_signal": {
+        "label": "Game Total Under",
+        "prob": 99,
+        "qualifies": true
+      },
+      "pregame_projection": {
+        "home_lambda": 3.03,
+        "away_lambda": 2.29,
+        "pregame_total": 5.32
+      }
+    }
+  ]
 }
