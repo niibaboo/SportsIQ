@@ -9,13 +9,14 @@
 
 <h2 style="text-align:center;margin-bottom:2px">🎯 Daily Rollover Acca</h2>
 <p style="text-align:center;color:#888;font-size:11px;margin-top:0">
-  Pulls live from Match IQ, Under IQ, Euro Ice &amp; Cards &amp; Corners IQ — target range 2.3–3.0
+  Pulls live from Match IQ, Under IQ, Euro Ice, Cards &amp; Corners IQ &amp; Strike Zone — target range 2.3–3.0
 </p>
 <p style="text-align:center;font-size:11px;margin:4px 0 14px">
   <a href="../match-iq/match_iq_index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Match IQ</a>·
   <a href="https://niibaboo.github.io/Under-Goals/under-iq/under_iq_index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Under IQ</a>·
   <a href="../euro-ice/index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Euro Ice</a>·
-  <a href="../cards-corners/index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Cards &amp; Corners IQ</a>
+  <a href="../cards-corners/index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Cards &amp; Corners IQ</a>·
+  <a href="../strike-zone/index.html" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Strike Zone</a>
 </p>
 
 <div id="loadStatus" style="text-align:center;color:#8b98a8;font-size:12px;margin-bottom:14px">Loading today's legs from all four models…</div>
@@ -48,6 +49,7 @@ const SOURCES = {
   underiq: "https://niibaboo.github.io/Under-Goals/under-iq/under_iq.json",
   euroice: "https://niibaboo.github.io/SportsIQ/euro-ice/euro_ice.json",
   cardscorners: "https://niibaboo.github.io/SportsIQ/cards-corners/cards_corners.json",
+  strikezone: "https://niibaboo.github.io/SportsIQ/strike-zone/strike_zone.json",
 };
 
 let ALL_LEGS = [];
@@ -132,6 +134,31 @@ function legsFromCardsCorners(predictions) {
   return legs;
 }
 
+// Strike Zone's legs.json (same passthrough shape as Euro Ice) carries
+// FOUR categories -- Strikeouts, Outs Recorded, Team Runs, Team Hits --
+// but only Team Hits has actually earned a place in a "safest" pool:
+// its verified real-world hit rate (~80%) lines up with the confidence
+// the model displays for it. Strikeouts shows similarly high displayed
+// confidence but has only verified at ~59% -- the model is calibrated
+// against its own generated line there, not against what bet365 actually
+// offers, and for markets like Pitcher Outs the book often has no
+// alt-line to match the model's safety-margined number at all. Rather
+// than quietly including legs whose displayed % is known to overstate
+// their real odds, this only pulls in the one category that's been
+// checked against real results and held up. Revisit this filter once
+// Outs Recorded (or others) have enough verified history of their own
+// to trust the same way.
+const STRIKE_ZONE_SAFE_CATEGORIES = new Set(["Team Hits"]);
+
+function legsFromStrikeZone(rawLegs) {
+  return rawLegs
+    .filter(l => l.prob > 0 && STRIKE_ZONE_SAFE_CATEGORIES.has(l.category))
+    .map(l => ({
+      source: "Strike Zone", match: l.match, subject: l.subject, market: l.market,
+      prob: l.prob, category: `Strike Zone — ${l.category}`, detail: l.detail, league: "MLB",
+    }));
+}
+
 async function fetchSource(name, url, parseFn) {
   try {
     const res = await fetch(url, { cache: "no-store" });
@@ -147,13 +174,14 @@ async function fetchSource(name, url, parseFn) {
 }
 
 async function loadAll() {
-  const [mi, ui, ei, cc] = await Promise.all([
+  const [mi, ui, ei, cc, sz] = await Promise.all([
     fetchSource("Match IQ", SOURCES.matchiq, legsFromMatchIQ),
     fetchSource("Under IQ", SOURCES.underiq, legsFromUnderIQ),
     fetchSource("Euro Ice", SOURCES.euroice, legsFromEuroIce),
     fetchSource("Cards & Corners IQ", SOURCES.cardscorners, legsFromCardsCorners),
+    fetchSource("Strike Zone", SOURCES.strikezone, legsFromStrikeZone),
   ]);
-  ALL_LEGS = [...mi, ...ui, ...ei, ...cc];
+  ALL_LEGS = [...mi, ...ui, ...ei, ...cc, ...sz];
 
   document.getElementById("sourceStatus").innerHTML = sourceStatusMsgs.join(" &nbsp;|&nbsp; ");
 
