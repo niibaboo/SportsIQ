@@ -799,11 +799,16 @@ RUN_STREAK_MIN_GAMES = 5
 K_STREAK_MIN = 7.0
 K_STREAK_MIN_STARTS = 5
 # Team Hits has been the tracker's best-performing category (80% hit rate
-# on the "Over X.5 hits" leg) -- these mirror Run/K Form's calibration
-# logic: MLB team hits/game runs a bit above 8.5 league-average, so the
-# Form (average) bar sits ~1.5 above that and the Real Streak (per-game,
-# consecutive) bar sits ~1 above it, same spacing as Run/K above.
-HIT_STREAK_MIN = 10.0
+# on the "Over X.5 hits" leg). Form (avg) bar deliberately lowered to 7.0
+# per user request -- NOTE this now sits BELOW both MLB's ~8.5 league-avg
+# hits/game and below the Real Streak per-game bar (9), unlike Run/K Form
+# where the average bar is always set ABOVE the streak's per-game bar
+# (5.5 vs 5, 7.0 vs 6). Practical effect: Hit Form will flag teams with a
+# roughly average (or even iffy) last 5 games -- a much looser "hot form"
+# screen than Run/K Form, so it'll surface far more teams, most of them
+# not actually hot. Real Hit Streak (below) still uses a stricter,
+# above-average per-game bar and isn't affected by this.
+HIT_STREAK_MIN = 7.0
 HIT_STREAK_MIN_GAMES = 5
 
 REAL_RUN_STREAK_THRESHOLD = 5   # per-game runs needed to extend the streak
@@ -1333,6 +1338,13 @@ if __name__ == "__main__":
 
     with open("docs/strike-zone/slate_report.json", "w") as f:
         json.dump(slate, f, indent=2, default=str)
+
+    # Same "dump the already-built legs list to its own JSON" pattern as
+    # Euro Ice (euro_ice.json) and Cards & Corners IQ -- lets the Daily
+    # Rollover Acca page (docs/rollover/index.html) pull Strike Zone legs
+    # in as a fifth source without re-deriving anything.
+    with open("docs/strike-zone/strike_zone.json", "w") as f:
+        json.dump(build_legs(slate), f, indent=2, default=str)
 
     try:
         import strike_zone_results_tracker as results_tracker
