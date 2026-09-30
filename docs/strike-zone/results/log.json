@@ -11793,5 +11793,43 @@
     "status": "pending",
     "result": null,
     "actual": null
+  },
+  {
+    "id": "286ce0578b423ed2",
+    "scanner": "hit_form",
+    "subject": "Houston Astros",
+    "market": "Hit Form vs Chicago White Sox",
+    "value": 10.6,
+    "detail": null,
+    "game_pk": 849846,
+    "pitcher_id": null,
+    "is_home": true,
+    "line": null,
+    "threshold": null,
+    "game_date": "2026-09-30",
+    "date_key": "2026-09-30",
+    "logged_at": "2026-09-30T06:46:14.583487+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "ebb3b9f6e0d4a165",
+    "scanner": "real_hit_streak",
+    "subject": "San Diego Padres",
+    "market": "Real Hit Streak vs Chicago Cubs",
+    "value": 3,
+    "detail": null,
+    "game_pk": 849842,
+    "pitcher_id": null,
+    "is_home": true,
+    "line": null,
+    "threshold": 9,
+    "game_date": "2026-09-30",
+    "date_key": "2026-09-30",
+    "logged_at": "2026-09-30T06:46:14.583508+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
   }
 ]
