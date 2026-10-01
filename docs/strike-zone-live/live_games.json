@@ -1,87 +1,87 @@
 {
-  "generated": "2026-09-30T23:43:41.211870+00:00",
+  "generated": "2026-10-01T02:29:01.932086+00:00",
   "total_live": 2,
   "games": [
-    {
-      "game_pk": 849846,
-      "home_team": "Houston Astros",
-      "away_team": "Chicago White Sox",
-      "home_runs": 3.0,
-      "away_runs": 7.0,
-      "home_hits": 5.0,
-      "away_hits": 6.0,
-      "inning": 8,
-      "inning_state": "Top",
-      "status": "In Progress",
-      "half_innings_remaining": 4,
-      "next_run": {
-        "home": 30,
-        "away": 70
-      },
-      "game_total_pace": {
-        "prob": 54,
-        "status": "On Pace: Over"
-      },
-      "inning_winner": {
-        "home": 16,
-        "away": 49,
-        "tie": 35
-      },
-      "inning_hits": {
-        "home": 28,
-        "away": 36,
-        "tie": 36
-      },
-      "model_signal": {
-        "label": "Game Total Over",
-        "prob": 54,
-        "qualifies": false
-      },
-      "pregame_projection": {
-        "home_lambda": 6.98,
-        "away_lambda": 5.29,
-        "pregame_total": 12.27
-      }
-    },
     {
       "game_pk": 849848,
       "home_team": "New York Yankees",
       "away_team": "Boston Red Sox",
-      "home_runs": 0.0,
-      "away_runs": 0.0,
-      "home_hits": 0.0,
-      "away_hits": 0.0,
-      "inning": 1,
+      "home_runs": 8.0,
+      "away_runs": 2.0,
+      "home_hits": 13.0,
+      "away_hits": 4.0,
+      "inning": 7,
       "inning_state": "Top",
-      "status": "Warmup",
-      "half_innings_remaining": 18,
+      "status": "In Progress",
+      "half_innings_remaining": 6,
       "next_run": {
-        "home": 65,
-        "away": 35
+        "home": 74,
+        "away": 26
       },
       "game_total_pace": {
-        "prob": 5,
-        "status": "On Pace: Under"
+        "prob": 100,
+        "status": "On Pace: Over"
       },
       "inning_winner": {
-        "home": 19,
-        "away": 10,
-        "tie": 72
+        "home": 50,
+        "away": 13,
+        "tie": 37
       },
       "inning_hits": {
-        "home": 27,
-        "away": 17,
-        "tie": 56
+        "home": 62,
+        "away": 15,
+        "tie": 24
       },
       "model_signal": {
-        "label": "Game Total Under",
-        "prob": 95,
+        "label": "Game Total Over",
+        "prob": 100,
         "qualifies": true
       },
       "pregame_projection": {
         "home_lambda": 4.28,
         "away_lambda": 2.29,
         "pregame_total": 6.57
+      }
+    },
+    {
+      "game_pk": 849842,
+      "home_team": "San Diego Padres",
+      "away_team": "Chicago Cubs",
+      "home_runs": 0.0,
+      "away_runs": 0.0,
+      "home_hits": 0.0,
+      "away_hits": 0.0,
+      "inning": 2,
+      "inning_state": "Top",
+      "status": "In Progress",
+      "half_innings_remaining": 16,
+      "next_run": {
+        "home": 66,
+        "away": 34
+      },
+      "game_total_pace": {
+        "prob": 2,
+        "status": "On Pace: Under"
+      },
+      "inning_winner": {
+        "home": 24,
+        "away": 11,
+        "tie": 65
+      },
+      "inning_hits": {
+        "home": 31,
+        "away": 22,
+        "tie": 47
+      },
+      "model_signal": {
+        "label": "Game Total Under",
+        "prob": 98,
+        "qualifies": true
+      },
+      "pregame_projection": {
+        "home_lambda": 5.85,
+        "away_lambda": 2.96,
+        "pregame_total": 8.81
       }
     }
   ]

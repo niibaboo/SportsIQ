@@ -122,5 +122,37 @@
     "logged_away_runs": 0.0,
     "pregame_total": 6.57,
     "status": "pending"
+  },
+  "849848_Game_Total_Over": {
+    "id": "849848_Game_Total_Over",
+    "game_pk": 849848,
+    "home_team": "New York Yankees",
+    "away_team": "Boston Red Sox",
+    "label": "Game Total Over",
+    "prob": 100,
+    "logged_at": "2026-10-01T02:29:01.935479+00:00",
+    "logged_inning": 7,
+    "logged_inning_state": "Top",
+    "logged_half_index": 12,
+    "logged_home_runs": 8.0,
+    "logged_away_runs": 2.0,
+    "pregame_total": 6.57,
+    "status": "pending"
+  },
+  "849842_Game_Total_Under": {
+    "id": "849842_Game_Total_Under",
+    "game_pk": 849842,
+    "home_team": "San Diego Padres",
+    "away_team": "Chicago Cubs",
+    "label": "Game Total Under",
+    "prob": 98,
+    "logged_at": "2026-10-01T02:29:01.935492+00:00",
+    "logged_inning": 2,
+    "logged_inning_state": "Top",
+    "logged_half_index": 2,
+    "logged_home_runs": 0.0,
+    "logged_away_runs": 0.0,
+    "pregame_total": 8.81,
+    "status": "pending"
   }
 }
