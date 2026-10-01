@@ -94,6 +94,11 @@ LEAGUE_TARGETS = [
 RECENT_WEIGHT = 0.65
 DEFAULT_LINE_FACTOR = 0.72  # same safety-margin convention as every other tool
 FINISHED_STATES = {"Finished", "Finished after penalties", "Finished after over time"}
+H2H_SAFE_MIN = 0.62  # floor for offering a Head to Head (match winner) leg --
+                      # deliberately a bit above a plain coinflip since the
+                      # favourite's probability already leans on a 50/50
+                      # tie-split assumption (see build_legs_and_cards), on
+                      # top of the existing no-OT/SO-modeling caveat
 
 
 def _get(path, params=None):
@@ -489,6 +494,46 @@ def build_legs_and_cards(target_date):
                     lh, la, tot, o55, ph, pa, pt, top2, home_proj, away_proj,
                 )
 
+                # H2H (match winner) leg -- the thing that was missing
+                # compared to the older, pre-SportsIQ version of this
+                # model: a real "Team to Win" pick, not just the win-prob
+                # bar shown in the card above. ph/pa are REGULATION-TIME
+                # only (see win_probs_and_scores docstring); bet365's
+                # actual Head to Head / Money Line market for hockey
+                # settles on the final result including OT/SO, so ph/pa
+                # alone would understate whichever team is favoured once
+                # the tie probability (pt) gets resolved one way or the
+                # other. There's no data here to model shootout skill, so
+                # pt is split 50/50 as the simplest unbiased assumption --
+                # flagged in the leg detail so it's never mistaken for a
+                # precise number. Only offered when the favourite clears
+                # H2H_SAFE_MIN, same spirit as the Over lines elsewhere
+                # requiring a real safety margin rather than a coinflip.
+                h2h_home = ph + pt / 2
+                h2h_away = pa + pt / 2
+                if h2h_home >= h2h_away:
+                    fav_name, fav_prob, fav_is_home = home["name"], h2h_home, True
+                else:
+                    fav_name, fav_prob, fav_is_home = away["name"], h2h_away, False
+                if fav_prob >= H2H_SAFE_MIN:
+                    legs.append({
+                        "match": match_label,
+                        "subject": fav_name,
+                        "market": f"{fav_name} to Win (H2H)",
+                        "prob": round(fav_prob * 100),
+                        # Same reasoning as Game Total -- this leans on a
+                        # 50/50 tie-split assumption rather than a real
+                        # paired sample, so no hit_rate is attached.
+                        "hit_rate": None,
+                        "category": f"{league['name']} Head to Head",
+                        "detail": f"proj {round(lh, 2)}-{round(la, 2)} goals (reg.) "
+                                  f"· incl. OT/SO via 50/50 tie-split",
+                        "history": None,
+                        "is_home": fav_is_home, "league_id": league["id"],
+                        "home_name": home["name"], "away_name": away["name"],
+                        "match_date": m.get("date", ""),
+                    })
+
     streak_entries.sort(key=lambda e: -e["last5_avg"])
     real_streak_entries.sort(key=lambda e: -e["streak_len"])
     return legs, cards, streak_entries, real_streak_entries
@@ -623,9 +668,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     season-to-date average, then prices with a Poisson distribution. Lines are set
     automatically below the model's projection for a safety margin. Game Total combines two
     teams' own separate scoring histories, not real head-to-head data — treat it with more
-    caution than the single-team legs. Win probability / correct score are regulation-time
-    only (no OT/SO modeling from goals-only data). This tool covers goals only; no player
-    props are available from Highlightly's free tier.
+    caution than the single-team legs. Win probability / correct score shown in the match
+    cards are regulation-time only (no OT/SO modeling from goals-only data). The Head to Head
+    leg in the builder extends that into an incl.-OT/SO pick by splitting the tie probability
+    50/50 — a reasonable approximation, not a precise number, since there's no shootout-skill
+    data to model from. This tool covers goals only; no player props are available from
+    Highlightly's free tier.
   </div>
 
 <script>
