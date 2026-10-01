@@ -1,194 +1,50 @@
 [
   {
-    "match": "Djurg\u00e5rden vs F\u00e4rjestad",
-    "subject": "Djurg\u00e5rden",
-    "market": "Djurg\u00e5rden Over 1.0 Goals",
-    "prob": 55,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 1.85 goals \u00b7 season 1.75/gm",
-    "history": "3/0/1/4/2",
-    "line": 1.0,
-    "is_home": true,
-    "league_id": 40781,
-    "home_name": "Djurg\u00e5rden",
-    "away_name": "F\u00e4rjestad",
-    "match_date": "2026-10-01T17:00:00.000Z"
-  },
-  {
-    "match": "Djurg\u00e5rden vs F\u00e4rjestad",
-    "subject": "F\u00e4rjestad",
-    "market": "F\u00e4rjestad Over 2.5 Goals",
-    "prob": 70,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 3.63 goals \u00b7 season 4.25/gm",
-    "history": "3/7/2/2/5",
-    "line": 2.5,
-    "is_home": false,
-    "league_id": 40781,
-    "home_name": "Djurg\u00e5rden",
-    "away_name": "F\u00e4rjestad",
-    "match_date": "2026-10-01T17:00:00.000Z"
-  },
-  {
-    "match": "Djurg\u00e5rden vs F\u00e4rjestad",
-    "subject": "Djurg\u00e5rden vs F\u00e4rjestad",
-    "market": "Game Over 3.5 Total Goals",
-    "prob": 80,
-    "hit_rate": null,
-    "category": "SHL Game Total",
-    "detail": "proj 5.48 goals combined",
-    "history": null
-  },
-  {
-    "match": "HV71 vs Orebro HK",
-    "subject": "HV71",
-    "market": "HV71 Over 2.5 Goals",
-    "prob": 70,
+    "match": "IF Bj\u00f6rkl\u00f6ven vs V\u00e4xj\u00f6 Lakers",
+    "subject": "IF Bj\u00f6rkl\u00f6ven",
+    "market": "IF Bj\u00f6rkl\u00f6ven Over 1.5 Goals",
+    "prob": 75,
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
     "category": "SHL Team Total",
-    "detail": "proj 3.62 goals \u00b7 season 3.75/gm",
-    "history": "4/4/4/5/2",
-    "line": 2.5,
-    "is_home": true,
-    "league_id": 40781,
-    "home_name": "HV71",
-    "away_name": "Orebro HK",
-    "match_date": "2026-10-01T17:00:00.000Z"
-  },
-  {
-    "match": "HV71 vs Orebro HK",
-    "subject": "Orebro HK",
-    "market": "Orebro HK Over 2.0 Goals",
-    "prob": 55,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 2.87 goals \u00b7 season 3.0/gm",
-    "history": "2/0/5/3/3",
-    "line": 2.0,
-    "is_home": false,
-    "league_id": 40781,
-    "home_name": "HV71",
-    "away_name": "Orebro HK",
-    "match_date": "2026-10-01T17:00:00.000Z"
-  },
-  {
-    "match": "HV71 vs Orebro HK",
-    "subject": "HV71 vs Orebro HK",
-    "market": "Game Over 4.5 Total Goals",
-    "prob": 78,
-    "hit_rate": null,
-    "category": "SHL Game Total",
-    "detail": "proj 6.49 goals combined",
-    "history": null
-  },
-  {
-    "match": "Skellefte\u00e5 AIK vs Malm\u00f6 Redhawks",
-    "subject": "Skellefte\u00e5 AIK",
-    "market": "Skellefte\u00e5 AIK Over 2.5 Goals",
-    "prob": 77,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 4.06 goals \u00b7 season 4.0/gm",
-    "history": "6/7/3/0/6",
-    "line": 2.5,
-    "is_home": true,
-    "league_id": 40781,
-    "home_name": "Skellefte\u00e5 AIK",
-    "away_name": "Malm\u00f6 Redhawks",
-    "match_date": "2026-10-01T17:00:00.000Z"
-  },
-  {
-    "match": "Skellefte\u00e5 AIK vs Malm\u00f6 Redhawks",
-    "subject": "Malm\u00f6 Redhawks",
-    "market": "Malm\u00f6 Redhawks Over 1.5 Goals",
-    "prob": 74,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 2.66 goals \u00b7 season 3.0/gm",
-    "history": "2/3/5/3/1",
+    "detail": "proj 2.71 goals \u00b7 season 2.75/gm",
+    "history": "2/3/4/0/4",
     "line": 1.5,
-    "is_home": false,
+    "is_home": true,
     "league_id": 40781,
-    "home_name": "Skellefte\u00e5 AIK",
-    "away_name": "Malm\u00f6 Redhawks",
+    "home_name": "IF Bj\u00f6rkl\u00f6ven",
+    "away_name": "V\u00e4xj\u00f6 Lakers",
     "match_date": "2026-10-01T17:00:00.000Z"
   },
   {
-    "match": "Skellefte\u00e5 AIK vs Malm\u00f6 Redhawks",
-    "subject": "Skellefte\u00e5 AIK vs Malm\u00f6 Redhawks",
-    "market": "Game Over 4.5 Total Goals",
-    "prob": 80,
-    "hit_rate": null,
-    "category": "SHL Game Total",
-    "detail": "proj 6.72 goals combined",
-    "history": null
-  },
-  {
-    "match": "R\u00f6gle vs Timr\u00e5",
-    "subject": "R\u00f6gle",
-    "market": "R\u00f6gle Over 1.0 Goals",
-    "prob": 60,
+    "match": "IF Bj\u00f6rkl\u00f6ven vs V\u00e4xj\u00f6 Lakers",
+    "subject": "V\u00e4xj\u00f6 Lakers",
+    "market": "V\u00e4xj\u00f6 Lakers Over 3.0 Goals",
+    "prob": 67,
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
     "category": "SHL Team Total",
-    "detail": "proj 2.01 goals \u00b7 season 2.0/gm",
-    "history": "4/2/3/1/2",
-    "line": 1.0,
-    "is_home": true,
-    "league_id": 40781,
-    "home_name": "R\u00f6gle",
-    "away_name": "Timr\u00e5",
-    "match_date": "2026-10-01T17:00:00.000Z"
-  },
-  {
-    "match": "R\u00f6gle vs Timr\u00e5",
-    "subject": "Timr\u00e5",
-    "market": "Timr\u00e5 Over 1.0 Goals",
-    "prob": 43,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "SHL Team Total",
-    "detail": "proj 1.47 goals \u00b7 season 1.5/gm",
-    "history": "5/2/1/3/0",
-    "line": 1.0,
+    "detail": "proj 4.59 goals \u00b7 season 4.5/gm",
+    "history": "6/4/4/3/7",
+    "line": 3.0,
     "is_home": false,
     "league_id": 40781,
-    "home_name": "R\u00f6gle",
-    "away_name": "Timr\u00e5",
+    "home_name": "IF Bj\u00f6rkl\u00f6ven",
+    "away_name": "V\u00e4xj\u00f6 Lakers",
     "match_date": "2026-10-01T17:00:00.000Z"
   },
   {
-    "match": "R\u00f6gle vs Timr\u00e5",
-    "subject": "R\u00f6gle vs Timr\u00e5",
-    "market": "Game Over 2.5 Total Goals",
-    "prob": 68,
+    "match": "IF Bj\u00f6rkl\u00f6ven vs V\u00e4xj\u00f6 Lakers",
+    "subject": "IF Bj\u00f6rkl\u00f6ven vs V\u00e4xj\u00f6 Lakers",
+    "market": "Game Over 5.0 Total Goals",
+    "prob": 74,
     "hit_rate": null,
     "category": "SHL Game Total",
-    "detail": "proj 3.48 goals combined",
+    "detail": "proj 7.3 goals combined",
     "history": null
   },
   {
@@ -240,51 +96,51 @@
     "history": null
   },
   {
-    "match": "IF Bj\u00f6rkl\u00f6ven vs V\u00e4xj\u00f6 Lakers",
-    "subject": "IF Bj\u00f6rkl\u00f6ven",
-    "market": "IF Bj\u00f6rkl\u00f6ven Over 1.5 Goals",
-    "prob": 75,
+    "match": "R\u00f6gle vs Timr\u00e5",
+    "subject": "R\u00f6gle",
+    "market": "R\u00f6gle Over 1.0 Goals",
+    "prob": 60,
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
     "category": "SHL Team Total",
-    "detail": "proj 2.71 goals \u00b7 season 2.75/gm",
-    "history": "2/3/4/0/4",
-    "line": 1.5,
+    "detail": "proj 2.01 goals \u00b7 season 2.0/gm",
+    "history": "4/2/3/1/2",
+    "line": 1.0,
     "is_home": true,
     "league_id": 40781,
-    "home_name": "IF Bj\u00f6rkl\u00f6ven",
-    "away_name": "V\u00e4xj\u00f6 Lakers",
+    "home_name": "R\u00f6gle",
+    "away_name": "Timr\u00e5",
     "match_date": "2026-10-01T17:00:00.000Z"
   },
   {
-    "match": "IF Bj\u00f6rkl\u00f6ven vs V\u00e4xj\u00f6 Lakers",
-    "subject": "V\u00e4xj\u00f6 Lakers",
-    "market": "V\u00e4xj\u00f6 Lakers Over 3.0 Goals",
-    "prob": 67,
+    "match": "R\u00f6gle vs Timr\u00e5",
+    "subject": "Timr\u00e5",
+    "market": "Timr\u00e5 Over 1.0 Goals",
+    "prob": 43,
     "hit_rate": {
-      "hits": 4,
+      "hits": 3,
       "total": 5
     },
     "category": "SHL Team Total",
-    "detail": "proj 4.59 goals \u00b7 season 4.5/gm",
-    "history": "6/4/4/3/7",
-    "line": 3.0,
+    "detail": "proj 1.47 goals \u00b7 season 1.5/gm",
+    "history": "5/2/1/3/0",
+    "line": 1.0,
     "is_home": false,
     "league_id": 40781,
-    "home_name": "IF Bj\u00f6rkl\u00f6ven",
-    "away_name": "V\u00e4xj\u00f6 Lakers",
+    "home_name": "R\u00f6gle",
+    "away_name": "Timr\u00e5",
     "match_date": "2026-10-01T17:00:00.000Z"
   },
   {
-    "match": "IF Bj\u00f6rkl\u00f6ven vs V\u00e4xj\u00f6 Lakers",
-    "subject": "IF Bj\u00f6rkl\u00f6ven vs V\u00e4xj\u00f6 Lakers",
-    "market": "Game Over 5.0 Total Goals",
-    "prob": 74,
+    "match": "R\u00f6gle vs Timr\u00e5",
+    "subject": "R\u00f6gle vs Timr\u00e5",
+    "market": "Game Over 2.5 Total Goals",
+    "prob": 68,
     "hit_rate": null,
     "category": "SHL Game Total",
-    "detail": "proj 7.3 goals combined",
+    "detail": "proj 3.48 goals combined",
     "history": null
   },
   {
@@ -333,54 +189,6 @@
     "hit_rate": null,
     "category": "SHL Game Total",
     "detail": "proj 7.47 goals combined",
-    "history": null
-  },
-  {
-    "match": "Sparta Prague vs \u010cesk\u00e9 Bud\u011bjovice",
-    "subject": "Sparta Prague",
-    "market": "Sparta Prague Over 1.5 Goals",
-    "prob": 73,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 2.57 goals \u00b7 season 3.0/gm",
-    "history": "2/3/4/0/3",
-    "line": 1.5,
-    "is_home": true,
-    "league_id": 9294,
-    "home_name": "Sparta Prague",
-    "away_name": "\u010cesk\u00e9 Bud\u011bjovice",
-    "match_date": "2026-10-01T16:30:00.000Z"
-  },
-  {
-    "match": "Sparta Prague vs \u010cesk\u00e9 Bud\u011bjovice",
-    "subject": "\u010cesk\u00e9 Bud\u011bjovice",
-    "market": "\u010cesk\u00e9 Bud\u011bjovice Over 2.0 Goals",
-    "prob": 59,
-    "hit_rate": {
-      "hits": 2,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 3.06 goals \u00b7 season 4.67/gm",
-    "history": "2/3/1/5/2",
-    "line": 2.0,
-    "is_home": false,
-    "league_id": 9294,
-    "home_name": "Sparta Prague",
-    "away_name": "\u010cesk\u00e9 Bud\u011bjovice",
-    "match_date": "2026-10-01T16:30:00.000Z"
-  },
-  {
-    "match": "Sparta Prague vs \u010cesk\u00e9 Bud\u011bjovice",
-    "subject": "Sparta Prague vs \u010cesk\u00e9 Bud\u011bjovice",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 66,
-    "hit_rate": null,
-    "category": "Extraliga Game Total",
-    "detail": "proj 5.63 goals combined",
     "history": null
   },
   {
