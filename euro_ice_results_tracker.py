@@ -87,9 +87,7 @@ def log_todays_signals(legs, streak_entries, real_streak_entries, log):
     built. Game Total legs are skipped here: they combine two teams'
     SEPARATE scoring histories into one number, so there's no single
     real "side" to check the way there is for a team total -- same
-    reasoning that already excludes them from hit_rate elsewhere.
-    (Head to Head is a card-only info line in euro_ice.py, not a leg --
-    it never reaches this function at all.)"""
+    reasoning that already excludes them from hit_rate elsewhere."""
     existing_ids = {e["id"] for e in log}
     added = 0
 
