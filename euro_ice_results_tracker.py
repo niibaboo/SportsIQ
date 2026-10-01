@@ -88,11 +88,8 @@ def log_todays_signals(legs, streak_entries, real_streak_entries, log):
     SEPARATE scoring histories into one number, so there's no single
     real "side" to check the way there is for a team total -- same
     reasoning that already excludes them from hit_rate elsewhere.
-    Head to Head legs are skipped for the same underlying reason: the
-    favourite's probability leans on a 50/50 tie-split assumption
-    rather than a real modeled outcome, so grading it against the
-    actual final result would verify the assumption's luck, not the
-    model's accuracy."""
+    (Head to Head is a card-only info line in euro_ice.py, not a leg --
+    it never reaches this function at all.)"""
     existing_ids = {e["id"] for e in log}
     added = 0
 
