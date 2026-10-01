@@ -29,11 +29,30 @@ break. Both are shown, clearly labeled, same as everywhere else.
 Setup:
     pip3 install requests --break-system-packages
     python3 cards_corners_iq.py YOUR_API_KEY
+    python3 cards_corners_iq.py YOUR_API_KEY --date 2026-10-05   # shift the
+                                       # FIXTURE_WINDOW_DAYS window to start
+                                       # from this date instead of today --
+                                       # the key can also come from
+                                       # THESTATSAPI_KEY, so --date works
+                                       # whether or not a key is passed
+                                       # positionally (see __main__ below)
 
 Output:
     docs/cards-corners/index.html
     docs/cards-corners/cards_corners_predictions.csv
     docs/cards-corners/cards_corners.json
+
+DATE FILTERING -- two independent layers, added together, not to be
+confused with each other:
+  1. --date above controls what gets FETCHED from the API (shifts the
+     whole FIXTURE_WINDOW_DAYS window). Use this to build the page for a
+     future date instead of always "today".
+  2. The generated page itself ALSO has an on-page date dropdown (inline
+     in HTML_TEMPLATE, driven by applyDateFilter() in the JS below) that
+     lets you browse the matches already fetched into that page, one day
+     at a time, without re-running the script. Every leg/card/streak-row
+     carries its own date_key precisely so this client-side filter has
+     something to match against.
 """
 
 import os
@@ -42,7 +61,7 @@ import time
 import math
 import csv
 import json
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, date, timedelta, timezone
 import requests
 
 BASE = "https://api.thestatsapi.com/api"
@@ -143,9 +162,14 @@ def find_competition(name, key):
     return data["data"][0] if data.get("data") else None
 
 
-def get_upcoming_matches(competition_id, season_id, key):
-    date_from = datetime.now(timezone.utc).date().isoformat()
-    date_to = (datetime.now(timezone.utc).date() + timedelta(days=FIXTURE_WINDOW_DAYS)).isoformat()
+def get_upcoming_matches(competition_id, season_id, key, start_date=None):
+    """start_date (a date object) shifts the whole FIXTURE_WINDOW_DAYS
+    window to begin there instead of today -- see the --date CLI flag in
+    __main__. Defaults to today, same behaviour as before this param
+    existed."""
+    start_date = start_date or datetime.now(timezone.utc).date()
+    date_from = start_date.isoformat()
+    date_to = (start_date + timedelta(days=FIXTURE_WINDOW_DAYS)).isoformat()
     data = _get("/football/matches", key, params={
         "competition_id": competition_id, "season_id": season_id,
         "status": "scheduled", "date_from": date_from, "date_to": date_to,
@@ -387,7 +411,7 @@ def build_real_streak_entries(team_rows, threshold, min_length, label, unit):
     return entries
 
 
-def build_predictions(key):
+def build_predictions(key, start_date=None):
     predictions = []
     for name in LEAGUE_SEARCH_NAMES:
         print(f"Looking up competition: {name}")
@@ -404,7 +428,7 @@ def build_predictions(key):
             print(f"  [!] no current season for {name} — skipping")
             continue
 
-        matches = get_upcoming_matches(comp_id, season_id, key)
+        matches = get_upcoming_matches(comp_id, season_id, key, start_date)
         print(f"  {len(matches)} upcoming matches in window")
 
         for m in matches:
@@ -451,6 +475,7 @@ def build_legs(predictions):
                 "hit_rate": hit_rate(proj[list_key], line),
                 "detail": f"{p['league']} · proj {proj['lambda']} corners",
                 "history": format_history(proj[list_key]),
+                "date_key": p["date_key"],
             })
         for side, team_name, proj, list_key in (
             ("home", p["home_team"], p["home_cards"], "yellow_cards_list"),
@@ -467,6 +492,7 @@ def build_legs(predictions):
                 "hit_rate": hit_rate(proj[list_key], line),
                 "detail": f"{p['league']} · proj {proj['lambda']} yellow cards",
                 "history": format_history(proj[list_key]),
+                "date_key": p["date_key"],
             })
     return legs
 
@@ -483,7 +509,8 @@ def _team_rows(predictions, side_key, form_key, stat_avg_key, stat_list_key):
             continue
         rows.append({
             "team": team_name, "match": match_label, "league": p["league"],
-            "date": p["date"], "n_games": form["n_games"], "avg": avg, "list": lst,
+            "date": p["date"], "date_key": p["date_key"],
+            "n_games": form["n_games"], "avg": avg, "list": lst,
         })
     return rows
 
@@ -528,22 +555,24 @@ BUILDER_TEMPLATE = """<div class="builderPanel">
   <div id="builderResult" class="builderResult">
     Untick a market you don't want considered, set a target odds and leg cap, then tap Build.
     Caps at 2 legs per team to avoid stacking a team's own Corners and Cards legs from the same match.
+    Uses whichever date is selected above (or every fetched date, if "All dates" is selected).
   </div>
 </div>"""
 
-STREAK_ROW = """<div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
+STREAK_ROW = """<div class="dateFilterable" data-date="{date_key}" style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #3a2a20">
   <div><b>{team}</b><br><span style="color:#998">{match} · {league}</span></div>
   <div style="text-align:right"><span style="color:#7dd3a8;font-weight:bold">{value}</span><br><span style="color:#998">{sub}</span></div>
 </div>"""
 
-STREAK_PANEL = """<div style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
+STREAK_PANEL = """<div class="streakPanel" style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
   <div style="font-size:14px;font-weight:bold;margin-bottom:6px">{icon} {title}</div>
   <div style="font-size:11px;color:#998;margin-bottom:10px">{note}</div>
-  {rows}
+  <div class="streakRows">{rows}</div>
+  <p class="emptyForDate" style="color:#998;font-size:11px;margin:6px 0 0;display:none">No entries for the selected date.</p>
 </div>"""
 
-MATCH_CARD = """<div style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
-  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">{league}</div>
+MATCH_CARD = """<div class="dateFilterable" data-date="{date_key}" style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
+  <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">{league} · {date_label}</div>
   <h3 style="margin:2px 0 10px 0;font-size:16px">{away} @ {home}</h3>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
     <div style="background:#0f1a12;border-radius:8px;padding:10px">
@@ -589,17 +618,30 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="UTF-8">
   .builderResult{{font-size:12px; color:var(--sub);}}
   .legRow{{display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid var(--border);}}
   .footnote{{font-size:11px; color:var(--sub); text-align:center; margin-top:20px; line-height:1.6;}}
+  .dateFilterBar{{display:flex; align-items:center; gap:8px; margin-bottom:14px;}}
+  .dateFilterBar label{{font-size:12px; color:var(--sub);}}
+  .dateFilterBar select{{background:var(--panel2); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:6px 10px; font-size:13px; flex:1;}}
+  .emptyForDate{{color:var(--sub); font-size:11px; margin:6px 0 0; display:none;}}
 </style></head>
 <body>
   <h1>🚩 Cards &amp; Corners IQ</h1>
   <div class="sub">Per-team Corners &amp; Yellow Cards · generated {generated}</div>
+
+  <div class="dateFilterBar">
+    <label for="dateFilter">📅 Date:</label>
+    <select id="dateFilter" onchange="applyDateFilter()">
+      <option value="all">All dates ({n_dates} day{plural})</option>
+      {date_options}
+    </select>
+  </div>
 
   {builder}
   {corners_hot_form}
   {corners_real_streak}
   {cards_hot_form}
   {cards_real_streak}
-  {cards}
+  <div id="matchCardsContainer">{cards}</div>
+  <p id="noCardsForDate" class="emptyForDate">No matches for the selected date.</p>
 
   <div class="footnote">
     Corners: each team's own recency-weighted+season corner-winning rate, adjusted by the
@@ -608,7 +650,9 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="UTF-8">
     opponent adjustment. Hot Form = average over the last {recent_games} games (can mask a bad most
     recent game). Real Streak = genuinely CONSECUTIVE recent games clearing the threshold, walking
     backward from the most recent game. Lines are set automatically below the model's projection for
-    a safety margin.
+    a safety margin. The date filter above only changes what's shown on THIS page (already-fetched
+    matches); it doesn't re-query the API — use --date when running the script to fetch a different
+    window of fixtures.
   </div>
 
 <script>
@@ -625,6 +669,37 @@ function initToggles() {{
   container.innerHTML = cats.map(c => `
     <label><input type="checkbox" class="catToggle" value="${{c}}" checked> ${{c}}</label>
   `).join('');
+}}
+function applyDateFilter() {{
+  const selected = document.getElementById('dateFilter').value;
+
+  // Show/hide every match card and streak row that carries a data-date --
+  // "all" always matches, otherwise it's an exact date_key string compare.
+  document.querySelectorAll('.dateFilterable').forEach(el => {{
+    el.style.display = (selected === 'all' || el.dataset.date === selected) ? '' : 'none';
+  }});
+
+  // Per-panel "no entries for this date" message, based on whether that
+  // panel still has any visible rows after the filter above ran.
+  document.querySelectorAll('.streakPanel').forEach(panel => {{
+    const rows = panel.querySelectorAll('.streakRows .dateFilterable');
+    const anyVisible = [...rows].some(r => r.style.display !== 'none');
+    const empty = panel.querySelector('.emptyForDate');
+    if (empty) empty.style.display = (rows.length && !anyVisible) ? '' : 'none';
+  }});
+
+  // Same idea for the match cards container.
+  const cardsContainer = document.getElementById('matchCardsContainer');
+  const cardRows = cardsContainer ? cardsContainer.querySelectorAll('.dateFilterable') : [];
+  const anyCardVisible = [...cardRows].some(r => r.style.display !== 'none');
+  const noCards = document.getElementById('noCardsForDate');
+  if (noCards) noCards.style.display = (cardRows.length && !anyCardVisible) ? '' : 'none';
+
+  // Deliberately NOT auto-rebuilding the Safest Bet Builder here -- it
+  // keeps its original "untick what you don't want, then tap Build"
+  // interaction model. buildSafest() already reads the current date
+  // filter itself (see above), so pressing Build after changing the date
+  // picks it up; this function only ever touches card/streak visibility.
 }}
 function shuffleArr(arr) {{
   for (let i = arr.length - 1; i > 0; i--) {{
@@ -648,9 +723,12 @@ function buildSafest() {{
   const target = parseFloat(document.getElementById('targetOdds').value) || 5.0;
   const maxLegs = parseInt(document.getElementById('maxLegs').value) || 8;
   const activeCats = [...document.querySelectorAll('.catToggle:checked')].map(el => el.value);
+  const dateFilterEl = document.getElementById('dateFilter');
+  const selectedDate = dateFilterEl ? dateFilterEl.value : 'all';
 
   const byCategory = {{}};
-  LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category)).forEach(l => {{
+  LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category)
+                 && (selectedDate === 'all' || l.date_key === selectedDate)).forEach(l => {{
     (byCategory[l.category] = byCategory[l.category] || []).push(l);
   }});
   const categories = Object.keys(byCategory);
@@ -719,9 +797,21 @@ def _streak_panel(entries, icon, title, note, value_fmt, sub_fmt):
         return ""
     rows = "".join(STREAK_ROW.format(
         team=e["team"], match=e["match"], league=e["league"],
-        value=value_fmt(e), sub=sub_fmt(e),
+        value=value_fmt(e), sub=sub_fmt(e), date_key=e["date_key"],
     ) for e in entries)
     return STREAK_PANEL.format(icon=icon, title=title, note=note, rows=rows)
+
+
+def _friendly_date(date_key):
+    """'2026-10-05' -> 'Thu 05 Oct', for the date dropdown's option labels
+    and each match card's date line. Falls back to the raw key if it
+    doesn't parse (shouldn't happen -- date_key always comes from an API
+    utc_date string -- but this is just a display label, not worth a hard
+    failure over)."""
+    try:
+        return datetime.strptime(date_key, "%Y-%m-%d").strftime("%a %d %b")
+    except ValueError:
+        return date_key
 
 
 def make_html(predictions):
@@ -753,6 +843,7 @@ def make_html(predictions):
 
     cards_html = "".join(MATCH_CARD.format(
         league=p["league"], home=p["home_team"], away=p["away_team"],
+        date_key=p["date_key"], date_label=_friendly_date(p["date_key"]),
         home_corners_lam=p["home_corners"]["lambda"], away_corners_lam=p["away_corners"]["lambda"],
         home_corners_hist=format_history(p["home_corners"]["corners_list"]) or "—",
         away_corners_hist=format_history(p["away_corners"]["corners_list"]) or "—",
@@ -763,9 +854,21 @@ def make_html(predictions):
     if not cards_html:
         cards_html = '<p style="text-align:center;color:var(--sub)">No usable matches today.</p>'
 
+    # Date dropdown options -- every distinct date_key across the fetched
+    # window, sorted chronologically. This is a client-side filter over
+    # data already in the page (see applyDateFilter() in the JS below);
+    # it has nothing to do with --date, which controls what gets FETCHED
+    # in the first place (see module docstring's DATE FILTERING section).
+    date_keys = sorted({p["date_key"] for p in predictions})
+    date_options = "".join(
+        f'<option value="{dk}">{_friendly_date(dk)}</option>' for dk in date_keys
+    )
+
     return HTML_TEMPLATE.format(
         generated=datetime.now().strftime("%Y-%m-%d %H:%M"),
         recent_games=RECENT_GAMES,
+        n_dates=len(date_keys), plural="" if len(date_keys) == 1 else "s",
+        date_options=date_options,
         builder=builder, corners_hot_form=corners_hot_form, corners_real_streak=corners_real_streak,
         cards_hot_form=cards_hot_form, cards_real_streak=cards_real_streak, cards=cards_html,
         legs_json=json.dumps(legs),
@@ -792,12 +895,32 @@ def write_csv(predictions, path):
 
 
 if __name__ == "__main__":
-    api_key = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("THESTATSAPI_KEY")
+    # --date is parsed as a named flag (not a positional) specifically so
+    # it works the same whether the API key comes from argv or from
+    # THESTATSAPI_KEY -- a positional date would be ambiguous with the
+    # positional key in the latter case.
+    args = sys.argv[1:]
+    start_date = None
+    if "--date" in args:
+        i = args.index("--date")
+        try:
+            date_str = args[i + 1]
+        except IndexError:
+            print("--date needs a value, e.g. --date 2026-10-05")
+            raise SystemExit(1)
+        try:
+            start_date = date.fromisoformat(date_str)
+        except ValueError:
+            print(f"--date value {date_str!r} isn't a valid YYYY-MM-DD date.")
+            raise SystemExit(1)
+        del args[i:i + 2]
+
+    api_key = args[0] if args else os.environ.get("THESTATSAPI_KEY")
     if not api_key:
         print("Pass your TheStatsAPI key as an argument, or set THESTATSAPI_KEY.")
         raise SystemExit(1)
 
-    predictions = build_predictions(api_key)
+    predictions = build_predictions(api_key, start_date)
     os.makedirs("docs/cards-corners", exist_ok=True)
     with open("docs/cards-corners/index.html", "w") as f:
         f.write(make_html(predictions))
