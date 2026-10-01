@@ -66,6 +66,21 @@ TARGET_LEAGUES = [
     ("National League", "Switzerland"),  # bet365 shows "Switzerland NLA";
                                           # Highlightly's own name TBD - this
                                           # run is what confirms it
+    # CANDIDATES (2026-10-01) -- not yet in euro_ice.py's LEAGUE_TARGETS.
+    # Picked on the same criteria as the four above: top-flight national
+    # league, realistically covered by bet365 (so a pick is actually
+    # placeable), and not a name shared across countries the way
+    # "Extraliga" turned out to be for Czech/Belarus/Slovakia -- so
+    # Slovakia's own entry below is exactly the kind of result this
+    # --confirm mode exists to catch before it gets hardcoded wrong.
+    ("Liiga", "Finland"),
+    ("Tipos Extraliga", "Slovakia"),   # also try plain "Extraliga" here if
+                                        # this exact name returns nothing --
+                                        # same ambiguity risk as Czech/Belarus
+    ("ICE Hockey League", "Austria"),  # cross-border league (also fields
+                                        # some Italian/Slovenian/Hungarian
+                                        # clubs) -- confirm Highlightly's
+                                        # exact name, this is a guess
 ]
 
 if len(sys.argv) > 1 and sys.argv[1] == "--confirm":
