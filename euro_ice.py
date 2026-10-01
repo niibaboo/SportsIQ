@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """
-Euro Ice — Team & Game Totals (SHL / Czech Extraliga / DEL)
+Euro Ice — Team & Game Totals (7 European leagues)
 --------------------------------------------------------------
-Team-level goals over/under predictor for SHL (Sweden), Czech Extraliga,
-and DEL (Germany), built on Highlightly's Hockey API free tier:
-  https://highlightly.net/hockey-api/documentation/
+Team-level goals over/under predictor across seven top-flight European
+leagues -- Sweden (SHL), Czech Republic (Extraliga), Germany (DEL),
+Switzerland (National League), Finland (Liiga), Slovakia (Extraliga)
+and Austria (ICE Hockey League) -- built on Highlightly's Hockey API
+free tier: https://highlightly.net/hockey-api/documentation/
+See LEAGUE_TARGETS below for the full, confirmed list with IDs.
 
 SCOPE NOTE — read before assuming this matches Blue Line's coverage:
 Highlightly's API has NO player-level endpoints anywhere (confirmed by
@@ -36,14 +39,14 @@ flagged inline where it matters, but the two biggest ones:
      name (Belarus, Czech Republic, Slovakia); an earlier version of
      this script matched Belarus by mistake since name-only lookup has
      no way to disambiguate identically-named leagues in different
-     countries. All four current leagues (SHL, Czech Extraliga, DEL,
-     Switzerland National League) have confirmed IDs now — see
-     LEAGUE_TARGETS.
+     countries. The original four leagues (SHL, Czech Extraliga, DEL,
+     Switzerland National League) got confirmed IDs here first; see the
+     note below LEAGUE_TARGETS for the 2026-10-01 extension to seven.
 
 Usage:
     pip3 install requests --break-system-packages
     export HIGHLIGHTLY_KEY=your_key_here
-    python3 euro_ice.py               # today's fixtures across all 3 leagues
+    python3 euro_ice.py               # today's fixtures across all 7 leagues
     python3 euro_ice.py 2026-10-05    # a specific date
     python3 euro_ice.py --auto        # non-interactive, for GitHub Actions —
                                        # same as running with no date arg,
@@ -70,17 +73,22 @@ API_KEY = os.environ.get("HIGHLIGHTLY_KEY")
 # UNCONFIRMED exact names — see module docstring point 3. Watch the
 # first run's "couldn't find league" warnings closely.
 # CONFIRMED via debug_leagues.py --confirm against live Highlightly data
-# (2026-09-18). "Extraliga" alone is genuinely ambiguous — Highlightly has
-# THREE leagues by that exact name (Belarus id=1635, Czech Republic
-# id=9294, Slovakia id=78225); the old name-only lookup silently picked
-# whichever came first and matched Belarus. IDs are hardcoded here
-# instead of resolved by name+country at runtime, which removes that
-# ambiguity risk entirely rather than just filtering it correctly.
+# (2026-09-18, extended 2026-10-01). "Extraliga" alone is genuinely
+# ambiguous — Highlightly has THREE leagues by that exact name (Belarus
+# id=1635, Czech Republic id=9294, Slovakia id=78225); the old name-only
+# lookup silently picked whichever came first and matched Belarus. IDs
+# are hardcoded here instead of resolved by name+country at runtime,
+# which removes that ambiguity risk entirely rather than just filtering
+# it correctly. Slovakia's entry below is exactly that same "Extraliga"
+# name colliding again -- confirmed by ID+country, not by name alone.
 LEAGUE_TARGETS = [
     {"id": 40781, "name": "SHL", "country": "Sweden"},
     {"id": 9294, "name": "Extraliga", "country": "Czech Republic"},
     {"id": 16953, "name": "DEL", "country": "Germany"},
     {"id": 44185, "name": "National League", "country": "Switzerland"},
+    {"id": 14400, "name": "Liiga", "country": "Finland"},
+    {"id": 78225, "name": "Extraliga", "country": "Slovakia"},
+    {"id": 60354, "name": "ICE Hockey League", "country": "Austria"},
 ]
 
 RECENT_WEIGHT = 0.65
@@ -224,66 +232,6 @@ def get_last_five(team_id):
         parsed.append({"date": g.get("date") or "", "gf": gf})
     parsed.sort(key=lambda x: x["date"])
     return parsed
-
-
-def get_head_to_head(team_id_one, team_id_two):
-    """Last meetings between these two SPECIFIC teams, from Highlightly's
-    /head-2-head endpoint (docs say it returns up to the last 10). Used
-    as INFORMATIONAL CONTEXT next to Real Streak entries -- NOT blended
-    into the goal projection lambda. 10 games is a small, potentially
-    stale sample (rosters turn over season to season), so this answers
-    "does this specific matchup have a history worth knowing about"
-    rather than feeding a probability."""
-    try:
-        data = _get("/head-2-head", {"teamIdOne": team_id_one, "teamIdTwo": team_id_two})
-    except Exception as e:
-        print(f"    [!] H2H lookup failed for {team_id_one} vs {team_id_two}: {e}")
-        return []
-
-    # Response wrapping is inconsistent across this API's endpoints
-    # (/matches wraps in {"data": [...]}, /last-five-games doesn't) --
-    # handle both rather than assume one shape.
-    games = data if isinstance(data, list) else data.get("data", [])
-
-    parsed = []
-    for g in games:
-        score = parse_score(g.get("state", {}).get("score", {}).get("current"))
-        if not score:
-            continue
-        home_goals, away_goals = score
-        home_id = g.get("homeTeam", {}).get("id")
-        one_goals = home_goals if home_id == team_id_one else away_goals
-        two_goals = away_goals if home_id == team_id_one else home_goals
-        parsed.append({
-            "date": g.get("date") or "",
-            "one_goals": one_goals, "two_goals": two_goals,
-        })
-    parsed.sort(key=lambda x: x["date"], reverse=True)  # most recent meeting first
-    return parsed
-
-
-def summarize_h2h(team_id, opp_id, max_games=5):
-    """Human-readable H2H summary for team_id specifically, from its
-    most recent meetings with opp_id -- e.g. record 3-1, avg 2.4 goals
-    for this team in their last 5 meetings. Returns None when there's no
-    meeting history at all (newly promoted opponent, different league
-    tier previously, API simply has nothing for this pairing, etc.) --
-    callers should treat None as "no H2H data available", not "0 games"."""
-    games = get_head_to_head(team_id, opp_id)[:max_games]
-    if not games:
-        return None
-
-    team_goals = [g["one_goals"] for g in games]
-    wins = sum(1 for g in games if g["one_goals"] > g["two_goals"])
-    losses = sum(1 for g in games if g["one_goals"] < g["two_goals"])
-    ties = len(games) - wins - losses
-
-    return {
-        "games_played": len(games),
-        "record": f"{wins}-{losses}-{ties}" if ties else f"{wins}-{losses}",
-        "avg_goals_for": round(sum(team_goals) / len(team_goals), 2),
-        "goals_str": "/".join(str(g) for g in reversed(team_goals)),  # oldest->newest, matching L5 convention
-    }
 
 
 def get_team_season_stats(team_id, from_date):
@@ -501,23 +449,12 @@ def build_legs_and_cards(target_date):
 
                 streak_len = _current_goal_streak(l5)
                 if streak_len >= REAL_STREAK_MIN_LENGTH:
-                    # Informational only (see summarize_h2h docstring) --
-                    # only fetched for entries that already qualify for
-                    # Real Streak, to keep the extra API call volume
-                    # proportional rather than adding one per fixture.
-                    h2h = None
-                    try:
-                        h2h = summarize_h2h(team["id"], opp["id"])
-                    except Exception as e:
-                        print(f"    [!] H2H summary failed for {team['name']} vs {opp['name']}: {e}")
-
                     real_streak_entries.append({
                         "team": team["name"], "opponent": opp["name"], "is_home": is_home,
                         "league": league["name"], "league_id": league["id"], "date": m.get("date", ""),
                         "streak_len": streak_len, "streak_games": l5[-streak_len:],  # already old->new
                         "full_sample": streak_len >= len(l5),
                         "home_name": home["name"], "away_name": away["name"],
-                        "h2h": h2h,
                     })
 
             if home_proj and away_proj:
@@ -586,12 +523,8 @@ REAL_STREAK_ENTRY_TEMPLATE = """<div style="background:var(--panel2);border-radi
     <div style="font-size:10px;color:var(--sub)">{league}</div>
     <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{team} <span style="color:var(--sub);font-weight:normal;font-size:11px">({home_away})</span> vs {opponent}</div>
     <div style="font-size:10px;color:var(--sub)">{streak_len} straight scoring {threshold}+ (old→new): {streak_str}</div>
-    {h2h_line}
   </div>
 </div>"""
-
-REAL_STREAK_H2H_LINE = """<div style="font-size:10px;color:#7ec8ff;margin-top:3px">H2H vs {opponent} (last {games_played}): {record} · avg {avg_goals_for} goals ({goals_str})</div>"""
-REAL_STREAK_H2H_NONE = """<div style="font-size:10px;color:var(--sub);font-style:italic;margin-top:3px">No H2H history found for this matchup.</div>"""
 
 STREAK_PANEL_TEMPLATE = """<div class="builderPanel">
   <div class="builderTitle">🔥 Hot Form &amp; Streaks</div>
@@ -619,19 +552,12 @@ def render_streak_panel(hot_form_entries, real_streak_entries):
         )
         for e in hot_form_entries
     ) or '<p style="color:var(--sub);font-size:11px">None currently.</p>'
-    def _h2h_line(e):
-        h2h = e.get("h2h")
-        if not h2h:
-            return REAL_STREAK_H2H_NONE
-        return REAL_STREAK_H2H_LINE.format(opponent=e["opponent"], **h2h)
-
     streak_html = "".join(
         REAL_STREAK_ENTRY_TEMPLATE.format(
             streak_len=e["streak_len"], plus="+" if e["full_sample"] else "",
             league=e["league"], team=e["team"], home_away="Home" if e["is_home"] else "Away",
             opponent=e["opponent"], threshold=REAL_STREAK_THRESHOLD,
             streak_str="/".join(str(v) for v in e["streak_games"]),
-            h2h_line=_h2h_line(e),
         )
         for e in real_streak_entries
     ) or '<p style="color:var(--sub);font-size:11px">None currently.</p>'
@@ -666,7 +592,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </style></head>
 <body>
   <h1>🧊 Euro Ice — Team &amp; Game Totals</h1>
-  <div class="sub">SHL · Czech Extraliga · DEL — {date} · generated {generated}</div>
+  <div class="sub">SHL · Czech Extraliga · DEL · Swiss NL · Liiga · Slovak Extraliga · ICE Hockey League — {date} · generated {generated}</div>
   <p style="text-align:center;margin:4px 0 0;font-size:12px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none">📊 Results Tracker</a></p>
 
   <div id="builderPanel" class="builderPanel">
@@ -697,12 +623,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     season-to-date average, then prices with a Poisson distribution. Lines are set
     automatically below the model's projection for a safety margin. Game Total combines two
     teams' own separate scoring histories, not real head-to-head data — treat it with more
-    caution than the single-team legs. Real Streak entries show real head-to-head history
-    against that specific opponent (last 5 meetings) as informational context — it is NOT
-    blended into any projection or lambda, since 10 games is a small, potentially stale sample.
-    Win probability / correct score are regulation-time only (no OT/SO modeling from
-    goals-only data). This tool covers goals only; no player props are available from
-    Highlightly's free tier.
+    caution than the single-team legs. Win probability / correct score are regulation-time
+    only (no OT/SO modeling from goals-only data). This tool covers goals only; no player
+    props are available from Highlightly's free tier.
   </div>
 
 <script>
