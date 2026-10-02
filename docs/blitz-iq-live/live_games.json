@@ -1,5 +1,38 @@
 {
-  "generated": "2026-10-01T21:39:17.284214+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-10-02T01:04:58.542586+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_id": "401872964",
+      "home_id": "5",
+      "away_id": "23",
+      "home_team": "Cleveland Browns",
+      "away_team": "Pittsburgh Steelers",
+      "home_score": 7.0,
+      "away_score": 7.0,
+      "period": 2,
+      "display_clock": "12:14",
+      "status": "12:14 - 2nd",
+      "elapsed_minute": 17.8,
+      "minutes_remaining": 42.2,
+      "next_score": {
+        "home": 50,
+        "away": 50
+      },
+      "game_total_pace": {
+        "prob": 57,
+        "status": "On Pace: Over"
+      },
+      "model_signal": {
+        "label": "Game Total Over",
+        "prob": 57,
+        "qualifies": false
+      },
+      "pregame_projection": {
+        "exp_home": 20.1,
+        "exp_away": 20.5,
+        "exp_total": 40.7
+      }
+    }
+  ]
 }
