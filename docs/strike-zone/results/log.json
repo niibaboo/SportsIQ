@@ -11989,9 +11989,10 @@
     "game_date": "2026-10-01",
     "date_key": "2026-10-01",
     "logged_at": "2026-10-01T18:37:16.678035+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-10-02T18:06:53.877607+00:00"
   },
   {
     "id": "5fa8c71d883a2402",
@@ -12008,9 +12009,10 @@
     "game_date": "2026-10-01",
     "date_key": "2026-10-01",
     "logged_at": "2026-10-01T18:37:16.678051+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 5,
+    "verified_at": "2026-10-02T18:06:53.913670+00:00"
   },
   {
     "id": "f59c18c6ca95ed66",
@@ -12027,9 +12029,10 @@
     "game_date": "2026-10-01",
     "date_key": "2026-10-01",
     "logged_at": "2026-10-01T18:37:16.678057+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2,
+    "verified_at": "2026-10-02T18:06:53.946214+00:00"
   },
   {
     "id": "60c01146d9988e78",
@@ -12046,9 +12049,10 @@
     "game_date": "2026-10-01",
     "date_key": "2026-10-01",
     "logged_at": "2026-10-01T18:37:16.678064+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 10,
+    "verified_at": "2026-10-02T18:06:53.979151+00:00"
   },
   {
     "id": "fc5645e5d7716075",
@@ -12065,9 +12069,10 @@
     "game_date": "2026-10-01",
     "date_key": "2026-10-01",
     "logged_at": "2026-10-01T18:37:16.678069+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2,
+    "verified_at": "2026-10-02T18:06:54.071145+00:00"
   },
   {
     "id": "420537c2f9cd3465",
@@ -12084,9 +12089,10 @@
     "game_date": "2026-10-01",
     "date_key": "2026-10-01",
     "logged_at": "2026-10-01T18:37:16.678074+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 6,
+    "verified_at": "2026-10-02T18:06:54.103112+00:00"
   },
   {
     "id": "4ce5575cf90148a2",
@@ -12103,9 +12109,10 @@
     "game_date": "2026-10-01",
     "date_key": "2026-10-01",
     "logged_at": "2026-10-01T18:37:16.678079+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 6,
+    "verified_at": "2026-10-02T18:06:54.136337+00:00"
   },
   {
     "id": "b68c8fe6e7989cd2",
@@ -12122,9 +12129,10 @@
     "game_date": "2026-10-01",
     "date_key": "2026-10-01",
     "logged_at": "2026-10-01T18:37:16.678088+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 6,
+    "verified_at": "2026-10-02T18:06:54.167395+00:00"
   },
   {
     "id": "355355838fa84237",
@@ -12141,8 +12149,9 @@
     "game_date": "2026-10-01",
     "date_key": "2026-10-01",
     "logged_at": "2026-10-01T18:37:16.678094+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 6,
+    "verified_at": "2026-10-02T18:06:54.201020+00:00"
   }
 ]

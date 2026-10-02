@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Strike Zone -- Slate for 2026-10-01</title>
+<title>Strike Zone -- Slate for 2026-10-02</title>
 <style>
   :root{--bg:#0b0f14; --panel:#121820; --panel2:#161d27; --border:#233040; --text:#e8edf2; --sub:#8b98a8; --yellow:#facc15; --green:#22c55e;}
   body{margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; padding:16px; max-width:640px; margin:0 auto;}
@@ -49,195 +49,18 @@
 <div class="topBar">
   <div>
     <h1>Strike Zone -- Daily Slate</h1>
-    <div class="sub">2026-10-01 · generated 2026-10-01 18:37</div>
+    <div class="sub">2026-10-02 · generated 2026-10-02 18:06</div>
     <div style="margin-top:4px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none;font-size:12px">📊 Results Tracker</a></div>
   </div>
   <button class="downloadBtn" onclick="exportCSV()">Download CSV</button>
 </div>
-<div class="builderPanel">
-  <div class="builderTitle">Safest Bet Builder</div>
-  <div class="builderToggles" id="builderToggles"></div>
-  <div class="builderControls">
-    <label>Target odds:</label>
-    <input type="number" step="0.1" min="1.1" value="5.0" id="szTargetOdds">
-    <label>Max legs:</label>
-    <input type="number" step="1" min="2" value="8" id="szMaxLegs">
-    <button class="builderBtn" onclick="buildSafestSZ()">Build</button>
-    <button class="builderBtnAlt" onclick="buildSafestSZ()">Shuffle</button>
-  </div>
-  <div class="builderResult" id="builderResult">
-    Untick any market you don't want considered, set a target odds and leg cap, then tap
-    Build. Rotates through ticked categories, groups near-tied legs and shuffles within
-    each group so it draws from more of today's slate rather than the same few
-    pitchers/teams, and caps at 2 legs per pitcher/team to avoid stacking correlated
-    lines (e.g. Strikeouts and Outs Recorded for the same starter). Tap Shuffle for a
-    fresh pick without changing your settings.
-  </div>
-</div>
-<div class="builderPanel">
-  <div class="builderTitle">🔥 Hot Form &amp; Streaks</div>
-  <div style="font-size:11px;color:var(--sub);margin-bottom:10px">
-    Raw recent-FORM screens, not probabilistic predictions like the rest of the slate.
-    Form (average) and Real Streak (consecutive, no break) measure genuinely different
-    things -- a team/pitcher can appear in one, both, or neither. Cross-check against
-    that team's/pitcher's own prop line above before treating either alone as a signal.
-  </div>
-  
-  
-  <div style="font-size:12px;font-weight:700;color:var(--text);margin:10px 0 4px">📊 Hit Form <span style="color:var(--sub);font-weight:normal;font-size:10px">(avg ≥7.0/gm over last 5)</span></div><div style="background:var(--panel2);border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
-  <div style="min-width:56px;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 4px;flex-shrink:0">
-    <div style="font-size:9px;color:var(--sub)">L5 AVG</div>
-    <div style="font-size:17px;font-weight:bold;color:var(--green)">7.0</div>
-  </div>
-  <div style="flex:1;min-width:0">
-    <div style="font-size:10px;color:var(--sub)">Philadelphia Phillies @ Atlanta Braves · 1:00 AM BST</div>
-    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Atlanta Braves (vs Philadelphia Phillies)</div>
-    <div style="font-size:10px;color:var(--sub)">last 5 (old→new): 7·12·1·10·5</div>
-  </div>
-</div>
-  
-  
-  
-</div>
-<div class="gameGroup">
-  <div class="gameHead"><span>Philadelphia Phillies @ Atlanta Braves</span><span>1:00 AM BST</span></div>
-  <div class="pitcherRow" data-runs_lambda="1.68">
-  <div class="pTop">
-    <div>
-      <div class="pName">Philadelphia Phillies -- Total Runs</div>
-      <div class="pMeta">vs Atlanta Braves · L5 runs: 1·1·0·1·7 · season 4.4/gm · pitching-adj x0.77 (xFIP-blended)</div>
-    </div>
-    <div class="pProj">
-      <div class="pProjNum">1.68</div>
-      <div class="pProjSub">1-3 range</div>
-    </div>
-  </div>
-  <div class="propLabel">Team Total Runs (full game)</div>
-  <div class="edgeRow">
-    <input type="number" step="0.5" class="lineInput" placeholder="Line">
-    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
-    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
-    <button class="edgeBtn" data-kind="runs_lambda" onclick="calcEdge(this)">Edge</button>
-    <div class="edgeOut"></div>
-  </div>
-</div><div class="pitcherRow" data-hits_lambda="3.72">
-  <div class="pTop">
-    <div>
-      <div class="pName">Philadelphia Phillies -- Total Hits</div>
-      <div class="pMeta">vs Atlanta Braves · L5 hits: 6·4·4·7·12 · season 8.03/gm · pitching-adj x0.52</div>
-    </div>
-    <div class="pProj">
-      <div class="pProjNum">3.72</div>
-      <div class="pProjSub">1-6 range</div>
-    </div>
-  </div>
-  <div class="propLabel">Team Total Hits (full game)</div>
-  <div class="edgeRow">
-    <input type="number" step="0.5" class="lineInput" placeholder="Line">
-    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
-    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
-    <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
-    <div class="edgeOut"></div>
-  </div>
-</div><div class="pitcherRow" data-runs_lambda="3.69">
-  <div class="pTop">
-    <div>
-      <div class="pName">Atlanta Braves -- Total Runs</div>
-      <div class="pMeta">vs Philadelphia Phillies · L5 runs: 3·6·0·8·3 · season 4.58/gm · pitching-adj x1.03 (xFIP-blended)</div>
-    </div>
-    <div class="pProj">
-      <div class="pProjNum">3.69</div>
-      <div class="pProjSub">1-6 range</div>
-    </div>
-  </div>
-  <div class="propLabel">Team Total Runs (full game)</div>
-  <div class="edgeRow">
-    <input type="number" step="0.5" class="lineInput" placeholder="Line">
-    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
-    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
-    <button class="edgeBtn" data-kind="runs_lambda" onclick="calcEdge(this)">Edge</button>
-    <div class="edgeOut"></div>
-  </div>
-</div><div class="pitcherRow" data-hits_lambda="7.4">
-  <div class="pTop">
-    <div>
-      <div class="pName">Atlanta Braves -- Total Hits</div>
-      <div class="pMeta">vs Philadelphia Phillies · L5 hits: 7·12·1·10·5 · season 8.32/gm · pitching-adj x1.04</div>
-    </div>
-    <div class="pProj">
-      <div class="pProjNum">7.4</div>
-      <div class="pProjSub">4-11 range</div>
-    </div>
-  </div>
-  <div class="propLabel">Team Total Hits (full game)</div>
-  <div class="edgeRow">
-    <input type="number" step="0.5" class="lineInput" placeholder="Line">
-    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
-    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
-    <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
-    <div class="edgeOut"></div>
-  </div>
-</div>
-  <div class="pitcherRow" data-lambda="4.61" data-outs_lambda="16.39">
-  <div class="pTop">
-    <div>
-      <div class="pName">Aaron Nola</div>
-      <div class="pMeta">Philadelphia Phillies vs Atlanta Braves · L5 Ks: 5·3·4·8·0 (-23% vs season) · BB/9 3.03 · FIP 4.87 · xFIP 3.86</div>
-    </div>
-    <div class="pProj">
-      <div class="pProjNum">4.61</div>
-      <div class="pProjSub">2-7 range · 5.5 IP</div>
-    </div>
-  </div>
-  <div class="propLabel">Strikeouts</div>
-  <div class="edgeRow">
-    <input type="number" step="0.5" class="lineInput" placeholder="Line">
-    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
-    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
-    <button class="edgeBtn" data-kind="lambda" onclick="calcEdge(this)">Edge</button>
-    <div class="edgeOut"></div>
-  </div>
-  <div class="propLabel">Outs Recorded <span class="pProjSub">(proj 16.39 · 11-22 range)</span></div>
-  <div class="edgeRow">
-    <input type="number" step="0.5" class="lineInput" placeholder="Line">
-    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
-    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
-    <button class="edgeBtn" data-kind="outs_lambda" onclick="calcEdge(this)">Edge</button>
-    <div class="edgeOut"></div>
-  </div>
-</div><div class="pitcherRow" data-lambda="5.38" data-outs_lambda="27.41">
-  <div class="pTop">
-    <div>
-      <div class="pName">Ray Kerr</div>
-      <div class="pMeta">Atlanta Braves vs Philadelphia Phillies · L5 Ks: 0 (+0% vs season) · BB/9 0.98 · FIP 3.97 · xFIP 4.12</div>
-    </div>
-    <div class="pProj">
-      <div class="pProjNum">5.38</div>
-      <div class="pProjSub">3-8 range · 9.1 IP</div>
-    </div>
-  </div>
-  <div class="propLabel">Strikeouts</div>
-  <div class="edgeRow">
-    <input type="number" step="0.5" class="lineInput" placeholder="Line">
-    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
-    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
-    <button class="edgeBtn" data-kind="lambda" onclick="calcEdge(this)">Edge</button>
-    <div class="edgeOut"></div>
-  </div>
-  <div class="propLabel">Outs Recorded <span class="pProjSub">(proj 27.41 · 21-34 range)</span></div>
-  <div class="edgeRow">
-    <input type="number" step="0.5" class="lineInput" placeholder="Line">
-    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
-    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
-    <button class="edgeBtn" data-kind="outs_lambda" onclick="calcEdge(this)">Edge</button>
-    <div class="edgeOut"></div>
-  </div>
-</div>
-</div>
+
+
+
 <div class="footnote">Projections blend season K-rate/batter-faced with a recency-weighted last-5 rate (65% recent), adjust for opponent K% and BB/9-driven outing length, then use a Poisson distribution for the range. Team run projections now blend opposing-starter xFIP (peripheral-based, strips out defense/luck) with raw ERA. Enter a book's line/odds under any pitcher to compute a de-vigged edge -- that math runs entirely in your browser, no data leaves the page.</div>
 <script>
-const REPORT_DATE = "2026-10-01";
-const LEGS = [{"match": "Philadelphia Phillies @ Atlanta Braves", "subject": "Aaron Nola", "market": "Aaron Nola Over 3.0 Strikeouts", "prob": 68, "category": "Strikeouts", "hit_rate": {"hits": 3, "total": 5}, "detail": "Philadelphia Phillies vs Atlanta Braves \u00b7 proj 4.61 K", "history": "5/3/4/8/0", "game_pk": 849844, "game_date": "2026-10-01", "pitcher_id": 605400, "line": 3.0}, {"match": "Philadelphia Phillies @ Atlanta Braves", "subject": "Aaron Nola", "market": "Aaron Nola Over 11.5 Outs Recorded", "prob": 89, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Philadelphia Phillies vs Atlanta Braves \u00b7 proj 5.5 IP", "history": "21/19/21/18/3", "game_pk": 849844, "game_date": "2026-10-01", "pitcher_id": 605400, "line": 11.5}, {"match": "Philadelphia Phillies @ Atlanta Braves", "subject": "Ray Kerr", "market": "Ray Kerr Over 3.5 Strikeouts", "prob": 78, "category": "Strikeouts", "hit_rate": {"hits": 0, "total": 1}, "detail": "Atlanta Braves vs Philadelphia Phillies \u00b7 proj 5.38 K", "history": "0", "game_pk": 849844, "game_date": "2026-10-01", "pitcher_id": 678061, "line": 3.5}, {"match": "Philadelphia Phillies @ Atlanta Braves", "subject": "Ray Kerr", "market": "Ray Kerr Over 19.5 Outs Recorded", "prob": 94, "category": "Outs Recorded", "hit_rate": {"hits": 0, "total": 1}, "detail": "Atlanta Braves vs Philadelphia Phillies \u00b7 proj 9.1 IP", "history": "9", "game_pk": 849844, "game_date": "2026-10-01", "pitcher_id": 678061, "line": 19.5}, {"match": "Philadelphia Phillies @ Atlanta Braves", "subject": "Philadelphia Phillies", "market": "Philadelphia Phillies Over 1.0 Runs", "prob": 50, "category": "Team Runs", "hit_rate": {"hits": 1, "total": 5}, "detail": "vs Atlanta Braves \u00b7 proj 1.68 runs", "history": "1/1/0/1/7", "game_pk": 849844, "game_date": "2026-10-01", "is_home": false, "line": 1.0}, {"match": "Philadelphia Phillies @ Atlanta Braves", "subject": "Philadelphia Phillies", "market": "Philadelphia Phillies Over 2.5 Hits", "prob": 72, "category": "Team Hits", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs Atlanta Braves \u00b7 proj 3.72 hits", "history": "6/4/4/7/12", "game_pk": 849844, "game_date": "2026-10-01", "is_home": false, "line": 2.5}, {"match": "Philadelphia Phillies @ Atlanta Braves", "subject": "Atlanta Braves", "market": "Atlanta Braves Over 2.5 Runs", "prob": 71, "category": "Team Runs", "hit_rate": {"hits": 4, "total": 5}, "detail": "vs Philadelphia Phillies \u00b7 proj 3.69 runs", "history": "3/6/0/8/3", "game_pk": 849844, "game_date": "2026-10-01", "is_home": true, "line": 2.5}, {"match": "Philadelphia Phillies @ Atlanta Braves", "subject": "Atlanta Braves", "market": "Atlanta Braves Over 5.0 Hits", "prob": 75, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Philadelphia Phillies \u00b7 proj 7.4 hits", "history": "7/12/1/10/5", "game_pk": 849844, "game_date": "2026-10-01", "is_home": true, "line": 5.0}];
+const REPORT_DATE = "2026-10-02";
+const LEGS = [];
 
 function poissonCDF(threshold, lambda){
   let p = Math.exp(-lambda), cum = p;
