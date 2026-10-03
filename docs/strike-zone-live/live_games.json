@@ -1,46 +1,87 @@
 {
-  "generated": "2026-10-03T19:16:07.007426+00:00",
-  "total_live": 1,
+  "generated": "2026-10-03T22:10:41.966510+00:00",
+  "total_live": 2,
   "games": [
     {
-      "game_pk": 849829,
-      "home_team": "Cleveland Guardians",
-      "away_team": "Chicago White Sox",
-      "home_runs": 0.0,
-      "away_runs": 2.0,
-      "home_hits": 2.0,
-      "away_hits": 5.0,
+      "game_pk": 849828,
+      "home_team": "Los Angeles Dodgers",
+      "away_team": "Atlanta Braves",
+      "home_runs": 5.0,
+      "away_runs": 1.0,
+      "home_hits": 7.0,
+      "away_hits": 2.0,
       "inning": 7,
       "inning_state": "Top",
       "status": "In Progress",
       "half_innings_remaining": 6,
       "next_run": {
-        "home": 25,
-        "away": 75
+        "home": 81,
+        "away": 19
       },
       "game_total_pace": {
-        "prob": 1,
-        "status": "On Pace: Under"
+        "prob": 93,
+        "status": "On Pace: Over"
       },
       "inning_winner": {
-        "home": 8,
-        "away": 26,
-        "tie": 67
+        "home": 46,
+        "away": 8,
+        "tie": 46
       },
       "inning_hits": {
-        "home": 14,
-        "away": 46,
-        "tie": 40
+        "home": 58,
+        "away": 11,
+        "tie": 32
       },
       "model_signal": {
-        "label": "Game Total Under",
-        "prob": 99,
+        "label": "Game Total Over",
+        "prob": 93,
         "qualifies": true
       },
       "pregame_projection": {
-        "home_lambda": 2.0,
-        "away_lambda": 4.84,
-        "pregame_total": 6.84
+        "home_lambda": 3.24,
+        "away_lambda": 2.99,
+        "pregame_total": 6.23
+      }
+    },
+    {
+      "game_pk": 849835,
+      "home_team": "Tampa Bay Rays",
+      "away_team": "New York Yankees",
+      "home_runs": 0.0,
+      "away_runs": 0.0,
+      "home_hits": 0.0,
+      "away_hits": 0.0,
+      "inning": 1,
+      "inning_state": "Top",
+      "status": "Warmup",
+      "half_innings_remaining": 18,
+      "next_run": {
+        "home": 45,
+        "away": 55
+      },
+      "game_total_pace": {
+        "prob": 5,
+        "status": "On Pace: Under"
+      },
+      "inning_winner": {
+        "home": 15,
+        "away": 18,
+        "tie": 68
+      },
+      "inning_hits": {
+        "home": 27,
+        "away": 21,
+        "tie": 52
+      },
+      "model_signal": {
+        "label": "Game Total Under",
+        "prob": 95,
+        "qualifies": true
+      },
+      "pregame_projection": {
+        "home_lambda": 3.57,
+        "away_lambda": 4.28,
+        "pregame_total": 7.85
       }
     }
   ]
