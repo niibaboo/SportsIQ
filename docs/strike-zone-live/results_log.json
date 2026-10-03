@@ -178,5 +178,21 @@
     "status": "hit",
     "final_home_runs": 6.0,
     "final_away_runs": 2.0
+  },
+  "849829_Game_Total_Under": {
+    "id": "849829_Game_Total_Under",
+    "game_pk": 849829,
+    "home_team": "Cleveland Guardians",
+    "away_team": "Chicago White Sox",
+    "label": "Game Total Under",
+    "prob": 99,
+    "logged_at": "2026-10-03T19:16:07.011351+00:00",
+    "logged_inning": 7,
+    "logged_inning_state": "Top",
+    "logged_half_index": 12,
+    "logged_home_runs": 0.0,
+    "logged_away_runs": 2.0,
+    "pregame_total": 6.84,
+    "status": "pending"
   }
 }
