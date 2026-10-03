@@ -1,914 +1,1058 @@
 [
   {
-    "match": "N\u00fcrnberg Ice Tigers vs Schwenninger",
-    "subject": "N\u00fcrnberg Ice Tigers",
-    "market": "N\u00fcrnberg Ice Tigers Over 2.5 Goals",
-    "prob": 68,
+    "match": "Orebro HK vs Lule\u00e5 HF",
+    "subject": "Orebro HK",
+    "market": "Orebro HK Over 1.5 Goals",
+    "prob": 71,
     "hit_rate": {
       "hits": 3,
       "total": 5
     },
-    "category": "DEL Team Total",
-    "detail": "proj 3.5 goals \u00b7 season 4.0/gm",
-    "history": "4/6/5/2/2",
-    "line": 2.5,
+    "category": "SHL Team Total",
+    "detail": "proj 2.49 goals \u00b7 season 3.0/gm",
+    "history": "0/5/3/3/1",
+    "line": 1.5,
     "is_home": true,
-    "league_id": 16953,
-    "home_name": "N\u00fcrnberg Ice Tigers",
-    "away_name": "Schwenninger",
-    "match_date": "2026-10-02T17:30:00.000Z"
+    "league_id": 40781,
+    "home_name": "Orebro HK",
+    "away_name": "Lule\u00e5 HF",
+    "match_date": "2026-10-03T16:00:00.000Z"
   },
   {
-    "match": "N\u00fcrnberg Ice Tigers vs Schwenninger",
-    "subject": "Schwenninger",
-    "market": "Schwenninger Over 2.0 Goals",
-    "prob": 58,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 3.01 goals \u00b7 season 3.67/gm",
-    "history": "6/0/3/4/2",
-    "line": 2.0,
-    "is_home": false,
-    "league_id": 16953,
-    "home_name": "N\u00fcrnberg Ice Tigers",
-    "away_name": "Schwenninger",
-    "match_date": "2026-10-02T17:30:00.000Z"
-  },
-  {
-    "match": "N\u00fcrnberg Ice Tigers vs Schwenninger",
-    "subject": "N\u00fcrnberg Ice Tigers vs Schwenninger",
-    "market": "Game Over 4.5 Total Goals",
-    "prob": 78,
-    "hit_rate": null,
-    "category": "DEL Game Total",
-    "detail": "proj 6.51 goals combined",
-    "history": null
-  },
-  {
-    "match": "Frankfurt Lowen vs Eisb\u00e4ren Berlin",
-    "subject": "Frankfurt Lowen",
-    "market": "Frankfurt Lowen Over 2.0 Goals",
+    "match": "Orebro HK vs Lule\u00e5 HF",
+    "subject": "Lule\u00e5 HF",
+    "market": "Lule\u00e5 HF Over 1.5 Goals",
     "prob": 63,
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
-    "category": "DEL Team Total",
-    "detail": "proj 3.27 goals \u00b7 season 3.25/gm",
-    "history": "5/5/3/1/4",
-    "line": 2.0,
-    "is_home": true,
-    "league_id": 16953,
-    "home_name": "Frankfurt Lowen",
-    "away_name": "Eisb\u00e4ren Berlin",
-    "match_date": "2026-10-02T17:30:00.000Z"
-  },
-  {
-    "match": "Frankfurt Lowen vs Eisb\u00e4ren Berlin",
-    "subject": "Eisb\u00e4ren Berlin",
-    "market": "Eisb\u00e4ren Berlin Over 2.5 Goals",
-    "prob": 69,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 3.57 goals \u00b7 season 2.5/gm",
-    "history": "2/4/3/6/4",
-    "line": 2.5,
-    "is_home": false,
-    "league_id": 16953,
-    "home_name": "Frankfurt Lowen",
-    "away_name": "Eisb\u00e4ren Berlin",
-    "match_date": "2026-10-02T17:30:00.000Z"
-  },
-  {
-    "match": "Frankfurt Lowen vs Eisb\u00e4ren Berlin",
-    "subject": "Frankfurt Lowen vs Eisb\u00e4ren Berlin",
-    "market": "Game Over 4.5 Total Goals",
-    "prob": 81,
-    "hit_rate": null,
-    "category": "DEL Game Total",
-    "detail": "proj 6.84 goals combined",
-    "history": null
-  },
-  {
-    "match": "Kolner vs M\u00fcnchen Red Bulls",
-    "subject": "Kolner",
-    "market": "Kolner Over 3.0 Goals",
-    "prob": 70,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 4.73 goals \u00b7 season 4.5/gm",
-    "history": "3/4/4/5/6",
-    "line": 3.0,
-    "is_home": true,
-    "league_id": 16953,
-    "home_name": "Kolner",
-    "away_name": "M\u00fcnchen Red Bulls",
-    "match_date": "2026-10-02T17:30:00.000Z"
-  },
-  {
-    "match": "Kolner vs M\u00fcnchen Red Bulls",
-    "subject": "M\u00fcnchen Red Bulls",
-    "market": "M\u00fcnchen Red Bulls Over 2.0 Goals",
-    "prob": 54,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 2.85 goals \u00b7 season 3.5/gm",
-    "history": "1/4/3/4/1",
-    "line": 2.0,
-    "is_home": false,
-    "league_id": 16953,
-    "home_name": "Kolner",
-    "away_name": "M\u00fcnchen Red Bulls",
-    "match_date": "2026-10-02T17:30:00.000Z"
-  },
-  {
-    "match": "Kolner vs M\u00fcnchen Red Bulls",
-    "subject": "Kolner vs M\u00fcnchen Red Bulls",
-    "market": "Game Over 5.0 Total Goals",
-    "prob": 77,
-    "hit_rate": null,
-    "category": "DEL Game Total",
-    "detail": "proj 7.58 goals combined",
-    "history": null
-  },
-  {
-    "match": "Augsburger Panther vs Grizzly Wolfsburg",
-    "subject": "Augsburger Panther",
-    "market": "Augsburger Panther Over 2.5 Goals",
-    "prob": 74,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 3.88 goals \u00b7 season 4.0/gm",
-    "history": "5/1/7/3/4",
-    "line": 2.5,
-    "is_home": true,
-    "league_id": 16953,
-    "home_name": "Augsburger Panther",
-    "away_name": "Grizzly Wolfsburg",
-    "match_date": "2026-10-02T17:30:00.000Z"
-  },
-  {
-    "match": "Augsburger Panther vs Grizzly Wolfsburg",
-    "subject": "Grizzly Wolfsburg",
-    "market": "Grizzly Wolfsburg Over 2.5 Goals",
-    "prob": 75,
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 3.95 goals \u00b7 season 4.5/gm",
-    "history": "4/8/4/3/3",
-    "line": 2.5,
-    "is_home": false,
-    "league_id": 16953,
-    "home_name": "Augsburger Panther",
-    "away_name": "Grizzly Wolfsburg",
-    "match_date": "2026-10-02T17:30:00.000Z"
-  },
-  {
-    "match": "Augsburger Panther vs Grizzly Wolfsburg",
-    "subject": "Augsburger Panther vs Grizzly Wolfsburg",
-    "market": "Game Over 5.5 Total Goals",
-    "prob": 79,
-    "hit_rate": null,
-    "category": "DEL Game Total",
-    "detail": "proj 7.83 goals combined",
-    "history": null
-  },
-  {
-    "match": "Krefeld Pinguine vs ERC Ingolstadt",
-    "subject": "Krefeld Pinguine",
-    "market": "Krefeld Pinguine Over 2.0 Goals",
-    "prob": 60,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 3.11 goals \u00b7 season 3.25/gm",
-    "history": "3/1/6/1/5",
-    "line": 2.0,
-    "is_home": true,
-    "league_id": 16953,
-    "home_name": "Krefeld Pinguine",
-    "away_name": "ERC Ingolstadt",
-    "match_date": "2026-10-02T17:30:00.000Z"
-  },
-  {
-    "match": "Krefeld Pinguine vs ERC Ingolstadt",
-    "subject": "ERC Ingolstadt",
-    "market": "ERC Ingolstadt Over 1.5 Goals",
-    "prob": 71,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 2.47 goals \u00b7 season 2.5/gm",
-    "history": "3/4/2/1/3",
+    "category": "SHL Team Total",
+    "detail": "proj 2.12 goals \u00b7 season 2.4/gm",
+    "history": "4/3/2/1/2",
     "line": 1.5,
     "is_home": false,
-    "league_id": 16953,
-    "home_name": "Krefeld Pinguine",
-    "away_name": "ERC Ingolstadt",
-    "match_date": "2026-10-02T17:30:00.000Z"
+    "league_id": 40781,
+    "home_name": "Orebro HK",
+    "away_name": "Lule\u00e5 HF",
+    "match_date": "2026-10-03T16:00:00.000Z"
   },
   {
-    "match": "Krefeld Pinguine vs ERC Ingolstadt",
-    "subject": "Krefeld Pinguine vs ERC Ingolstadt",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 65,
-    "hit_rate": null,
-    "category": "DEL Game Total",
-    "detail": "proj 5.58 goals combined",
-    "history": null
-  },
-  {
-    "match": "Straubing Tigers vs Bremerhaven",
-    "subject": "Straubing Tigers",
-    "market": "Straubing Tigers Over 1.5 Goals",
-    "prob": 69,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 2.38 goals \u00b7 season 1.33/gm",
-    "history": "1/2/3/4/3",
-    "line": 1.5,
-    "is_home": true,
-    "league_id": 16953,
-    "home_name": "Straubing Tigers",
-    "away_name": "Bremerhaven",
-    "match_date": "2026-10-02T17:30:00.000Z"
-  },
-  {
-    "match": "Straubing Tigers vs Bremerhaven",
-    "subject": "Bremerhaven",
-    "market": "Bremerhaven Over 1.0 Goals",
-    "prob": 57,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 1.92 goals \u00b7 season 2.0/gm",
-    "history": "2/3/2/1/2",
-    "line": 1.0,
-    "is_home": false,
-    "league_id": 16953,
-    "home_name": "Straubing Tigers",
-    "away_name": "Bremerhaven",
-    "match_date": "2026-10-02T17:30:00.000Z"
-  },
-  {
-    "match": "Straubing Tigers vs Bremerhaven",
-    "subject": "Straubing Tigers vs Bremerhaven",
+    "match": "Orebro HK vs Lule\u00e5 HF",
+    "subject": "Orebro HK vs Lule\u00e5 HF",
     "market": "Game Over 3.0 Total Goals",
-    "prob": 62,
+    "prob": 68,
     "hit_rate": null,
-    "category": "DEL Game Total",
-    "detail": "proj 4.3 goals combined",
+    "category": "SHL Game Total",
+    "detail": "proj 4.61 goals combined",
     "history": null
   },
   {
-    "match": "Davos vs Ajoie",
-    "subject": "Davos",
-    "market": "Davos Over 2.0 Goals",
-    "prob": 60,
-    "hit_rate": {
-      "hits": 2,
-      "total": 5
-    },
-    "category": "National League Team Total",
-    "detail": "proj 3.1 goals \u00b7 season 4.25/gm",
-    "history": "2/1/2/4/3",
-    "line": 2.0,
-    "is_home": true,
-    "league_id": 44185,
-    "home_name": "Davos",
-    "away_name": "Ajoie",
-    "match_date": "2026-10-02T17:45:00.000Z"
-  },
-  {
-    "match": "Davos vs Ajoie",
-    "subject": "Ajoie",
-    "market": "Ajoie Over 2.0 Goals",
-    "prob": 64,
+    "match": "Link\u00f6ping HC vs IF Bj\u00f6rkl\u00f6ven",
+    "subject": "Link\u00f6ping HC",
+    "market": "Link\u00f6ping HC Over 0.5 Goals",
+    "prob": 74,
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
-    "category": "National League Team Total",
-    "detail": "proj 3.31 goals \u00b7 season 3.5/gm",
-    "history": "4/2/3/4/3",
-    "line": 2.0,
-    "is_home": false,
-    "league_id": 44185,
-    "home_name": "Davos",
-    "away_name": "Ajoie",
-    "match_date": "2026-10-02T17:45:00.000Z"
-  },
-  {
-    "match": "Davos vs Ajoie",
-    "subject": "Davos vs Ajoie",
-    "market": "Game Over 4.5 Total Goals",
-    "prob": 77,
-    "hit_rate": null,
-    "category": "National League Game Total",
-    "detail": "proj 6.41 goals combined",
-    "history": null
-  },
-  {
-    "match": "EHC Kloten vs Fribourg-Gott\u00e9ron",
-    "subject": "EHC Kloten",
-    "market": "EHC Kloten Over 0.5 Goals",
-    "prob": 74,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "National League Team Total",
-    "detail": "proj 1.34 goals \u00b7 season 2.14/gm",
-    "history": "3/1/0/2/0",
+    "category": "SHL Team Total",
+    "detail": "proj 1.35 goals \u00b7 season 1.5/gm",
+    "history": "3/3/2/1/0",
     "line": 0.5,
     "is_home": true,
-    "league_id": 44185,
-    "home_name": "EHC Kloten",
-    "away_name": "Fribourg-Gott\u00e9ron",
-    "match_date": "2026-10-02T17:45:00.000Z"
+    "league_id": 40781,
+    "home_name": "Link\u00f6ping HC",
+    "away_name": "IF Bj\u00f6rkl\u00f6ven",
+    "match_date": "2026-10-03T16:00:00.000Z"
   },
   {
-    "match": "EHC Kloten vs Fribourg-Gott\u00e9ron",
-    "subject": "Fribourg-Gott\u00e9ron",
-    "market": "Fribourg-Gott\u00e9ron Over 2.5 Goals",
-    "prob": 69,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "National League Team Total",
-    "detail": "proj 3.56 goals \u00b7 season 3.57/gm",
-    "history": "2/2/3/4/5",
-    "line": 2.5,
-    "is_home": false,
-    "league_id": 44185,
-    "home_name": "EHC Kloten",
-    "away_name": "Fribourg-Gott\u00e9ron",
-    "match_date": "2026-10-02T17:45:00.000Z"
-  },
-  {
-    "match": "EHC Kloten vs Fribourg-Gott\u00e9ron",
-    "subject": "EHC Kloten vs Fribourg-Gott\u00e9ron",
-    "market": "Game Over 3.5 Total Goals",
-    "prob": 72,
-    "hit_rate": null,
-    "category": "National League Game Total",
-    "detail": "proj 4.9 goals combined",
-    "history": null
-  },
-  {
-    "match": "Lugano vs Rapperswil-Jona Lakers",
-    "subject": "Lugano",
-    "market": "Lugano Over 2.0 Goals",
+    "match": "Link\u00f6ping HC vs IF Bj\u00f6rkl\u00f6ven",
+    "subject": "IF Bj\u00f6rkl\u00f6ven",
+    "market": "IF Bj\u00f6rkl\u00f6ven Over 2.0 Goals",
     "prob": 61,
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
-    "category": "National League Team Total",
-    "detail": "proj 3.15 goals \u00b7 season 3.4/gm",
-    "history": "6/2/3/3/3",
+    "category": "SHL Team Total",
+    "detail": "proj 3.13 goals \u00b7 season 3.0/gm",
+    "history": "3/4/0/4/4",
     "line": 2.0,
-    "is_home": true,
-    "league_id": 44185,
-    "home_name": "Lugano",
-    "away_name": "Rapperswil-Jona Lakers",
-    "match_date": "2026-10-02T17:45:00.000Z"
+    "is_home": false,
+    "league_id": 40781,
+    "home_name": "Link\u00f6ping HC",
+    "away_name": "IF Bj\u00f6rkl\u00f6ven",
+    "match_date": "2026-10-03T16:00:00.000Z"
   },
   {
-    "match": "Lugano vs Rapperswil-Jona Lakers",
-    "subject": "Rapperswil-Jona Lakers",
-    "market": "Rapperswil-Jona Lakers Over 2.0 Goals",
-    "prob": 56,
+    "match": "Link\u00f6ping HC vs IF Bj\u00f6rkl\u00f6ven",
+    "subject": "Link\u00f6ping HC vs IF Bj\u00f6rkl\u00f6ven",
+    "market": "Game Over 3.0 Total Goals",
+    "prob": 65,
+    "hit_rate": null,
+    "category": "SHL Game Total",
+    "detail": "proj 4.48 goals combined",
+    "history": null
+  },
+  {
+    "match": "F\u00e4rjestad vs HV71",
+    "subject": "F\u00e4rjestad",
+    "market": "F\u00e4rjestad Over 2.5 Goals",
+    "prob": 75,
     "hit_rate": {
       "hits": 3,
       "total": 5
     },
-    "category": "National League Team Total",
-    "detail": "proj 2.93 goals \u00b7 season 3.0/gm",
-    "history": "3/2/3/5/2",
-    "line": 2.0,
-    "is_home": false,
-    "league_id": 44185,
-    "home_name": "Lugano",
-    "away_name": "Rapperswil-Jona Lakers",
-    "match_date": "2026-10-02T17:45:00.000Z"
+    "category": "SHL Team Total",
+    "detail": "proj 3.95 goals \u00b7 season 4.2/gm",
+    "history": "7/2/2/5/4",
+    "line": 2.5,
+    "is_home": true,
+    "league_id": 40781,
+    "home_name": "F\u00e4rjestad",
+    "away_name": "HV71",
+    "match_date": "2026-10-03T16:00:00.000Z"
   },
   {
-    "match": "Lugano vs Rapperswil-Jona Lakers",
-    "subject": "Lugano vs Rapperswil-Jona Lakers",
+    "match": "F\u00e4rjestad vs HV71",
+    "subject": "HV71",
+    "market": "HV71 Over 2.0 Goals",
+    "prob": 60,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "SHL Team Total",
+    "detail": "proj 3.12 goals \u00b7 season 3.4/gm",
+    "history": "4/4/5/2/2",
+    "line": 2.0,
+    "is_home": false,
+    "league_id": 40781,
+    "home_name": "F\u00e4rjestad",
+    "away_name": "HV71",
+    "match_date": "2026-10-03T16:00:00.000Z"
+  },
+  {
+    "match": "F\u00e4rjestad vs HV71",
+    "subject": "F\u00e4rjestad vs HV71",
+    "market": "Game Over 5.0 Total Goals",
+    "prob": 71,
+    "hit_rate": null,
+    "category": "SHL Game Total",
+    "detail": "proj 7.07 goals combined",
+    "history": null
+  },
+  {
+    "match": "V\u00e4xj\u00f6 Lakers vs R\u00f6gle",
+    "subject": "V\u00e4xj\u00f6 Lakers",
+    "market": "V\u00e4xj\u00f6 Lakers Over 2.5 Goals",
+    "prob": 72,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "SHL Team Total",
+    "detail": "proj 3.75 goals \u00b7 season 4.0/gm",
+    "history": "4/4/3/7/2",
+    "line": 2.5,
+    "is_home": true,
+    "league_id": 40781,
+    "home_name": "V\u00e4xj\u00f6 Lakers",
+    "away_name": "R\u00f6gle",
+    "match_date": "2026-10-03T13:15:00.000Z"
+  },
+  {
+    "match": "V\u00e4xj\u00f6 Lakers vs R\u00f6gle",
+    "subject": "R\u00f6gle",
+    "market": "R\u00f6gle Over 1.5 Goals",
+    "prob": 68,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "SHL Team Total",
+    "detail": "proj 2.33 goals \u00b7 season 2.4/gm",
+    "history": "2/3/1/2/4",
+    "line": 1.5,
+    "is_home": false,
+    "league_id": 40781,
+    "home_name": "V\u00e4xj\u00f6 Lakers",
+    "away_name": "R\u00f6gle",
+    "match_date": "2026-10-03T13:15:00.000Z"
+  },
+  {
+    "match": "V\u00e4xj\u00f6 Lakers vs R\u00f6gle",
+    "subject": "V\u00e4xj\u00f6 Lakers vs R\u00f6gle",
     "market": "Game Over 4.0 Total Goals",
     "prob": 73,
     "hit_rate": null,
-    "category": "National League Game Total",
+    "category": "SHL Game Total",
     "detail": "proj 6.08 goals combined",
     "history": null
   },
   {
-    "match": "Lausanne vs Biel",
-    "subject": "Lausanne",
-    "market": "Lausanne Over 2.0 Goals",
-    "prob": 63,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "National League Team Total",
-    "detail": "proj 3.25 goals \u00b7 season 2.86/gm",
-    "history": "4/5/2/0/6",
-    "line": 2.0,
-    "is_home": true,
-    "league_id": 44185,
-    "home_name": "Lausanne",
-    "away_name": "Biel",
-    "match_date": "2026-10-02T17:45:00.000Z"
-  },
-  {
-    "match": "Lausanne vs Biel",
-    "subject": "Biel",
-    "market": "Biel Over 2.0 Goals",
-    "prob": 54,
+    "match": "Timr\u00e5 vs Skellefte\u00e5 AIK",
+    "subject": "Timr\u00e5",
+    "market": "Timr\u00e5 Over 0.5 Goals",
+    "prob": 72,
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
-    "category": "National League Team Total",
-    "detail": "proj 2.86 goals \u00b7 season 3.5/gm",
-    "history": "3/3/6/0/3",
-    "line": 2.0,
-    "is_home": false,
-    "league_id": 44185,
-    "home_name": "Lausanne",
-    "away_name": "Biel",
-    "match_date": "2026-10-02T17:45:00.000Z"
+    "category": "SHL Team Total",
+    "detail": "proj 1.27 goals \u00b7 season 1.4/gm",
+    "history": "2/1/3/0/1",
+    "line": 0.5,
+    "is_home": true,
+    "league_id": 40781,
+    "home_name": "Timr\u00e5",
+    "away_name": "Skellefte\u00e5 AIK",
+    "match_date": "2026-10-03T13:15:00.000Z"
   },
   {
-    "match": "Lausanne vs Biel",
-    "subject": "Lausanne vs Biel",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 73,
-    "hit_rate": null,
-    "category": "National League Game Total",
-    "detail": "proj 6.11 goals combined",
-    "history": null
-  },
-  {
-    "match": "Bern vs Servette",
-    "subject": "Bern",
-    "market": "Bern Over 2.5 Goals",
+    "match": "Timr\u00e5 vs Skellefte\u00e5 AIK",
+    "subject": "Skellefte\u00e5 AIK",
+    "market": "Skellefte\u00e5 AIK Over 2.5 Goals",
     "prob": 75,
     "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "National League Team Total",
-    "detail": "proj 3.9 goals \u00b7 season 6.0/gm",
-    "history": "3/5/4/2/2",
-    "line": 2.5,
-    "is_home": true,
-    "league_id": 44185,
-    "home_name": "Bern",
-    "away_name": "Servette",
-    "match_date": "2026-10-02T17:45:00.000Z"
-  },
-  {
-    "match": "Bern vs Servette",
-    "subject": "Servette",
-    "market": "Servette Over 2.5 Goals",
-    "prob": 73,
-    "hit_rate": {
       "hits": 4,
       "total": 5
     },
-    "category": "National League Team Total",
-    "detail": "proj 3.78 goals \u00b7 season 3.38/gm",
-    "history": "4/4/2/4/5",
+    "category": "SHL Team Total",
+    "detail": "proj 3.9 goals \u00b7 season 4.0/gm",
+    "history": "7/3/0/6/4",
     "line": 2.5,
     "is_home": false,
-    "league_id": 44185,
-    "home_name": "Bern",
-    "away_name": "Servette",
-    "match_date": "2026-10-02T17:45:00.000Z"
+    "league_id": 40781,
+    "home_name": "Timr\u00e5",
+    "away_name": "Skellefte\u00e5 AIK",
+    "match_date": "2026-10-03T13:15:00.000Z"
   },
   {
-    "match": "Bern vs Servette",
-    "subject": "Bern vs Servette",
-    "market": "Game Over 5.5 Total Goals",
-    "prob": 78,
-    "hit_rate": null,
-    "category": "National League Game Total",
-    "detail": "proj 7.68 goals combined",
-    "history": null
-  },
-  {
-    "match": "\u00c4ss\u00e4t vs Lukko",
-    "subject": "\u00c4ss\u00e4t",
-    "market": "\u00c4ss\u00e4t Over 1.5 Goals",
-    "prob": 66,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "Liiga Team Total",
-    "detail": "proj 2.27 goals \u00b7 season 2.88/gm",
-    "history": "5/2/2/0/4",
-    "line": 1.5,
-    "is_home": true,
-    "league_id": 14400,
-    "home_name": "\u00c4ss\u00e4t",
-    "away_name": "Lukko",
-    "match_date": "2026-10-02T16:30:00.000Z"
-  },
-  {
-    "match": "\u00c4ss\u00e4t vs Lukko",
-    "subject": "Lukko",
-    "market": "Lukko Over 1.5 Goals",
-    "prob": 70,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "Liiga Team Total",
-    "detail": "proj 2.43 goals \u00b7 season 2.38/gm",
-    "history": "1/3/3/3/2",
-    "line": 1.5,
-    "is_home": false,
-    "league_id": 14400,
-    "home_name": "\u00c4ss\u00e4t",
-    "away_name": "Lukko",
-    "match_date": "2026-10-02T16:30:00.000Z"
-  },
-  {
-    "match": "\u00c4ss\u00e4t vs Lukko",
-    "subject": "\u00c4ss\u00e4t vs Lukko",
-    "market": "Game Over 3.0 Total Goals",
-    "prob": 69,
-    "hit_rate": null,
-    "category": "Liiga Game Total",
-    "detail": "proj 4.7 goals combined",
-    "history": null
-  },
-  {
-    "match": "Bolzano vs Klagenfurt",
-    "subject": "Bolzano",
-    "market": "Bolzano Over 2.5 Goals",
+    "match": "Timr\u00e5 vs Skellefte\u00e5 AIK",
+    "subject": "Timr\u00e5 vs Skellefte\u00e5 AIK",
+    "market": "Game Over 3.5 Total Goals",
     "prob": 76,
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 3.99 goals \u00b7 season 4.0/gm",
-    "history": "3/6/3/4/4",
-    "line": 2.5,
-    "is_home": true,
-    "league_id": 60354,
-    "home_name": "Bolzano",
-    "away_name": "Klagenfurt",
-    "match_date": "2026-10-02T17:45:00.000Z"
-  },
-  {
-    "match": "Bolzano vs Klagenfurt",
-    "subject": "Klagenfurt",
-    "market": "Klagenfurt Over 3.0 Goals",
-    "prob": 70,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 4.73 goals \u00b7 season 5.17/gm",
-    "history": "3/6/7/6/2",
-    "line": 3.0,
-    "is_home": false,
-    "league_id": 60354,
-    "home_name": "Bolzano",
-    "away_name": "Klagenfurt",
-    "match_date": "2026-10-02T17:45:00.000Z"
-  },
-  {
-    "match": "Bolzano vs Klagenfurt",
-    "subject": "Bolzano vs Klagenfurt",
-    "market": "Game Over 6.0 Total Goals",
-    "prob": 77,
     "hit_rate": null,
-    "category": "ICE Hockey League Game Total",
-    "detail": "proj 8.72 goals combined",
+    "category": "SHL Game Total",
+    "detail": "proj 5.17 goals combined",
     "history": null
   },
   {
-    "match": "Val Pusteria HC vs HK Olimpija",
-    "subject": "Val Pusteria HC",
-    "market": "Val Pusteria HC Over 2.5 Goals",
-    "prob": 72,
+    "match": "Malm\u00f6 Redhawks vs Bryn\u00e4s",
+    "subject": "Malm\u00f6 Redhawks",
+    "market": "Malm\u00f6 Redhawks Over 2.0 Goals",
+    "prob": 53,
     "hit_rate": {
-      "hits": 3,
+      "hits": 4,
       "total": 5
     },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 3.72 goals \u00b7 season 3.75/gm",
-    "history": "2/4/2/5/4",
-    "line": 2.5,
-    "is_home": true,
-    "league_id": 60354,
-    "home_name": "Val Pusteria HC",
-    "away_name": "HK Olimpija",
-    "match_date": "2026-10-02T17:45:00.000Z"
-  },
-  {
-    "match": "Val Pusteria HC vs HK Olimpija",
-    "subject": "HK Olimpija",
-    "market": "HK Olimpija Over 2.5 Goals",
-    "prob": 75,
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 3.94 goals \u00b7 season 2.67/gm",
-    "history": "5/6/3/3/6",
-    "line": 2.5,
-    "is_home": false,
-    "league_id": 60354,
-    "home_name": "Val Pusteria HC",
-    "away_name": "HK Olimpija",
-    "match_date": "2026-10-02T17:45:00.000Z"
-  },
-  {
-    "match": "Val Pusteria HC vs HK Olimpija",
-    "subject": "Val Pusteria HC vs HK Olimpija",
-    "market": "Game Over 5.5 Total Goals",
-    "prob": 78,
-    "hit_rate": null,
-    "category": "ICE Hockey League Game Total",
-    "detail": "proj 7.66 goals combined",
-    "history": null
-  },
-  {
-    "match": "Vorarlberg vs Salzburg",
-    "subject": "Vorarlberg",
-    "market": "Vorarlberg Over 2.0 Goals",
-    "prob": 54,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 2.85 goals \u00b7 season 2.5/gm",
-    "history": "1/4/3/2/4",
+    "category": "SHL Team Total",
+    "detail": "proj 2.8 goals \u00b7 season 3.0/gm",
+    "history": "3/5/3/1/3",
     "line": 2.0,
     "is_home": true,
-    "league_id": 60354,
-    "home_name": "Vorarlberg",
-    "away_name": "Salzburg",
-    "match_date": "2026-10-02T17:30:00.000Z"
+    "league_id": 40781,
+    "home_name": "Malm\u00f6 Redhawks",
+    "away_name": "Bryn\u00e4s",
+    "match_date": "2026-10-03T13:15:00.000Z"
   },
   {
-    "match": "Vorarlberg vs Salzburg",
-    "subject": "Salzburg",
-    "market": "Salzburg Over 1.5 Goals",
-    "prob": 64,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 2.17 goals \u00b7 season 2.5/gm",
-    "history": "3/2/2/6/1",
-    "line": 1.5,
-    "is_home": false,
-    "league_id": 60354,
-    "home_name": "Vorarlberg",
-    "away_name": "Salzburg",
-    "match_date": "2026-10-02T17:30:00.000Z"
-  },
-  {
-    "match": "Vorarlberg vs Salzburg",
-    "subject": "Vorarlberg vs Salzburg",
-    "market": "Game Over 3.5 Total Goals",
-    "prob": 74,
-    "hit_rate": null,
-    "category": "ICE Hockey League Game Total",
-    "detail": "proj 5.02 goals combined",
-    "history": null
-  },
-  {
-    "match": "Fehervar AV19 vs Ferencvaros",
-    "subject": "Fehervar AV19",
-    "market": "Fehervar AV19 Over 1.0 Goals",
-    "prob": 51,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 1.7 goals \u00b7 season 2.0/gm",
-    "history": "2/2/0/3/1",
-    "line": 1.0,
-    "is_home": true,
-    "league_id": 60354,
-    "home_name": "Fehervar AV19",
-    "away_name": "Ferencvaros",
-    "match_date": "2026-10-02T17:15:00.000Z"
-  },
-  {
-    "match": "Fehervar AV19 vs Ferencvaros",
-    "subject": "Ferencvaros",
-    "market": "Ferencvaros Over 2.0 Goals",
-    "prob": 58,
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 3.0 goals \u00b7 season 3.0/gm",
-    "history": "3/3/3/3/3",
-    "line": 2.0,
-    "is_home": false,
-    "league_id": 60354,
-    "home_name": "Fehervar AV19",
-    "away_name": "Ferencvaros",
-    "match_date": "2026-10-02T17:15:00.000Z"
-  },
-  {
-    "match": "Fehervar AV19 vs Ferencvaros",
-    "subject": "Fehervar AV19 vs Ferencvaros",
-    "market": "Game Over 3.0 Total Goals",
-    "prob": 69,
-    "hit_rate": null,
-    "category": "ICE Hockey League Game Total",
-    "detail": "proj 4.7 goals combined",
-    "history": null
-  },
-  {
-    "match": "Villach vs Milano",
-    "subject": "Villach",
-    "market": "Villach Over 1.0 Goals",
-    "prob": 45,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 1.51 goals \u00b7 season 1.8/gm",
-    "history": "2/1/4/2/0",
-    "line": 1.0,
-    "is_home": true,
-    "league_id": 60354,
-    "home_name": "Villach",
-    "away_name": "Milano",
-    "match_date": "2026-10-02T17:15:00.000Z"
-  },
-  {
-    "match": "Villach vs Milano",
-    "subject": "Milano",
-    "market": "Milano Over 2.5 Goals",
-    "prob": 74,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 3.83 goals \u00b7 season 3.67/gm",
-    "history": "4/5/0/6/4",
-    "line": 2.5,
-    "is_home": false,
-    "league_id": 60354,
-    "home_name": "Villach",
-    "away_name": "Milano",
-    "match_date": "2026-10-02T17:15:00.000Z"
-  },
-  {
-    "match": "Villach vs Milano",
-    "subject": "Villach vs Milano",
-    "market": "Game Over 3.5 Total Goals",
-    "prob": 78,
-    "hit_rate": null,
-    "category": "ICE Hockey League Game Total",
-    "detail": "proj 5.34 goals combined",
-    "history": null
-  },
-  {
-    "match": "Vienna Capitals vs TWK Innsbruck",
-    "subject": "Vienna Capitals",
-    "market": "Vienna Capitals Over 1.5 Goals",
-    "prob": 74,
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 2.62 goals \u00b7 season 3.2/gm",
-    "history": "2/5/3/2/2",
-    "line": 1.5,
-    "is_home": true,
-    "league_id": 60354,
-    "home_name": "Vienna Capitals",
-    "away_name": "TWK Innsbruck",
-    "match_date": "2026-10-02T17:15:00.000Z"
-  },
-  {
-    "match": "Vienna Capitals vs TWK Innsbruck",
-    "subject": "TWK Innsbruck",
-    "market": "TWK Innsbruck Over 2.0 Goals",
-    "prob": 66,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 3.4 goals \u00b7 season 3.33/gm",
-    "history": "4/3/2/3/5",
-    "line": 2.0,
-    "is_home": false,
-    "league_id": 60354,
-    "home_name": "Vienna Capitals",
-    "away_name": "TWK Innsbruck",
-    "match_date": "2026-10-02T17:15:00.000Z"
-  },
-  {
-    "match": "Vienna Capitals vs TWK Innsbruck",
-    "subject": "Vienna Capitals vs TWK Innsbruck",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 72,
-    "hit_rate": null,
-    "category": "ICE Hockey League Game Total",
-    "detail": "proj 6.02 goals combined",
-    "history": null
-  },
-  {
-    "match": "Black Wings Linz vs Graz 99ers",
-    "subject": "Black Wings Linz",
-    "market": "Black Wings Linz Over 2.5 Goals",
-    "prob": 75,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 3.93 goals \u00b7 season 3.5/gm",
-    "history": "0/4/5/4/5",
-    "line": 2.5,
-    "is_home": true,
-    "league_id": 60354,
-    "home_name": "Black Wings Linz",
-    "away_name": "Graz 99ers",
-    "match_date": "2026-10-02T17:15:00.000Z"
-  },
-  {
-    "match": "Black Wings Linz vs Graz 99ers",
-    "subject": "Graz 99ers",
-    "market": "Graz 99ers Over 1.5 Goals",
+    "match": "Malm\u00f6 Redhawks vs Bryn\u00e4s",
+    "subject": "Bryn\u00e4s",
+    "market": "Bryn\u00e4s Over 1.5 Goals",
     "prob": 67,
     "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "SHL Team Total",
+    "detail": "proj 2.3 goals \u00b7 season 3.4/gm",
+    "history": "2/9/4/1/1",
+    "line": 1.5,
+    "is_home": false,
+    "league_id": 40781,
+    "home_name": "Malm\u00f6 Redhawks",
+    "away_name": "Bryn\u00e4s",
+    "match_date": "2026-10-03T13:15:00.000Z"
+  },
+  {
+    "match": "Malm\u00f6 Redhawks vs Bryn\u00e4s",
+    "subject": "Malm\u00f6 Redhawks vs Bryn\u00e4s",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 75,
+    "hit_rate": null,
+    "category": "SHL Game Total",
+    "detail": "proj 5.1 goals combined",
+    "history": null
+  },
+  {
+    "match": "Fr\u00f6lunda vs Djurg\u00e5rden",
+    "subject": "Fr\u00f6lunda",
+    "market": "Fr\u00f6lunda Over 2.0 Goals",
+    "prob": 61,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "SHL Team Total",
+    "detail": "proj 3.14 goals \u00b7 season 3.75/gm",
+    "history": "5/3/7/2/2",
+    "line": 2.0,
+    "is_home": true,
+    "league_id": 40781,
+    "home_name": "Fr\u00f6lunda",
+    "away_name": "Djurg\u00e5rden",
+    "match_date": "2026-10-03T13:15:00.000Z"
+  },
+  {
+    "match": "Fr\u00f6lunda vs Djurg\u00e5rden",
+    "subject": "Djurg\u00e5rden",
+    "market": "Djurg\u00e5rden Over 0.5 Goals",
+    "prob": 71,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "SHL Team Total",
+    "detail": "proj 1.25 goals \u00b7 season 1.4/gm",
+    "history": "0/1/4/2/0",
+    "line": 0.5,
+    "is_home": false,
+    "league_id": 40781,
+    "home_name": "Fr\u00f6lunda",
+    "away_name": "Djurg\u00e5rden",
+    "match_date": "2026-10-03T13:15:00.000Z"
+  },
+  {
+    "match": "Fr\u00f6lunda vs Djurg\u00e5rden",
+    "subject": "Fr\u00f6lunda vs Djurg\u00e5rden",
+    "market": "Game Over 3.0 Total Goals",
+    "prob": 64,
+    "hit_rate": null,
+    "category": "SHL Game Total",
+    "detail": "proj 4.39 goals combined",
+    "history": null
+  },
+  {
+    "match": "Z\u00fcrich Lions vs Lausanne",
+    "subject": "Z\u00fcrich Lions",
+    "market": "Z\u00fcrich Lions Over 3.0 Goals",
+    "prob": 68,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 4.62 goals \u00b7 season 4.43/gm",
+    "history": "3/4/6/3/6",
+    "line": 3.0,
+    "is_home": true,
+    "league_id": 44185,
+    "home_name": "Z\u00fcrich Lions",
+    "away_name": "Lausanne",
+    "match_date": "2026-10-03T17:45:00.000Z"
+  },
+  {
+    "match": "Z\u00fcrich Lions vs Lausanne",
+    "subject": "Lausanne",
+    "market": "Lausanne Over 3.0 Goals",
+    "prob": 61,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 4.22 goals \u00b7 season 3.38/gm",
+    "history": "5/2/0/6/7",
+    "line": 3.0,
+    "is_home": false,
+    "league_id": 44185,
+    "home_name": "Z\u00fcrich Lions",
+    "away_name": "Lausanne",
+    "match_date": "2026-10-03T17:45:00.000Z"
+  },
+  {
+    "match": "Z\u00fcrich Lions vs Lausanne",
+    "subject": "Z\u00fcrich Lions vs Lausanne",
+    "market": "Game Over 6.0 Total Goals",
+    "prob": 78,
+    "hit_rate": null,
+    "category": "National League Game Total",
+    "detail": "proj 8.84 goals combined",
+    "history": null
+  },
+  {
+    "match": "Biel vs Davos",
+    "subject": "Biel",
+    "market": "Biel Over 2.0 Goals",
+    "prob": 62,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 3.2 goals \u00b7 season 3.57/gm",
+    "history": "3/6/0/3/4",
+    "line": 2.0,
+    "is_home": true,
+    "league_id": 44185,
+    "home_name": "Biel",
+    "away_name": "Davos",
+    "match_date": "2026-10-03T17:45:00.000Z"
+  },
+  {
+    "match": "Biel vs Davos",
+    "subject": "Davos",
+    "market": "Davos Over 2.0 Goals",
+    "prob": 65,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 3.35 goals \u00b7 season 4.25/gm",
+    "history": "1/2/4/3/3",
+    "line": 2.0,
+    "is_home": false,
+    "league_id": 44185,
+    "home_name": "Biel",
+    "away_name": "Davos",
+    "match_date": "2026-10-03T17:45:00.000Z"
+  },
+  {
+    "match": "Biel vs Davos",
+    "subject": "Biel vs Davos",
+    "market": "Game Over 4.5 Total Goals",
+    "prob": 78,
+    "hit_rate": null,
+    "category": "National League Game Total",
+    "detail": "proj 6.55 goals combined",
+    "history": null
+  },
+  {
+    "match": "Rapperswil-Jona Lakers vs Bern",
+    "subject": "Rapperswil-Jona Lakers",
+    "market": "Rapperswil-Jona Lakers Over 1.5 Goals",
+    "prob": 71,
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 2.51 goals \u00b7 season 2.88/gm",
+    "history": "2/3/5/2/2",
+    "line": 1.5,
+    "is_home": true,
+    "league_id": 44185,
+    "home_name": "Rapperswil-Jona Lakers",
+    "away_name": "Bern",
+    "match_date": "2026-10-03T17:45:00.000Z"
+  },
+  {
+    "match": "Rapperswil-Jona Lakers vs Bern",
+    "subject": "Bern",
+    "market": "Bern Over 2.5 Goals",
+    "prob": 69,
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 3.54 goals \u00b7 season 6.0/gm",
+    "history": "5/4/2/2/2",
+    "line": 2.5,
+    "is_home": false,
+    "league_id": 44185,
+    "home_name": "Rapperswil-Jona Lakers",
+    "away_name": "Bern",
+    "match_date": "2026-10-03T17:45:00.000Z"
+  },
+  {
+    "match": "Rapperswil-Jona Lakers vs Bern",
+    "subject": "Rapperswil-Jona Lakers vs Bern",
+    "market": "Game Over 4.0 Total Goals",
+    "prob": 72,
+    "hit_rate": null,
+    "category": "National League Game Total",
+    "detail": "proj 6.05 goals combined",
+    "history": null
+  },
+  {
+    "match": "Fribourg-Gott\u00e9ron vs Ambr\u00ec-Piotta",
+    "subject": "Fribourg-Gott\u00e9ron",
+    "market": "Fribourg-Gott\u00e9ron Over 2.5 Goals",
+    "prob": 74,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 3.83 goals \u00b7 season 3.62/gm",
+    "history": "2/3/4/5/4",
+    "line": 2.5,
+    "is_home": true,
+    "league_id": 44185,
+    "home_name": "Fribourg-Gott\u00e9ron",
+    "away_name": "Ambr\u00ec-Piotta",
+    "match_date": "2026-10-03T17:45:00.000Z"
+  },
+  {
+    "match": "Fribourg-Gott\u00e9ron vs Ambr\u00ec-Piotta",
+    "subject": "Ambr\u00ec-Piotta",
+    "market": "Ambr\u00ec-Piotta Over 1.5 Goals",
+    "prob": 69,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 2.38 goals \u00b7 season 3.25/gm",
+    "history": "4/3/5/0/1",
+    "line": 1.5,
+    "is_home": false,
+    "league_id": 44185,
+    "home_name": "Fribourg-Gott\u00e9ron",
+    "away_name": "Ambr\u00ec-Piotta",
+    "match_date": "2026-10-03T17:45:00.000Z"
+  },
+  {
+    "match": "Fribourg-Gott\u00e9ron vs Ambr\u00ec-Piotta",
+    "subject": "Fribourg-Gott\u00e9ron vs Ambr\u00ec-Piotta",
+    "market": "Game Over 4.0 Total Goals",
+    "prob": 74,
+    "hit_rate": null,
+    "category": "National League Game Total",
+    "detail": "proj 6.21 goals combined",
+    "history": null
+  },
+  {
+    "match": "Langnau Tigers vs EHC Kloten",
+    "subject": "Langnau Tigers",
+    "market": "Langnau Tigers Over 2.5 Goals",
+    "prob": 77,
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 4.09 goals \u00b7 season 3.88/gm",
+    "history": "3/5/3/4/5",
+    "line": 2.5,
+    "is_home": true,
+    "league_id": 44185,
+    "home_name": "Langnau Tigers",
+    "away_name": "EHC Kloten",
+    "match_date": "2026-10-03T17:45:00.000Z"
+  },
+  {
+    "match": "Langnau Tigers vs EHC Kloten",
+    "subject": "EHC Kloten",
+    "market": "EHC Kloten Over 0.5 Goals",
+    "prob": 70,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 1.22 goals \u00b7 season 2.0/gm",
+    "history": "1/0/2/0/1",
+    "line": 0.5,
+    "is_home": false,
+    "league_id": 44185,
+    "home_name": "Langnau Tigers",
+    "away_name": "EHC Kloten",
+    "match_date": "2026-10-03T17:45:00.000Z"
+  },
+  {
+    "match": "Langnau Tigers vs EHC Kloten",
+    "subject": "Langnau Tigers vs EHC Kloten",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 78,
+    "hit_rate": null,
+    "category": "National League Game Total",
+    "detail": "proj 5.31 goals combined",
+    "history": null
+  },
+  {
+    "match": "H\u00e4meenlinna vs Karpat",
+    "subject": "H\u00e4meenlinna",
+    "market": "H\u00e4meenlinna Over 1.0 Goals",
+    "prob": 53,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 1.77 goals \u00b7 season 2.0/gm",
+    "history": "3/1/5/0/2",
+    "line": 1.0,
+    "is_home": true,
+    "league_id": 14400,
+    "home_name": "H\u00e4meenlinna",
+    "away_name": "Karpat",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "H\u00e4meenlinna vs Karpat",
+    "subject": "Karpat",
+    "market": "Karpat Over 1.5 Goals",
+    "prob": 68,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 2.34 goals \u00b7 season 2.44/gm",
+    "history": "0/1/2/4/3",
+    "line": 1.5,
+    "is_home": false,
+    "league_id": 14400,
+    "home_name": "H\u00e4meenlinna",
+    "away_name": "Karpat",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "H\u00e4meenlinna vs Karpat",
+    "subject": "H\u00e4meenlinna vs Karpat",
+    "market": "Game Over 2.5 Total Goals",
+    "prob": 78,
+    "hit_rate": null,
+    "category": "Liiga Game Total",
+    "detail": "proj 4.11 goals combined",
+    "history": null
+  },
+  {
+    "match": "Ilves Tampere vs J\u00e4\u00e4honka Espoo",
+    "subject": "Ilves Tampere",
+    "market": "Ilves Tampere Over 2.0 Goals",
+    "prob": 62,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 3.19 goals \u00b7 season 3.12/gm",
+    "history": "4/2/6/3/3",
+    "line": 2.0,
+    "is_home": true,
+    "league_id": 14400,
+    "home_name": "Ilves Tampere",
+    "away_name": "J\u00e4\u00e4honka Espoo",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "Ilves Tampere vs J\u00e4\u00e4honka Espoo",
+    "subject": "J\u00e4\u00e4honka Espoo",
+    "market": "J\u00e4\u00e4honka Espoo Over 1.0 Goals",
+    "prob": 62,
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 2.08 goals \u00b7 season 2.5/gm",
+    "history": "1/1/4/4/1",
+    "line": 1.0,
+    "is_home": false,
+    "league_id": 14400,
+    "home_name": "Ilves Tampere",
+    "away_name": "J\u00e4\u00e4honka Espoo",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "Ilves Tampere vs J\u00e4\u00e4honka Espoo",
+    "subject": "Ilves Tampere vs J\u00e4\u00e4honka Espoo",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 77,
+    "hit_rate": null,
+    "category": "Liiga Game Total",
+    "detail": "proj 5.27 goals combined",
+    "history": null
+  },
+  {
+    "match": "Mikkelin Jukurit vs KalPa",
+    "subject": "Mikkelin Jukurit",
+    "market": "Mikkelin Jukurit Over 2.0 Goals",
+    "prob": 58,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 3.02 goals \u00b7 season 3.1/gm",
+    "history": "7/3/2/5/2",
+    "line": 2.0,
+    "is_home": true,
+    "league_id": 14400,
+    "home_name": "Mikkelin Jukurit",
+    "away_name": "KalPa",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "Mikkelin Jukurit vs KalPa",
+    "subject": "KalPa",
+    "market": "KalPa Over 2.0 Goals",
+    "prob": 60,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 3.1 goals \u00b7 season 2.88/gm",
+    "history": "7/1/5/1/4",
+    "line": 2.0,
+    "is_home": false,
+    "league_id": 14400,
+    "home_name": "Mikkelin Jukurit",
+    "away_name": "KalPa",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "Mikkelin Jukurit vs KalPa",
+    "subject": "Mikkelin Jukurit vs KalPa",
+    "market": "Game Over 4.0 Total Goals",
+    "prob": 73,
+    "hit_rate": null,
+    "category": "Liiga Game Total",
+    "detail": "proj 6.12 goals combined",
+    "history": null
+  },
+  {
+    "match": "KooKoo vs Pelicans Lahti",
+    "subject": "KooKoo",
+    "market": "KooKoo Over 1.0 Goals",
+    "prob": 50,
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 1.67 goals \u00b7 season 2.5/gm",
+    "history": "1/4/0/3/0",
+    "line": 1.0,
+    "is_home": true,
+    "league_id": 14400,
+    "home_name": "KooKoo",
+    "away_name": "Pelicans Lahti",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "KooKoo vs Pelicans Lahti",
+    "subject": "Pelicans Lahti",
+    "market": "Pelicans Lahti Over 1.0 Goals",
+    "prob": 43,
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 1.47 goals \u00b7 season 2.0/gm",
+    "history": "2/1/1/0/2",
+    "line": 1.0,
+    "is_home": false,
+    "league_id": 14400,
+    "home_name": "KooKoo",
+    "away_name": "Pelicans Lahti",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "KooKoo vs Pelicans Lahti",
+    "subject": "KooKoo vs Pelicans Lahti",
+    "market": "Game Over 2.0 Total Goals",
+    "prob": 61,
+    "hit_rate": null,
+    "category": "Liiga Game Total",
+    "detail": "proj 3.14 goals combined",
+    "history": null
+  },
+  {
+    "match": "Lukko vs \u00c4ss\u00e4t",
+    "subject": "Lukko",
+    "market": "Lukko Over 1.5 Goals",
+    "prob": 74,
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 2.64 goals \u00b7 season 2.44/gm",
+    "history": "3/3/3/2/3",
+    "line": 1.5,
+    "is_home": true,
+    "league_id": 14400,
+    "home_name": "Lukko",
+    "away_name": "\u00c4ss\u00e4t",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "Lukko vs \u00c4ss\u00e4t",
+    "subject": "\u00c4ss\u00e4t",
+    "market": "\u00c4ss\u00e4t Over 1.0 Goals",
+    "prob": 50,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 1.67 goals \u00b7 season 2.56/gm",
+    "history": "2/2/0/4/0",
+    "line": 1.0,
+    "is_home": false,
+    "league_id": 14400,
+    "home_name": "Lukko",
+    "away_name": "\u00c4ss\u00e4t",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "Lukko vs \u00c4ss\u00e4t",
+    "subject": "Lukko vs \u00c4ss\u00e4t",
+    "market": "Game Over 3.0 Total Goals",
+    "prob": 62,
+    "hit_rate": null,
+    "category": "Liiga Game Total",
+    "detail": "proj 4.31 goals combined",
+    "history": null
+  },
+  {
+    "match": "SaiPa vs Jokerit",
+    "subject": "SaiPa",
+    "market": "SaiPa Over 1.5 Goals",
+    "prob": 76,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 2.76 goals \u00b7 season 2.89/gm",
+    "history": "1/5/4/1/3",
+    "line": 1.5,
+    "is_home": true,
+    "league_id": 14400,
+    "home_name": "SaiPa",
+    "away_name": "Jokerit",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "SaiPa vs Jokerit",
+    "subject": "Jokerit",
+    "market": "Jokerit Over 1.0 Goals",
+    "prob": 61,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 2.06 goals \u00b7 season 2.1/gm",
+    "history": "3/1/1/3/2",
+    "line": 1.0,
+    "is_home": false,
+    "league_id": 14400,
+    "home_name": "SaiPa",
+    "away_name": "Jokerit",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "SaiPa vs Jokerit",
+    "subject": "SaiPa vs Jokerit",
+    "market": "Game Over 3.0 Total Goals",
+    "prob": 71,
+    "hit_rate": null,
+    "category": "Liiga Game Total",
+    "detail": "proj 4.82 goals combined",
+    "history": null
+  },
+  {
+    "match": "TPS Turku vs JYP",
+    "subject": "TPS Turku",
+    "market": "TPS Turku Over 1.5 Goals",
+    "prob": 63,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 2.13 goals \u00b7 season 2.44/gm",
+    "history": "4/1/2/2/2",
+    "line": 1.5,
+    "is_home": true,
+    "league_id": 14400,
+    "home_name": "TPS Turku",
+    "away_name": "JYP",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "TPS Turku vs JYP",
+    "subject": "JYP",
+    "market": "JYP Over 2.0 Goals",
+    "prob": 61,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 3.16 goals \u00b7 season 3.71/gm",
+    "history": "5/4/3/4/1",
+    "line": 2.0,
+    "is_home": false,
+    "league_id": 14400,
+    "home_name": "TPS Turku",
+    "away_name": "JYP",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "TPS Turku vs JYP",
+    "subject": "TPS Turku vs JYP",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 77,
+    "hit_rate": null,
+    "category": "Liiga Game Total",
+    "detail": "proj 5.29 goals combined",
+    "history": null
+  },
+  {
+    "match": "Vaasan Sport vs IFK Helsingfors",
+    "subject": "Vaasan Sport",
+    "market": "Vaasan Sport Over 1.0 Goals",
+    "prob": 40,
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 1.39 goals \u00b7 season 2.0/gm",
+    "history": "1/2/2/0/1",
+    "line": 1.0,
+    "is_home": true,
+    "league_id": 14400,
+    "home_name": "Vaasan Sport",
+    "away_name": "IFK Helsingfors",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "Vaasan Sport vs IFK Helsingfors",
+    "subject": "IFK Helsingfors",
+    "market": "IFK Helsingfors Over 1.5 Goals",
+    "prob": 68,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 2.34 goals \u00b7 season 2.5/gm",
+    "history": "4/2/3/3/1",
+    "line": 1.5,
+    "is_home": false,
+    "league_id": 14400,
+    "home_name": "Vaasan Sport",
+    "away_name": "IFK Helsingfors",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "Vaasan Sport vs IFK Helsingfors",
+    "subject": "Vaasan Sport vs IFK Helsingfors",
+    "market": "Game Over 2.5 Total Goals",
+    "prob": 72,
+    "hit_rate": null,
+    "category": "Liiga Game Total",
+    "detail": "proj 3.73 goals combined",
+    "history": null
+  },
+  {
+    "match": "Kosice vs Michalovce Dukla",
+    "subject": "Kosice",
+    "market": "Kosice Over 1.0 Goals",
+    "prob": 54,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 1.81 goals \u00b7 season 2.71/gm",
+    "history": "4/2/6/1/0",
+    "line": 1.0,
+    "is_home": true,
+    "league_id": 78225,
+    "home_name": "Kosice",
+    "away_name": "Michalovce Dukla",
+    "match_date": "2026-10-03T17:00:00.000Z"
+  },
+  {
+    "match": "Kosice vs Michalovce Dukla",
+    "subject": "Michalovce Dukla",
+    "market": "Michalovce Dukla Over 2.0 Goals",
+    "prob": 59,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 3.07 goals \u00b7 season 2.57/gm",
+    "history": "3/1/2/4/6",
+    "line": 2.0,
+    "is_home": false,
+    "league_id": 78225,
+    "home_name": "Kosice",
+    "away_name": "Michalovce Dukla",
+    "match_date": "2026-10-03T17:00:00.000Z"
+  },
+  {
+    "match": "Kosice vs Michalovce Dukla",
+    "subject": "Kosice vs Michalovce Dukla",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 72,
+    "hit_rate": null,
+    "category": "Extraliga Game Total",
+    "detail": "proj 4.88 goals combined",
+    "history": null
+  },
+  {
+    "match": "Graz 99ers vs TWK Innsbruck",
+    "subject": "Graz 99ers",
+    "market": "Graz 99ers Over 1.5 Goals",
+    "prob": 63,
+    "hit_rate": {
       "hits": 4,
       "total": 5
     },
     "category": "ICE Hockey League Team Total",
-    "detail": "proj 2.29 goals \u00b7 season 2.5/gm",
-    "history": "3/4/3/2/1",
+    "detail": "proj 2.13 goals \u00b7 season 2.43/gm",
+    "history": "4/3/2/1/2",
+    "line": 1.5,
+    "is_home": true,
+    "league_id": 60354,
+    "home_name": "Graz 99ers",
+    "away_name": "TWK Innsbruck",
+    "match_date": "2026-10-03T15:30:00.000Z"
+  },
+  {
+    "match": "Graz 99ers vs TWK Innsbruck",
+    "subject": "TWK Innsbruck",
+    "market": "TWK Innsbruck Over 1.5 Goals",
+    "prob": 70,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "ICE Hockey League Team Total",
+    "detail": "proj 2.43 goals \u00b7 season 2.86/gm",
+    "history": "3/2/3/5/0",
     "line": 1.5,
     "is_home": false,
     "league_id": 60354,
-    "home_name": "Black Wings Linz",
-    "away_name": "Graz 99ers",
-    "match_date": "2026-10-02T17:15:00.000Z"
+    "home_name": "Graz 99ers",
+    "away_name": "TWK Innsbruck",
+    "match_date": "2026-10-03T15:30:00.000Z"
   },
   {
-    "match": "Black Wings Linz vs Graz 99ers",
-    "subject": "Black Wings Linz vs Graz 99ers",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 74,
+    "match": "Graz 99ers vs TWK Innsbruck",
+    "subject": "Graz 99ers vs TWK Innsbruck",
+    "market": "Game Over 3.0 Total Goals",
+    "prob": 67,
     "hit_rate": null,
     "category": "ICE Hockey League Game Total",
-    "detail": "proj 6.22 goals combined",
+    "detail": "proj 4.56 goals combined",
     "history": null
   }
 ]
