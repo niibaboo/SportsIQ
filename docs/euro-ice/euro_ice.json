@@ -144,6 +144,54 @@
     "history": null
   },
   {
+    "match": "Fr\u00f6lunda vs Djurg\u00e5rden",
+    "subject": "Fr\u00f6lunda",
+    "market": "Fr\u00f6lunda Over 2.0 Goals",
+    "prob": 61,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "SHL Team Total",
+    "detail": "proj 3.14 goals \u00b7 season 3.75/gm",
+    "history": "5/3/7/2/2",
+    "line": 2.0,
+    "is_home": true,
+    "league_id": 40781,
+    "home_name": "Fr\u00f6lunda",
+    "away_name": "Djurg\u00e5rden",
+    "match_date": "2026-10-03T13:15:00.000Z"
+  },
+  {
+    "match": "Fr\u00f6lunda vs Djurg\u00e5rden",
+    "subject": "Djurg\u00e5rden",
+    "market": "Djurg\u00e5rden Over 0.5 Goals",
+    "prob": 71,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "SHL Team Total",
+    "detail": "proj 1.25 goals \u00b7 season 1.4/gm",
+    "history": "0/1/4/2/0",
+    "line": 0.5,
+    "is_home": false,
+    "league_id": 40781,
+    "home_name": "Fr\u00f6lunda",
+    "away_name": "Djurg\u00e5rden",
+    "match_date": "2026-10-03T13:15:00.000Z"
+  },
+  {
+    "match": "Fr\u00f6lunda vs Djurg\u00e5rden",
+    "subject": "Fr\u00f6lunda vs Djurg\u00e5rden",
+    "market": "Game Over 3.0 Total Goals",
+    "prob": 64,
+    "hit_rate": null,
+    "category": "SHL Game Total",
+    "detail": "proj 4.39 goals combined",
+    "history": null
+  },
+  {
     "match": "V\u00e4xj\u00f6 Lakers vs R\u00f6gle",
     "subject": "V\u00e4xj\u00f6 Lakers",
     "market": "V\u00e4xj\u00f6 Lakers Over 2.5 Goals",
@@ -288,51 +336,51 @@
     "history": null
   },
   {
-    "match": "Fr\u00f6lunda vs Djurg\u00e5rden",
-    "subject": "Fr\u00f6lunda",
-    "market": "Fr\u00f6lunda Over 2.0 Goals",
-    "prob": 61,
+    "match": "Langnau Tigers vs EHC Kloten",
+    "subject": "Langnau Tigers",
+    "market": "Langnau Tigers Over 2.5 Goals",
+    "prob": 77,
     "hit_rate": {
-      "hits": 3,
+      "hits": 5,
       "total": 5
     },
-    "category": "SHL Team Total",
-    "detail": "proj 3.14 goals \u00b7 season 3.75/gm",
-    "history": "5/3/7/2/2",
-    "line": 2.0,
+    "category": "National League Team Total",
+    "detail": "proj 4.09 goals \u00b7 season 3.88/gm",
+    "history": "3/5/3/4/5",
+    "line": 2.5,
     "is_home": true,
-    "league_id": 40781,
-    "home_name": "Fr\u00f6lunda",
-    "away_name": "Djurg\u00e5rden",
-    "match_date": "2026-10-03T13:15:00.000Z"
+    "league_id": 44185,
+    "home_name": "Langnau Tigers",
+    "away_name": "EHC Kloten",
+    "match_date": "2026-10-03T17:45:00.000Z"
   },
   {
-    "match": "Fr\u00f6lunda vs Djurg\u00e5rden",
-    "subject": "Djurg\u00e5rden",
-    "market": "Djurg\u00e5rden Over 0.5 Goals",
-    "prob": 71,
+    "match": "Langnau Tigers vs EHC Kloten",
+    "subject": "EHC Kloten",
+    "market": "EHC Kloten Over 0.5 Goals",
+    "prob": 70,
     "hit_rate": {
       "hits": 3,
       "total": 5
     },
-    "category": "SHL Team Total",
-    "detail": "proj 1.25 goals \u00b7 season 1.4/gm",
-    "history": "0/1/4/2/0",
+    "category": "National League Team Total",
+    "detail": "proj 1.22 goals \u00b7 season 2.0/gm",
+    "history": "1/0/2/0/1",
     "line": 0.5,
     "is_home": false,
-    "league_id": 40781,
-    "home_name": "Fr\u00f6lunda",
-    "away_name": "Djurg\u00e5rden",
-    "match_date": "2026-10-03T13:15:00.000Z"
+    "league_id": 44185,
+    "home_name": "Langnau Tigers",
+    "away_name": "EHC Kloten",
+    "match_date": "2026-10-03T17:45:00.000Z"
   },
   {
-    "match": "Fr\u00f6lunda vs Djurg\u00e5rden",
-    "subject": "Fr\u00f6lunda vs Djurg\u00e5rden",
-    "market": "Game Over 3.0 Total Goals",
-    "prob": 64,
+    "match": "Langnau Tigers vs EHC Kloten",
+    "subject": "Langnau Tigers vs EHC Kloten",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 78,
     "hit_rate": null,
-    "category": "SHL Game Total",
-    "detail": "proj 4.39 goals combined",
+    "category": "National League Game Total",
+    "detail": "proj 5.31 goals combined",
     "history": null
   },
   {
@@ -406,13 +454,13 @@
     "match": "Biel vs Davos",
     "subject": "Davos",
     "market": "Davos Over 2.0 Goals",
-    "prob": 65,
+    "prob": 54,
     "hit_rate": {
       "hits": 3,
       "total": 5
     },
     "category": "National League Team Total",
-    "detail": "proj 3.35 goals \u00b7 season 4.25/gm",
+    "detail": "proj 2.83 goals \u00b7 season 2.75/gm",
     "history": "1/2/4/3/3",
     "line": 2.0,
     "is_home": false,
@@ -424,59 +472,11 @@
   {
     "match": "Biel vs Davos",
     "subject": "Biel vs Davos",
-    "market": "Game Over 4.5 Total Goals",
-    "prob": 78,
-    "hit_rate": null,
-    "category": "National League Game Total",
-    "detail": "proj 6.55 goals combined",
-    "history": null
-  },
-  {
-    "match": "Rapperswil-Jona Lakers vs Bern",
-    "subject": "Rapperswil-Jona Lakers",
-    "market": "Rapperswil-Jona Lakers Over 1.5 Goals",
-    "prob": 71,
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
-    "category": "National League Team Total",
-    "detail": "proj 2.51 goals \u00b7 season 2.88/gm",
-    "history": "2/3/5/2/2",
-    "line": 1.5,
-    "is_home": true,
-    "league_id": 44185,
-    "home_name": "Rapperswil-Jona Lakers",
-    "away_name": "Bern",
-    "match_date": "2026-10-03T17:45:00.000Z"
-  },
-  {
-    "match": "Rapperswil-Jona Lakers vs Bern",
-    "subject": "Bern",
-    "market": "Bern Over 2.5 Goals",
-    "prob": 69,
-    "hit_rate": {
-      "hits": 2,
-      "total": 5
-    },
-    "category": "National League Team Total",
-    "detail": "proj 3.54 goals \u00b7 season 6.0/gm",
-    "history": "5/4/2/2/2",
-    "line": 2.5,
-    "is_home": false,
-    "league_id": 44185,
-    "home_name": "Rapperswil-Jona Lakers",
-    "away_name": "Bern",
-    "match_date": "2026-10-03T17:45:00.000Z"
-  },
-  {
-    "match": "Rapperswil-Jona Lakers vs Bern",
-    "subject": "Rapperswil-Jona Lakers vs Bern",
     "market": "Game Over 4.0 Total Goals",
     "prob": 72,
     "hit_rate": null,
     "category": "National League Game Total",
-    "detail": "proj 6.05 goals combined",
+    "detail": "proj 6.03 goals combined",
     "history": null
   },
   {
@@ -528,51 +528,99 @@
     "history": null
   },
   {
-    "match": "Langnau Tigers vs EHC Kloten",
-    "subject": "Langnau Tigers",
-    "market": "Langnau Tigers Over 2.5 Goals",
-    "prob": 77,
+    "match": "Rapperswil-Jona Lakers vs Bern",
+    "subject": "Rapperswil-Jona Lakers",
+    "market": "Rapperswil-Jona Lakers Over 1.5 Goals",
+    "prob": 71,
     "hit_rate": {
       "hits": 5,
       "total": 5
     },
     "category": "National League Team Total",
-    "detail": "proj 4.09 goals \u00b7 season 3.88/gm",
-    "history": "3/5/3/4/5",
-    "line": 2.5,
+    "detail": "proj 2.51 goals \u00b7 season 2.88/gm",
+    "history": "2/3/5/2/2",
+    "line": 1.5,
     "is_home": true,
     "league_id": 44185,
-    "home_name": "Langnau Tigers",
-    "away_name": "EHC Kloten",
+    "home_name": "Rapperswil-Jona Lakers",
+    "away_name": "Bern",
     "match_date": "2026-10-03T17:45:00.000Z"
   },
   {
-    "match": "Langnau Tigers vs EHC Kloten",
-    "subject": "EHC Kloten",
-    "market": "EHC Kloten Over 0.5 Goals",
-    "prob": 70,
+    "match": "Rapperswil-Jona Lakers vs Bern",
+    "subject": "Bern",
+    "market": "Bern Over 1.5 Goals",
+    "prob": 71,
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 2.49 goals \u00b7 season 3.0/gm",
+    "history": "5/4/2/2/2",
+    "line": 1.5,
+    "is_home": false,
+    "league_id": 44185,
+    "home_name": "Rapperswil-Jona Lakers",
+    "away_name": "Bern",
+    "match_date": "2026-10-03T17:45:00.000Z"
+  },
+  {
+    "match": "Rapperswil-Jona Lakers vs Bern",
+    "subject": "Rapperswil-Jona Lakers vs Bern",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 73,
+    "hit_rate": null,
+    "category": "National League Game Total",
+    "detail": "proj 5.0 goals combined",
+    "history": null
+  },
+  {
+    "match": "SaiPa vs Jokerit",
+    "subject": "SaiPa",
+    "market": "SaiPa Over 1.5 Goals",
+    "prob": 76,
     "hit_rate": {
       "hits": 3,
       "total": 5
     },
-    "category": "National League Team Total",
-    "detail": "proj 1.22 goals \u00b7 season 2.0/gm",
-    "history": "1/0/2/0/1",
-    "line": 0.5,
-    "is_home": false,
-    "league_id": 44185,
-    "home_name": "Langnau Tigers",
-    "away_name": "EHC Kloten",
-    "match_date": "2026-10-03T17:45:00.000Z"
+    "category": "Liiga Team Total",
+    "detail": "proj 2.76 goals \u00b7 season 2.89/gm",
+    "history": "1/5/4/1/3",
+    "line": 1.5,
+    "is_home": true,
+    "league_id": 14400,
+    "home_name": "SaiPa",
+    "away_name": "Jokerit",
+    "match_date": "2026-10-03T14:00:00.000Z"
   },
   {
-    "match": "Langnau Tigers vs EHC Kloten",
-    "subject": "Langnau Tigers vs EHC Kloten",
-    "market": "Game Over 3.5 Total Goals",
-    "prob": 78,
+    "match": "SaiPa vs Jokerit",
+    "subject": "Jokerit",
+    "market": "Jokerit Over 1.0 Goals",
+    "prob": 61,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 2.06 goals \u00b7 season 2.1/gm",
+    "history": "3/1/1/3/2",
+    "line": 1.0,
+    "is_home": false,
+    "league_id": 14400,
+    "home_name": "SaiPa",
+    "away_name": "Jokerit",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "SaiPa vs Jokerit",
+    "subject": "SaiPa vs Jokerit",
+    "market": "Game Over 3.0 Total Goals",
+    "prob": 71,
     "hit_rate": null,
-    "category": "National League Game Total",
-    "detail": "proj 5.31 goals combined",
+    "category": "Liiga Game Total",
+    "detail": "proj 4.82 goals combined",
     "history": null
   },
   {
@@ -621,54 +669,6 @@
     "hit_rate": null,
     "category": "Liiga Game Total",
     "detail": "proj 4.11 goals combined",
-    "history": null
-  },
-  {
-    "match": "Ilves Tampere vs J\u00e4\u00e4honka Espoo",
-    "subject": "Ilves Tampere",
-    "market": "Ilves Tampere Over 2.0 Goals",
-    "prob": 62,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "Liiga Team Total",
-    "detail": "proj 3.19 goals \u00b7 season 3.12/gm",
-    "history": "4/2/6/3/3",
-    "line": 2.0,
-    "is_home": true,
-    "league_id": 14400,
-    "home_name": "Ilves Tampere",
-    "away_name": "J\u00e4\u00e4honka Espoo",
-    "match_date": "2026-10-03T14:00:00.000Z"
-  },
-  {
-    "match": "Ilves Tampere vs J\u00e4\u00e4honka Espoo",
-    "subject": "J\u00e4\u00e4honka Espoo",
-    "market": "J\u00e4\u00e4honka Espoo Over 1.0 Goals",
-    "prob": 62,
-    "hit_rate": {
-      "hits": 2,
-      "total": 5
-    },
-    "category": "Liiga Team Total",
-    "detail": "proj 2.08 goals \u00b7 season 2.5/gm",
-    "history": "1/1/4/4/1",
-    "line": 1.0,
-    "is_home": false,
-    "league_id": 14400,
-    "home_name": "Ilves Tampere",
-    "away_name": "J\u00e4\u00e4honka Espoo",
-    "match_date": "2026-10-03T14:00:00.000Z"
-  },
-  {
-    "match": "Ilves Tampere vs J\u00e4\u00e4honka Espoo",
-    "subject": "Ilves Tampere vs J\u00e4\u00e4honka Espoo",
-    "market": "Game Over 3.5 Total Goals",
-    "prob": 77,
-    "hit_rate": null,
-    "category": "Liiga Game Total",
-    "detail": "proj 5.27 goals combined",
     "history": null
   },
   {
@@ -768,6 +768,54 @@
     "history": null
   },
   {
+    "match": "Ilves Tampere vs J\u00e4\u00e4honka Espoo",
+    "subject": "Ilves Tampere",
+    "market": "Ilves Tampere Over 2.0 Goals",
+    "prob": 62,
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 3.19 goals \u00b7 season 3.12/gm",
+    "history": "4/2/6/3/3",
+    "line": 2.0,
+    "is_home": true,
+    "league_id": 14400,
+    "home_name": "Ilves Tampere",
+    "away_name": "J\u00e4\u00e4honka Espoo",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "Ilves Tampere vs J\u00e4\u00e4honka Espoo",
+    "subject": "J\u00e4\u00e4honka Espoo",
+    "market": "J\u00e4\u00e4honka Espoo Over 1.0 Goals",
+    "prob": 62,
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "category": "Liiga Team Total",
+    "detail": "proj 2.08 goals \u00b7 season 2.5/gm",
+    "history": "1/1/4/4/1",
+    "line": 1.0,
+    "is_home": false,
+    "league_id": 14400,
+    "home_name": "Ilves Tampere",
+    "away_name": "J\u00e4\u00e4honka Espoo",
+    "match_date": "2026-10-03T14:00:00.000Z"
+  },
+  {
+    "match": "Ilves Tampere vs J\u00e4\u00e4honka Espoo",
+    "subject": "Ilves Tampere vs J\u00e4\u00e4honka Espoo",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 77,
+    "hit_rate": null,
+    "category": "Liiga Game Total",
+    "detail": "proj 5.27 goals combined",
+    "history": null
+  },
+  {
     "match": "Lukko vs \u00c4ss\u00e4t",
     "subject": "Lukko",
     "market": "Lukko Over 1.5 Goals",
@@ -813,54 +861,6 @@
     "hit_rate": null,
     "category": "Liiga Game Total",
     "detail": "proj 4.31 goals combined",
-    "history": null
-  },
-  {
-    "match": "SaiPa vs Jokerit",
-    "subject": "SaiPa",
-    "market": "SaiPa Over 1.5 Goals",
-    "prob": 76,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "Liiga Team Total",
-    "detail": "proj 2.76 goals \u00b7 season 2.89/gm",
-    "history": "1/5/4/1/3",
-    "line": 1.5,
-    "is_home": true,
-    "league_id": 14400,
-    "home_name": "SaiPa",
-    "away_name": "Jokerit",
-    "match_date": "2026-10-03T14:00:00.000Z"
-  },
-  {
-    "match": "SaiPa vs Jokerit",
-    "subject": "Jokerit",
-    "market": "Jokerit Over 1.0 Goals",
-    "prob": 61,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "Liiga Team Total",
-    "detail": "proj 2.06 goals \u00b7 season 2.1/gm",
-    "history": "3/1/1/3/2",
-    "line": 1.0,
-    "is_home": false,
-    "league_id": 14400,
-    "home_name": "SaiPa",
-    "away_name": "Jokerit",
-    "match_date": "2026-10-03T14:00:00.000Z"
-  },
-  {
-    "match": "SaiPa vs Jokerit",
-    "subject": "SaiPa vs Jokerit",
-    "market": "Game Over 3.0 Total Goals",
-    "prob": 71,
-    "hit_rate": null,
-    "category": "Liiga Game Total",
-    "detail": "proj 4.82 goals combined",
     "history": null
   },
   {
