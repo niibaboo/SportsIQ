@@ -1,5 +1,38 @@
 {
-  "generated": "2026-10-04T09:56:32.648576+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-10-04T15:03:22.351008+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_id": "401872965",
+      "home_id": "28",
+      "away_id": "11",
+      "home_team": "Washington Commanders",
+      "away_team": "Indianapolis Colts",
+      "home_score": 6.0,
+      "away_score": 10.0,
+      "period": 2,
+      "display_clock": "0:00",
+      "status": "Halftime",
+      "elapsed_minute": 30.0,
+      "minutes_remaining": 30.0,
+      "next_score": {
+        "home": 41,
+        "away": 59
+      },
+      "game_total_pace": {
+        "prob": 13,
+        "status": "On Pace: Under"
+      },
+      "model_signal": {
+        "label": "Game Total Under",
+        "prob": 87,
+        "qualifies": true
+      },
+      "pregame_projection": {
+        "exp_home": 27.3,
+        "exp_away": 27.5,
+        "exp_total": 54.8
+      }
+    }
+  ]
 }
