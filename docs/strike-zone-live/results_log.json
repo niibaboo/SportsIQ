@@ -250,5 +250,21 @@
     "status": "hit",
     "final_home_runs": 3.0,
     "final_away_runs": 2.0
+  },
+  "849825_Game_Total_Under": {
+    "id": "849825_Game_Total_Under",
+    "game_pk": 849825,
+    "home_team": "Milwaukee Brewers",
+    "away_team": "San Diego Padres",
+    "label": "Game Total Under",
+    "prob": 97,
+    "logged_at": "2026-10-04T20:06:58.824589+00:00",
+    "logged_inning": 1,
+    "logged_inning_state": "Top",
+    "logged_half_index": 0,
+    "logged_home_runs": 0.0,
+    "logged_away_runs": 0.0,
+    "pregame_total": 9.68,
+    "status": "pending"
   }
 }

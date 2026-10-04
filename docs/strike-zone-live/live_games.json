@@ -1,5 +1,47 @@
 {
-  "generated": "2026-10-04T17:04:24.116134+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-10-04T20:06:58.821112+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_pk": 849825,
+      "home_team": "Milwaukee Brewers",
+      "away_team": "San Diego Padres",
+      "home_runs": 0.0,
+      "away_runs": 0.0,
+      "home_hits": 0.0,
+      "away_hits": 0.0,
+      "inning": 1,
+      "inning_state": "Top",
+      "status": "Warmup",
+      "half_innings_remaining": 18,
+      "next_run": {
+        "home": 54,
+        "away": 46
+      },
+      "game_total_pace": {
+        "prob": 3,
+        "status": "On Pace: Under"
+      },
+      "inning_winner": {
+        "home": 20,
+        "away": 17,
+        "tie": 63
+      },
+      "inning_hits": {
+        "home": 27,
+        "away": 23,
+        "tie": 50
+      },
+      "model_signal": {
+        "label": "Game Total Under",
+        "prob": 97,
+        "qualifies": true
+      },
+      "pregame_projection": {
+        "home_lambda": 5.18,
+        "away_lambda": 4.5,
+        "pregame_total": 9.68
+      }
+    }
+  ]
 }
