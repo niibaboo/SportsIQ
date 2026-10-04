@@ -6066,9 +6066,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-10-01T15:07:24.473674+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 27.0,
+    "verified_at": "2026-10-04T13:42:59.249412+00:00"
   },
   {
     "id": "d7001f51e0df6df7",
@@ -6085,9 +6086,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-10-01T15:07:24.473676+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 24.0,
+    "verified_at": "2026-10-04T13:42:59.249429+00:00"
   },
   {
     "id": "623a6b4a84dc6a97",
@@ -6104,9 +6106,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-10-01T15:07:24.473678+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 51.0,
+    "verified_at": "2026-10-04T13:42:59.249436+00:00"
   },
   {
     "id": "045faf8bd8c6e6b9",
@@ -6123,9 +6126,10 @@
     "athlete_id": "4832800",
     "stat_key": "REC",
     "logged_at": "2026-10-01T15:07:24.473680+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4.0,
+    "verified_at": "2026-10-04T13:42:59.249454+00:00"
   },
   {
     "id": "73fee3e3535de42b",
@@ -6142,9 +6146,10 @@
     "athlete_id": "3122840",
     "stat_key": "YDS",
     "logged_at": "2026-10-01T15:07:24.473682+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 268.0,
+    "verified_at": "2026-10-04T13:42:59.249466+00:00"
   },
   {
     "id": "f72ff6ae1cff3ad1",
@@ -6161,9 +6166,10 @@
     "athlete_id": "5083076",
     "stat_key": "REC",
     "logged_at": "2026-10-01T15:07:24.473684+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3.0,
+    "verified_at": "2026-10-04T13:42:59.249476+00:00"
   },
   {
     "id": "4d036c905fdf99e7",
@@ -6180,9 +6186,10 @@
     "athlete_id": "4685702",
     "stat_key": "YDS",
     "logged_at": "2026-10-01T15:07:24.473686+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 53.0,
+    "verified_at": "2026-10-04T13:42:59.249486+00:00"
   },
   {
     "id": "67e9bd5754b24d35",
@@ -6199,9 +6206,10 @@
     "athlete_id": "4047650",
     "stat_key": "REC",
     "logged_at": "2026-10-01T15:07:24.473688+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5.0,
+    "verified_at": "2026-10-04T13:42:59.249491+00:00"
   },
   {
     "id": "2e1d65e725102e9f",
@@ -6218,9 +6226,10 @@
     "athlete_id": "8439",
     "stat_key": "YDS",
     "logged_at": "2026-10-01T15:07:24.473690+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 299.0,
+    "verified_at": "2026-10-04T13:42:59.249495+00:00"
   },
   {
     "id": "273c7a9f11115f28",
@@ -6237,9 +6246,10 @@
     "athlete_id": "4430802",
     "stat_key": "REC",
     "logged_at": "2026-10-01T15:07:24.473692+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3.0,
+    "verified_at": "2026-10-04T13:42:59.249500+00:00"
   },
   {
     "id": "9cbaed6edbac5fc0",
@@ -6256,9 +6266,10 @@
     "athlete_id": "4569987",
     "stat_key": "YDS",
     "logged_at": "2026-10-01T15:07:24.473694+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 93.0,
+    "verified_at": "2026-10-04T13:42:59.249505+00:00"
   },
   {
     "id": "4429174f7b57d5c8",
@@ -7789,12 +7800,13 @@
     "game_date": "2026-10-02",
     "date_key": "2026-10-02",
     "logged_at": "2026-10-01T15:07:24.473883+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "miss",
+    "actual": 3.0,
     "athlete_id": "5083076",
     "stat_key": "REC",
-    "label": "Receptions"
+    "label": "Receptions",
+    "verified_at": "2026-10-04T13:42:59.249537+00:00"
   },
   {
     "id": "ddf9147de0571b80",
@@ -7995,5 +8007,81 @@
     "athlete_id": "4361307",
     "stat_key": "REC",
     "label": "Receptions"
+  },
+  {
+    "id": "866a885b930b4561",
+    "scanner": "rushing_yards",
+    "match": "Atlanta Falcons @ New Orleans Saints",
+    "market": "Alvin Kamara Over 32.5 Rushing Yards",
+    "value": 68,
+    "detail": "proj 45.7 (2gm)",
+    "line": 32.5,
+    "game_id": "401872979",
+    "game_date": "2026-10-06",
+    "date_key": "2026-10-06",
+    "is_home": true,
+    "athlete_id": "3054850",
+    "stat_key": "YDS",
+    "logged_at": "2026-10-04T13:42:58.481674+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "5af0a5f3511f3c6d",
+    "scanner": "game_total",
+    "match": "Kansas City Chiefs @ Las Vegas Raiders",
+    "market": "Game Over 33.5 Total Points",
+    "value": 82,
+    "detail": "proj 46.6 pts (3v3gm)",
+    "line": 33.5,
+    "game_id": "401872976",
+    "game_date": "2026-10-04",
+    "date_key": "2026-10-04",
+    "is_home": null,
+    "athlete_id": null,
+    "stat_key": null,
+    "logged_at": "2026-10-04T13:42:58.481695+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "90f7805f15c08f9a",
+    "scanner": "game_total",
+    "match": "Tennessee Titans @ Baltimore Ravens",
+    "market": "Game Over 31.0 Total Points",
+    "value": 80,
+    "detail": "proj 43.1 pts (3v3gm)",
+    "line": 31.0,
+    "game_id": "401872973",
+    "game_date": "2026-10-04",
+    "date_key": "2026-10-04",
+    "is_home": null,
+    "athlete_id": null,
+    "stat_key": null,
+    "logged_at": "2026-10-04T13:42:58.481746+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "b80f1078cb6188ab",
+    "scanner": "rushing_yards",
+    "match": "Los Angeles Chargers @ Seattle Seahawks",
+    "market": "Emanuel Wilson Over 34.0 Rushing Yards",
+    "value": 68,
+    "detail": "proj 47.4 (3gm)",
+    "line": 34.0,
+    "game_id": "401872977",
+    "game_date": "2026-10-04",
+    "date_key": "2026-10-04",
+    "is_home": true,
+    "athlete_id": "4887558",
+    "stat_key": "YDS",
+    "logged_at": "2026-10-04T13:42:58.481765+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
   }
 ]
