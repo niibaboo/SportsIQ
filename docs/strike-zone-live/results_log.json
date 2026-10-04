@@ -229,7 +229,9 @@
     "logged_home_runs": 0.0,
     "logged_away_runs": 0.0,
     "pregame_total": 7.85,
-    "status": "pending"
+    "status": "hit",
+    "final_home_runs": 1.0,
+    "final_away_runs": 0.0
   },
   "849830_Game_Total_Under": {
     "id": "849830_Game_Total_Under",
@@ -245,6 +247,8 @@
     "logged_home_runs": 0.0,
     "logged_away_runs": 0.0,
     "pregame_total": 9.9,
-    "status": "pending"
+    "status": "hit",
+    "final_home_runs": 3.0,
+    "final_away_runs": 2.0
   }
 }
