@@ -1,159 +1,167 @@
 [
   {
-    "away": "Chicago White Sox",
-    "home": "Cleveland Guardians",
-    "time": "6:00 PM BST",
+    "away": "San Diego Padres",
+    "home": "Milwaukee Brewers",
+    "time": "9:00 PM BST",
     "pitchers": [
       {
         "side": "away",
-        "name": "Hagen Smith",
-        "pitcher_id": 696146,
-        "team": "Chicago White Sox",
-        "opp": "Cleveland Guardians",
-        "opp_kpct": 20.8,
-        "fip": 2.35051,
-        "xfip": 2.85681,
-        "lambda": 11.59,
-        "lo": 7,
-        "hi": 16,
-        "proj_ip": 8.4,
-        "outs_lambda": 25.27,
-        "outs_lo": 19,
-        "outs_hi": 32,
-        "season_era": "1.29",
-        "season_k9": "13.18",
-        "season_hits9": "3.54",
-        "bb9": 5.14,
-        "whip": "0.96",
-        "l5_str": "3",
-        "l5_vs_season": 0.0,
+        "name": "Michael King",
+        "pitcher_id": 650633,
+        "team": "San Diego Padres",
+        "opp": "Milwaukee Brewers",
+        "opp_kpct": 22.0,
+        "fip": 4.13294,
+        "xfip": 4.33527,
+        "lambda": 5.03,
+        "lo": 2,
+        "hi": 8,
+        "proj_ip": 5.7,
+        "outs_lambda": 17.19,
+        "outs_lo": 12,
+        "outs_hi": 23,
+        "season_era": "3.21",
+        "season_k9": "7.74",
+        "season_hits9": "7.20",
+        "bb9": 3.41,
+        "whip": "1.18",
+        "l5_str": "6\u00b73\u00b74\u00b76\u00b75",
+        "l5_vs_season": 4.0,
         "k_last5": [
-          3
+          6,
+          3,
+          4,
+          6,
+          5
         ],
         "outs_last5": [
-          6
+          18,
+          18,
+          21,
+          18,
+          12
         ]
       },
       {
         "side": "home",
-        "name": "Parker Messick",
-        "pitcher_id": 800048,
-        "team": "Cleveland Guardians",
-        "opp": "Chicago White Sox",
-        "opp_kpct": 24.1,
-        "fip": 3.06831,
-        "xfip": 3.36506,
-        "lambda": 6.01,
+        "name": "Logan Henderson",
+        "pitcher_id": 701656,
+        "team": "Milwaukee Brewers",
+        "opp": "San Diego Padres",
+        "opp_kpct": 21.6,
+        "fip": 3.32424,
+        "xfip": 3.30051,
+        "lambda": 6.08,
         "lo": 3,
         "hi": 9,
-        "proj_ip": 5.1,
-        "outs_lambda": 15.2,
-        "outs_lo": 10,
-        "outs_hi": 20,
-        "season_era": "2.56",
-        "season_k9": "9.32",
-        "season_hits9": "7.20",
-        "bb9": 2.37,
-        "whip": "1.06",
-        "l5_str": "12\u00b75\u00b78\u00b75\u00b72",
-        "l5_vs_season": 7.0,
+        "proj_ip": 5.8,
+        "outs_lambda": 17.47,
+        "outs_lo": 12,
+        "outs_hi": 23,
+        "season_era": "2.47",
+        "season_k9": "10.07",
+        "season_hits9": "5.86",
+        "bb9": 1.74,
+        "whip": "0.84",
+        "l5_str": "7\u00b77\u00b76\u00b78\u00b73",
+        "l5_vs_season": -7.0,
         "k_last5": [
-          12,
-          5,
+          7,
+          7,
+          6,
           8,
-          5,
-          2
+          3
         ],
         "outs_last5": [
-          18,
-          16,
-          18,
+          21,
+          21,
           15,
-          9
+          15,
+          15
         ]
       }
     ],
-    "game_pk": 849829,
-    "game_date": "2026-10-03",
+    "game_pk": 849825,
+    "game_date": "2026-10-04",
     "team_runs": {
       "away": {
-        "team": "Chicago White Sox",
-        "opp": "Cleveland Guardians",
-        "lambda": 4.84,
+        "team": "San Diego Padres",
+        "opp": "Milwaukee Brewers",
+        "lambda": 4.5,
         "lo": 2,
-        "hi": 8,
-        "l5_str": "4\u00b79\u00b76\u00b76\u00b74",
+        "hi": 7,
+        "l5_str": "5\u00b74\u00b74\u00b710\u00b79",
         "last5_runs": [
+          5,
           4,
-          9,
-          6,
-          6,
-          4
+          4,
+          10,
+          9
         ],
-        "season_rpg": 4.79,
-        "run_factor": 0.92,
+        "season_rpg": 4.46,
+        "run_factor": 0.81,
         "xfip_used": true
       },
       "home": {
-        "team": "Cleveland Guardians",
-        "opp": "Chicago White Sox",
-        "lambda": 2.0,
-        "lo": 1,
-        "hi": 4,
-        "l5_str": "0\u00b71\u00b712\u00b711\u00b72",
+        "team": "Milwaukee Brewers",
+        "opp": "San Diego Padres",
+        "lambda": 5.18,
+        "lo": 2,
+        "hi": 8,
+        "l5_str": "4\u00b75\u00b78\u00b73\u00b76",
         "last5_runs": [
-          0,
-          1,
-          12,
-          11,
-          2
+          4,
+          5,
+          8,
+          3,
+          6
         ],
-        "season_rpg": 4.19,
-        "run_factor": 0.7,
+        "season_rpg": 5.14,
+        "run_factor": 1.0,
         "xfip_used": true
       }
     },
     "team_hits": {
       "away": {
-        "team": "Chicago White Sox",
-        "opp": "Cleveland Guardians",
-        "lambda": 7.66,
+        "team": "San Diego Padres",
+        "opp": "Milwaukee Brewers",
+        "lambda": 7.23,
         "lo": 4,
         "hi": 11,
-        "l5_str": "9\u00b712\u00b710\u00b78\u00b78",
+        "l5_str": "8\u00b76\u00b710\u00b713\u00b711",
         "last5_hits": [
-          9,
-          12,
-          10,
           8,
-          8
+          6,
+          10,
+          13,
+          11
         ],
-        "season_hpg": 7.91,
-        "hit_factor": 0.89
+        "season_hpg": 8.11,
+        "hit_factor": 0.75
       },
       "home": {
-        "team": "Cleveland Guardians",
-        "opp": "Chicago White Sox",
-        "lambda": 3.95,
-        "lo": 2,
-        "hi": 7,
-        "l5_str": "5\u00b74\u00b79\u00b714\u00b79",
+        "team": "Milwaukee Brewers",
+        "opp": "San Diego Padres",
+        "lambda": 8.29,
+        "lo": 5,
+        "hi": 12,
+        "l5_str": "6\u00b711\u00b712\u00b78\u00b710",
         "last5_hits": [
-          5,
-          4,
-          9,
-          14,
-          9
+          6,
+          11,
+          12,
+          8,
+          10
         ],
-        "season_hpg": 7.97,
-        "hit_factor": 0.45
+        "season_hpg": 8.78,
+        "hit_factor": 0.89
       }
     }
   },
   {
     "away": "Atlanta Braves",
     "home": "Los Angeles Dodgers",
-    "time": "9:00 PM BST",
+    "time": "1:00 AM BST",
     "pitchers": [
       {
         "side": "away",
@@ -161,50 +169,50 @@
       },
       {
         "side": "home",
-        "name": "Tarik Skubal",
-        "pitcher_id": 669373,
+        "name": "Blake Snell",
+        "pitcher_id": 605483,
         "team": "Los Angeles Dodgers",
         "opp": "Atlanta Braves",
         "opp_kpct": 21.6,
-        "fip": 2.508076218487395,
-        "xfip": 2.7027071848739497,
-        "lambda": 7.1,
-        "lo": 4,
-        "hi": 11,
-        "proj_ip": 6.4,
-        "outs_lambda": 19.34,
-        "outs_lo": 14,
-        "outs_hi": 25,
-        "season_era": "2.72",
-        "season_k9": "10.55",
-        "season_hits9": "7.15",
-        "bb9": 1.53,
-        "whip": "0.96",
-        "l5_str": "6\u00b75\u00b79\u00b73\u00b710",
-        "l5_vs_season": -6.0,
+        "fip": 1.7177,
+        "xfip": 3.06237,
+        "lambda": 5.08,
+        "lo": 2,
+        "hi": 8,
+        "proj_ip": 4.3,
+        "outs_lambda": 12.85,
+        "outs_lo": 8,
+        "outs_hi": 18,
+        "season_era": "1.90",
+        "season_k9": "11.60",
+        "season_hits9": "6.54",
+        "bb9": 3.38,
+        "whip": "1.10",
+        "l5_str": "10\u00b77\u00b78\u00b71\u00b73",
+        "l5_vs_season": -9.0,
         "k_last5": [
-          6,
-          5,
-          9,
-          3,
-          10
+          10,
+          7,
+          8,
+          1,
+          3
         ],
         "outs_last5": [
-          17,
-          22,
-          21,
           15,
-          21
+          18,
+          17,
+          3,
+          12
         ]
       }
     ],
-    "game_pk": 849828,
-    "game_date": "2026-10-03",
+    "game_pk": 849823,
+    "game_date": "2026-10-04",
     "team_runs": {
       "away": {
         "team": "Atlanta Braves",
         "opp": "Los Angeles Dodgers",
-        "lambda": 2.99,
+        "lambda": 2.86,
         "lo": 1,
         "hi": 5,
         "l5_str": "3\u00b76\u00b70\u00b78\u00b73",
@@ -216,7 +224,7 @@
           3
         ],
         "season_rpg": 4.58,
-        "run_factor": 0.84,
+        "run_factor": 0.8,
         "xfip_used": true
       },
       "home": {
@@ -242,7 +250,7 @@
       "away": {
         "team": "Atlanta Braves",
         "opp": "Los Angeles Dodgers",
-        "lambda": 5.99,
+        "lambda": 5.77,
         "lo": 3,
         "hi": 9,
         "l5_str": "7\u00b712\u00b71\u00b710\u00b75",
@@ -254,7 +262,7 @@
           5
         ],
         "season_hpg": 8.32,
-        "hit_factor": 0.85
+        "hit_factor": 0.81
       },
       "home": {
         "team": "Los Angeles Dodgers",
@@ -272,324 +280,6 @@
         ],
         "season_hpg": 8.64,
         "hit_factor": 0.97
-      }
-    }
-  },
-  {
-    "away": "New York Yankees",
-    "home": "Tampa Bay Rays",
-    "time": "11:30 PM BST",
-    "pitchers": [
-      {
-        "side": "away",
-        "name": "Gerrit Cole",
-        "pitcher_id": 543037,
-        "team": "New York Yankees",
-        "opp": "Tampa Bay Rays",
-        "opp_kpct": 18.8,
-        "fip": 3.92728,
-        "xfip": 3.67253,
-        "lambda": 5.0,
-        "lo": 2,
-        "hi": 8,
-        "proj_ip": 5.7,
-        "outs_lambda": 17.06,
-        "outs_lo": 12,
-        "outs_hi": 22,
-        "season_era": "3.61",
-        "season_k9": "9.28",
-        "season_hits9": "8.15",
-        "bb9": 1.77,
-        "whip": "1.10",
-        "l5_str": "5\u00b73\u00b74\u00b76\u00b78",
-        "l5_vs_season": 1.0,
-        "k_last5": [
-          5,
-          3,
-          4,
-          6,
-          8
-        ],
-        "outs_last5": [
-          16,
-          21,
-          13,
-          18,
-          17
-        ]
-      },
-      {
-        "side": "home",
-        "name": "Drew Rasmussen",
-        "pitcher_id": 656876,
-        "team": "Tampa Bay Rays",
-        "opp": "New York Yankees",
-        "opp_kpct": 24.7,
-        "fip": 2.81563,
-        "xfip": 3.21462,
-        "lambda": 7.49,
-        "lo": 4,
-        "hi": 11,
-        "proj_ip": 6.4,
-        "outs_lambda": 19.09,
-        "outs_lo": 14,
-        "outs_hi": 25,
-        "season_era": "2.67",
-        "season_k9": "9.10",
-        "season_hits9": "6.54",
-        "bb9": 1.67,
-        "whip": "0.91",
-        "l5_str": "6\u00b77\u00b74\u00b73\u00b711",
-        "l5_vs_season": 6.0,
-        "k_last5": [
-          6,
-          7,
-          4,
-          3,
-          11
-        ],
-        "outs_last5": [
-          18,
-          21,
-          21,
-          15,
-          20
-        ]
-      }
-    ],
-    "game_pk": 849835,
-    "game_date": "2026-10-03",
-    "team_runs": {
-      "away": {
-        "team": "New York Yankees",
-        "opp": "Tampa Bay Rays",
-        "lambda": 4.28,
-        "lo": 2,
-        "hi": 7,
-        "l5_str": "1\u00b79\u00b76\u00b72\u00b76",
-        "last5_runs": [
-          1,
-          9,
-          6,
-          2,
-          6
-        ],
-        "season_rpg": 4.59,
-        "run_factor": 0.89,
-        "xfip_used": true
-      },
-      "home": {
-        "team": "Tampa Bay Rays",
-        "opp": "New York Yankees",
-        "lambda": 3.57,
-        "lo": 1,
-        "hi": 6,
-        "l5_str": "2\u00b74\u00b72\u00b712\u00b73",
-        "last5_runs": [
-          2,
-          4,
-          2,
-          12,
-          3
-        ],
-        "season_rpg": 4.54,
-        "run_factor": 0.97,
-        "xfip_used": true
-      }
-    },
-    "team_hits": {
-      "away": {
-        "team": "New York Yankees",
-        "opp": "Tampa Bay Rays",
-        "lambda": 6.47,
-        "lo": 3,
-        "hi": 10,
-        "l5_str": "3\u00b712\u00b77\u00b79\u00b78",
-        "last5_hits": [
-          3,
-          12,
-          7,
-          9,
-          8
-        ],
-        "season_hpg": 7.76,
-        "hit_factor": 0.81
-      },
-      "home": {
-        "team": "Tampa Bay Rays",
-        "opp": "New York Yankees",
-        "lambda": 8.03,
-        "lo": 5,
-        "hi": 12,
-        "l5_str": "6\u00b79\u00b76\u00b717\u00b78",
-        "last5_hits": [
-          6,
-          9,
-          6,
-          17,
-          8
-        ],
-        "season_hpg": 8.67,
-        "hit_factor": 0.93
-      }
-    }
-  },
-  {
-    "away": "San Diego Padres",
-    "home": "Milwaukee Brewers",
-    "time": "1:30 AM BST",
-    "pitchers": [
-      {
-        "side": "away",
-        "name": "Robbie Ray",
-        "pitcher_id": 592662,
-        "team": "San Diego Padres",
-        "opp": "Milwaukee Brewers",
-        "opp_kpct": 22.0,
-        "fip": 4.694075251509054,
-        "xfip": 4.908887142857143,
-        "lambda": 3.54,
-        "lo": 1,
-        "hi": 6,
-        "proj_ip": 4.3,
-        "outs_lambda": 12.96,
-        "outs_lo": 8,
-        "outs_hi": 18,
-        "season_era": "3.59",
-        "season_k9": "7.61",
-        "season_hits9": "7.61",
-        "bb9": 4.56,
-        "whip": "1.35",
-        "l5_str": "4\u00b71\u00b75\u00b76\u00b72",
-        "l5_vs_season": -4.0,
-        "k_last5": [
-          4,
-          1,
-          5,
-          6,
-          2
-        ],
-        "outs_last5": [
-          18,
-          7,
-          15,
-          18,
-          10
-        ]
-      },
-      {
-        "side": "home",
-        "name": "Jacob Misiorowski",
-        "pitcher_id": 694819,
-        "team": "Milwaukee Brewers",
-        "opp": "San Diego Padres",
-        "opp_kpct": 21.6,
-        "fip": 2.16731,
-        "xfip": 2.29225,
-        "lambda": 5.93,
-        "lo": 3,
-        "hi": 9,
-        "proj_ip": 4.7,
-        "outs_lambda": 14.2,
-        "outs_lo": 9,
-        "outs_hi": 19,
-        "season_era": "1.80",
-        "season_k9": "12.98",
-        "season_hits9": "4.95",
-        "bb9": 2.27,
-        "whip": "0.80",
-        "l5_str": "5\u00b79\u00b77\u00b74\u00b75",
-        "l5_vs_season": -17.0,
-        "k_last5": [
-          5,
-          9,
-          7,
-          4,
-          5
-        ],
-        "outs_last5": [
-          12,
-          19,
-          15,
-          9,
-          16
-        ]
-      }
-    ],
-    "game_pk": 849830,
-    "game_date": "2026-10-03",
-    "team_runs": {
-      "away": {
-        "team": "San Diego Padres",
-        "opp": "Milwaukee Brewers",
-        "lambda": 4.09,
-        "lo": 2,
-        "hi": 7,
-        "l5_str": "5\u00b74\u00b74\u00b710\u00b79",
-        "last5_runs": [
-          5,
-          4,
-          4,
-          10,
-          9
-        ],
-        "season_rpg": 4.46,
-        "run_factor": 0.73,
-        "xfip_used": true
-      },
-      "home": {
-        "team": "Milwaukee Brewers",
-        "opp": "San Diego Padres",
-        "lambda": 5.81,
-        "lo": 3,
-        "hi": 9,
-        "l5_str": "4\u00b75\u00b78\u00b73\u00b76",
-        "last5_runs": [
-          4,
-          5,
-          8,
-          3,
-          6
-        ],
-        "season_rpg": 5.14,
-        "run_factor": 1.12,
-        "xfip_used": true
-      }
-    },
-    "team_hits": {
-      "away": {
-        "team": "San Diego Padres",
-        "opp": "Milwaukee Brewers",
-        "lambda": 6.91,
-        "lo": 4,
-        "hi": 10,
-        "l5_str": "8\u00b76\u00b710\u00b713\u00b711",
-        "last5_hits": [
-          8,
-          6,
-          10,
-          13,
-          11
-        ],
-        "season_hpg": 8.11,
-        "hit_factor": 0.72
-      },
-      "home": {
-        "team": "Milwaukee Brewers",
-        "opp": "San Diego Padres",
-        "lambda": 8.67,
-        "lo": 5,
-        "hi": 13,
-        "l5_str": "6\u00b711\u00b712\u00b78\u00b710",
-        "last5_hits": [
-          6,
-          11,
-          12,
-          8,
-          10
-        ],
-        "season_hpg": 8.78,
-        "hit_factor": 0.93
       }
     }
   }
