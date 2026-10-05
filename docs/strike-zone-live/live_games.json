@@ -1,46 +1,46 @@
 {
-  "generated": "2026-10-04T23:03:56.543702+00:00",
+  "generated": "2026-10-05T01:54:21.399956+00:00",
   "total_live": 1,
   "games": [
     {
-      "game_pk": 849825,
-      "home_team": "Milwaukee Brewers",
-      "away_team": "San Diego Padres",
-      "home_runs": 2.0,
-      "away_runs": 3.0,
+      "game_pk": 849823,
+      "home_team": "Los Angeles Dodgers",
+      "away_team": "Atlanta Braves",
+      "home_runs": 1.0,
+      "away_runs": 2.0,
       "home_hits": 4.0,
-      "away_hits": 5.0,
-      "inning": 9,
-      "inning_state": "Top",
+      "away_hits": 4.0,
+      "inning": 5,
+      "inning_state": "Bottom",
       "status": "In Progress",
-      "half_innings_remaining": 2,
+      "half_innings_remaining": 9,
       "next_run": {
-        "home": 43,
-        "away": 57
+        "home": 33,
+        "away": 67
       },
       "game_total_pace": {
-        "prob": 0,
+        "prob": 35,
         "status": "On Pace: Under"
       },
       "inning_winner": {
-        "home": 18,
-        "away": 25,
+        "home": 13,
+        "away": 30,
         "tie": 57
       },
       "inning_hits": {
-        "home": 24,
-        "away": 32,
-        "tie": 43
+        "home": 33,
+        "away": 33,
+        "tie": 33
       },
       "model_signal": {
         "label": "Game Total Under",
-        "prob": 100,
-        "qualifies": true
+        "prob": 65,
+        "qualifies": false
       },
       "pregame_projection": {
-        "home_lambda": 5.18,
-        "away_lambda": 4.5,
-        "pregame_total": 9.68
+        "home_lambda": 3.24,
+        "away_lambda": 2.86,
+        "pregame_total": 6.1
       }
     }
   ]
