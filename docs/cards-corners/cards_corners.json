@@ -1092,6 +1092,1562 @@
     }
   },
   {
+    "match_id": "mt_155869147",
+    "league": "Championship",
+    "date": "2026-10-14T19:00:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Lincoln City",
+    "away_team": "West Ham United",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.0,
+      "corners_list": [
+        8,
+        2,
+        5,
+        4,
+        3,
+        4,
+        2
+      ],
+      "avg_corners_conceded": 8.57,
+      "corners_conceded_list": [
+        3,
+        14,
+        7,
+        6,
+        16,
+        13,
+        1
+      ],
+      "avg_yellow_cards": 2.57,
+      "yellow_cards_list": [
+        3,
+        3,
+        1,
+        3,
+        1,
+        5,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 6.71,
+      "corners_list": [
+        7,
+        11,
+        6,
+        5,
+        4,
+        3,
+        11
+      ],
+      "avg_corners_conceded": 4.71,
+      "corners_conceded_list": [
+        4,
+        3,
+        7,
+        6,
+        4,
+        6,
+        3
+      ],
+      "avg_yellow_cards": 1.86,
+      "yellow_cards_list": [
+        2,
+        1,
+        2,
+        0,
+        3,
+        1,
+        4
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.16,
+      "corners_list": [
+        8,
+        2,
+        5,
+        4,
+        3,
+        4,
+        2
+      ],
+      "line": 2.5,
+      "prob": 78
+    },
+    "away_corners": {
+      "lambda": 9.5,
+      "corners_list": [
+        7,
+        11,
+        6,
+        5,
+        4,
+        3,
+        11
+      ],
+      "line": 6.5,
+      "prob": 84
+    },
+    "home_cards": {
+      "lambda": 2.4,
+      "yellow_cards_list": [
+        3,
+        3,
+        1,
+        3,
+        1,
+        5,
+        2
+      ],
+      "line": 1.5,
+      "prob": 69
+    },
+    "away_cards": {
+      "lambda": 1.9,
+      "yellow_cards_list": [
+        2,
+        1,
+        2,
+        0,
+        3,
+        1,
+        4
+      ],
+      "line": 1.0,
+      "prob": 57
+    }
+  },
+  {
+    "match_id": "mt_988327941",
+    "league": "Championship",
+    "date": "2026-10-14T18:45:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Queens Park Rangers",
+    "away_team": "Derby County",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 7.43,
+      "corners_list": [
+        9,
+        3,
+        3,
+        12,
+        12,
+        3,
+        10
+      ],
+      "avg_corners_conceded": 3.57,
+      "corners_conceded_list": [
+        2,
+        3,
+        4,
+        3,
+        5,
+        5,
+        3
+      ],
+      "avg_yellow_cards": 1.71,
+      "yellow_cards_list": [
+        1,
+        2,
+        0,
+        1,
+        2,
+        4,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 6.71,
+      "corners_list": [
+        7,
+        5,
+        2,
+        6,
+        11,
+        10,
+        6
+      ],
+      "avg_corners_conceded": 5.71,
+      "corners_conceded_list": [
+        7,
+        6,
+        11,
+        5,
+        3,
+        4,
+        4
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        5,
+        3,
+        2,
+        2,
+        0,
+        1,
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 7.48,
+      "corners_list": [
+        9,
+        3,
+        3,
+        12,
+        12,
+        3,
+        10
+      ],
+      "line": 5.0,
+      "prob": 76
+    },
+    "away_corners": {
+      "lambda": 5.01,
+      "corners_list": [
+        7,
+        5,
+        2,
+        6,
+        11,
+        10,
+        6
+      ],
+      "line": 3.5,
+      "prob": 74
+    },
+    "home_cards": {
+      "lambda": 1.8,
+      "yellow_cards_list": [
+        1,
+        2,
+        0,
+        1,
+        2,
+        4,
+        2
+      ],
+      "line": 1.0,
+      "prob": 54
+    },
+    "away_cards": {
+      "lambda": 2.1,
+      "yellow_cards_list": [
+        5,
+        3,
+        2,
+        2,
+        0,
+        1,
+        2
+      ],
+      "line": 1.5,
+      "prob": 62
+    }
+  },
+  {
+    "match_id": "mt_022531044",
+    "league": "Championship",
+    "date": "2026-10-14T18:45:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Portsmouth",
+    "away_team": "Sheffield United",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 7.0,
+      "corners_list": [
+        6,
+        3,
+        10,
+        11,
+        5,
+        5,
+        9
+      ],
+      "avg_corners_conceded": 5.29,
+      "corners_conceded_list": [
+        3,
+        8,
+        3,
+        2,
+        7,
+        7,
+        7
+      ],
+      "avg_yellow_cards": 0.71,
+      "yellow_cards_list": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 3.0,
+      "corners_list": [
+        3,
+        2,
+        5,
+        7,
+        3,
+        0,
+        1
+      ],
+      "avg_corners_conceded": 7.43,
+      "corners_conceded_list": [
+        6,
+        13,
+        5,
+        4,
+        7,
+        9,
+        8
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        2,
+        2,
+        0,
+        2,
+        2,
+        2,
+        4
+      ]
+    },
+    "home_corners": {
+      "lambda": 8.77,
+      "corners_list": [
+        6,
+        3,
+        10,
+        11,
+        5,
+        5,
+        9
+      ],
+      "line": 6.0,
+      "prob": 77
+    },
+    "away_corners": {
+      "lambda": 3.78,
+      "corners_list": [
+        3,
+        2,
+        5,
+        7,
+        3,
+        0,
+        1
+      ],
+      "line": 2.5,
+      "prob": 73
+    },
+    "home_cards": {
+      "lambda": 1.08,
+      "yellow_cards_list": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        2
+      ],
+      "line": 0.5,
+      "prob": 66
+    },
+    "away_cards": {
+      "lambda": 1.98,
+      "yellow_cards_list": [
+        2,
+        2,
+        0,
+        2,
+        2,
+        2,
+        4
+      ],
+      "line": 1.0,
+      "prob": 59
+    }
+  },
+  {
+    "match_id": "mt_644092623",
+    "league": "Championship",
+    "date": "2026-10-14T18:45:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Norwich City",
+    "away_team": "Southampton",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.29,
+      "corners_list": [
+        3,
+        3,
+        5,
+        4,
+        6,
+        5,
+        4
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        8,
+        5,
+        3,
+        7,
+        7,
+        3,
+        2
+      ],
+      "avg_yellow_cards": 3.17,
+      "yellow_cards_list": [
+        3,
+        4,
+        2,
+        3,
+        6,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.29,
+      "corners_list": [
+        4,
+        8,
+        5,
+        6,
+        9,
+        2,
+        3
+      ],
+      "avg_corners_conceded": 4.29,
+      "corners_conceded_list": [
+        2,
+        11,
+        3,
+        4,
+        3,
+        5,
+        2
+      ],
+      "avg_yellow_cards": 1.57,
+      "yellow_cards_list": [
+        3,
+        2,
+        2,
+        0,
+        0,
+        0,
+        4
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.06,
+      "corners_list": [
+        3,
+        3,
+        5,
+        4,
+        6,
+        5,
+        4
+      ],
+      "line": 2.5,
+      "prob": 77
+    },
+    "away_corners": {
+      "lambda": 5.22,
+      "corners_list": [
+        4,
+        8,
+        5,
+        6,
+        9,
+        2,
+        3
+      ],
+      "line": 3.5,
+      "prob": 76
+    },
+    "home_cards": {
+      "lambda": 2.82,
+      "yellow_cards_list": [
+        3,
+        4,
+        2,
+        3,
+        6,
+        1
+      ],
+      "line": 2.0,
+      "prob": 54
+    },
+    "away_cards": {
+      "lambda": 1.69,
+      "yellow_cards_list": [
+        3,
+        2,
+        2,
+        0,
+        0,
+        0,
+        4
+      ],
+      "line": 1.0,
+      "prob": 50
+    }
+  },
+  {
+    "match_id": "mt_377416474",
+    "league": "Championship",
+    "date": "2026-10-13T19:00:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Stoke City",
+    "away_team": "Middlesbrough",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.57,
+      "corners_list": [
+        2,
+        1,
+        3,
+        5,
+        5,
+        8,
+        8
+      ],
+      "avg_corners_conceded": 4.57,
+      "corners_conceded_list": [
+        4,
+        7,
+        5,
+        3,
+        7,
+        5,
+        1
+      ],
+      "avg_yellow_cards": 2.86,
+      "yellow_cards_list": [
+        5,
+        4,
+        2,
+        1,
+        2,
+        2,
+        4
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.86,
+      "corners_list": [
+        10,
+        7,
+        1,
+        3,
+        3,
+        14,
+        3
+      ],
+      "avg_corners_conceded": 5.14,
+      "corners_conceded_list": [
+        2,
+        6,
+        5,
+        12,
+        5,
+        1,
+        5
+      ],
+      "avg_yellow_cards": 1.14,
+      "yellow_cards_list": [
+        1,
+        0,
+        2,
+        2,
+        2,
+        1,
+        0
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.81,
+      "corners_list": [
+        2,
+        1,
+        3,
+        5,
+        5,
+        8,
+        8
+      ],
+      "line": 3.0,
+      "prob": 71
+    },
+    "away_corners": {
+      "lambda": 5.29,
+      "corners_list": [
+        10,
+        7,
+        1,
+        3,
+        3,
+        14,
+        3
+      ],
+      "line": 3.5,
+      "prob": 77
+    },
+    "home_cards": {
+      "lambda": 2.6,
+      "yellow_cards_list": [
+        5,
+        4,
+        2,
+        1,
+        2,
+        2,
+        4
+      ],
+      "line": 1.5,
+      "prob": 73
+    },
+    "away_cards": {
+      "lambda": 1.39,
+      "yellow_cards_list": [
+        1,
+        0,
+        2,
+        2,
+        2,
+        1,
+        0
+      ],
+      "line": 1.0,
+      "prob": 40
+    }
+  },
+  {
+    "match_id": "mt_200175859",
+    "league": "Championship",
+    "date": "2026-10-13T19:00:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Birmingham City",
+    "away_team": "Preston North End",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.71,
+      "corners_list": [
+        7,
+        6,
+        3,
+        8,
+        7,
+        4,
+        5
+      ],
+      "avg_corners_conceded": 4.86,
+      "corners_conceded_list": [
+        3,
+        3,
+        5,
+        4,
+        6,
+        10,
+        3
+      ],
+      "avg_yellow_cards": 2.43,
+      "yellow_cards_list": [
+        2,
+        2,
+        3,
+        2,
+        3,
+        3,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.71,
+      "corners_list": [
+        5,
+        4,
+        5,
+        3,
+        4,
+        16,
+        3
+      ],
+      "avg_corners_conceded": 5.57,
+      "corners_conceded_list": [
+        4,
+        7,
+        2,
+        11,
+        2,
+        3,
+        10
+      ],
+      "avg_yellow_cards": 2.29,
+      "yellow_cards_list": [
+        4,
+        1,
+        2,
+        4,
+        2,
+        1,
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.98,
+      "corners_list": [
+        7,
+        6,
+        3,
+        8,
+        7,
+        4,
+        5
+      ],
+      "line": 4.0,
+      "prob": 71
+    },
+    "away_corners": {
+      "lambda": 5.42,
+      "corners_list": [
+        5,
+        4,
+        5,
+        3,
+        4,
+        16,
+        3
+      ],
+      "line": 3.5,
+      "prob": 79
+    },
+    "home_cards": {
+      "lambda": 2.3,
+      "yellow_cards_list": [
+        2,
+        2,
+        3,
+        2,
+        3,
+        3,
+        2
+      ],
+      "line": 1.5,
+      "prob": 67
+    },
+    "away_cards": {
+      "lambda": 2.2,
+      "yellow_cards_list": [
+        4,
+        1,
+        2,
+        4,
+        2,
+        1,
+        2
+      ],
+      "line": 1.5,
+      "prob": 65
+    }
+  },
+  {
+    "match_id": "mt_988327334",
+    "league": "Championship",
+    "date": "2026-10-13T18:45:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Wrexham",
+    "away_team": "West Bromwich Albion",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.14,
+      "corners_list": [
+        10,
+        3,
+        2,
+        2,
+        4,
+        6,
+        2
+      ],
+      "avg_corners_conceded": 3.57,
+      "corners_conceded_list": [
+        3,
+        6,
+        1,
+        5,
+        4,
+        3,
+        3
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        2,
+        1,
+        1,
+        0,
+        2,
+        0,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.29,
+      "corners_list": [
+        3,
+        6,
+        8,
+        5,
+        3,
+        5,
+        7
+      ],
+      "avg_corners_conceded": 5.86,
+      "corners_conceded_list": [
+        5,
+        7,
+        3,
+        4,
+        11,
+        3,
+        8
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        1,
+        1,
+        1,
+        5,
+        4,
+        1,
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.97,
+      "corners_list": [
+        10,
+        3,
+        2,
+        2,
+        4,
+        6,
+        2
+      ],
+      "line": 3.5,
+      "prob": 73
+    },
+    "away_corners": {
+      "lambda": 4.19,
+      "corners_list": [
+        3,
+        6,
+        8,
+        5,
+        3,
+        5,
+        7
+      ],
+      "line": 3.0,
+      "prob": 60
+    },
+    "home_cards": {
+      "lambda": 1.29,
+      "yellow_cards_list": [
+        2,
+        1,
+        1,
+        0,
+        2,
+        0,
+        1
+      ],
+      "line": 0.5,
+      "prob": 72
+    },
+    "away_cards": {
+      "lambda": 2.09,
+      "yellow_cards_list": [
+        1,
+        1,
+        1,
+        5,
+        4,
+        1,
+        2
+      ],
+      "line": 1.5,
+      "prob": 62
+    }
+  },
+  {
+    "match_id": "mt_022531539",
+    "league": "Championship",
+    "date": "2026-10-13T18:45:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Wolverhampton",
+    "away_team": "Bolton Wanderers",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 6.29,
+      "corners_list": [
+        5,
+        4,
+        7,
+        7,
+        4,
+        9,
+        8
+      ],
+      "avg_corners_conceded": 4.57,
+      "corners_conceded_list": [
+        5,
+        5,
+        1,
+        6,
+        8,
+        0,
+        7
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.43,
+      "corners_list": [
+        2,
+        14,
+        5,
+        9,
+        4,
+        2,
+        2
+      ],
+      "avg_corners_conceded": 5.29,
+      "corners_conceded_list": [
+        9,
+        2,
+        5,
+        3,
+        4,
+        10,
+        4
+      ],
+      "avg_yellow_cards": 1.67,
+      "yellow_cards_list": [
+        2,
+        0,
+        2,
+        1,
+        0,
+        5
+      ]
+    },
+    "home_corners": {
+      "lambda": 6.2,
+      "corners_list": [
+        5,
+        4,
+        7,
+        7,
+        4,
+        9,
+        8
+      ],
+      "line": 4.0,
+      "prob": 74
+    },
+    "away_corners": {
+      "lambda": 5.03,
+      "corners_list": [
+        2,
+        14,
+        5,
+        9,
+        4,
+        2,
+        2
+      ],
+      "line": 3.5,
+      "prob": 74
+    },
+    "home_cards": {
+      "lambda": 1.28,
+      "yellow_cards_list": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "line": 0.5,
+      "prob": 72
+    },
+    "away_cards": {
+      "lambda": 1.75,
+      "yellow_cards_list": [
+        2,
+        0,
+        2,
+        1,
+        0,
+        5
+      ],
+      "line": 1.0,
+      "prob": 52
+    }
+  },
+  {
+    "match_id": "mt_155869831",
+    "league": "Championship",
+    "date": "2026-10-13T18:45:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Millwall",
+    "away_team": "Swansea City",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.14,
+      "corners_list": [
+        8,
+        11,
+        1,
+        3,
+        2,
+        1,
+        3
+      ],
+      "avg_corners_conceded": 7.57,
+      "corners_conceded_list": [
+        3,
+        8,
+        2,
+        9,
+        6,
+        14,
+        11
+      ],
+      "avg_yellow_cards": 1.29,
+      "yellow_cards_list": [
+        1,
+        1,
+        2,
+        0,
+        3,
+        1,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.14,
+      "corners_list": [
+        6,
+        6,
+        5,
+        5,
+        3,
+        3,
+        1
+      ],
+      "avg_corners_conceded": 4.29,
+      "corners_conceded_list": [
+        3,
+        5,
+        3,
+        2,
+        9,
+        6,
+        2
+      ],
+      "avg_yellow_cards": 1.57,
+      "yellow_cards_list": [
+        2,
+        2,
+        0,
+        3,
+        1,
+        2,
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 3.98,
+      "corners_list": [
+        8,
+        11,
+        1,
+        3,
+        2,
+        1,
+        3
+      ],
+      "line": 2.5,
+      "prob": 76
+    },
+    "away_corners": {
+      "lambda": 6.02,
+      "corners_list": [
+        6,
+        6,
+        5,
+        5,
+        3,
+        3,
+        1
+      ],
+      "line": 4.0,
+      "prob": 72
+    },
+    "home_cards": {
+      "lambda": 1.48,
+      "yellow_cards_list": [
+        1,
+        1,
+        2,
+        0,
+        3,
+        1,
+        1
+      ],
+      "line": 1.0,
+      "prob": 44
+    },
+    "away_cards": {
+      "lambda": 1.67,
+      "yellow_cards_list": [
+        2,
+        2,
+        0,
+        3,
+        1,
+        2,
+        1
+      ],
+      "line": 1.0,
+      "prob": 50
+    }
+  },
+  {
+    "match_id": "mt_988327499",
+    "league": "Championship",
+    "date": "2026-10-13T18:45:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Cardiff City",
+    "away_team": "Watford",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 7.71,
+      "corners_list": [
+        7,
+        13,
+        4,
+        7,
+        7,
+        10,
+        6
+      ],
+      "avg_corners_conceded": 3.57,
+      "corners_conceded_list": [
+        7,
+        2,
+        3,
+        5,
+        5,
+        2,
+        1
+      ],
+      "avg_yellow_cards": 2.43,
+      "yellow_cards_list": [
+        1,
+        2,
+        2,
+        4,
+        1,
+        2,
+        5
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 3.57,
+      "corners_list": [
+        3,
+        3,
+        3,
+        4,
+        2,
+        5,
+        5
+      ],
+      "avg_corners_conceded": 6.43,
+      "corners_conceded_list": [
+        10,
+        11,
+        5,
+        5,
+        4,
+        8,
+        2
+      ],
+      "avg_yellow_cards": 2.43,
+      "yellow_cards_list": [
+        0,
+        3,
+        4,
+        3,
+        0,
+        2,
+        5
+      ]
+    },
+    "home_corners": {
+      "lambda": 8.32,
+      "corners_list": [
+        7,
+        13,
+        4,
+        7,
+        7,
+        10,
+        6
+      ],
+      "line": 5.5,
+      "prob": 84
+    },
+    "away_corners": {
+      "lambda": 3.2,
+      "corners_list": [
+        3,
+        3,
+        3,
+        4,
+        2,
+        5,
+        5
+      ],
+      "line": 2.0,
+      "prob": 62
+    },
+    "home_cards": {
+      "lambda": 2.28,
+      "yellow_cards_list": [
+        1,
+        2,
+        2,
+        4,
+        1,
+        2,
+        5
+      ],
+      "line": 1.5,
+      "prob": 66
+    },
+    "away_cards": {
+      "lambda": 2.28,
+      "yellow_cards_list": [
+        0,
+        3,
+        4,
+        3,
+        0,
+        2,
+        5
+      ],
+      "line": 1.5,
+      "prob": 66
+    }
+  },
+  {
+    "match_id": "mt_022531990",
+    "league": "Championship",
+    "date": "2026-10-13T18:45:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Burnley",
+    "away_team": "Charlton Athletic",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.86,
+      "corners_list": [
+        5,
+        5,
+        5,
+        5,
+        4,
+        6,
+        4
+      ],
+      "avg_corners_conceded": 4.0,
+      "corners_conceded_list": [
+        3,
+        3,
+        1,
+        8,
+        4,
+        3,
+        6
+      ],
+      "avg_yellow_cards": 2.57,
+      "yellow_cards_list": [
+        2,
+        3,
+        2,
+        3,
+        3,
+        1,
+        4
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.29,
+      "corners_list": [
+        4,
+        7,
+        3,
+        3,
+        5,
+        7,
+        1
+      ],
+      "avg_corners_conceded": 6.71,
+      "corners_conceded_list": [
+        7,
+        4,
+        8,
+        5,
+        12,
+        5,
+        6
+      ],
+      "avg_yellow_cards": 1.86,
+      "yellow_cards_list": [
+        3,
+        1,
+        1,
+        4,
+        0,
+        1,
+        3
+      ]
+    },
+    "home_corners": {
+      "lambda": 6.1,
+      "corners_list": [
+        5,
+        5,
+        5,
+        5,
+        4,
+        6,
+        4
+      ],
+      "line": 4.0,
+      "prob": 73
+    },
+    "away_corners": {
+      "lambda": 3.87,
+      "corners_list": [
+        4,
+        7,
+        3,
+        3,
+        5,
+        7,
+        1
+      ],
+      "line": 2.5,
+      "prob": 74
+    },
+    "home_cards": {
+      "lambda": 2.39,
+      "yellow_cards_list": [
+        2,
+        3,
+        2,
+        3,
+        3,
+        1,
+        4
+      ],
+      "line": 1.5,
+      "prob": 69
+    },
+    "away_cards": {
+      "lambda": 1.89,
+      "yellow_cards_list": [
+        3,
+        1,
+        1,
+        4,
+        0,
+        1,
+        3
+      ],
+      "line": 1.0,
+      "prob": 56
+    }
+  },
+  {
+    "match_id": "mt_511948324",
+    "league": "Championship",
+    "date": "2026-10-13T18:45:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Bristol City",
+    "away_team": "Blackburn Rovers",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.14,
+      "corners_list": [
+        3,
+        3,
+        2,
+        8,
+        5,
+        13,
+        2
+      ],
+      "avg_corners_conceded": 5.43,
+      "corners_conceded_list": [
+        7,
+        10,
+        5,
+        5,
+        2,
+        4,
+        5
+      ],
+      "avg_yellow_cards": 1.43,
+      "yellow_cards_list": [
+        1,
+        3,
+        0,
+        0,
+        2,
+        2,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 6.14,
+      "corners_list": [
+        2,
+        3,
+        7,
+        11,
+        7,
+        6,
+        7
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        10,
+        3,
+        5,
+        3,
+        3,
+        2,
+        9
+      ],
+      "avg_yellow_cards": 2.86,
+      "yellow_cards_list": [
+        4,
+        3,
+        4,
+        2,
+        1,
+        5,
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.09,
+      "corners_list": [
+        3,
+        3,
+        2,
+        8,
+        5,
+        13,
+        2
+      ],
+      "line": 3.5,
+      "prob": 75
+    },
+    "away_corners": {
+      "lambda": 6.14,
+      "corners_list": [
+        2,
+        3,
+        7,
+        11,
+        7,
+        6,
+        7
+      ],
+      "line": 4.0,
+      "prob": 73
+    },
+    "home_cards": {
+      "lambda": 1.59,
+      "yellow_cards_list": [
+        1,
+        3,
+        0,
+        0,
+        2,
+        2,
+        2
+      ],
+      "line": 1.0,
+      "prob": 47
+    },
+    "away_cards": {
+      "lambda": 2.59,
+      "yellow_cards_list": [
+        4,
+        3,
+        4,
+        2,
+        1,
+        5,
+        1
+      ],
+      "line": 1.5,
+      "prob": 73
+    }
+  },
+  {
     "match_id": "mt_733654960",
     "league": "Championship",
     "date": "2026-10-11T11:00:00.000Z",
@@ -1165,7 +2721,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.58,
+      "lambda": 5.42,
       "corners_list": [
         4,
         8,
@@ -1175,11 +2731,11 @@
         2,
         3
       ],
-      "line": 4.0,
-      "prob": 65
+      "line": 3.5,
+      "prob": 79
     },
     "away_corners": {
-      "lambda": 5.95,
+      "lambda": 5.77,
       "corners_list": [
         6,
         3,
@@ -1190,7 +2746,7 @@
         9
       ],
       "line": 4.0,
-      "prob": 71
+      "prob": 68
     },
     "home_cards": {
       "lambda": 1.68,
@@ -1207,7 +2763,7 @@
       "prob": 50
     },
     "away_cards": {
-      "lambda": 1.07,
+      "lambda": 1.08,
       "yellow_cards_list": [
         0,
         1,
@@ -1295,7 +2851,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.11,
+      "lambda": 4.97,
       "corners_list": [
         7,
         5,
@@ -1306,10 +2862,10 @@
         6
       ],
       "line": 3.5,
-      "prob": 75
+      "prob": 73
     },
     "away_corners": {
-      "lambda": 5.01,
+      "lambda": 4.86,
       "corners_list": [
         10,
         3,
@@ -1319,8 +2875,8 @@
         6,
         2
       ],
-      "line": 3.5,
-      "prob": 74
+      "line": 3.0,
+      "prob": 71
     },
     "home_cards": {
       "lambda": 2.07,
@@ -1337,7 +2893,7 @@
       "prob": 61
     },
     "away_cards": {
-      "lambda": 1.26,
+      "lambda": 1.27,
       "yellow_cards_list": [
         2,
         1,
@@ -1424,7 +2980,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.16,
+      "lambda": 5.01,
       "corners_list": [
         2,
         14,
@@ -1435,10 +2991,10 @@
         2
       ],
       "line": 3.5,
-      "prob": 76
+      "prob": 74
     },
     "away_corners": {
-      "lambda": 5.07,
+      "lambda": 4.92,
       "corners_list": [
         2,
         1,
@@ -1449,7 +3005,7 @@
         8
       ],
       "line": 3.5,
-      "prob": 74
+      "prob": 72
     },
     "home_cards": {
       "lambda": 1.74,
@@ -1465,7 +3021,7 @@
       "prob": 52
     },
     "away_cards": {
-      "lambda": 2.57,
+      "lambda": 2.58,
       "yellow_cards_list": [
         5,
         4,
@@ -1553,7 +3109,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.79,
+      "lambda": 4.67,
       "corners_list": [
         2,
         3,
@@ -1564,10 +3120,10 @@
         7
       ],
       "line": 3.0,
-      "prob": 70
+      "prob": 69
     },
     "away_corners": {
-      "lambda": 7.2,
+      "lambda": 6.96,
       "corners_list": [
         7,
         13,
@@ -1578,7 +3134,7 @@
         6
       ],
       "line": 5.0,
-      "prob": 72
+      "prob": 69
     },
     "home_cards": {
       "lambda": 2.59,
@@ -1683,7 +3239,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.58,
+      "lambda": 3.49,
       "corners_list": [
         3,
         3,
@@ -1694,10 +3250,10 @@
         5
       ],
       "line": 2.5,
-      "prob": 69
+      "prob": 68
     },
     "away_corners": {
-      "lambda": 6.16,
+      "lambda": 5.96,
       "corners_list": [
         5,
         5,
@@ -1708,10 +3264,10 @@
         4
       ],
       "line": 4.0,
-      "prob": 74
+      "prob": 71
     },
     "home_cards": {
-      "lambda": 2.3,
+      "lambda": 2.29,
       "yellow_cards_list": [
         0,
         3,
@@ -1725,7 +3281,7 @@
       "prob": 67
     },
     "away_cards": {
-      "lambda": 2.4,
+      "lambda": 2.39,
       "yellow_cards_list": [
         2,
         3,
@@ -1813,7 +3369,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.59,
+      "lambda": 5.45,
       "corners_list": [
         3,
         2,
@@ -1823,11 +3379,11 @@
         0,
         1
       ],
-      "line": 4.0,
-      "prob": 66
+      "line": 3.5,
+      "prob": 79
     },
     "away_corners": {
-      "lambda": 5.9,
+      "lambda": 5.78,
       "corners_list": [
         8,
         2,
@@ -1838,10 +3394,10 @@
         2
       ],
       "line": 4.0,
-      "prob": 70
+      "prob": 68
     },
     "home_cards": {
-      "lambda": 2.0,
+      "lambda": 1.99,
       "yellow_cards_list": [
         2,
         2,
@@ -1855,7 +3411,7 @@
       "prob": 59
     },
     "away_cards": {
-      "lambda": 2.4,
+      "lambda": 2.39,
       "yellow_cards_list": [
         3,
         3,
@@ -1943,7 +3499,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.51,
+      "lambda": 7.41,
       "corners_list": [
         5,
         4,
@@ -1954,10 +3510,10 @@
         3
       ],
       "line": 5.0,
-      "prob": 76
+      "prob": 75
     },
     "away_corners": {
-      "lambda": 4.73,
+      "lambda": 4.7,
       "corners_list": [
         8,
         11,
@@ -1968,10 +3524,10 @@
         3
       ],
       "line": 3.0,
-      "prob": 70
+      "prob": 69
     },
     "home_cards": {
-      "lambda": 2.21,
+      "lambda": 2.2,
       "yellow_cards_list": [
         4,
         1,
@@ -2073,7 +3629,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.22,
+      "lambda": 5.19,
       "corners_list": [
         10,
         7,
@@ -2087,7 +3643,7 @@
       "prob": 76
     },
     "away_corners": {
-      "lambda": 5.98,
+      "lambda": 5.94,
       "corners_list": [
         5,
         4,
@@ -2115,7 +3671,7 @@
       "prob": 40
     },
     "away_cards": {
-      "lambda": 1.29,
+      "lambda": 1.28,
       "yellow_cards_list": [
         1,
         1,
@@ -2127,524 +3683,6 @@
       ],
       "line": 0.5,
       "prob": 72
-    }
-  },
-  {
-    "match_id": "mt_377417012",
-    "league": "Championship",
-    "date": "2026-10-10T11:30:00.000Z",
-    "date_key": "2026-10-10",
-    "home_team": "Charlton Athletic",
-    "away_team": "Bristol City",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 4.29,
-      "corners_list": [
-        4,
-        7,
-        3,
-        3,
-        5,
-        7,
-        1
-      ],
-      "avg_corners_conceded": 6.71,
-      "corners_conceded_list": [
-        7,
-        4,
-        8,
-        5,
-        12,
-        5,
-        6
-      ],
-      "avg_yellow_cards": 1.86,
-      "yellow_cards_list": [
-        3,
-        1,
-        1,
-        4,
-        0,
-        1,
-        3
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 5.14,
-      "corners_list": [
-        3,
-        3,
-        2,
-        8,
-        5,
-        13,
-        2
-      ],
-      "avg_corners_conceded": 5.43,
-      "corners_conceded_list": [
-        7,
-        10,
-        5,
-        5,
-        2,
-        4,
-        5
-      ],
-      "avg_yellow_cards": 1.43,
-      "yellow_cards_list": [
-        1,
-        3,
-        0,
-        0,
-        2,
-        2,
-        2
-      ]
-    },
-    "home_corners": {
-      "lambda": 4.73,
-      "corners_list": [
-        4,
-        7,
-        3,
-        3,
-        5,
-        7,
-        1
-      ],
-      "line": 3.0,
-      "prob": 70
-    },
-    "away_corners": {
-      "lambda": 6.26,
-      "corners_list": [
-        3,
-        3,
-        2,
-        8,
-        5,
-        13,
-        2
-      ],
-      "line": 4.5,
-      "prob": 75
-    },
-    "home_cards": {
-      "lambda": 1.88,
-      "yellow_cards_list": [
-        3,
-        1,
-        1,
-        4,
-        0,
-        1,
-        3
-      ],
-      "line": 1.0,
-      "prob": 56
-    },
-    "away_cards": {
-      "lambda": 1.58,
-      "yellow_cards_list": [
-        1,
-        3,
-        0,
-        0,
-        2,
-        2,
-        2
-      ],
-      "line": 1.0,
-      "prob": 47
-    }
-  },
-  {
-    "match_id": "mt_644092951",
-    "league": "Championship",
-    "date": "2026-10-10T11:30:00.000Z",
-    "date_key": "2026-10-10",
-    "home_team": "West Bromwich Albion",
-    "away_team": "Birmingham City",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 5.29,
-      "corners_list": [
-        3,
-        6,
-        8,
-        5,
-        3,
-        5,
-        7
-      ],
-      "avg_corners_conceded": 5.86,
-      "corners_conceded_list": [
-        5,
-        7,
-        3,
-        4,
-        11,
-        3,
-        8
-      ],
-      "avg_yellow_cards": 2.14,
-      "yellow_cards_list": [
-        1,
-        1,
-        1,
-        5,
-        4,
-        1,
-        2
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 5.71,
-      "corners_list": [
-        7,
-        6,
-        3,
-        8,
-        7,
-        4,
-        5
-      ],
-      "avg_corners_conceded": 4.86,
-      "corners_conceded_list": [
-        3,
-        3,
-        5,
-        4,
-        6,
-        10,
-        3
-      ],
-      "avg_yellow_cards": 2.43,
-      "yellow_cards_list": [
-        2,
-        2,
-        3,
-        2,
-        3,
-        3,
-        2
-      ]
-    },
-    "home_corners": {
-      "lambda": 5.03,
-      "corners_list": [
-        3,
-        6,
-        8,
-        5,
-        3,
-        5,
-        7
-      ],
-      "line": 3.5,
-      "prob": 74
-    },
-    "away_corners": {
-      "lambda": 6.08,
-      "corners_list": [
-        7,
-        6,
-        3,
-        8,
-        7,
-        4,
-        5
-      ],
-      "line": 4.0,
-      "prob": 73
-    },
-    "home_cards": {
-      "lambda": 2.08,
-      "yellow_cards_list": [
-        1,
-        1,
-        1,
-        5,
-        4,
-        1,
-        2
-      ],
-      "line": 1.0,
-      "prob": 62
-    },
-    "away_cards": {
-      "lambda": 2.29,
-      "yellow_cards_list": [
-        2,
-        2,
-        3,
-        2,
-        3,
-        3,
-        2
-      ],
-      "line": 1.5,
-      "prob": 67
-    }
-  },
-  {
-    "match_id": "mt_200175799",
-    "league": "Championship",
-    "date": "2026-10-10T11:30:00.000Z",
-    "date_key": "2026-10-10",
-    "home_team": "Swansea City",
-    "away_team": "Norwich City",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 4.14,
-      "corners_list": [
-        6,
-        6,
-        5,
-        5,
-        3,
-        3,
-        1
-      ],
-      "avg_corners_conceded": 4.29,
-      "corners_conceded_list": [
-        3,
-        5,
-        3,
-        2,
-        9,
-        6,
-        2
-      ],
-      "avg_yellow_cards": 1.57,
-      "yellow_cards_list": [
-        2,
-        2,
-        0,
-        3,
-        1,
-        2,
-        1
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 4.29,
-      "corners_list": [
-        3,
-        3,
-        5,
-        4,
-        6,
-        5,
-        4
-      ],
-      "avg_corners_conceded": 5.0,
-      "corners_conceded_list": [
-        8,
-        5,
-        3,
-        7,
-        7,
-        3,
-        2
-      ],
-      "avg_yellow_cards": 3.17,
-      "yellow_cards_list": [
-        3,
-        4,
-        2,
-        3,
-        6,
-        1
-      ]
-    },
-    "home_corners": {
-      "lambda": 4.34,
-      "corners_list": [
-        6,
-        6,
-        5,
-        5,
-        3,
-        3,
-        1
-      ],
-      "line": 3.0,
-      "prob": 63
-    },
-    "away_corners": {
-      "lambda": 4.0,
-      "corners_list": [
-        3,
-        3,
-        5,
-        4,
-        6,
-        5,
-        4
-      ],
-      "line": 2.5,
-      "prob": 76
-    },
-    "home_cards": {
-      "lambda": 1.69,
-      "yellow_cards_list": [
-        2,
-        2,
-        0,
-        3,
-        1,
-        2,
-        1
-      ],
-      "line": 1.0,
-      "prob": 50
-    },
-    "away_cards": {
-      "lambda": 2.81,
-      "yellow_cards_list": [
-        3,
-        4,
-        2,
-        3,
-        6,
-        1
-      ],
-      "line": 2.0,
-      "prob": 53
-    }
-  },
-  {
-    "match_id": "mt_899703080",
-    "league": "Championship",
-    "date": "2026-10-09T19:00:00.000Z",
-    "date_key": "2026-10-09",
-    "home_team": "West Ham United",
-    "away_team": "Queens Park Rangers",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 6.71,
-      "corners_list": [
-        7,
-        11,
-        6,
-        5,
-        4,
-        3,
-        11
-      ],
-      "avg_corners_conceded": 4.71,
-      "corners_conceded_list": [
-        4,
-        3,
-        7,
-        6,
-        4,
-        6,
-        3
-      ],
-      "avg_yellow_cards": 1.86,
-      "yellow_cards_list": [
-        2,
-        1,
-        2,
-        0,
-        3,
-        1,
-        4
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 7.43,
-      "corners_list": [
-        9,
-        3,
-        3,
-        12,
-        12,
-        3,
-        10
-      ],
-      "avg_corners_conceded": 3.57,
-      "corners_conceded_list": [
-        2,
-        3,
-        4,
-        3,
-        5,
-        5,
-        3
-      ],
-      "avg_yellow_cards": 1.71,
-      "yellow_cards_list": [
-        1,
-        2,
-        0,
-        1,
-        2,
-        4,
-        2
-      ]
-    },
-    "home_corners": {
-      "lambda": 4.91,
-      "corners_list": [
-        7,
-        11,
-        6,
-        5,
-        4,
-        3,
-        11
-      ],
-      "line": 3.5,
-      "prob": 72
-    },
-    "away_corners": {
-      "lambda": 6.39,
-      "corners_list": [
-        9,
-        3,
-        3,
-        12,
-        12,
-        3,
-        10
-      ],
-      "line": 4.5,
-      "prob": 76
-    },
-    "home_cards": {
-      "lambda": 1.89,
-      "yellow_cards_list": [
-        2,
-        1,
-        2,
-        0,
-        3,
-        1,
-        4
-      ],
-      "line": 1.0,
-      "prob": 56
-    },
-    "away_cards": {
-      "lambda": 1.79,
-      "yellow_cards_list": [
-        1,
-        2,
-        0,
-        1,
-        2,
-        4,
-        2
-      ],
-      "line": 1.0,
-      "prob": 53
     }
   },
   {
@@ -2703,7 +3741,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.63,
+      "lambda": 6.57,
       "corners_list": [
         6,
         4,
@@ -2711,10 +3749,10 @@
         5
       ],
       "line": 4.5,
-      "prob": 79
+      "prob": 78
     },
     "away_corners": {
-      "lambda": 3.3,
+      "lambda": 3.29,
       "corners_list": [
         3,
         0,
@@ -2725,7 +3763,7 @@
       "prob": 64
     },
     "home_cards": {
-      "lambda": 1.84,
+      "lambda": 1.83,
       "yellow_cards_list": [
         1,
         3,
@@ -2803,7 +3841,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.13,
+      "lambda": 6.1,
       "corners_list": [
         6,
         8,
@@ -2814,7 +3852,7 @@
       "prob": 73
     },
     "away_corners": {
-      "lambda": 6.82,
+      "lambda": 6.78,
       "corners_list": [
         6,
         13,
@@ -2836,7 +3874,7 @@
       "prob": 59
     },
     "away_cards": {
-      "lambda": 2.7,
+      "lambda": 2.69,
       "yellow_cards_list": [
         0,
         3,
@@ -2903,7 +3941,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.64,
+      "lambda": 5.61,
       "corners_list": [
         7,
         7,
@@ -2914,7 +3952,7 @@
       "prob": 66
     },
     "away_corners": {
-      "lambda": 5.4,
+      "lambda": 5.37,
       "corners_list": [
         2,
         9,
@@ -2922,7 +3960,7 @@
         3
       ],
       "line": 3.5,
-      "prob": 79
+      "prob": 78
     },
     "home_cards": {
       "lambda": 1.55,
@@ -3003,7 +4041,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.91,
+      "lambda": 4.89,
       "corners_list": [
         2,
         5,
@@ -3014,15 +4052,15 @@
       "prob": 72
     },
     "away_corners": {
-      "lambda": 6.98,
+      "lambda": 6.94,
       "corners_list": [
         3,
         10,
         7,
         6
       ],
-      "line": 5.0,
-      "prob": 70
+      "line": 4.5,
+      "prob": 82
     },
     "home_cards": {
       "lambda": 1.69,
@@ -3103,7 +4141,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.44,
+      "lambda": 4.43,
       "corners_list": [
         11,
         5,
@@ -3114,7 +4152,7 @@
       "prob": 65
     },
     "away_corners": {
-      "lambda": 6.77,
+      "lambda": 6.74,
       "corners_list": [
         3,
         11,
@@ -3203,7 +4241,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.22,
+      "lambda": 3.21,
       "corners_list": [
         11,
         4,
@@ -3214,7 +4252,7 @@
       "prob": 62
     },
     "away_corners": {
-      "lambda": 9.34,
+      "lambda": 9.25,
       "corners_list": [
         9,
         11,
@@ -3303,7 +4341,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.07,
+      "lambda": 6.02,
       "corners_list": [
         7,
         10,
@@ -3314,7 +4352,7 @@
       "prob": 72
     },
     "away_corners": {
-      "lambda": 4.61,
+      "lambda": 4.57,
       "corners_list": [
         1,
         4,
@@ -3322,7 +4360,7 @@
         3
       ],
       "line": 3.0,
-      "prob": 68
+      "prob": 67
     },
     "home_cards": {
       "lambda": 1.96,
@@ -3403,7 +4441,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.93,
+      "lambda": 4.89,
       "corners_list": [
         5,
         1,
@@ -3411,10 +4449,10 @@
         2
       ],
       "line": 3.5,
-      "prob": 73
+      "prob": 72
     },
     "away_corners": {
-      "lambda": 5.19,
+      "lambda": 5.16,
       "corners_list": [
         4,
         4,
@@ -3436,7 +4474,7 @@
       "prob": 66
     },
     "away_cards": {
-      "lambda": 1.97,
+      "lambda": 1.96,
       "yellow_cards_list": [
         3,
         1,
@@ -3444,7 +4482,7 @@
         2
       ],
       "line": 1.0,
-      "prob": 59
+      "prob": 58
     }
   },
   {
@@ -3503,7 +4541,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.67,
+      "lambda": 4.64,
       "corners_list": [
         3,
         3,
@@ -3511,10 +4549,10 @@
         2
       ],
       "line": 3.0,
-      "prob": 69
+      "prob": 68
     },
     "away_corners": {
-      "lambda": 4.15,
+      "lambda": 4.14,
       "corners_list": [
         5,
         2,
@@ -3620,7 +4658,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.37,
+      "lambda": 4.35,
       "corners_list": [
         8,
         1,
@@ -3631,10 +4669,10 @@
         0
       ],
       "line": 3.0,
-      "prob": 64
+      "prob": 63
     },
     "away_corners": {
-      "lambda": 4.64,
+      "lambda": 4.62,
       "corners_list": [
         5,
         2,
@@ -3746,7 +4784,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.86,
+      "lambda": 4.83,
       "corners_list": [
         2,
         3,
@@ -3760,7 +4798,7 @@
       "prob": 71
     },
     "away_corners": {
-      "lambda": 5.56,
+      "lambda": 5.53,
       "corners_list": [
         5,
         7,
@@ -3770,8 +4808,8 @@
         4,
         3
       ],
-      "line": 4.0,
-      "prob": 65
+      "line": 3.5,
+      "prob": 80
     },
     "home_cards": {
       "lambda": 1.83,
@@ -3872,7 +4910,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.9,
+      "lambda": 4.89,
       "corners_list": [
         3,
         7,
@@ -3886,7 +4924,7 @@
       "prob": 72
     },
     "away_corners": {
-      "lambda": 5.12,
+      "lambda": 5.1,
       "corners_list": [
         7,
         5,
@@ -3913,7 +4951,7 @@
       "prob": 52
     },
     "away_cards": {
-      "lambda": 1.76,
+      "lambda": 1.77,
       "yellow_cards_list": [
         1,
         0,
@@ -3998,7 +5036,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.72,
+      "lambda": 4.71,
       "corners_list": [
         1,
         3,
@@ -4012,7 +5050,7 @@
       "prob": 69
     },
     "away_corners": {
-      "lambda": 5.24,
+      "lambda": 5.23,
       "corners_list": [
         2,
         1,
@@ -4123,7 +5161,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.66,
+      "lambda": 5.65,
       "corners_list": [
         10,
         7,
@@ -4264,7 +5302,7 @@
       "prob": 69
     },
     "away_corners": {
-      "lambda": 9.24,
+      "lambda": 9.2,
       "corners_list": [
         8,
         6,
@@ -4376,7 +5414,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.32,
+      "lambda": 4.31,
       "corners_list": [
         10,
         6,
@@ -4387,10 +5425,10 @@
         6
       ],
       "line": 3.0,
-      "prob": 63
+      "prob": 62
     },
     "away_corners": {
-      "lambda": 6.02,
+      "lambda": 6.0,
       "corners_list": [
         9,
         9,
@@ -4401,7 +5439,7 @@
         5
       ],
       "line": 4.0,
-      "prob": 72
+      "prob": 71
     },
     "home_cards": {
       "lambda": 1.4,
@@ -4500,7 +5538,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.16,
+      "lambda": 7.12,
       "corners_list": [
         6,
         6,
@@ -4511,10 +5549,10 @@
         7
       ],
       "line": 5.0,
-      "prob": 72
+      "prob": 71
     },
     "away_corners": {
-      "lambda": 5.15,
+      "lambda": 5.14,
       "corners_list": [
         5,
         5,
@@ -4525,7 +5563,7 @@
         3
       ],
       "line": 3.5,
-      "prob": 76
+      "prob": 75
     },
     "home_cards": {
       "lambda": 1.54,
@@ -4556,7 +5594,7 @@
   {
     "match_id": "mt_377263864",
     "league": "Eredivisie",
-    "date": "2026-10-09T15:00:00.000Z",
+    "date": "2026-10-09T18:00:00.000Z",
     "date_key": "2026-10-09",
     "home_team": "PSV Eindhoven",
     "away_team": "SC Heerenveen",
@@ -4626,7 +5664,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.21,
+      "lambda": 7.18,
       "corners_list": [
         9,
         7,
@@ -4637,10 +5675,10 @@
         5
       ],
       "line": 5.0,
-      "prob": 73
+      "prob": 72
     },
     "away_corners": {
-      "lambda": 3.23,
+      "lambda": 3.22,
       "corners_list": [
         4,
         2,
@@ -4651,7 +5689,7 @@
         6
       ],
       "line": 2.0,
-      "prob": 63
+      "prob": 62
     },
     "home_cards": {
       "lambda": 1.75,
@@ -4668,7 +5706,7 @@
       "prob": 52
     },
     "away_cards": {
-      "lambda": 1.37,
+      "lambda": 1.38,
       "yellow_cards_list": [
         2,
         1,
@@ -4755,7 +5793,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.13,
+      "lambda": 3.12,
       "corners_list": [
         2,
         5,
@@ -4766,10 +5804,10 @@
         2
       ],
       "line": 2.0,
-      "prob": 61
+      "prob": 60
     },
     "away_corners": {
-      "lambda": 4.42,
+      "lambda": 4.4,
       "corners_list": [
         5,
         0,
@@ -4783,7 +5821,7 @@
       "prob": 64
     },
     "home_cards": {
-      "lambda": 2.45,
+      "lambda": 2.46,
       "yellow_cards_list": [
         5,
         3,
@@ -4884,7 +5922,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.59,
+      "lambda": 4.57,
       "corners_list": [
         10,
         3,
@@ -4898,7 +5936,7 @@
       "prob": 67
     },
     "away_corners": {
-      "lambda": 2.96,
+      "lambda": 2.95,
       "corners_list": [
         5,
         1,
@@ -5012,7 +6050,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.33,
+      "lambda": 3.31,
       "corners_list": [
         2,
         6,
@@ -5023,10 +6061,10 @@
         3
       ],
       "line": 2.0,
-      "prob": 65
+      "prob": 64
     },
     "away_corners": {
-      "lambda": 4.7,
+      "lambda": 4.67,
       "corners_list": [
         4,
         7,
@@ -5140,7 +6178,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.39,
+      "lambda": 3.37,
       "corners_list": [
         2,
         4,
@@ -5151,10 +6189,10 @@
         2
       ],
       "line": 2.0,
-      "prob": 66
+      "prob": 65
     },
     "away_corners": {
-      "lambda": 5.07,
+      "lambda": 5.05,
       "corners_list": [
         7,
         4,
@@ -5267,7 +6305,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.01,
+      "lambda": 3.0,
       "corners_list": [
         2,
         1,
@@ -5281,7 +6319,7 @@
       "prob": 58
     },
     "away_corners": {
-      "lambda": 5.65,
+      "lambda": 5.62,
       "corners_list": [
         7,
         6,
@@ -5292,7 +6330,7 @@
         3
       ],
       "line": 4.0,
-      "prob": 67
+      "prob": 66
     },
     "home_cards": {
       "lambda": 1.87,
@@ -5309,7 +6347,7 @@
       "prob": 56
     },
     "away_cards": {
-      "lambda": 1.4,
+      "lambda": 1.41,
       "yellow_cards_list": [
         0,
         1,
@@ -5395,7 +6433,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.73,
+      "lambda": 4.7,
       "corners_list": [
         6,
         1,
@@ -5406,10 +6444,10 @@
         4
       ],
       "line": 3.0,
-      "prob": 70
+      "prob": 69
     },
     "away_corners": {
-      "lambda": 4.73,
+      "lambda": 4.7,
       "corners_list": [
         4,
         2,
@@ -5420,10 +6458,10 @@
         5
       ],
       "line": 3.0,
-      "prob": 70
+      "prob": 69
     },
     "home_cards": {
-      "lambda": 2.06,
+      "lambda": 2.07,
       "yellow_cards_list": [
         2,
         3,
@@ -5525,7 +6563,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.8,
+      "lambda": 3.78,
       "corners_list": [
         6,
         5,
@@ -5539,7 +6577,7 @@
       "prob": 73
     },
     "away_corners": {
-      "lambda": 4.28,
+      "lambda": 4.26,
       "corners_list": [
         9,
         2,
@@ -5652,7 +6690,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 2.86,
+      "lambda": 2.85,
       "corners_list": [
         2,
         2,
@@ -5665,7 +6703,7 @@
       "prob": 54
     },
     "away_corners": {
-      "lambda": 3.89,
+      "lambda": 3.87,
       "corners_list": [
         4,
         5,
@@ -5676,7 +6714,7 @@
         4
       ],
       "line": 2.5,
-      "prob": 75
+      "prob": 74
     },
     "home_cards": {
       "lambda": 1.97,
@@ -5747,33 +6785,36 @@
     },
     "away_form": {
       "n_games": 6,
-      "avg_corners": 3.6,
+      "avg_corners": 3.67,
       "corners_list": [
         5,
         3,
         3,
         7,
-        0
+        0,
+        4
       ],
-      "avg_corners_conceded": 5.4,
+      "avg_corners_conceded": 5.0,
       "corners_conceded_list": [
         2,
         4,
         6,
         1,
-        14
+        14,
+        3
       ],
-      "avg_yellow_cards": 1.8,
+      "avg_yellow_cards": 1.67,
       "yellow_cards_list": [
         1,
         1,
         4,
         0,
-        3
+        3,
+        1
       ]
     },
     "home_corners": {
-      "lambda": 3.17,
+      "lambda": 2.99,
       "corners_list": [
         4,
         3,
@@ -5784,22 +6825,23 @@
         0
       ],
       "line": 2.0,
-      "prob": 61
+      "prob": 57
     },
     "away_corners": {
-      "lambda": 4.15,
+      "lambda": 4.18,
       "corners_list": [
         5,
         3,
         3,
         7,
-        0
+        0,
+        4
       ],
-      "line": 2.5,
-      "prob": 78
+      "line": 3.0,
+      "prob": 60
     },
     "home_cards": {
-      "lambda": 2.68,
+      "lambda": 2.67,
       "yellow_cards_list": [
         4,
         4,
@@ -5812,16 +6854,17 @@
       "prob": 75
     },
     "away_cards": {
-      "lambda": 1.84,
+      "lambda": 1.75,
       "yellow_cards_list": [
         1,
         1,
         4,
         0,
-        3
+        3,
+        1
       ],
       "line": 1.0,
-      "prob": 55
+      "prob": 52
     }
   },
   {
@@ -5895,7 +6938,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 2.93,
+      "lambda": 2.92,
       "corners_list": [
         1,
         4,
@@ -5908,7 +6951,7 @@
       "prob": 56
     },
     "away_corners": {
-      "lambda": 4.22,
+      "lambda": 4.2,
       "corners_list": [
         1,
         3,
@@ -5919,7 +6962,7 @@
         1
       ],
       "line": 3.0,
-      "prob": 61
+      "prob": 60
     },
     "home_cards": {
       "lambda": 1.3,
@@ -6023,7 +7066,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.67,
+      "lambda": 3.66,
       "corners_list": [
         6,
         6,
@@ -6037,7 +7080,7 @@
       "prob": 71
     },
     "away_corners": {
-      "lambda": 7.23,
+      "lambda": 7.2,
       "corners_list": [
         1,
         8,
@@ -6048,7 +7091,7 @@
         7
       ],
       "line": 5.0,
-      "prob": 73
+      "prob": 72
     },
     "home_cards": {
       "lambda": 2.38,
@@ -6077,136 +7120,6 @@
       ],
       "line": 1.0,
       "prob": 59
-    }
-  },
-  {
-    "match_id": "mt_899827542",
-    "league": "LaLiga",
-    "date": "2026-10-11T19:00:00.000Z",
-    "date_key": "2026-10-11",
-    "home_team": "Elche",
-    "away_team": "Celta Vigo",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 4.43,
-      "corners_list": [
-        6,
-        3,
-        10,
-        6,
-        1,
-        2,
-        3
-      ],
-      "avg_corners_conceded": 4.29,
-      "corners_conceded_list": [
-        2,
-        1,
-        5,
-        7,
-        7,
-        5,
-        3
-      ],
-      "avg_yellow_cards": 2.43,
-      "yellow_cards_list": [
-        2,
-        1,
-        1,
-        4,
-        3,
-        4,
-        2
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 3.29,
-      "corners_list": [
-        2,
-        5,
-        4,
-        3,
-        5,
-        1,
-        3
-      ],
-      "avg_corners_conceded": 4.71,
-      "corners_conceded_list": [
-        1,
-        3,
-        7,
-        11,
-        3,
-        5,
-        3
-      ],
-      "avg_yellow_cards": 1.71,
-      "yellow_cards_list": [
-        3,
-        1,
-        0,
-        3,
-        2,
-        1,
-        2
-      ]
-    },
-    "home_corners": {
-      "lambda": 4.39,
-      "corners_list": [
-        6,
-        3,
-        10,
-        6,
-        1,
-        2,
-        3
-      ],
-      "line": 3.0,
-      "prob": 64
-    },
-    "away_corners": {
-      "lambda": 3.4,
-      "corners_list": [
-        2,
-        5,
-        4,
-        3,
-        5,
-        1,
-        3
-      ],
-      "line": 2.0,
-      "prob": 66
-    },
-    "home_cards": {
-      "lambda": 2.28,
-      "yellow_cards_list": [
-        2,
-        1,
-        1,
-        4,
-        3,
-        4,
-        2
-      ],
-      "line": 1.5,
-      "prob": 66
-    },
-    "away_cards": {
-      "lambda": 1.78,
-      "yellow_cards_list": [
-        3,
-        1,
-        0,
-        3,
-        2,
-        1,
-        2
-      ],
-      "line": 1.0,
-      "prob": 53
     }
   },
   {
@@ -6283,7 +7196,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.47,
+      "lambda": 4.46,
       "corners_list": [
         4,
         2,
@@ -6297,7 +7210,7 @@
       "prob": 65
     },
     "away_corners": {
-      "lambda": 4.56,
+      "lambda": 4.55,
       "corners_list": [
         9,
         3,
@@ -6413,7 +7326,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.82,
+      "lambda": 6.79,
       "corners_list": [
         5,
         7,
@@ -6427,7 +7340,7 @@
       "prob": 81
     },
     "away_corners": {
-      "lambda": 4.38,
+      "lambda": 4.36,
       "corners_list": [
         2,
         4,
@@ -6438,7 +7351,7 @@
         11
       ],
       "line": 3.0,
-      "prob": 64
+      "prob": 63
     },
     "home_cards": {
       "lambda": 2.18,
@@ -6467,6 +7380,136 @@
       ],
       "line": 1.0,
       "prob": 56
+    }
+  },
+  {
+    "match_id": "mt_899827542",
+    "league": "LaLiga",
+    "date": "2026-10-11T12:00:00.000Z",
+    "date_key": "2026-10-11",
+    "home_team": "Elche",
+    "away_team": "Celta Vigo",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.43,
+      "corners_list": [
+        6,
+        3,
+        10,
+        6,
+        1,
+        2,
+        3
+      ],
+      "avg_corners_conceded": 4.29,
+      "corners_conceded_list": [
+        2,
+        1,
+        5,
+        7,
+        7,
+        5,
+        3
+      ],
+      "avg_yellow_cards": 2.43,
+      "yellow_cards_list": [
+        2,
+        1,
+        1,
+        4,
+        3,
+        4,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 3.29,
+      "corners_list": [
+        2,
+        5,
+        4,
+        3,
+        5,
+        1,
+        3
+      ],
+      "avg_corners_conceded": 4.71,
+      "corners_conceded_list": [
+        1,
+        3,
+        7,
+        11,
+        3,
+        5,
+        3
+      ],
+      "avg_yellow_cards": 1.71,
+      "yellow_cards_list": [
+        3,
+        1,
+        0,
+        3,
+        2,
+        1,
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.37,
+      "corners_list": [
+        6,
+        3,
+        10,
+        6,
+        1,
+        2,
+        3
+      ],
+      "line": 3.0,
+      "prob": 64
+    },
+    "away_corners": {
+      "lambda": 3.39,
+      "corners_list": [
+        2,
+        5,
+        4,
+        3,
+        5,
+        1,
+        3
+      ],
+      "line": 2.0,
+      "prob": 66
+    },
+    "home_cards": {
+      "lambda": 2.28,
+      "yellow_cards_list": [
+        2,
+        1,
+        1,
+        4,
+        3,
+        4,
+        2
+      ],
+      "line": 1.5,
+      "prob": 66
+    },
+    "away_cards": {
+      "lambda": 1.77,
+      "yellow_cards_list": [
+        3,
+        1,
+        0,
+        3,
+        2,
+        1,
+        2
+      ],
+      "line": 1.0,
+      "prob": 53
     }
   },
   {
@@ -6543,7 +7586,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.14,
+      "lambda": 5.12,
       "corners_list": [
         8,
         4,
@@ -6557,7 +7600,7 @@
       "prob": 75
     },
     "away_corners": {
-      "lambda": 5.78,
+      "lambda": 5.76,
       "corners_list": [
         10,
         3,
@@ -6673,7 +7716,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.97,
+      "lambda": 6.94,
       "corners_list": [
         1,
         12,
@@ -6683,8 +7726,8 @@
         18,
         3
       ],
-      "line": 5.0,
-      "prob": 70
+      "line": 4.5,
+      "prob": 82
     },
     "away_corners": {
       "lambda": 2.83,
@@ -6701,7 +7744,7 @@
       "prob": 54
     },
     "home_cards": {
-      "lambda": 1.38,
+      "lambda": 1.37,
       "yellow_cards_list": [
         0,
         1,
@@ -6803,7 +7846,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.24,
+      "lambda": 3.23,
       "corners_list": [
         5,
         7,
@@ -6817,7 +7860,7 @@
       "prob": 63
     },
     "away_corners": {
-      "lambda": 5.11,
+      "lambda": 5.08,
       "corners_list": [
         6,
         5,
@@ -6930,7 +7973,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.1,
+      "lambda": 5.07,
       "corners_list": [
         2,
         9,
@@ -6941,10 +7984,10 @@
         4
       ],
       "line": 3.5,
-      "prob": 75
+      "prob": 74
     },
     "away_corners": {
-      "lambda": 6.72,
+      "lambda": 6.69,
       "corners_list": [
         10,
         5,
@@ -7058,7 +8101,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.67,
+      "lambda": 4.65,
       "corners_list": [
         1,
         7,
@@ -7069,10 +8112,10 @@
         9
       ],
       "line": 3.0,
-      "prob": 69
+      "prob": 68
     },
     "away_corners": {
-      "lambda": 3.12,
+      "lambda": 3.11,
       "corners_list": [
         0,
         0,
@@ -7100,7 +8143,7 @@
       "prob": 69
     },
     "away_cards": {
-      "lambda": 2.59,
+      "lambda": 2.58,
       "yellow_cards_list": [
         3,
         5,
@@ -7112,6 +8155,3314 @@
       ],
       "line": 1.5,
       "prob": 73
+    }
+  },
+  {
+    "match_id": "mt_206118228",
+    "league": "UEFA Champions League",
+    "date": "2026-10-14T19:00:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "\u0160K Slovan Bratislava",
+    "away_team": "VfB Stuttgart",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.0,
+      "corners_list": [
+        2,
+        4,
+        8,
+        2
+      ],
+      "avg_corners_conceded": 4.0,
+      "corners_conceded_list": [
+        4,
+        0,
+        5,
+        7
+      ],
+      "avg_yellow_cards": 1.75,
+      "yellow_cards_list": [
+        3,
+        2,
+        1,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 3.0,
+      "corners_list": [
+        3
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        5
+      ],
+      "avg_yellow_cards": 0.0,
+      "yellow_cards_list": [
+        0
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.3,
+      "corners_list": [
+        2,
+        4,
+        8,
+        2
+      ],
+      "line": 3.0,
+      "prob": 62
+    },
+    "away_corners": {
+      "lambda": 3.86,
+      "corners_list": [
+        3
+      ],
+      "line": 2.5,
+      "prob": 74
+    },
+    "home_cards": {
+      "lambda": 1.81,
+      "yellow_cards_list": [
+        3,
+        2,
+        1,
+        1
+      ],
+      "line": 1.0,
+      "prob": 54
+    },
+    "away_cards": {
+      "lambda": 1.45,
+      "yellow_cards_list": [
+        0
+      ],
+      "line": 1.0,
+      "prob": 43
+    }
+  },
+  {
+    "match_id": "mt_206118176",
+    "league": "UEFA Champions League",
+    "date": "2026-10-14T19:00:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Bod\u00f8/Glimt",
+    "away_team": "Borussia Dortmund",
+    "home_form": {
+      "n_games": 5,
+      "avg_corners": 4.75,
+      "corners_list": [
+        10,
+        2,
+        4,
+        3
+      ],
+      "avg_corners_conceded": 4.0,
+      "corners_conceded_list": [
+        1,
+        7,
+        2,
+        6
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        2,
+        1,
+        0,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 9.0,
+      "corners_list": [
+        9
+      ],
+      "avg_corners_conceded": 7.0,
+      "corners_conceded_list": [
+        7
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.32,
+      "corners_list": [
+        10,
+        2,
+        4,
+        3
+      ],
+      "line": 3.5,
+      "prob": 78
+    },
+    "away_corners": {
+      "lambda": 5.24,
+      "corners_list": [
+        9
+      ],
+      "line": 3.5,
+      "prob": 77
+    },
+    "home_cards": {
+      "lambda": 1.34,
+      "yellow_cards_list": [
+        2,
+        1,
+        0,
+        1
+      ],
+      "line": 0.5,
+      "prob": 74
+    },
+    "away_cards": {
+      "lambda": 1.69,
+      "yellow_cards_list": [
+        1
+      ],
+      "line": 1.0,
+      "prob": 50
+    }
+  },
+  {
+    "match_id": "mt_895776752",
+    "league": "UEFA Champions League",
+    "date": "2026-10-14T19:00:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Shakhtar Donetsk",
+    "away_team": "AEK Athens",
+    "home_form": {
+      "n_games": 1,
+      "avg_corners": 3.0,
+      "corners_list": [
+        3
+      ],
+      "avg_corners_conceded": 3.0,
+      "corners_conceded_list": [
+        3
+      ],
+      "avg_yellow_cards": 6.0,
+      "yellow_cards_list": [
+        6
+      ]
+    },
+    "away_form": {
+      "n_games": 3,
+      "avg_corners": 5.0,
+      "corners_list": [
+        2,
+        6,
+        7
+      ],
+      "avg_corners_conceded": 2.33,
+      "corners_conceded_list": [
+        1,
+        3,
+        3
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        3,
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 3.3,
+      "corners_list": [
+        3
+      ],
+      "line": 2.0,
+      "prob": 64
+    },
+    "away_corners": {
+      "lambda": 4.5,
+      "corners_list": [
+        2,
+        6,
+        7
+      ],
+      "line": 3.0,
+      "prob": 66
+    },
+    "home_cards": {
+      "lambda": 2.96,
+      "yellow_cards_list": [
+        6
+      ],
+      "line": 2.0,
+      "prob": 57
+    },
+    "away_cards": {
+      "lambda": 1.97,
+      "yellow_cards_list": [
+        3,
+        1
+      ],
+      "line": 1.0,
+      "prob": 59
+    }
+  },
+  {
+    "match_id": "mt_981334439",
+    "league": "UEFA Champions League",
+    "date": "2026-10-14T19:00:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Roma",
+    "away_team": "Real Madrid",
+    "home_form": {
+      "n_games": 1,
+      "avg_corners": 3.0,
+      "corners_list": [
+        3
+      ],
+      "avg_corners_conceded": 1.0,
+      "corners_conceded_list": [
+        1
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 4.0,
+      "corners_list": [
+        4
+      ],
+      "avg_corners_conceded": 11.0,
+      "corners_conceded_list": [
+        11
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.86,
+      "corners_list": [
+        3
+      ],
+      "line": 4.0,
+      "prob": 70
+    },
+    "away_corners": {
+      "lambda": 3.79,
+      "corners_list": [
+        4
+      ],
+      "line": 2.5,
+      "prob": 73
+    },
+    "home_cards": {
+      "lambda": 1.96,
+      "yellow_cards_list": [
+        2
+      ],
+      "line": 1.0,
+      "prob": 58
+    },
+    "away_cards": {
+      "lambda": 1.7,
+      "yellow_cards_list": [
+        1
+      ],
+      "line": 1.0,
+      "prob": 51
+    }
+  },
+  {
+    "match_id": "mt_739660065",
+    "league": "UEFA Champions League",
+    "date": "2026-10-14T19:00:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Real Betis",
+    "away_team": "FC Porto",
+    "home_form": {
+      "n_games": 1,
+      "avg_corners": 5.0,
+      "corners_list": [
+        5
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        5
+      ],
+      "avg_yellow_cards": 3.0,
+      "yellow_cards_list": [
+        3
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 2.0,
+      "corners_list": [
+        2
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        5
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.98,
+      "corners_list": [
+        5
+      ],
+      "line": 3.5,
+      "prob": 73
+    },
+    "away_corners": {
+      "lambda": 4.23,
+      "corners_list": [
+        2
+      ],
+      "line": 3.0,
+      "prob": 61
+    },
+    "home_cards": {
+      "lambda": 2.21,
+      "yellow_cards_list": [
+        3
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "away_cards": {
+      "lambda": 1.7,
+      "yellow_cards_list": [
+        1
+      ],
+      "line": 1.0,
+      "prob": 51
+    }
+  },
+  {
+    "match_id": "mt_981334424",
+    "league": "UEFA Champions League",
+    "date": "2026-10-14T19:00:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Aston Villa",
+    "away_team": "Fenerbah\u00e7e",
+    "home_form": {
+      "n_games": 1,
+      "avg_corners": 5.0,
+      "corners_list": [
+        5
+      ],
+      "avg_corners_conceded": 4.0,
+      "corners_conceded_list": [
+        4
+      ],
+      "avg_yellow_cards": 3.0,
+      "yellow_cards_list": [
+        3
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.29,
+      "corners_list": [
+        9,
+        7,
+        4,
+        6,
+        3,
+        7,
+        1
+      ],
+      "avg_corners_conceded": 4.0,
+      "corners_conceded_list": [
+        2,
+        9,
+        2,
+        7,
+        0,
+        5,
+        3
+      ],
+      "avg_yellow_cards": 2.83,
+      "yellow_cards_list": [
+        5,
+        0,
+        3,
+        2,
+        3,
+        4
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.27,
+      "corners_list": [
+        5
+      ],
+      "line": 3.0,
+      "prob": 62
+    },
+    "away_corners": {
+      "lambda": 4.93,
+      "corners_list": [
+        9,
+        7,
+        4,
+        6,
+        3,
+        7,
+        1
+      ],
+      "line": 3.5,
+      "prob": 73
+    },
+    "home_cards": {
+      "lambda": 2.21,
+      "yellow_cards_list": [
+        3
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "away_cards": {
+      "lambda": 2.57,
+      "yellow_cards_list": [
+        5,
+        0,
+        3,
+        2,
+        3,
+        4
+      ],
+      "line": 1.5,
+      "prob": 73
+    }
+  },
+  {
+    "match_id": "mt_981334223",
+    "league": "UEFA Champions League",
+    "date": "2026-10-14T19:00:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Manchester City",
+    "away_team": "Paris Saint-Germain",
+    "home_form": {
+      "n_games": 1,
+      "avg_corners": 5.0,
+      "corners_list": [
+        5
+      ],
+      "avg_corners_conceded": 2.0,
+      "corners_conceded_list": [
+        2
+      ],
+      "avg_yellow_cards": 3.0,
+      "yellow_cards_list": [
+        3
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 7.0,
+      "corners_list": [
+        7
+      ],
+      "avg_corners_conceded": 2.0,
+      "corners_conceded_list": [
+        2
+      ],
+      "avg_yellow_cards": 0.0,
+      "yellow_cards_list": [
+        0
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.23,
+      "corners_list": [
+        5
+      ],
+      "line": 3.0,
+      "prob": 61
+    },
+    "away_corners": {
+      "lambda": 4.66,
+      "corners_list": [
+        7
+      ],
+      "line": 3.0,
+      "prob": 68
+    },
+    "home_cards": {
+      "lambda": 2.21,
+      "yellow_cards_list": [
+        3
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "away_cards": {
+      "lambda": 1.46,
+      "yellow_cards_list": [
+        0
+      ],
+      "line": 1.0,
+      "prob": 43
+    }
+  },
+  {
+    "match_id": "mt_512993555",
+    "league": "UEFA Champions League",
+    "date": "2026-10-14T16:45:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "LASK",
+    "away_team": "Liverpool",
+    "home_form": {
+      "n_games": 3,
+      "avg_corners": 5.33,
+      "corners_list": [
+        3,
+        10,
+        3
+      ],
+      "avg_corners_conceded": 6.67,
+      "corners_conceded_list": [
+        8,
+        5,
+        7
+      ],
+      "avg_yellow_cards": 1.67,
+      "yellow_cards_list": [
+        1,
+        2,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 7.0,
+      "corners_list": [
+        7
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        5
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.16,
+      "corners_list": [
+        3,
+        10,
+        3
+      ],
+      "line": 3.5,
+      "prob": 76
+    },
+    "away_corners": {
+      "lambda": 6.44,
+      "corners_list": [
+        7
+      ],
+      "line": 4.5,
+      "prob": 77
+    },
+    "home_cards": {
+      "lambda": 1.81,
+      "yellow_cards_list": [
+        1,
+        2,
+        2
+      ],
+      "line": 1.0,
+      "prob": 54
+    },
+    "away_cards": {
+      "lambda": 1.7,
+      "yellow_cards_list": [
+        1
+      ],
+      "line": 1.0,
+      "prob": 51
+    }
+  },
+  {
+    "match_id": "mt_024559081",
+    "league": "UEFA Champions League",
+    "date": "2026-10-14T16:45:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Feyenoord",
+    "away_team": "Como",
+    "home_form": {
+      "n_games": 1,
+      "avg_corners": 1.0,
+      "corners_list": [
+        1
+      ],
+      "avg_corners_conceded": 4.0,
+      "corners_conceded_list": [
+        4
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 1.0,
+      "corners_list": [
+        1
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        5
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 3.99,
+      "corners_list": [
+        1
+      ],
+      "line": 2.5,
+      "prob": 76
+    },
+    "away_corners": {
+      "lambda": 3.78,
+      "corners_list": [
+        1
+      ],
+      "line": 2.5,
+      "prob": 73
+    },
+    "home_cards": {
+      "lambda": 1.7,
+      "yellow_cards_list": [
+        1
+      ],
+      "line": 1.0,
+      "prob": 51
+    },
+    "away_cards": {
+      "lambda": 1.95,
+      "yellow_cards_list": [
+        2
+      ],
+      "line": 1.0,
+      "prob": 58
+    }
+  },
+  {
+    "match_id": "mt_206118286",
+    "league": "UEFA Champions League",
+    "date": "2026-10-13T19:00:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Viking FK",
+    "away_team": "FC Bayern M\u00fcnchen",
+    "home_form": {
+      "n_games": 3,
+      "avg_corners": 3.67,
+      "corners_list": [
+        3,
+        3,
+        5
+      ],
+      "avg_corners_conceded": 5.67,
+      "corners_conceded_list": [
+        9,
+        5,
+        3
+      ],
+      "avg_yellow_cards": 3.0,
+      "yellow_cards_list": [
+        1,
+        5,
+        3
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 6.0,
+      "corners_list": [
+        6
+      ],
+      "avg_corners_conceded": 3.0,
+      "corners_conceded_list": [
+        3
+      ],
+      "avg_yellow_cards": 0.0,
+      "yellow_cards_list": [
+        0
+      ]
+    },
+    "home_corners": {
+      "lambda": 3.88,
+      "corners_list": [
+        3,
+        3,
+        5
+      ],
+      "line": 2.5,
+      "prob": 74
+    },
+    "away_corners": {
+      "lambda": 5.58,
+      "corners_list": [
+        6
+      ],
+      "line": 4.0,
+      "prob": 65
+    },
+    "home_cards": {
+      "lambda": 2.47,
+      "yellow_cards_list": [
+        1,
+        5,
+        3
+      ],
+      "line": 1.5,
+      "prob": 71
+    },
+    "away_cards": {
+      "lambda": 1.44,
+      "yellow_cards_list": [
+        0
+      ],
+      "line": 1.0,
+      "prob": 42
+    }
+  },
+  {
+    "match_id": "mt_739660726",
+    "league": "UEFA Champions League",
+    "date": "2026-10-13T19:00:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Galatasaray",
+    "away_team": "Barcelona",
+    "home_form": {
+      "n_games": 1,
+      "avg_corners": 4.0,
+      "corners_list": [
+        4
+      ],
+      "avg_corners_conceded": 1.0,
+      "corners_conceded_list": [
+        1
+      ],
+      "avg_yellow_cards": 3.0,
+      "yellow_cards_list": [
+        3
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 4.0,
+      "corners_list": [
+        4
+      ],
+      "avg_corners_conceded": 1.0,
+      "corners_conceded_list": [
+        1
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 3.76,
+      "corners_list": [
+        4
+      ],
+      "line": 2.5,
+      "prob": 72
+    },
+    "away_corners": {
+      "lambda": 3.76,
+      "corners_list": [
+        4
+      ],
+      "line": 2.5,
+      "prob": 72
+    },
+    "home_cards": {
+      "lambda": 2.2,
+      "yellow_cards_list": [
+        3
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "away_cards": {
+      "lambda": 1.7,
+      "yellow_cards_list": [
+        1
+      ],
+      "line": 1.0,
+      "prob": 51
+    }
+  },
+  {
+    "match_id": "mt_739660603",
+    "league": "UEFA Champions League",
+    "date": "2026-10-13T19:00:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "RB Leipzig",
+    "away_team": "PSV Eindhoven",
+    "home_form": {
+      "n_games": 1,
+      "avg_corners": 5.0,
+      "corners_list": [
+        5
+      ],
+      "avg_corners_conceded": 1.0,
+      "corners_conceded_list": [
+        1
+      ],
+      "avg_yellow_cards": 3.0,
+      "yellow_cards_list": [
+        3
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 3.0,
+      "corners_list": [
+        3
+      ],
+      "avg_corners_conceded": 3.0,
+      "corners_conceded_list": [
+        3
+      ],
+      "avg_yellow_cards": 3.0,
+      "yellow_cards_list": [
+        3
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.47,
+      "corners_list": [
+        5
+      ],
+      "line": 3.0,
+      "prob": 65
+    },
+    "away_corners": {
+      "lambda": 3.56,
+      "corners_list": [
+        3
+      ],
+      "line": 2.5,
+      "prob": 69
+    },
+    "home_cards": {
+      "lambda": 2.2,
+      "yellow_cards_list": [
+        3
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "away_cards": {
+      "lambda": 2.21,
+      "yellow_cards_list": [
+        3
+      ],
+      "line": 1.5,
+      "prob": 65
+    }
+  },
+  {
+    "match_id": "mt_024559549",
+    "league": "UEFA Champions League",
+    "date": "2026-10-13T19:00:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Villarreal",
+    "away_team": "Napoli",
+    "home_form": {
+      "n_games": 1,
+      "avg_corners": 7.0,
+      "corners_list": [
+        7
+      ],
+      "avg_corners_conceded": 9.0,
+      "corners_conceded_list": [
+        9
+      ],
+      "avg_yellow_cards": 3.0,
+      "yellow_cards_list": [
+        3
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 0.0,
+      "corners_list": [
+        0
+      ],
+      "avg_corners_conceded": 6.0,
+      "corners_conceded_list": [
+        6
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.75,
+      "corners_list": [
+        7
+      ],
+      "line": 4.0,
+      "prob": 68
+    },
+    "away_corners": {
+      "lambda": 4.46,
+      "corners_list": [
+        0
+      ],
+      "line": 3.0,
+      "prob": 65
+    },
+    "home_cards": {
+      "lambda": 2.21,
+      "yellow_cards_list": [
+        3
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "away_cards": {
+      "lambda": 1.96,
+      "yellow_cards_list": [
+        2
+      ],
+      "line": 1.0,
+      "prob": 58
+    }
+  },
+  {
+    "match_id": "mt_378442252",
+    "league": "UEFA Champions League",
+    "date": "2026-10-13T19:00:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Arsenal",
+    "away_team": "Lille",
+    "home_form": {
+      "n_games": 1,
+      "avg_corners": 6.0,
+      "corners_list": [
+        6
+      ],
+      "avg_corners_conceded": 0.0,
+      "corners_conceded_list": [
+        0
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 5.0,
+      "corners_list": [
+        5
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        5
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.21,
+      "corners_list": [
+        6
+      ],
+      "line": 3.5,
+      "prob": 76
+    },
+    "away_corners": {
+      "lambda": 3.69,
+      "corners_list": [
+        5
+      ],
+      "line": 2.5,
+      "prob": 71
+    },
+    "home_cards": {
+      "lambda": 1.7,
+      "yellow_cards_list": [
+        1
+      ],
+      "line": 1.0,
+      "prob": 51
+    },
+    "away_cards": {
+      "lambda": 1.7,
+      "yellow_cards_list": [
+        1
+      ],
+      "line": 1.0,
+      "prob": 51
+    }
+  },
+  {
+    "match_id": "mt_739660560",
+    "league": "UEFA Champions League",
+    "date": "2026-10-13T19:00:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Atl\u00e9tico Madrid",
+    "away_team": "Manchester United",
+    "home_form": {
+      "n_games": 1,
+      "avg_corners": 5.0,
+      "corners_list": [
+        5
+      ],
+      "avg_corners_conceded": 7.0,
+      "corners_conceded_list": [
+        7
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 7.0,
+      "corners_list": [
+        7
+      ],
+      "avg_corners_conceded": 2.0,
+      "corners_conceded_list": [
+        2
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.2,
+      "corners_list": [
+        5
+      ],
+      "line": 3.0,
+      "prob": 60
+    },
+    "away_corners": {
+      "lambda": 6.03,
+      "corners_list": [
+        7
+      ],
+      "line": 4.0,
+      "prob": 72
+    },
+    "home_cards": {
+      "lambda": 1.7,
+      "yellow_cards_list": [
+        1
+      ],
+      "line": 1.0,
+      "prob": 51
+    },
+    "away_cards": {
+      "lambda": 1.69,
+      "yellow_cards_list": [
+        1
+      ],
+      "line": 1.0,
+      "prob": 50
+    }
+  },
+  {
+    "match_id": "mt_378442127",
+    "league": "UEFA Champions League",
+    "date": "2026-10-13T19:00:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Inter",
+    "away_team": "Club Brugge KV",
+    "home_form": {
+      "n_games": 1,
+      "avg_corners": 11.0,
+      "corners_list": [
+        11
+      ],
+      "avg_corners_conceded": 4.0,
+      "corners_conceded_list": [
+        4
+      ],
+      "avg_yellow_cards": 3.0,
+      "yellow_cards_list": [
+        3
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 4.0,
+      "corners_list": [
+        4
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        5
+      ],
+      "avg_yellow_cards": 3.0,
+      "yellow_cards_list": [
+        3
+      ]
+    },
+    "home_corners": {
+      "lambda": 6.5,
+      "corners_list": [
+        11
+      ],
+      "line": 4.5,
+      "prob": 78
+    },
+    "away_corners": {
+      "lambda": 4.49,
+      "corners_list": [
+        4
+      ],
+      "line": 3.0,
+      "prob": 66
+    },
+    "home_cards": {
+      "lambda": 2.2,
+      "yellow_cards_list": [
+        3
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "away_cards": {
+      "lambda": 2.2,
+      "yellow_cards_list": [
+        3
+      ],
+      "line": 1.5,
+      "prob": 65
+    }
+  },
+  {
+    "match_id": "mt_378442325",
+    "league": "UEFA Champions League",
+    "date": "2026-10-13T16:45:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "Sabah FK",
+    "away_team": "SK Slavia Praha",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.4,
+      "corners_list": [
+        5,
+        7,
+        2,
+        11,
+        2
+      ],
+      "avg_corners_conceded": 4.6,
+      "corners_conceded_list": [
+        6,
+        4,
+        3,
+        3,
+        7
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        2,
+        0,
+        0,
+        2,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 6.0,
+      "corners_list": [
+        6
+      ],
+      "avg_corners_conceded": 9.0,
+      "corners_conceded_list": [
+        9
+      ],
+      "avg_yellow_cards": 0.0,
+      "yellow_cards_list": [
+        0
+      ]
+    },
+    "home_corners": {
+      "lambda": 6.39,
+      "corners_list": [
+        5,
+        7,
+        2,
+        11,
+        2
+      ],
+      "line": 4.5,
+      "prob": 76
+    },
+    "away_corners": {
+      "lambda": 5.01,
+      "corners_list": [
+        6
+      ],
+      "line": 3.5,
+      "prob": 74
+    },
+    "home_cards": {
+      "lambda": 1.28,
+      "yellow_cards_list": [
+        2,
+        0,
+        0,
+        2,
+        1
+      ],
+      "line": 0.5,
+      "prob": 72
+    },
+    "away_cards": {
+      "lambda": 1.44,
+      "yellow_cards_list": [
+        0
+      ],
+      "line": 1.0,
+      "prob": 42
+    }
+  },
+  {
+    "match_id": "mt_512993522",
+    "league": "UEFA Champions League",
+    "date": "2026-10-13T16:45:00.000Z",
+    "date_key": "2026-10-13",
+    "home_team": "RC Lens",
+    "away_team": "Sporting",
+    "home_form": {
+      "n_games": 1,
+      "avg_corners": 9.0,
+      "corners_list": [
+        9
+      ],
+      "avg_corners_conceded": 6.0,
+      "corners_conceded_list": [
+        6
+      ],
+      "avg_yellow_cards": 1.0,
+      "yellow_cards_list": [
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 1,
+      "avg_corners": 1.0,
+      "corners_list": [
+        1
+      ],
+      "avg_corners_conceded": 4.0,
+      "corners_conceded_list": [
+        4
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.71,
+      "corners_list": [
+        9
+      ],
+      "line": 4.0,
+      "prob": 67
+    },
+    "away_corners": {
+      "lambda": 4.2,
+      "corners_list": [
+        1
+      ],
+      "line": 3.0,
+      "prob": 60
+    },
+    "home_cards": {
+      "lambda": 1.69,
+      "yellow_cards_list": [
+        1
+      ],
+      "line": 1.0,
+      "prob": 50
+    },
+    "away_cards": {
+      "lambda": 1.94,
+      "yellow_cards_list": [
+        2
+      ],
+      "line": 1.0,
+      "prob": 58
+    }
+  },
+  {
+    "match_id": "mt_153015610",
+    "league": "MLS",
+    "date": "2026-10-15T02:30:00.000Z",
+    "date_key": "2026-10-15",
+    "home_team": "LA Galaxy",
+    "away_team": "Portland Timbers",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.71,
+      "corners_list": [
+        5,
+        7,
+        5,
+        5,
+        5,
+        8,
+        5
+      ],
+      "avg_corners_conceded": 5.29,
+      "corners_conceded_list": [
+        6,
+        7,
+        3,
+        7,
+        3,
+        5,
+        6
+      ],
+      "avg_yellow_cards": 1.29,
+      "yellow_cards_list": [
+        0,
+        2,
+        2,
+        3,
+        0,
+        1,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.43,
+      "corners_list": [
+        0,
+        6,
+        4,
+        9,
+        5,
+        5,
+        9
+      ],
+      "avg_corners_conceded": 5.14,
+      "corners_conceded_list": [
+        12,
+        3,
+        3,
+        2,
+        8,
+        3,
+        5
+      ],
+      "avg_yellow_cards": 1.29,
+      "yellow_cards_list": [
+        3,
+        1,
+        1,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.69,
+      "corners_list": [
+        5,
+        7,
+        5,
+        5,
+        5,
+        8,
+        5
+      ],
+      "line": 4.0,
+      "prob": 67
+    },
+    "away_corners": {
+      "lambda": 5.6,
+      "corners_list": [
+        0,
+        6,
+        4,
+        9,
+        5,
+        5,
+        9
+      ],
+      "line": 4.0,
+      "prob": 66
+    },
+    "home_cards": {
+      "lambda": 1.48,
+      "yellow_cards_list": [
+        0,
+        2,
+        2,
+        3,
+        0,
+        1,
+        1
+      ],
+      "line": 1.0,
+      "prob": 44
+    },
+    "away_cards": {
+      "lambda": 1.48,
+      "yellow_cards_list": [
+        3,
+        1,
+        1,
+        1,
+        0,
+        2,
+        1
+      ],
+      "line": 1.0,
+      "prob": 44
+    }
+  },
+  {
+    "match_id": "mt_732973573",
+    "league": "MLS",
+    "date": "2026-10-15T02:30:00.000Z",
+    "date_key": "2026-10-15",
+    "home_team": "San Diego FC",
+    "away_team": "Houston Dynamo",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 3.86,
+      "corners_list": [
+        2,
+        7,
+        4,
+        1,
+        11,
+        1,
+        1
+      ],
+      "avg_corners_conceded": 4.43,
+      "corners_conceded_list": [
+        3,
+        7,
+        6,
+        3,
+        4,
+        4,
+        4
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        0,
+        5,
+        2,
+        4,
+        2,
+        1,
+        0
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.71,
+      "corners_list": [
+        5,
+        7,
+        6,
+        1,
+        3,
+        3,
+        8
+      ],
+      "avg_corners_conceded": 3.86,
+      "corners_conceded_list": [
+        1,
+        4,
+        8,
+        4,
+        1,
+        7,
+        2
+      ],
+      "avg_yellow_cards": 1.67,
+      "yellow_cards_list": [
+        3,
+        0,
+        4,
+        1,
+        1,
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 3.58,
+      "corners_list": [
+        2,
+        7,
+        4,
+        1,
+        11,
+        1,
+        1
+      ],
+      "line": 2.5,
+      "prob": 69
+    },
+    "away_corners": {
+      "lambda": 4.48,
+      "corners_list": [
+        5,
+        7,
+        6,
+        1,
+        3,
+        3,
+        8
+      ],
+      "line": 3.0,
+      "prob": 65
+    },
+    "home_cards": {
+      "lambda": 1.97,
+      "yellow_cards_list": [
+        0,
+        5,
+        2,
+        4,
+        2,
+        1,
+        0
+      ],
+      "line": 1.0,
+      "prob": 59
+    },
+    "away_cards": {
+      "lambda": 1.74,
+      "yellow_cards_list": [
+        3,
+        0,
+        4,
+        1,
+        1,
+        1
+      ],
+      "line": 1.0,
+      "prob": 52
+    }
+  },
+  {
+    "match_id": "mt_370837130",
+    "league": "MLS",
+    "date": "2026-10-15T02:30:00.000Z",
+    "date_key": "2026-10-15",
+    "home_team": "Los Angeles FC",
+    "away_team": "Austin FC",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 7.86,
+      "corners_list": [
+        12,
+        8,
+        8,
+        9,
+        13,
+        3,
+        2
+      ],
+      "avg_corners_conceded": 5.43,
+      "corners_conceded_list": [
+        0,
+        5,
+        5,
+        3,
+        6,
+        17,
+        2
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        2,
+        0,
+        2,
+        2,
+        2,
+        4
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.86,
+      "corners_list": [
+        6,
+        3,
+        7,
+        8,
+        0,
+        6,
+        4
+      ],
+      "avg_corners_conceded": 5.43,
+      "corners_conceded_list": [
+        6,
+        6,
+        7,
+        4,
+        6,
+        8,
+        1
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        1,
+        4,
+        1,
+        0,
+        5,
+        2,
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 7.55,
+      "corners_list": [
+        12,
+        8,
+        8,
+        9,
+        13,
+        3,
+        2
+      ],
+      "line": 5.0,
+      "prob": 76
+    },
+    "away_corners": {
+      "lambda": 5.28,
+      "corners_list": [
+        6,
+        3,
+        7,
+        8,
+        0,
+        6,
+        4
+      ],
+      "line": 3.5,
+      "prob": 77
+    },
+    "home_cards": {
+      "lambda": 1.97,
+      "yellow_cards_list": [
+        2,
+        0,
+        2,
+        2,
+        2,
+        4
+      ],
+      "line": 1.0,
+      "prob": 59
+    },
+    "away_cards": {
+      "lambda": 1.97,
+      "yellow_cards_list": [
+        1,
+        4,
+        1,
+        0,
+        5,
+        2,
+        1
+      ],
+      "line": 1.0,
+      "prob": 59
+    }
+  },
+  {
+    "match_id": "mt_986198294",
+    "league": "MLS",
+    "date": "2026-10-15T01:30:00.000Z",
+    "date_key": "2026-10-15",
+    "home_team": "Colorado Rapids",
+    "away_team": "Minnesota United",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.57,
+      "corners_list": [
+        3,
+        7,
+        3,
+        4,
+        5,
+        4,
+        6
+      ],
+      "avg_corners_conceded": 3.43,
+      "corners_conceded_list": [
+        2,
+        1,
+        1,
+        8,
+        1,
+        6,
+        5
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        3,
+        3,
+        0,
+        2,
+        2,
+        2,
+        3
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.71,
+      "corners_list": [
+        3,
+        8,
+        3,
+        2,
+        5,
+        5,
+        7
+      ],
+      "avg_corners_conceded": 4.71,
+      "corners_conceded_list": [
+        3,
+        1,
+        4,
+        6,
+        6,
+        8,
+        5
+      ],
+      "avg_yellow_cards": 1.86,
+      "yellow_cards_list": [
+        0,
+        2,
+        3,
+        2,
+        3,
+        1,
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.58,
+      "corners_list": [
+        3,
+        7,
+        3,
+        4,
+        5,
+        4,
+        6
+      ],
+      "line": 3.0,
+      "prob": 67
+    },
+    "away_corners": {
+      "lambda": 3.79,
+      "corners_list": [
+        3,
+        8,
+        3,
+        2,
+        5,
+        5,
+        7
+      ],
+      "line": 2.5,
+      "prob": 73
+    },
+    "home_cards": {
+      "lambda": 2.07,
+      "yellow_cards_list": [
+        3,
+        3,
+        0,
+        2,
+        2,
+        2,
+        3
+      ],
+      "line": 1.0,
+      "prob": 61
+    },
+    "away_cards": {
+      "lambda": 1.87,
+      "yellow_cards_list": [
+        0,
+        2,
+        3,
+        2,
+        3,
+        1,
+        2
+      ],
+      "line": 1.0,
+      "prob": 56
+    }
+  },
+  {
+    "match_id": "mt_894589083",
+    "league": "MLS",
+    "date": "2026-10-15T01:30:00.000Z",
+    "date_key": "2026-10-15",
+    "home_team": "Real Salt Lake",
+    "away_team": "San Jose Earthquakes",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.71,
+      "corners_list": [
+        1,
+        5,
+        4,
+        10,
+        6,
+        6,
+        1
+      ],
+      "avg_corners_conceded": 6.0,
+      "corners_conceded_list": [
+        7,
+        8,
+        1,
+        1,
+        7,
+        7,
+        11
+      ],
+      "avg_yellow_cards": 2.86,
+      "yellow_cards_list": [
+        5,
+        3,
+        4,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.71,
+      "corners_list": [
+        3,
+        4,
+        7,
+        3,
+        1,
+        17,
+        5
+      ],
+      "avg_corners_conceded": 4.71,
+      "corners_conceded_list": [
+        3,
+        7,
+        7,
+        1,
+        3,
+        3,
+        9
+      ],
+      "avg_yellow_cards": 2.29,
+      "yellow_cards_list": [
+        1,
+        1,
+        1,
+        6,
+        3,
+        2,
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.67,
+      "corners_list": [
+        1,
+        5,
+        4,
+        10,
+        6,
+        6,
+        1
+      ],
+      "line": 3.0,
+      "prob": 69
+    },
+    "away_corners": {
+      "lambda": 6.37,
+      "corners_list": [
+        3,
+        4,
+        7,
+        3,
+        1,
+        17,
+        5
+      ],
+      "line": 4.5,
+      "prob": 76
+    },
+    "home_cards": {
+      "lambda": 2.58,
+      "yellow_cards_list": [
+        5,
+        3,
+        4,
+        2,
+        2,
+        2,
+        2
+      ],
+      "line": 1.5,
+      "prob": 73
+    },
+    "away_cards": {
+      "lambda": 2.18,
+      "yellow_cards_list": [
+        1,
+        1,
+        1,
+        6,
+        3,
+        2,
+        2
+      ],
+      "line": 1.5,
+      "prob": 64
+    }
+  },
+  {
+    "match_id": "mt_641364968",
+    "league": "MLS",
+    "date": "2026-10-15T00:30:00.000Z",
+    "date_key": "2026-10-15",
+    "home_team": "St.Louis City",
+    "away_team": "Vancouver Whitecaps",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.0,
+      "corners_list": [
+        1,
+        6,
+        2,
+        2,
+        6,
+        8,
+        3
+      ],
+      "avg_corners_conceded": 5.14,
+      "corners_conceded_list": [
+        5,
+        3,
+        6,
+        9,
+        5,
+        4,
+        4
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        4,
+        1,
+        3,
+        4,
+        0,
+        2,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 6.57,
+      "corners_list": [
+        9,
+        4,
+        6,
+        7,
+        6,
+        7,
+        7
+      ],
+      "avg_corners_conceded": 3.86,
+      "corners_conceded_list": [
+        3,
+        1,
+        2,
+        5,
+        0,
+        6,
+        10
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        1,
+        2,
+        4,
+        1,
+        2,
+        5,
+        0
+      ]
+    },
+    "home_corners": {
+      "lambda": 3.66,
+      "corners_list": [
+        1,
+        6,
+        2,
+        2,
+        6,
+        8,
+        3
+      ],
+      "line": 2.5,
+      "prob": 71
+    },
+    "away_corners": {
+      "lambda": 6.32,
+      "corners_list": [
+        9,
+        4,
+        6,
+        7,
+        6,
+        7,
+        7
+      ],
+      "line": 4.5,
+      "prob": 76
+    },
+    "home_cards": {
+      "lambda": 2.07,
+      "yellow_cards_list": [
+        4,
+        1,
+        3,
+        4,
+        0,
+        2,
+        1
+      ],
+      "line": 1.0,
+      "prob": 61
+    },
+    "away_cards": {
+      "lambda": 2.07,
+      "yellow_cards_list": [
+        1,
+        2,
+        4,
+        1,
+        2,
+        5,
+        0
+      ],
+      "line": 1.0,
+      "prob": 61
+    }
+  },
+  {
+    "match_id": "mt_465746824",
+    "league": "MLS",
+    "date": "2026-10-15T00:30:00.000Z",
+    "date_key": "2026-10-15",
+    "home_team": "FC Dallas",
+    "away_team": "Seattle Sounders FC",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.71,
+      "corners_list": [
+        3,
+        3,
+        3,
+        6,
+        8,
+        8,
+        2
+      ],
+      "avg_corners_conceded": 5.29,
+      "corners_conceded_list": [
+        9,
+        6,
+        7,
+        2,
+        5,
+        6,
+        2
+      ],
+      "avg_yellow_cards": 1.86,
+      "yellow_cards_list": [
+        4,
+        2,
+        0,
+        2,
+        1,
+        2,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 6.43,
+      "corners_list": [
+        4,
+        9,
+        3,
+        6,
+        7,
+        5,
+        11
+      ],
+      "avg_corners_conceded": 6.0,
+      "corners_conceded_list": [
+        7,
+        7,
+        5,
+        4,
+        6,
+        7,
+        6
+      ],
+      "avg_yellow_cards": 1.57,
+      "yellow_cards_list": [
+        1,
+        1,
+        2,
+        0,
+        4,
+        2,
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.56,
+      "corners_list": [
+        3,
+        3,
+        3,
+        6,
+        8,
+        8,
+        2
+      ],
+      "line": 4.0,
+      "prob": 65
+    },
+    "away_corners": {
+      "lambda": 6.35,
+      "corners_list": [
+        4,
+        9,
+        3,
+        6,
+        7,
+        5,
+        11
+      ],
+      "line": 4.5,
+      "prob": 76
+    },
+    "home_cards": {
+      "lambda": 1.88,
+      "yellow_cards_list": [
+        4,
+        2,
+        0,
+        2,
+        1,
+        2,
+        2
+      ],
+      "line": 1.0,
+      "prob": 56
+    },
+    "away_cards": {
+      "lambda": 1.67,
+      "yellow_cards_list": [
+        1,
+        1,
+        2,
+        0,
+        4,
+        2,
+        1
+      ],
+      "line": 1.0,
+      "prob": 50
+    }
+  },
+  {
+    "match_id": "mt_028402355",
+    "league": "MLS",
+    "date": "2026-10-15T00:30:00.000Z",
+    "date_key": "2026-10-15",
+    "home_team": "Chicago Fire",
+    "away_team": "Philadelphia Union",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.0,
+      "corners_list": [
+        2,
+        7,
+        3,
+        2,
+        13,
+        2,
+        6
+      ],
+      "avg_corners_conceded": 3.86,
+      "corners_conceded_list": [
+        3,
+        4,
+        6,
+        5,
+        0,
+        5,
+        4
+      ],
+      "avg_yellow_cards": 1.57,
+      "yellow_cards_list": [
+        2,
+        0,
+        2,
+        2,
+        2,
+        1,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.86,
+      "corners_list": [
+        6,
+        7,
+        6,
+        7,
+        4,
+        4,
+        7
+      ],
+      "avg_corners_conceded": 4.71,
+      "corners_conceded_list": [
+        6,
+        4,
+        1,
+        1,
+        11,
+        3,
+        7
+      ],
+      "avg_yellow_cards": 2.29,
+      "yellow_cards_list": [
+        2,
+        2,
+        4,
+        0,
+        2,
+        4,
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.87,
+      "corners_list": [
+        2,
+        7,
+        3,
+        2,
+        13,
+        2,
+        6
+      ],
+      "line": 3.5,
+      "prob": 72
+    },
+    "away_corners": {
+      "lambda": 4.78,
+      "corners_list": [
+        6,
+        7,
+        6,
+        7,
+        4,
+        4,
+        7
+      ],
+      "line": 3.0,
+      "prob": 70
+    },
+    "home_cards": {
+      "lambda": 1.67,
+      "yellow_cards_list": [
+        2,
+        0,
+        2,
+        2,
+        2,
+        1,
+        2
+      ],
+      "line": 1.0,
+      "prob": 50
+    },
+    "away_cards": {
+      "lambda": 2.18,
+      "yellow_cards_list": [
+        2,
+        2,
+        4,
+        0,
+        2,
+        4,
+        2
+      ],
+      "line": 1.5,
+      "prob": 64
+    }
+  },
+  {
+    "match_id": "mt_986198232",
+    "league": "MLS",
+    "date": "2026-10-15T00:30:00.000Z",
+    "date_key": "2026-10-15",
+    "home_team": "Nashville SC",
+    "away_team": "Sporting Kansas City",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 6.0,
+      "corners_list": [
+        8,
+        6,
+        3,
+        8,
+        3,
+        5,
+        9
+      ],
+      "avg_corners_conceded": 2.86,
+      "corners_conceded_list": [
+        1,
+        4,
+        3,
+        3,
+        4,
+        2,
+        3
+      ],
+      "avg_yellow_cards": 1.71,
+      "yellow_cards_list": [
+        1,
+        3,
+        4,
+        0,
+        2,
+        1,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.43,
+      "corners_list": [
+        6,
+        1,
+        7,
+        6,
+        3,
+        2,
+        6
+      ],
+      "avg_corners_conceded": 6.43,
+      "corners_conceded_list": [
+        2,
+        4,
+        3,
+        13,
+        4,
+        8,
+        11
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        1,
+        2,
+        2,
+        2,
+        3,
+        4,
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 6.97,
+      "corners_list": [
+        8,
+        6,
+        3,
+        8,
+        3,
+        5,
+        9
+      ],
+      "line": 5.0,
+      "prob": 70
+    },
+    "away_corners": {
+      "lambda": 3.27,
+      "corners_list": [
+        6,
+        1,
+        7,
+        6,
+        3,
+        2,
+        6
+      ],
+      "line": 2.0,
+      "prob": 63
+    },
+    "home_cards": {
+      "lambda": 1.77,
+      "yellow_cards_list": [
+        1,
+        3,
+        4,
+        0,
+        2,
+        1,
+        1
+      ],
+      "line": 1.0,
+      "prob": 53
+    },
+    "away_cards": {
+      "lambda": 2.07,
+      "yellow_cards_list": [
+        1,
+        2,
+        2,
+        2,
+        3,
+        4,
+        1
+      ],
+      "line": 1.0,
+      "prob": 61
+    }
+  },
+  {
+    "match_id": "mt_517251493",
+    "league": "MLS",
+    "date": "2026-10-14T23:30:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Toronto FC",
+    "away_team": "Orlando City SC",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.0,
+      "corners_list": [
+        2,
+        7,
+        6,
+        3,
+        3,
+        4,
+        3
+      ],
+      "avg_corners_conceded": 5.29,
+      "corners_conceded_list": [
+        3,
+        2,
+        3,
+        8,
+        4,
+        8,
+        9
+      ],
+      "avg_yellow_cards": 1.57,
+      "yellow_cards_list": [
+        1,
+        3,
+        2,
+        1,
+        2,
+        2,
+        0
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.43,
+      "corners_list": [
+        5,
+        1,
+        6,
+        5,
+        4,
+        3,
+        7
+      ],
+      "avg_corners_conceded": 6.14,
+      "corners_conceded_list": [
+        4,
+        8,
+        4,
+        7,
+        3,
+        10,
+        7
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        1,
+        2,
+        3,
+        2,
+        3,
+        0,
+        4
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.08,
+      "corners_list": [
+        2,
+        7,
+        6,
+        3,
+        3,
+        4,
+        3
+      ],
+      "line": 3.5,
+      "prob": 75
+    },
+    "away_corners": {
+      "lambda": 4.87,
+      "corners_list": [
+        5,
+        1,
+        6,
+        5,
+        4,
+        3,
+        7
+      ],
+      "line": 3.5,
+      "prob": 72
+    },
+    "home_cards": {
+      "lambda": 1.67,
+      "yellow_cards_list": [
+        1,
+        3,
+        2,
+        1,
+        2,
+        2,
+        0
+      ],
+      "line": 1.0,
+      "prob": 50
+    },
+    "away_cards": {
+      "lambda": 2.07,
+      "yellow_cards_list": [
+        1,
+        2,
+        3,
+        2,
+        3,
+        0,
+        4
+      ],
+      "line": 1.0,
+      "prob": 61
+    }
+  },
+  {
+    "match_id": "mt_209620716",
+    "league": "MLS",
+    "date": "2026-10-14T23:30:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "CF Montr\u00e9al",
+    "away_team": "Atlanta United",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.86,
+      "corners_list": [
+        6,
+        6,
+        1,
+        11,
+        1,
+        5,
+        4
+      ],
+      "avg_corners_conceded": 4.57,
+      "corners_conceded_list": [
+        5,
+        6,
+        6,
+        3,
+        5,
+        1,
+        6
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        2,
+        2,
+        4,
+        2,
+        1,
+        2,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.86,
+      "corners_list": [
+        2,
+        11,
+        6,
+        7,
+        8,
+        3,
+        4
+      ],
+      "avg_corners_conceded": 5.14,
+      "corners_conceded_list": [
+        6,
+        7,
+        6,
+        5,
+        4,
+        5,
+        3
+      ],
+      "avg_yellow_cards": 1.71,
+      "yellow_cards_list": [
+        2,
+        1,
+        3,
+        1,
+        2,
+        2,
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.08,
+      "corners_list": [
+        6,
+        6,
+        1,
+        11,
+        1,
+        5,
+        4
+      ],
+      "line": 3.5,
+      "prob": 75
+    },
+    "away_corners": {
+      "lambda": 5.35,
+      "corners_list": [
+        2,
+        11,
+        6,
+        7,
+        8,
+        3,
+        4
+      ],
+      "line": 3.5,
+      "prob": 78
+    },
+    "home_cards": {
+      "lambda": 2.07,
+      "yellow_cards_list": [
+        2,
+        2,
+        4,
+        2,
+        1,
+        2,
+        2
+      ],
+      "line": 1.0,
+      "prob": 61
+    },
+    "away_cards": {
+      "lambda": 1.77,
+      "yellow_cards_list": [
+        2,
+        1,
+        3,
+        1,
+        2,
+        2,
+        1
+      ],
+      "line": 1.0,
+      "prob": 53
+    }
+  },
+  {
+    "match_id": "mt_732973564",
+    "league": "MLS",
+    "date": "2026-10-14T23:30:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "DC United",
+    "away_team": "New York Red Bulls",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.57,
+      "corners_list": [
+        4,
+        9,
+        5,
+        3,
+        4,
+        4,
+        10
+      ],
+      "avg_corners_conceded": 5.71,
+      "corners_conceded_list": [
+        5,
+        4,
+        8,
+        5,
+        8,
+        3,
+        7
+      ],
+      "avg_yellow_cards": 2.17,
+      "yellow_cards_list": [
+        1,
+        3,
+        3,
+        3,
+        2,
+        1
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.43,
+      "corners_list": [
+        3,
+        4,
+        7,
+        3,
+        3,
+        7,
+        4
+      ],
+      "avg_corners_conceded": 6.14,
+      "corners_conceded_list": [
+        2,
+        7,
+        9,
+        9,
+        7,
+        6,
+        3
+      ],
+      "avg_yellow_cards": 1.86,
+      "yellow_cards_list": [
+        1,
+        1,
+        3,
+        2,
+        2,
+        3,
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 6.37,
+      "corners_list": [
+        4,
+        9,
+        5,
+        3,
+        4,
+        4,
+        10
+      ],
+      "line": 4.5,
+      "prob": 76
+    },
+    "away_corners": {
+      "lambda": 5.14,
+      "corners_list": [
+        3,
+        4,
+        7,
+        3,
+        3,
+        7,
+        4
+      ],
+      "line": 3.5,
+      "prob": 75
+    },
+    "home_cards": {
+      "lambda": 2.09,
+      "yellow_cards_list": [
+        1,
+        3,
+        3,
+        3,
+        2,
+        1
+      ],
+      "line": 1.5,
+      "prob": 62
+    },
+    "away_cards": {
+      "lambda": 1.88,
+      "yellow_cards_list": [
+        1,
+        1,
+        3,
+        2,
+        2,
+        3,
+        1
+      ],
+      "line": 1.0,
+      "prob": 56
+    }
+  },
+  {
+    "match_id": "mt_894589074",
+    "league": "MLS",
+    "date": "2026-10-14T23:30:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Columbus Crew",
+    "away_team": "Charlotte FC",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.14,
+      "corners_list": [
+        1,
+        5,
+        1,
+        5,
+        7,
+        1,
+        9
+      ],
+      "avg_corners_conceded": 4.0,
+      "corners_conceded_list": [
+        8,
+        5,
+        3,
+        3,
+        3,
+        5,
+        1
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        1,
+        1,
+        4,
+        2,
+        2,
+        1,
+        4
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.57,
+      "corners_list": [
+        4,
+        7,
+        8,
+        3,
+        3,
+        3,
+        4
+      ],
+      "avg_corners_conceded": 8.43,
+      "corners_conceded_list": [
+        9,
+        11,
+        6,
+        11,
+        12,
+        4,
+        6
+      ],
+      "avg_yellow_cards": 2.57,
+      "yellow_cards_list": [
+        2,
+        1,
+        5,
+        1,
+        1,
+        2,
+        6
+      ]
+    },
+    "home_corners": {
+      "lambda": 6.62,
+      "corners_list": [
+        1,
+        5,
+        1,
+        5,
+        7,
+        1,
+        9
+      ],
+      "line": 4.5,
+      "prob": 79
+    },
+    "away_corners": {
+      "lambda": 4.09,
+      "corners_list": [
+        4,
+        7,
+        8,
+        3,
+        3,
+        3,
+        4
+      ],
+      "line": 2.5,
+      "prob": 77
+    },
+    "home_cards": {
+      "lambda": 2.07,
+      "yellow_cards_list": [
+        1,
+        1,
+        4,
+        2,
+        2,
+        1,
+        4
+      ],
+      "line": 1.0,
+      "prob": 61
+    },
+    "away_cards": {
+      "lambda": 2.38,
+      "yellow_cards_list": [
+        2,
+        1,
+        5,
+        1,
+        1,
+        2,
+        6
+      ],
+      "line": 1.5,
+      "prob": 69
+    }
+  },
+  {
+    "match_id": "mt_370837145",
+    "league": "MLS",
+    "date": "2026-10-14T23:30:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "Inter Miami CF",
+    "away_team": "New York City FC",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.14,
+      "corners_list": [
+        3,
+        6,
+        6,
+        5,
+        4,
+        4,
+        1
+      ],
+      "avg_corners_conceded": 4.14,
+      "corners_conceded_list": [
+        2,
+        6,
+        6,
+        2,
+        3,
+        1,
+        9
+      ],
+      "avg_yellow_cards": 3.43,
+      "yellow_cards_list": [
+        2,
+        1,
+        6,
+        3,
+        3,
+        2,
+        7
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.43,
+      "corners_list": [
+        4,
+        2,
+        3,
+        12,
+        1,
+        6,
+        3
+      ],
+      "avg_corners_conceded": 5.86,
+      "corners_conceded_list": [
+        6,
+        7,
+        3,
+        4,
+        10,
+        7,
+        4
+      ],
+      "avg_yellow_cards": 1.57,
+      "yellow_cards_list": [
+        1,
+        3,
+        2,
+        0,
+        2,
+        2,
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.99,
+      "corners_list": [
+        3,
+        6,
+        6,
+        5,
+        4,
+        4,
+        1
+      ],
+      "line": 3.5,
+      "prob": 73
+    },
+    "away_corners": {
+      "lambda": 4.09,
+      "corners_list": [
+        4,
+        2,
+        3,
+        12,
+        1,
+        6,
+        3
+      ],
+      "line": 2.5,
+      "prob": 77
+    },
+    "home_cards": {
+      "lambda": 2.98,
+      "yellow_cards_list": [
+        2,
+        1,
+        6,
+        3,
+        3,
+        2,
+        7
+      ],
+      "line": 2.0,
+      "prob": 57
+    },
+    "away_cards": {
+      "lambda": 1.68,
+      "yellow_cards_list": [
+        1,
+        3,
+        2,
+        0,
+        2,
+        2,
+        1
+      ],
+      "line": 1.0,
+      "prob": 50
+    }
+  },
+  {
+    "match_id": "mt_517251434",
+    "league": "MLS",
+    "date": "2026-10-14T23:30:00.000Z",
+    "date_key": "2026-10-14",
+    "home_team": "FC Cincinnati",
+    "away_team": "New England Revolution",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.86,
+      "corners_list": [
+        2,
+        9,
+        4,
+        1,
+        12,
+        7,
+        6
+      ],
+      "avg_corners_conceded": 4.57,
+      "corners_conceded_list": [
+        5,
+        4,
+        6,
+        7,
+        3,
+        3,
+        4
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        3,
+        1,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.57,
+      "corners_list": [
+        6,
+        5,
+        3,
+        4,
+        0,
+        10,
+        11
+      ],
+      "avg_corners_conceded": 6.14,
+      "corners_conceded_list": [
+        4,
+        5,
+        5,
+        12,
+        13,
+        3,
+        1
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        1,
+        1,
+        3,
+        2,
+        2,
+        4,
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 6.58,
+      "corners_list": [
+        2,
+        9,
+        4,
+        1,
+        12,
+        7,
+        6
+      ],
+      "line": 4.5,
+      "prob": 79
+    },
+    "away_corners": {
+      "lambda": 5.13,
+      "corners_list": [
+        6,
+        5,
+        3,
+        4,
+        0,
+        10,
+        11
+      ],
+      "line": 3.5,
+      "prob": 75
+    },
+    "home_cards": {
+      "lambda": 1.98,
+      "yellow_cards_list": [
+        3,
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "line": 1.0,
+      "prob": 59
+    },
+    "away_cards": {
+      "lambda": 2.08,
+      "yellow_cards_list": [
+        1,
+        1,
+        3,
+        2,
+        2,
+        4,
+        2
+      ],
+      "line": 1.0,
+      "prob": 62
     }
   },
   {
@@ -7188,7 +11539,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.48,
+      "lambda": 4.52,
       "corners_list": [
         1,
         6,
@@ -7199,10 +11550,10 @@
         3
       ],
       "line": 3.0,
-      "prob": 65
+      "prob": 66
     },
     "away_corners": {
-      "lambda": 5.61,
+      "lambda": 5.67,
       "corners_list": [
         5,
         7,
@@ -7213,7 +11564,7 @@
         5
       ],
       "line": 4.0,
-      "prob": 66
+      "prob": 67
     },
     "home_cards": {
       "lambda": 2.08,
@@ -7230,7 +11581,7 @@
       "prob": 62
     },
     "away_cards": {
-      "lambda": 1.49,
+      "lambda": 1.48,
       "yellow_cards_list": [
         0,
         2,
@@ -7317,7 +11668,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.89,
+      "lambda": 5.95,
       "corners_list": [
         12,
         8,
@@ -7328,10 +11679,10 @@
         2
       ],
       "line": 4.0,
-      "prob": 70
+      "prob": 71
     },
     "away_corners": {
-      "lambda": 6.48,
+      "lambda": 6.54,
       "corners_list": [
         9,
         4,
@@ -7342,7 +11693,7 @@
         7
       ],
       "line": 4.5,
-      "prob": 77
+      "prob": 78
     },
     "home_cards": {
       "lambda": 1.98,
@@ -7446,7 +11797,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.53,
+      "lambda": 4.57,
       "corners_list": [
         3,
         7,
@@ -7457,10 +11808,10 @@
         6
       ],
       "line": 3.0,
-      "prob": 66
+      "prob": 67
     },
     "away_corners": {
-      "lambda": 4.31,
+      "lambda": 4.34,
       "corners_list": [
         3,
         4,
@@ -7471,7 +11822,7 @@
         5
       ],
       "line": 3.0,
-      "prob": 62
+      "prob": 63
     },
     "home_cards": {
       "lambda": 2.08,
@@ -7488,7 +11839,7 @@
       "prob": 62
     },
     "away_cards": {
-      "lambda": 2.19,
+      "lambda": 2.18,
       "yellow_cards_list": [
         1,
         1,
@@ -7575,7 +11926,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.06,
+      "lambda": 4.08,
       "corners_list": [
         3,
         8,
@@ -7589,7 +11940,7 @@
       "prob": 77
     },
     "away_corners": {
-      "lambda": 4.63,
+      "lambda": 4.67,
       "corners_list": [
         5,
         7,
@@ -7600,10 +11951,10 @@
         8
       ],
       "line": 3.0,
-      "prob": 68
+      "prob": 69
     },
     "home_cards": {
-      "lambda": 1.89,
+      "lambda": 1.88,
       "yellow_cards_list": [
         0,
         2,
@@ -7704,7 +12055,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.72,
+      "lambda": 4.76,
       "corners_list": [
         6,
         1,
@@ -7715,10 +12066,10 @@
         6
       ],
       "line": 3.0,
-      "prob": 69
+      "prob": 70
     },
     "away_corners": {
-      "lambda": 6.41,
+      "lambda": 6.46,
       "corners_list": [
         0,
         6,
@@ -7746,7 +12097,7 @@
       "prob": 62
     },
     "away_cards": {
-      "lambda": 1.49,
+      "lambda": 1.48,
       "yellow_cards_list": [
         3,
         1,
@@ -7758,1432 +12109,6 @@
       ],
       "line": 1.0,
       "prob": 44
-    }
-  },
-  {
-    "match_id": "mt_894589062",
-    "league": "MLS",
-    "date": "2026-10-11T00:30:00.000Z",
-    "date_key": "2026-10-11",
-    "home_team": "Austin FC",
-    "away_team": "Nashville SC",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 4.86,
-      "corners_list": [
-        6,
-        3,
-        7,
-        8,
-        0,
-        6,
-        4
-      ],
-      "avg_corners_conceded": 5.43,
-      "corners_conceded_list": [
-        6,
-        6,
-        7,
-        4,
-        6,
-        8,
-        1
-      ],
-      "avg_yellow_cards": 2.0,
-      "yellow_cards_list": [
-        1,
-        4,
-        1,
-        0,
-        5,
-        2,
-        1
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 6.0,
-      "corners_list": [
-        8,
-        6,
-        3,
-        8,
-        3,
-        5,
-        9
-      ],
-      "avg_corners_conceded": 2.86,
-      "corners_conceded_list": [
-        1,
-        4,
-        3,
-        3,
-        4,
-        2,
-        3
-      ],
-      "avg_yellow_cards": 1.71,
-      "yellow_cards_list": [
-        1,
-        3,
-        4,
-        0,
-        2,
-        1,
-        1
-      ]
-    },
-    "home_corners": {
-      "lambda": 3.45,
-      "corners_list": [
-        6,
-        3,
-        7,
-        8,
-        0,
-        6,
-        4
-      ],
-      "line": 2.0,
-      "prob": 67
-    },
-    "away_corners": {
-      "lambda": 6.08,
-      "corners_list": [
-        8,
-        6,
-        3,
-        8,
-        3,
-        5,
-        9
-      ],
-      "line": 4.0,
-      "prob": 73
-    },
-    "home_cards": {
-      "lambda": 1.98,
-      "yellow_cards_list": [
-        1,
-        4,
-        1,
-        0,
-        5,
-        2,
-        1
-      ],
-      "line": 1.0,
-      "prob": 59
-    },
-    "away_cards": {
-      "lambda": 1.78,
-      "yellow_cards_list": [
-        1,
-        3,
-        4,
-        0,
-        2,
-        1,
-        1
-      ],
-      "line": 1.0,
-      "prob": 53
-    }
-  },
-  {
-    "match_id": "mt_465724581",
-    "league": "MLS",
-    "date": "2026-10-10T23:30:00.000Z",
-    "date_key": "2026-10-10",
-    "home_team": "Philadelphia Union",
-    "away_team": "Real Salt Lake",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 5.86,
-      "corners_list": [
-        6,
-        7,
-        6,
-        7,
-        4,
-        4,
-        7
-      ],
-      "avg_corners_conceded": 4.71,
-      "corners_conceded_list": [
-        6,
-        4,
-        1,
-        1,
-        11,
-        3,
-        7
-      ],
-      "avg_yellow_cards": 2.29,
-      "yellow_cards_list": [
-        2,
-        2,
-        4,
-        0,
-        2,
-        4,
-        2
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 4.71,
-      "corners_list": [
-        1,
-        5,
-        4,
-        10,
-        6,
-        6,
-        1
-      ],
-      "avg_corners_conceded": 6.0,
-      "corners_conceded_list": [
-        7,
-        8,
-        1,
-        1,
-        7,
-        7,
-        11
-      ],
-      "avg_yellow_cards": 2.86,
-      "yellow_cards_list": [
-        5,
-        3,
-        4,
-        2,
-        2,
-        2,
-        2
-      ]
-    },
-    "home_corners": {
-      "lambda": 6.44,
-      "corners_list": [
-        6,
-        7,
-        6,
-        7,
-        4,
-        4,
-        7
-      ],
-      "line": 4.5,
-      "prob": 77
-    },
-    "away_corners": {
-      "lambda": 4.64,
-      "corners_list": [
-        1,
-        5,
-        4,
-        10,
-        6,
-        6,
-        1
-      ],
-      "line": 3.0,
-      "prob": 68
-    },
-    "home_cards": {
-      "lambda": 2.19,
-      "yellow_cards_list": [
-        2,
-        2,
-        4,
-        0,
-        2,
-        4,
-        2
-      ],
-      "line": 1.5,
-      "prob": 64
-    },
-    "away_cards": {
-      "lambda": 2.59,
-      "yellow_cards_list": [
-        5,
-        3,
-        4,
-        2,
-        2,
-        2,
-        2
-      ],
-      "line": 1.5,
-      "prob": 73
-    }
-  },
-  {
-    "match_id": "mt_028450833",
-    "league": "MLS",
-    "date": "2026-10-10T23:30:00.000Z",
-    "date_key": "2026-10-10",
-    "home_team": "Orlando City SC",
-    "away_team": "Columbus Crew",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 4.43,
-      "corners_list": [
-        5,
-        1,
-        6,
-        5,
-        4,
-        3,
-        7
-      ],
-      "avg_corners_conceded": 6.14,
-      "corners_conceded_list": [
-        4,
-        8,
-        4,
-        7,
-        3,
-        10,
-        7
-      ],
-      "avg_yellow_cards": 2.14,
-      "yellow_cards_list": [
-        1,
-        2,
-        3,
-        2,
-        3,
-        0,
-        4
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 4.14,
-      "corners_list": [
-        1,
-        5,
-        1,
-        5,
-        7,
-        1,
-        9
-      ],
-      "avg_corners_conceded": 4.0,
-      "corners_conceded_list": [
-        8,
-        5,
-        3,
-        3,
-        3,
-        5,
-        1
-      ],
-      "avg_yellow_cards": 2.14,
-      "yellow_cards_list": [
-        1,
-        1,
-        4,
-        2,
-        2,
-        1,
-        4
-      ]
-    },
-    "home_corners": {
-      "lambda": 3.98,
-      "corners_list": [
-        5,
-        1,
-        6,
-        5,
-        4,
-        3,
-        7
-      ],
-      "line": 2.5,
-      "prob": 76
-    },
-    "away_corners": {
-      "lambda": 5.14,
-      "corners_list": [
-        1,
-        5,
-        1,
-        5,
-        7,
-        1,
-        9
-      ],
-      "line": 3.5,
-      "prob": 75
-    },
-    "home_cards": {
-      "lambda": 2.08,
-      "yellow_cards_list": [
-        1,
-        2,
-        3,
-        2,
-        3,
-        0,
-        4
-      ],
-      "line": 1.0,
-      "prob": 62
-    },
-    "away_cards": {
-      "lambda": 2.08,
-      "yellow_cards_list": [
-        1,
-        1,
-        4,
-        2,
-        2,
-        1,
-        4
-      ],
-      "line": 1.0,
-      "prob": 62
-    }
-  },
-  {
-    "match_id": "mt_517295742",
-    "league": "MLS",
-    "date": "2026-10-10T23:30:00.000Z",
-    "date_key": "2026-10-10",
-    "home_team": "New York Red Bulls",
-    "away_team": "San Diego FC",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 4.43,
-      "corners_list": [
-        3,
-        4,
-        7,
-        3,
-        3,
-        7,
-        4
-      ],
-      "avg_corners_conceded": 6.14,
-      "corners_conceded_list": [
-        2,
-        7,
-        9,
-        9,
-        7,
-        6,
-        3
-      ],
-      "avg_yellow_cards": 1.86,
-      "yellow_cards_list": [
-        1,
-        1,
-        3,
-        2,
-        2,
-        3,
-        1
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 3.86,
-      "corners_list": [
-        2,
-        7,
-        4,
-        1,
-        11,
-        1,
-        1
-      ],
-      "avg_corners_conceded": 4.43,
-      "corners_conceded_list": [
-        3,
-        7,
-        6,
-        3,
-        4,
-        4,
-        4
-      ],
-      "avg_yellow_cards": 2.0,
-      "yellow_cards_list": [
-        0,
-        5,
-        2,
-        4,
-        2,
-        1,
-        0
-      ]
-    },
-    "home_corners": {
-      "lambda": 4.26,
-      "corners_list": [
-        3,
-        4,
-        7,
-        3,
-        3,
-        7,
-        4
-      ],
-      "line": 3.0,
-      "prob": 62
-    },
-    "away_corners": {
-      "lambda": 4.9,
-      "corners_list": [
-        2,
-        7,
-        4,
-        1,
-        11,
-        1,
-        1
-      ],
-      "line": 3.5,
-      "prob": 72
-    },
-    "home_cards": {
-      "lambda": 1.89,
-      "yellow_cards_list": [
-        1,
-        1,
-        3,
-        2,
-        2,
-        3,
-        1
-      ],
-      "line": 1.0,
-      "prob": 56
-    },
-    "away_cards": {
-      "lambda": 1.99,
-      "yellow_cards_list": [
-        0,
-        5,
-        2,
-        4,
-        2,
-        1,
-        0
-      ],
-      "line": 1.0,
-      "prob": 59
-    }
-  },
-  {
-    "match_id": "mt_986139628",
-    "league": "MLS",
-    "date": "2026-10-10T23:30:00.000Z",
-    "date_key": "2026-10-10",
-    "home_team": "New England Revolution",
-    "away_team": "Seattle Sounders FC",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 5.57,
-      "corners_list": [
-        6,
-        5,
-        3,
-        4,
-        0,
-        10,
-        11
-      ],
-      "avg_corners_conceded": 6.14,
-      "corners_conceded_list": [
-        4,
-        5,
-        5,
-        12,
-        13,
-        3,
-        1
-      ],
-      "avg_yellow_cards": 2.14,
-      "yellow_cards_list": [
-        1,
-        1,
-        3,
-        2,
-        2,
-        4,
-        2
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 6.43,
-      "corners_list": [
-        4,
-        9,
-        3,
-        6,
-        7,
-        5,
-        11
-      ],
-      "avg_corners_conceded": 6.0,
-      "corners_conceded_list": [
-        7,
-        7,
-        5,
-        4,
-        6,
-        7,
-        6
-      ],
-      "avg_yellow_cards": 1.57,
-      "yellow_cards_list": [
-        1,
-        1,
-        2,
-        0,
-        4,
-        2,
-        1
-      ]
-    },
-    "home_corners": {
-      "lambda": 6.18,
-      "corners_list": [
-        6,
-        5,
-        3,
-        4,
-        0,
-        10,
-        11
-      ],
-      "line": 4.0,
-      "prob": 74
-    },
-    "away_corners": {
-      "lambda": 6.99,
-      "corners_list": [
-        4,
-        9,
-        3,
-        6,
-        7,
-        5,
-        11
-      ],
-      "line": 5.0,
-      "prob": 70
-    },
-    "home_cards": {
-      "lambda": 2.08,
-      "yellow_cards_list": [
-        1,
-        1,
-        3,
-        2,
-        2,
-        4,
-        2
-      ],
-      "line": 1.0,
-      "prob": 62
-    },
-    "away_cards": {
-      "lambda": 1.69,
-      "yellow_cards_list": [
-        1,
-        1,
-        2,
-        0,
-        4,
-        2,
-        1
-      ],
-      "line": 1.0,
-      "prob": 50
-    }
-  },
-  {
-    "match_id": "mt_209612975",
-    "league": "MLS",
-    "date": "2026-10-10T23:30:00.000Z",
-    "date_key": "2026-10-10",
-    "home_team": "Inter Miami CF",
-    "away_team": "DC United",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 4.14,
-      "corners_list": [
-        3,
-        6,
-        6,
-        5,
-        4,
-        4,
-        1
-      ],
-      "avg_corners_conceded": 4.14,
-      "corners_conceded_list": [
-        2,
-        6,
-        6,
-        2,
-        3,
-        1,
-        9
-      ],
-      "avg_yellow_cards": 3.43,
-      "yellow_cards_list": [
-        2,
-        1,
-        6,
-        3,
-        3,
-        2,
-        7
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 5.57,
-      "corners_list": [
-        4,
-        9,
-        5,
-        3,
-        4,
-        4,
-        10
-      ],
-      "avg_corners_conceded": 5.71,
-      "corners_conceded_list": [
-        5,
-        4,
-        8,
-        5,
-        8,
-        3,
-        7
-      ],
-      "avg_yellow_cards": 2.17,
-      "yellow_cards_list": [
-        1,
-        3,
-        3,
-        3,
-        2,
-        1
-      ]
-    },
-    "home_corners": {
-      "lambda": 4.85,
-      "corners_list": [
-        3,
-        6,
-        6,
-        5,
-        4,
-        4,
-        1
-      ],
-      "line": 3.0,
-      "prob": 71
-    },
-    "away_corners": {
-      "lambda": 4.76,
-      "corners_list": [
-        4,
-        9,
-        5,
-        3,
-        4,
-        4,
-        10
-      ],
-      "line": 3.0,
-      "prob": 70
-    },
-    "home_cards": {
-      "lambda": 2.99,
-      "yellow_cards_list": [
-        2,
-        1,
-        6,
-        3,
-        3,
-        2,
-        7
-      ],
-      "line": 2.0,
-      "prob": 57
-    },
-    "away_cards": {
-      "lambda": 2.11,
-      "yellow_cards_list": [
-        1,
-        3,
-        3,
-        3,
-        2,
-        1
-      ],
-      "line": 1.5,
-      "prob": 62
-    }
-  },
-  {
-    "match_id": "mt_153081363",
-    "league": "MLS",
-    "date": "2026-10-10T23:30:00.000Z",
-    "date_key": "2026-10-10",
-    "home_team": "Charlotte FC",
-    "away_team": "FC Dallas",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 4.57,
-      "corners_list": [
-        4,
-        7,
-        8,
-        3,
-        3,
-        3,
-        4
-      ],
-      "avg_corners_conceded": 8.43,
-      "corners_conceded_list": [
-        9,
-        11,
-        6,
-        11,
-        12,
-        4,
-        6
-      ],
-      "avg_yellow_cards": 2.57,
-      "yellow_cards_list": [
-        2,
-        1,
-        5,
-        1,
-        1,
-        2,
-        6
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 4.71,
-      "corners_list": [
-        3,
-        3,
-        3,
-        6,
-        8,
-        8,
-        2
-      ],
-      "avg_corners_conceded": 5.29,
-      "corners_conceded_list": [
-        9,
-        6,
-        7,
-        2,
-        5,
-        6,
-        2
-      ],
-      "avg_yellow_cards": 1.86,
-      "yellow_cards_list": [
-        4,
-        2,
-        0,
-        2,
-        1,
-        2,
-        2
-      ]
-    },
-    "home_corners": {
-      "lambda": 4.9,
-      "corners_list": [
-        4,
-        7,
-        8,
-        3,
-        3,
-        3,
-        4
-      ],
-      "line": 3.5,
-      "prob": 72
-    },
-    "away_corners": {
-      "lambda": 7.11,
-      "corners_list": [
-        3,
-        3,
-        3,
-        6,
-        8,
-        8,
-        2
-      ],
-      "line": 5.0,
-      "prob": 71
-    },
-    "home_cards": {
-      "lambda": 2.39,
-      "yellow_cards_list": [
-        2,
-        1,
-        5,
-        1,
-        1,
-        2,
-        6
-      ],
-      "line": 1.5,
-      "prob": 69
-    },
-    "away_cards": {
-      "lambda": 1.89,
-      "yellow_cards_list": [
-        4,
-        2,
-        0,
-        2,
-        1,
-        2,
-        2
-      ],
-      "line": 1.0,
-      "prob": 56
-    }
-  },
-  {
-    "match_id": "mt_370843084",
-    "league": "MLS",
-    "date": "2026-10-10T23:30:00.000Z",
-    "date_key": "2026-10-10",
-    "home_team": "Atlanta United",
-    "away_team": "FC Cincinnati",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 5.86,
-      "corners_list": [
-        2,
-        11,
-        6,
-        7,
-        8,
-        3,
-        4
-      ],
-      "avg_corners_conceded": 5.14,
-      "corners_conceded_list": [
-        6,
-        7,
-        6,
-        5,
-        4,
-        5,
-        3
-      ],
-      "avg_yellow_cards": 1.71,
-      "yellow_cards_list": [
-        2,
-        1,
-        3,
-        1,
-        2,
-        2,
-        1
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 5.86,
-      "corners_list": [
-        2,
-        9,
-        4,
-        1,
-        12,
-        7,
-        6
-      ],
-      "avg_corners_conceded": 4.57,
-      "corners_conceded_list": [
-        5,
-        4,
-        6,
-        7,
-        3,
-        3,
-        4
-      ],
-      "avg_yellow_cards": 2.0,
-      "yellow_cards_list": [
-        3,
-        1,
-        2,
-        2,
-        2,
-        2
-      ]
-    },
-    "home_corners": {
-      "lambda": 5.26,
-      "corners_list": [
-        2,
-        11,
-        6,
-        7,
-        8,
-        3,
-        4
-      ],
-      "line": 3.5,
-      "prob": 77
-    },
-    "away_corners": {
-      "lambda": 5.71,
-      "corners_list": [
-        2,
-        9,
-        4,
-        1,
-        12,
-        7,
-        6
-      ],
-      "line": 4.0,
-      "prob": 67
-    },
-    "home_cards": {
-      "lambda": 1.79,
-      "yellow_cards_list": [
-        2,
-        1,
-        3,
-        1,
-        2,
-        2,
-        1
-      ],
-      "line": 1.0,
-      "prob": 53
-    },
-    "away_cards": {
-      "lambda": 1.99,
-      "yellow_cards_list": [
-        3,
-        1,
-        2,
-        2,
-        2,
-        2
-      ],
-      "line": 1.0,
-      "prob": 59
-    }
-  },
-  {
-    "match_id": "mt_465724578",
-    "league": "MLS",
-    "date": "2026-10-10T18:30:00.000Z",
-    "date_key": "2026-10-10",
-    "home_team": "Chicago Fire",
-    "away_team": "New York City FC",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 5.0,
-      "corners_list": [
-        2,
-        7,
-        3,
-        2,
-        13,
-        2,
-        6
-      ],
-      "avg_corners_conceded": 3.86,
-      "corners_conceded_list": [
-        3,
-        4,
-        6,
-        5,
-        0,
-        5,
-        4
-      ],
-      "avg_yellow_cards": 1.57,
-      "yellow_cards_list": [
-        2,
-        0,
-        2,
-        2,
-        2,
-        1,
-        2
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 4.43,
-      "corners_list": [
-        4,
-        2,
-        3,
-        12,
-        1,
-        6,
-        3
-      ],
-      "avg_corners_conceded": 5.86,
-      "corners_conceded_list": [
-        6,
-        7,
-        3,
-        4,
-        10,
-        7,
-        4
-      ],
-      "avg_yellow_cards": 1.57,
-      "yellow_cards_list": [
-        1,
-        3,
-        2,
-        0,
-        2,
-        2,
-        1
-      ]
-    },
-    "home_corners": {
-      "lambda": 5.61,
-      "corners_list": [
-        2,
-        7,
-        3,
-        2,
-        13,
-        2,
-        6
-      ],
-      "line": 4.0,
-      "prob": 66
-    },
-    "away_corners": {
-      "lambda": 3.87,
-      "corners_list": [
-        4,
-        2,
-        3,
-        12,
-        1,
-        6,
-        3
-      ],
-      "line": 2.5,
-      "prob": 74
-    },
-    "home_cards": {
-      "lambda": 1.69,
-      "yellow_cards_list": [
-        2,
-        0,
-        2,
-        2,
-        2,
-        1,
-        2
-      ],
-      "line": 1.0,
-      "prob": 50
-    },
-    "away_cards": {
-      "lambda": 1.69,
-      "yellow_cards_list": [
-        1,
-        3,
-        2,
-        0,
-        2,
-        2,
-        1
-      ],
-      "line": 1.0,
-      "prob": 50
-    }
-  },
-  {
-    "match_id": "mt_894578458",
-    "league": "MLS",
-    "date": "2026-10-10T17:00:00.000Z",
-    "date_key": "2026-10-10",
-    "home_team": "Toronto FC",
-    "away_team": "CF Montr\u00e9al",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 4.0,
-      "corners_list": [
-        2,
-        7,
-        6,
-        3,
-        3,
-        4,
-        3
-      ],
-      "avg_corners_conceded": 5.29,
-      "corners_conceded_list": [
-        3,
-        2,
-        3,
-        8,
-        4,
-        8,
-        9
-      ],
-      "avg_yellow_cards": 1.57,
-      "yellow_cards_list": [
-        1,
-        3,
-        2,
-        1,
-        2,
-        2,
-        0
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 4.86,
-      "corners_list": [
-        6,
-        6,
-        1,
-        11,
-        1,
-        5,
-        4
-      ],
-      "avg_corners_conceded": 4.57,
-      "corners_conceded_list": [
-        5,
-        6,
-        6,
-        3,
-        5,
-        1,
-        6
-      ],
-      "avg_yellow_cards": 2.14,
-      "yellow_cards_list": [
-        2,
-        2,
-        4,
-        2,
-        1,
-        2,
-        2
-      ]
-    },
-    "home_corners": {
-      "lambda": 4.04,
-      "corners_list": [
-        2,
-        7,
-        6,
-        3,
-        3,
-        4,
-        3
-      ],
-      "line": 2.5,
-      "prob": 77
-    },
-    "away_corners": {
-      "lambda": 5.1,
-      "corners_list": [
-        6,
-        6,
-        1,
-        11,
-        1,
-        5,
-        4
-      ],
-      "line": 3.5,
-      "prob": 75
-    },
-    "home_cards": {
-      "lambda": 1.69,
-      "yellow_cards_list": [
-        1,
-        3,
-        2,
-        1,
-        2,
-        2,
-        0
-      ],
-      "line": 1.0,
-      "prob": 50
-    },
-    "away_cards": {
-      "lambda": 2.09,
-      "yellow_cards_list": [
-        2,
-        2,
-        4,
-        2,
-        1,
-        2,
-        2
-      ],
-      "line": 1.5,
-      "prob": 62
-    }
-  },
-  {
-    "match_id": "mt_206959652",
-    "league": "MLS",
-    "date": "2026-10-07T00:30:00.000Z",
-    "date_key": "2026-10-07",
-    "home_team": "Chicago Fire",
-    "away_team": "Vancouver Whitecaps",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 5.0,
-      "corners_list": [
-        2,
-        7,
-        3,
-        2,
-        13,
-        2,
-        6
-      ],
-      "avg_corners_conceded": 3.86,
-      "corners_conceded_list": [
-        3,
-        4,
-        6,
-        5,
-        0,
-        5,
-        4
-      ],
-      "avg_yellow_cards": 1.57,
-      "yellow_cards_list": [
-        2,
-        0,
-        2,
-        2,
-        2,
-        1,
-        2
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 6.57,
-      "corners_list": [
-        9,
-        4,
-        6,
-        7,
-        6,
-        7,
-        7
-      ],
-      "avg_corners_conceded": 3.86,
-      "corners_conceded_list": [
-        3,
-        1,
-        2,
-        5,
-        0,
-        6,
-        10
-      ],
-      "avg_yellow_cards": 2.14,
-      "yellow_cards_list": [
-        1,
-        2,
-        4,
-        1,
-        2,
-        5,
-        0
-      ]
-    },
-    "home_corners": {
-      "lambda": 4.2,
-      "corners_list": [
-        2,
-        7,
-        3,
-        2,
-        13,
-        2,
-        6
-      ],
-      "line": 3.0,
-      "prob": 60
-    },
-    "away_corners": {
-      "lambda": 5.13,
-      "corners_list": [
-        9,
-        4,
-        6,
-        7,
-        6,
-        7,
-        7
-      ],
-      "line": 3.5,
-      "prob": 75
-    },
-    "home_cards": {
-      "lambda": 1.69,
-      "yellow_cards_list": [
-        2,
-        0,
-        2,
-        2,
-        2,
-        1,
-        2
-      ],
-      "line": 1.0,
-      "prob": 50
-    },
-    "away_cards": {
-      "lambda": 2.09,
-      "yellow_cards_list": [
-        1,
-        2,
-        4,
-        1,
-        2,
-        5,
-        0
-      ],
-      "line": 1.5,
-      "prob": 62
     }
   },
   {
@@ -9260,7 +12185,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.42,
+      "lambda": 5.48,
       "corners_list": [
         5,
         4,
@@ -9271,10 +12196,10 @@
         3
       ],
       "line": 3.5,
-      "prob": 79
+      "prob": 80
     },
     "away_corners": {
-      "lambda": 4.27,
+      "lambda": 4.31,
       "corners_list": [
         1,
         6,
@@ -9288,7 +12213,7 @@
       "prob": 62
     },
     "home_cards": {
-      "lambda": 2.29,
+      "lambda": 2.28,
       "yellow_cards_list": [
         4,
         4,
@@ -9299,10 +12224,10 @@
         1
       ],
       "line": 1.5,
-      "prob": 67
+      "prob": 66
     },
     "away_cards": {
-      "lambda": 2.59,
+      "lambda": 2.58,
       "yellow_cards_list": [
         1,
         7,
@@ -9390,7 +12315,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.14,
+      "lambda": 7.22,
       "corners_list": [
         6,
         6,
@@ -9401,10 +12326,10 @@
         7
       ],
       "line": 5.0,
-      "prob": 72
+      "prob": 73
     },
     "away_corners": {
-      "lambda": 3.78,
+      "lambda": 3.82,
       "corners_list": [
         3,
         2,
@@ -9418,7 +12343,7 @@
       "prob": 73
     },
     "home_cards": {
-      "lambda": 1.99,
+      "lambda": 1.98,
       "yellow_cards_list": [
         2,
         2,
@@ -9432,7 +12357,7 @@
       "prob": 59
     },
     "away_cards": {
-      "lambda": 2.39,
+      "lambda": 2.38,
       "yellow_cards_list": [
         3,
         4,
@@ -9520,7 +12445,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.64,
+      "lambda": 4.68,
       "corners_list": [
         5,
         9,
@@ -9531,10 +12456,10 @@
         8
       ],
       "line": 3.0,
-      "prob": 68
+      "prob": 69
     },
     "away_corners": {
-      "lambda": 7.42,
+      "lambda": 7.5,
       "corners_list": [
         2,
         6,
@@ -9545,10 +12470,10 @@
         10
       ],
       "line": 5.0,
-      "prob": 75
+      "prob": 76
     },
     "home_cards": {
-      "lambda": 2.29,
+      "lambda": 2.28,
       "yellow_cards_list": [
         5,
         1,
@@ -9559,10 +12484,10 @@
         2
       ],
       "line": 1.5,
-      "prob": 67
+      "prob": 66
     },
     "away_cards": {
-      "lambda": 2.2,
+      "lambda": 2.19,
       "yellow_cards_list": [
         3,
         0,
@@ -9573,7 +12498,7 @@
         1
       ],
       "line": 1.5,
-      "prob": 65
+      "prob": 64
     }
   },
   {
@@ -9649,7 +12574,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.09,
+      "lambda": 5.14,
       "corners_list": [
         7,
         13,
@@ -9663,7 +12588,7 @@
       "prob": 75
     },
     "away_corners": {
-      "lambda": 7.68,
+      "lambda": 7.77,
       "corners_list": [
         6,
         8,
@@ -9674,10 +12599,10 @@
         5
       ],
       "line": 5.5,
-      "prob": 78
+      "prob": 79
     },
     "home_cards": {
-      "lambda": 2.39,
+      "lambda": 2.38,
       "yellow_cards_list": [
         2,
         4,
@@ -9691,7 +12616,7 @@
       "prob": 69
     },
     "away_cards": {
-      "lambda": 1.88,
+      "lambda": 1.86,
       "yellow_cards_list": [
         2,
         0,
@@ -9701,7 +12626,7 @@
         3
       ],
       "line": 1.0,
-      "prob": 56
+      "prob": 55
     }
   },
   {
@@ -9777,7 +12702,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.42,
+      "lambda": 4.46,
       "corners_list": [
         2,
         4,
@@ -9788,10 +12713,10 @@
         5
       ],
       "line": 3.0,
-      "prob": 64
+      "prob": 65
     },
     "away_corners": {
-      "lambda": 5.5,
+      "lambda": 5.56,
       "corners_list": [
         5,
         1,
@@ -9801,11 +12726,11 @@
         7,
         7
       ],
-      "line": 3.5,
-      "prob": 80
+      "line": 4.0,
+      "prob": 65
     },
     "home_cards": {
-      "lambda": 2.7,
+      "lambda": 2.69,
       "yellow_cards_list": [
         3,
         4,
@@ -9818,7 +12743,7 @@
       "prob": 75
     },
     "away_cards": {
-      "lambda": 2.49,
+      "lambda": 2.48,
       "yellow_cards_list": [
         3,
         2,
@@ -9906,7 +12831,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.38,
+      "lambda": 6.45,
       "corners_list": [
         5,
         4,
@@ -9917,10 +12842,10 @@
         6
       ],
       "line": 4.5,
-      "prob": 76
+      "prob": 77
     },
     "away_corners": {
-      "lambda": 4.04,
+      "lambda": 4.07,
       "corners_list": [
         9,
         7,
@@ -9934,7 +12859,7 @@
       "prob": 77
     },
     "home_cards": {
-      "lambda": 2.5,
+      "lambda": 2.48,
       "yellow_cards_list": [
         0,
         3,
@@ -9948,7 +12873,7 @@
       "prob": 71
     },
     "away_cards": {
-      "lambda": 2.7,
+      "lambda": 2.69,
       "yellow_cards_list": [
         6,
         2,
@@ -10036,7 +12961,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.25,
+      "lambda": 7.32,
       "corners_list": [
         10,
         15,
@@ -10047,10 +12972,10 @@
         2
       ],
       "line": 5.0,
-      "prob": 73
+      "prob": 74
     },
     "away_corners": {
-      "lambda": 2.63,
+      "lambda": 2.65,
       "corners_list": [
         4,
         1,
@@ -10064,7 +12989,7 @@
       "prob": 74
     },
     "home_cards": {
-      "lambda": 1.6,
+      "lambda": 1.59,
       "yellow_cards_list": [
         1,
         0,
@@ -10075,10 +13000,10 @@
         2
       ],
       "line": 1.0,
-      "prob": 48
+      "prob": 47
     },
     "away_cards": {
-      "lambda": 2.1,
+      "lambda": 2.09,
       "yellow_cards_list": [
         1,
         4,
@@ -10101,9 +13026,8 @@
     "away_team": "FC K\u00f8benhavn",
     "home_form": {
       "n_games": 7,
-      "avg_corners": 5.57,
+      "avg_corners": 5.67,
       "corners_list": [
-        5,
         10,
         7,
         5,
@@ -10111,9 +13035,8 @@
         6,
         2
       ],
-      "avg_corners_conceded": 4.86,
+      "avg_corners_conceded": 5.17,
       "corners_conceded_list": [
-        3,
         5,
         4,
         8,
@@ -10121,9 +13044,8 @@
         2,
         9
       ],
-      "avg_yellow_cards": 2.0,
+      "avg_yellow_cards": 1.8,
       "yellow_cards_list": [
-        3,
         1,
         3,
         1,
@@ -10165,9 +13087,8 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.9,
+      "lambda": 3.98,
       "corners_list": [
-        5,
         10,
         7,
         5,
@@ -10176,10 +13097,10 @@
         2
       ],
       "line": 2.5,
-      "prob": 75
+      "prob": 76
     },
     "away_corners": {
-      "lambda": 4.62,
+      "lambda": 4.87,
       "corners_list": [
         4,
         6,
@@ -10189,13 +13110,12 @@
         7,
         4
       ],
-      "line": 3.0,
-      "prob": 68
+      "line": 3.5,
+      "prob": 72
     },
     "home_cards": {
-      "lambda": 2.0,
+      "lambda": 1.85,
       "yellow_cards_list": [
-        3,
         1,
         3,
         1,
@@ -10203,10 +13123,10 @@
         3
       ],
       "line": 1.0,
-      "prob": 59
+      "prob": 55
     },
     "away_cards": {
-      "lambda": 1.7,
+      "lambda": 1.69,
       "yellow_cards_list": [
         0,
         3,
@@ -10217,137 +13137,7 @@
         1
       ],
       "line": 1.0,
-      "prob": 51
-    }
-  },
-  {
-    "match_id": "mt_988246639",
-    "league": "Danish Superliga",
-    "date": "2026-10-11T14:00:00.000Z",
-    "date_key": "2026-10-11",
-    "home_team": "FC Nordsj\u00e6lland",
-    "away_team": "Odense Boldklub",
-    "home_form": {
-      "n_games": 7,
-      "avg_corners": 3.71,
-      "corners_list": [
-        8,
-        4,
-        4,
-        0,
-        3,
-        2,
-        5
-      ],
-      "avg_corners_conceded": 3.71,
-      "corners_conceded_list": [
-        1,
-        6,
-        5,
-        2,
-        4,
-        4,
-        4
-      ],
-      "avg_yellow_cards": 2.0,
-      "yellow_cards_list": [
-        2,
-        2,
-        3,
-        2,
-        1,
-        2,
-        2
-      ]
-    },
-    "away_form": {
-      "n_games": 7,
-      "avg_corners": 6.29,
-      "corners_list": [
-        3,
-        9,
-        0,
-        6,
-        6,
-        11,
-        9
-      ],
-      "avg_corners_conceded": 5.0,
-      "corners_conceded_list": [
-        6,
-        3,
-        15,
-        4,
-        2,
-        3,
-        2
-      ],
-      "avg_yellow_cards": 2.71,
-      "yellow_cards_list": [
-        3,
-        1,
-        6,
-        4,
-        2,
-        1,
-        2
-      ]
-    },
-    "home_corners": {
-      "lambda": 4.12,
-      "corners_list": [
-        8,
-        4,
-        4,
-        0,
-        3,
-        2,
-        5
-      ],
-      "line": 2.5,
-      "prob": 78
-    },
-    "away_corners": {
-      "lambda": 4.86,
-      "corners_list": [
-        3,
-        9,
-        0,
-        6,
-        6,
-        11,
-        9
-      ],
-      "line": 3.0,
-      "prob": 71
-    },
-    "home_cards": {
-      "lambda": 2.0,
-      "yellow_cards_list": [
-        2,
-        2,
-        3,
-        2,
-        1,
-        2,
-        2
-      ],
-      "line": 1.0,
-      "prob": 59
-    },
-    "away_cards": {
-      "lambda": 2.5,
-      "yellow_cards_list": [
-        3,
-        1,
-        6,
-        4,
-        2,
-        1,
-        2
-      ],
-      "line": 1.5,
-      "prob": 71
+      "prob": 50
     }
   },
   {
@@ -10424,7 +13214,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.07,
+      "lambda": 5.11,
       "corners_list": [
         6,
         10,
@@ -10435,10 +13225,10 @@
         1
       ],
       "line": 3.5,
-      "prob": 74
+      "prob": 75
     },
     "away_corners": {
-      "lambda": 5.02,
+      "lambda": 5.05,
       "corners_list": [
         9,
         3,
@@ -10452,7 +13242,7 @@
       "prob": 74
     },
     "home_cards": {
-      "lambda": 2.0,
+      "lambda": 1.99,
       "yellow_cards_list": [
         2,
         2,
@@ -10466,7 +13256,7 @@
       "prob": 59
     },
     "away_cards": {
-      "lambda": 2.2,
+      "lambda": 2.19,
       "yellow_cards_list": [
         1,
         2,
@@ -10477,7 +13267,7 @@
         4
       ],
       "line": 1.5,
-      "prob": 65
+      "prob": 64
     }
   },
   {
@@ -10553,7 +13343,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.32,
+      "lambda": 4.35,
       "corners_list": [
         6,
         1,
@@ -10567,7 +13357,7 @@
       "prob": 63
     },
     "away_corners": {
-      "lambda": 4.31,
+      "lambda": 4.35,
       "corners_list": [
         3,
         3,
@@ -10578,10 +13368,10 @@
         3
       ],
       "line": 3.0,
-      "prob": 62
+      "prob": 63
     },
     "home_cards": {
-      "lambda": 1.65,
+      "lambda": 1.64,
       "yellow_cards_list": [
         1,
         2,
@@ -10594,7 +13384,7 @@
       "prob": 49
     },
     "away_cards": {
-      "lambda": 2.3,
+      "lambda": 2.29,
       "yellow_cards_list": [
         2,
         0,
@@ -10682,7 +13472,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.39,
+      "lambda": 4.42,
       "corners_list": [
         3,
         6,
@@ -10696,7 +13486,7 @@
       "prob": 64
     },
     "away_corners": {
-      "lambda": 6.59,
+      "lambda": 6.65,
       "corners_list": [
         7,
         3,
@@ -10710,7 +13500,7 @@
       "prob": 79
     },
     "home_cards": {
-      "lambda": 1.8,
+      "lambda": 1.78,
       "yellow_cards_list": [
         0,
         1,
@@ -10721,10 +13511,10 @@
         0
       ],
       "line": 1.0,
-      "prob": 54
+      "prob": 53
     },
     "away_cards": {
-      "lambda": 0.9,
+      "lambda": 0.89,
       "yellow_cards_list": [
         0,
         0,
@@ -10736,6 +13526,136 @@
       ],
       "line": 0.5,
       "prob": 59
+    }
+  },
+  {
+    "match_id": "mt_988246639",
+    "league": "Danish Superliga",
+    "date": "2026-10-09T17:00:00.000Z",
+    "date_key": "2026-10-09",
+    "home_team": "FC Nordsj\u00e6lland",
+    "away_team": "Odense Boldklub",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 3.71,
+      "corners_list": [
+        8,
+        4,
+        4,
+        0,
+        3,
+        2,
+        5
+      ],
+      "avg_corners_conceded": 3.71,
+      "corners_conceded_list": [
+        1,
+        6,
+        5,
+        2,
+        4,
+        4,
+        4
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        2,
+        2,
+        3,
+        2,
+        1,
+        2,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 6.29,
+      "corners_list": [
+        3,
+        9,
+        0,
+        6,
+        6,
+        11,
+        9
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        6,
+        3,
+        15,
+        4,
+        2,
+        3,
+        2
+      ],
+      "avg_yellow_cards": 2.71,
+      "yellow_cards_list": [
+        3,
+        1,
+        6,
+        4,
+        2,
+        1,
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.14,
+      "corners_list": [
+        8,
+        4,
+        4,
+        0,
+        3,
+        2,
+        5
+      ],
+      "line": 2.5,
+      "prob": 78
+    },
+    "away_corners": {
+      "lambda": 4.88,
+      "corners_list": [
+        3,
+        9,
+        0,
+        6,
+        6,
+        11,
+        9
+      ],
+      "line": 3.5,
+      "prob": 72
+    },
+    "home_cards": {
+      "lambda": 1.99,
+      "yellow_cards_list": [
+        2,
+        2,
+        3,
+        2,
+        1,
+        2,
+        2
+      ],
+      "line": 1.0,
+      "prob": 59
+    },
+    "away_cards": {
+      "lambda": 2.48,
+      "yellow_cards_list": [
+        3,
+        1,
+        6,
+        4,
+        2,
+        1,
+        2
+      ],
+      "line": 1.5,
+      "prob": 71
     }
   },
   {
@@ -10812,7 +13732,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.91,
+      "lambda": 4.96,
       "corners_list": [
         3,
         6,
@@ -10823,10 +13743,10 @@
         1
       ],
       "line": 3.5,
-      "prob": 72
+      "prob": 73
     },
     "away_corners": {
-      "lambda": 7.09,
+      "lambda": 7.16,
       "corners_list": [
         3,
         8,
@@ -10837,10 +13757,10 @@
         9
       ],
       "line": 5.0,
-      "prob": 71
+      "prob": 72
     },
     "home_cards": {
-      "lambda": 1.9,
+      "lambda": 1.89,
       "yellow_cards_list": [
         0,
         3,
@@ -10851,10 +13771,10 @@
         2
       ],
       "line": 1.0,
-      "prob": 57
+      "prob": 56
     },
     "away_cards": {
-      "lambda": 1.9,
+      "lambda": 1.89,
       "yellow_cards_list": [
         3,
         1,
@@ -10865,7 +13785,7 @@
         0
       ],
       "line": 1.0,
-      "prob": 57
+      "prob": 56
     }
   },
   {
@@ -10942,7 +13862,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.42,
+      "lambda": 4.46,
       "corners_list": [
         2,
         8,
@@ -10953,10 +13873,10 @@
         6
       ],
       "line": 3.0,
-      "prob": 64
+      "prob": 65
     },
     "away_corners": {
-      "lambda": 7.18,
+      "lambda": 7.26,
       "corners_list": [
         5,
         12,
@@ -10967,10 +13887,10 @@
         10
       ],
       "line": 5.0,
-      "prob": 72
+      "prob": 73
     },
     "home_cards": {
-      "lambda": 1.79,
+      "lambda": 1.78,
       "yellow_cards_list": [
         2,
         1,
@@ -10984,7 +13904,7 @@
       "prob": 53
     },
     "away_cards": {
-      "lambda": 1.9,
+      "lambda": 1.89,
       "yellow_cards_list": [
         1,
         3,
@@ -10995,7 +13915,7 @@
         2
       ],
       "line": 1.0,
-      "prob": 57
+      "prob": 56
     }
   },
   {
@@ -11071,7 +13991,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.91,
+      "lambda": 5.97,
       "corners_list": [
         6,
         6,
@@ -11082,10 +14002,10 @@
         4
       ],
       "line": 4.0,
-      "prob": 70
+      "prob": 71
     },
     "away_corners": {
-      "lambda": 4.88,
+      "lambda": 4.93,
       "corners_list": [
         3,
         8,
@@ -11096,10 +14016,10 @@
         1
       ],
       "line": 3.5,
-      "prob": 72
+      "prob": 73
     },
     "home_cards": {
-      "lambda": 2.0,
+      "lambda": 1.99,
       "yellow_cards_list": [
         2,
         2,
@@ -11112,7 +14032,7 @@
       "prob": 59
     },
     "away_cards": {
-      "lambda": 1.5,
+      "lambda": 1.49,
       "yellow_cards_list": [
         1,
         2,
@@ -11200,7 +14120,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.6,
+      "lambda": 6.67,
       "corners_list": [
         9,
         4,
@@ -11214,7 +14134,7 @@
       "prob": 79
     },
     "away_corners": {
-      "lambda": 7.46,
+      "lambda": 7.54,
       "corners_list": [
         4,
         8,
@@ -11225,10 +14145,10 @@
         11
       ],
       "line": 5.0,
-      "prob": 75
+      "prob": 76
     },
     "home_cards": {
-      "lambda": 2.2,
+      "lambda": 2.19,
       "yellow_cards_list": [
         0,
         1,
@@ -11239,10 +14159,10 @@
         4
       ],
       "line": 1.5,
-      "prob": 65
+      "prob": 64
     },
     "away_cards": {
-      "lambda": 1.39,
+      "lambda": 1.38,
       "yellow_cards_list": [
         1,
         3,
@@ -11252,8 +14172,8 @@
         0,
         1
       ],
-      "line": 1.0,
-      "prob": 40
+      "line": 0.5,
+      "prob": 75
     }
   },
   {
@@ -11328,7 +14248,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.59,
+      "lambda": 3.62,
       "corners_list": [
         6,
         4,
@@ -11342,7 +14262,7 @@
       "prob": 70
     },
     "away_corners": {
-      "lambda": 6.16,
+      "lambda": 6.23,
       "corners_list": [
         5,
         4,
@@ -11356,7 +14276,7 @@
       "prob": 74
     },
     "home_cards": {
-      "lambda": 1.64,
+      "lambda": 1.63,
       "yellow_cards_list": [
         1,
         1,
@@ -11366,10 +14286,10 @@
         1
       ],
       "line": 1.0,
-      "prob": 49
+      "prob": 48
     },
     "away_cards": {
-      "lambda": 1.76,
+      "lambda": 1.75,
       "yellow_cards_list": [
         1,
         1,
@@ -11379,7 +14299,7 @@
         0
       ],
       "line": 1.0,
-      "prob": 53
+      "prob": 52
     }
   },
   {
@@ -11455,7 +14375,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.34,
+      "lambda": 6.41,
       "corners_list": [
         12,
         6,
@@ -11466,10 +14386,10 @@
         6
       ],
       "line": 4.5,
-      "prob": 76
+      "prob": 77
     },
     "away_corners": {
-      "lambda": 5.68,
+      "lambda": 5.74,
       "corners_list": [
         5,
         5,
@@ -11480,10 +14400,10 @@
         5
       ],
       "line": 4.0,
-      "prob": 67
+      "prob": 68
     },
     "home_cards": {
-      "lambda": 1.99,
+      "lambda": 1.98,
       "yellow_cards_list": [
         3,
         6,
@@ -11496,7 +14416,7 @@
       "prob": 59
     },
     "away_cards": {
-      "lambda": 2.39,
+      "lambda": 2.38,
       "yellow_cards_list": [
         0,
         2,
@@ -11584,7 +14504,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 8.75,
+      "lambda": 8.84,
       "corners_list": [
         6,
         10,
@@ -11595,10 +14515,10 @@
         6
       ],
       "line": 6.0,
-      "prob": 77
+      "prob": 78
     },
     "away_corners": {
-      "lambda": 3.4,
+      "lambda": 3.42,
       "corners_list": [
         3,
         1,
@@ -11612,7 +14532,7 @@
       "prob": 66
     },
     "home_cards": {
-      "lambda": 0.99,
+      "lambda": 0.98,
       "yellow_cards_list": [
         1,
         0,
@@ -11623,10 +14543,10 @@
         1
       ],
       "line": 0.5,
-      "prob": 63
+      "prob": 62
     },
     "away_cards": {
-      "lambda": 1.59,
+      "lambda": 1.58,
       "yellow_cards_list": [
         1,
         2,
@@ -11713,7 +14633,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.64,
+      "lambda": 7.73,
       "corners_list": [
         10,
         5,
@@ -11724,10 +14644,10 @@
         3
       ],
       "line": 5.5,
-      "prob": 77
+      "prob": 78
     },
     "away_corners": {
-      "lambda": 7.53,
+      "lambda": 7.61,
       "corners_list": [
         5,
         11,
@@ -11738,10 +14658,10 @@
         7
       ],
       "line": 5.0,
-      "prob": 76
+      "prob": 77
     },
     "home_cards": {
-      "lambda": 1.69,
+      "lambda": 1.68,
       "yellow_cards_list": [
         0,
         2,
@@ -11755,7 +14675,7 @@
       "prob": 50
     },
     "away_cards": {
-      "lambda": 1.52,
+      "lambda": 1.51,
       "yellow_cards_list": [
         3,
         2,
