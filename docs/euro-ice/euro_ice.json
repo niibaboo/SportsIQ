@@ -1,242 +1,50 @@
 [
   {
-    "match": "Pardubice Dynamo vs Sparta Prague",
-    "subject": "Pardubice Dynamo",
-    "market": "Pardubice Dynamo Over 3.0 Goals",
-    "prob": 63,
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 4.32 goals \u00b7 season 4.12/gm",
-    "history": "4/4/5/5/4",
-    "line": 3.0,
-    "is_home": true,
-    "league_id": 9294,
-    "home_name": "Pardubice Dynamo",
-    "away_name": "Sparta Prague",
-    "match_date": "2026-10-04T16:30:00.000Z"
-  },
-  {
-    "match": "Pardubice Dynamo vs Sparta Prague",
-    "subject": "Sparta Prague",
-    "market": "Sparta Prague Over 2.0 Goals",
+    "match": "\u010cesk\u00e9 Bud\u011bjovice vs Kometa Brno",
+    "subject": "\u010cesk\u00e9 Bud\u011bjovice",
+    "market": "\u010cesk\u00e9 Bud\u011bjovice Over 2.0 Goals",
     "prob": 58,
     "hit_rate": {
-      "hits": 4,
+      "hits": 2,
       "total": 5
     },
     "category": "Extraliga Team Total",
-    "detail": "proj 3.01 goals \u00b7 season 3.14/gm",
-    "history": "3/4/0/3/4",
-    "line": 2.0,
-    "is_home": false,
-    "league_id": 9294,
-    "home_name": "Pardubice Dynamo",
-    "away_name": "Sparta Prague",
-    "match_date": "2026-10-04T16:30:00.000Z"
-  },
-  {
-    "match": "Pardubice Dynamo vs Sparta Prague",
-    "subject": "Pardubice Dynamo vs Sparta Prague",
-    "market": "Game Over 5.0 Total Goals",
-    "prob": 74,
-    "hit_rate": null,
-    "category": "Extraliga Game Total",
-    "detail": "proj 7.33 goals combined",
-    "history": null
-  },
-  {
-    "match": "Litv\u00ednov vs Kladno",
-    "subject": "Litv\u00ednov",
-    "market": "Litv\u00ednov Over 2.0 Goals",
-    "prob": 57,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 2.97 goals \u00b7 season 3.0/gm",
-    "history": "3/1/4/5/2",
+    "detail": "proj 3.03 goals \u00b7 season 4.67/gm",
+    "history": "3/1/5/2/2",
     "line": 2.0,
     "is_home": true,
     "league_id": 9294,
-    "home_name": "Litv\u00ednov",
-    "away_name": "Kladno",
-    "match_date": "2026-10-04T15:30:00.000Z"
+    "home_name": "\u010cesk\u00e9 Bud\u011bjovice",
+    "away_name": "Kometa Brno",
+    "match_date": "2026-10-05T15:30:00.000Z"
   },
   {
-    "match": "Litv\u00ednov vs Kladno",
-    "subject": "Kladno",
-    "market": "Kladno Over 1.5 Goals",
-    "prob": 70,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 2.46 goals \u00b7 season 1.67/gm",
-    "history": "3/3/1/4/3",
-    "line": 1.5,
-    "is_home": false,
-    "league_id": 9294,
-    "home_name": "Litv\u00ednov",
-    "away_name": "Kladno",
-    "match_date": "2026-10-04T15:30:00.000Z"
-  },
-  {
-    "match": "Litv\u00ednov vs Kladno",
-    "subject": "Litv\u00ednov vs Kladno",
-    "market": "Game Over 3.5 Total Goals",
-    "prob": 79,
-    "hit_rate": null,
-    "category": "Extraliga Game Total",
-    "detail": "proj 5.43 goals combined",
-    "history": null
-  },
-  {
-    "match": "M\u00fcnchen Red Bulls vs Augsburger Panther",
-    "subject": "M\u00fcnchen Red Bulls",
-    "market": "M\u00fcnchen Red Bulls Over 2.0 Goals",
-    "prob": 64,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 3.29 goals \u00b7 season 3.6/gm",
-    "history": "4/3/4/1/4",
-    "line": 2.0,
-    "is_home": true,
-    "league_id": 16953,
-    "home_name": "M\u00fcnchen Red Bulls",
-    "away_name": "Augsburger Panther",
-    "match_date": "2026-10-04T17:00:00.000Z"
-  },
-  {
-    "match": "M\u00fcnchen Red Bulls vs Augsburger Panther",
-    "subject": "Augsburger Panther",
-    "market": "Augsburger Panther Over 3.0 Goals",
-    "prob": 60,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 4.17 goals \u00b7 season 4.2/gm",
-    "history": "1/7/3/4/5",
-    "line": 3.0,
-    "is_home": false,
-    "league_id": 16953,
-    "home_name": "M\u00fcnchen Red Bulls",
-    "away_name": "Augsburger Panther",
-    "match_date": "2026-10-04T17:00:00.000Z"
-  },
-  {
-    "match": "M\u00fcnchen Red Bulls vs Augsburger Panther",
-    "subject": "M\u00fcnchen Red Bulls vs Augsburger Panther",
-    "market": "Game Over 5.0 Total Goals",
-    "prob": 75,
-    "hit_rate": null,
-    "category": "DEL Game Total",
-    "detail": "proj 7.46 goals combined",
-    "history": null
-  },
-  {
-    "match": "Villach vs Vienna Capitals",
-    "subject": "Villach",
-    "market": "Villach Over 1.5 Goals",
-    "prob": 64,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 2.16 goals \u00b7 season 2.67/gm",
-    "history": "1/4/2/0/7",
-    "line": 1.5,
-    "is_home": true,
-    "league_id": 60354,
-    "home_name": "Villach",
-    "away_name": "Vienna Capitals",
-    "match_date": "2026-10-04T15:30:00.000Z"
-  },
-  {
-    "match": "Villach vs Vienna Capitals",
-    "subject": "Vienna Capitals",
-    "market": "Vienna Capitals Over 2.0 Goals",
-    "prob": 61,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 3.15 goals \u00b7 season 3.33/gm",
-    "history": "5/3/2/2/4",
-    "line": 2.0,
-    "is_home": false,
-    "league_id": 60354,
-    "home_name": "Villach",
-    "away_name": "Vienna Capitals",
-    "match_date": "2026-10-04T15:30:00.000Z"
-  },
-  {
-    "match": "Villach vs Vienna Capitals",
-    "subject": "Villach vs Vienna Capitals",
-    "market": "Game Over 3.5 Total Goals",
-    "prob": 78,
-    "hit_rate": null,
-    "category": "ICE Hockey League Game Total",
-    "detail": "proj 5.31 goals combined",
-    "history": null
-  },
-  {
-    "match": "Black Wings Linz vs Klagenfurt",
-    "subject": "Black Wings Linz",
-    "market": "Black Wings Linz Over 2.5 Goals",
-    "prob": 71,
+    "match": "\u010cesk\u00e9 Bud\u011bjovice vs Kometa Brno",
+    "subject": "Kometa Brno",
+    "market": "Kometa Brno Over 2.0 Goals",
+    "prob": 67,
     "hit_rate": {
       "hits": 5,
       "total": 5
     },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 3.67 goals \u00b7 season 3.0/gm",
-    "history": "4/5/4/5/3",
-    "line": 2.5,
-    "is_home": true,
-    "league_id": 60354,
-    "home_name": "Black Wings Linz",
-    "away_name": "Klagenfurt",
-    "match_date": "2026-10-04T15:30:00.000Z"
-  },
-  {
-    "match": "Black Wings Linz vs Klagenfurt",
-    "subject": "Klagenfurt",
-    "market": "Klagenfurt Over 2.5 Goals",
-    "prob": 68,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "ICE Hockey League Team Total",
-    "detail": "proj 3.51 goals \u00b7 season 4.43/gm",
-    "history": "6/7/6/2/0",
-    "line": 2.5,
+    "category": "Extraliga Team Total",
+    "detail": "proj 3.44 goals \u00b7 season 3.67/gm",
+    "history": "5/3/4/3/3",
+    "line": 2.0,
     "is_home": false,
-    "league_id": 60354,
-    "home_name": "Black Wings Linz",
-    "away_name": "Klagenfurt",
-    "match_date": "2026-10-04T15:30:00.000Z"
+    "league_id": 9294,
+    "home_name": "\u010cesk\u00e9 Bud\u011bjovice",
+    "away_name": "Kometa Brno",
+    "match_date": "2026-10-05T15:30:00.000Z"
   },
   {
-    "match": "Black Wings Linz vs Klagenfurt",
-    "subject": "Black Wings Linz vs Klagenfurt",
-    "market": "Game Over 5.0 Total Goals",
-    "prob": 72,
+    "match": "\u010cesk\u00e9 Bud\u011bjovice vs Kometa Brno",
+    "subject": "\u010cesk\u00e9 Bud\u011bjovice vs Kometa Brno",
+    "market": "Game Over 4.5 Total Goals",
+    "prob": 77,
     "hit_rate": null,
-    "category": "ICE Hockey League Game Total",
-    "detail": "proj 7.18 goals combined",
+    "category": "Extraliga Game Total",
+    "detail": "proj 6.47 goals combined",
     "history": null
   }
 ]
