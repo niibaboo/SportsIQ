@@ -1,240 +1,274 @@
 [
   {
-    "match": "San Diego Padres @ Milwaukee Brewers",
-    "subject": "Michael King",
-    "market": "Michael King Over 3.5 Strikeouts",
-    "prob": 74,
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Anthony Kay",
+    "market": "Anthony Kay Over 2.0 Strikeouts",
+    "prob": 62,
     "category": "Strikeouts",
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
-    "detail": "San Diego Padres vs Milwaukee Brewers \u00b7 proj 5.03 K",
-    "history": "6/3/4/6/5",
-    "game_pk": 849825,
-    "game_date": "2026-10-04",
-    "pitcher_id": 650633,
-    "line": 3.5
+    "detail": "Chicago White Sox vs Cleveland Guardians \u00b7 proj 3.2 K",
+    "history": "3/2/3/4/4",
+    "game_pk": 849834,
+    "game_date": "2026-10-05",
+    "pitcher_id": 641743,
+    "line": 2.0
   },
   {
-    "match": "San Diego Padres @ Milwaukee Brewers",
-    "subject": "Michael King",
-    "market": "Michael King Over 12.0 Outs Recorded",
-    "prob": 87,
-    "category": "Outs Recorded",
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "detail": "San Diego Padres vs Milwaukee Brewers \u00b7 proj 5.7 IP",
-    "history": "18/18/21/18/12",
-    "game_pk": 849825,
-    "game_date": "2026-10-04",
-    "pitcher_id": 650633,
-    "line": 12.0
-  },
-  {
-    "match": "San Diego Padres @ Milwaukee Brewers",
-    "subject": "Logan Henderson",
-    "market": "Logan Henderson Over 4.0 Strikeouts",
-    "prob": 73,
-    "category": "Strikeouts",
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "detail": "Milwaukee Brewers vs San Diego Padres \u00b7 proj 6.08 K",
-    "history": "7/7/6/8/3",
-    "game_pk": 849825,
-    "game_date": "2026-10-04",
-    "pitcher_id": 701656,
-    "line": 4.0
-  },
-  {
-    "match": "San Diego Padres @ Milwaukee Brewers",
-    "subject": "Logan Henderson",
-    "market": "Logan Henderson Over 12.5 Outs Recorded",
-    "prob": 89,
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Anthony Kay",
+    "market": "Anthony Kay Over 9.0 Outs Recorded",
+    "prob": 82,
     "category": "Outs Recorded",
     "hit_rate": {
       "hits": 5,
       "total": 5
     },
-    "detail": "Milwaukee Brewers vs San Diego Padres \u00b7 proj 5.8 IP",
-    "history": "21/21/15/15/15",
-    "game_pk": 849825,
-    "game_date": "2026-10-04",
-    "pitcher_id": 701656,
-    "line": 12.5
+    "detail": "Chicago White Sox vs Cleveland Guardians \u00b7 proj 4.2 IP",
+    "history": "13/12/12/12/15",
+    "game_pk": 849834,
+    "game_date": "2026-10-05",
+    "pitcher_id": 641743,
+    "line": 9.0
   },
   {
-    "match": "San Diego Padres @ Milwaukee Brewers",
-    "subject": "San Diego Padres",
-    "market": "San Diego Padres Over 3.0 Runs",
-    "prob": 66,
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Gavin Williams",
+    "market": "Gavin Williams Over 6.0 Strikeouts",
+    "prob": 76,
+    "category": "Strikeouts",
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "detail": "Cleveland Guardians vs Chicago White Sox \u00b7 proj 8.7 K",
+    "history": "13/11/7/9/4",
+    "game_pk": 849834,
+    "game_date": "2026-10-05",
+    "pitcher_id": 668909,
+    "line": 6.0
+  },
+  {
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Gavin Williams",
+    "market": "Gavin Williams Over 12.0 Outs Recorded",
+    "prob": 86,
+    "category": "Outs Recorded",
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "detail": "Cleveland Guardians vs Chicago White Sox \u00b7 proj 5.7 IP",
+    "history": "21/18/15/21/10",
+    "game_pk": 849834,
+    "game_date": "2026-10-05",
+    "pitcher_id": 668909,
+    "line": 12.0
+  },
+  {
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Chicago White Sox",
+    "market": "Chicago White Sox Over 3.0 Runs",
+    "prob": 67,
     "category": "Team Runs",
     "hit_rate": {
       "hits": 5,
       "total": 5
     },
-    "detail": "vs Milwaukee Brewers \u00b7 proj 4.5 runs",
-    "history": "5/4/4/10/9",
-    "game_pk": 849825,
-    "game_date": "2026-10-04",
+    "detail": "vs Cleveland Guardians \u00b7 proj 4.58 runs",
+    "history": "4/9/6/6/4",
+    "game_pk": 849834,
+    "game_date": "2026-10-05",
     "is_home": false,
     "line": 3.0
   },
   {
-    "match": "San Diego Padres @ Milwaukee Brewers",
-    "subject": "San Diego Padres",
-    "market": "San Diego Padres Over 5.0 Hits",
-    "prob": 73,
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Chicago White Sox",
+    "market": "Chicago White Sox Over 5.0 Hits",
+    "prob": 76,
     "category": "Team Hits",
     "hit_rate": {
       "hits": 5,
       "total": 5
     },
-    "detail": "vs Milwaukee Brewers \u00b7 proj 7.23 hits",
-    "history": "8/6/10/13/11",
-    "game_pk": 849825,
-    "game_date": "2026-10-04",
+    "detail": "vs Cleveland Guardians \u00b7 proj 7.49 hits",
+    "history": "9/12/10/8/8",
+    "game_pk": 849834,
+    "game_date": "2026-10-05",
     "is_home": false,
     "line": 5.0
   },
   {
-    "match": "San Diego Padres @ Milwaukee Brewers",
-    "subject": "Milwaukee Brewers",
-    "market": "Milwaukee Brewers Over 3.5 Runs",
-    "prob": 76,
-    "category": "Team Runs",
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "detail": "vs San Diego Padres \u00b7 proj 5.18 runs",
-    "history": "4/5/8/3/6",
-    "game_pk": 849825,
-    "game_date": "2026-10-04",
-    "is_home": true,
-    "line": 3.5
-  },
-  {
-    "match": "San Diego Padres @ Milwaukee Brewers",
-    "subject": "Milwaukee Brewers",
-    "market": "Milwaukee Brewers Over 5.5 Hits",
-    "prob": 83,
-    "category": "Team Hits",
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
-    "detail": "vs San Diego Padres \u00b7 proj 8.29 hits",
-    "history": "6/11/12/8/10",
-    "game_pk": 849825,
-    "game_date": "2026-10-04",
-    "is_home": true,
-    "line": 5.5
-  },
-  {
-    "match": "Atlanta Braves @ Los Angeles Dodgers",
-    "subject": "Blake Snell",
-    "market": "Blake Snell Over 3.5 Strikeouts",
-    "prob": 75,
-    "category": "Strikeouts",
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "detail": "Los Angeles Dodgers vs Atlanta Braves \u00b7 proj 5.08 K",
-    "history": "10/7/8/1/3",
-    "game_pk": 849823,
-    "game_date": "2026-10-04",
-    "pitcher_id": 605483,
-    "line": 3.5
-  },
-  {
-    "match": "Atlanta Braves @ Los Angeles Dodgers",
-    "subject": "Blake Snell",
-    "market": "Blake Snell Over 9.0 Outs Recorded",
-    "prob": 82,
-    "category": "Outs Recorded",
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "detail": "Los Angeles Dodgers vs Atlanta Braves \u00b7 proj 4.3 IP",
-    "history": "15/18/17/3/12",
-    "game_pk": 849823,
-    "game_date": "2026-10-04",
-    "pitcher_id": 605483,
-    "line": 9.0
-  },
-  {
-    "match": "Atlanta Braves @ Los Angeles Dodgers",
-    "subject": "Atlanta Braves",
-    "market": "Atlanta Braves Over 2.0 Runs",
-    "prob": 54,
-    "category": "Team Runs",
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "detail": "vs Los Angeles Dodgers \u00b7 proj 2.86 runs",
-    "history": "3/6/0/8/3",
-    "game_pk": 849823,
-    "game_date": "2026-10-04",
-    "is_home": false,
-    "line": 2.0
-  },
-  {
-    "match": "Atlanta Braves @ Los Angeles Dodgers",
-    "subject": "Atlanta Braves",
-    "market": "Atlanta Braves Over 4.0 Hits",
-    "prob": 68,
-    "category": "Team Hits",
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "detail": "vs Los Angeles Dodgers \u00b7 proj 5.77 hits",
-    "history": "7/12/1/10/5",
-    "game_pk": 849823,
-    "game_date": "2026-10-04",
-    "is_home": false,
-    "line": 4.0
-  },
-  {
-    "match": "Atlanta Braves @ Los Angeles Dodgers",
-    "subject": "Los Angeles Dodgers",
-    "market": "Los Angeles Dodgers Over 2.0 Runs",
-    "prob": 63,
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Cleveland Guardians",
+    "market": "Cleveland Guardians Over 2.0 Runs",
+    "prob": 61,
     "category": "Team Runs",
     "hit_rate": {
       "hits": 2,
       "total": 5
     },
-    "detail": "vs Atlanta Braves \u00b7 proj 3.24 runs",
-    "history": "1/2/2/4/5",
-    "game_pk": 849823,
-    "game_date": "2026-10-04",
+    "detail": "vs Chicago White Sox \u00b7 proj 3.14 runs",
+    "history": "0/1/12/11/2",
+    "game_pk": 849834,
+    "game_date": "2026-10-05",
     "is_home": true,
     "line": 2.0
   },
   {
-    "match": "Atlanta Braves @ Los Angeles Dodgers",
-    "subject": "Los Angeles Dodgers",
-    "market": "Los Angeles Dodgers Over 5.5 Hits",
-    "prob": 82,
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Cleveland Guardians",
+    "market": "Cleveland Guardians Over 6.0 Hits",
+    "prob": 78,
+    "category": "Team Hits",
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "detail": "vs Chicago White Sox \u00b7 proj 8.89 hits",
+    "history": "5/4/9/14/9",
+    "game_pk": 849834,
+    "game_date": "2026-10-05",
+    "is_home": true,
+    "line": 6.0
+  },
+  {
+    "match": "New York Yankees @ Tampa Bay Rays",
+    "subject": "Cam Schlittler",
+    "market": "Cam Schlittler Over 4.5 Strikeouts",
+    "prob": 77,
+    "category": "Strikeouts",
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "detail": "New York Yankees vs Tampa Bay Rays \u00b7 proj 6.47 K",
+    "history": "9/10/8/6/5",
+    "game_pk": 849839,
+    "game_date": "2026-10-05",
+    "pitcher_id": 693645,
+    "line": 4.5
+  },
+  {
+    "match": "New York Yankees @ Tampa Bay Rays",
+    "subject": "Cam Schlittler",
+    "market": "Cam Schlittler Over 12.5 Outs Recorded",
+    "prob": 91,
+    "category": "Outs Recorded",
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "detail": "New York Yankees vs Tampa Bay Rays \u00b7 proj 6.0 IP",
+    "history": "24/21/18/18/9",
+    "game_pk": 849839,
+    "game_date": "2026-10-05",
+    "pitcher_id": 693645,
+    "line": 12.5
+  },
+  {
+    "match": "New York Yankees @ Tampa Bay Rays",
+    "subject": "Freddy Peralta",
+    "market": "Freddy Peralta Over 3.5 Strikeouts",
+    "prob": 77,
+    "category": "Strikeouts",
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "detail": "Tampa Bay Rays vs New York Yankees \u00b7 proj 5.3 K",
+    "history": "7/2/4/6/4",
+    "game_pk": 849839,
+    "game_date": "2026-10-05",
+    "pitcher_id": 642547,
+    "line": 3.5
+  },
+  {
+    "match": "New York Yankees @ Tampa Bay Rays",
+    "subject": "Freddy Peralta",
+    "market": "Freddy Peralta Over 11.5 Outs Recorded",
+    "prob": 90,
+    "category": "Outs Recorded",
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "detail": "Tampa Bay Rays vs New York Yankees \u00b7 proj 5.5 IP",
+    "history": "18/18/15/17/16",
+    "game_pk": 849839,
+    "game_date": "2026-10-05",
+    "pitcher_id": 642547,
+    "line": 11.5
+  },
+  {
+    "match": "New York Yankees @ Tampa Bay Rays",
+    "subject": "New York Yankees",
+    "market": "New York Yankees Over 3.5 Runs",
+    "prob": 75,
+    "category": "Team Runs",
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "detail": "vs Tampa Bay Rays \u00b7 proj 5.12 runs",
+    "history": "1/9/6/2/6",
+    "game_pk": 849839,
+    "game_date": "2026-10-05",
+    "is_home": false,
+    "line": 3.5
+  },
+  {
+    "match": "New York Yankees @ Tampa Bay Rays",
+    "subject": "New York Yankees",
+    "market": "New York Yankees Over 5.5 Hits",
+    "prob": 78,
+    "category": "Team Hits",
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "detail": "vs Tampa Bay Rays \u00b7 proj 7.75 hits",
+    "history": "3/12/7/9/8",
+    "game_pk": 849839,
+    "game_date": "2026-10-05",
+    "is_home": false,
+    "line": 5.5
+  },
+  {
+    "match": "New York Yankees @ Tampa Bay Rays",
+    "subject": "Tampa Bay Rays",
+    "market": "Tampa Bay Rays Over 1.5 Runs",
+    "prob": 74,
+    "category": "Team Runs",
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "detail": "vs New York Yankees \u00b7 proj 2.62 runs",
+    "history": "2/4/2/12/3",
+    "game_pk": 849839,
+    "game_date": "2026-10-05",
+    "is_home": true,
+    "line": 1.5
+  },
+  {
+    "match": "New York Yankees @ Tampa Bay Rays",
+    "subject": "Tampa Bay Rays",
+    "market": "Tampa Bay Rays Over 4.5 Hits",
+    "prob": 79,
     "category": "Team Hits",
     "hit_rate": {
       "hits": 5,
       "total": 5
     },
-    "detail": "vs Atlanta Braves \u00b7 proj 8.07 hits",
-    "history": "10/7/7/9/8",
-    "game_pk": 849823,
-    "game_date": "2026-10-04",
+    "detail": "vs New York Yankees \u00b7 proj 6.59 hits",
+    "history": "6/9/6/17/8",
+    "game_pk": 849839,
+    "game_date": "2026-10-05",
     "is_home": true,
-    "line": 5.5
+    "line": 4.5
   }
 ]
