@@ -3,7 +3,8 @@
 Match IQ Results Tracker
 --------------------------------------------------------------
 Logs every qualifying pick from each of Match IQ's scanners (Over 2.5,
-BTTS, Corners, Safe Corners, Over 4.5, Hot Form, Real Streak) into a
+BTTS, Corners, Safe Corners, Over 4.5, Away to Score, Home Over 1.5,
+Hot Form, Real Streak) into a
 persistent JSON log, then on LATER runs automatically checks back on
 older entries whose match has since finished, fetches the real result,
 and marks each one hit or miss -- building an actual, honest track
@@ -133,6 +134,12 @@ def log_todays_signals(all_predictions, hot_form_entries, streak_entries, log, t
                 detail=f"sample {p.get('corners_sample_n')}/7", **base)
         if p.get("over45", 0) >= thresholds["over45_min"]:
             add("over45", match_label, "Over 4.5 Goals", p["over45"], detail=f"exp {p.get('exp_total')} goals", **base)
+        if p.get("away_to_score", 0) >= thresholds["away_to_score_min"]:
+            add("away_to_score", match_label, f"{p['away_team']} to Score (Over 0.5)", p["away_to_score"],
+                detail=f"exp {p.get('exp_away')} goals", **base)
+        if p.get("home_over15", 0) >= thresholds["home_over15_min"]:
+            add("home_over15", match_label, f"{p['home_team']} Over 1.5 Goals", p["home_over15"],
+                detail=f"exp {p.get('exp_home')} goals", **base)
 
     for e in hot_form_entries:
         add("hot_form", e["team"], f"Hot Form vs {e['opponent']}", e["last5_avg"],
@@ -180,6 +187,38 @@ def _verify_btts_entry(entry, key):
     if s.get("home") is None or s.get("away") is None:
         return None
     hit = s["home"] >= 1 and s["away"] >= 1
+    return {"actual": f"{s['home']}-{s['away']}", "result": "hit" if hit else "miss"}
+
+
+def _verify_away_to_score_entry(entry, key):
+    """Away to Score (Over 0.5) -- hit if the away team's own final score
+    is >=1. Same /matches response as BTTS, just checking one side."""
+    data = _get(f"/football/matches/{entry['match_id']}", key)
+    if not data or not data.get("data"):
+        return None
+    m = data["data"]
+    if m.get("status") != "finished":
+        return None
+    s = m.get("score", {})
+    if s.get("home") is None or s.get("away") is None:
+        return None
+    hit = s["away"] >= 1
+    return {"actual": f"{s['home']}-{s['away']}", "result": "hit" if hit else "miss"}
+
+
+def _verify_home_over15_entry(entry, key):
+    """Home Over 1.5 Goals -- hit if the home team's own final score is
+    >=2 (needs 2+, not just 1, unlike Home/Away to Score)."""
+    data = _get(f"/football/matches/{entry['match_id']}", key)
+    if not data or not data.get("data"):
+        return None
+    m = data["data"]
+    if m.get("status") != "finished":
+        return None
+    s = m.get("score", {})
+    if s.get("home") is None or s.get("away") is None:
+        return None
+    hit = s["home"] >= 2
     return {"actual": f"{s['home']}-{s['away']}", "result": "hit" if hit else "miss"}
 
 
@@ -266,6 +305,10 @@ def verify_pending_results(log, key, real_streak_threshold, max_checks=60):
                 result = _verify_goals_entry(entry, key, GOAL_THRESHOLD_SCANNERS[entry["scanner"]])
             elif entry["scanner"] == "btts":
                 result = _verify_btts_entry(entry, key)
+            elif entry["scanner"] == "away_to_score":
+                result = _verify_away_to_score_entry(entry, key)
+            elif entry["scanner"] == "home_over15":
+                result = _verify_home_over15_entry(entry, key)
             elif entry["scanner"] in ("corners", "corners_safe"):
                 result = _verify_corners_entry(entry, key)
             elif entry["scanner"] in ("hot_form", "real_streak"):
@@ -299,7 +342,8 @@ def build_results_dashboard(log):
 
     SCANNER_LABELS = {
         "over25": "Over 2.5 Goals", "btts": "BTTS", "corners": "Over 10.5 Corners",
-        "corners_safe": "Safe Corners", "over45": "Over 4.5 Goals",
+        "corners_safe": "Safe Corners", "over45": "Over 4.5 Goals", "away_to_score": "Away to Score",
+        "home_over15": "Home Over 1.5 Goals",
         "hot_form": "Hot Form", "real_streak": "Real Streak",
     }
 
