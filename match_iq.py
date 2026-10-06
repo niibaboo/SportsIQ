@@ -59,6 +59,12 @@ SAFE_CORNERS_MIN_SAMPLE = RECENT_GAMES  # both teams need a FULL recent-games
                                           # shrink()'s league-average fallback
 SCANNER_FH_BTTS_MIN = 60
 SCANNER_OVER45_MIN = 50
+SCANNER_AWAY_TO_SCORE_MIN = 75  # higher bar than BTTS -- a one-sided market
+                                 # (just the away side scoring) is easier to
+                                 # hit than BTTS, so it earns a stricter floor
+SCANNER_HOME_OVER15_MIN = 65    # needing 2+ goals is a harder bar than just
+                                 # scoring once, so this sits below the
+                                 # Over 0.5 markets' floors, not above them
 
 # Start small — uncomment more once you've confirmed the API-call budget
 # works for your trial quota. Names must match exactly what TheStatsAPI's
@@ -343,11 +349,26 @@ def predict_goals(h_form, a_form, lg_scored, lg_conceded):
 
     p_over25 = 1 - poisson_cdf(2, exp_total)
     p_over45 = 1 - poisson_cdf(4, exp_total)
+    # P(team scores >=1) is just 1 - P(0 goals) off that team's own expected
+    # goals -- BTTS already computes both halves of this as an intermediate
+    # step, just never exposed its own per-team number. Added 2026-10-06
+    # (user request): "Away to Score Over 0.5" as its own market/scanner,
+    # using the same shrunk, opponent-adjusted exp_away already computed
+    # above rather than a raw average.
+    p_home_to_score = 1 - poisson_pmf(0, exp_home)
+    p_away_to_score = 1 - poisson_pmf(0, exp_away)
+    # Home Over 1.5 Goals (needs 2+) -- user request, 2026-10-06, as a
+    # harder companion to Home/Away to Score (Over 0.5, needs just 1).
+    # Same shrunk/opponent-adjusted exp_home, just a higher bar via
+    # poisson_cdf instead of poisson_pmf(0, ...).
+    p_home_over15 = 1 - poisson_cdf(1, exp_home)
     p_btts = (1 - poisson_pmf(0, exp_home)) * (1 - poisson_pmf(0, exp_away))
 
     return {
         "exp_home": round(exp_home, 2), "exp_away": round(exp_away, 2), "exp_total": exp_total,
         "over25": round(p_over25 * 100), "over45": round(p_over45 * 100), "btts": round(p_btts * 100),
+        "home_to_score": round(p_home_to_score * 100), "away_to_score": round(p_away_to_score * 100),
+        "home_over15": round(p_home_over15 * 100),
     }
 
 
@@ -596,6 +617,18 @@ def build_legs(predictions):
             "match": match_label, "market": "BTTS", "prob": p["btts"], "category": "BTTS",
             "detail": f"{p['exp_total']} exp goals ({h_n}v{a_n}gm)",
             "history": f"H {h_goals_hist} · A {a_goals_hist}" if h_goals_hist and a_goals_hist else None,
+        })
+        legs.append({
+            "match": match_label, "market": f"{p['away_team']} to Score (Over 0.5)",
+            "prob": p["away_to_score"], "category": "Team to Score",
+            "detail": f"{p['exp_away']} exp goals vs {h_n}v{a_n}gm sample",
+            "history": a_goals_hist or None,
+        })
+        legs.append({
+            "match": match_label, "market": f"{p['home_team']} Over 1.5 Goals",
+            "prob": p["home_over15"], "category": "Team Goals",
+            "detail": f"{p['exp_home']} exp goals ({h_n}v{a_n}gm)",
+            "history": h_goals_hist or None,
         })
 
         h_fh_hist = format_history(hf.get("fh_corners_list"))
@@ -885,7 +918,7 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
 <h2 style="text-align:center">⚽ MATCH IQ — Full Stats</h2>
 <p style="text-align:center;color:#888;font-size:11px">Powered by TheStatsAPI · {generated}</p>
-<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Safe Corners</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a>·<a href="scanners/goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Hot Form/Streak</a></p>
+<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Safe Corners</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a>·<a href="scanners/away_to_score/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Away to Score</a>·<a href="scanners/home_over15/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Home O1.5</a>·<a href="scanners/goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Hot Form/Streak</a></p>
 <p style="text-align:center;margin:4px 0 0;font-size:12px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none">📊 Results Tracker</a></p>
 {date_bar}
 <p style="text-align:center;margin-bottom:16px"><a href="match_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
@@ -1049,7 +1082,8 @@ SCANNER_HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 
 def _scanner_badge_value(p, market_key):
     return {"over25": p["over25"], "btts": p["btts"], "corners_over105": p["corners_over105"],
-            "over45": p["over45"]}[market_key]
+            "over45": p["over45"], "away_to_score": p["away_to_score"],
+            "home_over15": p["home_over15"]}[market_key]
 
 
 def render_scanner_cards(predictions, market_key, badge_label):
@@ -1097,11 +1131,12 @@ def make_scanner_html(predictions, page_title, icon, subtitle, market_key, badge
 def write_scanner_csv(predictions, path):
     with open(path, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["Date", "League", "HomeTeam", "AwayTeam", "Over25", "Over45", "BTTS",
-                          "ExpCorners", "CornersOver105", "CornersSampleN"])
+        writer.writerow(["Date", "League", "HomeTeam", "AwayTeam", "Over25", "Over45", "BTTS", "AwayToScore",
+                          "HomeOver15", "ExpCorners", "CornersOver105", "CornersSampleN"])
         for p in predictions:
             writer.writerow([p["date"], p["league"], p["home_team"], p["away_team"],
-                              p["over25"], p["over45"], p["btts"], p["exp_corners"], p["corners_over105"],
+                              p["over25"], p["over45"], p["btts"], p.get("away_to_score", ""),
+                              p.get("home_over15", ""), p["exp_corners"], p["corners_over105"],
                               p.get("corners_sample_n", "")])
 
 
@@ -1388,6 +1423,16 @@ SCANNER_CONFIGS = [
         "title": "Over 4.5 Goals Daily Scanner", "icon": "🎯", "badge_label": "O4.5",
         "subtitle_fmt": f"All matches with ≥{SCANNER_OVER45_MIN}% Over 4.5 probability",
     },
+    {
+        "dir": "away_to_score", "market_key": "away_to_score", "min": SCANNER_AWAY_TO_SCORE_MIN,
+        "title": "Away to Score Daily Scanner", "icon": "🛫", "badge_label": "A2S",
+        "subtitle_fmt": f"All matches with ≥{SCANNER_AWAY_TO_SCORE_MIN}% probability the away team scores (Over 0.5)",
+    },
+    {
+        "dir": "home_over15", "market_key": "home_over15", "min": SCANNER_HOME_OVER15_MIN,
+        "title": "Home Over 1.5 Goals Daily Scanner", "icon": "🏠", "badge_label": "H1.5",
+        "subtitle_fmt": f"All matches with ≥{SCANNER_HOME_OVER15_MIN}% probability the home team scores 2+ goals",
+    },
 ]
 
 
@@ -1462,8 +1507,8 @@ def post_daily_digest_to_telegram(all_predictions):
 
 
 def build_daily_signals_scanners(all_predictions, base_dir="docs/match-iq/scanners"):
-    """Generates the five Daily Signals scanner pages (Over 2.5, BTTS,
-    Over 10.5 Corners, Safe Corners, Over 4.5), each filtered independently
+    """Generates the Daily Signals scanner pages (Over 2.5, BTTS,
+    Over 10.5 Corners, Safe Corners, Over 4.5, Away to Score, Home Over 1.5), each filtered independently
     from the FULL unfiltered fixture list — not the main page's filtered
     set — with its own date-paginated pages and CSV export, mirroring the
     main Match IQ page's existing date-navigation pattern."""
@@ -1572,6 +1617,7 @@ if __name__ == "__main__":
                 "over25_min": SCANNER_OVER25_MIN, "btts_min": SCANNER_BTTS_MIN,
                 "corners_min": SCANNER_CORNERS_MIN, "safe_corners_min": SCANNER_SAFE_CORNERS_MIN,
                 "safe_corners_min_sample": SAFE_CORNERS_MIN_SAMPLE, "over45_min": SCANNER_OVER45_MIN,
+                "away_to_score_min": SCANNER_AWAY_TO_SCORE_MIN, "home_over15_min": SCANNER_HOME_OVER15_MIN,
                 "real_streak_threshold": REAL_STREAK_THRESHOLD,
             },
         )
