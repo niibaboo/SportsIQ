@@ -230,5 +230,22 @@
     "scorer_team_id": "24",
     "final_home_score": 30.0,
     "final_away_score": 23.0
+  },
+  "401872979_Away_Next_Score": {
+    "id": "401872979_Away_Next_Score",
+    "game_id": "401872979",
+    "home_id": "18",
+    "away_id": "1",
+    "home_team": "New Orleans Saints",
+    "away_team": "Atlanta Falcons",
+    "label": "Away Next Score",
+    "prob": 75,
+    "logged_at": "2026-10-06T01:39:08.534028+00:00",
+    "logged_period": 2,
+    "logged_clock": "3:14",
+    "logged_home_score": 7.0,
+    "logged_away_score": 21.0,
+    "pregame_total": 47.7,
+    "status": "pending"
   }
 }
