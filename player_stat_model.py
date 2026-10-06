@@ -598,7 +598,14 @@ def compute_hit_rates(game_log: dict) -> dict:
 
 def build_report(player: dict, stats: dict, team_id: str, expected_minutes: float,
                   team_name: str | None = None, league_name: str | None = None,
-                  matches: list[dict] | None = None) -> dict:
+                  matches: list[dict] | None = None,
+                  fixture: dict | None = None) -> dict:
+    """fixture, when given, is {"match_id", "match_date", "opponent"} for
+    the specific upcoming match this report's props are being priced
+    against — attached so the results tracker can later verify the
+    prop against that exact match (get_match_player_stats(match_id,
+    player_id)) rather than guessing which fixture a pick referred to.
+    None for watchlist/manual lookups, which aren't tied to one fixture."""
     player_id = player["id"]
     if matches is None:
         matches = get_team_recent_matches(team_id)
@@ -623,6 +630,9 @@ def build_report(player: dict, stats: dict, team_id: str, expected_minutes: floa
         "hit_rates": hit_rates,
         "season_minutes_played": season["minutes"],
         "low_data": rolling["matches_used"] == 0 and season["minutes"] < MIN_SEASON_MINUTES,
+        "match_id": (fixture or {}).get("match_id"),
+        "match_date": (fixture or {}).get("match_date"),
+        "opponent": (fixture or {}).get("opponent"),
         "projected_per_match": projected,
         "props": {
             "shots_over_1.5": round(prob_over(projected["shots"], 1.5), 3),
@@ -676,10 +686,16 @@ def build_player_report(name: str, expected_minutes: float = 90.0) -> dict:
 # Team / squad scanning — lets the model pick its own player pool
 # ----------------------------------------------------------------------
 
-def scan_team(team_id: str, min_avg_minutes: float = MIN_AVG_MINUTES) -> list[dict]:
+def scan_team(team_id: str, min_avg_minutes: float = MIN_AVG_MINUTES,
+              fixture: dict | None = None) -> list[dict]:
     """Build reports for every regular starter in a team's squad.
-    
-    OPTIMIZED: Fetches team matches once at the start, passes to each player's report."""
+
+    OPTIMIZED: Fetches team matches once at the start, passes to each player's report.
+
+    fixture, when given, is {"match_id", "match_date", "opponent"} for
+    the specific match this team is playing that the scan is being run
+    for — passed straight through to every player's report (see
+    build_report)."""
     resolved = resolve_team_and_league(team_id)
     season_id = resolved["season_id"]
     if not season_id:
@@ -699,7 +715,7 @@ def scan_team(team_id: str, min_avg_minutes: float = MIN_AVG_MINUTES) -> list[di
         try:
             report = build_report(player, stats, team_id, expected_minutes=min(avg_minutes, 90),
                                    team_name=resolved["team_name"], league_name=resolved["league_name"],
-                                   matches=team_matches)
+                                   matches=team_matches, fixture=fixture)
         except Exception:
             continue
         reports.append(report)
@@ -723,27 +739,48 @@ def run_watchlist_scan(team_names: list[str] = WATCHLIST) -> list[dict]:
 def run_competition_scan(competition_id: str, days_ahead: int = 7) -> list[dict]:
     """Scan every team with a fixture in a competition over the next N days."""
     matches = get_upcoming_matches(competition_id, days_ahead)
-    team_ids = set()
-    for m in matches:
-        home = m.get("home_team_id") or m.get("home_team", {}).get("id")
-        away = m.get("away_team_id") or m.get("away_team", {}).get("id")
-        team_ids.update({home, away} - {None})
 
+    # team_id -> fixture info for THAT team's match in this window, so
+    # every report built from it can carry match_id/match_date/opponent
+    # for the results tracker to verify against later. If a team somehow
+    # has two matches in the window, the last one found wins — fine for
+    # days_ahead=0 (the automated daily run), where a team plays at most
+    # once that day; a multi-day manual scan just tags the latest.
+    team_fixture: dict[str, dict] = {}
+    for m in matches:
+        home = m.get("home_team", {}) or {}
+        away = m.get("away_team", {}) or {}
+        home_id, away_id = home.get("id") or m.get("home_team_id"), away.get("id") or m.get("away_team_id")
+        match_id, match_date = m.get("id"), m.get("utc_date")
+        if home_id:
+            team_fixture[home_id] = {"match_id": match_id, "match_date": match_date,
+                                      "opponent": away.get("name")}
+        if away_id:
+            team_fixture[away_id] = {"match_id": match_id, "match_date": match_date,
+                                      "opponent": home.get("name")}
+
+    team_ids = set(team_fixture)
     print(f"{len(matches)} fixtures found, {len(team_ids)} teams to scan.")
     all_reports = []
     for team_id in team_ids:
-        all_reports.extend(scan_team(team_id))
+        all_reports.extend(scan_team(team_id, fixture=team_fixture.get(team_id)))
     return all_reports
 
 
 # Leagues the automated "today's fixtures" run scans.
-# OPTIMIZED: Reduced to Premier League only to stay within TheStatsAPI rate limits.
-# Player-level scanning is expensive (each player = 1 stats call + up to ROLLING_MATCHES
-# match lookups). Premier League alone = ~20 teams × ~25 players = ~500 API calls per run.
-# Rotate through other leagues manually or expand the list once quota is confirmed.
-# To add more leagues: Championship, League One, League Two, FA Cup, EFL Cup.
+# OPTIMIZED: kept to Premier League + Championship to stay within
+# TheStatsAPI rate limits. Player-level scanning is expensive (each
+# player = 1 stats call + up to ROLLING_MATCHES match lookups).
+# Premier League alone = ~20 teams × ~25 players = ~500 API calls per
+# run; adding Championship roughly doubles that (~24 teams × ~25
+# players more). EXPANDED from Premier-League-only (2026-10-06, user
+# request, ahead of the season resuming) — rotate through further
+# leagues manually, or add them here once quota is confirmed to hold
+# at this level.
+# To add more leagues: League One, League Two, FA Cup, EFL Cup.
 DAILY_SCAN_LEAGUES = [
     "Premier League",
+    "Championship",
 ]
 
 
@@ -888,12 +925,21 @@ def build_legs(reports: list[dict]) -> list[dict]:
                         history = "/".join(str(int(v)) for v in values)
             legs.append({
                 "player": r["player_name"],
+                "player_id": r.get("player_id"),
+                "prop_key": prop_key,
                 "market": f"{r['player_name']} {label}",
                 "prob": round(prob * 100),
                 "hit_rate": (r.get("hit_rates") or {}).get(prop_key),
                 "category": category,
                 "detail": f"{r.get('team_name', 'Unknown team')} · {r.get('league_name', 'Unknown league')}",
                 "history": history,
+                # Only populated for picks from the daily fixture scan
+                # (run_competition_scan attaches these); watchlist/manual
+                # lookups leave them None, and the results tracker skips
+                # legs it can't tie to a specific match.
+                "match_id": r.get("match_id"),
+                "match_date": r.get("match_date"),
+                "opponent": r.get("opponent"),
             })
     return legs
 
@@ -1029,11 +1075,28 @@ if __name__ == "__main__":
             raise SystemExit(0)
         run_scan(reports)
 
+        # Results tracker — logs every leg with a resolvable match_id
+        # against the real outcome once that match has finished. Same
+        # architecture as Match IQ / Euro Ice's trackers; see
+        # player_stat_model_results_tracker.py.
+        try:
+            import player_stat_model_results_tracker as results_tracker
+            results_tracker.run_results_tracker(build_legs(reports), HEADERS)
+        except Exception as exc:
+            print(f"  [!] Results tracker step failed (non-fatal): {exc}")
+
         # Publish for GitHub Pages, same docs/ convention as Match IQ:
         # index.html + the JSON it fetches, side by side, so the HTML's
         # existing relative fetch("player_stats_data.json") keeps working
         # unchanged.
-        docs_dir = Path(__file__).parent.parent / "docs" / "player-stat-model"
+        # FIXED: was .parent.parent, which resolves to ONE LEVEL ABOVE
+        # this repo (this script sits at the repo root, same as docs/,
+        # so it only needs .parent). Harmless in CI only because the
+        # workflow's own "Copy data to docs" step republishes correctly
+        # right after this runs and overwrites whatever this wrote — but
+        # standalone (or if that redundant step is ever removed) this
+        # was silently writing outside the repo entirely.
+        docs_dir = Path(__file__).parent / "docs" / "player-stat-model"
         docs_dir.mkdir(parents=True, exist_ok=True)
         html_src = Path(__file__).parent / "player_stat_model.html"
         if html_src.exists():
