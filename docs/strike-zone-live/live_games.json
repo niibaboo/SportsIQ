@@ -1,47 +1,5 @@
 {
-  "generated": "2026-10-06T03:04:09.805582+00:00",
-  "total_live": 1,
-  "games": [
-    {
-      "game_pk": 849839,
-      "home_team": "Tampa Bay Rays",
-      "away_team": "New York Yankees",
-      "home_runs": 5.0,
-      "away_runs": 2.0,
-      "home_hits": 7.0,
-      "away_hits": 4.0,
-      "inning": 8,
-      "inning_state": "Bottom",
-      "status": "In Progress",
-      "half_innings_remaining": 3,
-      "next_run": {
-        "home": 67,
-        "away": 33
-      },
-      "game_total_pace": {
-        "prob": 73,
-        "status": "On Pace: Over"
-      },
-      "inning_winner": {
-        "home": 36,
-        "away": 15,
-        "tie": 49
-      },
-      "inning_hits": {
-        "home": 44,
-        "away": 20,
-        "tie": 36
-      },
-      "model_signal": {
-        "label": "Game Total Over",
-        "prob": 73,
-        "qualifies": true
-      },
-      "pregame_projection": {
-        "home_lambda": 2.62,
-        "away_lambda": 5.12,
-        "pregame_total": 7.74
-      }
-    }
-  ]
+  "generated": "2026-10-06T10:09:03.508226+00:00",
+  "total_live": 0,
+  "games": []
 }
