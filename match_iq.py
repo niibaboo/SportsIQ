@@ -143,11 +143,16 @@ def _get(path, key, params=None, timeout=15):
         print(f"  [!] {r.status_code} on {path}: {r.text[:200]}")
         return None
 
-    time.sleep(2.0)  # baseline pacing — the earlier 0.3s was too fast for the trial's
-                      # actual per-minute limit and caused repeated 429s despite the
-                      # adaptive top-up above; this spaces every call out enough to
-                      # avoid hitting the ceiling in the first place, rather than
-                      # reacting to it after the fact
+    # LOWERED 2.0 -> 0.5 (2026-10-07): 2.0s was tuned for the TRIAL plan's
+    # rate limit, back when 0.3s was causing repeated 429s. Since upgrading
+    # to the full TheStatsAPI package, 2.0s was pure overhead that scaled
+    # badly as leagues got added -- 11 leagues now (incl. Champions League's
+    # 36 teams), ~1,500-1,700 successful calls per run, made a full run take
+    # 1hr+ in flat sleep time alone. The adaptive top-up above already reacts
+    # to the real X-RateLimit-Remaining/Reset headers, so it still catches a
+    # genuine ceiling -- this baseline is just less conservative padding on
+    # top of that, not the only protection.
+    time.sleep(0.5)
     return r.json()
 
 
@@ -1062,6 +1067,7 @@ SCANNER_CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;pad
     <div style="font-size:11px;color:#999">{league} · {time}</div>
     <div style="font-size:15px;font-weight:bold;margin:2px 0 6px">{home_team} vs {away_team}</div>
     <div style="font-size:11px;color:#aaa">O2.5: <span style="color:#a0e8a0">{over25}%</span> &nbsp;|&nbsp; BTTS: <span style="color:#a0e8a0">{btts}%</span> &nbsp;|&nbsp; Corners 10.5+: <span style="color:#a0e8a0">{corners_disp}%</span></div>
+    <div style="font-size:10px;color:#666;margin-top:4px">last 5 goals — {home_team}: {h_last5} · {away_team}: {a_last5}</div>
     {sample_note}
   </div>
 </div>"""
@@ -1098,11 +1104,21 @@ def render_scanner_cards(predictions, market_key, badge_label):
                 full = "✓ full sample" if n >= SAFE_CORNERS_MIN_SAMPLE else "thin sample"
                 sample_note = (f'<div style="font-size:10px;color:#8b98a8;margin-top:4px">'
                                 f'data: {n}/{SAFE_CORNERS_MIN_SAMPLE} games ({full})</div>')
+        # Last-5-GAMES goals, oldest->newest — same "last 5" convention as
+        # Hot Form/Real Streak (GOAL_STREAK_MIN_GAMES) and format_history's
+        # existing newest-first-list convention, just reused here rather
+        # than the full RECENT_GAMES(7) history the main page cards show.
+        # Added 2026-10-07, user request, after confirming Home Over 1.5 /
+        # Away to Score were live — shows the actual scoring sequence
+        # behind each scanner's probability, not just the badge %.
+        h_last5 = format_history((p["home_form"].get("goals_list") or [])[:5]) or "—"
+        a_last5 = format_history((p["away_form"].get("goals_list") or [])[:5]) or "—"
         cards += SCANNER_CARD_TEMPLATE.format(
             badge_label=badge_label, badge_value=_scanner_badge_value(p, market_key),
             league=p["league"], time=p["date"][:16].replace("T", " "),
             home_team=p["home_team"], away_team=p["away_team"],
             over25=p["over25"], btts=p["btts"], corners_disp=p["corners_over105"],
+            h_last5=h_last5, a_last5=a_last5,
             sample_note=sample_note,
         )
     return cards
