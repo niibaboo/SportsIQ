@@ -304,5 +304,21 @@
     "status": "miss",
     "final_home_runs": 5.0,
     "final_away_runs": 2.0
+  },
+  "849819_Game_Total_Under": {
+    "id": "849819_Game_Total_Under",
+    "game_pk": 849819,
+    "home_team": "Atlanta Braves",
+    "away_team": "Los Angeles Dodgers",
+    "label": "Game Total Under",
+    "prob": 89,
+    "logged_at": "2026-10-07T00:48:28.233632+00:00",
+    "logged_inning": 9,
+    "logged_inning_state": "Top",
+    "logged_half_index": 16,
+    "logged_home_runs": 1.0,
+    "logged_away_runs": 3.0,
+    "pregame_total": 5.9,
+    "status": "pending"
   }
 }
