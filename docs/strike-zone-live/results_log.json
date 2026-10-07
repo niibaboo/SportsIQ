@@ -322,5 +322,37 @@
     "status": "hit",
     "final_home_runs": 1.0,
     "final_away_runs": 3.0
+  },
+  "849822_Game_Total_Under": {
+    "id": "849822_Game_Total_Under",
+    "game_pk": 849822,
+    "home_team": "Atlanta Braves",
+    "away_team": "Los Angeles Dodgers",
+    "label": "Game Total Under",
+    "prob": 99,
+    "logged_at": "2026-10-07T23:52:09.914951+00:00",
+    "logged_inning": 6,
+    "logged_inning_state": "Bottom",
+    "logged_half_index": 11,
+    "logged_home_runs": 1.0,
+    "logged_away_runs": 1.0,
+    "pregame_total": 6.59,
+    "status": "pending"
+  },
+  "849838_Game_Total_Under": {
+    "id": "849838_Game_Total_Under",
+    "game_pk": 849838,
+    "home_team": "New York Yankees",
+    "away_team": "Tampa Bay Rays",
+    "label": "Game Total Under",
+    "prob": 95,
+    "logged_at": "2026-10-07T23:52:09.914960+00:00",
+    "logged_inning": 1,
+    "logged_inning_state": "Top",
+    "logged_half_index": 0,
+    "logged_home_runs": 0.0,
+    "logged_away_runs": 0.0,
+    "pregame_total": 7.97,
+    "status": "pending"
   }
 }
