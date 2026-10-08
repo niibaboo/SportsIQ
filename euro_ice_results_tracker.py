@@ -81,13 +81,15 @@ def save_log(entries):
 
 
 def log_todays_signals(legs, streak_entries, real_streak_entries, log):
-    """Team Total legs already carry everything needed for later
-    verification (line, is_home, league_id, home/away names, match
+    """Team Total AND Game Total legs now both carry everything needed
+    for later verification (line, league_id, home/away names, match
     date) -- added specifically for this tracker when the legs were
-    built. Game Total legs are skipped here: they combine two teams'
-    SEPARATE scoring histories into one number, so there's no single
-    real "side" to check the way there is for a team total -- same
-    reasoning that already excludes them from hit_rate elsewhere."""
+    built. Game Total still has no hit_rate in the builder UI (combining
+    two teams' separate scoring histories isn't a genuine paired record
+    to count against), but that's a display-only concern -- summing both
+    sides' ACTUAL final score from the same match lookup gives a real
+    total to check the line against, same as Blitz IQ's own Game Total
+    tracking."""
     existing_ids = {e["id"] for e in log}
     added = 0
 
@@ -110,14 +112,21 @@ def log_todays_signals(legs, streak_entries, real_streak_entries, log):
         added += 1
 
     for leg in legs:
-        if "Team Total" not in leg.get("category", ""):
-            continue  # skip Game Total legs -- see docstring
-        league_name = leg["category"].replace(" Team Total", "")
-        date_key = (leg.get("match_date") or "")[:10]
-        add("team_total", leg["subject"], leg["market"], leg["prob"],
-            league_name, leg["league_id"], leg["match_date"], date_key,
-            leg["home_name"], leg["away_name"], is_home=leg["is_home"],
-            detail=f"line={leg['line']}")
+        category = leg.get("category", "")
+        if "Team Total" in category:
+            league_name = category.replace(" Team Total", "")
+            date_key = (leg.get("match_date") or "")[:10]
+            add("team_total", leg["subject"], leg["market"], leg["prob"],
+                league_name, leg["league_id"], leg["match_date"], date_key,
+                leg["home_name"], leg["away_name"], is_home=leg["is_home"],
+                detail=f"line={leg['line']}")
+        elif "Game Total" in category:
+            league_name = category.replace(" Game Total", "")
+            date_key = (leg.get("match_date") or "")[:10]
+            add("game_total", leg["subject"], leg["market"], leg["prob"],
+                league_name, leg["league_id"], leg["match_date"], date_key,
+                leg["home_name"], leg["away_name"], is_home=None,
+                detail=f"line={leg['line']}")
 
     for e in streak_entries:
         date_key = (e["date"] or "")[:10]
@@ -164,6 +173,19 @@ def _verify_team_total_entry(entry, key):
     return {"actual": team_goals, "result": "hit" if team_goals > line else "miss"}
 
 
+def _verify_game_total_entry(entry, key):
+    m = _find_finished_match(entry, key)
+    if not m:
+        return None
+    score = parse_score(m.get("state", {}).get("score", {}).get("current"))
+    if not score:
+        return None
+    home_goals, away_goals = score
+    total_goals = home_goals + away_goals
+    line = float(entry["detail"].split("=")[1])
+    return {"actual": total_goals, "result": "hit" if total_goals > line else "miss"}
+
+
 def _verify_form_streak_entry(entry, key, threshold):
     m = _find_finished_match(entry, key)
     if not m:
@@ -194,6 +216,8 @@ def verify_pending_results(log, key, real_streak_threshold, max_checks=60):
         try:
             if entry["scanner"] == "team_total":
                 result = _verify_team_total_entry(entry, key)
+            elif entry["scanner"] == "game_total":
+                result = _verify_game_total_entry(entry, key)
             elif entry["scanner"] in ("hot_form", "real_streak"):
                 result = _verify_form_streak_entry(entry, key, real_streak_threshold)
         except Exception as e:
@@ -229,7 +253,8 @@ def build_results_dashboard(log):
         d = by_league.setdefault(e.get("league") or "Unknown", {"hit": 0, "miss": 0})
         d[e["result"]] += 1
 
-    SCANNER_LABELS = {"team_total": "Team Total Goals", "hot_form": "Hot Form", "real_streak": "Real Streak"}
+    SCANNER_LABELS = {"team_total": "Team Total Goals", "game_total": "Game Total Goals",
+                       "hot_form": "Hot Form", "real_streak": "Real Streak"}
 
     total_hit = sum(d["hit"] for d in by_scanner.values())
     total_miss = sum(d["miss"] for d in by_scanner.values())
@@ -301,11 +326,13 @@ def build_results_dashboard(log):
 </div>
 
 <div style="font-size:11px;color:var(--sub);text-align:center;margin-top:20px;line-height:1.6">
-  Game Total legs aren't tracked here — they combine two teams' separate scoring histories
-  into one number, so there's no single real "side" to check against. Hot Form / Real Streak
-  are verified against whether the flagged team scored 2+ in the SAME match the signal was
-  flagged alongside. Sample sizes are still small early on — treat percentages with real
-  caution until there's a few weeks of data.
+  Game Total is verified by summing BOTH teams' actual final goals from the same
+  match and checking that against the line — it still has no hit_rate shown in the
+  builder UI (combining two teams' separate scoring histories isn't a genuine paired
+  record to count against there), but the final score itself is real and checkable.
+  Hot Form / Real Streak are verified against whether the flagged team scored 2+ in
+  the SAME match the signal was flagged alongside. Sample sizes are still small early
+  on — treat percentages with real caution until there's a few weeks of data.
 </div>
 </body></html>"""
 
