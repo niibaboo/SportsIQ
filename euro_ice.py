@@ -547,6 +547,14 @@ def build_legs_and_cards(target_date):
                         "category": f"{league['name']} Game Total",
                         "detail": f"proj {round(total_lambda, 2)} goals combined",
                         "history": None,
+                        # Fields below aren't used by the builder UI --
+                        # same as Team Total's own trailing fields above,
+                        # they exist purely so the results tracker can
+                        # look this match back up later and sum both
+                        # sides' actual final score against the line.
+                        "line": line, "league_id": league["id"],
+                        "home_name": home["name"], "away_name": away["name"],
+                        "match_date": m.get("date", ""),
                     })
 
                 # NEW: build the per-match card (win prob bar + correct
