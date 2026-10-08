@@ -337,7 +337,9 @@
     "logged_home_runs": 1.0,
     "logged_away_runs": 1.0,
     "pregame_total": 6.59,
-    "status": "pending"
+    "status": "hit",
+    "final_home_runs": 1.0,
+    "final_away_runs": 4.0
   },
   "849838_Game_Total_Under": {
     "id": "849838_Game_Total_Under",
@@ -353,6 +355,24 @@
     "logged_home_runs": 0.0,
     "logged_away_runs": 0.0,
     "pregame_total": 7.97,
+    "status": "hit",
+    "final_home_runs": 3.0,
+    "final_away_runs": 4.0
+  },
+  "849827_Game_Total_Under": {
+    "id": "849827_Game_Total_Under",
+    "game_pk": 849827,
+    "home_team": "San Diego Padres",
+    "away_team": "Milwaukee Brewers",
+    "label": "Game Total Under",
+    "prob": 100,
+    "logged_at": "2026-10-08T04:21:39.092178+00:00",
+    "logged_inning": 7,
+    "logged_inning_state": "Middle",
+    "logged_half_index": 13,
+    "logged_home_runs": 1.0,
+    "logged_away_runs": 3.0,
+    "pregame_total": 10.88,
     "status": "pending"
   }
 }

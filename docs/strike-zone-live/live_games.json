@@ -1,87 +1,46 @@
 {
-  "generated": "2026-10-07T23:52:09.911387+00:00",
-  "total_live": 2,
+  "generated": "2026-10-08T04:21:39.089506+00:00",
+  "total_live": 1,
   "games": [
     {
-      "game_pk": 849822,
-      "home_team": "Atlanta Braves",
-      "away_team": "Los Angeles Dodgers",
+      "game_pk": 849827,
+      "home_team": "San Diego Padres",
+      "away_team": "Milwaukee Brewers",
       "home_runs": 1.0,
-      "away_runs": 1.0,
-      "home_hits": 1.0,
-      "away_hits": 2.0,
-      "inning": 6,
-      "inning_state": "Bottom",
+      "away_runs": 3.0,
+      "home_hits": 3.0,
+      "away_hits": 10.0,
+      "inning": 7,
+      "inning_state": "Middle",
       "status": "In Progress",
-      "half_innings_remaining": 7,
+      "half_innings_remaining": 5,
       "next_run": {
-        "home": 49,
-        "away": 51
+        "home": 39,
+        "away": 61
       },
       "game_total_pace": {
-        "prob": 1,
+        "prob": 0,
         "status": "On Pace: Under"
       },
       "inning_winner": {
-        "home": 14,
-        "away": 15,
-        "tie": 71
-      },
-      "inning_hits": {
         "home": 17,
         "away": 29,
-        "tie": 55
-      },
-      "model_signal": {
-        "label": "Game Total Under",
-        "prob": 99,
-        "qualifies": true
-      },
-      "pregame_projection": {
-        "home_lambda": 3.13,
-        "away_lambda": 3.46,
-        "pregame_total": 6.59
-      }
-    },
-    {
-      "game_pk": 849838,
-      "home_team": "New York Yankees",
-      "away_team": "Tampa Bay Rays",
-      "home_runs": 0.0,
-      "away_runs": 0.0,
-      "home_hits": 0.0,
-      "away_hits": 0.0,
-      "inning": 1,
-      "inning_state": "Top",
-      "status": "Warmup",
-      "half_innings_remaining": 18,
-      "next_run": {
-        "home": 61,
-        "away": 39
-      },
-      "game_total_pace": {
-        "prob": 5,
-        "status": "On Pace: Under"
-      },
-      "inning_winner": {
-        "home": 20,
-        "away": 13,
-        "tie": 67
+        "tie": 54
       },
       "inning_hits": {
-        "home": 26,
-        "away": 22,
-        "tie": 52
+        "home": 12,
+        "away": 63,
+        "tie": 25
       },
       "model_signal": {
         "label": "Game Total Under",
-        "prob": 95,
+        "prob": 100,
         "qualifies": true
       },
       "pregame_projection": {
-        "home_lambda": 4.83,
-        "away_lambda": 3.14,
-        "pregame_total": 7.97
+        "home_lambda": 5.32,
+        "away_lambda": 5.56,
+        "pregame_total": 10.88
       }
     }
   ]
