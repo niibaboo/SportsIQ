@@ -41,7 +41,7 @@ SUMMARY_CACHE = {}  # one fetch per game_id per run, several legs share a game
 CATEGORY_SCANNER = {
     "Team Total": "team_total", "Game Total": "game_total",
     "Passing Yards": "passing_yards", "Rushing Yards": "rushing_yards",
-    "Receptions": "receptions",
+    "Receptions": "receptions", "Anytime TD": "anytime_touchdown",
 }
 STAT_LABEL_TO_SCANNER = {"YDS": None, "REC": "receptions"}  # YDS is ambiguous
                                                                 # (passing vs rushing) --
@@ -273,16 +273,61 @@ SCANNER_CATEGORY_KEYWORD = {
 }
 
 
+def _find_player_any_td(summary, athlete_id):
+    """Anytime TD needs this player's TOTAL touchdowns across every
+    non-passing category in the game (rushing + receiving -- a TD is a
+    TD whichever way it came in, but a thrown TD doesn't count), unlike
+    _find_player_boxscore_stat above which returns a single preferred
+    category's value. Same defensive labels/athletes walk, just summed
+    across every matching category instead of returning the first hit."""
+    players = summary.get("boxscore", {}).get("players", [])
+    if not players:
+        print(f"    [DIAG] boxscore has no 'players' key or it's empty. "
+              f"Top-level boxscore keys: {list(summary.get('boxscore', {}).keys())}")
+        return None
+    total = 0.0
+    found = False
+    for team_block in players:
+        for stat_category in team_block.get("statistics", []):
+            cat_name = (stat_category.get("name") or stat_category.get("displayName") or "").lower()
+            if "pass" in cat_name:
+                continue  # a thrown TD doesn't pay out an Anytime TD bet
+            labels = stat_category.get("labels") or stat_category.get("names")
+            athletes = stat_category.get("athletes", [])
+            if not labels or "TD" not in labels:
+                continue
+            idx = labels.index("TD")
+            for a in athletes:
+                athlete_info = a.get("athlete", {})
+                if str(athlete_info.get("id")) != str(athlete_id):
+                    continue
+                stats = a.get("stats", [])
+                try:
+                    total += float(stats[idx])
+                    found = True
+                except (IndexError, ValueError, TypeError):
+                    continue
+    if not found:
+        print(f"    [DIAG] couldn't find athlete {athlete_id}'s TD stat in any non-passing "
+              f"boxscore category -- either this player didn't appear in one this game, or "
+              f"the shape assumed here doesn't match ESPN's real response.")
+        return None
+    return total
+
+
 def _verify_player_leg(entry):
     if not entry.get("athlete_id") or not entry.get("stat_key"):
         return None
     summary = _get_summary(entry["game_id"])
     if not summary or not _is_final(summary):
         return None
-    actual = _find_player_boxscore_stat(
-        summary, entry["athlete_id"], entry["stat_key"],
-        prefer_keyword=SCANNER_CATEGORY_KEYWORD.get(entry["scanner"]),
-    )
+    if entry["scanner"] == "anytime_touchdown":
+        actual = _find_player_any_td(summary, entry["athlete_id"])
+    else:
+        actual = _find_player_boxscore_stat(
+            summary, entry["athlete_id"], entry["stat_key"],
+            prefer_keyword=SCANNER_CATEGORY_KEYWORD.get(entry["scanner"]),
+        )
     if actual is None:
         return None
     return {"actual": actual, "result": "hit" if actual > entry["line"] else "miss"}
@@ -316,10 +361,13 @@ def _verify_player_form_entry(entry):
     summary = _get_summary(entry["game_id"])
     if not summary or not _is_final(summary):
         return None
-    actual = _find_player_boxscore_stat(
-        summary, entry["athlete_id"], entry["stat_key"],
-        prefer_keyword=PREFER_KEYWORD_BY_LABEL.get(entry.get("label")),
-    )
+    if entry.get("label") == "Anytime TD":
+        actual = _find_player_any_td(summary, entry["athlete_id"])
+    else:
+        actual = _find_player_boxscore_stat(
+            summary, entry["athlete_id"], entry["stat_key"],
+            prefer_keyword=PREFER_KEYWORD_BY_LABEL.get(entry.get("label")),
+        )
     if actual is None:
         return None
     return {"actual": actual, "result": "hit" if actual >= entry["threshold"] else "miss"}
@@ -343,7 +391,7 @@ def verify_pending_results(log, max_checks=60):
         try:
             if entry["scanner"] in ("team_total", "game_total"):
                 result = _verify_team_leg(entry)
-            elif entry["scanner"] in ("passing_yards", "rushing_yards", "receptions"):
+            elif entry["scanner"] in ("passing_yards", "rushing_yards", "receptions", "anytime_touchdown"):
                 result = _verify_player_leg(entry)
             elif entry["scanner"] in ("team_hot_form", "team_real_streak"):
                 result = _verify_team_form_entry(entry)
@@ -376,7 +424,7 @@ def build_results_dashboard(log):
     SCANNER_LABELS = {
         "team_total": "Team Total", "game_total": "Game Total",
         "passing_yards": "Passing Yards", "rushing_yards": "Rushing Yards",
-        "receptions": "Receptions",
+        "receptions": "Receptions", "anytime_touchdown": "Anytime TD",
         "team_hot_form": "Team Hot Form", "team_real_streak": "Team Real Streak",
         "player_hot_form": "Player Hot Form", "player_real_streak": "Player Real Streak",
     }
@@ -430,11 +478,11 @@ def build_results_dashboard(log):
 
 <div style="font-size:11px;color:#888;text-align:center;margin-top:20px;line-height:1.6">
   Team Total / Game Total use the same proven score field this model already relies on.
-  Passing Yards / Rushing Yards / Receptions use a best-effort read of ESPN's boxscore that
-  wasn't confirmed against a live response — if those three categories stay empty for more
-  than a few days after games finish, check the Actions log for [DIAG] lines, which show
-  exactly what shape the boxscore actually came back in. Sample sizes are still small early
-  on — treat percentages with real caution until there's a few weeks of data.
+  Passing Yards / Rushing Yards / Receptions / Anytime TD use a best-effort read of ESPN's
+  boxscore that wasn't confirmed against a live response — if those categories stay empty
+  for more than a few days after games finish, check the Actions log for [DIAG] lines, which
+  show exactly what shape the boxscore actually came back in. Sample sizes are still small
+  early on — treat percentages with real caution until there's a few weeks of data.
 </div>
 </body></html>"""
 
