@@ -230,6 +230,32 @@ PLAYER_STAT_CONFIG = {
     'TE': {'stat': 'REC', 'label': 'Receptions', 'dist': 'poisson', 'std': None, 'prior': 3.5},
 }
 
+# Anytime Touchdown -- a separate prop alongside each position's primary
+# stat above (RB keeps its Rushing Yards prop AND gets an Anytime TD
+# prop; same for WR/TE's Receptions). QB deliberately excluded: a
+# thrown TD doesn't pay out an "Anytime TD" bet, and modeling QB
+# rushing TDs separately isn't worth the added complexity for a hobby
+# tool -- can be added later if wanted.
+#
+# This reuses get_player_gamelog(athlete_id, 'TD') exactly like the
+# YDS/REC stats above -- ESPN's gamelog endpoint appears to key its
+# root-level 'labels' to whichever stat category is that athlete's
+# primary one (passing for a QB, rushing for a RB, receiving for a
+# WR/TE), the same assumption PLAYER_STAT_CONFIG's stat/label pairs
+# above already rely on working correctly in production, so 'TD' comes
+# back as THAT player's rushing or receiving TDs, not a mix.
+#
+# 'prior' here is a per-game TD-RATE prior (not a yardage/reception
+# count) -- fed into the same recency_weighted()+shrink() pipeline,
+# then converted to an anytime-TD probability via the Poisson
+# "at least 1" pattern (1 - P(0)), the same shape Player Stat Model
+# uses for to_score/to_be_carded/goal_or_assist.
+PLAYER_TD_CONFIG = {
+    'RB': {'stat': 'TD', 'prior': 0.45},
+    'WR': {'stat': 'TD', 'prior': 0.35},
+    'TE': {'stat': 'TD', 'prior': 0.30},
+}
+
 depth_chart_cache = {}
 
 
@@ -367,6 +393,30 @@ def project_player_stat(pos_abbr, athlete_id, name):
     }
 
 
+def project_player_touchdown(pos_abbr, athlete_id, name):
+    cfg = PLAYER_TD_CONFIG.get(pos_abbr)
+    if not cfg:
+        return None
+    values = get_player_gamelog(athlete_id, cfg['stat'])
+    if not values:
+        return None
+    n = len(values)
+    recent = recency_weighted(values)
+    shrunk = shrink(recent, n, cfg['prior'])
+    prob_any = round((1 - poisson_pmf(0, shrunk)) * 100)
+    return {
+        'name': name, 'position': pos_abbr, 'label': 'Anytime TD', 'kind': 'td',
+        'dist': None, 'std': None,
+        'projected': f"{prob_any}%",  # kept as a display-ready string so this
+                                        # drops straight into PLAYER_PROP_ROW /
+                                        # the props CSV without a separate
+                                        # template -- those just show whatever
+                                        # 'projected' holds next to 'n_games'.
+        'prob_any': prob_any, 'projected_rate': round(shrunk, 2),
+        'n_games': n, 'recent_values': values, 'athlete_id': athlete_id,
+    }
+
+
 def get_team_player_props(team_id):
     starters = get_starters(team_id)
     if not starters:
@@ -380,6 +430,9 @@ def get_team_player_props(team_id):
             props.append(proj)
         else:
             print(f"    {athlete['name']} ({pos_abbr}): no gamelog data found")
+        td_proj = project_player_touchdown(pos_abbr, athlete['id'], athlete['name'])
+        if td_proj:
+            props.append(td_proj)
     return props
 
 
@@ -464,6 +517,14 @@ PLAYER_STREAK_THRESHOLDS = {
 }
 PLAYER_HOT_FORM_MIN_GAMES = 3
 PLAYER_REAL_STREAK_MIN_LENGTH = 3
+TD_HOT_FORM_THRESHOLD = 0.5  # Anytime TD's recent_values are raw per-game TD
+                              # counts (0, 1, 2...), not yards/receptions, so
+                              # this isn't position-keyed like
+                              # PLAYER_STREAK_THRESHOLDS -- 0.5 means "scored
+                              # in at least every other recent game" counts as
+                              # hot, and _current_streak(values, 0.5) counts
+                              # consecutive games with >=1 TD correctly since
+                              # any non-zero game count clears 0.5.
 
 
 def _current_streak(values_oldest_first, threshold):
@@ -525,7 +586,12 @@ def build_player_form_entries(predictions):
         for team_name, props in ((p['home_team'], p.get('home_props') or []),
                                    (p['away_team'], p.get('away_props') or [])):
             for prop in props:
-                threshold = PLAYER_STREAK_THRESHOLDS.get(prop['position'])
+                if prop.get('kind') == 'td':
+                    threshold = TD_HOT_FORM_THRESHOLD
+                    stat_key = 'TD'
+                else:
+                    threshold = PLAYER_STREAK_THRESHOLDS.get(prop['position'])
+                    stat_key = PLAYER_STAT_CONFIG[prop['position']]['stat']
                 if threshold is None:
                     continue
                 values = prop.get('recent_values') or []
@@ -535,7 +601,7 @@ def build_player_form_entries(predictions):
                     'team': team_name, 'match': p['match'], 'date': p['date'],
                     'n_games': n, 'list': values, 'threshold': threshold,
                     'game_id': p.get('game_id'), 'athlete_id': prop.get('athlete_id'),
-                    'stat_key': PLAYER_STAT_CONFIG[prop['position']]['stat'],
+                    'stat_key': stat_key,
                 }
                 avg = (sum(values) / len(values)) if values else None
                 if n >= PLAYER_HOT_FORM_MIN_GAMES and avg is not None and avg >= threshold:
@@ -594,21 +660,35 @@ def build_legs(predictions):
         for team_name, props in [(p["home_team"], p.get("home_props") or []),
                                    (p["away_team"], p.get("away_props") or [])]:
             for prop in props:
-                if prop["dist"] == "poisson":
+                if prop.get("kind") == "td":
+                    # Anytime TD is a binary "at least 1" event, not an
+                    # over/under line -- represented as "Over 0.5 TDs" so it
+                    # drops straight into the exact same leg/results-tracker
+                    # schema (line + stat_key='TD') as every other prop here.
+                    result = {"line": 0.5, "prob": prop["prob_any"], "avg": prop["projected_rate"]}
+                    stat_key = "TD"
+                    market = f"{prop['name']} Anytime TD"
+                elif prop["dist"] == "poisson":
                     result = poisson_prop(prop["projected"])
+                    stat_key = PLAYER_STAT_CONFIG[prop["position"]]["stat"]
+                    market = None
                 else:
                     result = normal_prop(prop["projected"], prop["std"])
+                    stat_key = PLAYER_STAT_CONFIG[prop["position"]]["stat"]
+                    market = None
                 if not result:
                     continue
+                if market is None:
+                    market = f"{prop['name']} Over {result['line']} {prop['label']}"
                 legs.append({
                     "match": match_label,
-                    "market": f"{prop['name']} Over {result['line']} {prop['label']}",
+                    "market": market,
                     "prob": result["prob"], "category": prop["label"],
                     "hit_rate": hit_rate(prop.get("recent_values"), result["line"]),
                     "detail": f"proj {result['avg']} ({prop['n_games']}gm)",
                     "history": format_history(prop.get("recent_values")),
                     "game_id": game_id, "game_date": game_date, "line": result["line"],
-                    "athlete_id": prop.get("athlete_id"), "stat_key": PLAYER_STAT_CONFIG[prop["position"]]["stat"],
+                    "athlete_id": prop.get("athlete_id"), "stat_key": stat_key,
                     "is_home": team_name == p["home_team"],
                 })
     return legs
