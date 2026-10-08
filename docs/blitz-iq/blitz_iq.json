@@ -1,113 +1,236 @@
 [
   {
-    "date": "2026-10-06T00:15Z",
-    "game_id": "401872979",
-    "match": "Atlanta Falcons @ New Orleans Saints",
-    "home_team": "New Orleans Saints",
-    "away_team": "Atlanta Falcons",
+    "date": "2026-10-11T20:25Z",
+    "game_id": "401872991",
+    "match": "Detroit Lions @ Arizona Cardinals",
+    "home_team": "Arizona Cardinals",
+    "away_team": "Detroit Lions",
     "home_form": {
-      "avg_scored": 27.0,
-      "avg_allowed": 27.7,
-      "n_games": 3,
+      "avg_scored": 21.8,
+      "avg_allowed": 29.2,
+      "n_games": 4,
       "source": "current",
       "scored_list": [
+        26.0,
+        7.0,
         30.0,
-        24.0,
-        27.0
+        24.0
       ],
       "allowed_list": [
+        14.0,
         31.0,
-        17.0,
-        35.0
+        36.0,
+        36.0
       ]
     },
     "away_form": {
-      "avg_scored": 17.0,
-      "avg_allowed": 22.7,
-      "n_games": 3,
+      "avg_scored": 29.8,
+      "avg_allowed": 31.8,
+      "n_games": 4,
       "source": "current",
       "scored_list": [
-        13.0,
-        3.0,
-        35.0
+        31.0,
+        31.0,
+        31.0,
+        26.0
       ],
       "allowed_list": [
-        20.0,
-        34.0,
-        14.0
+        30.0,
+        41.0,
+        24.0,
+        32.0
       ]
     },
     "home_props": [
       {
-        "name": "Chris Olave",
+        "name": "Michael Wilson",
         "position": "WR",
         "label": "Receptions",
         "dist": "poisson",
         "std": null,
-        "projected": 6.5,
-        "n_games": 3,
+        "projected": 5.0,
+        "n_games": 4,
         "recent_values": [
-          9.0,
-          8.0,
-          10.0
+          7.0,
+          11.0,
+          2.0,
+          5.0
         ],
-        "athlete_id": "4361370"
+        "athlete_id": "4360761"
       },
       {
-        "name": "Tyler Shough",
+        "name": "Jacoby Brissett",
         "position": "QB",
         "label": "Passing Yards",
         "dist": "normal",
         "std": 55,
-        "projected": 277.3,
-        "n_games": 3,
+        "projected": 220.7,
+        "n_games": 4,
         "recent_values": [
-          255.0,
-          252.0,
-          410.0
+          166.0,
+          280.0,
+          95.0,
+          277.0
         ],
-        "athlete_id": "4360689"
+        "athlete_id": "2578570"
       },
       {
-        "name": "Juwan Johnson",
+        "name": "Trey McBride",
         "position": "TE",
         "label": "Receptions",
         "dist": "poisson",
         "std": null,
-        "projected": 4.0,
-        "n_games": 3,
+        "projected": 6.3,
+        "n_games": 4,
         "recent_values": [
+          7.0,
+          9.0,
           8.0,
-          4.0,
-          3.0
+          9.0
         ],
-        "athlete_id": "3929645"
+        "athlete_id": "4361307"
       },
       {
-        "name": "Alvin Kamara",
+        "name": "Jeremiyah Love",
         "position": "RB",
         "label": "Rushing Yards",
         "dist": "normal",
         "std": 28,
-        "projected": 45.7,
-        "n_games": 2,
+        "projected": 55.2,
+        "n_games": 4,
         "recent_values": [
-          36.0,
-          15.0
+          63.0,
+          90.0,
+          29.0,
+          41.0
         ],
-        "athlete_id": "3054850"
+        "athlete_id": "4870808"
       }
     ],
     "away_props": [
+      {
+        "name": "Amon-Ra St. Brown",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 6.4,
+        "n_games": 4,
+        "recent_values": [
+          8.0,
+          4.0,
+          9.0,
+          10.0
+        ],
+        "athlete_id": "4374302"
+      },
+      {
+        "name": "Jared Goff",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 263.9,
+        "n_games": 4,
+        "recent_values": [
+          412.0,
+          269.0,
+          327.0,
+          206.0
+        ],
+        "athlete_id": "3046779"
+      },
+      {
+        "name": "Sam LaPorta",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.6,
+        "n_games": 4,
+        "recent_values": [
+          8.0,
+          3.0,
+          6.0,
+          5.0
+        ],
+        "athlete_id": "4430027"
+      },
+      {
+        "name": "Jahmyr Gibbs",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 81.6,
+        "n_games": 4,
+        "recent_values": [
+          46.0,
+          99.0,
+          52.0,
+          156.0
+        ],
+        "athlete_id": "4429795"
+      }
+    ],
+    "exp_home": 27.3,
+    "exp_away": 32.1,
+    "exp_total": 59.4,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-12T00:20Z",
+    "game_id": "401872993",
+    "match": "Baltimore Ravens @ Atlanta Falcons",
+    "home_team": "Atlanta Falcons",
+    "away_team": "Baltimore Ravens",
+    "home_form": {
+      "avg_scored": 24.0,
+      "avg_allowed": 23.0,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        13.0,
+        3.0,
+        35.0,
+        45.0
+      ],
+      "allowed_list": [
+        20.0,
+        34.0,
+        14.0,
+        24.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 29.0,
+      "avg_allowed": 24.0,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        41.0,
+        17.0,
+        34.0,
+        24.0
+      ],
+      "allowed_list": [
+        23.0,
+        24.0,
+        31.0,
+        18.0
+      ]
+    },
+    "home_props": [
       {
         "name": "Drake London",
         "position": "WR",
         "label": "Receptions",
         "dist": "poisson",
         "std": null,
-        "projected": 4.2,
-        "n_games": 3,
+        "projected": 4.3,
+        "n_games": 4,
         "recent_values": [
+          5.0,
           9.0,
           4.0,
           2.0
@@ -120,9 +243,10 @@
         "label": "Passing Yards",
         "dist": "normal",
         "std": 55,
-        "projected": 240.2,
-        "n_games": 1,
+        "projected": 237.7,
+        "n_games": 2,
         "recent_values": [
+          223.0,
           256.0
         ],
         "athlete_id": "4360423"
@@ -133,9 +257,10 @@
         "label": "Receptions",
         "dist": "poisson",
         "std": null,
-        "projected": 2.0,
-        "n_games": 3,
+        "projected": 2.1,
+        "n_games": 4,
         "recent_values": [
+          3.0,
           1.0,
           1.0,
           0.0
@@ -148,9 +273,10 @@
         "label": "Rushing Yards",
         "dist": "normal",
         "std": 28,
-        "projected": 83.6,
-        "n_games": 3,
+        "projected": 90.5,
+        "n_games": 4,
         "recent_values": [
+          145.0,
           194.0,
           72.0,
           83.0
@@ -158,9 +284,2375 @@
         "athlete_id": "4430807"
       }
     ],
-    "exp_home": 24.3,
-    "exp_away": 23.4,
-    "exp_total": 47.7,
+    "away_props": [
+      {
+        "name": "Zay Flowers",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.9,
+        "n_games": 3,
+        "recent_values": [
+          8.0,
+          5.0,
+          5.0
+        ],
+        "athlete_id": "4429615"
+      },
+      {
+        "name": "Lamar Jackson",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 246.0,
+        "n_games": 4,
+        "recent_values": [
+          222.0,
+          186.0,
+          235.0,
+          324.0
+        ],
+        "athlete_id": "3916387"
+      },
+      {
+        "name": "Mark Andrews",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.1,
+        "n_games": 4,
+        "recent_values": [
+          5.0,
+          3.0,
+          6.0,
+          4.0
+        ],
+        "athlete_id": "3116365"
+      },
+      {
+        "name": "Derrick Henry",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 83.0,
+        "n_games": 4,
+        "recent_values": [
+          73.0,
+          89.0,
+          68.0,
+          144.0
+        ],
+        "athlete_id": "3043078"
+      }
+    ],
+    "exp_home": 26.4,
+    "exp_away": 25.7,
+    "exp_total": 52.1,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-09T00:15Z",
+    "game_id": "401872980",
+    "match": "Tampa Bay Buccaneers @ Dallas Cowboys",
+    "home_team": "Dallas Cowboys",
+    "away_team": "Tampa Bay Buccaneers",
+    "home_form": {
+      "avg_scored": 30.5,
+      "avg_allowed": 28.0,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        20.0,
+        37.0,
+        31.0,
+        34.0
+      ],
+      "allowed_list": [
+        28.0,
+        20.0,
+        34.0,
+        30.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 19.0,
+      "avg_allowed": 24.0,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        27.0,
+        19.0,
+        16.0,
+        14.0
+      ],
+      "allowed_list": [
+        33.0,
+        23.0,
+        23.0,
+        17.0
+      ]
+    },
+    "home_props": [
+      {
+        "name": "CeeDee Lamb",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 6.4,
+        "n_games": 4,
+        "recent_values": [
+          17.0,
+          7.0,
+          8.0,
+          5.0
+        ],
+        "athlete_id": "4241389"
+      },
+      {
+        "name": "Dak Prescott",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 243.9,
+        "n_games": 4,
+        "recent_values": [
+          335.0,
+          276.0,
+          279.0,
+          175.0
+        ],
+        "athlete_id": "2577417"
+      },
+      {
+        "name": "Jake Ferguson",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.2,
+        "n_games": 4,
+        "recent_values": [
+          3.0,
+          3.0,
+          4.0,
+          2.0
+        ],
+        "athlete_id": "4242355"
+      },
+      {
+        "name": "Javonte Williams",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 56.2,
+        "n_games": 4,
+        "recent_values": [
+          62.0,
+          98.0,
+          30.0,
+          41.0
+        ],
+        "athlete_id": "4361579"
+      }
+    ],
+    "away_props": [
+      {
+        "name": "Emeka Egbuka",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.0,
+        "n_games": 4,
+        "recent_values": [
+          2.0,
+          5.0,
+          3.0,
+          5.0
+        ],
+        "athlete_id": "4567750"
+      },
+      {
+        "name": "Baker Mayfield",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 220.1,
+        "n_games": 3,
+        "recent_values": [
+          217.0,
+          182.0,
+          216.0
+        ],
+        "athlete_id": "3052587"
+      },
+      {
+        "name": "Cade Otton",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.6,
+        "n_games": 4,
+        "recent_values": [
+          4.0,
+          3.0,
+          5.0,
+          3.0
+        ],
+        "athlete_id": "4243331"
+      },
+      {
+        "name": "Bucky Irving",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 59.9,
+        "n_games": 4,
+        "recent_values": [
+          61.0,
+          46.0,
+          89.0,
+          45.0
+        ],
+        "athlete_id": "4596448"
+      }
+    ],
+    "exp_home": 27.5,
+    "exp_away": 22.8,
+    "exp_total": 50.3,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-13T00:15Z",
+    "game_id": "401872994",
+    "match": "Buffalo Bills @ Los Angeles Rams",
+    "home_team": "Los Angeles Rams",
+    "away_team": "Buffalo Bills",
+    "home_form": {
+      "avg_scored": 21.2,
+      "avg_allowed": 20.8,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        7.0,
+        28.0,
+        26.0,
+        24.0
+      ],
+      "allowed_list": [
+        27.0,
+        6.0,
+        30.0,
+        20.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 31.8,
+      "avg_allowed": 26.8,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        36.0,
+        41.0,
+        24.0,
+        26.0
+      ],
+      "allowed_list": [
+        31.0,
+        31.0,
+        16.0,
+        29.0
+      ]
+    },
+    "home_props": [
+      {
+        "name": "Puka Nacua",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 5.1,
+        "n_games": 2,
+        "recent_values": [
+          9.0,
+          5.0
+        ],
+        "athlete_id": "4426515"
+      },
+      {
+        "name": "Matthew Stafford",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 259.3,
+        "n_games": 4,
+        "recent_values": [
+          317.0,
+          390.0,
+          327.0,
+          155.0
+        ],
+        "athlete_id": "12483"
+      },
+      {
+        "name": "Colby Parkinson",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.3,
+        "n_games": 3,
+        "recent_values": [
+          0.0,
+          2.0,
+          1.0
+        ],
+        "athlete_id": "4242557"
+      },
+      {
+        "name": "Kyren Williams",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 65.3,
+        "n_games": 4,
+        "recent_values": [
+          80.0,
+          88.0,
+          85.0,
+          41.0
+        ],
+        "athlete_id": "4430737"
+      }
+    ],
+    "away_props": [
+      {
+        "name": "DJ Moore",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.5,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          6.0,
+          0.0,
+          5.0
+        ],
+        "athlete_id": "3915416"
+      },
+      {
+        "name": "Josh Allen",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 255.1,
+        "n_games": 4,
+        "recent_values": [
+          253.0,
+          204.0,
+          248.0,
+          334.0
+        ],
+        "athlete_id": "3918298"
+      },
+      {
+        "name": "Dalton Kincaid",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.9,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          2.0,
+          7.0,
+          5.0
+        ],
+        "athlete_id": "4385690"
+      },
+      {
+        "name": "James Cook III",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 83.8,
+        "n_games": 4,
+        "recent_values": [
+          75.0,
+          154.0,
+          135.0,
+          57.0
+        ],
+        "athlete_id": "4379399"
+      }
+    ],
+    "exp_home": 24.6,
+    "exp_away": 25.7,
+    "exp_total": 50.3,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-11T20:25Z",
+    "game_id": "401872992",
+    "match": "San Francisco 49ers @ Seattle Seahawks",
+    "home_team": "Seattle Seahawks",
+    "away_team": "San Francisco 49ers",
+    "home_form": {
+      "avg_scored": 26.2,
+      "avg_allowed": 18.2,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        13.0,
+        31.0,
+        31.0,
+        30.0
+      ],
+      "allowed_list": [
+        10.0,
+        7.0,
+        33.0,
+        23.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 30.5,
+      "avg_allowed": 16.0,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        27.0,
+        35.0,
+        36.0,
+        24.0
+      ],
+      "allowed_list": [
+        7.0,
+        13.0,
+        30.0,
+        14.0
+      ]
+    },
+    "home_props": [
+      {
+        "name": "Jaxon Smith-Njigba",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 6.4,
+        "n_games": 4,
+        "recent_values": [
+          5.0,
+          10.0,
+          9.0,
+          8.0
+        ],
+        "athlete_id": "4430878"
+      },
+      {
+        "name": "Sam Darnold",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 203.0,
+        "n_games": 3,
+        "recent_values": [
+          168.0,
+          379.0,
+          13.0
+        ],
+        "athlete_id": "3912547"
+      },
+      {
+        "name": "AJ Barner",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.8,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          5.0,
+          1.0,
+          2.0
+        ],
+        "athlete_id": "4576297"
+      },
+      {
+        "name": "Emanuel Wilson",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 49.8,
+        "n_games": 4,
+        "recent_values": [
+          81.0,
+          14.0,
+          92.0,
+          3.0
+        ],
+        "athlete_id": "4887558"
+      }
+    ],
+    "away_props": [
+      {
+        "name": "Mike Evans",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.2,
+        "n_games": 4,
+        "recent_values": [
+          5.0,
+          3.0,
+          3.0,
+          6.0
+        ],
+        "athlete_id": "16737"
+      },
+      {
+        "name": "Brock Purdy",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 242.9,
+        "n_games": 4,
+        "recent_values": [
+          218.0,
+          297.0,
+          287.0,
+          205.0
+        ],
+        "athlete_id": "4361741"
+      },
+      {
+        "name": "George Kittle",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.6,
+        "n_games": 4,
+        "recent_values": [
+          4.0,
+          6.0,
+          4.0,
+          2.0
+        ],
+        "athlete_id": "3040151"
+      },
+      {
+        "name": "Christian McCaffrey",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 56.9,
+        "n_games": 4,
+        "recent_values": [
+          52.0,
+          75.0,
+          23.0,
+          68.0
+        ],
+        "athlete_id": "3117251"
+      }
+    ],
+    "exp_home": 21.9,
+    "exp_away": 25.2,
+    "exp_total": 47.1,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-11T17:00Z",
+    "game_id": "401872988",
+    "match": "New York Giants @ Washington Commanders",
+    "home_team": "Washington Commanders",
+    "away_team": "New York Giants",
+    "home_form": {
+      "avg_scored": 22.0,
+      "avg_allowed": 30.5,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        22.0,
+        20.0,
+        33.0,
+        13.0
+      ],
+      "allowed_list": [
+        24.0,
+        37.0,
+        31.0,
+        30.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 20.5,
+      "avg_allowed": 19.8,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        28.0,
+        6.0,
+        12.0,
+        36.0
+      ],
+      "allowed_list": [
+        20.0,
+        28.0,
+        7.0,
+        24.0
+      ]
+    },
+    "home_props": [
+      {
+        "name": "Terry McLaurin",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.5,
+        "n_games": 3,
+        "recent_values": [
+          6.0,
+          2.0,
+          2.0
+        ],
+        "athlete_id": "3121422"
+      },
+      {
+        "name": "Jayden Daniels",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 194.8,
+        "n_games": 2,
+        "recent_values": [
+          96.0,
+          164.0
+        ],
+        "athlete_id": "4426348"
+      },
+      {
+        "name": "Chig Okonkwo",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.9,
+        "n_games": 2,
+        "recent_values": [
+          2.0,
+          2.0
+        ],
+        "athlete_id": "4360635"
+      },
+      {
+        "name": "Jacory Croskey-Merritt",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 50.9,
+        "n_games": 4,
+        "recent_values": [
+          15.0,
+          36.0,
+          43.0,
+          63.0
+        ],
+        "athlete_id": "4575131"
+      }
+    ],
+    "away_props": [
+      {
+        "name": "Malik Nabers",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.2,
+        "n_games": 4,
+        "recent_values": [
+          6.0,
+          5.0,
+          1.0,
+          6.0
+        ],
+        "athlete_id": "4595348"
+      },
+      {
+        "name": "Jameis Winston",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 191.6,
+        "n_games": 3,
+        "recent_values": [
+          250.0,
+          118.0,
+          111.0
+        ],
+        "athlete_id": "2969939"
+      },
+      {
+        "name": "Isaiah Likely",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.8,
+        "n_games": 4,
+        "recent_values": [
+          7.0,
+          2.0,
+          5.0,
+          8.0
+        ],
+        "athlete_id": "4361050"
+      },
+      {
+        "name": "Cam Skattebo",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 60.3,
+        "n_games": 4,
+        "recent_values": [
+          58.0,
+          60.0,
+          36.0,
+          81.0
+        ],
+        "athlete_id": "4696981"
+      }
+    ],
+    "exp_home": 20.2,
+    "exp_away": 26.6,
+    "exp_total": 46.8,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-11T17:00Z",
+    "game_id": "401872985",
+    "match": "Indianapolis Colts @ Pittsburgh Steelers",
+    "home_team": "Pittsburgh Steelers",
+    "away_team": "Indianapolis Colts",
+    "home_form": {
+      "avg_scored": 19.2,
+      "avg_allowed": 21.8,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        20.0,
+        3.0,
+        30.0,
+        24.0
+      ],
+      "allowed_list": [
+        13.0,
+        20.0,
+        27.0,
+        27.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 25.5,
+      "avg_allowed": 26.0,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        23.0,
+        30.0,
+        19.0,
+        30.0
+      ],
+      "allowed_list": [
+        41.0,
+        33.0,
+        17.0,
+        13.0
+      ]
+    },
+    "home_props": [
+      {
+        "name": "DK Metcalf",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.0,
+        "n_games": 4,
+        "recent_values": [
+          5.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "athlete_id": "4047650"
+      },
+      {
+        "name": "Aaron Rodgers",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 237.4,
+        "n_games": 4,
+        "recent_values": [
+          299.0,
+          292.0,
+          187.0,
+          221.0
+        ],
+        "athlete_id": "8439"
+      },
+      {
+        "name": "Darnell Washington",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.7,
+        "n_games": 4,
+        "recent_values": [
+          3.0,
+          3.0,
+          1.0,
+          2.0
+        ],
+        "athlete_id": "4430802"
+      },
+      {
+        "name": "Jaylen Warren",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 65.6,
+        "n_games": 4,
+        "recent_values": [
+          93.0,
+          127.0,
+          43.0,
+          46.0
+        ],
+        "athlete_id": "4569987"
+      }
+    ],
+    "away_props": [
+      {
+        "name": "Josh Downs",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.1,
+        "n_games": 4,
+        "recent_values": [
+          3.0,
+          5.0,
+          7.0,
+          2.0
+        ],
+        "athlete_id": "4688813"
+      },
+      {
+        "name": "Daniel Jones",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 208.6,
+        "n_games": 4,
+        "recent_values": [
+          143.0,
+          235.0,
+          210.0,
+          166.0
+        ],
+        "athlete_id": "3917792"
+      },
+      {
+        "name": "Tyler Warren",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.6,
+        "n_games": 4,
+        "recent_values": [
+          5.0,
+          9.0,
+          6.0,
+          3.0
+        ],
+        "athlete_id": "4431459"
+      },
+      {
+        "name": "Jonathan Taylor",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 76.9,
+        "n_games": 4,
+        "recent_values": [
+          95.0,
+          68.0,
+          92.0,
+          98.0
+        ],
+        "athlete_id": "4242335"
+      }
+    ],
+    "exp_home": 21.5,
+    "exp_away": 24.8,
+    "exp_total": 46.3,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-11T17:00Z",
+    "game_id": "401872986",
+    "match": "Las Vegas Raiders @ New England Patriots",
+    "home_team": "New England Patriots",
+    "away_team": "Las Vegas Raiders",
+    "home_form": {
+      "avg_scored": 16.2,
+      "avg_allowed": 19.2,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        10.0,
+        20.0,
+        6.0,
+        29.0
+      ],
+      "allowed_list": [
+        13.0,
+        3.0,
+        35.0,
+        26.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 28.8,
+      "avg_allowed": 21.0,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        27.0,
+        26.0,
+        35.0,
+        27.0
+      ],
+      "allowed_list": [
+        13.0,
+        14.0,
+        27.0,
+        30.0
+      ]
+    },
+    "home_props": [
+      {
+        "name": "Romeo Doubs",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.1,
+        "n_games": 4,
+        "recent_values": [
+          6.0,
+          3.0,
+          3.0,
+          0.0
+        ],
+        "athlete_id": "4361432"
+      },
+      {
+        "name": "Drake Maye",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 218.0,
+        "n_games": 4,
+        "recent_values": [
+          269.0,
+          199.0,
+          208.0,
+          178.0
+        ],
+        "athlete_id": "4431452"
+      },
+      {
+        "name": "Hunter Henry",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.2,
+        "n_games": 4,
+        "recent_values": [
+          5.0,
+          1.0,
+          3.0,
+          3.0
+        ],
+        "athlete_id": "3046439"
+      },
+      {
+        "name": "Rhamondre Stevenson",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 49.8,
+        "n_games": 4,
+        "recent_values": [
+          47.0,
+          22.0,
+          43.0,
+          51.0
+        ],
+        "athlete_id": "4569173"
+      }
+    ],
+    "away_props": [
+      {
+        "name": "Tre Tucker",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.8,
+        "n_games": 4,
+        "recent_values": [
+          4.0,
+          4.0,
+          5.0,
+          2.0
+        ],
+        "athlete_id": "4428718"
+      },
+      {
+        "name": "Kirk Cousins",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 236.2,
+        "n_games": 4,
+        "recent_values": [
+          365.0,
+          248.0,
+          253.0,
+          160.0
+        ],
+        "athlete_id": "14880"
+      },
+      {
+        "name": "Brock Bowers",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 5.4,
+        "n_games": 2,
+        "recent_values": [
+          6.0,
+          10.0
+        ],
+        "athlete_id": "4432665"
+      },
+      {
+        "name": "Ashton Jeanty",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 66.0,
+        "n_games": 4,
+        "recent_values": [
+          58.0,
+          56.0,
+          48.0,
+          102.0
+        ],
+        "athlete_id": "4890973"
+      }
+    ],
+    "exp_home": 20.0,
+    "exp_away": 25.4,
+    "exp_total": 45.5,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-11T17:00Z",
+    "game_id": "401872987",
+    "match": "Minnesota Vikings @ New Orleans Saints",
+    "home_team": "New Orleans Saints",
+    "away_team": "Minnesota Vikings",
+    "home_form": {
+      "avg_scored": 26.2,
+      "avg_allowed": 32.0,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        30.0,
+        24.0,
+        27.0,
+        24.0
+      ],
+      "allowed_list": [
+        31.0,
+        17.0,
+        35.0,
+        45.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 21.5,
+      "avg_allowed": 12.8,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        39.0,
+        9.0,
+        23.0,
+        15.0
+      ],
+      "allowed_list": [
+        22.0,
+        3.0,
+        16.0,
+        10.0
+      ]
+    },
+    "home_props": [
+      {
+        "name": "Chris Olave",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 6.8,
+        "n_games": 4,
+        "recent_values": [
+          8.0,
+          9.0,
+          8.0,
+          10.0
+        ],
+        "athlete_id": "4361370"
+      },
+      {
+        "name": "Tyler Shough",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 280.3,
+        "n_games": 4,
+        "recent_values": [
+          286.0,
+          255.0,
+          252.0,
+          410.0
+        ],
+        "athlete_id": "4360689"
+      },
+      {
+        "name": "Juwan Johnson",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.2,
+        "n_games": 4,
+        "recent_values": [
+          6.0,
+          8.0,
+          4.0,
+          3.0
+        ],
+        "athlete_id": "3929645"
+      },
+      {
+        "name": "Alvin Kamara",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 41.9,
+        "n_games": 3,
+        "recent_values": [
+          23.0,
+          36.0,
+          15.0
+        ],
+        "athlete_id": "3054850"
+      }
+    ],
+    "away_props": [
+      {
+        "name": "Justin Jefferson",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.4,
+        "n_games": 3,
+        "recent_values": [
+          2.0,
+          3.0,
+          8.0
+        ],
+        "athlete_id": "4262921"
+      },
+      {
+        "name": "Kyler Murray",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 179.6,
+        "n_games": 3,
+        "recent_values": [
+          247.0,
+          168.0,
+          18.0
+        ],
+        "athlete_id": "3917315"
+      },
+      {
+        "name": "T.J. Hockenson",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.2,
+        "n_games": 4,
+        "recent_values": [
+          13.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "athlete_id": "4036133"
+      },
+      {
+        "name": "Aaron Jones Sr.",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 65.9,
+        "n_games": 4,
+        "recent_values": [
+          94.0,
+          58.0,
+          105.0,
+          40.0
+        ],
+        "athlete_id": "3042519"
+      }
+    ],
+    "exp_home": 17.9,
+    "exp_away": 27.0,
+    "exp_total": 44.9,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-11T20:05Z",
+    "game_id": "401872989",
+    "match": "Denver Broncos @ Los Angeles Chargers",
+    "home_team": "Los Angeles Chargers",
+    "away_team": "Denver Broncos",
+    "home_form": {
+      "avg_scored": 16.8,
+      "avg_allowed": 26.5,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        14.0,
+        14.0,
+        16.0,
+        23.0
+      ],
+      "allowed_list": [
+        26.0,
+        26.0,
+        24.0,
+        30.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 18.5,
+      "avg_allowed": 23.5,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        10.0,
+        20.0,
+        30.0,
+        14.0
+      ],
+      "allowed_list": [
+        31.0,
+        13.0,
+        26.0,
+        24.0
+      ]
+    },
+    "home_props": [
+      {
+        "name": "Ladd McConkey",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.7,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          4.0,
+          3.0,
+          5.0
+        ],
+        "athlete_id": "4612826"
+      },
+      {
+        "name": "Justin Herbert",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 217.7,
+        "n_games": 4,
+        "recent_values": [
+          189.0,
+          226.0,
+          192.0,
+          209.0
+        ],
+        "athlete_id": "4038941"
+      },
+      {
+        "name": "Charlie Kolar",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.6,
+        "n_games": 2,
+        "recent_values": [
+          3.0,
+          0.0
+        ],
+        "athlete_id": "4241263"
+      },
+      {
+        "name": "Omarion Hampton",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 60.0,
+        "n_games": 4,
+        "recent_values": [
+          45.0,
+          56.0,
+          94.0,
+          43.0
+        ],
+        "athlete_id": "4685382"
+      }
+    ],
+    "away_props": [
+      {
+        "name": "Jaylen Waddle",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.9,
+        "n_games": 4,
+        "recent_values": [
+          5.0,
+          2.0,
+          8.0,
+          1.0
+        ],
+        "athlete_id": "4372016"
+      },
+      {
+        "name": "Bo Nix",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 214.3,
+        "n_games": 4,
+        "recent_values": [
+          214.0,
+          186.0,
+          288.0,
+          131.0
+        ],
+        "athlete_id": "4426338"
+      },
+      {
+        "name": "Evan Engram",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.6,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          0.0,
+          1.0,
+          4.0
+        ],
+        "athlete_id": "3051876"
+      },
+      {
+        "name": "J.K. Dobbins",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 48.2,
+        "n_games": 4,
+        "recent_values": [
+          40.0,
+          49.0,
+          36.0,
+          36.0
+        ],
+        "athlete_id": "4241985"
+      }
+    ],
+    "exp_home": 20.2,
+    "exp_away": 22.7,
+    "exp_total": 42.9,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-11T17:00Z",
+    "game_id": "401872983",
+    "match": "Cleveland Browns @ New York Jets",
+    "home_team": "New York Jets",
+    "away_team": "Cleveland Browns",
+    "home_form": {
+      "avg_scored": 19.0,
+      "avg_allowed": 21.0,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        23.0,
+        17.0,
+        24.0,
+        12.0
+      ],
+      "allowed_list": [
+        10.0,
+        20.0,
+        31.0,
+        23.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 20.2,
+      "avg_allowed": 23.8,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        10.0,
+        23.0,
+        21.0,
+        27.0
+      ],
+      "allowed_list": [
+        34.0,
+        19.0,
+        18.0,
+        24.0
+      ]
+    },
+    "home_props": [
+      {
+        "name": "Garrett Wilson",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 5.2,
+        "n_games": 4,
+        "recent_values": [
+          3.0,
+          10.0,
+          5.0,
+          6.0
+        ],
+        "athlete_id": "4569618"
+      },
+      {
+        "name": "Geno Smith",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 232.4,
+        "n_games": 4,
+        "recent_values": [
+          119.0,
+          321.0,
+          247.0,
+          215.0
+        ],
+        "athlete_id": "15864"
+      },
+      {
+        "name": "Kenyon Sadiq",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.3,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          7.0,
+          2.0,
+          3.0
+        ],
+        "athlete_id": "5083315"
+      },
+      {
+        "name": "Breece Hall",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 60.3,
+        "n_games": 3,
+        "recent_values": [
+          32.0,
+          29.0,
+          102.0
+        ],
+        "athlete_id": "4427366"
+      }
+    ],
+    "away_props": [
+      {
+        "name": "Denzel Boston",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.5,
+        "n_games": 4,
+        "recent_values": [
+          4.0,
+          2.0,
+          5.0,
+          2.0
+        ],
+        "athlete_id": "4832800"
+      },
+      {
+        "name": "Deshaun Watson",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 221.5,
+        "n_games": 4,
+        "recent_values": [
+          268.0,
+          144.0,
+          238.0,
+          205.0
+        ],
+        "athlete_id": "3122840"
+      },
+      {
+        "name": "Harold Fannin Jr.",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.8,
+        "n_games": 4,
+        "recent_values": [
+          3.0,
+          7.0,
+          5.0,
+          2.0
+        ],
+        "athlete_id": "5083076"
+      },
+      {
+        "name": "Quinshon Judkins",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 49.0,
+        "n_games": 4,
+        "recent_values": [
+          53.0,
+          70.0,
+          21.0,
+          33.0
+        ],
+        "athlete_id": "4685702"
+      }
+    ],
+    "exp_home": 20.2,
+    "exp_away": 22.0,
+    "exp_total": 42.1,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-11T17:00Z",
+    "game_id": "401872990",
+    "match": "Chicago Bears @ Green Bay Packers",
+    "home_team": "Green Bay Packers",
+    "away_team": "Chicago Bears",
+    "home_form": {
+      "avg_scored": 18.2,
+      "avg_allowed": 26.2,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        22.0,
+        20.0,
+        14.0,
+        17.0
+      ],
+      "allowed_list": [
+        39.0,
+        17.0,
+        35.0,
+        14.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 28.0,
+      "avg_allowed": 16.2,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        59.0,
+        3.0,
+        27.0,
+        23.0
+      ],
+      "allowed_list": [
+        37.0,
+        9.0,
+        7.0,
+        12.0
+      ]
+    },
+    "home_props": [
+      {
+        "name": "Christian Watson",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.7,
+        "n_games": 4,
+        "recent_values": [
+          3.0,
+          7.0,
+          4.0,
+          6.0
+        ],
+        "athlete_id": "4248528"
+      },
+      {
+        "name": "Jordan Love",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 257.5,
+        "n_games": 4,
+        "recent_values": [
+          197.0,
+          312.0,
+          145.0,
+          387.0
+        ],
+        "athlete_id": "4036378"
+      },
+      {
+        "name": "Tucker Kraft",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.5,
+        "n_games": 4,
+        "recent_values": [
+          6.0,
+          4.0,
+          2.0,
+          3.0
+        ],
+        "athlete_id": "4572680"
+      },
+      {
+        "name": "MarShawn Lloyd",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 38.9,
+        "n_games": 4,
+        "recent_values": [
+          13.0,
+          11.0,
+          20.0,
+          37.0
+        ],
+        "athlete_id": "4429023"
+      }
+    ],
+    "away_props": [
+      {
+        "name": "Rome Odunze",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.5,
+        "n_games": 4,
+        "recent_values": [
+          6.0,
+          3.0,
+          3.0,
+          2.0
+        ],
+        "athlete_id": "4431299"
+      },
+      {
+        "name": "Caleb Williams",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 225.8,
+        "n_games": 2,
+        "recent_values": [
+          138.0,
+          269.0
+        ],
+        "athlete_id": "4431611"
+      },
+      {
+        "name": "Colston Loveland",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.7,
+        "n_games": 4,
+        "recent_values": [
+          6.0,
+          4.0,
+          1.0,
+          0.0
+        ],
+        "athlete_id": "4723086"
+      },
+      {
+        "name": "D'Andre Swift",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 73.3,
+        "n_games": 4,
+        "recent_values": [
+          58.0,
+          84.0,
+          45.0,
+          124.0
+        ],
+        "athlete_id": "4259545"
+      }
+    ],
+    "exp_home": 15.5,
+    "exp_away": 25.4,
+    "exp_total": 40.9,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-11T17:00Z",
+    "game_id": "401872984",
+    "match": "Houston Texans @ Tennessee Titans",
+    "home_team": "Tennessee Titans",
+    "away_team": "Houston Texans",
+    "home_form": {
+      "avg_scored": 13.8,
+      "avg_allowed": 20.8,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        10.0,
+        20.0,
+        7.0,
+        18.0
+      ],
+      "allowed_list": [
+        23.0,
+        24.0,
+        12.0,
+        24.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 21.0,
+      "avg_allowed": 27.2,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        31.0,
+        6.0,
+        17.0,
+        30.0
+      ],
+      "allowed_list": [
+        36.0,
+        20.0,
+        19.0,
+        34.0
+      ]
+    },
+    "home_props": [
+      {
+        "name": "Carnell Tate",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.5,
+        "n_games": 4,
+        "recent_values": [
+          9.0,
+          6.0,
+          3.0,
+          4.0
+        ],
+        "athlete_id": "4871023"
+      },
+      {
+        "name": "Cam Ward",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 199.9,
+        "n_games": 4,
+        "recent_values": [
+          222.0,
+          181.0,
+          183.0,
+          140.0
+        ],
+        "athlete_id": "4688380"
+      },
+      {
+        "name": "Gunnar Helm",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.0,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          2.0,
+          2.0,
+          4.0
+        ],
+        "athlete_id": "4686728"
+      },
+      {
+        "name": "Tony Pollard",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 56.1,
+        "n_games": 4,
+        "recent_values": [
+          48.0,
+          74.0,
+          64.0,
+          35.0
+        ],
+        "athlete_id": "3916148"
+      }
+    ],
+    "away_props": [
+      {
+        "name": "Nico Collins",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 5.2,
+        "n_games": 2,
+        "recent_values": [
+          7.0,
+          7.0
+        ],
+        "athlete_id": "4258173"
+      },
+      {
+        "name": "C.J. Stroud",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 263.5,
+        "n_games": 4,
+        "recent_values": [
+          347.0,
+          167.0,
+          353.0,
+          274.0
+        ],
+        "athlete_id": "4432577"
+      },
+      {
+        "name": "Dalton Schultz",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.7,
+        "n_games": 4,
+        "recent_values": [
+          2.0,
+          3.0,
+          12.0,
+          4.0
+        ],
+        "athlete_id": "3117256"
+      },
+      {
+        "name": "David Montgomery",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 45.6,
+        "n_games": 4,
+        "recent_values": [
+          24.0,
+          33.0,
+          10.0,
+          60.0
+        ],
+        "athlete_id": "4035538"
+      }
+    ],
+    "exp_home": 19.8,
+    "exp_away": 20.8,
+    "exp_total": 40.7,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-11T13:30Z",
+    "game_id": "401872981",
+    "match": "Philadelphia Eagles @ Jacksonville Jaguars",
+    "home_team": "Jacksonville Jaguars",
+    "away_team": "Philadelphia Eagles",
+    "home_form": {
+      "avg_scored": 26.0,
+      "avg_allowed": 13.2,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        34.0,
+        13.0,
+        35.0,
+        22.0
+      ],
+      "allowed_list": [
+        10.0,
+        20.0,
+        6.0,
+        17.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 18.8,
+      "avg_allowed": 23.2,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        24.0,
+        24.0,
+        7.0,
+        20.0
+      ],
+      "allowed_list": [
+        22.0,
+        20.0,
+        27.0,
+        24.0
+      ]
+    },
+    "home_props": [
+      {
+        "name": "Parker Washington",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.3,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          3.0,
+          7.0,
+          5.0
+        ],
+        "athlete_id": "4432620"
+      },
+      {
+        "name": "Trevor Lawrence",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 222.7,
+        "n_games": 4,
+        "recent_values": [
+          227.0,
+          182.0,
+          189.0,
+          245.0
+        ],
+        "athlete_id": "4360310"
+      },
+      {
+        "name": "Brenton Strange",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.2,
+        "n_games": 4,
+        "recent_values": [
+          7.0,
+          3.0,
+          2.0,
+          2.0
+        ],
+        "athlete_id": "4430539"
+      },
+      {
+        "name": "Bhayshul Tuten",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 64.8,
+        "n_games": 4,
+        "recent_values": [
+          73.0,
+          73.0,
+          65.0,
+          66.0
+        ],
+        "athlete_id": "4882093"
+      }
+    ],
+    "away_props": [
+      {
+        "name": "DeVonta Smith",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 5.0,
+        "n_games": 3,
+        "recent_values": [
+          6.0,
+          10.0,
+          3.0
+        ],
+        "athlete_id": "4241478"
+      },
+      {
+        "name": "Jalen Hurts",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 210.1,
+        "n_games": 4,
+        "recent_values": [
+          93.0,
+          153.0,
+          264.0,
+          203.0
+        ],
+        "athlete_id": "4040715"
+      },
+      {
+        "name": "Dallas Goedert",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.2,
+        "n_games": 2,
+        "recent_values": [
+          1.0,
+          4.0
+        ],
+        "athlete_id": "3121023"
+      },
+      {
+        "name": "Saquon Barkley",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 54.5,
+        "n_games": 4,
+        "recent_values": [
+          8.0,
+          82.0,
+          9.0,
+          83.0
+        ],
+        "athlete_id": "3929630"
+      }
+    ],
+    "exp_home": 24.9,
+    "exp_away": 15.4,
+    "exp_total": 40.2,
+    "total_std": 14.1
+  },
+  {
+    "date": "2026-10-11T17:00Z",
+    "game_id": "401872982",
+    "match": "Cincinnati Bengals @ Miami Dolphins",
+    "home_team": "Miami Dolphins",
+    "away_team": "Cincinnati Bengals",
+    "home_form": {
+      "avg_scored": 11.5,
+      "avg_allowed": 25.2,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        13.0,
+        13.0,
+        10.0,
+        10.0
+      ],
+      "allowed_list": [
+        27.0,
+        35.0,
+        24.0,
+        15.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 24.2,
+      "avg_allowed": 21.2,
+      "n_games": 4,
+      "source": "current",
+      "scored_list": [
+        33.0,
+        20.0,
+        27.0,
+        17.0
+      ],
+      "allowed_list": [
+        27.0,
+        6.0,
+        30.0,
+        22.0
+      ]
+    },
+    "home_props": [
+      {
+        "name": "Malik Washington",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.0,
+        "n_games": 4,
+        "recent_values": [
+          5.0,
+          5.0,
+          4.0,
+          3.0
+        ],
+        "athlete_id": "4569603"
+      },
+      {
+        "name": "Malik Willis",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 209.2,
+        "n_games": 4,
+        "recent_values": [
+          85.0,
+          210.0,
+          197.0,
+          220.0
+        ],
+        "athlete_id": "4242512"
+      },
+      {
+        "name": "Greg Dulcich",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.8,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          5.0,
+          2.0,
+          2.0
+        ],
+        "athlete_id": "4367209"
+      },
+      {
+        "name": "Ollie Gordon II",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 41.0,
+        "n_games": 4,
+        "recent_values": [
+          100.0,
+          41.0,
+          7.0,
+          0.0
+        ],
+        "athlete_id": "4711533"
+      }
+    ],
+    "away_props": [
+      {
+        "name": "Ja'Marr Chase",
+        "position": "WR",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.6,
+        "n_games": 4,
+        "recent_values": [
+          3.0,
+          9.0,
+          7.0,
+          2.0
+        ],
+        "athlete_id": "4362628"
+      },
+      {
+        "name": "Joe Burrow",
+        "position": "QB",
+        "label": "Passing Yards",
+        "dist": "normal",
+        "std": 55,
+        "projected": 258.0,
+        "n_games": 4,
+        "recent_values": [
+          428.0,
+          282.0,
+          207.0,
+          254.0
+        ],
+        "athlete_id": "3915511"
+      },
+      {
+        "name": "Mike Gesicki",
+        "position": "TE",
+        "label": "Receptions",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.2,
+        "n_games": 4,
+        "recent_values": [
+          3.0,
+          3.0,
+          0.0,
+          5.0
+        ],
+        "athlete_id": "3116164"
+      },
+      {
+        "name": "Chase Brown",
+        "position": "RB",
+        "label": "Rushing Yards",
+        "dist": "normal",
+        "std": 28,
+        "projected": 57.8,
+        "n_games": 4,
+        "recent_values": [
+          10.0,
+          61.0,
+          80.0,
+          56.0
+        ],
+        "athlete_id": "4362238"
+      }
+    ],
+    "exp_home": 15.7,
+    "exp_away": 23.3,
+    "exp_total": 39.0,
     "total_std": 14.1
   }
 ]
