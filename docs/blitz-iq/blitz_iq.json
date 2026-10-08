@@ -59,6 +59,25 @@
         "athlete_id": "4360761"
       },
       {
+        "name": "Michael Wilson",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "24%",
+        "prob_any": 24,
+        "projected_rate": 0.27,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4360761"
+      },
+      {
         "name": "Jacoby Brissett",
         "position": "QB",
         "label": "Passing Yards",
@@ -91,6 +110,25 @@
         "athlete_id": "4361307"
       },
       {
+        "name": "Trey McBride",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "39%",
+        "prob_any": 39,
+        "projected_rate": 0.49,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "athlete_id": "4361307"
+      },
+      {
         "name": "Jeremiyah Love",
         "position": "RB",
         "label": "Rushing Yards",
@@ -103,6 +141,25 @@
           90.0,
           29.0,
           41.0
+        ],
+        "athlete_id": "4870808"
+      },
+      {
+        "name": "Jeremiyah Love",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "33%",
+        "prob_any": 33,
+        "projected_rate": 0.4,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
         ],
         "athlete_id": "4870808"
       }
@@ -121,6 +178,25 @@
           4.0,
           9.0,
           10.0
+        ],
+        "athlete_id": "4374302"
+      },
+      {
+        "name": "Amon-Ra St. Brown",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "63%",
+        "prob_any": 63,
+        "projected_rate": 0.99,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          1.0,
+          2.0,
+          2.0
         ],
         "athlete_id": "4374302"
       },
@@ -157,6 +233,25 @@
         "athlete_id": "4430027"
       },
       {
+        "name": "Sam LaPorta",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "31%",
+        "prob_any": 31,
+        "projected_rate": 0.38,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "athlete_id": "4430027"
+      },
+      {
         "name": "Jahmyr Gibbs",
         "position": "RB",
         "label": "Rushing Yards",
@@ -169,6 +264,25 @@
           99.0,
           52.0,
           156.0
+        ],
+        "athlete_id": "4429795"
+      },
+      {
+        "name": "Jahmyr Gibbs",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "61%",
+        "prob_any": 61,
+        "projected_rate": 0.93,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          2.0,
+          0.0,
+          2.0
         ],
         "athlete_id": "4429795"
       }
@@ -238,6 +352,25 @@
         "athlete_id": "4426502"
       },
       {
+        "name": "Drake London",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "14%",
+        "prob_any": 14,
+        "projected_rate": 0.15,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4426502"
+      },
+      {
         "name": "Michael Penix Jr.",
         "position": "QB",
         "label": "Passing Yards",
@@ -268,6 +401,25 @@
         "athlete_id": "4360248"
       },
       {
+        "name": "Kyle Pitts Sr.",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "12%",
+        "prob_any": 12,
+        "projected_rate": 0.13,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4360248"
+      },
+      {
         "name": "Bijan Robinson",
         "position": "RB",
         "label": "Rushing Yards",
@@ -280,6 +432,25 @@
           194.0,
           72.0,
           83.0
+        ],
+        "athlete_id": "4430807"
+      },
+      {
+        "name": "Bijan Robinson",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "46%",
+        "prob_any": 46,
+        "projected_rate": 0.62,
+        "n_games": 4,
+        "recent_values": [
+          2.0,
+          2.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "4430807"
       }
@@ -297,6 +468,24 @@
           8.0,
           5.0,
           5.0
+        ],
+        "athlete_id": "4429615"
+      },
+      {
+        "name": "Zay Flowers",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "40%",
+        "prob_any": 40,
+        "projected_rate": 0.51,
+        "n_games": 3,
+        "recent_values": [
+          1.0,
+          0.0,
+          1.0
         ],
         "athlete_id": "4429615"
       },
@@ -333,6 +522,25 @@
         "athlete_id": "3116365"
       },
       {
+        "name": "Mark Andrews",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "20%",
+        "prob_any": 20,
+        "projected_rate": 0.22,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "3116365"
+      },
+      {
         "name": "Derrick Henry",
         "position": "RB",
         "label": "Rushing Yards",
@@ -345,6 +553,25 @@
           89.0,
           68.0,
           144.0
+        ],
+        "athlete_id": "3043078"
+      },
+      {
+        "name": "Derrick Henry",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "72%",
+        "prob_any": 72,
+        "projected_rate": 1.29,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          2.0,
+          1.0,
+          3.0
         ],
         "athlete_id": "3043078"
       }
@@ -414,6 +641,25 @@
         "athlete_id": "4241389"
       },
       {
+        "name": "CeeDee Lamb",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "53%",
+        "prob_any": 53,
+        "projected_rate": 0.76,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          0.0,
+          2.0,
+          1.0
+        ],
+        "athlete_id": "4241389"
+      },
+      {
         "name": "Dak Prescott",
         "position": "QB",
         "label": "Passing Yards",
@@ -446,6 +692,25 @@
         "athlete_id": "4242355"
       },
       {
+        "name": "Jake Ferguson",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "43%",
+        "prob_any": 43,
+        "projected_rate": 0.56,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          1.0,
+          2.0,
+          0.0
+        ],
+        "athlete_id": "4242355"
+      },
+      {
         "name": "Javonte Williams",
         "position": "RB",
         "label": "Rushing Yards",
@@ -458,6 +723,25 @@
           98.0,
           30.0,
           41.0
+        ],
+        "athlete_id": "4361579"
+      },
+      {
+        "name": "Javonte Williams",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "55%",
+        "prob_any": 55,
+        "projected_rate": 0.79,
+        "n_games": 4,
+        "recent_values": [
+          3.0,
+          1.0,
+          0.0,
+          1.0
         ],
         "athlete_id": "4361579"
       }
@@ -476,6 +760,25 @@
           5.0,
           3.0,
           5.0
+        ],
+        "athlete_id": "4567750"
+      },
+      {
+        "name": "Emeka Egbuka",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "26%",
+        "prob_any": 26,
+        "projected_rate": 0.31,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
         ],
         "athlete_id": "4567750"
       },
@@ -511,6 +814,25 @@
         "athlete_id": "4243331"
       },
       {
+        "name": "Cade Otton",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "12%",
+        "prob_any": 12,
+        "projected_rate": 0.13,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4243331"
+      },
+      {
         "name": "Bucky Irving",
         "position": "RB",
         "label": "Rushing Yards",
@@ -523,6 +845,25 @@
           46.0,
           89.0,
           45.0
+        ],
+        "athlete_id": "4596448"
+      },
+      {
+        "name": "Bucky Irving",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "33%",
+        "prob_any": 33,
+        "projected_rate": 0.4,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
         ],
         "athlete_id": "4596448"
       }
@@ -590,6 +931,23 @@
         "athlete_id": "4426515"
       },
       {
+        "name": "Puka Nacua",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "19%",
+        "prob_any": 19,
+        "projected_rate": 0.21,
+        "n_games": 2,
+        "recent_values": [
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4426515"
+      },
+      {
         "name": "Matthew Stafford",
         "position": "QB",
         "label": "Passing Yards",
@@ -621,6 +979,24 @@
         "athlete_id": "4242557"
       },
       {
+        "name": "Colby Parkinson",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "14%",
+        "prob_any": 14,
+        "projected_rate": 0.15,
+        "n_games": 3,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4242557"
+      },
+      {
         "name": "Kyren Williams",
         "position": "RB",
         "label": "Rushing Yards",
@@ -633,6 +1009,25 @@
           88.0,
           85.0,
           41.0
+        ],
+        "athlete_id": "4430737"
+      },
+      {
+        "name": "Kyren Williams",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "44%",
+        "prob_any": 44,
+        "projected_rate": 0.58,
+        "n_games": 4,
+        "recent_values": [
+          2.0,
+          0.0,
+          0.0,
+          1.0
         ],
         "athlete_id": "4430737"
       }
@@ -651,6 +1046,25 @@
           6.0,
           0.0,
           5.0
+        ],
+        "athlete_id": "3915416"
+      },
+      {
+        "name": "DJ Moore",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "30%",
+        "prob_any": 30,
+        "projected_rate": 0.35,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
         ],
         "athlete_id": "3915416"
       },
@@ -687,6 +1101,25 @@
         "athlete_id": "4385690"
       },
       {
+        "name": "Dalton Kincaid",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "25%",
+        "prob_any": 25,
+        "projected_rate": 0.28,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "athlete_id": "4385690"
+      },
+      {
         "name": "James Cook III",
         "position": "RB",
         "label": "Rushing Yards",
@@ -699,6 +1132,25 @@
           154.0,
           135.0,
           57.0
+        ],
+        "athlete_id": "4379399"
+      },
+      {
+        "name": "James Cook III",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "43%",
+        "prob_any": 43,
+        "projected_rate": 0.56,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
         ],
         "athlete_id": "4379399"
       }
@@ -768,6 +1220,25 @@
         "athlete_id": "4430878"
       },
       {
+        "name": "Jaxon Smith-Njigba",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "65%",
+        "prob_any": 65,
+        "projected_rate": 1.06,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          2.0,
+          3.0,
+          1.0
+        ],
+        "athlete_id": "4430878"
+      },
+      {
         "name": "Sam Darnold",
         "position": "QB",
         "label": "Passing Yards",
@@ -799,6 +1270,25 @@
         "athlete_id": "4576297"
       },
       {
+        "name": "AJ Barner",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "12%",
+        "prob_any": 12,
+        "projected_rate": 0.13,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4576297"
+      },
+      {
         "name": "Emanuel Wilson",
         "position": "RB",
         "label": "Rushing Yards",
@@ -811,6 +1301,25 @@
           14.0,
           92.0,
           3.0
+        ],
+        "athlete_id": "4887558"
+      },
+      {
+        "name": "Emanuel Wilson",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "25%",
+        "prob_any": 25,
+        "projected_rate": 0.29,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "4887558"
       }
@@ -829,6 +1338,25 @@
           3.0,
           3.0,
           6.0
+        ],
+        "athlete_id": "16737"
+      },
+      {
+        "name": "Mike Evans",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "38%",
+        "prob_any": 38,
+        "projected_rate": 0.47,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
         ],
         "athlete_id": "16737"
       },
@@ -865,6 +1393,25 @@
         "athlete_id": "3040151"
       },
       {
+        "name": "George Kittle",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "46%",
+        "prob_any": 46,
+        "projected_rate": 0.62,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          2.0,
+          1.0,
+          0.0
+        ],
+        "athlete_id": "3040151"
+      },
+      {
         "name": "Christian McCaffrey",
         "position": "RB",
         "label": "Rushing Yards",
@@ -877,6 +1424,25 @@
           75.0,
           23.0,
           68.0
+        ],
+        "athlete_id": "3117251"
+      },
+      {
+        "name": "Christian McCaffrey",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "51%",
+        "prob_any": 51,
+        "projected_rate": 0.72,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          1.0,
+          2.0,
+          0.0
         ],
         "athlete_id": "3117251"
       }
@@ -945,6 +1511,24 @@
         "athlete_id": "3121422"
       },
       {
+        "name": "Terry McLaurin",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "26%",
+        "prob_any": 26,
+        "projected_rate": 0.3,
+        "n_games": 3,
+        "recent_values": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "3121422"
+      },
+      {
         "name": "Jayden Daniels",
         "position": "QB",
         "label": "Passing Yards",
@@ -973,6 +1557,23 @@
         "athlete_id": "4360635"
       },
       {
+        "name": "Chig Okonkwo",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "16%",
+        "prob_any": 16,
+        "projected_rate": 0.18,
+        "n_games": 2,
+        "recent_values": [
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4360635"
+      },
+      {
         "name": "Jacory Croskey-Merritt",
         "position": "RB",
         "label": "Rushing Yards",
@@ -985,6 +1586,25 @@
           36.0,
           43.0,
           63.0
+        ],
+        "athlete_id": "4575131"
+      },
+      {
+        "name": "Jacory Croskey-Merritt",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "33%",
+        "prob_any": 33,
+        "projected_rate": 0.4,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
         ],
         "athlete_id": "4575131"
       }
@@ -1003,6 +1623,25 @@
           5.0,
           1.0,
           6.0
+        ],
+        "athlete_id": "4595348"
+      },
+      {
+        "name": "Malik Nabers",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "22%",
+        "prob_any": 22,
+        "projected_rate": 0.24,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "4595348"
       },
@@ -1038,6 +1677,25 @@
         "athlete_id": "4361050"
       },
       {
+        "name": "Isaiah Likely",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "41%",
+        "prob_any": 41,
+        "projected_rate": 0.53,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          2.0
+        ],
+        "athlete_id": "4361050"
+      },
+      {
         "name": "Cam Skattebo",
         "position": "RB",
         "label": "Rushing Yards",
@@ -1050,6 +1708,25 @@
           60.0,
           36.0,
           81.0
+        ],
+        "athlete_id": "4696981"
+      },
+      {
+        "name": "Cam Skattebo",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "33%",
+        "prob_any": 33,
+        "projected_rate": 0.4,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
         ],
         "athlete_id": "4696981"
       }
@@ -1119,6 +1796,25 @@
         "athlete_id": "4047650"
       },
       {
+        "name": "DK Metcalf",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "24%",
+        "prob_any": 24,
+        "projected_rate": 0.27,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4047650"
+      },
+      {
         "name": "Aaron Rodgers",
         "position": "QB",
         "label": "Passing Yards",
@@ -1151,6 +1847,25 @@
         "athlete_id": "4430802"
       },
       {
+        "name": "Darnell Washington",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "20%",
+        "prob_any": 20,
+        "projected_rate": 0.22,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4430802"
+      },
+      {
         "name": "Jaylen Warren",
         "position": "RB",
         "label": "Rushing Yards",
@@ -1163,6 +1878,25 @@
           127.0,
           43.0,
           46.0
+        ],
+        "athlete_id": "4569987"
+      },
+      {
+        "name": "Jaylen Warren",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "18%",
+        "prob_any": 18,
+        "projected_rate": 0.19,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "4569987"
       }
@@ -1181,6 +1915,25 @@
           5.0,
           7.0,
           2.0
+        ],
+        "athlete_id": "4688813"
+      },
+      {
+        "name": "Josh Downs",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "14%",
+        "prob_any": 14,
+        "projected_rate": 0.15,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "4688813"
       },
@@ -1217,6 +1970,25 @@
         "athlete_id": "4431459"
       },
       {
+        "name": "Tyler Warren",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "39%",
+        "prob_any": 39,
+        "projected_rate": 0.49,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "athlete_id": "4431459"
+      },
+      {
         "name": "Jonathan Taylor",
         "position": "RB",
         "label": "Rushing Yards",
@@ -1229,6 +2001,25 @@
           68.0,
           92.0,
           98.0
+        ],
+        "athlete_id": "4242335"
+      },
+      {
+        "name": "Jonathan Taylor",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "67%",
+        "prob_any": 67,
+        "projected_rate": 1.1,
+        "n_games": 4,
+        "recent_values": [
+          2.0,
+          0.0,
+          2.0,
+          2.0
         ],
         "athlete_id": "4242335"
       }
@@ -1298,6 +2089,25 @@
         "athlete_id": "4361432"
       },
       {
+        "name": "Romeo Doubs",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "28%",
+        "prob_any": 28,
+        "projected_rate": 0.33,
+        "n_games": 4,
+        "recent_values": [
+          2.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4361432"
+      },
+      {
         "name": "Drake Maye",
         "position": "QB",
         "label": "Passing Yards",
@@ -1330,6 +2140,25 @@
         "athlete_id": "3046439"
       },
       {
+        "name": "Hunter Henry",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "12%",
+        "prob_any": 12,
+        "projected_rate": 0.13,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "3046439"
+      },
+      {
         "name": "Rhamondre Stevenson",
         "position": "RB",
         "label": "Rushing Yards",
@@ -1342,6 +2171,25 @@
           22.0,
           43.0,
           51.0
+        ],
+        "athlete_id": "4569173"
+      },
+      {
+        "name": "Rhamondre Stevenson",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "25%",
+        "prob_any": 25,
+        "projected_rate": 0.29,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "4569173"
       }
@@ -1360,6 +2208,25 @@
           4.0,
           5.0,
           2.0
+        ],
+        "athlete_id": "4428718"
+      },
+      {
+        "name": "Tre Tucker",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "26%",
+        "prob_any": 26,
+        "projected_rate": 0.31,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
         ],
         "athlete_id": "4428718"
       },
@@ -1394,6 +2261,23 @@
         "athlete_id": "4432665"
       },
       {
+        "name": "Brock Bowers",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "44%",
+        "prob_any": 44,
+        "projected_rate": 0.58,
+        "n_games": 2,
+        "recent_values": [
+          1.0,
+          1.0
+        ],
+        "athlete_id": "4432665"
+      },
+      {
         "name": "Ashton Jeanty",
         "position": "RB",
         "label": "Rushing Yards",
@@ -1406,6 +2290,25 @@
           56.0,
           48.0,
           102.0
+        ],
+        "athlete_id": "4890973"
+      },
+      {
+        "name": "Ashton Jeanty",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "18%",
+        "prob_any": 18,
+        "projected_rate": 0.19,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "4890973"
       }
@@ -1475,6 +2378,25 @@
         "athlete_id": "4361370"
       },
       {
+        "name": "Chris Olave",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "26%",
+        "prob_any": 26,
+        "projected_rate": 0.31,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "athlete_id": "4361370"
+      },
+      {
         "name": "Tyler Shough",
         "position": "QB",
         "label": "Passing Yards",
@@ -1507,6 +2429,25 @@
         "athlete_id": "3929645"
       },
       {
+        "name": "Juwan Johnson",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "44%",
+        "prob_any": 44,
+        "projected_rate": 0.57,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          2.0,
+          0.0,
+          1.0
+        ],
+        "athlete_id": "3929645"
+      },
+      {
         "name": "Alvin Kamara",
         "position": "RB",
         "label": "Rushing Yards",
@@ -1518,6 +2459,24 @@
           23.0,
           36.0,
           15.0
+        ],
+        "athlete_id": "3054850"
+      },
+      {
+        "name": "Alvin Kamara",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "38%",
+        "prob_any": 38,
+        "projected_rate": 0.48,
+        "n_games": 3,
+        "recent_values": [
+          2.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "3054850"
       }
@@ -1535,6 +2494,24 @@
           2.0,
           3.0,
           8.0
+        ],
+        "athlete_id": "4262921"
+      },
+      {
+        "name": "Justin Jefferson",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "45%",
+        "prob_any": 45,
+        "projected_rate": 0.6,
+        "n_games": 3,
+        "recent_values": [
+          0.0,
+          0.0,
+          2.0
         ],
         "athlete_id": "4262921"
       },
@@ -1570,6 +2547,25 @@
         "athlete_id": "4036133"
       },
       {
+        "name": "T.J. Hockenson",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "28%",
+        "prob_any": 28,
+        "projected_rate": 0.33,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "athlete_id": "4036133"
+      },
+      {
         "name": "Aaron Jones Sr.",
         "position": "RB",
         "label": "Rushing Yards",
@@ -1582,6 +2578,25 @@
           58.0,
           105.0,
           40.0
+        ],
+        "athlete_id": "3042519"
+      },
+      {
+        "name": "Aaron Jones Sr.",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "33%",
+        "prob_any": 33,
+        "projected_rate": 0.4,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
         ],
         "athlete_id": "3042519"
       }
@@ -1651,6 +2666,25 @@
         "athlete_id": "4612826"
       },
       {
+        "name": "Ladd McConkey",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "30%",
+        "prob_any": 30,
+        "projected_rate": 0.35,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "athlete_id": "4612826"
+      },
+      {
         "name": "Justin Herbert",
         "position": "QB",
         "label": "Passing Yards",
@@ -1681,6 +2715,23 @@
         "athlete_id": "4241263"
       },
       {
+        "name": "Charlie Kolar",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "16%",
+        "prob_any": 16,
+        "projected_rate": 0.18,
+        "n_games": 2,
+        "recent_values": [
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4241263"
+      },
+      {
         "name": "Omarion Hampton",
         "position": "RB",
         "label": "Rushing Yards",
@@ -1693,6 +2744,25 @@
           56.0,
           94.0,
           43.0
+        ],
+        "athlete_id": "4685382"
+      },
+      {
+        "name": "Omarion Hampton",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "47%",
+        "prob_any": 47,
+        "projected_rate": 0.64,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          0.0,
+          1.0,
+          1.0
         ],
         "athlete_id": "4685382"
       }
@@ -1711,6 +2781,25 @@
           2.0,
           8.0,
           1.0
+        ],
+        "athlete_id": "4372016"
+      },
+      {
+        "name": "Jaylen Waddle",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "22%",
+        "prob_any": 22,
+        "projected_rate": 0.24,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "4372016"
       },
@@ -1747,6 +2836,25 @@
         "athlete_id": "3051876"
       },
       {
+        "name": "Evan Engram",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "28%",
+        "prob_any": 28,
+        "projected_rate": 0.33,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "athlete_id": "3051876"
+      },
+      {
         "name": "J.K. Dobbins",
         "position": "RB",
         "label": "Rushing Yards",
@@ -1759,6 +2867,25 @@
           49.0,
           36.0,
           36.0
+        ],
+        "athlete_id": "4241985"
+      },
+      {
+        "name": "J.K. Dobbins",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "18%",
+        "prob_any": 18,
+        "projected_rate": 0.19,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "4241985"
       }
@@ -1828,6 +2955,25 @@
         "athlete_id": "4569618"
       },
       {
+        "name": "Garrett Wilson",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "35%",
+        "prob_any": 35,
+        "projected_rate": 0.43,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "athlete_id": "4569618"
+      },
+      {
         "name": "Geno Smith",
         "position": "QB",
         "label": "Passing Yards",
@@ -1860,6 +3006,25 @@
         "athlete_id": "5083315"
       },
       {
+        "name": "Kenyon Sadiq",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "22%",
+        "prob_any": 22,
+        "projected_rate": 0.25,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "5083315"
+      },
+      {
         "name": "Breece Hall",
         "position": "RB",
         "label": "Rushing Yards",
@@ -1871,6 +3036,24 @@
           32.0,
           29.0,
           102.0
+        ],
+        "athlete_id": "4427366"
+      },
+      {
+        "name": "Breece Hall",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "35%",
+        "prob_any": 35,
+        "projected_rate": 0.44,
+        "n_games": 3,
+        "recent_values": [
+          0.0,
+          0.0,
+          1.0
         ],
         "athlete_id": "4427366"
       }
@@ -1889,6 +3072,25 @@
           2.0,
           5.0,
           2.0
+        ],
+        "athlete_id": "4832800"
+      },
+      {
+        "name": "Denzel Boston",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "40%",
+        "prob_any": 40,
+        "projected_rate": 0.51,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
         ],
         "athlete_id": "4832800"
       },
@@ -1925,6 +3127,25 @@
         "athlete_id": "5083076"
       },
       {
+        "name": "Harold Fannin Jr.",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "37%",
+        "prob_any": 37,
+        "projected_rate": 0.46,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          2.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "5083076"
+      },
+      {
         "name": "Quinshon Judkins",
         "position": "RB",
         "label": "Rushing Yards",
@@ -1937,6 +3158,25 @@
           70.0,
           21.0,
           33.0
+        ],
+        "athlete_id": "4685702"
+      },
+      {
+        "name": "Quinshon Judkins",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "25%",
+        "prob_any": 25,
+        "projected_rate": 0.29,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "4685702"
       }
@@ -2006,6 +3246,25 @@
         "athlete_id": "4248528"
       },
       {
+        "name": "Christian Watson",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "56%",
+        "prob_any": 56,
+        "projected_rate": 0.83,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          1.0,
+          1.0,
+          2.0
+        ],
+        "athlete_id": "4248528"
+      },
+      {
         "name": "Jordan Love",
         "position": "QB",
         "label": "Passing Yards",
@@ -2038,6 +3297,25 @@
         "athlete_id": "4572680"
       },
       {
+        "name": "Tucker Kraft",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "20%",
+        "prob_any": 20,
+        "projected_rate": 0.22,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4572680"
+      },
+      {
         "name": "MarShawn Lloyd",
         "position": "RB",
         "label": "Rushing Yards",
@@ -2050,6 +3328,25 @@
           11.0,
           20.0,
           37.0
+        ],
+        "athlete_id": "4429023"
+      },
+      {
+        "name": "MarShawn Lloyd",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "18%",
+        "prob_any": 18,
+        "projected_rate": 0.19,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "4429023"
       }
@@ -2068,6 +3365,25 @@
           3.0,
           3.0,
           2.0
+        ],
+        "athlete_id": "4431299"
+      },
+      {
+        "name": "Rome Odunze",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "14%",
+        "prob_any": 14,
+        "projected_rate": 0.15,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "4431299"
       },
@@ -2102,6 +3418,25 @@
         "athlete_id": "4723086"
       },
       {
+        "name": "Colston Loveland",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "12%",
+        "prob_any": 12,
+        "projected_rate": 0.13,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4723086"
+      },
+      {
         "name": "D'Andre Swift",
         "position": "RB",
         "label": "Rushing Yards",
@@ -2114,6 +3449,25 @@
           84.0,
           45.0,
           124.0
+        ],
+        "athlete_id": "4259545"
+      },
+      {
+        "name": "D'Andre Swift",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "55%",
+        "prob_any": 55,
+        "projected_rate": 0.8,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          3.0
         ],
         "athlete_id": "4259545"
       }
@@ -2183,6 +3537,25 @@
         "athlete_id": "4871023"
       },
       {
+        "name": "Carnell Tate",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "14%",
+        "prob_any": 14,
+        "projected_rate": 0.15,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4871023"
+      },
+      {
         "name": "Cam Ward",
         "position": "QB",
         "label": "Passing Yards",
@@ -2215,6 +3588,25 @@
         "athlete_id": "4686728"
       },
       {
+        "name": "Gunnar Helm",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "12%",
+        "prob_any": 12,
+        "projected_rate": 0.13,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4686728"
+      },
+      {
         "name": "Tony Pollard",
         "position": "RB",
         "label": "Rushing Yards",
@@ -2227,6 +3619,25 @@
           74.0,
           64.0,
           35.0
+        ],
+        "athlete_id": "3916148"
+      },
+      {
+        "name": "Tony Pollard",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "25%",
+        "prob_any": 25,
+        "projected_rate": 0.29,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "3916148"
       }
@@ -2243,6 +3654,23 @@
         "recent_values": [
           7.0,
           7.0
+        ],
+        "athlete_id": "4258173"
+      },
+      {
+        "name": "Nico Collins",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "54%",
+        "prob_any": 54,
+        "projected_rate": 0.78,
+        "n_games": 2,
+        "recent_values": [
+          2.0,
+          1.0
         ],
         "athlete_id": "4258173"
       },
@@ -2279,6 +3707,25 @@
         "athlete_id": "3117256"
       },
       {
+        "name": "Dalton Schultz",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "12%",
+        "prob_any": 12,
+        "projected_rate": 0.13,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "3117256"
+      },
+      {
         "name": "David Montgomery",
         "position": "RB",
         "label": "Rushing Yards",
@@ -2291,6 +3738,25 @@
           33.0,
           10.0,
           60.0
+        ],
+        "athlete_id": "4035538"
+      },
+      {
+        "name": "David Montgomery",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "45%",
+        "prob_any": 45,
+        "projected_rate": 0.6,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          2.0
         ],
         "athlete_id": "4035538"
       }
@@ -2360,6 +3826,25 @@
         "athlete_id": "4432620"
       },
       {
+        "name": "Parker Washington",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "38%",
+        "prob_any": 38,
+        "projected_rate": 0.47,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        "athlete_id": "4432620"
+      },
+      {
         "name": "Trevor Lawrence",
         "position": "QB",
         "label": "Passing Yards",
@@ -2392,6 +3877,25 @@
         "athlete_id": "4430539"
       },
       {
+        "name": "Brenton Strange",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "28%",
+        "prob_any": 28,
+        "projected_rate": 0.33,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "athlete_id": "4430539"
+      },
+      {
         "name": "Bhayshul Tuten",
         "position": "RB",
         "label": "Rushing Yards",
@@ -2404,6 +3908,25 @@
           73.0,
           65.0,
           66.0
+        ],
+        "athlete_id": "4882093"
+      },
+      {
+        "name": "Bhayshul Tuten",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "37%",
+        "prob_any": 37,
+        "projected_rate": 0.47,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          1.0,
+          1.0,
+          0.0
         ],
         "athlete_id": "4882093"
       }
@@ -2421,6 +3944,24 @@
           6.0,
           10.0,
           3.0
+        ],
+        "athlete_id": "4241478"
+      },
+      {
+        "name": "DeVonta Smith",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "29%",
+        "prob_any": 29,
+        "projected_rate": 0.34,
+        "n_games": 3,
+        "recent_values": [
+          0.0,
+          1.0,
+          0.0
         ],
         "athlete_id": "4241478"
       },
@@ -2455,6 +3996,23 @@
         "athlete_id": "3121023"
       },
       {
+        "name": "Dallas Goedert",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "47%",
+        "prob_any": 47,
+        "projected_rate": 0.63,
+        "n_games": 2,
+        "recent_values": [
+          0.0,
+          2.0
+        ],
+        "athlete_id": "3121023"
+      },
+      {
         "name": "Saquon Barkley",
         "position": "RB",
         "label": "Rushing Yards",
@@ -2467,6 +4025,25 @@
           82.0,
           9.0,
           83.0
+        ],
+        "athlete_id": "3929630"
+      },
+      {
+        "name": "Saquon Barkley",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "18%",
+        "prob_any": 18,
+        "projected_rate": 0.19,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "athlete_id": "3929630"
       }
@@ -2536,6 +4113,25 @@
         "athlete_id": "4569603"
       },
       {
+        "name": "Malik Washington",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "14%",
+        "prob_any": 14,
+        "projected_rate": 0.15,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4569603"
+      },
+      {
         "name": "Malik Willis",
         "position": "QB",
         "label": "Passing Yards",
@@ -2568,6 +4164,25 @@
         "athlete_id": "4367209"
       },
       {
+        "name": "Greg Dulcich",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "12%",
+        "prob_any": 12,
+        "projected_rate": 0.13,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "athlete_id": "4367209"
+      },
+      {
         "name": "Ollie Gordon II",
         "position": "RB",
         "label": "Rushing Yards",
@@ -2579,6 +4194,25 @@
           100.0,
           41.0,
           7.0,
+          0.0
+        ],
+        "athlete_id": "4711533"
+      },
+      {
+        "name": "Ollie Gordon II",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "33%",
+        "prob_any": 33,
+        "projected_rate": 0.41,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          1.0,
+          0.0,
           0.0
         ],
         "athlete_id": "4711533"
@@ -2598,6 +4232,25 @@
           9.0,
           7.0,
           2.0
+        ],
+        "athlete_id": "4362628"
+      },
+      {
+        "name": "Ja'Marr Chase",
+        "position": "WR",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "44%",
+        "prob_any": 44,
+        "projected_rate": 0.58,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          1.0,
+          2.0,
+          0.0
         ],
         "athlete_id": "4362628"
       },
@@ -2634,6 +4287,25 @@
         "athlete_id": "3116164"
       },
       {
+        "name": "Mike Gesicki",
+        "position": "TE",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "42%",
+        "prob_any": 42,
+        "projected_rate": 0.54,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        "athlete_id": "3116164"
+      },
+      {
         "name": "Chase Brown",
         "position": "RB",
         "label": "Rushing Yards",
@@ -2646,6 +4318,25 @@
           61.0,
           80.0,
           56.0
+        ],
+        "athlete_id": "4362238"
+      },
+      {
+        "name": "Chase Brown",
+        "position": "RB",
+        "label": "Anytime TD",
+        "kind": "td",
+        "dist": null,
+        "std": null,
+        "projected": "33%",
+        "prob_any": 33,
+        "projected_rate": 0.4,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
         ],
         "athlete_id": "4362238"
       }
