@@ -1,5 +1,38 @@
 {
-  "generated": "2026-10-08T22:25:17.301304+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-10-09T02:21:21.233844+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_id": "401872980",
+      "home_id": "6",
+      "away_id": "27",
+      "home_team": "Dallas Cowboys",
+      "away_team": "Tampa Bay Buccaneers",
+      "home_score": 10.0,
+      "away_score": 21.0,
+      "period": 3,
+      "display_clock": "5:40",
+      "status": "5:40 - 3rd",
+      "elapsed_minute": 39.3,
+      "minutes_remaining": 20.7,
+      "next_score": {
+        "home": 32,
+        "away": 68
+      },
+      "game_total_pace": {
+        "prob": 41,
+        "status": "On Pace: Under"
+      },
+      "model_signal": {
+        "label": "Away Next Score",
+        "prob": 68,
+        "qualifies": false
+      },
+      "pregame_projection": {
+        "exp_home": 27.5,
+        "exp_away": 22.8,
+        "exp_total": 50.3
+      }
+    }
+  ]
 }
