@@ -25,6 +25,13 @@ by expected minutes, builds a report for everyone left, then flags
 players against your CRITERIA_THRESHOLDS and separately surfaces the
 top-N highest-probability plays per market.
 
+On top of the Poisson-priced props, also surfaces Hot Form (a player's
+rolling-window AVERAGE for a stat clears a line -- can mask a bad most
+recent game) and Real Streak (a genuinely CONSECUTIVE run of games
+clearing a line, walking backward from the most recent game) across
+shots, shots on target, tackles, fouls, and combined goal involvement
+-- see STREAK_CONFIG.
+
 Usage:
     python3 player_stat_model.py
 
@@ -898,6 +905,121 @@ CATEGORY_STAT_KEY = {
 }
 
 
+# ----------------------------------------------------------------------
+# Hot Form vs Real Streak -- same distinction already fixed across every
+# other tool in this suite (Blitz IQ, Euro Ice, EuroLeague IQ, Orange
+# Line): Hot Form is a plain AVERAGE over the rolling window (can mask a
+# bad most-recent game); Real Streak is a genuinely CONSECUTIVE run
+# clearing a threshold, computed by walking backward from the most
+# recent game and stopping at the first break. game_log's per-stat lists
+# are already stored oldest-first (see rolling_form()'s own comment),
+# so the backward walk here is correct without any re-sorting.
+#
+# "cards" is deliberately left out of both -- it's a rare, mostly binary
+# event (0 or 1 most games) for any one player, the same reasoning
+# Cards & Corners IQ used to exclude red cards entirely: an average or a
+# "consecutive games carded" streak on a once-in-a-while event is mostly
+# noise, not a real signal. "goals"/"assists" alone are left out too in
+# favour of the combined goal_or_assist stat below, which is the more
+# useful backable signal for an attacking player's "involved in a goal"
+# streak.
+# ----------------------------------------------------------------------
+
+STREAK_CONFIG = {
+    "shots": {"hot_form_min": 3.0, "real_streak_threshold": 2, "label": "Shots",
+               "min_games": 3, "min_streak_len": 3},
+    "shots_on_target": {"hot_form_min": 1.5, "real_streak_threshold": 1, "label": "Shots on Target",
+                         "min_games": 3, "min_streak_len": 3},
+    "tackles": {"hot_form_min": 2.5, "real_streak_threshold": 2, "label": "Tackles",
+                "min_games": 3, "min_streak_len": 3},
+    "fouls": {"hot_form_min": 2.0, "real_streak_threshold": 2, "label": "Fouls",
+              "min_games": 3, "min_streak_len": 3},
+    "goal_or_assist": {"hot_form_min": 0.5, "real_streak_threshold": 1, "label": "Goal Involvement",
+                        "min_games": 3, "min_streak_len": 3},
+}
+
+
+def _stat_values(game_log: dict, stat_key: str) -> list:
+    """game_log values for a STREAK_CONFIG stat, oldest-first. goal_or_assist
+    has no single game_log key -- it's goals+assists summed per game,
+    same combination compute_hit_rates()/build_legs() already use."""
+    if stat_key == "goal_or_assist":
+        goals, assists = game_log.get("goals", []), game_log.get("assists", [])
+        if goals and assists and len(goals) == len(assists):
+            return [g + a for g, a in zip(goals, assists)]
+        return []
+    return game_log.get(stat_key, [])
+
+
+def _current_streak(values_oldest_first: list, threshold: float) -> int:
+    """Walks backward from the most recent value, counting consecutive
+    values >= threshold, stopping at the first break."""
+    streak = 0
+    for v in reversed(values_oldest_first):
+        if v >= threshold:
+            streak += 1
+        else:
+            break
+    return streak
+
+
+def build_hot_form_entries(reports: list[dict]) -> list[dict]:
+    """Players whose rolling-window AVERAGE for a stat clears
+    STREAK_CONFIG's hot_form_min. match_id/match_date/opponent are
+    carried straight from the report (only populated for daily-fixture-
+    scan reports -- see build_report's fixture param) so the results
+    tracker has something to verify each entry against, the same fix
+    already applied to Orange Line's Hot Form/Real Streak entries."""
+    entries = []
+    for r in reports:
+        game_log = r.get("game_log", {})
+        for stat_key, cfg in STREAK_CONFIG.items():
+            values = _stat_values(game_log, stat_key)
+            if len(values) < cfg["min_games"]:
+                continue
+            avg = sum(values) / len(values)
+            if avg >= cfg["hot_form_min"]:
+                entries.append({
+                    "player": r["player_name"], "player_id": r.get("player_id"),
+                    "team": r.get("team_name"), "league": r.get("league_name"),
+                    "match_id": r.get("match_id"), "match_date": r.get("match_date"),
+                    "opponent": r.get("opponent"),
+                    "stat_key": stat_key, "label": cfg["label"],
+                    "avg": round(avg, 2), "n_games": len(values),
+                    "history": "/".join(str(int(v)) for v in values),
+                    "threshold": cfg["hot_form_min"],
+                })
+    entries.sort(key=lambda e: -e["avg"])
+    return entries
+
+
+def build_real_streak_entries(reports: list[dict]) -> list[dict]:
+    """Players genuinely CONSECUTIVE in a stat for at least min_streak_len
+    games, walking backward from the most recent game -- distinct from
+    Hot Form's plain average above, which can mask a bad most-recent
+    game. Same match_id/match_date/opponent carry-through as Hot Form."""
+    entries = []
+    for r in reports:
+        game_log = r.get("game_log", {})
+        for stat_key, cfg in STREAK_CONFIG.items():
+            values = _stat_values(game_log, stat_key)
+            if len(values) < cfg["min_streak_len"]:
+                continue
+            streak = _current_streak(values, cfg["real_streak_threshold"])
+            if streak >= cfg["min_streak_len"]:
+                entries.append({
+                    "player": r["player_name"], "player_id": r.get("player_id"),
+                    "team": r.get("team_name"), "league": r.get("league_name"),
+                    "match_id": r.get("match_id"), "match_date": r.get("match_date"),
+                    "opponent": r.get("opponent"),
+                    "stat_key": stat_key, "label": cfg["label"],
+                    "streak": streak, "threshold": cfg["real_streak_threshold"],
+                    "history": "/".join(str(int(v)) for v in values),
+                })
+    entries.sort(key=lambda e: -e["streak"])
+    return entries
+
+
 def build_legs(reports: list[dict]) -> list[dict]:
     """Flatten every scanned player's props into individual bet-builder
     legs. Each leg carries its own "last games" history for just the
@@ -968,8 +1090,11 @@ def save_scan(reports: list[dict], qualifying: list[dict], ranked: dict, custom_
         ],
     }
     data["legs"] = build_legs(reports)
+    data["hot_form"] = build_hot_form_entries(reports)
+    data["real_streak"] = build_real_streak_entries(reports)
     OUTPUT_JSON.write_text(json.dumps(data, indent=2))
-    print(f"Saved {len(reports)} player reports + screener results to {OUTPUT_JSON}")
+    print(f"Saved {len(reports)} player reports + screener results to {OUTPUT_JSON} "
+          f"({len(data['hot_form'])} Hot Form, {len(data['real_streak'])} Real Streak entries)")
 
 
 def _load_output() -> dict:
@@ -1078,10 +1203,13 @@ if __name__ == "__main__":
         # Results tracker — logs every leg with a resolvable match_id
         # against the real outcome once that match has finished. Same
         # architecture as Match IQ / Euro Ice's trackers; see
-        # player_stat_model_results_tracker.py.
+        # player_stat_model_results_tracker.py. Hot Form / Real Streak
+        # entries are logged and verified the same way as prop legs.
         try:
             import player_stat_model_results_tracker as results_tracker
-            results_tracker.run_results_tracker(build_legs(reports), HEADERS)
+            hot_form = build_hot_form_entries(reports)
+            real_streak = build_real_streak_entries(reports)
+            results_tracker.run_results_tracker(build_legs(reports), hot_form, real_streak, HEADERS)
         except Exception as exc:
             print(f"  [!] Results tracker step failed (non-fatal): {exc}")
 
