@@ -249,6 +249,56 @@
       padding-top: 20px;
       border-top: 1px solid var(--border);
     }
+
+    .streakPanel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .streakPanel .panelTitle {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .streakPanel .panelNote {
+      font-size: 11px;
+      color: var(--sub);
+      margin-bottom: 10px;
+    }
+
+    .streakRow {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+    }
+
+    .streakRow:first-of-type {
+      border-top: none;
+    }
+
+    .streakRow .srMain b {
+      font-size: 13px;
+    }
+
+    .streakRow .srSub {
+      color: var(--sub);
+      font-size: 11px;
+    }
+
+    .streakRow .streakValue {
+      text-align: right;
+    }
+
+    .streakRow .streakValue .big {
+      font-weight: 700;
+      color: var(--green);
+    }
   </style>
 </head>
 <body>
@@ -267,6 +317,9 @@
     <button class="filter-btn" data-filter="fouls">Fouls</button>
   </div>
   
+  <div id="hotFormPanel"></div>
+  <div id="realStreakPanel"></div>
+
   <div class="content" id="content">
     <div class="loading">Loading player data...</div>
   </div>
@@ -301,6 +354,7 @@
         allPlayers = Object.values(data.players || {});
         renderPlayers();
         setupFilters();
+        renderStreakPanels(data.hot_form, data.real_streak);
       } catch (err) {
         document.getElementById('content').innerHTML = `
           <div class="error">
@@ -311,6 +365,48 @@
       }
     }
     
+    // Hot Form = plain average over the rolling window clears a line
+    // (can mask a bad most recent game). Real Streak = genuinely
+    // CONSECUTIVE recent games clearing a line, walking backward from
+    // the most recent game. Both computed server-side in
+    // player_stat_model.py (STREAK_CONFIG / build_hot_form_entries /
+    // build_real_streak_entries) and saved into player_stats_data.json
+    // alongside the per-player reports and builder legs -- rendered
+    // here as two standing panels, independent of the filter buttons
+    // above (those only affect the player card list below).
+    function renderStreakPanels(hotForm, realStreak) {
+      const hf = hotForm || [];
+      const rs = realStreak || [];
+      const hfPanel = document.getElementById('hotFormPanel');
+      const rsPanel = document.getElementById('realStreakPanel');
+
+      hfPanel.innerHTML = !hf.length ? '' : `
+        <div class="streakPanel">
+          <div class="panelTitle">📊 Hot Form</div>
+          <div class="panelNote">Average over the player's recent games clears the line — can mask a bad most recent game. Not a streak.</div>
+          ${hf.map(e => `
+            <div class="streakRow">
+              <div class="srMain"><b>${e.player}</b><br><span class="srSub">${e.team} · ${e.league} · ${e.label}</span></div>
+              <div class="streakValue"><span class="big">${e.avg} avg</span><br><span class="srSub">${e.n_games}gm · ${e.history}</span></div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      rsPanel.innerHTML = !rs.length ? '' : `
+        <div class="streakPanel">
+          <div class="panelTitle">🔥 Real Streak</div>
+          <div class="panelNote">Genuinely CONSECUTIVE recent games clearing the line, walking backward from the most recent game.</div>
+          ${rs.map(e => `
+            <div class="streakRow">
+              <div class="srMain"><b>${e.player}</b><br><span class="srSub">${e.team} · ${e.league} · ${e.label}</span></div>
+              <div class="streakValue"><span class="big">${e.streak}+ straight</span><br><span class="srSub">${e.history}</span></div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
     function setupFilters() {
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
