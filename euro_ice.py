@@ -132,7 +132,12 @@ def hit_rate(values, line):
 # "streak" implies and what an average measures. This walks backward
 # from the most recent game and stops at the first one that breaks the
 # per-game threshold, same concept applied to Match IQ.
-REAL_STREAK_THRESHOLD = 2   # per-game goals needed to extend the streak
+REAL_STREAK_THRESHOLD = 4   # per-game goals needed to extend the streak --
+                             # comparison below is >=, so 4 means "more
+                             # than 3 goals", raised from 2 (user feedback:
+                             # the old bar let modest-scoring teams qualify,
+                             # this now surfaces genuinely elite scoring
+                             # nights only).
 REAL_STREAK_MIN_LENGTH = 3  # shortest run that counts as "a streak"
 
 
@@ -452,7 +457,7 @@ def build_legs_and_cards(target_date):
     breakdown; streak_entries feeds the Goal Streak panel — teams whose
     last 5 games average >= GOAL_STREAK_MIN goals, same raw-form-screen
     concept as Match IQ's Goal Streak scanner, recalibrated for hockey's
-    higher scoring rate (3.0 here vs football's 2.0)."""
+    higher scoring rate (3.5 here vs football's 2.0)."""
     legs = []
     cards = ""
     streak_entries = []
@@ -573,9 +578,13 @@ def build_legs_and_cards(target_date):
     return legs, cards, streak_entries, real_streak_entries
 
 
-GOAL_STREAK_MIN = 3.0  # hockey-appropriate bar — higher than Match IQ's
+GOAL_STREAK_MIN = 3.5  # hockey-appropriate bar — higher than Match IQ's
                         # football threshold (2.0), since a single team's
-                        # own goals per game runs higher in hockey
+                        # own goals per game runs higher in hockey. Raised
+                        # from 3.0 (user feedback, same reasoning as
+                        # REAL_STREAK_THRESHOLD above): "more than 3" avg
+                        # goals/game over the last 5, not "3 or more", so
+                        # only the best goal-scoring teams show up.
 GOAL_STREAK_MIN_GAMES = 5  # matches this endpoint's fixed sample size —
                             # get_last_five() always returns up to 5 games,
                             # so this really just checks "has this team
