@@ -68,6 +68,28 @@ PROP_VERIFY_MAP = {
     "fouls_over_2.5": (_fouls, 2.5),
 }
 
+# stat_key (as used by STREAK_CONFIG / build_hot_form_entries /
+# build_real_streak_entries in player_stat_model.py) -> same extractor
+# functions above. Hot Form / Real Streak entries carry a stat_key, not
+# a prop_key, since they're not tied to one of the fixed prop lines --
+# kept as a separate map rather than folding into PROP_VERIFY_MAP so a
+# stat_key never accidentally resolves against the wrong (prop-line)
+# comparison semantics (see verify_pending_results' >= vs > distinction
+# below).
+STAT_KEY_EXTRACTOR = {
+    "shots": _shots,
+    "shots_on_target": _sot,
+    "tackles": _tackles,
+    "fouls": _fouls,
+    "goal_or_assist": _goal_or_assist,
+}
+
+SCANNER_LABELS = {
+    "prop": "Prop Picks",
+    "player_hot_form": "Hot Form",
+    "player_real_streak": "Real Streak",
+}
+
 
 def _get_match_player_row(match_id, player_id, headers):
     try:
@@ -88,8 +110,15 @@ def _get_match_player_row(match_id, player_id, headers):
     return None
 
 
-def _entry_id(player_id, prop_key, match_id):
-    raw = f"{player_id}|{prop_key}|{match_id}"
+def _entry_id(player_id, key, match_id):
+    """key is a prop_key for a prop leg, or "{scanner}|{stat_key}" for a
+    Hot Form/Real Streak entry -- the scanner prefix is what stops a
+    player qualifying for BOTH Hot Form and Real Streak in the same stat
+    on the same match from colliding onto one log entry (same bug class
+    already caught and fixed in Orange Line's tracker: without something
+    stat/scanner-specific in the id, same player+match+prop collapses
+    multiple real picks into "already logged" duplicates)."""
+    raw = f"{player_id}|{key}|{match_id}"
     return hashlib.sha256(raw.encode()).hexdigest()[:16]
 
 
@@ -110,10 +139,10 @@ def save_log(entries):
         json.dump(entries, f, indent=2, default=str)
 
 
-def log_todays_signals(legs, log):
-    """Only legs carrying a match_id (built from the automated daily
-    fixture scan) can be verified against a specific later result —
-    watchlist/manual-lookup legs have no single fixture to check and
+def log_todays_signals(legs, hot_form, real_streak, log):
+    """Only legs/entries carrying a match_id (built from the automated
+    daily fixture scan) can be verified against a specific later result
+    — watchlist/manual-lookup legs have no single fixture to check and
     are skipped, same reasoning Euro Ice uses to skip Game Total legs."""
     existing_ids = {e["id"] for e in log}
     added = 0
@@ -126,6 +155,7 @@ def log_todays_signals(legs, log):
         date_key = (leg.get("match_date") or "")[:10]
         log.append({
             "id": eid,
+            "scanner": "prop",
             "player": leg["player"],
             "player_id": leg.get("player_id"),
             "prop_key": leg["prop_key"],
@@ -142,6 +172,43 @@ def log_todays_signals(legs, log):
         })
         existing_ids.add(eid)
         added += 1
+
+    def _add_form(entries, scanner):
+        nonlocal added
+        for e in entries or []:
+            if not e.get("match_id") or not e.get("stat_key"):
+                continue
+            # scanner-prefixed key -- see _entry_id's docstring for why.
+            eid = _entry_id(e.get("player_id"), f"{scanner}|{e['stat_key']}", e["match_id"])
+            if eid in existing_ids:
+                continue
+            date_key = (e.get("match_date") or "")[:10]
+            value = e.get("avg") if scanner == "player_hot_form" else e.get("streak")
+            kind = "Hot Form" if scanner == "player_hot_form" else "Real Streak"
+            log.append({
+                "id": eid,
+                "scanner": scanner,
+                "player": e["player"],
+                "player_id": e.get("player_id"),
+                "stat_key": e["stat_key"],
+                "market": f"{e['player']} {e['label']} {kind}",
+                "category": e["label"],
+                "value": value,
+                "threshold": e.get("threshold"),
+                "detail": f"{e.get('team', 'Unknown team')} · {e.get('league', 'Unknown league')}",
+                "opponent": e.get("opponent"),
+                "match_id": e["match_id"],
+                "match_date": e.get("match_date"),
+                "date_key": date_key,
+                "logged_at": datetime.now(timezone.utc).isoformat(),
+                "status": "pending", "result": None, "actual": None,
+            })
+            existing_ids.add(eid)
+            added += 1
+
+    _add_form(hot_form, "player_hot_form")
+    _add_form(real_streak, "player_real_streak")
+
     print(f"  Results log: {added} new pick(s) logged, {len(log)} total in log")
     return log
 
@@ -172,12 +239,27 @@ def verify_pending_results(log, headers, max_checks=80):
         if row is None:
             continue  # match not finished/ingested yet — leave pending
 
-        extractor, line = PROP_VERIFY_MAP.get(entry["prop_key"], (None, None))
-        if extractor is None:
-            continue
-        actual = extractor(row)
+        scanner = entry.get("scanner", "prop")
+        if scanner == "prop":
+            extractor, line = PROP_VERIFY_MAP.get(entry["prop_key"], (None, None))
+            if extractor is None:
+                continue
+            actual = extractor(row)
+            result = "hit" if actual > line else "miss"
+        else:
+            # Hot Form / Real Streak both ask "did THIS game clear the
+            # threshold too" — >= matches build_hot_form_entries()'s and
+            # build_real_streak_entries()'s own qualifying comparison in
+            # player_stat_model.py, not the prop legs' plain > used for
+            # fixed prop lines above.
+            extractor = STAT_KEY_EXTRACTOR.get(entry.get("stat_key"))
+            if extractor is None:
+                continue
+            actual = extractor(row)
+            result = "hit" if actual >= entry["threshold"] else "miss"
+
         entry["status"] = "verified"
-        entry["result"] = "hit" if actual > line else "miss"
+        entry["result"] = result
         entry["actual"] = actual
         entry["verified_at"] = datetime.now(timezone.utc).isoformat()
         updated += 1
@@ -190,21 +272,44 @@ def build_results_dashboard(log):
     verified = [e for e in log if e["status"] == "verified"]
     pending = [e for e in log if e["status"] == "pending"]
 
+    # Only prop-scanner entries carry a prop_key -- Hot Form/Real Streak
+    # entries use stat_key instead (see log_todays_signals), so this
+    # grouping is scoped to scanner == "prop" rather than assuming every
+    # verified entry has a prop_key.
     by_prop = {}
     for e in verified:
+        if e.get("scanner", "prop") != "prop":
+            continue
         d = by_prop.setdefault(e["prop_key"], {"hit": 0, "miss": 0})
         d[e["result"]] += 1
 
     # By-category breakdown (same grouping build_legs() already uses:
     # Shots, Shots on Target, Cards, Goals, Assists, Tackles, Fouls,
     # Goal or Assist) — coarser than per-prop, easier to read at a glance.
+    # Hot Form/Real Streak entries share these same category labels
+    # (Shots, Tackles, etc. — see STREAK_CONFIG), so this mixes prop
+    # picks and streak picks together here; the By Scanner breakdown
+    # below is what keeps them apart.
     by_category = {}
     for e in verified:
         d = by_category.setdefault(e.get("category") or "Unknown", {"hit": 0, "miss": 0})
         d[e["result"]] += 1
 
-    total_hit = sum(d["hit"] for d in by_prop.values())
-    total_miss = sum(d["miss"] for d in by_prop.values())
+    # By-scanner breakdown — Prop Picks (the fixed Poisson-priced lines)
+    # vs. Hot Form (rolling average clears a line) vs. Real Streak
+    # (genuinely consecutive games clearing a line). Kept separate from
+    # By Category above since all three scanners can tag the same
+    # category label (e.g. "Shots").
+    by_scanner = {}
+    for e in verified:
+        d = by_scanner.setdefault(e.get("scanner", "prop"), {"hit": 0, "miss": 0})
+        d[e["result"]] += 1
+
+    # OVERALL covers every verified entry regardless of scanner -- summing
+    # by_prop here would silently exclude Hot Form/Real Streak picks from
+    # the headline number now that by_prop is scoped to scanner == "prop".
+    total_hit = sum(1 for e in verified if e["result"] == "hit")
+    total_miss = sum(1 for e in verified if e["result"] == "miss")
     total = total_hit + total_miss
     overall_pct = round(100 * total_hit / total) if total else None
 
@@ -222,6 +327,7 @@ def build_results_dashboard(log):
         return out or '<p style="color:var(--sub);font-size:12px">No verified picks yet.</p>'
 
     category_rows = _rows(by_category)
+    scanner_rows = _rows({SCANNER_LABELS.get(k, k): v for k, v in by_scanner.items()})
 
     recent = sorted(verified, key=lambda e: e.get("verified_at", ""), reverse=True)[:30]
     recent_rows = ""
@@ -244,6 +350,11 @@ def build_results_dashboard(log):
   <div style="font-size:11px;color:var(--sub)">OVERALL</div>
   <div style="font-size:32px;font-weight:bold;color:var(--green)">{overall_pct if overall_pct is not None else "—"}{"%" if overall_pct is not None else ""}</div>
   <div style="font-size:12px;color:var(--sub)">{total_hit}/{total} verified picks · {len(pending)} pending (match not finished yet)</div>
+</div>
+
+<div style="background:var(--panel);border-radius:12px;padding:16px;margin:14px 0;border:1px solid var(--border)">
+  <div style="font-weight:bold;margin-bottom:8px">By Scanner</div>
+  {scanner_rows}
 </div>
 
 <div style="background:var(--panel);border-radius:12px;padding:16px;margin:14px 0;border:1px solid var(--border)">
@@ -270,11 +381,11 @@ def build_results_dashboard(log):
     print(f"  Results dashboard: {total} verified, {overall_pct}% overall" if total else "  Results dashboard: no verified picks yet")
 
 
-def run_results_tracker(legs, headers):
+def run_results_tracker(legs, hot_form, real_streak, headers):
     """Single entry point called from player_stat_model.py's --auto path."""
     print("\nRunning results tracker...")
     log = load_log()
-    log = log_todays_signals(legs, log)
+    log = log_todays_signals(legs, hot_form, real_streak, log)
     log = verify_pending_results(log, headers)
     save_log(log)
     build_results_dashboard(log)
