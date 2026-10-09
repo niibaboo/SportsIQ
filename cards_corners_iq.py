@@ -53,6 +53,19 @@ confused with each other:
      at a time, without re-running the script. Every leg/card/streak-row
      carries its own date_key precisely so this client-side filter has
      something to match against.
+
+CHRONOLOGICAL ORDER (fixed alongside the date filter -- user feedback:
+"not chronologically arranged"): build_predictions() iterates league by
+league, so without an explicit sort the final list came out grouped by
+LEAGUE, not by date -- a Bundesliga match three days from now could sit
+above a Premier League match tonight. predictions is now sorted by
+date_key (then the full date string) right before it's returned, and
+make_html() re-sorts defensively before rendering and groups consecutive
+same-day cards under a date header (same fix already applied to
+EuroLeague IQ for the identical symptom) -- so "All dates" now reads top
+to bottom in order, and each date header carries the same data-date/
+dateFilterable wiring as the cards below it, so the dropdown filter still
+hides the right header along with its matches.
 """
 
 import os
@@ -453,6 +466,14 @@ def build_predictions(key, start_date=None):
                 "home_corners": h_corners, "away_corners": a_corners,
                 "home_cards": h_cards, "away_cards": a_cards,
             })
+
+    # Chronological, not league-by-league -- without this, predictions
+    # came out grouped by LEAGUE (the outer loop above), so a match three
+    # days away in one league could sit above tonight's match in another
+    # (user feedback: "not chronologically arranged"). Sorts on date_key
+    # first (so same-day matches stay grouped by day) then the full date
+    # string as a tiebreaker for kickoff-time order within that day.
+    predictions.sort(key=lambda p: (p["date_key"], p["date"]))
     return predictions
 
 
@@ -571,6 +592,8 @@ STREAK_PANEL = """<div class="streakPanel" style="background:#1a1310;border-radi
   <p class="emptyForDate" style="color:#998;font-size:11px;margin:6px 0 0;display:none">No entries for the selected date.</p>
 </div>"""
 
+DATE_HEADER = """<div class="dateFilterable" data-date="{date_key}" style="color:var(--green);font-size:12px;font-weight:bold;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)">{label}</div>"""
+
 MATCH_CARD = """<div class="dateFilterable" data-date="{date_key}" style="background:#14261a;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a4a34">
   <div style="font-size:11px;color:#998;text-transform:uppercase;letter-spacing:.03em">{league} · {date_label}</div>
   <h3 style="margin:2px 0 10px 0;font-size:16px">{away} @ {home}</h3>
@@ -673,8 +696,9 @@ function initToggles() {{
 function applyDateFilter() {{
   const selected = document.getElementById('dateFilter').value;
 
-  // Show/hide every match card and streak row that carries a data-date --
-  // "all" always matches, otherwise it's an exact date_key string compare.
+  // Show/hide every match card, date header, and streak row that carries
+  // a data-date -- "all" always matches, otherwise it's an exact
+  // date_key string compare.
   document.querySelectorAll('.dateFilterable').forEach(el => {{
     el.style.display = (selected === 'all' || el.dataset.date === selected) ? '' : 'none';
   }});
@@ -688,9 +712,11 @@ function applyDateFilter() {{
     if (empty) empty.style.display = (rows.length && !anyVisible) ? '' : 'none';
   }});
 
-  // Same idea for the match cards container.
+  // Same idea for the match cards container -- date headers don't count
+  // as a "card" here, only the actual MATCH_CARD elements do, so the
+  // empty-state message is driven off those specifically.
   const cardsContainer = document.getElementById('matchCardsContainer');
-  const cardRows = cardsContainer ? cardsContainer.querySelectorAll('.dateFilterable') : [];
+  const cardRows = cardsContainer ? cardsContainer.querySelectorAll('.dateFilterable:not(.dateHeader)') : [];
   const anyCardVisible = [...cardRows].some(r => r.style.display !== 'none');
   const noCards = document.getElementById('noCardsForDate');
   if (noCards) noCards.style.display = (cardRows.length && !anyCardVisible) ? '' : 'none';
@@ -815,6 +841,11 @@ def _friendly_date(date_key):
 
 
 def make_html(predictions):
+    # Defensive re-sort -- build_predictions() already returns this
+    # chronologically, but make_html() doesn't rely on the caller having
+    # kept it that way (same precedent as EuroLeague IQ's own make_html).
+    predictions = sorted(predictions, key=lambda p: (p["date_key"], p["date"]))
+
     legs = build_legs(predictions)
     builder = BUILDER_TEMPLATE if legs else ""
 
@@ -841,16 +872,31 @@ def make_html(predictions):
         lambda e: f"{e['streak']}+ straight", lambda e: format_history(e["list"]),
     )
 
-    cards_html = "".join(MATCH_CARD.format(
-        league=p["league"], home=p["home_team"], away=p["away_team"],
-        date_key=p["date_key"], date_label=_friendly_date(p["date_key"]),
-        home_corners_lam=p["home_corners"]["lambda"], away_corners_lam=p["away_corners"]["lambda"],
-        home_corners_hist=format_history(p["home_corners"]["corners_list"]) or "—",
-        away_corners_hist=format_history(p["away_corners"]["corners_list"]) or "—",
-        home_cards_lam=p["home_cards"]["lambda"], away_cards_lam=p["away_cards"]["lambda"],
-        home_cards_hist=format_history(p["home_cards"]["yellow_cards_list"]) or "—",
-        away_cards_hist=format_history(p["away_cards"]["yellow_cards_list"]) or "—",
-    ) for p in predictions)
+    # Group consecutive same-day cards under a date header -- same fix
+    # already applied to EuroLeague IQ for the identical "not
+    # chronologically arranged" symptom. The header itself carries
+    # dateFilterable + data-date (plus a dateHeader marker class so the
+    # JS empty-state check above doesn't count it as a match card) so
+    # selecting one specific date in the dropdown still hides every other
+    # day's header along with its cards.
+    cards_html = ""
+    last_date_key = None
+    for p in predictions:
+        if p["date_key"] != last_date_key:
+            cards_html += DATE_HEADER.format(date_key=p["date_key"], label=_friendly_date(p["date_key"])).replace(
+                'class="dateFilterable"', 'class="dateFilterable dateHeader"'
+            )
+            last_date_key = p["date_key"]
+        cards_html += MATCH_CARD.format(
+            league=p["league"], home=p["home_team"], away=p["away_team"],
+            date_key=p["date_key"], date_label=_friendly_date(p["date_key"]),
+            home_corners_lam=p["home_corners"]["lambda"], away_corners_lam=p["away_corners"]["lambda"],
+            home_corners_hist=format_history(p["home_corners"]["corners_list"]) or "—",
+            away_corners_hist=format_history(p["away_corners"]["corners_list"]) or "—",
+            home_cards_lam=p["home_cards"]["lambda"], away_cards_lam=p["away_cards"]["lambda"],
+            home_cards_hist=format_history(p["home_cards"]["yellow_cards_list"]) or "—",
+            away_cards_hist=format_history(p["away_cards"]["yellow_cards_list"]) or "—",
+        )
     if not cards_html:
         cards_html = '<p style="text-align:center;color:var(--sub)">No usable matches today.</p>'
 
