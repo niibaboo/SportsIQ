@@ -415,7 +415,7 @@
           ${rs.map(e => `
             <div class="streakRow">
               <div class="srMain"><b>${e.player}</b><br><span class="srSub">${e.team} · ${e.league} · ${e.label}</span></div>
-              <div class="streakValue"><span class="big">${e.streak}+ straight</span><br><span class="srSub">${e.history}</span></div>
+              <div class="streakValue"><span class="big">${e.streak}${e.full_sample ? '+' : ''} straight</span><br><span class="srSub">${e.history}</span></div>
             </div>
           `).join('')}
         </div>
@@ -453,23 +453,38 @@
     
     function renderPlayers() {
       const filtered = allPlayers.filter(p => shouldShowPlayer(p, currentFilter));
-      
+
       if (filtered.length === 0) {
         document.getElementById('content').innerHTML = '<div class="loading">No players found for this filter.</div>';
         return;
       }
-      
-      // Sort by highest probability
+
+      // Which props a card shows/sorts by depends on the active tab -- 'all'
+      // uses every prop the player has; a specific category restricts to
+      // just that category's prop keys. Without this, every tab showed the
+      // same top-3-overall props on each card, so switching tabs visibly
+      // changed WHICH players appeared but not what was shown on them --
+      // looked like the filter wasn't doing anything.
+      const relevantProps = (player) => {
+        const entries = Object.entries(player.props || {}).filter(([k, v]) => v > 0);
+        if (currentFilter === 'all') return entries;
+        const cats = PROP_CATEGORIES[currentFilter] || [];
+        return entries.filter(([k]) => cats.includes(k));
+      };
+
+      // Sort by highest probability WITHIN the active category
       filtered.sort((a, b) => {
-        const aMax = Math.max(...Object.values(a.props || {}));
-        const bMax = Math.max(...Object.values(b.props || {}));
+        const aVals = relevantProps(a).map(([, v]) => v);
+        const bVals = relevantProps(b).map(([, v]) => v);
+        const aMax = aVals.length ? Math.max(...aVals) : 0;
+        const bMax = bVals.length ? Math.max(...bVals) : 0;
         return bMax - aMax;
       });
-      
+
       const html = filtered.map(player => {
         const gameLog = player.game_log || {};
         const hitRates = player.hit_rates || {};
-        
+
         return `
           <div class="card">
             <div class="card-header">
@@ -481,12 +496,11 @@
                 <span class="market">${player.rolling_matches_used} games used</span>
               </div>
             </div>
-            
+
             <div class="card-body">
               ${player.low_data ? '<div class="error">⚠ Low data: Probabilities may be unreliable</div>' : ''}
-              
-              ${Object.entries(player.props || {})
-                .filter(([k, v]) => v > 0)
+
+              ${relevantProps(player)
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 3)
                 .map(([prop, prob]) => {
