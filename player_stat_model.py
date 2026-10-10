@@ -997,7 +997,18 @@ def build_real_streak_entries(reports: list[dict]) -> list[dict]:
     """Players genuinely CONSECUTIVE in a stat for at least min_streak_len
     games, walking backward from the most recent game -- distinct from
     Hot Form's plain average above, which can mask a bad most-recent
-    game. Same match_id/match_date/opponent carry-through as Hot Form."""
+    game. Same match_id/match_date/opponent carry-through as Hot Form.
+
+    "history" is the games that actually MAKE UP the streak
+    (values[-streak:]), not the full rolling window -- using the full
+    window here was a real bug: a 9-game streak out of a 10-game window
+    would show all 10 values, including the earlier game that BROKE the
+    streak, making it look like the streak's own history contradicted
+    its own threshold (e.g. a "9+ straight >=2" streak whose shown
+    history opened with a 0). "full_sample" flags when the streak
+    reaches all the way back to the edge of the available data -- only
+    then does it genuinely mean "9 and possibly more, we just don't have
+    older games to check"; the HTML only appends "+" in that case."""
     entries = []
     for r in reports:
         game_log = r.get("game_log", {})
@@ -1007,6 +1018,7 @@ def build_real_streak_entries(reports: list[dict]) -> list[dict]:
                 continue
             streak = _current_streak(values, cfg["real_streak_threshold"])
             if streak >= cfg["min_streak_len"]:
+                streak_games = values[-streak:]
                 entries.append({
                     "player": r["player_name"], "player_id": r.get("player_id"),
                     "team": r.get("team_name"), "league": r.get("league_name"),
@@ -1014,7 +1026,8 @@ def build_real_streak_entries(reports: list[dict]) -> list[dict]:
                     "opponent": r.get("opponent"),
                     "stat_key": stat_key, "label": cfg["label"],
                     "streak": streak, "threshold": cfg["real_streak_threshold"],
-                    "history": "/".join(str(int(v)) for v in values),
+                    "history": "/".join(str(int(v)) for v in streak_games),
+                    "full_sample": streak >= len(values),
                 })
     entries.sort(key=lambda e: -e["streak"])
     return entries
