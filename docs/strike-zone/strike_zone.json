@@ -1,1 +1,138 @@
-[]
+[
+  {
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Sean Burke",
+    "market": "Sean Burke Over 3.0 Strikeouts",
+    "prob": 63,
+    "category": "Strikeouts",
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "detail": "Chicago White Sox vs Cleveland Guardians \u00b7 proj 4.36 K",
+    "history": "3/6/2/5/7",
+    "game_pk": 849831,
+    "game_date": "2026-10-10",
+    "pitcher_id": 680732,
+    "line": 3.0
+  },
+  {
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Sean Burke",
+    "market": "Sean Burke Over 9.0 Outs Recorded",
+    "prob": 81,
+    "category": "Outs Recorded",
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "detail": "Chicago White Sox vs Cleveland Guardians \u00b7 proj 4.2 IP",
+    "history": "9/17/4/18/16",
+    "game_pk": 849831,
+    "game_date": "2026-10-10",
+    "pitcher_id": 680732,
+    "line": 9.0
+  },
+  {
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Gavin Williams",
+    "market": "Gavin Williams Over 6.0 Strikeouts",
+    "prob": 76,
+    "category": "Strikeouts",
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "detail": "Cleveland Guardians vs Chicago White Sox \u00b7 proj 8.7 K",
+    "history": "13/11/7/9/4",
+    "game_pk": 849831,
+    "game_date": "2026-10-10",
+    "pitcher_id": 668909,
+    "line": 6.0
+  },
+  {
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Gavin Williams",
+    "market": "Gavin Williams Over 12.0 Outs Recorded",
+    "prob": 86,
+    "category": "Outs Recorded",
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "detail": "Cleveland Guardians vs Chicago White Sox \u00b7 proj 5.7 IP",
+    "history": "21/18/15/21/10",
+    "game_pk": 849831,
+    "game_date": "2026-10-10",
+    "pitcher_id": 668909,
+    "line": 12.0
+  },
+  {
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Chicago White Sox",
+    "market": "Chicago White Sox Over 3.0 Runs",
+    "prob": 70,
+    "category": "Team Runs",
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "detail": "vs Cleveland Guardians \u00b7 proj 4.73 runs",
+    "history": "4/9/6/6/4",
+    "game_pk": 849831,
+    "game_date": "2026-10-10",
+    "is_home": false,
+    "line": 3.0
+  },
+  {
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Chicago White Sox",
+    "market": "Chicago White Sox Over 5.0 Hits",
+    "prob": 76,
+    "category": "Team Hits",
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "detail": "vs Cleveland Guardians \u00b7 proj 7.49 hits",
+    "history": "9/12/10/8/8",
+    "game_pk": 849831,
+    "game_date": "2026-10-10",
+    "is_home": false,
+    "line": 5.0
+  },
+  {
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Cleveland Guardians",
+    "market": "Cleveland Guardians Over 2.0 Runs",
+    "prob": 56,
+    "category": "Team Runs",
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "detail": "vs Chicago White Sox \u00b7 proj 2.93 runs",
+    "history": "0/1/12/11/2",
+    "game_pk": 849831,
+    "game_date": "2026-10-10",
+    "is_home": true,
+    "line": 2.0
+  },
+  {
+    "match": "Chicago White Sox @ Cleveland Guardians",
+    "subject": "Cleveland Guardians",
+    "market": "Cleveland Guardians Over 5.5 Hits",
+    "prob": 82,
+    "category": "Team Hits",
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "detail": "vs Chicago White Sox \u00b7 proj 8.1 hits",
+    "history": "5/4/9/14/9",
+    "game_pk": 849831,
+    "game_date": "2026-10-10",
+    "is_home": true,
+    "line": 5.5
+  }
+]

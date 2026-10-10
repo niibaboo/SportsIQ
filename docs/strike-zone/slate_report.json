@@ -1,1 +1,161 @@
-[]
+[
+  {
+    "away": "Chicago White Sox",
+    "home": "Cleveland Guardians",
+    "time": "1:00 AM BST",
+    "pitchers": [
+      {
+        "side": "away",
+        "name": "Sean Burke",
+        "pitcher_id": 680732,
+        "team": "Chicago White Sox",
+        "opp": "Cleveland Guardians",
+        "opp_kpct": 20.8,
+        "fip": 3.62276,
+        "xfip": 4.003,
+        "lambda": 4.36,
+        "lo": 2,
+        "hi": 7,
+        "proj_ip": 4.2,
+        "outs_lambda": 12.71,
+        "outs_lo": 8,
+        "outs_hi": 17,
+        "season_era": "3.34",
+        "season_k9": "9.66",
+        "season_hits9": "7.52",
+        "bb9": 3.24,
+        "whip": "1.20",
+        "l5_str": "3\u00b76\u00b72\u00b75\u00b77",
+        "l5_vs_season": 3.0,
+        "k_last5": [
+          3,
+          6,
+          2,
+          5,
+          7
+        ],
+        "outs_last5": [
+          9,
+          17,
+          4,
+          18,
+          16
+        ]
+      },
+      {
+        "side": "home",
+        "name": "Gavin Williams",
+        "pitcher_id": 668909,
+        "team": "Cleveland Guardians",
+        "opp": "Chicago White Sox",
+        "opp_kpct": 24.1,
+        "fip": 3.47483,
+        "xfip": 2.8516,
+        "lambda": 8.7,
+        "lo": 5,
+        "hi": 13,
+        "proj_ip": 5.7,
+        "outs_lambda": 17.0,
+        "outs_lo": 12,
+        "outs_hi": 22,
+        "season_era": "3.76",
+        "season_k9": "12.11",
+        "season_hits9": "7.03",
+        "bb9": 2.98,
+        "whip": "1.11",
+        "l5_str": "13\u00b711\u00b77\u00b79\u00b74",
+        "l5_vs_season": 7.0,
+        "k_last5": [
+          13,
+          11,
+          7,
+          9,
+          4
+        ],
+        "outs_last5": [
+          21,
+          18,
+          15,
+          21,
+          10
+        ]
+      }
+    ],
+    "game_pk": 849831,
+    "game_date": "2026-10-10",
+    "team_runs": {
+      "away": {
+        "team": "Chicago White Sox",
+        "opp": "Cleveland Guardians",
+        "lambda": 4.73,
+        "lo": 2,
+        "hi": 8,
+        "l5_str": "4\u00b79\u00b76\u00b76\u00b74",
+        "last5_runs": [
+          4,
+          9,
+          6,
+          6,
+          4
+        ],
+        "season_rpg": 4.79,
+        "run_factor": 0.9,
+        "xfip_used": true
+      },
+      "home": {
+        "team": "Cleveland Guardians",
+        "opp": "Chicago White Sox",
+        "lambda": 2.93,
+        "lo": 1,
+        "hi": 5,
+        "l5_str": "0\u00b71\u00b712\u00b711\u00b72",
+        "last5_runs": [
+          0,
+          1,
+          12,
+          11,
+          2
+        ],
+        "season_rpg": 4.19,
+        "run_factor": 1.03,
+        "xfip_used": true
+      }
+    },
+    "team_hits": {
+      "away": {
+        "team": "Chicago White Sox",
+        "opp": "Cleveland Guardians",
+        "lambda": 7.49,
+        "lo": 4,
+        "hi": 11,
+        "l5_str": "9\u00b712\u00b710\u00b78\u00b78",
+        "last5_hits": [
+          9,
+          12,
+          10,
+          8,
+          8
+        ],
+        "season_hpg": 7.91,
+        "hit_factor": 0.87
+      },
+      "home": {
+        "team": "Cleveland Guardians",
+        "opp": "Chicago White Sox",
+        "lambda": 8.1,
+        "lo": 5,
+        "hi": 12,
+        "l5_str": "5\u00b74\u00b79\u00b714\u00b79",
+        "last5_hits": [
+          5,
+          4,
+          9,
+          14,
+          9
+        ],
+        "season_hpg": 7.97,
+        "hit_factor": 0.93
+      }
+    }
+  }
+]

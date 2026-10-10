@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Strike Zone -- Slate for 2026-10-09</title>
+<title>Strike Zone -- Slate for 2026-10-10</title>
 <style>
   :root{--bg:#0b0f14; --panel:#121820; --panel2:#161d27; --border:#233040; --text:#e8edf2; --sub:#8b98a8; --yellow:#facc15; --green:#22c55e;}
   body{margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; padding:16px; max-width:640px; margin:0 auto;}
@@ -49,18 +49,235 @@
 <div class="topBar">
   <div>
     <h1>Strike Zone -- Daily Slate</h1>
-    <div class="sub">2026-10-09 · generated 2026-10-09 18:34</div>
+    <div class="sub">2026-10-10 · generated 2026-10-10 17:31</div>
     <div style="margin-top:4px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none;font-size:12px">📊 Results Tracker</a></div>
   </div>
   <button class="downloadBtn" onclick="exportCSV()">Download CSV</button>
 </div>
-
-
-
+<div class="builderPanel">
+  <div class="builderTitle">Safest Bet Builder</div>
+  <div class="builderToggles" id="builderToggles"></div>
+  <div class="builderControls">
+    <label>Target odds:</label>
+    <input type="number" step="0.1" min="1.1" value="5.0" id="szTargetOdds">
+    <label>Max legs:</label>
+    <input type="number" step="1" min="2" value="8" id="szMaxLegs">
+    <button class="builderBtn" onclick="buildSafestSZ()">Build</button>
+    <button class="builderBtnAlt" onclick="buildSafestSZ()">Shuffle</button>
+  </div>
+  <div class="builderResult" id="builderResult">
+    Untick any market you don't want considered, set a target odds and leg cap, then tap
+    Build. Rotates through ticked categories, groups near-tied legs and shuffles within
+    each group so it draws from more of today's slate rather than the same few
+    pitchers/teams, and caps at 2 legs per pitcher/team to avoid stacking correlated
+    lines (e.g. Strikeouts and Outs Recorded for the same starter). Tap Shuffle for a
+    fresh pick without changing your settings.
+  </div>
+</div>
+<div class="builderPanel">
+  <div class="builderTitle">🔥 Hot Form &amp; Streaks</div>
+  <div style="font-size:11px;color:var(--sub);margin-bottom:10px">
+    Raw recent-FORM screens, not probabilistic predictions like the rest of the slate.
+    Form (average) and Real Streak (consecutive, no break) measure genuinely different
+    things -- a team/pitcher can appear in one, both, or neither. Cross-check against
+    that team's/pitcher's own prop line above before treating either alone as a signal.
+  </div>
+  <div style="font-size:12px;font-weight:700;color:var(--text);margin:10px 0 4px">⚾ Run Form <span style="color:var(--sub);font-weight:normal;font-size:10px">(avg ≥5.5/gm over last 5)</span></div><div style="background:var(--panel2);border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:var(--sub)">L5 AVG</div>
+    <div style="font-size:17px;font-weight:bold;color:var(--green)">5.8</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:var(--sub)">Chicago White Sox @ Cleveland Guardians · 1:00 AM BST</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Chicago White Sox (vs Cleveland Guardians)</div>
+    <div style="font-size:10px;color:var(--sub)">last 5 (old→new): 4·9·6·6·4</div>
+  </div>
+</div>
+  
+  <div style="font-size:12px;font-weight:700;color:var(--text);margin:10px 0 4px">📊 Hit Form <span style="color:var(--sub);font-weight:normal;font-size:10px">(avg ≥7.0/gm over last 5)</span></div><div style="background:var(--panel2);border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:var(--sub)">L5 AVG</div>
+    <div style="font-size:17px;font-weight:bold;color:var(--green)">9.4</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:var(--sub)">Chicago White Sox @ Cleveland Guardians · 1:00 AM BST</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Chicago White Sox (vs Cleveland Guardians)</div>
+    <div style="font-size:10px;color:var(--sub)">last 5 (old→new): 9·12·10·8·8</div>
+  </div>
+</div><div style="background:var(--panel2);border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:var(--sub)">L5 AVG</div>
+    <div style="font-size:17px;font-weight:bold;color:var(--green)">8.2</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:var(--sub)">Chicago White Sox @ Cleveland Guardians · 1:00 AM BST</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Cleveland Guardians (vs Chicago White Sox)</div>
+    <div style="font-size:10px;color:var(--sub)">last 5 (old→new): 5·4·9·14·9</div>
+  </div>
+</div>
+  <div style="font-size:12px;font-weight:700;color:var(--text);margin:10px 0 4px">🔥 Real Hit Streak <span style="color:var(--sub);font-weight:normal;font-size:10px">(≥3+ CONSECUTIVE games ≥9 hits)</span></div><div style="background:var(--panel2);border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:var(--bg);border:1px solid #f59e0b;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:var(--sub)">STREAK</div>
+    <div style="font-size:17px;font-weight:bold;color:#f59e0b">3</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:var(--sub)">Chicago White Sox @ Cleveland Guardians · 1:00 AM BST</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Cleveland Guardians (vs Chicago White Sox)</div>
+    <div style="font-size:10px;color:var(--sub)">3 straight ≥9 (old→new): 9·14·9</div>
+  </div>
+</div>
+  <div style="font-size:12px;font-weight:700;color:var(--text);margin:10px 0 4px">🎯 K Form <span style="color:var(--sub);font-weight:normal;font-size:10px">(avg ≥7.0/start over last 5)</span></div><div style="background:var(--panel2);border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:var(--sub)">L5 AVG</div>
+    <div style="font-size:17px;font-weight:bold;color:var(--green)">8.8</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:var(--sub)">Chicago White Sox @ Cleveland Guardians · 1:00 AM BST</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Gavin Williams (Cleveland Guardians vs Chicago White Sox)</div>
+    <div style="font-size:10px;color:var(--sub)">last 5 (old→new): 13·11·7·9·4</div>
+  </div>
+</div>
+  
+</div>
+<div class="gameGroup">
+  <div class="gameHead"><span>Chicago White Sox @ Cleveland Guardians</span><span>1:00 AM BST</span></div>
+  <div class="pitcherRow" data-runs_lambda="4.73">
+  <div class="pTop">
+    <div>
+      <div class="pName">Chicago White Sox -- Total Runs</div>
+      <div class="pMeta">vs Cleveland Guardians · L5 runs: 4·9·6·6·4 · season 4.79/gm · pitching-adj x0.9 (xFIP-blended)</div>
+    </div>
+    <div class="pProj">
+      <div class="pProjNum">4.73</div>
+      <div class="pProjSub">2-8 range</div>
+    </div>
+  </div>
+  <div class="propLabel">Team Total Runs (full game)</div>
+  <div class="edgeRow">
+    <input type="number" step="0.5" class="lineInput" placeholder="Line">
+    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
+    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
+    <button class="edgeBtn" data-kind="runs_lambda" onclick="calcEdge(this)">Edge</button>
+    <div class="edgeOut"></div>
+  </div>
+</div><div class="pitcherRow" data-hits_lambda="7.49">
+  <div class="pTop">
+    <div>
+      <div class="pName">Chicago White Sox -- Total Hits</div>
+      <div class="pMeta">vs Cleveland Guardians · L5 hits: 9·12·10·8·8 · season 7.91/gm · pitching-adj x0.87</div>
+    </div>
+    <div class="pProj">
+      <div class="pProjNum">7.49</div>
+      <div class="pProjSub">4-11 range</div>
+    </div>
+  </div>
+  <div class="propLabel">Team Total Hits (full game)</div>
+  <div class="edgeRow">
+    <input type="number" step="0.5" class="lineInput" placeholder="Line">
+    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
+    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
+    <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
+    <div class="edgeOut"></div>
+  </div>
+</div><div class="pitcherRow" data-runs_lambda="2.93">
+  <div class="pTop">
+    <div>
+      <div class="pName">Cleveland Guardians -- Total Runs</div>
+      <div class="pMeta">vs Chicago White Sox · L5 runs: 0·1·12·11·2 · season 4.19/gm · pitching-adj x1.03 (xFIP-blended)</div>
+    </div>
+    <div class="pProj">
+      <div class="pProjNum">2.93</div>
+      <div class="pProjSub">1-5 range</div>
+    </div>
+  </div>
+  <div class="propLabel">Team Total Runs (full game)</div>
+  <div class="edgeRow">
+    <input type="number" step="0.5" class="lineInput" placeholder="Line">
+    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
+    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
+    <button class="edgeBtn" data-kind="runs_lambda" onclick="calcEdge(this)">Edge</button>
+    <div class="edgeOut"></div>
+  </div>
+</div><div class="pitcherRow" data-hits_lambda="8.1">
+  <div class="pTop">
+    <div>
+      <div class="pName">Cleveland Guardians -- Total Hits</div>
+      <div class="pMeta">vs Chicago White Sox · L5 hits: 5·4·9·14·9 · season 7.97/gm · pitching-adj x0.93</div>
+    </div>
+    <div class="pProj">
+      <div class="pProjNum">8.1</div>
+      <div class="pProjSub">5-12 range</div>
+    </div>
+  </div>
+  <div class="propLabel">Team Total Hits (full game)</div>
+  <div class="edgeRow">
+    <input type="number" step="0.5" class="lineInput" placeholder="Line">
+    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
+    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
+    <button class="edgeBtn" data-kind="hits_lambda" onclick="calcEdge(this)">Edge</button>
+    <div class="edgeOut"></div>
+  </div>
+</div>
+  <div class="pitcherRow" data-lambda="4.36" data-outs_lambda="12.71">
+  <div class="pTop">
+    <div>
+      <div class="pName">Sean Burke</div>
+      <div class="pMeta">Chicago White Sox vs Cleveland Guardians · L5 Ks: 3·6·2·5·7 (+3% vs season) · BB/9 3.24 · FIP 3.62 · xFIP 4.00</div>
+    </div>
+    <div class="pProj">
+      <div class="pProjNum">4.36</div>
+      <div class="pProjSub">2-7 range · 4.2 IP</div>
+    </div>
+  </div>
+  <div class="propLabel">Strikeouts</div>
+  <div class="edgeRow">
+    <input type="number" step="0.5" class="lineInput" placeholder="Line">
+    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
+    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
+    <button class="edgeBtn" data-kind="lambda" onclick="calcEdge(this)">Edge</button>
+    <div class="edgeOut"></div>
+  </div>
+  <div class="propLabel">Outs Recorded <span class="pProjSub">(proj 12.71 · 8-17 range)</span></div>
+  <div class="edgeRow">
+    <input type="number" step="0.5" class="lineInput" placeholder="Line">
+    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
+    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
+    <button class="edgeBtn" data-kind="outs_lambda" onclick="calcEdge(this)">Edge</button>
+    <div class="edgeOut"></div>
+  </div>
+</div><div class="pitcherRow" data-lambda="8.7" data-outs_lambda="17.0">
+  <div class="pTop">
+    <div>
+      <div class="pName">Gavin Williams</div>
+      <div class="pMeta">Cleveland Guardians vs Chicago White Sox · L5 Ks: 13·11·7·9·4 (+7% vs season) · BB/9 2.98 · FIP 3.47 · xFIP 2.85</div>
+    </div>
+    <div class="pProj">
+      <div class="pProjNum">8.7</div>
+      <div class="pProjSub">5-13 range · 5.7 IP</div>
+    </div>
+  </div>
+  <div class="propLabel">Strikeouts</div>
+  <div class="edgeRow">
+    <input type="number" step="0.5" class="lineInput" placeholder="Line">
+    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
+    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
+    <button class="edgeBtn" data-kind="lambda" onclick="calcEdge(this)">Edge</button>
+    <div class="edgeOut"></div>
+  </div>
+  <div class="propLabel">Outs Recorded <span class="pProjSub">(proj 17.0 · 12-22 range)</span></div>
+  <div class="edgeRow">
+    <input type="number" step="0.5" class="lineInput" placeholder="Line">
+    <input type="number" step="0.01" class="overInput" placeholder="Over odds">
+    <input type="number" step="0.01" class="underInput" placeholder="Under odds">
+    <button class="edgeBtn" data-kind="outs_lambda" onclick="calcEdge(this)">Edge</button>
+    <div class="edgeOut"></div>
+  </div>
+</div>
+</div>
 <div class="footnote">Projections blend season K-rate/batter-faced with a recency-weighted last-5 rate (65% recent), adjust for opponent K% and BB/9-driven outing length, then use a Poisson distribution for the range. Team run projections now blend opposing-starter xFIP (peripheral-based, strips out defense/luck) with raw ERA. Enter a book's line/odds under any pitcher to compute a de-vigged edge -- that math runs entirely in your browser, no data leaves the page.</div>
 <script>
-const REPORT_DATE = "2026-10-09";
-const LEGS = [];
+const REPORT_DATE = "2026-10-10";
+const LEGS = [{"match": "Chicago White Sox @ Cleveland Guardians", "subject": "Sean Burke", "market": "Sean Burke Over 3.0 Strikeouts", "prob": 63, "category": "Strikeouts", "hit_rate": {"hits": 3, "total": 5}, "detail": "Chicago White Sox vs Cleveland Guardians \u00b7 proj 4.36 K", "history": "3/6/2/5/7", "game_pk": 849831, "game_date": "2026-10-10", "pitcher_id": 680732, "line": 3.0}, {"match": "Chicago White Sox @ Cleveland Guardians", "subject": "Sean Burke", "market": "Sean Burke Over 9.0 Outs Recorded", "prob": 81, "category": "Outs Recorded", "hit_rate": {"hits": 3, "total": 5}, "detail": "Chicago White Sox vs Cleveland Guardians \u00b7 proj 4.2 IP", "history": "9/17/4/18/16", "game_pk": 849831, "game_date": "2026-10-10", "pitcher_id": 680732, "line": 9.0}, {"match": "Chicago White Sox @ Cleveland Guardians", "subject": "Gavin Williams", "market": "Gavin Williams Over 6.0 Strikeouts", "prob": 76, "category": "Strikeouts", "hit_rate": {"hits": 4, "total": 5}, "detail": "Cleveland Guardians vs Chicago White Sox \u00b7 proj 8.7 K", "history": "13/11/7/9/4", "game_pk": 849831, "game_date": "2026-10-10", "pitcher_id": 668909, "line": 6.0}, {"match": "Chicago White Sox @ Cleveland Guardians", "subject": "Gavin Williams", "market": "Gavin Williams Over 12.0 Outs Recorded", "prob": 86, "category": "Outs Recorded", "hit_rate": {"hits": 4, "total": 5}, "detail": "Cleveland Guardians vs Chicago White Sox \u00b7 proj 5.7 IP", "history": "21/18/15/21/10", "game_pk": 849831, "game_date": "2026-10-10", "pitcher_id": 668909, "line": 12.0}, {"match": "Chicago White Sox @ Cleveland Guardians", "subject": "Chicago White Sox", "market": "Chicago White Sox Over 3.0 Runs", "prob": 70, "category": "Team Runs", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs Cleveland Guardians \u00b7 proj 4.73 runs", "history": "4/9/6/6/4", "game_pk": 849831, "game_date": "2026-10-10", "is_home": false, "line": 3.0}, {"match": "Chicago White Sox @ Cleveland Guardians", "subject": "Chicago White Sox", "market": "Chicago White Sox Over 5.0 Hits", "prob": 76, "category": "Team Hits", "hit_rate": {"hits": 5, "total": 5}, "detail": "vs Cleveland Guardians \u00b7 proj 7.49 hits", "history": "9/12/10/8/8", "game_pk": 849831, "game_date": "2026-10-10", "is_home": false, "line": 5.0}, {"match": "Chicago White Sox @ Cleveland Guardians", "subject": "Cleveland Guardians", "market": "Cleveland Guardians Over 2.0 Runs", "prob": 56, "category": "Team Runs", "hit_rate": {"hits": 2, "total": 5}, "detail": "vs Chicago White Sox \u00b7 proj 2.93 runs", "history": "0/1/12/11/2", "game_pk": 849831, "game_date": "2026-10-10", "is_home": true, "line": 2.0}, {"match": "Chicago White Sox @ Cleveland Guardians", "subject": "Cleveland Guardians", "market": "Cleveland Guardians Over 5.5 Hits", "prob": 82, "category": "Team Hits", "hit_rate": {"hits": 3, "total": 5}, "detail": "vs Chicago White Sox \u00b7 proj 8.1 hits", "history": "5/4/9/14/9", "game_pk": 849831, "game_date": "2026-10-10", "is_home": true, "line": 5.5}];
 
 function poissonCDF(threshold, lambda){
   let p = Math.exp(-lambda), cum = p;
