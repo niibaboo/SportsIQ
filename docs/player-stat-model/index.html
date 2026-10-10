@@ -285,6 +285,36 @@
       margin-bottom: 10px;
     }
 
+    .statGroup {
+      margin-top: 14px;
+    }
+
+    .statGroup:first-of-type {
+      margin-top: 0;
+    }
+
+    .statGroupTitle {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .statGroup:first-of-type .statGroupTitle {
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .statGroupCount {
+      color: var(--sub);
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
     .streakRow {
       display: flex;
       justify-content: space-between;
@@ -389,6 +419,24 @@
     // alongside the per-player reports and builder legs -- rendered
     // here as two standing panels, independent of the filter buttons
     // above (those only affect the player card list below).
+    // Groups entries by their stat label ("Shots", "Shots on Target",
+    // "Tackles", "Fouls", "Goal Involvement") so the panel reads as
+    // distinct sections per stat instead of one flat mixed list. The
+    // STREAK_CONFIG order from player_stat_model.py (shots -> SOT ->
+    // tackles -> fouls -> goal involvement) is used as the category
+    // order; entries within a group keep the sort order they already
+    // arrived in (avg/streak descending, from the Python side).
+    const CATEGORY_ORDER = ['Shots', 'Shots on Target', 'Tackles', 'Fouls', 'Goal Involvement'];
+    function groupByLabel(entries) {
+      const groups = {};
+      entries.forEach(e => { (groups[e.label] = groups[e.label] || []).push(e); });
+      const orderedKeys = [
+        ...CATEGORY_ORDER.filter(k => groups[k]),
+        ...Object.keys(groups).filter(k => !CATEGORY_ORDER.includes(k)),
+      ];
+      return orderedKeys.map(label => [label, groups[label]]);
+    }
+
     function renderStreakPanels(hotForm, realStreak) {
       const hf = hotForm || [];
       const rs = realStreak || [];
@@ -399,10 +447,15 @@
         <div class="streakPanel">
           <div class="panelTitle">📊 Hot Form</div>
           <div class="panelNote">Average over the player's recent games clears the line — can mask a bad most recent game. Not a streak.</div>
-          ${hf.map(e => `
-            <div class="streakRow">
-              <div class="srMain"><b>${e.player}</b><br><span class="srSub">${e.team} · ${e.league} · ${e.label}</span></div>
-              <div class="streakValue"><span class="big">${e.avg} avg</span><br><span class="srSub">${e.n_games}gm · ${e.history}</span></div>
+          ${groupByLabel(hf).map(([label, group]) => `
+            <div class="statGroup">
+              <div class="statGroupTitle">${label} <span class="statGroupCount">${group.length}</span></div>
+              ${group.map(e => `
+                <div class="streakRow">
+                  <div class="srMain"><b>${e.player}</b><br><span class="srSub">${e.team} · ${e.league}</span></div>
+                  <div class="streakValue"><span class="big">${e.avg} avg</span><br><span class="srSub">${e.n_games}gm · ${e.history}</span></div>
+                </div>
+              `).join('')}
             </div>
           `).join('')}
         </div>
@@ -412,10 +465,15 @@
         <div class="streakPanel">
           <div class="panelTitle">🔥 Real Streak</div>
           <div class="panelNote">Genuinely CONSECUTIVE recent games clearing the line, walking backward from the most recent game.</div>
-          ${rs.map(e => `
-            <div class="streakRow">
-              <div class="srMain"><b>${e.player}</b><br><span class="srSub">${e.team} · ${e.league} · ${e.label}</span></div>
-              <div class="streakValue"><span class="big">${e.streak}+ straight</span><br><span class="srSub">${e.history}</span></div>
+          ${groupByLabel(rs).map(([label, group]) => `
+            <div class="statGroup">
+              <div class="statGroupTitle">${label} <span class="statGroupCount">${group.length}</span></div>
+              ${group.map(e => `
+                <div class="streakRow">
+                  <div class="srMain"><b>${e.player}</b><br><span class="srSub">${e.team} · ${e.league}</span></div>
+                  <div class="streakValue"><span class="big">${e.streak}${e.full_sample ? '+' : ''} straight</span><br><span class="srSub">${e.history}</span></div>
+                </div>
+              `).join('')}
             </div>
           `).join('')}
         </div>
@@ -453,23 +511,38 @@
     
     function renderPlayers() {
       const filtered = allPlayers.filter(p => shouldShowPlayer(p, currentFilter));
-      
+
       if (filtered.length === 0) {
         document.getElementById('content').innerHTML = '<div class="loading">No players found for this filter.</div>';
         return;
       }
-      
-      // Sort by highest probability
+
+      // Which props a card shows/sorts by depends on the active tab -- 'all'
+      // uses every prop the player has; a specific category restricts to
+      // just that category's prop keys. Without this, every tab showed the
+      // same top-3-overall props on each card, so switching tabs visibly
+      // changed WHICH players appeared but not what was shown on them --
+      // looked like the filter wasn't doing anything.
+      const relevantProps = (player) => {
+        const entries = Object.entries(player.props || {}).filter(([k, v]) => v > 0);
+        if (currentFilter === 'all') return entries;
+        const cats = PROP_CATEGORIES[currentFilter] || [];
+        return entries.filter(([k]) => cats.includes(k));
+      };
+
+      // Sort by highest probability WITHIN the active category
       filtered.sort((a, b) => {
-        const aMax = Math.max(...Object.values(a.props || {}));
-        const bMax = Math.max(...Object.values(b.props || {}));
+        const aVals = relevantProps(a).map(([, v]) => v);
+        const bVals = relevantProps(b).map(([, v]) => v);
+        const aMax = aVals.length ? Math.max(...aVals) : 0;
+        const bMax = bVals.length ? Math.max(...bVals) : 0;
         return bMax - aMax;
       });
-      
+
       const html = filtered.map(player => {
         const gameLog = player.game_log || {};
         const hitRates = player.hit_rates || {};
-        
+
         return `
           <div class="card">
             <div class="card-header">
@@ -481,12 +554,11 @@
                 <span class="market">${player.rolling_matches_used} games used</span>
               </div>
             </div>
-            
+
             <div class="card-body">
               ${player.low_data ? '<div class="error">⚠ Low data: Probabilities may be unreliable</div>' : ''}
-              
-              ${Object.entries(player.props || {})
-                .filter(([k, v]) => v > 0)
+
+              ${relevantProps(player)
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 3)
                 .map(([prop, prob]) => {
