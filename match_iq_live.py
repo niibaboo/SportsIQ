@@ -112,25 +112,45 @@ def get_live_matches(competition_id, key):
     return data.get("data", []) if data else []
 
 
-def get_team_season_stats(team_id, competition_id, season_id, key):
-    """Fetch a team's season-level stats (goals for/against, shots, etc.)
-    to use as the baseline scoring rate for this team in this league."""
-    data = _get("/football/teams", key, params={"team_id": team_id})
-    if not data or not data.get("data"):
+def get_standings(competition_id, season_id, key):
+    """Same endpoint/shape as match_iq.py and under_iq.py's get_standings --
+    returns {team_id: standings_row}, each row carrying goals_for/
+    goals_against/matches_played (NOT shots or xG -- standings don't
+    carry those, see get_team_season_stats below)."""
+    data = _get(f"/football/competitions/{competition_id}/seasons/{season_id}/standings", key)
+    if not data:
+        return {}
+    return {row["team"]["id"]: row for row in data.get("data", [])}
+
+
+def get_team_season_stats(team_id, standings):
+    """Look up a team's season-level goals rate from the competition's
+    standings (fetched ONCE per competition/season via get_standings
+    and passed in here, not re-fetched per team).
+
+    FIXED: this used to call _get("/football/teams", key,
+    params={"team_id": team_id}) directly -- confirmed via live GitHub
+    Actions logs to 400 on EVERY call ("Unknown query parameter
+    'team_id'. Supported parameters: page, per_page, limit,
+    competition_id, season_id, country, search, is_mens_team, sort.").
+    /football/teams has never supported filtering by team_id at all, so
+    every single live match in every run was being skipped as "missing
+    stats" -- including the run that found 5 live Bundesliga matches and
+    then silently dropped all 5. Every other tool in this suite already
+    gets team-level scoring rates from the standings endpoint
+    (match_iq.py, under_iq.py); this just reuses that same working
+    pattern instead of a team-detail endpoint that was never real.
+
+    Standings don't carry shots/xG, so those two still fall back to
+    neutral league-wide estimates, same as before -- only goals_for is
+    now a genuine per-team read instead of always failing outright."""
+    row = standings.get(team_id)
+    if not row or not row.get("matches_played"):
         return None
-    
-    # Extract season stats from the team detail — this is a simplified
-    # version that just gets the aggregate; a fuller implementation would
-    # parse per-match history like match_iq.py does, but for live signals
-    # we can start with season-level averages and refine later.
-    team = data["data"][0] if isinstance(data.get("data"), list) else data.get("data", {})
-    stats = team.get("statistics", {})
-    
-    # Fallback to a neutral estimate if we can't find season stats
     return {
-        "goals_for": stats.get("goals_for", 1.5),  # season goals/match average
-        "shots": stats.get("shots", 12),  # season shots/match
-        "xg": stats.get("expected_goals", 1.2),  # season xG/match
+        "goals_for": round(row["goals_for"] / row["matches_played"], 2),  # real per-team read
+        "shots": 12,  # standings carry no shot data -- neutral league estimate
+        "xg": 1.2,    # standings carry no xG data -- neutral league estimate
     }
 
 
@@ -374,14 +394,19 @@ def build_live_signals(key):
         
         matches = get_live_matches(comp_id, key)
         print(f"  {len(matches)} live match(es)")
-        
+
+        # Fetched once per competition/season, not once per team -- see
+        # get_team_season_stats' docstring for why this replaced the old
+        # (broken) per-team /football/teams?team_id= call.
+        standings = get_standings(comp_id, season_id, key) if matches else {}
+
         for m in matches:
             home_id = m["home_team"]["id"]
             away_id = m["away_team"]["id"]
-            
+
             # Get team season stats (used as the baseline scoring rate)
-            home_stats = get_team_season_stats(home_id, comp_id, season_id, key)
-            away_stats = get_team_season_stats(away_id, comp_id, season_id, key)
+            home_stats = get_team_season_stats(home_id, standings)
+            away_stats = get_team_season_stats(away_id, standings)
             
             if not home_stats or not away_stats:
                 print(f"    Skipping {m['home_team']['name']} vs {m['away_team']['name']} — missing stats")
