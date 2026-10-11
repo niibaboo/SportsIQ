@@ -1,5 +1,47 @@
 {
-  "generated": "2026-10-10T21:36:01.259866+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-10-11T00:27:00.128318+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_pk": 849831,
+      "home_team": "Cleveland Guardians",
+      "away_team": "Chicago White Sox",
+      "home_runs": 0.0,
+      "away_runs": 0.0,
+      "home_hits": 0.0,
+      "away_hits": 0.0,
+      "inning": 2,
+      "inning_state": "Middle",
+      "status": "In Progress",
+      "half_innings_remaining": 15,
+      "next_run": {
+        "home": 38,
+        "away": 62
+      },
+      "game_total_pace": {
+        "prob": 2,
+        "status": "On Pace: Under"
+      },
+      "inning_winner": {
+        "home": 12,
+        "away": 20,
+        "tie": 68
+      },
+      "inning_hits": {
+        "home": 26,
+        "away": 24,
+        "tie": 50
+      },
+      "model_signal": {
+        "label": "Game Total Under",
+        "prob": 98,
+        "qualifies": true
+      },
+      "pregame_projection": {
+        "home_lambda": 2.93,
+        "away_lambda": 4.73,
+        "pregame_total": 7.66
+      }
+    }
+  ]
 }
