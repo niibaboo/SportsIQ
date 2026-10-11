@@ -266,7 +266,10 @@
     "logged_home_score": 31.0,
     "logged_away_score": 7.0,
     "pregame_total": 40.9,
-    "status": "pending"
+    "status": "void",
+    "scorer_team_id": null,
+    "final_home_score": 31.0,
+    "final_away_score": 7.0
   },
   "401872984_Game_Total_Under": {
     "id": "401872984_Game_Total_Under",
@@ -283,7 +286,9 @@
     "logged_home_score": 3.0,
     "logged_away_score": 26.0,
     "pregame_total": 40.6,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 3.0,
+    "final_away_score": 26.0
   },
   "401872982_Game_Total_Over": {
     "id": "401872982_Game_Total_Over",
@@ -300,7 +305,9 @@
     "logged_home_score": 18.0,
     "logged_away_score": 28.0,
     "pregame_total": 38.9,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 24.0,
+    "final_away_score": 31.0
   },
   "401872986_Game_Total_Over": {
     "id": "401872986_Game_Total_Over",
@@ -317,7 +324,9 @@
     "logged_home_score": 38.0,
     "logged_away_score": 16.0,
     "pregame_total": 45.4,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 45.0,
+    "final_away_score": 17.0
   },
   "401872987_Game_Total_Under": {
     "id": "401872987_Game_Total_Under",
@@ -334,7 +343,9 @@
     "logged_home_score": 13.0,
     "logged_away_score": 23.0,
     "pregame_total": 44.9,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 13.0,
+    "final_away_score": 23.0
   },
   "401872983_Game_Total_Under": {
     "id": "401872983_Game_Total_Under",
@@ -351,7 +362,9 @@
     "logged_home_score": 10.0,
     "logged_away_score": 12.0,
     "pregame_total": 42.1,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 17.0,
+    "final_away_score": 12.0
   },
   "401872985_Game_Total_Over": {
     "id": "401872985_Game_Total_Over",
@@ -368,6 +381,59 @@
     "logged_home_score": 31.0,
     "logged_away_score": 22.0,
     "pregame_total": 46.3,
+    "status": "hit",
+    "final_home_score": 34.0,
+    "final_away_score": 22.0
+  },
+  "401872989_Game_Total_Under": {
+    "id": "401872989_Game_Total_Under",
+    "game_id": "401872989",
+    "home_id": "24",
+    "away_id": "7",
+    "home_team": "Los Angeles Chargers",
+    "away_team": "Denver Broncos",
+    "label": "Game Total Under",
+    "prob": 76,
+    "logged_at": "2026-10-11T23:12:17.405225+00:00",
+    "logged_period": 4,
+    "logged_clock": "1:08",
+    "logged_home_score": 17.0,
+    "logged_away_score": 23.0,
+    "pregame_total": 43.0,
+    "status": "pending"
+  },
+  "401872991_Game_Total_Over": {
+    "id": "401872991_Game_Total_Over",
+    "game_id": "401872991",
+    "home_id": "22",
+    "away_id": "8",
+    "home_team": "Arizona Cardinals",
+    "away_team": "Detroit Lions",
+    "label": "Game Total Over",
+    "prob": 86,
+    "logged_at": "2026-10-11T23:12:17.405234+00:00",
+    "logged_period": 4,
+    "logged_clock": "5:03",
+    "logged_home_score": 14.0,
+    "logged_away_score": 45.0,
+    "pregame_total": 59.6,
+    "status": "pending"
+  },
+  "401872992_Game_Total_Over": {
+    "id": "401872992_Game_Total_Over",
+    "game_id": "401872992",
+    "home_id": "26",
+    "away_id": "25",
+    "home_team": "Seattle Seahawks",
+    "away_team": "San Francisco 49ers",
+    "label": "Game Total Over",
+    "prob": 100,
+    "logged_at": "2026-10-11T23:12:17.405237+00:00",
+    "logged_period": 4,
+    "logged_clock": "11:02",
+    "logged_home_score": 26.0,
+    "logged_away_score": 29.0,
+    "pregame_total": 47.2,
     "status": "pending"
   }
 }
