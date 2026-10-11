@@ -287,9 +287,9 @@
         "athlete_id": "4429795"
       }
     ],
-    "exp_home": 27.3,
+    "exp_home": 27.4,
     "exp_away": 32.1,
-    "exp_total": 59.4,
+    "exp_total": 59.5,
     "total_std": 14.1
   },
   {
@@ -579,298 +579,6 @@
     "exp_home": 26.4,
     "exp_away": 25.7,
     "exp_total": 52.1,
-    "total_std": 14.1
-  },
-  {
-    "date": "2026-10-09T00:15Z",
-    "game_id": "401872980",
-    "match": "Tampa Bay Buccaneers @ Dallas Cowboys",
-    "home_team": "Dallas Cowboys",
-    "away_team": "Tampa Bay Buccaneers",
-    "home_form": {
-      "avg_scored": 30.5,
-      "avg_allowed": 28.0,
-      "n_games": 4,
-      "source": "current",
-      "scored_list": [
-        20.0,
-        37.0,
-        31.0,
-        34.0
-      ],
-      "allowed_list": [
-        28.0,
-        20.0,
-        34.0,
-        30.0
-      ]
-    },
-    "away_form": {
-      "avg_scored": 19.0,
-      "avg_allowed": 24.0,
-      "n_games": 4,
-      "source": "current",
-      "scored_list": [
-        27.0,
-        19.0,
-        16.0,
-        14.0
-      ],
-      "allowed_list": [
-        33.0,
-        23.0,
-        23.0,
-        17.0
-      ]
-    },
-    "home_props": [
-      {
-        "name": "CeeDee Lamb",
-        "position": "WR",
-        "label": "Receptions",
-        "dist": "poisson",
-        "std": null,
-        "projected": 6.4,
-        "n_games": 4,
-        "recent_values": [
-          17.0,
-          7.0,
-          8.0,
-          5.0
-        ],
-        "athlete_id": "4241389"
-      },
-      {
-        "name": "CeeDee Lamb",
-        "position": "WR",
-        "label": "Anytime TD",
-        "kind": "td",
-        "dist": null,
-        "std": null,
-        "projected": "53%",
-        "prob_any": 53,
-        "projected_rate": 0.76,
-        "n_games": 4,
-        "recent_values": [
-          1.0,
-          0.0,
-          2.0,
-          1.0
-        ],
-        "athlete_id": "4241389"
-      },
-      {
-        "name": "Dak Prescott",
-        "position": "QB",
-        "label": "Passing Yards",
-        "dist": "normal",
-        "std": 55,
-        "projected": 243.9,
-        "n_games": 4,
-        "recent_values": [
-          335.0,
-          276.0,
-          279.0,
-          175.0
-        ],
-        "athlete_id": "2577417"
-      },
-      {
-        "name": "Jake Ferguson",
-        "position": "TE",
-        "label": "Receptions",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.2,
-        "n_games": 4,
-        "recent_values": [
-          3.0,
-          3.0,
-          4.0,
-          2.0
-        ],
-        "athlete_id": "4242355"
-      },
-      {
-        "name": "Jake Ferguson",
-        "position": "TE",
-        "label": "Anytime TD",
-        "kind": "td",
-        "dist": null,
-        "std": null,
-        "projected": "43%",
-        "prob_any": 43,
-        "projected_rate": 0.56,
-        "n_games": 4,
-        "recent_values": [
-          0.0,
-          1.0,
-          2.0,
-          0.0
-        ],
-        "athlete_id": "4242355"
-      },
-      {
-        "name": "Javonte Williams",
-        "position": "RB",
-        "label": "Rushing Yards",
-        "dist": "normal",
-        "std": 28,
-        "projected": 56.2,
-        "n_games": 4,
-        "recent_values": [
-          62.0,
-          98.0,
-          30.0,
-          41.0
-        ],
-        "athlete_id": "4361579"
-      },
-      {
-        "name": "Javonte Williams",
-        "position": "RB",
-        "label": "Anytime TD",
-        "kind": "td",
-        "dist": null,
-        "std": null,
-        "projected": "55%",
-        "prob_any": 55,
-        "projected_rate": 0.79,
-        "n_games": 4,
-        "recent_values": [
-          3.0,
-          1.0,
-          0.0,
-          1.0
-        ],
-        "athlete_id": "4361579"
-      }
-    ],
-    "away_props": [
-      {
-        "name": "Emeka Egbuka",
-        "position": "WR",
-        "label": "Receptions",
-        "dist": "poisson",
-        "std": null,
-        "projected": 4.0,
-        "n_games": 4,
-        "recent_values": [
-          2.0,
-          5.0,
-          3.0,
-          5.0
-        ],
-        "athlete_id": "4567750"
-      },
-      {
-        "name": "Emeka Egbuka",
-        "position": "WR",
-        "label": "Anytime TD",
-        "kind": "td",
-        "dist": null,
-        "std": null,
-        "projected": "26%",
-        "prob_any": 26,
-        "projected_rate": 0.31,
-        "n_games": 4,
-        "recent_values": [
-          0.0,
-          0.0,
-          1.0,
-          0.0
-        ],
-        "athlete_id": "4567750"
-      },
-      {
-        "name": "Baker Mayfield",
-        "position": "QB",
-        "label": "Passing Yards",
-        "dist": "normal",
-        "std": 55,
-        "projected": 220.1,
-        "n_games": 3,
-        "recent_values": [
-          217.0,
-          182.0,
-          216.0
-        ],
-        "athlete_id": "3052587"
-      },
-      {
-        "name": "Cade Otton",
-        "position": "TE",
-        "label": "Receptions",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.6,
-        "n_games": 4,
-        "recent_values": [
-          4.0,
-          3.0,
-          5.0,
-          3.0
-        ],
-        "athlete_id": "4243331"
-      },
-      {
-        "name": "Cade Otton",
-        "position": "TE",
-        "label": "Anytime TD",
-        "kind": "td",
-        "dist": null,
-        "std": null,
-        "projected": "12%",
-        "prob_any": 12,
-        "projected_rate": 0.13,
-        "n_games": 4,
-        "recent_values": [
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "athlete_id": "4243331"
-      },
-      {
-        "name": "Bucky Irving",
-        "position": "RB",
-        "label": "Rushing Yards",
-        "dist": "normal",
-        "std": 28,
-        "projected": 59.9,
-        "n_games": 4,
-        "recent_values": [
-          61.0,
-          46.0,
-          89.0,
-          45.0
-        ],
-        "athlete_id": "4596448"
-      },
-      {
-        "name": "Bucky Irving",
-        "position": "RB",
-        "label": "Anytime TD",
-        "kind": "td",
-        "dist": null,
-        "std": null,
-        "projected": "33%",
-        "prob_any": 33,
-        "projected_rate": 0.4,
-        "n_games": 4,
-        "recent_values": [
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ],
-        "athlete_id": "4596448"
-      }
-    ],
-    "exp_home": 27.5,
-    "exp_away": 22.8,
-    "exp_total": 50.3,
     "total_std": 14.1
   },
   {
@@ -1732,8 +1440,8 @@
       }
     ],
     "exp_home": 20.2,
-    "exp_away": 26.6,
-    "exp_total": 46.8,
+    "exp_away": 26.7,
+    "exp_total": 46.9,
     "total_std": 14.1
   },
   {
@@ -2603,7 +2311,7 @@
     ],
     "exp_home": 17.9,
     "exp_away": 27.0,
-    "exp_total": 44.9,
+    "exp_total": 45.0,
     "total_std": 14.1
   },
   {
@@ -3183,7 +2891,7 @@
     ],
     "exp_home": 20.2,
     "exp_away": 22.0,
-    "exp_total": 42.1,
+    "exp_total": 42.2,
     "total_std": 14.1
   },
   {
@@ -4050,7 +3758,7 @@
     ],
     "exp_home": 24.9,
     "exp_away": 15.4,
-    "exp_total": 40.2,
+    "exp_total": 40.3,
     "total_std": 14.1
   },
   {
