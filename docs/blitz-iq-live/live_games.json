@@ -1,5 +1,38 @@
 {
-  "generated": "2026-10-11T09:20:30.564006+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-10-11T15:48:44.524725+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_id": "401872981",
+      "home_id": "30",
+      "away_id": "21",
+      "home_team": "Jacksonville Jaguars",
+      "away_team": "Philadelphia Eagles",
+      "home_score": 7.0,
+      "away_score": 14.0,
+      "period": 3,
+      "display_clock": "8:08",
+      "status": "8:08 - 3rd",
+      "elapsed_minute": 36.9,
+      "minutes_remaining": 23.1,
+      "next_score": {
+        "home": 35,
+        "away": 65
+      },
+      "game_total_pace": {
+        "prob": 33,
+        "status": "On Pace: Under"
+      },
+      "model_signal": {
+        "label": "Game Total Under",
+        "prob": 67,
+        "qualifies": false
+      },
+      "pregame_projection": {
+        "exp_home": 24.9,
+        "exp_away": 15.4,
+        "exp_total": 40.3
+      }
+    }
+  ]
 }
