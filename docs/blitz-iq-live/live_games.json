@@ -1,101 +1,37 @@
 {
-  "generated": "2026-10-11T23:12:17.402422+00:00",
-  "total_live": 3,
+  "generated": "2026-10-12T02:26:00.109706+00:00",
+  "total_live": 1,
   "games": [
     {
-      "game_id": "401872989",
-      "home_id": "24",
-      "away_id": "7",
-      "home_team": "Los Angeles Chargers",
-      "away_team": "Denver Broncos",
+      "game_id": "401872993",
+      "home_id": "1",
+      "away_id": "33",
+      "home_team": "Atlanta Falcons",
+      "away_team": "Baltimore Ravens",
       "home_score": 17.0,
-      "away_score": 23.0,
-      "period": 4,
-      "display_clock": "1:08",
-      "status": "1:08 - 4th",
-      "elapsed_minute": 58.9,
-      "minutes_remaining": 1.1,
+      "away_score": 15.0,
+      "period": 3,
+      "display_clock": "6:06",
+      "status": "6:06 - 3rd",
+      "elapsed_minute": 38.9,
+      "minutes_remaining": 21.1,
       "next_score": {
-        "home": 42,
-        "away": 57
+        "home": 53,
+        "away": 47
       },
       "game_total_pace": {
-        "prob": 24,
+        "prob": 41,
         "status": "On Pace: Under"
       },
       "model_signal": {
         "label": "Game Total Under",
-        "prob": 76,
-        "qualifies": true
+        "prob": 59,
+        "qualifies": false
       },
       "pregame_projection": {
-        "exp_home": 20.2,
-        "exp_away": 22.8,
-        "exp_total": 43.0
-      }
-    },
-    {
-      "game_id": "401872991",
-      "home_id": "22",
-      "away_id": "8",
-      "home_team": "Arizona Cardinals",
-      "away_team": "Detroit Lions",
-      "home_score": 14.0,
-      "away_score": 45.0,
-      "period": 4,
-      "display_clock": "5:03",
-      "status": "5:03 - 4th",
-      "elapsed_minute": 55.0,
-      "minutes_remaining": 5.0,
-      "next_score": {
-        "home": 24,
-        "away": 76
-      },
-      "game_total_pace": {
-        "prob": 86,
-        "status": "On Pace: Over"
-      },
-      "model_signal": {
-        "label": "Game Total Over",
-        "prob": 86,
-        "qualifies": true
-      },
-      "pregame_projection": {
-        "exp_home": 27.4,
-        "exp_away": 32.2,
-        "exp_total": 59.6
-      }
-    },
-    {
-      "game_id": "401872992",
-      "home_id": "26",
-      "away_id": "25",
-      "home_team": "Seattle Seahawks",
-      "away_team": "San Francisco 49ers",
-      "home_score": 26.0,
-      "away_score": 29.0,
-      "period": 4,
-      "display_clock": "11:02",
-      "status": "11:02 - 4th",
-      "elapsed_minute": 49.0,
-      "minutes_remaining": 11.0,
-      "next_score": {
-        "home": 47,
-        "away": 53
-      },
-      "game_total_pace": {
-        "prob": 100,
-        "status": "On Pace: Over"
-      },
-      "model_signal": {
-        "label": "Game Total Over",
-        "prob": 100,
-        "qualifies": true
-      },
-      "pregame_projection": {
-        "exp_home": 21.9,
-        "exp_away": 25.3,
-        "exp_total": 47.2
+        "exp_home": 26.4,
+        "exp_away": 25.7,
+        "exp_total": 52.2
       }
     }
   ]

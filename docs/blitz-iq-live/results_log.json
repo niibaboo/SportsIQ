@@ -400,7 +400,9 @@
     "logged_home_score": 17.0,
     "logged_away_score": 23.0,
     "pregame_total": 43.0,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 17.0,
+    "final_away_score": 23.0
   },
   "401872991_Game_Total_Over": {
     "id": "401872991_Game_Total_Over",
@@ -417,7 +419,9 @@
     "logged_home_score": 14.0,
     "logged_away_score": 45.0,
     "pregame_total": 59.6,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 21.0,
+    "final_away_score": 45.0
   },
   "401872992_Game_Total_Over": {
     "id": "401872992_Game_Total_Over",
@@ -434,6 +438,8 @@
     "logged_home_score": 26.0,
     "logged_away_score": 29.0,
     "pregame_total": 47.2,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 29.0,
+    "final_away_score": 32.0
   }
 }
