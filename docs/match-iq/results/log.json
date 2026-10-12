@@ -1592,9 +1592,10 @@
     "home_team": "Philadelphia Union",
     "away_team": "Real Salt Lake",
     "logged_at": "2026-09-30T12:27:36.800884+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2,
+    "verified_at": "2026-10-12T14:47:37.837550+00:00"
   },
   {
     "id": "873a265b8b0f0021",
@@ -1610,9 +1611,10 @@
     "home_team": "AFC Ajax",
     "away_team": "NEC Nijmegen",
     "logged_at": "2026-09-30T12:27:36.800887+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-10-12T14:47:38.296623+00:00"
   },
   {
     "id": "8498981a919a2800",
@@ -1754,9 +1756,10 @@
     "home_team": "Real Madrid",
     "away_team": "Villarreal",
     "logged_at": "2026-09-30T12:27:36.800916+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-10-12T14:47:43.004500+00:00"
   },
   {
     "id": "b950881eb274de86",
@@ -1808,9 +1811,10 @@
     "home_team": "Orlando City SC",
     "away_team": "Columbus Crew",
     "logged_at": "2026-09-30T12:27:36.800927+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-10-12T14:47:44.535123+00:00"
   },
   {
     "id": "b11dd0cdbb6ebdd9",
@@ -1988,9 +1992,10 @@
     "home_team": "West Ham United",
     "away_team": "Queens Park Rangers",
     "logged_at": "2026-09-30T12:27:36.800967+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-10-12T14:47:51.892069+00:00"
   },
   {
     "id": "de35012a36c706a1",
@@ -2042,9 +2047,10 @@
     "home_team": "Philadelphia Union",
     "away_team": "Real Salt Lake",
     "logged_at": "2026-09-30T12:27:36.800978+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2,
+    "verified_at": "2026-10-12T14:47:53.360269+00:00"
   },
   {
     "id": "0c28cb789b78a772",
@@ -2114,9 +2120,10 @@
     "home_team": "Orlando City SC",
     "away_team": "Columbus Crew",
     "logged_at": "2026-09-30T12:27:36.800992+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-10-12T14:47:55.366131+00:00"
   },
   {
     "id": "4a075698a7b092ee",
@@ -2186,9 +2193,10 @@
     "home_team": "AFC Ajax",
     "away_team": "NEC Nijmegen",
     "logged_at": "2026-09-30T12:27:36.801006+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-10-12T14:47:57.393319+00:00"
   },
   {
     "id": "5cb832447dd7b7dd",
@@ -2222,9 +2230,10 @@
     "home_team": "New England Revolution",
     "away_team": "Seattle Sounders FC",
     "logged_at": "2026-09-30T12:27:36.801012+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-10-12T14:47:58.406196+00:00"
   },
   {
     "id": "138a32fe2194a5db",
@@ -2258,9 +2267,10 @@
     "home_team": "Grasshopper Club Z\u00fcrich",
     "away_team": "Young Boys",
     "logged_at": "2026-10-02T12:51:27.020394+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2,
+    "verified_at": "2026-10-12T14:47:59.498131+00:00"
   },
   {
     "id": "3a453afac6bfc621",
@@ -2276,9 +2286,10 @@
     "home_team": "Grasshopper Club Z\u00fcrich",
     "away_team": "Young Boys",
     "logged_at": "2026-10-02T12:51:27.020400+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": "0-2",
+    "verified_at": "2026-10-12T14:48:00.024138+00:00"
   },
   {
     "id": "37546c2314329b98",
@@ -2294,9 +2305,10 @@
     "home_team": "Grasshopper Club Z\u00fcrich",
     "away_team": "Young Boys",
     "logged_at": "2026-10-02T12:51:27.020405+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 8,
+    "verified_at": "2026-10-12T14:48:01.084095+00:00"
   },
   {
     "id": "ddede42a8e69a325",
@@ -2312,9 +2324,10 @@
     "home_team": "Grasshopper Club Z\u00fcrich",
     "away_team": "Young Boys",
     "logged_at": "2026-10-02T12:51:27.020410+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2,
+    "verified_at": "2026-10-12T14:48:02.364002+00:00"
   },
   {
     "id": "5440cc2890df4f9a",
@@ -2330,9 +2343,10 @@
     "home_team": "FC Vaduz",
     "away_team": "Basel",
     "logged_at": "2026-10-02T12:51:27.020415+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-10-12T14:48:03.014774+00:00"
   },
   {
     "id": "c1704c906a3395f6",
@@ -2348,9 +2362,10 @@
     "home_team": "FC Vaduz",
     "away_team": "Basel",
     "logged_at": "2026-10-02T12:51:27.020418+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": "3-0",
+    "verified_at": "2026-10-12T14:48:03.551189+00:00"
   },
   {
     "id": "d588654f37c88b8c",
