@@ -99,6 +99,14 @@ LEAGUE_SEARCH_NAMES = [
                      # coverage (red_cards missing on the one match checked, same
                      # "likely just 0" pattern seen elsewhere, not a real gap),
                      # xG available, 16 teams, ~3.1-3.2 goals/match across 2025-26
+    "Serie A",  # Italy, added back on request -- NOT previously in this list
+                 # (checked full repo history, no trace of it ever being added or
+                 # removed before now). Name should match TheStatsAPI's exact
+                 # /football/competitions result as-is, but unlike the leagues
+                 # above this hasn't been verified against a live API key in this
+                 # session -- watch find_competition()'s "couldn't find"/"using
+                 # first result" warning on the first run after this change, same
+                 # as any newly-added league.
 ]
 
 FIXTURE_WINDOW_DAYS = 10
