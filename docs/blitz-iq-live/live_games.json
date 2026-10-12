@@ -1,38 +1,5 @@
 {
-  "generated": "2026-10-12T02:26:00.109706+00:00",
-  "total_live": 1,
-  "games": [
-    {
-      "game_id": "401872993",
-      "home_id": "1",
-      "away_id": "33",
-      "home_team": "Atlanta Falcons",
-      "away_team": "Baltimore Ravens",
-      "home_score": 17.0,
-      "away_score": 15.0,
-      "period": 3,
-      "display_clock": "6:06",
-      "status": "6:06 - 3rd",
-      "elapsed_minute": 38.9,
-      "minutes_remaining": 21.1,
-      "next_score": {
-        "home": 53,
-        "away": 47
-      },
-      "game_total_pace": {
-        "prob": 41,
-        "status": "On Pace: Under"
-      },
-      "model_signal": {
-        "label": "Game Total Under",
-        "prob": 59,
-        "qualifies": false
-      },
-      "pregame_projection": {
-        "exp_home": 26.4,
-        "exp_away": 25.7,
-        "exp_total": 52.2
-      }
-    }
-  ]
+  "generated": "2026-10-12T09:30:37.743319+00:00",
+  "total_live": 0,
+  "games": []
 }
