@@ -1,5 +1,47 @@
 {
-  "generated": "2026-10-11T21:46:14.317894+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-10-12T00:45:26.742033+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_pk": 849809,
+      "home_team": "Milwaukee Brewers",
+      "away_team": "Los Angeles Dodgers",
+      "home_runs": 0.0,
+      "away_runs": 1.0,
+      "home_hits": 0.0,
+      "away_hits": 3.0,
+      "inning": 2,
+      "inning_state": "Top",
+      "status": "In Progress",
+      "half_innings_remaining": 16,
+      "next_run": {
+        "home": 47,
+        "away": 53
+      },
+      "game_total_pace": {
+        "prob": 17,
+        "status": "On Pace: Under"
+      },
+      "inning_winner": {
+        "home": 18,
+        "away": 21,
+        "tie": 62
+      },
+      "inning_hits": {
+        "home": 12,
+        "away": 59,
+        "tie": 29
+      },
+      "model_signal": {
+        "label": "Game Total Under",
+        "prob": 83,
+        "qualifies": true
+      },
+      "pregame_projection": {
+        "home_lambda": 4.72,
+        "away_lambda": 2.69,
+        "pregame_total": 7.41
+      }
+    }
+  ]
 }
