@@ -402,16 +402,24 @@ for g in games:
       for j in range(0,7):
         scores.append(((j,i), pois(j,la)*pois(i,lh)))
     scores.sort(key=lambda x:x[1], reverse=True)
-    top9=scores[:9]
+    top3=scores[:3]
 
     props_h=get_props(home,away,True)
     props_a=get_props(away,home,False)
     def render_props(lst):
       return "".join([f"<div style='display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:6px 0;border-bottom:1px solid #1e3a6a'><span style='min-width:120px'>{x['name']} ({x['pos']})</span><span style='text-align:right'>Goal {x['any']*100:.0f}% | 1+Pt {x['pts']*100:.0f}% | SOG {x['sog']:.1f} O1.5 {x['o1']*100:.0f}%</span></div>" for x in lst])
     def render_scores():
-      return "".join([f"<div style='background:#0a1730;border-radius:8px;padding:8px;text-align:center'><div style='font-size:12px;color:#8aa'>{away} {a}-{h} {home}</div><div style='font-weight:700;margin-top:2px'>{p*100:.1f}%</div></div>" for (a,h),p in top9])
+      return "".join([f"<div style='background:#0a1730;border-radius:8px;padding:8px;text-align:center'><div style='font-size:12px;color:#8aa'>{away} {a}-{h} {home}</div><div style='font-weight:700;margin-top:2px'>{p*100:.1f}%</div></div>" for (a,h),p in top3])
 
-    win_bar=f"""<div style="margin:10px 0 6px 0"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>{away} {pa*100:.0f}%</span><span>Tie {pt*100:.0f}%</span><span>{home} {ph*100:.0f}%</span></div><div style="display:flex;height:10px;border-radius:999px;overflow:hidden;background:#0a1730"><div style="width:{pa*100:.1f}%;background:#ff4d5a"></div><div style="width:{pt*100:.1f}%;background:#5a5f7a"></div><div style="width:{ph*100:.1f}%;background:#4ea1ff"></div></div></div>"""
+    # Last-5-games goals history, same source feeding Hot Form/Real Streak
+    # below -- shown on the card itself too, matching Euro Ice's card layout
+    # (its render_match_card puts this exact "last 5 (old->new)" line under
+    # each team's win%, in place of a props section it doesn't have data for).
+    recent_goals_by_team = {home: get_team_recent_goals(home), away: get_team_recent_goals(away)}
+    home_hist = "/".join(str(v) for v in recent_goals_by_team[home]) or "—"
+    away_hist = "/".join(str(v) for v in recent_goals_by_team[away]) or "—"
+
+    win_bar=f"""<div style="margin:10px 0 6px 0"><div style="display:flex;justify-content:space-between;align-items:flex-start;font-size:12px;margin-bottom:4px"><div><div>{away} {pa*100:.0f}%</div><div style="font-size:10px;color:#8aa;margin-top:2px">last 5 (old→new): {away_hist}</div></div><span>Tie {pt*100:.0f}%</span><div style="text-align:right"><div>{home} {ph*100:.0f}%</div><div style="font-size:10px;color:#8aa;margin-top:2px">last 5 (old→new): {home_hist}</div></div></div><div style="display:flex;height:10px;border-radius:999px;overflow:hidden;background:#0a1730"><div style="width:{pa*100:.1f}%;background:#ff4d5a"></div><div style="width:{pt*100:.1f}%;background:#5a5f7a"></div><div style="width:{ph*100:.1f}%;background:#4ea1ff"></div></div></div>"""
 
     cards+=f"""<div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0"><h3 style="margin:0 0 4px 0">{away} @ {home} — Total {tot:.2f}</h3><p style="margin:0;color:#b7c5e6;font-size:13px">Proj: {away} {la:.2f} - {lh:.2f} {home} | O5.5 {o55*100:.0f}%</p>{win_bar}<div style="margin-top:12px"><div style="font-size:12px;color:#8aa;margin-bottom:6px">Correct Score</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">{render_scores()}</div></div><details style="margin-top:12px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">{home} Props</summary><div style="margin-top:8px">{render_props(props_h) or 'No data'}</div></details><details style="margin-top:8px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">{away} Props</summary><div style="margin-top:8px">{render_props(props_a) or 'No data'}</div></details></div>"""
 
@@ -421,7 +429,7 @@ for g in games:
     game_date = g.get("startTimeUTC", "")[:10]
 
     for team_label, opp_label, is_home_flag in [(home, away, True), (away, home, False)]:
-      recent_goals = get_team_recent_goals(team_label)
+      recent_goals = recent_goals_by_team[team_label]
       if len(recent_goals) >= HOT_FORM_MIN_GAMES:
         avg5 = round(sum(recent_goals)/len(recent_goals), 2)
         if avg5 >= HOT_FORM_MIN:
