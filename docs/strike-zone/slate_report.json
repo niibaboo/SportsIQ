@@ -1,252 +1,93 @@
 [
   {
-    "away": "Los Angeles Dodgers",
-    "home": "Milwaukee Brewers",
-    "time": "10:00 PM BST",
-    "pitchers": [
-      {
-        "side": "away",
-        "name": "Yoshinobu Yamamoto",
-        "pitcher_id": 808967,
-        "team": "Los Angeles Dodgers",
-        "opp": "Milwaukee Brewers",
-        "opp_kpct": 22.0,
-        "fip": 3.33211,
-        "xfip": 3.28144,
-        "lambda": 6.66,
-        "lo": 3,
-        "hi": 10,
-        "proj_ip": 6.7,
-        "outs_lambda": 20.0,
-        "outs_lo": 14,
-        "outs_hi": 26,
-        "season_era": "2.53",
-        "season_k9": "8.85",
-        "season_hits9": "5.79",
-        "bb9": 2.04,
-        "whip": "0.87",
-        "l5_str": "8\u00b78\u00b710\u00b77\u00b74",
-        "l5_vs_season": 3.0,
-        "k_last5": [
-          8,
-          8,
-          10,
-          7,
-          4
-        ],
-        "outs_last5": [
-          19,
-          21,
-          21,
-          21,
-          18
-        ]
-      },
-      {
-        "side": "home",
-        "name": "Logan Henderson",
-        "pitcher_id": 701656,
-        "team": "Milwaukee Brewers",
-        "opp": "Los Angeles Dodgers",
-        "opp_kpct": 20.4,
-        "fip": 3.3234,
-        "xfip": 3.29967,
-        "lambda": 5.74,
-        "lo": 3,
-        "hi": 9,
-        "proj_ip": 5.8,
-        "outs_lambda": 17.47,
-        "outs_lo": 12,
-        "outs_hi": 23,
-        "season_era": "2.47",
-        "season_k9": "10.07",
-        "season_hits9": "5.86",
-        "bb9": 1.74,
-        "whip": "0.84",
-        "l5_str": "7\u00b77\u00b76\u00b78\u00b73",
-        "l5_vs_season": -7.0,
-        "k_last5": [
-          7,
-          7,
-          6,
-          8,
-          3
-        ],
-        "outs_last5": [
-          21,
-          21,
-          15,
-          15,
-          15
-        ]
-      }
-    ],
-    "game_pk": 849812,
-    "game_date": "2026-10-12",
-    "team_runs": {
-      "away": {
-        "team": "Los Angeles Dodgers",
-        "opp": "Milwaukee Brewers",
-        "lambda": 2.89,
-        "lo": 1,
-        "hi": 5,
-        "l5_str": "1\u00b72\u00b72\u00b74\u00b75",
-        "last5_runs": [
-          1,
-          2,
-          2,
-          4,
-          5
-        ],
-        "season_rpg": 4.94,
-        "run_factor": 0.86,
-        "xfip_used": true
-      },
-      "home": {
-        "team": "Milwaukee Brewers",
-        "opp": "Los Angeles Dodgers",
-        "lambda": 4.46,
-        "lo": 2,
-        "hi": 7,
-        "l5_str": "4\u00b75\u00b78\u00b73\u00b76",
-        "last5_runs": [
-          4,
-          5,
-          8,
-          3,
-          6
-        ],
-        "season_rpg": 5.14,
-        "run_factor": 0.86,
-        "xfip_used": true
-      }
-    },
-    "team_hits": {
-      "away": {
-        "team": "Los Angeles Dodgers",
-        "opp": "Milwaukee Brewers",
-        "lambda": 6.25,
-        "lo": 3,
-        "hi": 10,
-        "l5_str": "10\u00b77\u00b77\u00b79\u00b78",
-        "last5_hits": [
-          10,
-          7,
-          7,
-          9,
-          8
-        ],
-        "season_hpg": 8.64,
-        "hit_factor": 0.75
-      },
-      "home": {
-        "team": "Milwaukee Brewers",
-        "opp": "Los Angeles Dodgers",
-        "lambda": 6.77,
-        "lo": 4,
-        "hi": 10,
-        "l5_str": "6\u00b711\u00b712\u00b78\u00b710",
-        "last5_hits": [
-          6,
-          11,
-          12,
-          8,
-          10
-        ],
-        "season_hpg": 8.78,
-        "hit_factor": 0.73
-      }
-    }
-  },
-  {
     "away": "Cleveland Guardians",
     "home": "Tampa Bay Rays",
     "time": "1:00 AM BST",
     "pitchers": [
       {
         "side": "away",
-        "name": "Foster Griffin",
-        "pitcher_id": 656492,
+        "name": "Parker Messick",
+        "pitcher_id": 800048,
         "team": "Cleveland Guardians",
         "opp": "Tampa Bay Rays",
         "opp_kpct": 18.8,
-        "fip": 3.9568204633204633,
-        "xfip": 3.764105366795367,
-        "lambda": 4.07,
+        "fip": 3.06748,
+        "xfip": 3.36422,
+        "lambda": 4.66,
         "lo": 2,
-        "hi": 7,
-        "proj_ip": 4.7,
-        "outs_lambda": 14.0,
-        "outs_lo": 9,
-        "outs_hi": 19,
-        "season_era": "3.60",
-        "season_k9": "8.24",
-        "season_hits9": "8.55",
-        "bb9": 2.35,
-        "whip": "1.21",
-        "l5_str": "4\u00b73\u00b74\u00b75\u00b77",
-        "l5_vs_season": 19.0,
+        "hi": 8,
+        "proj_ip": 5.1,
+        "outs_lambda": 15.2,
+        "outs_lo": 10,
+        "outs_hi": 20,
+        "season_era": "2.56",
+        "season_k9": "9.32",
+        "season_hits9": "7.20",
+        "bb9": 2.37,
+        "whip": "1.06",
+        "l5_str": "12\u00b75\u00b78\u00b75\u00b72",
+        "l5_vs_season": 7.0,
         "k_last5": [
-          4,
-          3,
-          4,
+          12,
           5,
-          7
+          8,
+          5,
+          2
         ],
         "outs_last5": [
-          15,
           18,
-          7,
-          12,
-          18
+          16,
+          18,
+          15,
+          9
         ]
       },
       {
         "side": "home",
-        "name": "Drew Rasmussen",
-        "pitcher_id": 656876,
+        "name": "Freddy Peralta",
+        "pitcher_id": 642547,
         "team": "Tampa Bay Rays",
         "opp": "Cleveland Guardians",
         "opp_kpct": 20.8,
-        "fip": 2.81479,
-        "xfip": 3.21379,
-        "lambda": 6.31,
-        "lo": 3,
-        "hi": 10,
-        "proj_ip": 6.4,
-        "outs_lambda": 19.09,
-        "outs_lo": 14,
-        "outs_hi": 25,
-        "season_era": "2.67",
-        "season_k9": "9.10",
-        "season_hits9": "6.54",
-        "bb9": 1.67,
-        "whip": "0.91",
-        "l5_str": "6\u00b77\u00b74\u00b73\u00b711",
-        "l5_vs_season": 6.0,
+        "fip": 4.283104358974359,
+        "xfip": 4.372095009861933,
+        "lambda": 4.46,
+        "lo": 2,
+        "hi": 7,
+        "proj_ip": 5.5,
+        "outs_lambda": 16.62,
+        "outs_lo": 12,
+        "outs_hi": 22,
+        "season_era": "4.42",
+        "season_k9": "8.31",
+        "season_hits9": "8.57",
+        "bb9": 3.36,
+        "whip": "1.33",
+        "l5_str": "7\u00b72\u00b74\u00b76\u00b74",
+        "l5_vs_season": -11.0,
         "k_last5": [
-          6,
           7,
+          2,
           4,
-          3,
-          11
+          6,
+          4
         ],
         "outs_last5": [
           18,
-          21,
-          21,
+          18,
           15,
-          20
+          17,
+          16
         ]
       }
     ],
-    "game_pk": 849820,
-    "game_date": "2026-10-12",
+    "game_pk": 849813,
+    "game_date": "2026-10-13",
     "team_runs": {
       "away": {
         "team": "Cleveland Guardians",
         "opp": "Tampa Bay Rays",
-        "lambda": 2.45,
+        "lambda": 2.97,
         "lo": 1,
         "hi": 5,
         "l5_str": "0\u00b71\u00b712\u00b711\u00b72",
@@ -258,15 +99,15 @@
           2
         ],
         "season_rpg": 4.19,
-        "run_factor": 0.86,
+        "run_factor": 1.04,
         "xfip_used": true
       },
       "home": {
         "team": "Tampa Bay Rays",
         "opp": "Cleveland Guardians",
-        "lambda": 3.64,
+        "lambda": 3.14,
         "lo": 1,
-        "hi": 6,
+        "hi": 5,
         "l5_str": "2\u00b74\u00b72\u00b712\u00b73",
         "last5_runs": [
           2,
@@ -276,7 +117,7 @@
           3
         ],
         "season_rpg": 4.54,
-        "run_factor": 0.99,
+        "run_factor": 0.85,
         "xfip_used": true
       }
     },
@@ -284,9 +125,9 @@
       "away": {
         "team": "Cleveland Guardians",
         "opp": "Tampa Bay Rays",
-        "lambda": 7.05,
-        "lo": 4,
-        "hi": 11,
+        "lambda": 8.44,
+        "lo": 5,
+        "hi": 12,
         "l5_str": "5\u00b74\u00b79\u00b714\u00b79",
         "last5_hits": [
           5,
@@ -296,14 +137,14 @@
           9
         ],
         "season_hpg": 7.97,
-        "hit_factor": 0.81
+        "hit_factor": 0.97
       },
       "home": {
         "team": "Tampa Bay Rays",
         "opp": "Cleveland Guardians",
-        "lambda": 8.43,
-        "lo": 5,
-        "hi": 12,
+        "lambda": 7.68,
+        "lo": 4,
+        "hi": 11,
         "l5_str": "6\u00b79\u00b76\u00b717\u00b78",
         "last5_hits": [
           6,
@@ -313,7 +154,7 @@
           8
         ],
         "season_hpg": 8.67,
-        "hit_factor": 0.98
+        "hit_factor": 0.89
       }
     }
   }
