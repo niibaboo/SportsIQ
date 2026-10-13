@@ -16357,5 +16357,43 @@
     "status": "pending",
     "result": null,
     "actual": null
+  },
+  {
+    "id": "2999a40d52eb3acf",
+    "scanner": "team_total",
+    "subject": "FLA Over 1.0 Goals",
+    "match": "FLA @ BUF",
+    "market": "FLA Over 1.0 Goals",
+    "value": 65,
+    "detail": "proj 2.21 goals",
+    "line": 1.0,
+    "game_id": 2026020087,
+    "game_date": "2026-10-12",
+    "is_home": false,
+    "player_id": null,
+    "date_key": "2026-10-12",
+    "logged_at": "2026-10-13T06:52:44.211188+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "4762ba48cfaa7b49",
+    "scanner": "team_total",
+    "subject": "NJD Over 1.0 Goals",
+    "match": "OTT @ NJD",
+    "market": "NJD Over 1.0 Goals",
+    "value": 62,
+    "detail": "proj 2.10 goals",
+    "line": 1.0,
+    "game_id": 2026020088,
+    "game_date": "2026-10-12",
+    "is_home": true,
+    "player_id": null,
+    "date_key": "2026-10-12",
+    "logged_at": "2026-10-13T06:52:44.211203+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
   }
 ]
