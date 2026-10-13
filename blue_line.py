@@ -4,6 +4,18 @@ from datetime import datetime, timezone
 BASE="https://api-web.nhle.com/v1"
 H={"User-Agent":"Mozilla/5.0"}
 CLUB_CACHE={} # memoize club-stats
+SCHEDULE_CACHE={} # memoize club-schedule-season (for Hot Form/Real Streak)
+
+# Hot Form / Real Streak thresholds -- NHL teams average roughly 3.0-3.3
+# goals/game league-wide (lower than Euro Ice's international-hockey pool,
+# which is why that file's bars of 3.5 avg / 4-per-game are tightened here
+# to 3.0/3). Starting point only, same as every other tool's thresholds in
+# this suite -- watch real results and raise/lower once there's evidence
+# (see Under IQ's TEAM_UNDER15_MIN, which got the same treatment).
+HOT_FORM_MIN = 3.0          # avg goals over last N games to count as "hot"
+HOT_FORM_MIN_GAMES = 5
+REAL_STREAK_THRESHOLD = 3   # goals needed in a game to extend the streak
+REAL_STREAK_MIN_LENGTH = 3  # min consecutive games to show a streak
 
 def fetch(u):
   return requests.get(u, headers=H, timeout=20).json()
@@ -28,14 +40,24 @@ def safe_line(lam, factor=0.55):
 # out games we'd already found. That's wrong: the schedule doesn't depend
 # on standings being usable, so it shouldn't die with it.
 
+# FIXED: this used to flatten every gameWeek day into one list, then
+# keep only games whose startTimeUTC STRING started with the FIRST
+# game's UTC date. NHL games run late US evening, so a single night's
+# slate routinely crosses the UTC midnight boundary partway through
+# (confirmed with live bet365 evidence: 23:07/23:22/23:37/23:52 UK time
+# on one date, then 00:07 UK time -- same NHL night, but a different UTC
+# calendar date) -- every game on the far side of that rollover was
+# silently dropped, even though it belonged to the same scheduled slate.
+# /schedule/now's gameWeek[0] is the NHL API's OWN "today" bucket,
+# already correctly grouped by schedule date server-side -- using its
+# games directly instead of re-deriving "today" from a raw timestamp
+# substring sidesteps the UTC-rollover bug entirely rather than
+# patching the date-matching logic.
 games=[]
 try:
   sched=fetch(f"{BASE}/schedule/now")
-  for wk in sched.get("gameWeek",[]):
-    for g in wk.get("games",[]): games.append(g)
-  if games:
-    first=games[0]["startTimeUTC"][:10]
-    games=[g for g in games if g["startTimeUTC"].startswith(first)]
+  game_weeks=sched.get("gameWeek",[])
+  games=game_weeks[0].get("games",[]) if game_weeks else []
 except Exception as e:
   print(f"schedule error: {e}", file=sys.stderr)
   games=[]
@@ -136,7 +158,90 @@ def get_props(team, opp, is_home):
     print(f"get_props {team} logic error: {e}", file=sys.stderr)
     return []
 
+def get_team_recent_goals(team):
+  """Last HOT_FORM_MIN_GAMES FINISHED games' goals-for for `team`,
+  oldest-first (same convention as Euro Ice's get_last_five -- a
+  backward walk over this list from the end is a walk from most
+  recent to oldest, which is what _current_goal_streak needs).
+
+  UNVERIFIED ENDPOINT: /club-schedule-season/{team}/now isn't called
+  anywhere else in this file, and this sandbox has no network path to
+  api-web.nhle.com to confirm its exact response shape. The field
+  names below (games[], gameState, gameDate, homeTeam/awayTeam.abbrev
+  + .score) match the shape every OTHER NHL schedule-family endpoint
+  already used in this file (/schedule/now) and in the results
+  tracker (/gamecenter/{id}/boxscore) uses, so this is a reasonable
+  bet, not a confirmed one -- if Hot Form/Real Streak entries never
+  show up on a live run, check stderr for a "club-schedule" warning
+  first."""
+  if team in SCHEDULE_CACHE:
+    sched=SCHEDULE_CACHE[team]
+  else:
+    try:
+      sched=fetch(f"{BASE}/club-schedule-season/{team}/now")
+      SCHEDULE_CACHE[team]=sched
+    except Exception as e:
+      print(f"club-schedule-season {team} failed: {e}", file=sys.stderr)
+      return []
+
+  try:
+    finished=[g for g in sched.get("games",[])
+              if g.get("gameState") in ("OFF","FINAL")
+              and g.get("homeTeam",{}).get("score") is not None
+              and g.get("awayTeam",{}).get("score") is not None]
+    finished.sort(key=lambda g: g.get("gameDate") or g.get("startTimeUTC") or "")
+    last=finished[-HOT_FORM_MIN_GAMES:]
+    out=[]
+    for g in last:
+      is_home=g.get("homeTeam",{}).get("abbrev")==team
+      gf=g["homeTeam"]["score"] if is_home else g["awayTeam"]["score"]
+      out.append(gf)
+    return out
+  except Exception as e:
+    print(f"club-schedule-season {team} parse error: {e}", file=sys.stderr)
+    return []
+
+def _current_goal_streak(goals_oldest_first, threshold=REAL_STREAK_THRESHOLD):
+  """Walk backward (most-recent-first) and stop at the first game
+  under the threshold -- a genuine consecutive run, not an average."""
+  streak=0
+  for g in reversed(goals_oldest_first):
+    if g>=threshold:
+      streak+=1
+    else:
+      break
+  return streak
+
+def render_streak_panel(hot_form_entries, real_streak_entries):
+  if not hot_form_entries and not real_streak_entries:
+    return ""
+  def row(e, kind):
+    vs=f"{'vs' if e['is_home'] else '@'} {e['opponent']}"
+    if kind=="hot":
+      return f"""<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
+  <span>{e['team']} {vs}</span><span style="color:#4ea1ff;font-weight:bold">{e['last5_avg']} gpg (L{HOT_FORM_MIN_GAMES})</span>
+</div>"""
+    plus="+" if e["full_sample"] else ""
+    return f"""<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
+  <span>{e['team']} {vs}</span><span style="color:#2a6f6a;font-weight:bold">{e['streak_len']}{plus} straight ({'/'.join(str(g) for g in e['streak_games'])})</span>
+</div>"""
+  hot_rows="".join(row(e,"hot") for e in hot_form_entries) or '<p style="color:#8aa;font-size:12px">None today.</p>'
+  streak_rows="".join(row(e,"streak") for e in real_streak_entries) or '<p style="color:#8aa;font-size:12px">None today.</p>'
+  return f"""
+<div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0">
+  <div style="font-weight:bold;margin-bottom:2px">📊 Hot Form</div>
+  <div style="color:#8aa;font-size:11px;margin-bottom:8px">Averaging {HOT_FORM_MIN}+ goals over their last {HOT_FORM_MIN_GAMES} games</div>
+  {hot_rows}
+</div>
+<div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0">
+  <div style="font-weight:bold;margin-bottom:2px">🔥 Real Streak</div>
+  <div style="color:#8aa;font-size:11px;margin-bottom:8px">Consecutive games scoring {REAL_STREAK_THRESHOLD}+ goals (oldest→newest shown)</div>
+  {streak_rows}
+</div>"""
+
 all_legs=[]
+hot_form_entries=[]
+real_streak_entries=[]
 
 BUILDER_TEMPLATE = """
 <div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0">
@@ -314,6 +419,25 @@ for g in games:
     game_id = g.get("id")  # NEW: needed later to look up the real final
                              # result for the results tracker
     game_date = g.get("startTimeUTC", "")[:10]
+
+    for team_label, opp_label, is_home_flag in [(home, away, True), (away, home, False)]:
+      recent_goals = get_team_recent_goals(team_label)
+      if len(recent_goals) >= HOT_FORM_MIN_GAMES:
+        avg5 = round(sum(recent_goals)/len(recent_goals), 2)
+        if avg5 >= HOT_FORM_MIN:
+          hot_form_entries.append({
+            "team": team_label, "opponent": opp_label, "is_home": is_home_flag,
+            "last5_avg": avg5, "game_id": game_id, "date": game_date,
+          })
+      streak_len = _current_goal_streak(recent_goals)
+      if streak_len >= REAL_STREAK_MIN_LENGTH:
+        real_streak_entries.append({
+          "team": team_label, "opponent": opp_label, "is_home": is_home_flag,
+          "streak_len": streak_len, "streak_games": recent_goals[-streak_len:],
+          "full_sample": streak_len >= len(recent_goals),
+          "game_id": game_id, "date": game_date,
+        })
+
     for team_label, lam in [(home, lh), (away, la)]:
       line = safe_line(lam)
       all_legs.append({
@@ -355,17 +479,18 @@ for g in games:
   except Exception as e: print(f"game loop {e}", file=sys.stderr); continue
 
 builder = BUILDER_TEMPLATE.format(legs_json=json.dumps(all_legs)) if all_legs else ""
+streak_panel = render_streak_panel(hot_form_entries, real_streak_entries)
 
 fallback_note = ('<p style="margin:4px 0 0;color:#ffb84e;font-size:12px">⚠️ Early season — projections use last season\'s final standings '
                   'until this season has a few games of its own on the board.</p>') if using_fallback_standings else ""
 
-html=f"""<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blue Line v2 Clean</title><style>body{{background:#081229;color:#fff;font-family:-apple-system,system-ui,sans-serif;padding:16px;max-width:800px;margin:0 auto}}h1{{color:#4ea1ff;font-size:22px}}</style></head><body><h1>🔵 Blue Line v2 — Patched</h1><p style="color:#8aa;font-size:12px">Last: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} | Games: {len(games)}</p>{fallback_note}<p style="margin:4px 0 0"><a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a></p>{builder}{cards or '<p>No games today — model ready.</p>'}<p style="font-size:11px;color:#5a6a8a;margin-top:24px">Fixes: cached club-stats, logged excepts, utcnow→now(utc), total clamp 4.5-8.0. Added: Safest Bet Builder (goals/props markets only — no moneyline, since ph/pa are regulation-time only and would understate a favorite's true win odds through OT/SO). Games and standings are now fetched/validated independently so a thin preseason sample can't wipe out a valid schedule.</p></body></html>"""
+html=f"""<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blue Line v2 Clean</title><style>body{{background:#081229;color:#fff;font-family:-apple-system,system-ui,sans-serif;padding:16px;max-width:800px;margin:0 auto}}h1{{color:#4ea1ff;font-size:22px}}</style></head><body><h1>🔵 Blue Line v2 — Patched</h1><p style="color:#8aa;font-size:12px">Last: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} | Games: {len(games)}</p>{fallback_note}<p style="margin:4px 0 0"><a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a></p>{builder}{streak_panel}{cards or '<p>No games today — model ready.</p>'}<p style="font-size:11px;color:#5a6a8a;margin-top:24px">Fixes: cached club-stats, logged excepts, utcnow→now(utc), total clamp 4.5-8.0. Added: Safest Bet Builder (goals/props markets only — no moneyline, since ph/pa are regulation-time only and would understate a favorite's true win odds through OT/SO). Games and standings are now fetched/validated independently so a thin preseason sample can't wipe out a valid schedule.</p></body></html>"""
 import os as _os; _os.makedirs("docs/blue-line", exist_ok=True)
 with open("docs/blue-line/index.html","w") as f: f.write(html)
 
 try:
   import results_tracker_blue_line
-  results_tracker_blue_line.run_results_tracker(all_legs)
+  results_tracker_blue_line.run_results_tracker(all_legs, hot_form_entries, real_streak_entries)
 except Exception as e:
   # Results tracking sits on top of everything above, which has already
   # succeeded by this point -- a failure here should never take down an
