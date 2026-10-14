@@ -168,6 +168,13 @@ def log_todays_signals(predictions, log):
         add("Team Cards", team=p["away_team"], is_home=False,
             line=away_cards_line, lam=p["away_cards"]["lambda"], **base)
 
+        home_sot_line = p["home_sot"].get("line") or safe_line(p["home_sot"]["lambda"])
+        add("Team Shots on Target", team=p["home_team"], is_home=True,
+            line=home_sot_line, lam=p["home_sot"]["lambda"], **base)
+        away_sot_line = p["away_sot"].get("line") or safe_line(p["away_sot"]["lambda"])
+        add("Team Shots on Target", team=p["away_team"], is_home=False,
+            line=away_sot_line, lam=p["away_sot"]["lambda"], **base)
+
     print(f"  Results log: {added} new pick(s) logged, {len(log)} total in log")
     return log
 
@@ -203,7 +210,11 @@ def _verify_entry(entry, key):
     if not overview:
         return None
 
-    stat_key = "corner_kicks" if entry["category"] == "Team Corners" else "yellow_cards"
+    stat_key = {
+        "Team Corners": "corner_kicks",
+        "Team Cards": "yellow_cards",
+        "Team Shots on Target": "shots_on_target",
+    }.get(entry["category"], "yellow_cards")
     item = overview.get(stat_key, {}).get("all")
     if not item:
         return None  # stat never populated for this match -- stays pending, see module docstring
@@ -260,10 +271,11 @@ def build_results_dashboard(log):
         d = by_cat.setdefault(e["category"], {"hit": 0, "miss": 0})
         d[e["result"]] += 1
 
-    CATEGORY_ORDER = ["Team Corners", "Team Cards"]
+    CATEGORY_ORDER = ["Team Corners", "Team Cards", "Team Shots on Target"]
     CATEGORY_NOTE = {
         "Team Corners": "opponent-adjusted projection · safety-margined line",
         "Team Cards": "yellow cards only, no opponent adjustment · safety-margined line",
+        "Team Shots on Target": "opponent-adjusted projection · safety-margined line",
     }
 
     total_hit = sum(d["hit"] for d in by_cat.values())
@@ -315,9 +327,10 @@ def build_results_dashboard(log):
 
 <div style="font-size:11px;color:#8b98a8;text-align:center;margin-top:20px;line-height:1.6">
   Every pick is logged BEFORE its match kicks off, against the exact same safety-margined line
-  shown on the page — nothing here is cherry-picked after the fact. Team Corners and Team Cards
-  are tracked separately since Corners is opponent-adjusted and Cards isn't; if one market's win
-  rate consistently lags the other, that's the signal to revisit that market's line factor first.
+  shown on the page — nothing here is cherry-picked after the fact. Corners, Cards, and Shots on
+  Target are tracked separately since Cards isn't opponent-adjusted the way Corners and SOT are;
+  if one market's win rate consistently lags the others, that's the signal to revisit that
+  market's line factor first.
 </div>
 </body></html>"""
 
