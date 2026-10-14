@@ -1,47 +1,5 @@
 {
-  "generated": "2026-10-14T01:16:37.914977+00:00",
-  "total_live": 1,
-  "games": [
-    {
-      "game_pk": 849813,
-      "home_team": "Tampa Bay Rays",
-      "away_team": "Cleveland Guardians",
-      "home_runs": 0.0,
-      "away_runs": 0.0,
-      "home_hits": 4.0,
-      "away_hits": 3.0,
-      "inning": 4,
-      "inning_state": "Bottom",
-      "status": "Manager challenge",
-      "half_innings_remaining": 11,
-      "next_run": {
-        "home": 51,
-        "away": 49
-      },
-      "game_total_pace": {
-        "prob": 0,
-        "status": "On Pace: Under"
-      },
-      "inning_winner": {
-        "home": 14,
-        "away": 13,
-        "tie": 73
-      },
-      "inning_hits": {
-        "home": 42,
-        "away": 27,
-        "tie": 30
-      },
-      "model_signal": {
-        "label": "Game Total Under",
-        "prob": 100,
-        "qualifies": true
-      },
-      "pregame_projection": {
-        "home_lambda": 3.14,
-        "away_lambda": 2.97,
-        "pregame_total": 6.11
-      }
-    }
-  ]
+  "generated": "2026-10-14T06:13:41.612679+00:00",
+  "total_live": 0,
+  "games": []
 }
