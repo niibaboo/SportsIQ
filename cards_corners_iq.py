@@ -115,6 +115,15 @@ CARDS_HOT_FORM_MIN_GAMES = 3
 CARDS_REAL_STREAK_THRESHOLD = 2
 CARDS_REAL_STREAK_MIN_LENGTH = 3
 
+# Shots on Target -- same opponent-adjusted treatment as corners (a leaky
+# defense genuinely gives up more SOT, same logic as corners-conceded),
+# not the un-adjusted treatment used for cards. Threshold of 4 is what
+# clears a "Team Over 3.5 SOT" line, the bet365 market this was built for.
+SOT_HOT_FORM_MIN = 4.0
+SOT_HOT_FORM_MIN_GAMES = 3
+SOT_REAL_STREAK_THRESHOLD = 4
+SOT_REAL_STREAK_MIN_LENGTH = 3
+
 
 def _headers(key):
     return {"Authorization": f"Bearer {key}"}
@@ -224,6 +233,7 @@ def get_team_form(team_id, competition_id, season_id, key):
         return None
 
     corners, corners_conceded, yellow_cards = [], [], []
+    sot, sot_conceded = [], []
     dates = []
 
     for m in matches:
@@ -248,21 +258,27 @@ def get_team_form(team_id, competition_id, season_id, key):
         c = side_val("corner_kicks")
         cc = opp_side_val("corner_kicks")
         y = side_val("yellow_cards")
+        s = side_val("shots_on_target")
+        sc = opp_side_val("shots_on_target")
 
         # Only append to a metric's own list if that metric was actually
-        # present for this match -- keeps corners_list/yellow_cards_list
-        # each internally consistent (no placeholder zeros standing in
-        # for missing data), even if that means the two lists end up
-        # different lengths for the same team.
+        # present for this match -- keeps corners_list/yellow_cards_list/
+        # sot_list each internally consistent (no placeholder zeros
+        # standing in for missing data), even if that means the lists
+        # end up different lengths for the same team.
         if c is not None:
             corners.append(c)
         if cc is not None:
             corners_conceded.append(cc)
         if y is not None:
             yellow_cards.append(y)
+        if s is not None:
+            sot.append(s)
+        if sc is not None:
+            sot_conceded.append(sc)
         dates.append(m["utc_date"])
 
-    if not corners and not yellow_cards:
+    if not corners and not yellow_cards and not sot:
         team_form_cache[cache_key] = None
         return None
 
@@ -274,6 +290,10 @@ def get_team_form(team_id, competition_id, season_id, key):
         "corners_conceded_list": corners_conceded,
         "avg_yellow_cards": round(sum(yellow_cards) / len(yellow_cards), 2) if yellow_cards else None,
         "yellow_cards_list": yellow_cards,  # oldest -> newest
+        "avg_sot": round(sum(sot) / len(sot), 2) if sot else None,
+        "sot_list": sot,  # oldest -> newest
+        "avg_sot_conceded": round(sum(sot_conceded) / len(sot_conceded), 2) if sot_conceded else None,
+        "sot_conceded_list": sot_conceded,
     }
     team_form_cache[cache_key] = form
     return form
@@ -298,6 +318,8 @@ def shrink(value, n, league_avg, prior=PRIOR_STRENGTH):
 _corners_won_samples = []
 _corners_conceded_samples = []
 _cards_samples = []
+_sot_won_samples = []
+_sot_conceded_samples = []
 
 
 def _lg_avg(samples, fallback):
@@ -311,6 +333,10 @@ def _record_samples(form):
         _corners_conceded_samples.append(form["avg_corners_conceded"])
     if form.get("avg_yellow_cards") is not None:
         _cards_samples.append(form["avg_yellow_cards"])
+    if form.get("avg_sot") is not None:
+        _sot_won_samples.append(form["avg_sot"])
+    if form.get("avg_sot_conceded") is not None:
+        _sot_conceded_samples.append(form["avg_sot_conceded"])
 
 
 def project_team_corners(form, opp_form):
@@ -337,6 +363,25 @@ def project_team_corners(form, opp_form):
     # the page itself shows, rather than each downstream page having to
     # reimplement safe_line/prob_over in its own JS.
     return {"lambda": lam, "corners_list": form.get("corners_list") or [], "line": line, "prob": prob}
+
+
+def project_team_sot(form, opp_form):
+    """Shots on Target gets the same opponent-adjusted treatment as
+    corners, not cards' un-adjusted one -- a leaky defense genuinely
+    concedes more SOT, the same reasoning validated for corners-conceded,
+    whereas yellow cards are mostly about the team's own discipline."""
+    _record_samples(form)
+    lg_won = _lg_avg(_sot_won_samples, 4.0)
+    lg_conceded = _lg_avg(_sot_conceded_samples, 4.0)
+
+    own_rate = shrink(form.get("avg_sot"), form["n_games"], lg_won)
+    opp_conceded_rate = shrink(opp_form.get("avg_sot_conceded"), opp_form["n_games"], lg_conceded)
+    opp_factor = (opp_conceded_rate / lg_conceded) if lg_conceded else 1.0
+
+    lam = round(own_rate * opp_factor, 2)
+    line = safe_line(lam)
+    prob = round(prob_over(lam, line) * 100) if line is not None else None
+    return {"lambda": lam, "sot_list": form.get("sot_list") or [], "line": line, "prob": prob}
 
 
 def project_team_cards(form):
@@ -457,6 +502,8 @@ def build_predictions(key, start_date=None):
             a_corners = project_team_corners(a_form, h_form)
             h_cards = project_team_cards(h_form)
             a_cards = project_team_cards(a_form)
+            h_sot = project_team_sot(h_form, a_form)
+            a_sot = project_team_sot(a_form, h_form)
 
             predictions.append({
                 "match_id": m["id"], "league": comp["name"],
@@ -465,6 +512,7 @@ def build_predictions(key, start_date=None):
                 "home_form": h_form, "away_form": a_form,
                 "home_corners": h_corners, "away_corners": a_corners,
                 "home_cards": h_cards, "away_cards": a_cards,
+                "home_sot": h_sot, "away_sot": a_sot,
             })
 
     # Chronological, not league-by-league -- without this, predictions
@@ -515,6 +563,23 @@ def build_legs(predictions):
                 "history": format_history(proj[list_key]),
                 "date_key": p["date_key"],
             })
+        for side, team_name, proj, list_key in (
+            ("home", p["home_team"], p["home_sot"], "sot_list"),
+            ("away", p["away_team"], p["away_sot"], "sot_list"),
+        ):
+            line = proj.get("line")
+            if not line:
+                continue
+            legs.append({
+                "match": match_label, "subject": team_name,
+                "market": f"{team_name} Over {line} Shots on Target",
+                "prob": proj["prob"],
+                "category": "Team Shots on Target",
+                "hit_rate": hit_rate(proj[list_key], line),
+                "detail": f"{p['league']} · proj {proj['lambda']} SOT",
+                "history": format_history(proj[list_key]),
+                "date_key": p["date_key"],
+            })
     return legs
 
 
@@ -541,6 +606,8 @@ def build_all_form_entries(predictions):
                    _team_rows(predictions, "away", "away_form", "avg_corners", "corners_list"))
     card_rows = (_team_rows(predictions, "home", "home_form", "avg_yellow_cards", "yellow_cards_list") +
                  _team_rows(predictions, "away", "away_form", "avg_yellow_cards", "yellow_cards_list"))
+    sot_rows = (_team_rows(predictions, "home", "home_form", "avg_sot", "sot_list") +
+                _team_rows(predictions, "away", "away_form", "avg_sot", "sot_list"))
 
     return {
         "corners_hot_form": build_hot_form_entries(
@@ -555,6 +622,12 @@ def build_all_form_entries(predictions):
         "cards_real_streak": build_real_streak_entries(
             card_rows, CARDS_REAL_STREAK_THRESHOLD, CARDS_REAL_STREAK_MIN_LENGTH,
             "Real Card Streak", "cards"),
+        "sot_hot_form": build_hot_form_entries(
+            sot_rows, "avg_sot", SOT_HOT_FORM_MIN, SOT_HOT_FORM_MIN_GAMES,
+            "SOT Hot Form", "SOT"),
+        "sot_real_streak": build_real_streak_entries(
+            sot_rows, SOT_REAL_STREAK_THRESHOLD, SOT_REAL_STREAK_MIN_LENGTH,
+            "Real SOT Streak", "SOT"),
     }
 
 
@@ -618,6 +691,16 @@ MATCH_CARD = """<div class="dateFilterable" data-date="{date_key}" style="backgr
       <div style="font-size:20px;font-weight:800;color:#ffeb3b">{away_cards_lam}</div>
       <div style="font-size:10px;color:#998">last: {away_cards_hist}</div>
     </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">{home} — SOT</div>
+      <div style="font-size:20px;font-weight:800;color:#4ea1ff">{home_sot_lam}</div>
+      <div style="font-size:10px;color:#998">last: {home_sot_hist}</div>
+    </div>
+    <div style="background:#0f1a12;border-radius:8px;padding:10px">
+      <div style="font-size:11px;color:#998;margin-bottom:4px">{away} — SOT</div>
+      <div style="font-size:20px;font-weight:800;color:#4ea1ff">{away_sot_lam}</div>
+      <div style="font-size:10px;color:#998">last: {away_sot_hist}</div>
+    </div>
   </div>
 </div>"""
 
@@ -663,19 +746,22 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="UTF-8">
   {corners_real_streak}
   {cards_hot_form}
   {cards_real_streak}
+  {sot_hot_form}
+  {sot_real_streak}
   <div id="matchCardsContainer">{cards}</div>
   <p id="noCardsForDate" class="emptyForDate">No matches for the selected date.</p>
 
   <div class="footnote">
-    Corners: each team's own recency-weighted+season corner-winning rate, adjusted by the
-    OPPONENT'S corner-conceding rate vs. league average. Cards: each team's own recency-weighted+
-    season YELLOW card rate (red cards excluded entirely — see the page's build notes), with no
-    opponent adjustment. Hot Form = average over the last {recent_games} games (can mask a bad most
-    recent game). Real Streak = genuinely CONSECUTIVE recent games clearing the threshold, walking
-    backward from the most recent game. Lines are set automatically below the model's projection for
-    a safety margin. The date filter above only changes what's shown on THIS page (already-fetched
-    matches); it doesn't re-query the API — use --date when running the script to fetch a different
-    window of fixtures.
+    Corners &amp; Shots on Target: each team's own recency-weighted+season rate, adjusted by the
+    OPPONENT'S conceding rate vs. league average (a leaky defense really does give up more of both).
+    Cards: each team's own recency-weighted+season YELLOW card rate (red cards excluded entirely —
+    see the page's build notes), with no opponent adjustment — card counts are about a team's own
+    discipline and the referee, not the opponent. Hot Form = average over the last {recent_games}
+    games (can mask a bad most recent game). Real Streak = genuinely CONSECUTIVE recent games
+    clearing the threshold, walking backward from the most recent game. Lines are set automatically
+    below the model's projection for a safety margin. The date filter above only changes what's
+    shown on THIS page (already-fetched matches); it doesn't re-query the API — use --date when
+    running the script to fetch a different window of fixtures.
   </div>
 
 <script>
@@ -871,6 +957,16 @@ def make_html(predictions):
         f"Genuinely CONSECUTIVE recent games with {CARDS_REAL_STREAK_THRESHOLD}+ yellow cards, walking back from the most recent.",
         lambda e: f"{e['streak']}+ straight", lambda e: format_history(e["list"]),
     )
+    sot_hot_form = _streak_panel(
+        forms["sot_hot_form"], "📊", "SOT Hot Form",
+        f"Average over the last {RECENT_GAMES} games — can mask a bad most recent game. Not a streak.",
+        lambda e: f"{e['avg']} avg", lambda e: f"{e['n_games']}gm · {format_history(e['list'])}",
+    )
+    sot_real_streak = _streak_panel(
+        forms["sot_real_streak"], "🔥", "Real SOT Streak",
+        f"Genuinely CONSECUTIVE recent games with {SOT_REAL_STREAK_THRESHOLD}+ shots on target, walking back from the most recent.",
+        lambda e: f"{e['streak']}+ straight", lambda e: format_history(e["list"]),
+    )
 
     # Group consecutive same-day cards under a date header -- same fix
     # already applied to EuroLeague IQ for the identical "not
@@ -896,6 +992,9 @@ def make_html(predictions):
             home_cards_lam=p["home_cards"]["lambda"], away_cards_lam=p["away_cards"]["lambda"],
             home_cards_hist=format_history(p["home_cards"]["yellow_cards_list"]) or "—",
             away_cards_hist=format_history(p["away_cards"]["yellow_cards_list"]) or "—",
+            home_sot_lam=p["home_sot"]["lambda"], away_sot_lam=p["away_sot"]["lambda"],
+            home_sot_hist=format_history(p["home_sot"]["sot_list"]) or "—",
+            away_sot_hist=format_history(p["away_sot"]["sot_list"]) or "—",
         )
     if not cards_html:
         cards_html = '<p style="text-align:center;color:var(--sub)">No usable matches today.</p>'
@@ -916,7 +1015,8 @@ def make_html(predictions):
         n_dates=len(date_keys), plural="" if len(date_keys) == 1 else "s",
         date_options=date_options,
         builder=builder, corners_hot_form=corners_hot_form, corners_real_streak=corners_real_streak,
-        cards_hot_form=cards_hot_form, cards_real_streak=cards_real_streak, cards=cards_html,
+        cards_hot_form=cards_hot_form, cards_real_streak=cards_real_streak,
+        sot_hot_form=sot_hot_form, sot_real_streak=sot_real_streak, cards=cards_html,
         legs_json=json.dumps(legs),
     )
 
@@ -932,6 +1032,8 @@ def write_csv(predictions, path):
                 (p["away_team"], p["away_corners"], "corners_list", "Corners"),
                 (p["home_team"], p["home_cards"], "yellow_cards_list", "Cards"),
                 (p["away_team"], p["away_cards"], "yellow_cards_list", "Cards"),
+                (p["home_team"], p["home_sot"], "sot_list", "ShotsOnTarget"),
+                (p["away_team"], p["away_sot"], "sot_list", "ShotsOnTarget"),
             ):
                 writer.writerow([
                     p["date"], p["league"], f"{p['home_team']} vs {p['away_team']}", team_name, market,
