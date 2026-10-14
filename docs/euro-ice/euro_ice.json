@@ -1,108 +1,55 @@
 [
   {
-    "match": "Pardubice Dynamo vs T\u0159inec",
-    "subject": "Pardubice Dynamo",
-    "market": "Pardubice Dynamo Over 3.0 Goals",
-    "prob": 62,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 4.3 goals \u00b7 season 4.2/gm",
-    "history": "5/4/6/5/3",
-    "line": 3.0,
-    "is_home": true,
-    "league_id": 9294,
-    "home_name": "Pardubice Dynamo",
-    "away_name": "T\u0159inec",
-    "match_date": "2026-10-11T16:30:00.000Z"
-  },
-  {
-    "match": "Pardubice Dynamo vs T\u0159inec",
-    "subject": "T\u0159inec",
-    "market": "T\u0159inec Over 3.5 Goals",
-    "prob": 75,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "Extraliga Team Total",
-    "detail": "proj 5.14 goals \u00b7 season 5.0/gm",
-    "history": "3/6/3/9/5",
-    "line": 3.5,
-    "is_home": false,
-    "league_id": 9294,
-    "home_name": "Pardubice Dynamo",
-    "away_name": "T\u0159inec",
-    "match_date": "2026-10-11T16:30:00.000Z"
-  },
-  {
-    "match": "Pardubice Dynamo vs T\u0159inec",
-    "subject": "Pardubice Dynamo vs T\u0159inec",
-    "market": "Game Over 6.5 Total Goals",
-    "prob": 83,
-    "hit_rate": null,
-    "category": "Extraliga Game Total",
-    "detail": "proj 9.44 goals combined",
-    "history": null,
-    "line": 6.5,
-    "league_id": 9294,
-    "home_name": "Pardubice Dynamo",
-    "away_name": "T\u0159inec",
-    "match_date": "2026-10-11T16:30:00.000Z"
-  },
-  {
-    "match": "Adler Mannheim vs Straubing Tigers",
-    "subject": "Adler Mannheim",
-    "market": "Adler Mannheim Over 2.5 Goals",
-    "prob": 77,
-    "hit_rate": {
-      "hits": 3,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 4.09 goals \u00b7 season 4.0/gm",
-    "history": "2/6/1/5/5",
-    "line": 2.5,
-    "is_home": true,
-    "league_id": 16953,
-    "home_name": "Adler Mannheim",
-    "away_name": "Straubing Tigers",
-    "match_date": "2026-10-11T17:00:00.000Z"
-  },
-  {
-    "match": "Adler Mannheim vs Straubing Tigers",
-    "subject": "Straubing Tigers",
-    "market": "Straubing Tigers Over 2.0 Goals",
+    "match": "Lausanne vs Ajoie",
+    "subject": "Lausanne",
+    "market": "Lausanne Over 2.0 Goals",
     "prob": 67,
     "hit_rate": {
-      "hits": 5,
+      "hits": 3,
       "total": 5
     },
-    "category": "DEL Team Total",
-    "detail": "proj 3.44 goals \u00b7 season 1.33/gm",
-    "history": "4/3/4/4/11",
+    "category": "National League Team Total",
+    "detail": "proj 3.44 goals \u00b7 season 3.18/gm",
+    "history": "6/7/2/2/4",
     "line": 2.0,
-    "is_home": false,
-    "league_id": 16953,
-    "home_name": "Adler Mannheim",
-    "away_name": "Straubing Tigers",
-    "match_date": "2026-10-11T17:00:00.000Z"
+    "is_home": true,
+    "league_id": 44185,
+    "home_name": "Lausanne",
+    "away_name": "Ajoie",
+    "match_date": "2026-10-14T17:45:00.000Z"
   },
   {
-    "match": "Adler Mannheim vs Straubing Tigers",
-    "subject": "Adler Mannheim vs Straubing Tigers",
-    "market": "Game Over 5.0 Total Goals",
-    "prob": 76,
+    "match": "Lausanne vs Ajoie",
+    "subject": "Ajoie",
+    "market": "Ajoie Over 2.0 Goals",
+    "prob": 65,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "National League Team Total",
+    "detail": "proj 3.36 goals \u00b7 season 3.5/gm",
+    "history": "3/1/5/2/5",
+    "line": 2.0,
+    "is_home": false,
+    "league_id": 44185,
+    "home_name": "Lausanne",
+    "away_name": "Ajoie",
+    "match_date": "2026-10-14T17:45:00.000Z"
+  },
+  {
+    "match": "Lausanne vs Ajoie",
+    "subject": "Lausanne vs Ajoie",
+    "market": "Game Over 4.5 Total Goals",
+    "prob": 81,
     "hit_rate": null,
-    "category": "DEL Game Total",
-    "detail": "proj 7.53 goals combined",
+    "category": "National League Game Total",
+    "detail": "proj 6.8 goals combined",
     "history": null,
-    "line": 5.0,
-    "league_id": 16953,
-    "home_name": "Adler Mannheim",
-    "away_name": "Straubing Tigers",
-    "match_date": "2026-10-11T17:00:00.000Z"
+    "line": 4.5,
+    "league_id": 44185,
+    "home_name": "Lausanne",
+    "away_name": "Ajoie",
+    "match_date": "2026-10-14T17:45:00.000Z"
   }
 ]
