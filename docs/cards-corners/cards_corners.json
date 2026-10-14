@@ -68,7 +68,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.28,
+      "lambda": 4.29,
       "corners_list": [
         2,
         4,
@@ -79,7 +79,7 @@
       "prob": 62
     },
     "away_corners": {
-      "lambda": 3.83,
+      "lambda": 3.84,
       "corners_list": [
         3
       ],
@@ -117,7 +117,7 @@
       "prob": 78
     },
     "away_sot": {
-      "lambda": 5.54,
+      "lambda": 5.53,
       "sot_list": [
         3
       ],
@@ -194,7 +194,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.3,
+      "lambda": 5.31,
       "corners_list": [
         10,
         2,
@@ -202,10 +202,10 @@
         3
       ],
       "line": 3.5,
-      "prob": 77
+      "prob": 78
     },
     "away_corners": {
-      "lambda": 5.21,
+      "lambda": 5.22,
       "corners_list": [
         9
       ],
@@ -232,7 +232,7 @@
       "prob": 48
     },
     "home_sot": {
-      "lambda": 5.55,
+      "lambda": 5.54,
       "sot_list": [
         9,
         4,
@@ -365,7 +365,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.52,
+      "lambda": 4.53,
       "corners_list": [
         3,
         2,
@@ -435,7 +435,7 @@
       "prob": 66
     },
     "away_sot": {
-      "lambda": 3.76,
+      "lambda": 3.75,
       "sot_list": [
         0,
         2,
@@ -563,7 +563,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.39,
+      "lambda": 5.4,
       "corners_list": [
         2,
         5,
@@ -577,7 +577,7 @@
       "prob": 79
     },
     "away_corners": {
-      "lambda": 3.91,
+      "lambda": 3.92,
       "corners_list": [
         1,
         6,
@@ -741,7 +741,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.66,
+      "lambda": 5.68,
       "corners_list": [
         2,
         9,
@@ -753,7 +753,7 @@
       "prob": 67
     },
     "away_corners": {
-      "lambda": 5.33,
+      "lambda": 5.34,
       "corners_list": [
         6,
         8,
@@ -789,7 +789,7 @@
       "prob": 54
     },
     "home_sot": {
-      "lambda": 6.17,
+      "lambda": 6.16,
       "sot_list": [
         3,
         8,
@@ -801,7 +801,7 @@
       "prob": 74
     },
     "away_sot": {
-      "lambda": 7.42,
+      "lambda": 7.41,
       "sot_list": [
         6,
         5,
@@ -927,7 +927,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.84,
+      "lambda": 5.85,
       "corners_list": [
         4,
         5,
@@ -941,7 +941,7 @@
       "prob": 69
     },
     "away_corners": {
-      "lambda": 3.97,
+      "lambda": 3.98,
       "corners_list": [
         1,
         4,
@@ -997,7 +997,7 @@
       "prob": 74
     },
     "away_sot": {
-      "lambda": 3.94,
+      "lambda": 3.93,
       "sot_list": [
         0,
         1,
@@ -1307,7 +1307,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 2.21,
+      "lambda": 2.22,
       "corners_list": [
         0,
         3,
@@ -1321,7 +1321,7 @@
       "prob": 65
     },
     "away_corners": {
-      "lambda": 5.42,
+      "lambda": 5.43,
       "corners_list": [
         5,
         2,
@@ -1505,7 +1505,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.26,
+      "lambda": 3.27,
       "corners_list": [
         8,
         1,
@@ -1519,7 +1519,7 @@
       "prob": 63
     },
     "away_corners": {
-      "lambda": 7.44,
+      "lambda": 7.45,
       "corners_list": [
         10,
         8,
@@ -1561,7 +1561,7 @@
       "prob": 61
     },
     "home_sot": {
-      "lambda": 2.8,
+      "lambda": 2.79,
       "sot_list": [
         6,
         0,
@@ -1575,7 +1575,7 @@
       "prob": 53
     },
     "away_sot": {
-      "lambda": 8.32,
+      "lambda": 8.31,
       "sot_list": [
         7,
         4,
@@ -1683,7 +1683,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.77,
+      "lambda": 4.79,
       "corners_list": [
         1,
         4,
@@ -1695,7 +1695,7 @@
       "prob": 70
     },
     "away_corners": {
-      "lambda": 6.05,
+      "lambda": 6.07,
       "corners_list": [
         3,
         10,
@@ -1731,7 +1731,7 @@
       "prob": 42
     },
     "home_sot": {
-      "lambda": 4.8,
+      "lambda": 4.79,
       "sot_list": [
         3,
         1,
@@ -1740,10 +1740,10 @@
         4
       ],
       "line": 3.0,
-      "prob": 71
+      "prob": 70
     },
     "away_sot": {
-      "lambda": 6.26,
+      "lambda": 6.25,
       "sot_list": [
         4,
         8,
@@ -1849,7 +1849,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.19,
+      "lambda": 3.2,
       "corners_list": [
         3,
         0,
@@ -1861,7 +1861,7 @@
       "prob": 62
     },
     "away_corners": {
-      "lambda": 6.98,
+      "lambda": 7.01,
       "corners_list": [
         11,
         5,
@@ -1897,7 +1897,7 @@
       "prob": 64
     },
     "home_sot": {
-      "lambda": 3.6,
+      "lambda": 3.59,
       "sot_list": [
         5,
         1,
@@ -1909,7 +1909,7 @@
       "prob": 70
     },
     "away_sot": {
-      "lambda": 6.54,
+      "lambda": 6.53,
       "sot_list": [
         4,
         8,
@@ -2015,7 +2015,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.04,
+      "lambda": 4.05,
       "corners_list": [
         5,
         1,
@@ -2027,7 +2027,7 @@
       "prob": 77
     },
     "away_corners": {
-      "lambda": 5.47,
+      "lambda": 5.49,
       "corners_list": [
         3,
         3,
@@ -2036,7 +2036,7 @@
         9
       ],
       "line": 3.5,
-      "prob": 79
+      "prob": 80
     },
     "home_cards": {
       "lambda": 2.18,
@@ -2063,7 +2063,7 @@
       "prob": 64
     },
     "home_sot": {
-      "lambda": 4.23,
+      "lambda": 4.22,
       "sot_list": [
         10,
         0,
@@ -2181,7 +2181,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.68,
+      "lambda": 4.7,
       "corners_list": [
         5,
         2,
@@ -2193,7 +2193,7 @@
       "prob": 69
     },
     "away_corners": {
-      "lambda": 5.55,
+      "lambda": 5.57,
       "corners_list": [
         2,
         5,
@@ -2201,8 +2201,8 @@
         6,
         7
       ],
-      "line": 3.5,
-      "prob": 80
+      "line": 4.0,
+      "prob": 65
     },
     "home_cards": {
       "lambda": 1.43,
@@ -2229,7 +2229,7 @@
       "prob": 46
     },
     "home_sot": {
-      "lambda": 5.94,
+      "lambda": 5.93,
       "sot_list": [
         3,
         7,
@@ -2241,7 +2241,7 @@
       "prob": 71
     },
     "away_sot": {
-      "lambda": 4.05,
+      "lambda": 4.04,
       "sot_list": [
         0,
         3,
@@ -2347,7 +2347,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.31,
+      "lambda": 5.33,
       "corners_list": [
         4,
         4,
@@ -2359,7 +2359,7 @@
       "prob": 78
     },
     "away_corners": {
-      "lambda": 6.14,
+      "lambda": 6.16,
       "corners_list": [
         11,
         4,
@@ -2368,7 +2368,7 @@
         5
       ],
       "line": 4.0,
-      "prob": 73
+      "prob": 74
     },
     "home_cards": {
       "lambda": 1.8,
@@ -3079,7 +3079,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.52,
+      "lambda": 4.54,
       "corners_list": [
         2,
         2,
@@ -3093,7 +3093,7 @@
       "prob": 66
     },
     "away_corners": {
-      "lambda": 4.19,
+      "lambda": 4.2,
       "corners_list": [
         5,
         3,
@@ -3135,7 +3135,7 @@
       "prob": 58
     },
     "home_sot": {
-      "lambda": 3.86,
+      "lambda": 3.85,
       "sot_list": [
         3,
         1,
@@ -3149,7 +3149,7 @@
       "prob": 74
     },
     "away_sot": {
-      "lambda": 3.32,
+      "lambda": 3.31,
       "sot_list": [
         4,
         3,
@@ -3277,7 +3277,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.13,
+      "lambda": 6.16,
       "corners_list": [
         8,
         5,
@@ -3288,10 +3288,10 @@
         7
       ],
       "line": 4.0,
-      "prob": 73
+      "prob": 74
     },
     "away_corners": {
-      "lambda": 7.85,
+      "lambda": 7.88,
       "corners_list": [
         7,
         11,
@@ -3302,7 +3302,7 @@
         5
       ],
       "line": 5.5,
-      "prob": 79
+      "prob": 80
     },
     "home_cards": {
       "lambda": 2.16,
@@ -3333,7 +3333,7 @@
       "prob": 58
     },
     "home_sot": {
-      "lambda": 2.85,
+      "lambda": 2.84,
       "sot_list": [
         3,
         4,
@@ -3475,7 +3475,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.29,
+      "lambda": 3.3,
       "corners_list": [
         5,
         5,
@@ -3489,7 +3489,7 @@
       "prob": 64
     },
     "away_corners": {
-      "lambda": 6.23,
+      "lambda": 6.26,
       "corners_list": [
         11,
         6,
@@ -3499,8 +3499,8 @@
         11,
         4
       ],
-      "line": 4.0,
-      "prob": 74
+      "line": 4.5,
+      "prob": 75
     },
     "home_cards": {
       "lambda": 1.55,
@@ -3531,7 +3531,7 @@
       "prob": 55
     },
     "home_sot": {
-      "lambda": 3.99,
+      "lambda": 3.98,
       "sot_list": [
         8,
         3,
@@ -3673,7 +3673,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.48,
+      "lambda": 5.5,
       "corners_list": [
         8,
         5,
@@ -3687,7 +3687,7 @@
       "prob": 80
     },
     "away_corners": {
-      "lambda": 4.77,
+      "lambda": 4.78,
       "corners_list": [
         5,
         9,
@@ -3729,7 +3729,7 @@
       "prob": 49
     },
     "home_sot": {
-      "lambda": 5.48,
+      "lambda": 5.47,
       "sot_list": [
         7,
         4,
@@ -3740,10 +3740,10 @@
         3
       ],
       "line": 3.5,
-      "prob": 80
+      "prob": 79
     },
     "away_sot": {
-      "lambda": 4.8,
+      "lambda": 4.79,
       "sot_list": [
         6,
         4,
@@ -3754,7 +3754,7 @@
         6
       ],
       "line": 3.0,
-      "prob": 71
+      "prob": 70
     }
   },
   {
@@ -3819,9 +3819,8 @@
     },
     "away_form": {
       "n_games": 7,
-      "avg_corners": 6.71,
+      "avg_corners": 7.33,
       "corners_list": [
-        3,
         10,
         11,
         5,
@@ -3829,9 +3828,8 @@
         9,
         4
       ],
-      "avg_corners_conceded": 5.14,
+      "avg_corners_conceded": 4.67,
       "corners_conceded_list": [
-        8,
         3,
         2,
         7,
@@ -3839,9 +3837,8 @@
         7,
         2
       ],
-      "avg_yellow_cards": 1.14,
+      "avg_yellow_cards": 1.17,
       "yellow_cards_list": [
-        1,
         0,
         1,
         0,
@@ -3849,9 +3846,8 @@
         2,
         3
       ],
-      "avg_sot": 4.14,
+      "avg_sot": 3.67,
       "sot_list": [
-        7,
         1,
         3,
         5,
@@ -3861,7 +3857,6 @@
       ],
       "avg_sot_conceded": 4.0,
       "sot_conceded_list": [
-        4,
         3,
         5,
         5,
@@ -3871,7 +3866,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.55,
+      "lambda": 4.27,
       "corners_list": [
         3,
         5,
@@ -3882,12 +3877,11 @@
         2
       ],
       "line": 3.0,
-      "prob": 67
+      "prob": 62
     },
     "away_corners": {
-      "lambda": 5.66,
+      "lambda": 6.07,
       "corners_list": [
-        3,
         10,
         11,
         5,
@@ -3896,7 +3890,7 @@
         4
       ],
       "line": 4.0,
-      "prob": 67
+      "prob": 72
     },
     "home_cards": {
       "lambda": 2.25,
@@ -3913,9 +3907,8 @@
       "prob": 66
     },
     "away_cards": {
-      "lambda": 1.35,
+      "lambda": 1.37,
       "yellow_cards_list": [
-        1,
         0,
         1,
         0,
@@ -3924,10 +3917,10 @@
         3
       ],
       "line": 0.5,
-      "prob": 74
+      "prob": 75
     },
     "home_sot": {
-      "lambda": 4.97,
+      "lambda": 4.96,
       "sot_list": [
         6,
         6,
@@ -3941,9 +3934,8 @@
       "prob": 73
     },
     "away_sot": {
-      "lambda": 4.32,
+      "lambda": 3.98,
       "sot_list": [
-        7,
         1,
         3,
         5,
@@ -3951,8 +3943,8 @@
         7,
         3
       ],
-      "line": 3.0,
-      "prob": 63
+      "line": 2.5,
+      "prob": 76
     }
   },
   {
@@ -4069,7 +4061,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.57,
+      "lambda": 5.6,
       "corners_list": [
         5,
         2,
@@ -4080,10 +4072,10 @@
         1
       ],
       "line": 4.0,
-      "prob": 65
+      "prob": 66
     },
     "away_corners": {
-      "lambda": 5.92,
+      "lambda": 5.95,
       "corners_list": [
         3,
         5,
@@ -4094,7 +4086,7 @@
         4
       ],
       "line": 4.0,
-      "prob": 70
+      "prob": 71
     },
     "home_cards": {
       "lambda": 1.85,
@@ -4139,7 +4131,7 @@
       "prob": 73
     },
     "away_sot": {
-      "lambda": 4.9,
+      "lambda": 4.89,
       "sot_list": [
         2,
         8,
@@ -4267,7 +4259,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.68,
+      "lambda": 7.72,
       "corners_list": [
         2,
         8,
@@ -4281,7 +4273,7 @@
       "prob": 78
     },
     "away_corners": {
-      "lambda": 3.27,
+      "lambda": 3.28,
       "corners_list": [
         2,
         5,
@@ -4292,7 +4284,7 @@
         2
       ],
       "line": 2.0,
-      "prob": 63
+      "prob": 64
     },
     "home_cards": {
       "lambda": 1.25,
@@ -4323,7 +4315,7 @@
       "prob": 63
     },
     "home_sot": {
-      "lambda": 6.16,
+      "lambda": 6.15,
       "sot_list": [
         7,
         4,
@@ -4334,10 +4326,10 @@
         7
       ],
       "line": 4.0,
-      "prob": 74
+      "prob": 73
     },
     "away_sot": {
-      "lambda": 3.11,
+      "lambda": 3.1,
       "sot_list": [
         4,
         5,
@@ -4465,7 +4457,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.96,
+      "lambda": 5.97,
       "corners_list": [
         1,
         10,
@@ -4507,7 +4499,7 @@
       "prob": 46
     },
     "away_cards": {
-      "lambda": 2.25,
+      "lambda": 2.26,
       "yellow_cards_list": [
         1,
         0,
@@ -4535,7 +4527,7 @@
       "prob": 73
     },
     "away_sot": {
-      "lambda": 7.41,
+      "lambda": 7.4,
       "sot_list": [
         2,
         8,
@@ -4663,7 +4655,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.23,
+      "lambda": 5.24,
       "corners_list": [
         3,
         9,
@@ -4861,7 +4853,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 2.68,
+      "lambda": 2.69,
       "corners_list": [
         5,
         3,
@@ -4875,7 +4867,7 @@
       "prob": 75
     },
     "away_corners": {
-      "lambda": 6.88,
+      "lambda": 6.9,
       "corners_list": [
         7,
         9,
@@ -5059,7 +5051,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 8.2,
+      "lambda": 8.21,
       "corners_list": [
         11,
         6,
@@ -5073,7 +5065,7 @@
       "prob": 83
     },
     "away_corners": {
-      "lambda": 6.15,
+      "lambda": 6.16,
       "corners_list": [
         4,
         2,
@@ -5084,7 +5076,7 @@
         8
       ],
       "line": 4.0,
-      "prob": 73
+      "prob": 74
     },
     "home_cards": {
       "lambda": 1.05,
@@ -5419,7 +5411,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 8.7,
+      "lambda": 8.72,
       "corners_list": [
         9,
         11,
@@ -5428,10 +5420,10 @@
         9
       ],
       "line": 6.0,
-      "prob": 76
+      "prob": 77
     },
     "away_corners": {
-      "lambda": 3.94,
+      "lambda": 3.95,
       "corners_list": [
         7,
         7,
@@ -5467,7 +5459,7 @@
       "prob": 42
     },
     "home_sot": {
-      "lambda": 8.62,
+      "lambda": 8.61,
       "sot_list": [
         9,
         5,
@@ -5479,7 +5471,7 @@
       "prob": 76
     },
     "away_sot": {
-      "lambda": 4.4,
+      "lambda": 4.39,
       "sot_list": [
         11,
         5,
@@ -5619,7 +5611,7 @@
       "prob": 64
     },
     "away_corners": {
-      "lambda": 9.26,
+      "lambda": 9.27,
       "corners_list": [
         12,
         9,
@@ -5803,7 +5795,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.02,
+      "lambda": 4.03,
       "corners_list": [
         7,
         5,
@@ -5814,10 +5806,10 @@
         8
       ],
       "line": 2.5,
-      "prob": 76
+      "prob": 77
     },
     "away_corners": {
-      "lambda": 5.14,
+      "lambda": 5.15,
       "corners_list": [
         6,
         3,
@@ -5828,7 +5820,7 @@
         7
       ],
       "line": 3.5,
-      "prob": 75
+      "prob": 76
     },
     "home_cards": {
       "lambda": 1.52,
@@ -6001,7 +5993,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.34,
+      "lambda": 7.36,
       "corners_list": [
         5,
         5,
@@ -6015,7 +6007,7 @@
       "prob": 74
     },
     "away_corners": {
-      "lambda": 5.4,
+      "lambda": 5.41,
       "corners_list": [
         1,
         9,
@@ -6194,7 +6186,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.59,
+      "lambda": 4.6,
       "corners_list": [
         8,
         5,
@@ -6208,7 +6200,7 @@
       "prob": 67
     },
     "away_corners": {
-      "lambda": 5.32,
+      "lambda": 5.33,
       "corners_list": [
         10,
         5,
@@ -6262,7 +6254,7 @@
       "prob": 76
     },
     "away_sot": {
-      "lambda": 5.3,
+      "lambda": 5.29,
       "sot_list": [
         8,
         0,
@@ -6389,7 +6381,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.06,
+      "lambda": 5.07,
       "corners_list": [
         2,
         3,
@@ -6403,7 +6395,7 @@
       "prob": 74
     },
     "away_corners": {
-      "lambda": 6.59,
+      "lambda": 6.6,
       "corners_list": [
         8,
         8,
@@ -6587,7 +6579,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.64,
+      "lambda": 4.65,
       "corners_list": [
         1,
         6,
@@ -6601,7 +6593,7 @@
       "prob": 68
     },
     "away_corners": {
-      "lambda": 6.76,
+      "lambda": 6.77,
       "corners_list": [
         9,
         5,
@@ -6643,7 +6635,7 @@
       "prob": 52
     },
     "home_sot": {
-      "lambda": 5.84,
+      "lambda": 5.83,
       "sot_list": [
         5,
         5,
@@ -6657,7 +6649,7 @@
       "prob": 69
     },
     "away_sot": {
-      "lambda": 6.51,
+      "lambda": 6.5,
       "sot_list": [
         5,
         4,
@@ -6799,7 +6791,7 @@
       "prob": 76
     },
     "away_corners": {
-      "lambda": 6.16,
+      "lambda": 6.17,
       "corners_list": [
         7,
         6,
@@ -6855,7 +6847,7 @@
       "prob": 69
     },
     "away_sot": {
-      "lambda": 5.7,
+      "lambda": 5.69,
       "sot_list": [
         6,
         8,
@@ -6997,7 +6989,7 @@
       "prob": 77
     },
     "away_corners": {
-      "lambda": 5.53,
+      "lambda": 5.54,
       "corners_list": [
         3,
         2,
@@ -7181,7 +7173,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.48,
+      "lambda": 5.49,
       "corners_list": [
         7,
         6,
@@ -7195,7 +7187,7 @@
       "prob": 80
     },
     "away_corners": {
-      "lambda": 4.13,
+      "lambda": 4.14,
       "corners_list": [
         3,
         3,
@@ -7379,7 +7371,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.97,
+      "lambda": 4.98,
       "corners_list": [
         1,
         7,
@@ -7393,7 +7385,7 @@
       "prob": 73
     },
     "away_corners": {
-      "lambda": 5.91,
+      "lambda": 5.92,
       "corners_list": [
         5,
         4,
@@ -7449,7 +7441,7 @@
       "prob": 67
     },
     "away_sot": {
-      "lambda": 6.1,
+      "lambda": 6.09,
       "sot_list": [
         9,
         4,
@@ -7577,7 +7569,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.04,
+      "lambda": 4.05,
       "corners_list": [
         3,
         7,
@@ -7591,7 +7583,7 @@
       "prob": 77
     },
     "away_corners": {
-      "lambda": 6.15,
+      "lambda": 6.16,
       "corners_list": [
         6,
         7,
@@ -7602,7 +7594,7 @@
         2
       ],
       "line": 4.0,
-      "prob": 73
+      "prob": 74
     },
     "home_cards": {
       "lambda": 1.95,
@@ -7647,7 +7639,7 @@
       "prob": 75
     },
     "away_sot": {
-      "lambda": 5.64,
+      "lambda": 5.63,
       "sot_list": [
         3,
         9,
@@ -7775,7 +7767,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.31,
+      "lambda": 4.32,
       "corners_list": [
         6,
         4,
@@ -7786,10 +7778,10 @@
         1
       ],
       "line": 3.0,
-      "prob": 62
+      "prob": 63
     },
     "away_corners": {
-      "lambda": 4.5,
+      "lambda": 4.51,
       "corners_list": [
         7,
         3,
@@ -7973,7 +7965,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.18,
+      "lambda": 4.19,
       "corners_list": [
         4,
         7,
@@ -7987,7 +7979,7 @@
       "prob": 60
     },
     "away_corners": {
-      "lambda": 5.61,
+      "lambda": 5.62,
       "corners_list": [
         6,
         3,
@@ -8171,7 +8163,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.11,
+      "lambda": 6.12,
       "corners_list": [
         9,
         3,
@@ -8185,7 +8177,7 @@
       "prob": 73
     },
     "away_corners": {
-      "lambda": 5.69,
+      "lambda": 5.7,
       "corners_list": [
         6,
         1,
@@ -8227,7 +8219,7 @@
       "prob": 63
     },
     "home_sot": {
-      "lambda": 6.78,
+      "lambda": 6.77,
       "sot_list": [
         6,
         8,
@@ -8238,7 +8230,7 @@
         5
       ],
       "line": 4.5,
-      "prob": 81
+      "prob": 80
     },
     "away_sot": {
       "lambda": 4.71,
@@ -8383,7 +8375,7 @@
       "prob": 73
     },
     "away_corners": {
-      "lambda": 4.51,
+      "lambda": 4.52,
       "corners_list": [
         7,
         4,
@@ -8567,7 +8559,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.6,
+      "lambda": 4.61,
       "corners_list": [
         3,
         3,
@@ -8578,10 +8570,10 @@
         5
       ],
       "line": 3.0,
-      "prob": 67
+      "prob": 68
     },
     "away_corners": {
-      "lambda": 7.49,
+      "lambda": 7.51,
       "corners_list": [
         6,
         5,
@@ -8623,7 +8615,7 @@
       "prob": 64
     },
     "home_sot": {
-      "lambda": 4.48,
+      "lambda": 4.47,
       "sot_list": [
         3,
         7,
@@ -8637,7 +8629,7 @@
       "prob": 65
     },
     "away_sot": {
-      "lambda": 7.05,
+      "lambda": 7.04,
       "sot_list": [
         6,
         5,
@@ -8648,7 +8640,7 @@
         6
       ],
       "line": 5.0,
-      "prob": 71
+      "prob": 70
     }
   },
   {
@@ -8765,7 +8757,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.37,
+      "lambda": 4.39,
       "corners_list": [
         3,
         1,
@@ -8779,7 +8771,7 @@
       "prob": 64
     },
     "away_corners": {
-      "lambda": 4.7,
+      "lambda": 4.71,
       "corners_list": [
         6,
         5,
@@ -8835,7 +8827,7 @@
       "prob": 71
     },
     "away_sot": {
-      "lambda": 4.86,
+      "lambda": 4.85,
       "sot_list": [
         3,
         6,
@@ -8963,7 +8955,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.54,
+      "lambda": 4.55,
       "corners_list": [
         3,
         9,
@@ -8974,7 +8966,7 @@
         4
       ],
       "line": 3.0,
-      "prob": 66
+      "prob": 67
     },
     "away_corners": {
       "lambda": 4.19,
@@ -9217,7 +9209,7 @@
       "prob": 43
     },
     "home_sot": {
-      "lambda": 4.51,
+      "lambda": 4.5,
       "sot_list": [
         5,
         5,
@@ -9359,7 +9351,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.05,
+      "lambda": 3.06,
       "corners_list": [
         7,
         3,
@@ -9373,7 +9365,7 @@
       "prob": 59
     },
     "away_corners": {
-      "lambda": 7.45,
+      "lambda": 7.46,
       "corners_list": [
         9,
         15,
@@ -10281,7 +10273,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.46,
+      "lambda": 5.48,
       "corners_list": [
         3,
         11,
@@ -10290,10 +10282,10 @@
         3
       ],
       "line": 3.5,
-      "prob": 79
+      "prob": 80
     },
     "away_corners": {
-      "lambda": 4.28,
+      "lambda": 4.29,
       "corners_list": [
         6,
         4,
@@ -10329,7 +10321,7 @@
       "prob": 58
     },
     "home_sot": {
-      "lambda": 3.65,
+      "lambda": 3.64,
       "sot_list": [
         4,
         10,
@@ -10338,7 +10330,7 @@
         7
       ],
       "line": 2.5,
-      "prob": 71
+      "prob": 70
     },
     "away_sot": {
       "lambda": 4.79,
@@ -10481,7 +10473,7 @@
       "prob": 76
     },
     "away_corners": {
-      "lambda": 6.12,
+      "lambda": 6.13,
       "corners_list": [
         10,
         9,
@@ -10523,7 +10515,7 @@
       "prob": 58
     },
     "home_sot": {
-      "lambda": 4.59,
+      "lambda": 4.58,
       "sot_list": [
         1,
         2,
@@ -10665,7 +10657,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.34,
+      "lambda": 4.35,
       "corners_list": [
         5,
         4,
@@ -10679,7 +10671,7 @@
       "prob": 63
     },
     "away_corners": {
-      "lambda": 4.09,
+      "lambda": 4.1,
       "corners_list": [
         7,
         5,
@@ -10690,7 +10682,7 @@
         0
       ],
       "line": 2.5,
-      "prob": 77
+      "prob": 78
     },
     "home_cards": {
       "lambda": 1.74,
@@ -10863,7 +10855,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 2.94,
+      "lambda": 2.95,
       "corners_list": [
         2,
         4,
@@ -10874,10 +10866,10 @@
         6
       ],
       "line": 2.0,
-      "prob": 56
+      "prob": 57
     },
     "away_corners": {
-      "lambda": 6.45,
+      "lambda": 6.46,
       "corners_list": [
         7,
         4,
@@ -11061,7 +11053,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.02,
+      "lambda": 7.03,
       "corners_list": [
         8,
         5,
@@ -11075,7 +11067,7 @@
       "prob": 70
     },
     "away_corners": {
-      "lambda": 8.23,
+      "lambda": 8.24,
       "corners_list": [
         5,
         10,
@@ -11329,7 +11321,7 @@
       "prob": 71
     },
     "away_sot": {
-      "lambda": 4.93,
+      "lambda": 4.92,
       "sot_list": [
         4,
         4,
@@ -11340,7 +11332,7 @@
         5
       ],
       "line": 3.5,
-      "prob": 73
+      "prob": 72
     }
   },
   {
@@ -11457,7 +11449,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.32,
+      "lambda": 6.33,
       "corners_list": [
         12,
         3,
@@ -11513,7 +11505,7 @@
       "prob": 46
     },
     "home_sot": {
-      "lambda": 7.98,
+      "lambda": 7.97,
       "sot_list": [
         10,
         4,
@@ -11817,7 +11809,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.93,
+      "lambda": 5.95,
       "corners_list": [
         6,
         13,
@@ -11829,7 +11821,7 @@
       "prob": 71
     },
     "away_corners": {
-      "lambda": 6.35,
+      "lambda": 6.38,
       "corners_list": [
         7,
         10,
@@ -11877,7 +11869,7 @@
       "prob": 69
     },
     "away_sot": {
-      "lambda": 7.3,
+      "lambda": 7.29,
       "sot_list": [
         4,
         6,
@@ -11886,7 +11878,7 @@
         4
       ],
       "line": 5.0,
-      "prob": 74
+      "prob": 73
     }
   },
   {
@@ -12003,7 +11995,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.22,
+      "lambda": 3.23,
       "corners_list": [
         6,
         7,
@@ -12014,7 +12006,7 @@
         2
       ],
       "line": 2.0,
-      "prob": 62
+      "prob": 63
     },
     "away_corners": {
       "lambda": 4.06,
@@ -12201,7 +12193,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.01,
+      "lambda": 6.03,
       "corners_list": [
         7,
         6,
@@ -12215,7 +12207,7 @@
       "prob": 72
     },
     "away_corners": {
-      "lambda": 6.42,
+      "lambda": 6.43,
       "corners_list": [
         7,
         7,
@@ -12257,7 +12249,7 @@
       "prob": 58
     },
     "home_sot": {
-      "lambda": 4.01,
+      "lambda": 4.0,
       "sot_list": [
         2,
         1,
@@ -12399,7 +12391,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.3,
+      "lambda": 6.31,
       "corners_list": [
         4,
         2,
@@ -12597,7 +12589,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.84,
+      "lambda": 7.86,
       "corners_list": [
         6,
         9,
@@ -12608,10 +12600,10 @@
         7
       ],
       "line": 5.5,
-      "prob": 79
+      "prob": 80
     },
     "away_corners": {
-      "lambda": 3.61,
+      "lambda": 3.62,
       "corners_list": [
         3,
         7,
@@ -12795,7 +12787,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.5,
+      "lambda": 5.51,
       "corners_list": [
         2,
         7,
@@ -12851,7 +12843,7 @@
       "prob": 45
     },
     "home_sot": {
-      "lambda": 4.77,
+      "lambda": 4.76,
       "sot_list": [
         10,
         4,
@@ -12993,7 +12985,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.41,
+      "lambda": 5.42,
       "corners_list": [
         4,
         9,
@@ -13007,7 +12999,7 @@
       "prob": 79
     },
     "away_corners": {
-      "lambda": 3.6,
+      "lambda": 3.61,
       "corners_list": [
         3,
         4,
@@ -13035,7 +13027,7 @@
       "prob": 63
     },
     "away_cards": {
-      "lambda": 2.64,
+      "lambda": 2.65,
       "yellow_cards_list": [
         4,
         2,
@@ -13063,7 +13055,7 @@
       "prob": 75
     },
     "away_sot": {
-      "lambda": 4.21,
+      "lambda": 4.2,
       "sot_list": [
         4,
         5,
@@ -13074,7 +13066,7 @@
         5
       ],
       "line": 3.0,
-      "prob": 61
+      "prob": 60
     }
   },
   {
@@ -13205,7 +13197,7 @@
       "prob": 62
     },
     "away_corners": {
-      "lambda": 5.06,
+      "lambda": 5.07,
       "corners_list": [
         5,
         1,
@@ -13769,7 +13761,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.78,
+      "lambda": 4.79,
       "corners_list": [
         8,
         3,
@@ -13783,7 +13775,7 @@
       "prob": 70
     },
     "away_corners": {
-      "lambda": 5.72,
+      "lambda": 5.73,
       "corners_list": [
         2,
         9,
@@ -13839,7 +13831,7 @@
       "prob": 68
     },
     "away_sot": {
-      "lambda": 4.3,
+      "lambda": 4.29,
       "sot_list": [
         3,
         3,
@@ -13967,7 +13959,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.24,
+      "lambda": 4.25,
       "corners_list": [
         2,
         2,
@@ -14143,7 +14135,7 @@
       "prob": 80
     },
     "away_corners": {
-      "lambda": 5.81,
+      "lambda": 5.82,
       "corners_list": [
         9
       ],
@@ -14185,7 +14177,7 @@
       "prob": 74
     },
     "away_sot": {
-      "lambda": 6.18,
+      "lambda": 6.17,
       "sot_list": [
         6
       ],
@@ -14282,7 +14274,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.6,
+      "lambda": 5.61,
       "corners_list": [
         9,
         7,
@@ -14296,7 +14288,7 @@
       "prob": 66
     },
     "away_corners": {
-      "lambda": 4.61,
+      "lambda": 4.62,
       "corners_list": [
         6,
         6
@@ -14328,7 +14320,7 @@
       "prob": 44
     },
     "home_sot": {
-      "lambda": 6.51,
+      "lambda": 6.5,
       "sot_list": [
         6,
         2,
@@ -14413,9 +14405,8 @@
     },
     "away_form": {
       "n_games": 7,
-      "avg_corners": 6.71,
+      "avg_corners": 7.33,
       "corners_list": [
-        3,
         10,
         11,
         5,
@@ -14423,9 +14414,8 @@
         9,
         4
       ],
-      "avg_corners_conceded": 5.14,
+      "avg_corners_conceded": 4.67,
       "corners_conceded_list": [
-        8,
         3,
         2,
         7,
@@ -14433,9 +14423,8 @@
         7,
         2
       ],
-      "avg_yellow_cards": 1.14,
+      "avg_yellow_cards": 1.17,
       "yellow_cards_list": [
-        1,
         0,
         1,
         0,
@@ -14443,9 +14432,8 @@
         2,
         3
       ],
-      "avg_sot": 4.14,
+      "avg_sot": 3.67,
       "sot_list": [
-        7,
         1,
         3,
         5,
@@ -14455,7 +14443,6 @@
       ],
       "avg_sot_conceded": 4.0,
       "sot_conceded_list": [
-        4,
         3,
         5,
         5,
@@ -14465,7 +14452,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.69,
+      "lambda": 6.27,
       "corners_list": [
         7,
         7,
@@ -14476,12 +14463,11 @@
         9
       ],
       "line": 4.5,
-      "prob": 80
+      "prob": 75
     },
     "away_corners": {
-      "lambda": 5.5,
+      "lambda": 5.9,
       "corners_list": [
-        3,
         10,
         11,
         5,
@@ -14489,8 +14475,8 @@
         9,
         4
       ],
-      "line": 3.5,
-      "prob": 80
+      "line": 4.0,
+      "prob": 70
     },
     "home_cards": {
       "lambda": 1.66,
@@ -14507,9 +14493,8 @@
       "prob": 49
     },
     "away_cards": {
-      "lambda": 1.35,
+      "lambda": 1.38,
       "yellow_cards_list": [
-        1,
         0,
         1,
         0,
@@ -14518,7 +14503,7 @@
         3
       ],
       "line": 0.5,
-      "prob": 74
+      "prob": 75
     },
     "home_sot": {
       "lambda": 3.92,
@@ -14535,9 +14520,8 @@
       "prob": 75
     },
     "away_sot": {
-      "lambda": 4.11,
+      "lambda": 3.79,
       "sot_list": [
-        7,
         1,
         3,
         5,
@@ -14546,7 +14530,7 @@
         3
       ],
       "line": 2.5,
-      "prob": 78
+      "prob": 73
     }
   },
   {
@@ -14608,7 +14592,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.78,
+      "lambda": 4.79,
       "corners_list": [
         3
       ],
@@ -14616,7 +14600,7 @@
       "prob": 70
     },
     "away_corners": {
-      "lambda": 4.35,
+      "lambda": 4.36,
       "corners_list": [
         5,
         2
@@ -14642,7 +14626,7 @@
       "prob": 45
     },
     "home_sot": {
-      "lambda": 4.2,
+      "lambda": 4.19,
       "sot_list": [
         3
       ],
@@ -14650,7 +14634,7 @@
       "prob": 60
     },
     "away_sot": {
-      "lambda": 4.22,
+      "lambda": 4.21,
       "sot_list": [
         4,
         5
@@ -14733,7 +14717,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.25,
+      "lambda": 3.26,
       "corners_list": [
         0,
         4
@@ -14742,7 +14726,7 @@
       "prob": 63
     },
     "away_corners": {
-      "lambda": 4.78,
+      "lambda": 4.79,
       "corners_list": [
         10,
         2,
@@ -14773,7 +14757,7 @@
       "prob": 73
     },
     "home_sot": {
-      "lambda": 4.76,
+      "lambda": 4.75,
       "sot_list": [
         3,
         3
@@ -14862,7 +14846,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.78,
+      "lambda": 3.79,
       "corners_list": [
         3
       ],
@@ -14900,7 +14884,7 @@
       "prob": 53
     },
     "home_sot": {
-      "lambda": 5.45,
+      "lambda": 5.44,
       "sot_list": [
         3
       ],
@@ -14978,7 +14962,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.99,
+      "lambda": 4.0,
       "corners_list": [
         2
       ],
@@ -15012,15 +14996,15 @@
       "prob": 62
     },
     "home_sot": {
-      "lambda": 3.43,
+      "lambda": 3.42,
       "sot_list": [
         0
       ],
       "line": 2.0,
-      "prob": 67
+      "prob": 66
     },
     "away_sot": {
-      "lambda": 5.33,
+      "lambda": 5.32,
       "sot_list": [
         2,
         5
@@ -15088,7 +15072,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.05,
+      "lambda": 6.06,
       "corners_list": [
         7
       ],
@@ -15096,7 +15080,7 @@
       "prob": 72
     },
     "away_corners": {
-      "lambda": 5.13,
+      "lambda": 5.14,
       "corners_list": [
         7,
         4
@@ -15198,7 +15182,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.69,
+      "lambda": 3.7,
       "corners_list": [
         7
       ],
@@ -15206,13 +15190,13 @@
       "prob": 71
     },
     "away_corners": {
-      "lambda": 4.2,
+      "lambda": 4.21,
       "corners_list": [
         4,
         6
       ],
       "line": 3.0,
-      "prob": 60
+      "prob": 61
     },
     "home_cards": {
       "lambda": 1.38,
@@ -15313,7 +15297,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.62,
+      "lambda": 3.63,
       "corners_list": [
         5
       ],
@@ -15426,7 +15410,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.02,
+      "lambda": 3.03,
       "corners_list": [
         1
       ],
@@ -15460,7 +15444,7 @@
       "prob": 45
     },
     "home_sot": {
-      "lambda": 4.12,
+      "lambda": 4.11,
       "sot_list": [
         6
       ],
@@ -15468,7 +15452,7 @@
       "prob": 78
     },
     "away_sot": {
-      "lambda": 5.44,
+      "lambda": 5.43,
       "sot_list": [
         10,
         4
@@ -15550,7 +15534,7 @@
       "prob": 68
     },
     "away_corners": {
-      "lambda": 4.27,
+      "lambda": 4.28,
       "corners_list": [
         4,
         1
@@ -15718,7 +15702,7 @@
       "prob": 71
     },
     "away_corners": {
-      "lambda": 5.91,
+      "lambda": 5.92,
       "corners_list": [
         10,
         5,
@@ -15854,7 +15838,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.37,
+      "lambda": 4.38,
       "corners_list": [
         1,
         3
@@ -15863,7 +15847,7 @@
       "prob": 64
     },
     "away_corners": {
-      "lambda": 5.11,
+      "lambda": 5.12,
       "corners_list": [
         3,
         10,
@@ -15892,7 +15876,7 @@
       "prob": 52
     },
     "home_sot": {
-      "lambda": 4.71,
+      "lambda": 4.7,
       "sot_list": [
         5,
         5
@@ -15965,7 +15949,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.71,
+      "lambda": 4.72,
       "corners_list": [
         5
       ],
@@ -15973,12 +15957,12 @@
       "prob": 69
     },
     "away_corners": {
-      "lambda": 3.95,
+      "lambda": 3.96,
       "corners_list": [
         1
       ],
       "line": 2.5,
-      "prob": 75
+      "prob": 76
     },
     "home_cards": {
       "lambda": 2.13,
@@ -15989,7 +15973,7 @@
       "prob": 63
     },
     "away_cards": {
-      "lambda": 1.62,
+      "lambda": 1.63,
       "yellow_cards_list": [
         1
       ],
@@ -15997,7 +15981,7 @@
       "prob": 48
     },
     "home_sot": {
-      "lambda": 5.77,
+      "lambda": 5.76,
       "sot_list": [
         5
       ],
@@ -16005,7 +15989,7 @@
       "prob": 68
     },
     "away_sot": {
-      "lambda": 3.42,
+      "lambda": 3.41,
       "sot_list": [
         2
       ],
@@ -16086,7 +16070,7 @@
       "prob": 62
     },
     "away_corners": {
-      "lambda": 5.53,
+      "lambda": 5.54,
       "corners_list": [
         6,
         7
@@ -16122,13 +16106,13 @@
       "prob": 73
     },
     "away_sot": {
-      "lambda": 4.87,
+      "lambda": 4.86,
       "sot_list": [
         8,
         8
       ],
-      "line": 3.5,
-      "prob": 72
+      "line": 3.0,
+      "prob": 71
     }
   },
   {
@@ -16200,7 +16184,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.63,
+      "lambda": 6.65,
       "corners_list": [
         5
       ],
@@ -16321,7 +16305,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.38,
+      "lambda": 4.39,
       "corners_list": [
         4,
         4
@@ -16366,7 +16350,7 @@
       "prob": 70
     },
     "away_sot": {
-      "lambda": 8.26,
+      "lambda": 8.25,
       "sot_list": [
         8,
         6
@@ -16443,7 +16427,7 @@
       "prob": 79
     },
     "away_corners": {
-      "lambda": 4.11,
+      "lambda": 4.12,
       "corners_list": [
         3
       ],
@@ -16468,7 +16452,7 @@
       "prob": 55
     },
     "home_sot": {
-      "lambda": 5.69,
+      "lambda": 5.68,
       "sot_list": [
         7,
         12
@@ -16477,7 +16461,7 @@
       "prob": 67
     },
     "away_sot": {
-      "lambda": 5.13,
+      "lambda": 5.12,
       "sot_list": [
         2
       ],
@@ -16544,7 +16528,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.28,
+      "lambda": 5.29,
       "corners_list": [
         4
       ],
@@ -16552,7 +16536,7 @@
       "prob": 77
     },
     "away_corners": {
-      "lambda": 6.71,
+      "lambda": 6.72,
       "corners_list": [
         5,
         6
@@ -16569,7 +16553,7 @@
       "prob": 49
     },
     "away_cards": {
-      "lambda": 1.92,
+      "lambda": 1.93,
       "yellow_cards_list": [
         3,
         1
@@ -16586,7 +16570,7 @@
       "prob": 70
     },
     "away_sot": {
-      "lambda": 5.63,
+      "lambda": 5.62,
       "sot_list": [
         4,
         7
@@ -16709,7 +16693,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.24,
+      "lambda": 6.25,
       "corners_list": [
         9,
         4,
@@ -16719,11 +16703,11 @@
         6,
         4
       ],
-      "line": 4.0,
+      "line": 4.5,
       "prob": 75
     },
     "away_corners": {
-      "lambda": 4.87,
+      "lambda": 4.88,
       "corners_list": [
         9,
         5,
@@ -16779,7 +16763,7 @@
       "prob": 75
     },
     "away_sot": {
-      "lambda": 4.82,
+      "lambda": 4.81,
       "sot_list": [
         5,
         4,
@@ -16921,7 +16905,7 @@
       "prob": 72
     },
     "away_corners": {
-      "lambda": 7.48,
+      "lambda": 7.49,
       "corners_list": [
         10,
         9,
@@ -17105,7 +17089,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.61,
+      "lambda": 5.62,
       "corners_list": [
         6,
         5,
@@ -17119,7 +17103,7 @@
       "prob": 66
     },
     "away_corners": {
-      "lambda": 4.77,
+      "lambda": 4.79,
       "corners_list": [
         7,
         5,
@@ -17161,7 +17145,7 @@
       "prob": 46
     },
     "home_sot": {
-      "lambda": 6.51,
+      "lambda": 6.5,
       "sot_list": [
         6,
         5,
@@ -17283,7 +17267,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.96,
+      "lambda": 5.98,
       "corners_list": [
         3,
         10,
@@ -17295,7 +17279,7 @@
       "prob": 71
     },
     "away_corners": {
-      "lambda": 6.81,
+      "lambda": 6.83,
       "corners_list": [
         6,
         13,
@@ -17331,7 +17315,7 @@
       "prob": 75
     },
     "home_sot": {
-      "lambda": 8.55,
+      "lambda": 8.54,
       "sot_list": [
         4,
         8,
@@ -17343,7 +17327,7 @@
       "prob": 75
     },
     "away_sot": {
-      "lambda": 5.49,
+      "lambda": 5.48,
       "sot_list": [
         4,
         6,
@@ -17651,7 +17635,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.36,
+      "lambda": 5.37,
       "corners_list": [
         5,
         9,
@@ -17665,7 +17649,7 @@
       "prob": 78
     },
     "away_corners": {
-      "lambda": 5.02,
+      "lambda": 5.03,
       "corners_list": [
         1,
         3,
@@ -17721,7 +17705,7 @@
       "prob": 63
     },
     "away_sot": {
-      "lambda": 6.14,
+      "lambda": 6.13,
       "sot_list": [
         2,
         6,
@@ -17849,7 +17833,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.77,
+      "lambda": 3.78,
       "corners_list": [
         7,
         5,
@@ -17863,7 +17847,7 @@
       "prob": 73
     },
     "away_corners": {
-      "lambda": 6.84,
+      "lambda": 6.85,
       "corners_list": [
         7,
         6,
@@ -18047,7 +18031,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.96,
+      "lambda": 4.97,
       "corners_list": [
         1,
         4,
@@ -18061,7 +18045,7 @@
       "prob": 73
     },
     "away_corners": {
-      "lambda": 3.11,
+      "lambda": 3.12,
       "corners_list": [
         1,
         4,
@@ -18103,7 +18087,7 @@
       "prob": 52
     },
     "home_sot": {
-      "lambda": 5.1,
+      "lambda": 5.09,
       "sot_list": [
         3,
         5,
@@ -18117,7 +18101,7 @@
       "prob": 75
     },
     "away_sot": {
-      "lambda": 2.7,
+      "lambda": 2.69,
       "sot_list": [
         4,
         4,
@@ -18259,7 +18243,7 @@
       "prob": 75
     },
     "away_corners": {
-      "lambda": 6.95,
+      "lambda": 6.97,
       "corners_list": [
         3,
         9,
@@ -18270,7 +18254,7 @@
         11
       ],
       "line": 5.0,
-      "prob": 69
+      "prob": 70
     },
     "home_cards": {
       "lambda": 2.63,
@@ -18315,7 +18299,7 @@
       "prob": 59
     },
     "away_sot": {
-      "lambda": 3.52,
+      "lambda": 3.51,
       "sot_list": [
         8,
         8,
@@ -18718,9 +18702,8 @@
     "away_team": "Millwall",
     "home_form": {
       "n_games": 7,
-      "avg_corners": 6.71,
+      "avg_corners": 7.33,
       "corners_list": [
-        3,
         10,
         11,
         5,
@@ -18728,9 +18711,8 @@
         9,
         4
       ],
-      "avg_corners_conceded": 5.14,
+      "avg_corners_conceded": 4.67,
       "corners_conceded_list": [
-        8,
         3,
         2,
         7,
@@ -18738,9 +18720,8 @@
         7,
         2
       ],
-      "avg_yellow_cards": 1.14,
+      "avg_yellow_cards": 1.17,
       "yellow_cards_list": [
-        1,
         0,
         1,
         0,
@@ -18748,9 +18729,8 @@
         2,
         3
       ],
-      "avg_sot": 4.14,
+      "avg_sot": 3.67,
       "sot_list": [
-        7,
         1,
         3,
         5,
@@ -18760,7 +18740,6 @@
       ],
       "avg_sot_conceded": 4.0,
       "sot_conceded_list": [
-        4,
         3,
         5,
         5,
@@ -18823,9 +18802,8 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.88,
+      "lambda": 8.44,
       "corners_list": [
-        3,
         10,
         11,
         5,
@@ -18833,11 +18811,11 @@
         9,
         4
       ],
-      "line": 5.5,
-      "prob": 80
+      "line": 6.0,
+      "prob": 74
     },
     "away_corners": {
-      "lambda": 4.37,
+      "lambda": 4.09,
       "corners_list": [
         1,
         3,
@@ -18847,13 +18825,12 @@
         4,
         13
       ],
-      "line": 3.0,
-      "prob": 64
+      "line": 2.5,
+      "prob": 77
     },
     "home_cards": {
-      "lambda": 1.36,
+      "lambda": 1.38,
       "yellow_cards_list": [
-        1,
         0,
         1,
         0,
@@ -18862,7 +18839,7 @@
         3
       ],
       "line": 0.5,
-      "prob": 74
+      "prob": 75
     },
     "away_cards": {
       "lambda": 1.76,
@@ -18879,9 +18856,8 @@
       "prob": 53
     },
     "home_sot": {
-      "lambda": 3.82,
+      "lambda": 3.52,
       "sot_list": [
-        7,
         1,
         3,
         5,
@@ -18890,7 +18866,7 @@
         3
       ],
       "line": 2.5,
-      "prob": 73
+      "prob": 68
     },
     "away_sot": {
       "lambda": 3.54,
@@ -19021,7 +18997,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.2,
+      "lambda": 4.21,
       "corners_list": [
         3,
         3,
@@ -19032,10 +19008,10 @@
         7
       ],
       "line": 3.0,
-      "prob": 60
+      "prob": 61
     },
     "away_corners": {
-      "lambda": 5.63,
+      "lambda": 5.65,
       "corners_list": [
         3,
         5,
@@ -19046,7 +19022,7 @@
         2
       ],
       "line": 4.0,
-      "prob": 66
+      "prob": 67
     },
     "home_cards": {
       "lambda": 1.76,
@@ -19219,7 +19195,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.61,
+      "lambda": 4.62,
       "corners_list": [
         2,
         9,
@@ -19233,7 +19209,7 @@
       "prob": 68
     },
     "away_corners": {
-      "lambda": 5.13,
+      "lambda": 5.14,
       "corners_list": [
         3,
         10,
@@ -19397,7 +19373,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.55,
+      "lambda": 5.57,
       "corners_list": [
         11,
         4,
@@ -19405,11 +19381,11 @@
         2,
         5
       ],
-      "line": 3.5,
-      "prob": 80
+      "line": 4.0,
+      "prob": 65
     },
     "away_corners": {
-      "lambda": 5.59,
+      "lambda": 5.61,
       "corners_list": [
         5,
         1,
@@ -19445,7 +19421,7 @@
       "prob": 64
     },
     "home_sot": {
-      "lambda": 8.74,
+      "lambda": 8.73,
       "sot_list": [
         13,
         7,
@@ -19457,7 +19433,7 @@
       "prob": 77
     },
     "away_sot": {
-      "lambda": 7.11,
+      "lambda": 7.1,
       "sot_list": [
         10,
         0,
@@ -19563,7 +19539,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.84,
+      "lambda": 7.87,
       "corners_list": [
         6,
         8,
@@ -19572,10 +19548,10 @@
         6
       ],
       "line": 5.5,
-      "prob": 79
+      "prob": 80
     },
     "away_corners": {
-      "lambda": 4.18,
+      "lambda": 4.2,
       "corners_list": [
         3,
         0,
@@ -19611,7 +19587,7 @@
       "prob": 73
     },
     "home_sot": {
-      "lambda": 6.46,
+      "lambda": 6.45,
       "sot_list": [
         6,
         5,
@@ -19623,7 +19599,7 @@
       "prob": 77
     },
     "away_sot": {
-      "lambda": 4.78,
+      "lambda": 4.77,
       "sot_list": [
         5,
         1,
@@ -19729,7 +19705,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.97,
+      "lambda": 4.99,
       "corners_list": [
         2,
         5,
@@ -19741,7 +19717,7 @@
       "prob": 73
     },
     "away_corners": {
-      "lambda": 4.83,
+      "lambda": 4.85,
       "corners_list": [
         1,
         4,
@@ -19777,7 +19753,7 @@
       "prob": 42
     },
     "home_sot": {
-      "lambda": 3.96,
+      "lambda": 3.95,
       "sot_list": [
         0,
         3,
@@ -19786,10 +19762,10 @@
         6
       ],
       "line": 2.5,
-      "prob": 76
+      "prob": 75
     },
     "away_sot": {
-      "lambda": 4.46,
+      "lambda": 4.45,
       "sot_list": [
         3,
         1,
@@ -19895,7 +19871,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.28,
+      "lambda": 6.3,
       "corners_list": [
         11,
         5,
@@ -19907,7 +19883,7 @@
       "prob": 75
     },
     "away_corners": {
-      "lambda": 3.48,
+      "lambda": 3.49,
       "corners_list": [
         5,
         2,
@@ -19919,7 +19895,7 @@
       "prob": 68
     },
     "home_cards": {
-      "lambda": 2.18,
+      "lambda": 2.19,
       "yellow_cards_list": [
         1,
         3,
@@ -19943,7 +19919,7 @@
       "prob": 42
     },
     "home_sot": {
-      "lambda": 6.43,
+      "lambda": 6.42,
       "sot_list": [
         4,
         8,
@@ -20061,7 +20037,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.11,
+      "lambda": 7.14,
       "corners_list": [
         7,
         7,
@@ -20070,10 +20046,10 @@
         3
       ],
       "line": 5.0,
-      "prob": 71
+      "prob": 72
     },
     "away_corners": {
-      "lambda": 4.59,
+      "lambda": 4.61,
       "corners_list": [
         4,
         4,
@@ -20082,7 +20058,7 @@
         3
       ],
       "line": 3.0,
-      "prob": 67
+      "prob": 68
     },
     "home_cards": {
       "lambda": 1.43,
@@ -20109,7 +20085,7 @@
       "prob": 54
     },
     "home_sot": {
-      "lambda": 6.02,
+      "lambda": 6.01,
       "sot_list": [
         11,
         5,
@@ -22195,7 +22171,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 8.6,
+      "lambda": 8.61,
       "corners_list": [
         10,
         8,
@@ -22206,7 +22182,7 @@
         5
       ],
       "line": 6.0,
-      "prob": 75
+      "prob": 76
     },
     "away_corners": {
       "lambda": 4.74,
@@ -22393,7 +22369,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.73,
+      "lambda": 4.74,
       "corners_list": [
         6,
         5,
@@ -22407,7 +22383,7 @@
       "prob": 70
     },
     "away_corners": {
-      "lambda": 4.54,
+      "lambda": 4.55,
       "corners_list": [
         0,
         3,
@@ -22418,7 +22394,7 @@
         2
       ],
       "line": 3.0,
-      "prob": 66
+      "prob": 67
     },
     "home_cards": {
       "lambda": 2.43,
@@ -22591,7 +22567,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.49,
+      "lambda": 5.5,
       "corners_list": [
         3,
         7,
@@ -22605,7 +22581,7 @@
       "prob": 80
     },
     "away_corners": {
-      "lambda": 5.58,
+      "lambda": 5.6,
       "corners_list": [
         3,
         3,
@@ -22616,7 +22592,7 @@
         5
       ],
       "line": 4.0,
-      "prob": 65
+      "prob": 66
     },
     "home_cards": {
       "lambda": 2.04,
@@ -22647,7 +22623,7 @@
       "prob": 46
     },
     "home_sot": {
-      "lambda": 5.38,
+      "lambda": 5.37,
       "sot_list": [
         2,
         4,
@@ -22789,7 +22765,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.42,
+      "lambda": 5.44,
       "corners_list": [
         0,
         3,
@@ -22987,7 +22963,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.97,
+      "lambda": 5.98,
       "corners_list": [
         4,
         6,
@@ -23185,7 +23161,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.59,
+      "lambda": 5.6,
       "corners_list": [
         13,
         3,
@@ -23199,7 +23175,7 @@
       "prob": 66
     },
     "away_corners": {
-      "lambda": 5.31,
+      "lambda": 5.32,
       "corners_list": [
         4,
         5,
@@ -23241,7 +23217,7 @@
       "prob": 64
     },
     "home_sot": {
-      "lambda": 4.08,
+      "lambda": 4.07,
       "sot_list": [
         5,
         2,
@@ -23383,7 +23359,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.3,
+      "lambda": 5.31,
       "corners_list": [
         4,
         5,
@@ -23394,10 +23370,10 @@
         1
       ],
       "line": 3.5,
-      "prob": 77
+      "prob": 78
     },
     "away_corners": {
-      "lambda": 5.58,
+      "lambda": 5.59,
       "corners_list": [
         13,
         3,
@@ -23408,7 +23384,7 @@
         5
       ],
       "line": 4.0,
-      "prob": 65
+      "prob": 66
     },
     "home_cards": {
       "lambda": 2.16,
@@ -23581,7 +23557,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.66,
+      "lambda": 4.67,
       "corners_list": [
         7,
         1,
@@ -23592,10 +23568,10 @@
         7
       ],
       "line": 3.0,
-      "prob": 68
+      "prob": 69
     },
     "away_corners": {
-      "lambda": 5.94,
+      "lambda": 5.95,
       "corners_list": [
         4,
         6,
@@ -23835,7 +23811,7 @@
       "prob": 55
     },
     "home_sot": {
-      "lambda": 3.92,
+      "lambda": 3.91,
       "sot_list": [
         6,
         0,
@@ -23849,7 +23825,7 @@
       "prob": 75
     },
     "away_sot": {
-      "lambda": 9.41,
+      "lambda": 9.4,
       "sot_list": [
         8,
         7,
@@ -24139,7 +24115,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.43,
+      "lambda": 4.45,
       "corners_list": [
         3,
         3,
@@ -24151,7 +24127,7 @@
       "prob": 65
     },
     "away_corners": {
-      "lambda": 4.8,
+      "lambda": 4.82,
       "corners_list": [
         2,
         9,
@@ -24187,7 +24163,7 @@
       "prob": 64
     },
     "home_sot": {
-      "lambda": 7.95,
+      "lambda": 7.94,
       "sot_list": [
         6,
         4,
@@ -24199,7 +24175,7 @@
       "prob": 80
     },
     "away_sot": {
-      "lambda": 4.53,
+      "lambda": 4.52,
       "sot_list": [
         3,
         8,
@@ -24339,7 +24315,7 @@
       "prob": 60
     },
     "away_corners": {
-      "lambda": 5.48,
+      "lambda": 5.49,
       "corners_list": [
         3,
         9,
@@ -24381,7 +24357,7 @@
       "prob": 45
     },
     "home_sot": {
-      "lambda": 2.83,
+      "lambda": 2.82,
       "sot_list": [
         3,
         4,
@@ -24523,7 +24499,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.57,
+      "lambda": 4.59,
       "corners_list": [
         1,
         9,
@@ -24537,7 +24513,7 @@
       "prob": 67
     },
     "away_corners": {
-      "lambda": 5.21,
+      "lambda": 5.23,
       "corners_list": [
         7,
         3,
@@ -24548,7 +24524,7 @@
         5
       ],
       "line": 3.5,
-      "prob": 76
+      "prob": 77
     },
     "home_cards": {
       "lambda": 1.24,
@@ -24721,7 +24697,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.57,
+      "lambda": 4.58,
       "corners_list": [
         2,
         4,
@@ -24919,7 +24895,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.71,
+      "lambda": 3.72,
       "corners_list": [
         6,
         1,
@@ -24933,7 +24909,7 @@
       "prob": 72
     },
     "away_corners": {
-      "lambda": 5.47,
+      "lambda": 5.48,
       "corners_list": [
         6,
         3,
@@ -24944,7 +24920,7 @@
         6
       ],
       "line": 3.5,
-      "prob": 79
+      "prob": 80
     },
     "home_cards": {
       "lambda": 2.15,
@@ -25315,7 +25291,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.54,
+      "lambda": 3.55,
       "corners_list": [
         5,
         3,
@@ -25329,7 +25305,7 @@
       "prob": 69
     },
     "away_corners": {
-      "lambda": 5.83,
+      "lambda": 5.85,
       "corners_list": [
         2,
         5,
@@ -25371,7 +25347,7 @@
       "prob": 71
     },
     "home_sot": {
-      "lambda": 3.5,
+      "lambda": 3.49,
       "sot_list": [
         4,
         3,
@@ -25513,7 +25489,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.63,
+      "lambda": 5.65,
       "corners_list": [
         5,
         2,
@@ -25524,10 +25500,10 @@
         10
       ],
       "line": 4.0,
-      "prob": 66
+      "prob": 67
     },
     "away_corners": {
-      "lambda": 3.94,
+      "lambda": 3.95,
       "corners_list": [
         4,
         5,
@@ -25711,7 +25687,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 2.75,
+      "lambda": 2.76,
       "corners_list": [
         5,
         3,
@@ -25725,7 +25701,7 @@
       "prob": 76
     },
     "away_corners": {
-      "lambda": 5.94,
+      "lambda": 5.95,
       "corners_list": [
         6,
         12,
@@ -25781,7 +25757,7 @@
       "prob": 73
     },
     "away_sot": {
-      "lambda": 3.94,
+      "lambda": 3.93,
       "sot_list": [
         6,
         10,
@@ -26107,7 +26083,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.11,
+      "lambda": 4.12,
       "corners_list": [
         4,
         7,
@@ -26121,7 +26097,7 @@
       "prob": 78
     },
     "away_corners": {
-      "lambda": 5.64,
+      "lambda": 5.65,
       "corners_list": [
         6,
         6,
@@ -26132,7 +26108,7 @@
         4
       ],
       "line": 4.0,
-      "prob": 66
+      "prob": 67
     },
     "home_cards": {
       "lambda": 1.95,
@@ -26305,7 +26281,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.87,
+      "lambda": 4.88,
       "corners_list": [
         9,
         5,
@@ -26319,7 +26295,7 @@
       "prob": 72
     },
     "away_corners": {
-      "lambda": 6.24,
+      "lambda": 6.25,
       "corners_list": [
         9,
         4,
@@ -26329,7 +26305,7 @@
         6,
         4
       ],
-      "line": 4.0,
+      "line": 4.5,
       "prob": 75
     },
     "home_cards": {
@@ -26503,7 +26479,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.35,
+      "lambda": 6.36,
       "corners_list": [
         7,
         6,
@@ -26517,7 +26493,7 @@
       "prob": 76
     },
     "away_corners": {
-      "lambda": 5.03,
+      "lambda": 5.04,
       "corners_list": [
         5,
         3,
@@ -26573,7 +26549,7 @@
       "prob": 73
     },
     "away_sot": {
-      "lambda": 4.63,
+      "lambda": 4.62,
       "sot_list": [
         11,
         7,
@@ -26701,7 +26677,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.62,
+      "lambda": 4.63,
       "corners_list": [
         1,
         6,
@@ -26715,7 +26691,7 @@
       "prob": 68
     },
     "away_corners": {
-      "lambda": 5.95,
+      "lambda": 5.96,
       "corners_list": [
         2,
         3,
@@ -26899,7 +26875,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.52,
+      "lambda": 5.53,
       "corners_list": [
         11,
         6,
@@ -26913,7 +26889,7 @@
       "prob": 80
     },
     "away_corners": {
-      "lambda": 4.58,
+      "lambda": 4.59,
       "corners_list": [
         3,
         2,
@@ -26969,7 +26945,7 @@
       "prob": 76
     },
     "away_sot": {
-      "lambda": 4.18,
+      "lambda": 4.17,
       "sot_list": [
         6,
         3,
