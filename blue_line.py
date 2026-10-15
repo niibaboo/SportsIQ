@@ -134,9 +134,19 @@ def get_props(team, opp, is_home):
     pace = team_lam/max(season_gf,0.1)
     shot_fac = 1+0.5*(pace-1)
     props=[]
+    # FIXED: this required gp<10 to be excluded, i.e. 10+ games played
+    # THIS SEASON before a skater's props would show at all. club-stats
+    # resets every new season, so for the first ~6 weeks of an 82-game
+    # season (confirmed live: mid-October, teams only a handful of games
+    # in) literally no skater on any team clears that bar -- every match
+    # card's Props sections showed "No data" across the board, which is
+    # exactly what was reported. Lowered to the same MIN_AVG_GP=3 floor
+    # already used for the team-level standings fallback above -- low
+    # enough to clear early in the season, still high enough to keep a
+    # true 1-game call-up's noisy per-game rate from dominating.
     for p in data.get("skaters",[]):
       gp=p.get("gamesPlayed",0)
-      if gp<10: continue
+      if gp<3: continue
       gpg=p["goals"]/gp; ppg=p["points"]/gp; spg=p["shots"]/gp
       lam_g=gpg*pace; lam_p=ppg*pace; lam_s=spg*shot_fac
       props.append({
