@@ -5,6 +5,7 @@ BASE="https://api-web.nhle.com/v1"
 H={"User-Agent":"Mozilla/5.0"}
 CLUB_CACHE={} # memoize club-stats
 SCHEDULE_CACHE={} # memoize club-schedule-season (for Hot Form/Real Streak)
+GAMELOG_CACHE={} # memoize player/{id}/game-log/now (for skater SOG Hot Form/Real Streak)
 
 # Hot Form / Real Streak thresholds -- NHL teams average roughly 3.0-3.3
 # goals/game league-wide (lower than Euro Ice's international-hockey pool,
@@ -16,6 +17,24 @@ HOT_FORM_MIN = 3.0          # avg goals over last N games to count as "hot"
 HOT_FORM_MIN_GAMES = 5
 REAL_STREAK_THRESHOLD = 3   # goals needed in a game to extend the streak
 REAL_STREAK_MIN_LENGTH = 3  # min consecutive games to show a streak
+
+# Same Hot Form/Real Streak treatment, applied to skater Shots on Goal
+# instead of team goals -- scoped (by user choice) to just the 5 skaters
+# per team already shown in the Props section, not the whole roster, so
+# this doesn't add a per-player API call for every name on a club. Starting
+# thresholds only, same caveat as above -- watch real results and adjust.
+SOG_HOT_FORM_MIN = 3.0          # avg shots-on-goal over last N games
+SOG_HOT_FORM_MIN_GAMES = 5
+SOG_REAL_STREAK_THRESHOLD = 2   # SOG needed in a game to extend the streak
+SOG_REAL_STREAK_MIN_LENGTH = 3  # min consecutive games to show a streak
+
+# Goalie Saves lines -- fixed thresholds rather than a computed line (same
+# approach as skater SOG's O1.5/O2.5 above), picked to bracket a typical
+# starter's workload (bet365's own Saves milestone market runs whole
+# numbers around 25/30/35 for a busy night -- these sit either side of
+# a normal ~28-save game).
+GOALIE_SAVES_LINE_LOW = 24.5
+GOALIE_SAVES_LINE_HIGH = 29.5
 
 def fetch(u):
   return requests.get(u, headers=H, timeout=20).json()
@@ -163,9 +182,101 @@ def get_props(team, opp, is_home):
         "o2": over_prob(2.5,lam_s)
       })
     props.sort(key=lambda x:x["any"], reverse=True)
-    return props[:5]
+    top=props[:5]
+    # Hot Form/Real Streak is only fetched for these 5 shown skaters, not
+    # the whole roster (scoped this way deliberately -- one extra API call
+    # per name shown, not per roster slot).
+    for x in top:
+      x["sog_recent"]=get_player_recent_sog(x.get("player_id"))
+    return top
   except Exception as e:
     print(f"get_props {team} logic error: {e}", file=sys.stderr)
+    return []
+
+def get_goalie_props(team, opp):
+  """Projected saves for `team`'s likely starter, same club-stats call
+  get_props already fetches/caches (just a different list on the same
+  response -- club-stats returns "goalies" alongside "skaters").
+
+  Unlike skater props (top 5 shown, several play every game), only the
+  TOP-PROJECTED goalie is returned -- an NHL team starts one goalie a
+  night, so showing a backup's season average for a game they likely
+  won't play would be misleading, not just extra.
+
+  Saves scale with how many shots the OPPONENT generates, not this
+  team's own pace -- so the pace factor here is the opponent's own
+  scoring rate relative to the league average (avg_h/avg_r, already
+  computed above for pred()), same relative-pace idea as shot_fac in
+  get_props just pointed at the other team."""
+  if team not in standings: return []
+  if team in CLUB_CACHE:
+    data=CLUB_CACHE[team]
+  else:
+    try:
+      data=fetch(f"{BASE}/club-stats/{team}/now")
+      CLUB_CACHE[team]=data
+    except Exception as e:
+      print(f"club-stats {team} failed: {e}", file=sys.stderr)
+      return []
+
+  try:
+    league_avg_gf = (avg_h+avg_r)/2
+    opp_gf = standings[opp]["goalFor"]/max(standings[opp]["gamesPlayed"],1) if opp in standings else league_avg_gf
+    opp_pace = opp_gf/max(league_avg_gf,0.1)
+    props=[]
+    for p in data.get("goalies",[]):
+      gp=p.get("gamesPlayed",0)
+      if gp<3: continue
+      saves=p.get("saves")
+      if saves is None: continue
+      spg=saves/gp
+      lam=spg*opp_pace
+      props.append({
+        "player_id": p.get("playerId"),
+        "name": f"{p['firstName']['default']} {p['lastName']['default']}",
+        "pos": "G",
+        "saves_proj": lam,
+        "o_low": over_prob(GOALIE_SAVES_LINE_LOW,lam),
+        "o_high": over_prob(GOALIE_SAVES_LINE_HIGH,lam),
+      })
+    props.sort(key=lambda x:x["saves_proj"], reverse=True)
+    return props[:1]
+  except Exception as e:
+    print(f"get_goalie_props {team} logic error: {e}", file=sys.stderr)
+    return []
+
+def get_player_recent_sog(player_id):
+  """Last SOG_HOT_FORM_MIN_GAMES games' shots-on-goal for a skater,
+  oldest-first (same convention as get_team_recent_goals).
+
+  UNVERIFIED ENDPOINT: /player/{id}/game-log/now isn't called anywhere
+  else in this file, and this sandbox has no network path to
+  api-web.nhle.com to confirm its exact response shape. The field names
+  below (gameLog[], gameDate, shots) match multiple independent public
+  references for this endpoint, same confidence level as the
+  club-schedule-season endpoint above -- not confirmed live. If this
+  player's Hot Form/Real Streak entries never show up, check stderr for
+  a "game-log" warning first. Sorting by gameDate ourselves rather than
+  trusting the API's own order, since community docs disagree on
+  whether gameLog comes back newest-first or oldest-first."""
+  if not player_id:
+    return []
+  if player_id in GAMELOG_CACHE:
+    log=GAMELOG_CACHE[player_id]
+  else:
+    try:
+      log=fetch(f"{BASE}/player/{player_id}/game-log/now")
+      GAMELOG_CACHE[player_id]=log
+    except Exception as e:
+      print(f"game-log {player_id} failed: {e}", file=sys.stderr)
+      return []
+  try:
+    entries=[g for g in log.get("gameLog",[]) if g.get("shots") is not None]
+    entries.sort(key=lambda g: g.get("gameDate") or "")
+    last=entries[-SOG_HOT_FORM_MIN_GAMES:]
+    return [g["shots"] for g in last]
+  except Exception as e:
+    print(f"game-log {player_id} parse error: {e}", file=sys.stderr)
     return []
 
 def get_team_recent_goals(team):
@@ -249,9 +360,42 @@ def render_streak_panel(hot_form_entries, real_streak_entries):
   {streak_rows}
 </div>"""
 
+def render_player_streak_panel(hot_form_entries, real_streak_entries):
+  """Same layout as render_streak_panel above, but for skater SOG --
+  separate function (not a shared helper) since rows need a player name
+  and position alongside the team, not just the team."""
+  if not hot_form_entries and not real_streak_entries:
+    return ""
+  def row(e, kind):
+    vs=f"{'vs' if e['is_home'] else '@'} {e['opponent']}"
+    who=f"{e['player']} ({e['team']} {vs})"
+    if kind=="hot":
+      return f"""<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
+  <span>{who}</span><span style="color:#4ea1ff;font-weight:bold">{e['last5_avg']} SOG/g (L{SOG_HOT_FORM_MIN_GAMES})</span>
+</div>"""
+    plus="+" if e["full_sample"] else ""
+    return f"""<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
+  <span>{who}</span><span style="color:#2a6f6a;font-weight:bold">{e['streak_len']}{plus} straight ({'/'.join(str(g) for g in e['streak_games'])})</span>
+</div>"""
+  hot_rows="".join(row(e,"hot") for e in hot_form_entries) or '<p style="color:#8aa;font-size:12px">None today.</p>'
+  streak_rows="".join(row(e,"streak") for e in real_streak_entries) or '<p style="color:#8aa;font-size:12px">None today.</p>'
+  return f"""
+<div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0">
+  <div style="font-weight:bold;margin-bottom:2px">📊 Player SOG Hot Form</div>
+  <div style="color:#8aa;font-size:11px;margin-bottom:8px">Averaging {SOG_HOT_FORM_MIN}+ shots on goal over their last {SOG_HOT_FORM_MIN_GAMES} games (top props skaters only)</div>
+  {hot_rows}
+</div>
+<div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0">
+  <div style="font-weight:bold;margin-bottom:2px">🔥 Player SOG Real Streak</div>
+  <div style="color:#8aa;font-size:11px;margin-bottom:8px">Consecutive games with {SOG_REAL_STREAK_THRESHOLD}+ shots on goal (oldest→newest shown)</div>
+  {streak_rows}
+</div>"""
+
 all_legs=[]
 hot_form_entries=[]
 real_streak_entries=[]
+player_hot_form_entries=[]
+player_real_streak_entries=[]
 
 BUILDER_TEMPLATE = """
 <div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0">
@@ -416,8 +560,12 @@ for g in games:
 
     props_h=get_props(home,away,True)
     props_a=get_props(away,home,False)
+    goalie_h=get_goalie_props(home,away)
+    goalie_a=get_goalie_props(away,home)
     def render_props(lst):
       return "".join([f"<div style='display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:6px 0;border-bottom:1px solid #1e3a6a'><span style='min-width:120px'>{x['name']} ({x['pos']})</span><span style='text-align:right'>Goal {x['any']*100:.0f}% | 1+Pt {x['pts']*100:.0f}% | SOG {x['sog']:.1f} O1.5 {x['o1']*100:.0f}%</span></div>" for x in lst])
+    def render_goalie(lst):
+      return "".join([f"<div style='display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:6px 0;border-bottom:1px solid #1e3a6a'><span style='min-width:120px'>{x['name']} (G)</span><span style='text-align:right'>Proj {x['saves_proj']:.1f} saves | O{GOALIE_SAVES_LINE_LOW} {x['o_low']*100:.0f}% | O{GOALIE_SAVES_LINE_HIGH} {x['o_high']*100:.0f}%</span></div>" for x in lst])
     def render_scores():
       return "".join([f"<div style='background:#0a1730;border-radius:8px;padding:8px;text-align:center'><div style='font-size:12px;color:#8aa'>{away} {a}-{h} {home}</div><div style='font-weight:700;margin-top:2px'>{p*100:.1f}%</div></div>" for (a,h),p in top3])
 
@@ -431,7 +579,7 @@ for g in games:
 
     win_bar=f"""<div style="margin:10px 0 6px 0"><div style="display:flex;justify-content:space-between;align-items:flex-start;font-size:12px;margin-bottom:4px"><div><div>{away} {pa*100:.0f}%</div><div style="font-size:10px;color:#8aa;margin-top:2px">last 5 (old→new): {away_hist}</div></div><span>Tie {pt*100:.0f}%</span><div style="text-align:right"><div>{home} {ph*100:.0f}%</div><div style="font-size:10px;color:#8aa;margin-top:2px">last 5 (old→new): {home_hist}</div></div></div><div style="display:flex;height:10px;border-radius:999px;overflow:hidden;background:#0a1730"><div style="width:{pa*100:.1f}%;background:#ff4d5a"></div><div style="width:{pt*100:.1f}%;background:#5a5f7a"></div><div style="width:{ph*100:.1f}%;background:#4ea1ff"></div></div></div>"""
 
-    cards+=f"""<div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0"><h3 style="margin:0 0 4px 0">{away} @ {home} — Total {tot:.2f}</h3><p style="margin:0;color:#b7c5e6;font-size:13px">Proj: {away} {la:.2f} - {lh:.2f} {home} | O5.5 {o55*100:.0f}%</p>{win_bar}<div style="margin-top:12px"><div style="font-size:12px;color:#8aa;margin-bottom:6px">Correct Score</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">{render_scores()}</div></div><details style="margin-top:12px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">{home} Props</summary><div style="margin-top:8px">{render_props(props_h) or 'No data'}</div></details><details style="margin-top:8px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">{away} Props</summary><div style="margin-top:8px">{render_props(props_a) or 'No data'}</div></details></div>"""
+    cards+=f"""<div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0"><h3 style="margin:0 0 4px 0">{away} @ {home} — Total {tot:.2f}</h3><p style="margin:0;color:#b7c5e6;font-size:13px">Proj: {away} {la:.2f} - {lh:.2f} {home} | O5.5 {o55*100:.0f}%</p>{win_bar}<div style="margin-top:12px"><div style="font-size:12px;color:#8aa;margin-bottom:6px">Correct Score</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">{render_scores()}</div></div><details style="margin-top:12px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">{home} Props</summary><div style="margin-top:8px">{render_props(props_h) or 'No data'}</div></details><details style="margin-top:8px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">{away} Props</summary><div style="margin-top:8px">{render_props(props_a) or 'No data'}</div></details><details style="margin-top:8px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">Goalie Saves</summary><div style="margin-top:8px">{render_goalie(goalie_h+goalie_a) or 'No data'}</div></details></div>"""
 
     match_label = f"{away} @ {home}"
     game_id = g.get("id")  # NEW: needed later to look up the real final
@@ -455,6 +603,31 @@ for g in games:
           "full_sample": streak_len >= len(recent_goals),
           "game_id": game_id, "date": game_date,
         })
+
+    # Skater SOG Hot Form/Real Streak -- props already carry sog_recent
+    # (oldest-first) from get_props, only for the 5 skaters shown per team.
+    for team_label, opp_label, is_home_flag, props in [
+      (home, away, True, props_h), (away, home, False, props_a)
+    ]:
+      for x in props:
+        sog_hist = x.get("sog_recent") or []
+        if len(sog_hist) >= SOG_HOT_FORM_MIN_GAMES:
+          avg5 = round(sum(sog_hist)/len(sog_hist), 2)
+          if avg5 >= SOG_HOT_FORM_MIN:
+            player_hot_form_entries.append({
+              "player": x["name"], "player_id": x.get("player_id"), "pos": x["pos"],
+              "team": team_label, "opponent": opp_label, "is_home": is_home_flag,
+              "last5_avg": avg5, "game_id": game_id, "date": game_date,
+            })
+        streak_len = _current_goal_streak(sog_hist, SOG_REAL_STREAK_THRESHOLD)
+        if streak_len >= SOG_REAL_STREAK_MIN_LENGTH:
+          player_real_streak_entries.append({
+            "player": x["name"], "player_id": x.get("player_id"), "pos": x["pos"],
+            "team": team_label, "opponent": opp_label, "is_home": is_home_flag,
+            "streak_len": streak_len, "streak_games": sog_hist[-streak_len:],
+            "full_sample": streak_len >= len(sog_hist),
+            "game_id": game_id, "date": game_date,
+          })
 
     for team_label, lam in [(home, lh), (away, la)]:
       line = safe_line(lam)
@@ -494,21 +667,35 @@ for g in games:
           "game_id": game_id, "game_date": game_date, "player_id": x.get("player_id"), "line": 1.5,
           "is_home": team_label == home,
         })
+    for team_label, goalies in [(home, goalie_h), (away, goalie_a)]:
+      for x in goalies:
+        for line, prob_key in [(GOALIE_SAVES_LINE_LOW, "o_low"), (GOALIE_SAVES_LINE_HIGH, "o_high")]:
+          all_legs.append({
+            "match": match_label, "market": f"{x['name']} Over {line} Saves",
+            "prob": round(x[prob_key]*100), "category": "Goalie Saves",
+            "detail": f"{team_label} · G · proj {x['saves_proj']:.1f} saves",
+            "game_id": game_id, "game_date": game_date, "player_id": x.get("player_id"), "line": line,
+            "is_home": team_label == home,
+          })
   except Exception as e: print(f"game loop {e}", file=sys.stderr); continue
 
 builder = BUILDER_TEMPLATE.format(legs_json=json.dumps(all_legs)) if all_legs else ""
 streak_panel = render_streak_panel(hot_form_entries, real_streak_entries)
+player_streak_panel = render_player_streak_panel(player_hot_form_entries, player_real_streak_entries)
 
 fallback_note = ('<p style="margin:4px 0 0;color:#ffb84e;font-size:12px">⚠️ Early season — projections use last season\'s final standings '
                   'until this season has a few games of its own on the board.</p>') if using_fallback_standings else ""
 
-html=f"""<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blue Line v2 Clean</title><style>body{{background:#081229;color:#fff;font-family:-apple-system,system-ui,sans-serif;padding:16px;max-width:800px;margin:0 auto}}h1{{color:#4ea1ff;font-size:22px}}</style></head><body><h1>🔵 Blue Line v2 — Patched</h1><p style="color:#8aa;font-size:12px">Last: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} | Games: {len(games)}</p>{fallback_note}<p style="margin:4px 0 0"><a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a></p>{builder}{streak_panel}{cards or '<p>No games today — model ready.</p>'}<p style="font-size:11px;color:#5a6a8a;margin-top:24px">Fixes: cached club-stats, logged excepts, utcnow→now(utc), total clamp 4.5-8.0. Added: Safest Bet Builder (goals/props markets only — no moneyline, since ph/pa are regulation-time only and would understate a favorite's true win odds through OT/SO). Games and standings are now fetched/validated independently so a thin preseason sample can't wipe out a valid schedule.</p></body></html>"""
+html=f"""<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blue Line v2 Clean</title><style>body{{background:#081229;color:#fff;font-family:-apple-system,system-ui,sans-serif;padding:16px;max-width:800px;margin:0 auto}}h1{{color:#4ea1ff;font-size:22px}}</style></head><body><h1>🔵 Blue Line v2 — Patched</h1><p style="color:#8aa;font-size:12px">Last: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} | Games: {len(games)}</p>{fallback_note}<p style="margin:4px 0 0"><a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a></p>{builder}{streak_panel}{player_streak_panel}{cards or '<p>No games today — model ready.</p>'}<p style="font-size:11px;color:#5a6a8a;margin-top:24px">Fixes: cached club-stats, logged excepts, utcnow→now(utc), total clamp 4.5-8.0. Added: Safest Bet Builder (goals/props markets only — no moneyline, since ph/pa are regulation-time only and would understate a favorite's true win odds through OT/SO). Games and standings are now fetched/validated independently so a thin preseason sample can't wipe out a valid schedule.</p></body></html>"""
 import os as _os; _os.makedirs("docs/blue-line", exist_ok=True)
 with open("docs/blue-line/index.html","w") as f: f.write(html)
 
 try:
   import results_tracker_blue_line
-  results_tracker_blue_line.run_results_tracker(all_legs, hot_form_entries, real_streak_entries)
+  results_tracker_blue_line.run_results_tracker(
+    all_legs, hot_form_entries, real_streak_entries,
+    player_hot_form_entries, player_real_streak_entries,
+  )
 except Exception as e:
   # Results tracking sits on top of everything above, which has already
   # succeeded by this point -- a failure here should never take down an
