@@ -171,9 +171,26 @@ def _find_player_stat(boxscore, is_home, player_id):
     return None
 
 
+# FIXED: this used to require gameState == "OFF" exactly. "OFF" is the
+# NHL API's brief "game just ended, not yet officially final" state --
+# it settles to "FINAL" within a day or so of the game finishing, which
+# is where almost every game sits by the time this tracker gets around
+# to checking it (checked once a day, same as the rest of this script).
+# Requiring "OFF" alone meant basically nothing with a game_date more
+# than a day or two old could ever verify -- confirmed against the live
+# log: 973 pending entries with a game_date weeks in the past, 0 ever
+# verified. "OFF" is kept in the check (not dropped) in case a same-day
+# check ever catches a game in that narrow window.
+_FINISHED_STATES = ("OFF", "FINAL")
+
+
 def _verify_team_leg(entry):
     box = _get_boxscore(entry["game_id"])
-    if not box or box.get("gameState") != "OFF":
+    if not box:
+        print(f"    [!] no boxscore for game {entry['game_id']} ({entry['match']})")
+        return None
+    if box.get("gameState") not in _FINISHED_STATES:
+        print(f"    [!] game {entry['game_id']} ({entry['match']}) not finished yet -- gameState={box.get('gameState')!r}")
         return None
     home_score = box.get("homeTeam", {}).get("score")
     away_score = box.get("awayTeam", {}).get("score")
@@ -190,7 +207,11 @@ def _verify_player_leg(entry):
     if not entry.get("player_id"):
         return None
     box = _get_boxscore(entry["game_id"])
-    if not box or box.get("gameState") != "OFF":
+    if not box:
+        print(f"    [!] no boxscore for game {entry['game_id']} ({entry['match']})")
+        return None
+    if box.get("gameState") not in _FINISHED_STATES:
+        print(f"    [!] game {entry['game_id']} ({entry['match']}) not finished yet -- gameState={box.get('gameState')!r}")
         return None
     p = _find_player_stat(box, entry["is_home"], entry["player_id"])
     if not p:
@@ -219,7 +240,11 @@ def _verify_form_streak_entry(entry, real_streak_threshold=3):
     same one Euro Ice uses: did the team keep scoring (>= the Real
     Streak threshold) in the very game this was flagged alongside."""
     box = _get_boxscore(entry["game_id"])
-    if not box or box.get("gameState") != "OFF":
+    if not box:
+        print(f"    [!] no boxscore for game {entry['game_id']} ({entry['match']})")
+        return None
+    if box.get("gameState") not in _FINISHED_STATES:
+        print(f"    [!] game {entry['game_id']} ({entry['match']}) not finished yet -- gameState={box.get('gameState')!r}")
         return None
     home_score = box.get("homeTeam", {}).get("score")
     away_score = box.get("awayTeam", {}).get("score")
