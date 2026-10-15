@@ -36,6 +36,15 @@ SOG_REAL_STREAK_MIN_LENGTH = 3  # min consecutive games to show a streak
 GOALIE_SAVES_LINE_LOW = 24.5
 GOALIE_SAVES_LINE_HIGH = 29.5
 
+# Same Hot Form/Real Streak treatment again, this time for the starting
+# goalie's saves -- only the 1 goalie shown per team (get_goalie_props
+# already narrows to the top-projected starter), so one extra API call
+# per team, not per roster slot. Starting thresholds only, same caveat.
+SAVES_HOT_FORM_MIN = 28.0         # avg saves over last N games to count as "hot"
+SAVES_HOT_FORM_MIN_GAMES = 5
+SAVES_REAL_STREAK_THRESHOLD = 25  # saves needed in a game to extend the streak
+SAVES_REAL_STREAK_MIN_LENGTH = 3  # min consecutive games to show a streak
+
 def fetch(u):
   return requests.get(u, headers=H, timeout=20).json()
 
@@ -240,44 +249,65 @@ def get_goalie_props(team, opp):
         "o_high": over_prob(GOALIE_SAVES_LINE_HIGH,lam),
       })
     props.sort(key=lambda x:x["saves_proj"], reverse=True)
-    return props[:1]
+    top=props[:1]
+    for x in top:
+      x["saves_recent"]=get_player_recent_saves(x.get("player_id"))
+    return top
   except Exception as e:
     print(f"get_goalie_props {team} logic error: {e}", file=sys.stderr)
     return []
 
-def get_player_recent_sog(player_id):
-  """Last SOG_HOT_FORM_MIN_GAMES games' shots-on-goal for a skater,
-  oldest-first (same convention as get_team_recent_goals).
+def _get_player_gamelog(player_id):
+  """Shared fetch+cache for /player/{id}/game-log/now -- one request per
+  player_id regardless of how many stat keys get pulled from it (a
+  skater's sog and a goalie's saves never collide on the same
+  player_id, so one cache serves both get_player_recent_sog and
+  get_player_recent_saves below).
 
-  UNVERIFIED ENDPOINT: /player/{id}/game-log/now isn't called anywhere
-  else in this file, and this sandbox has no network path to
+  UNVERIFIED ENDPOINT: this sandbox has no network path to
   api-web.nhle.com to confirm its exact response shape. The field names
-  below (gameLog[], gameDate, shots) match multiple independent public
-  references for this endpoint, same confidence level as the
-  club-schedule-season endpoint above -- not confirmed live. If this
-  player's Hot Form/Real Streak entries never show up, check stderr for
-  a "game-log" warning first. Sorting by gameDate ourselves rather than
-  trusting the API's own order, since community docs disagree on
-  whether gameLog comes back newest-first or oldest-first."""
+  used by callers below (gameLog[], gameDate, shots/saves) match
+  multiple independent public references for this endpoint, same
+  confidence level as the club-schedule-season endpoint above -- not
+  confirmed live. If a player's Hot Form/Real Streak entries never show
+  up, check stderr for a "game-log" warning first."""
   if not player_id:
-    return []
+    return None
   if player_id in GAMELOG_CACHE:
-    log=GAMELOG_CACHE[player_id]
-  else:
-    try:
-      log=fetch(f"{BASE}/player/{player_id}/game-log/now")
-      GAMELOG_CACHE[player_id]=log
-    except Exception as e:
-      print(f"game-log {player_id} failed: {e}", file=sys.stderr)
-      return []
+    return GAMELOG_CACHE[player_id]
   try:
-    entries=[g for g in log.get("gameLog",[]) if g.get("shots") is not None]
+    log=fetch(f"{BASE}/player/{player_id}/game-log/now")
+    GAMELOG_CACHE[player_id]=log
+    return log
+  except Exception as e:
+    print(f"game-log {player_id} failed: {e}", file=sys.stderr)
+    return None
+
+def _recent_stat(player_id, stat_key, n_games):
+  """Last n_games games' value of stat_key for a player, oldest-first
+  (same convention as get_team_recent_goals). Sorting by gameDate
+  ourselves rather than trusting the API's own order, since community
+  docs disagree on whether gameLog comes back newest-first or
+  oldest-first."""
+  log=_get_player_gamelog(player_id)
+  if not log:
+    return []
+  try:
+    entries=[g for g in log.get("gameLog",[]) if g.get(stat_key) is not None]
     entries.sort(key=lambda g: g.get("gameDate") or "")
-    last=entries[-SOG_HOT_FORM_MIN_GAMES:]
-    return [g["shots"] for g in last]
+    last=entries[-n_games:]
+    return [g[stat_key] for g in last]
   except Exception as e:
     print(f"game-log {player_id} parse error: {e}", file=sys.stderr)
     return []
+
+def get_player_recent_sog(player_id):
+  """Last SOG_HOT_FORM_MIN_GAMES games' shots-on-goal for a skater."""
+  return _recent_stat(player_id, "shots", SOG_HOT_FORM_MIN_GAMES)
+
+def get_player_recent_saves(player_id):
+  """Last SAVES_HOT_FORM_MIN_GAMES games' saves for a goalie."""
+  return _recent_stat(player_id, "saves", SAVES_HOT_FORM_MIN_GAMES)
 
 def get_team_recent_goals(team):
   """Last HOT_FORM_MIN_GAMES FINISHED games' goals-for for `team`,
@@ -360,10 +390,18 @@ def render_streak_panel(hot_form_entries, real_streak_entries):
   {streak_rows}
 </div>"""
 
-def render_player_streak_panel(hot_form_entries, real_streak_entries):
-  """Same layout as render_streak_panel above, but for skater SOG --
-  separate function (not a shared helper) since rows need a player name
-  and position alongside the team, not just the team."""
+def render_player_streak_panel(
+    hot_form_entries, real_streak_entries,
+    hot_title="📊 Player SOG Hot Form",
+    hot_note=f"Averaging {SOG_HOT_FORM_MIN}+ shots on goal over their last {SOG_HOT_FORM_MIN_GAMES} games (top props skaters only)",
+    hot_unit=f"SOG/g (L{SOG_HOT_FORM_MIN_GAMES})",
+    streak_title="🔥 Player SOG Real Streak",
+    streak_note=f"Consecutive games with {SOG_REAL_STREAK_THRESHOLD}+ shots on goal (oldest→newest shown)",
+):
+  """Same layout as render_streak_panel above, but for a per-player stat
+  (skater SOG by default, also reused for goalie saves below via the
+  hot_*/streak_* overrides) -- separate from render_streak_panel since
+  rows need a player name alongside the team, not just the team."""
   if not hot_form_entries and not real_streak_entries:
     return ""
   def row(e, kind):
@@ -371,7 +409,7 @@ def render_player_streak_panel(hot_form_entries, real_streak_entries):
     who=f"{e['player']} ({e['team']} {vs})"
     if kind=="hot":
       return f"""<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
-  <span>{who}</span><span style="color:#4ea1ff;font-weight:bold">{e['last5_avg']} SOG/g (L{SOG_HOT_FORM_MIN_GAMES})</span>
+  <span>{who}</span><span style="color:#4ea1ff;font-weight:bold">{e['last5_avg']} {hot_unit}</span>
 </div>"""
     plus="+" if e["full_sample"] else ""
     return f"""<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
@@ -381,13 +419,13 @@ def render_player_streak_panel(hot_form_entries, real_streak_entries):
   streak_rows="".join(row(e,"streak") for e in real_streak_entries) or '<p style="color:#8aa;font-size:12px">None today.</p>'
   return f"""
 <div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0">
-  <div style="font-weight:bold;margin-bottom:2px">📊 Player SOG Hot Form</div>
-  <div style="color:#8aa;font-size:11px;margin-bottom:8px">Averaging {SOG_HOT_FORM_MIN}+ shots on goal over their last {SOG_HOT_FORM_MIN_GAMES} games (top props skaters only)</div>
+  <div style="font-weight:bold;margin-bottom:2px">{hot_title}</div>
+  <div style="color:#8aa;font-size:11px;margin-bottom:8px">{hot_note}</div>
   {hot_rows}
 </div>
 <div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0">
-  <div style="font-weight:bold;margin-bottom:2px">🔥 Player SOG Real Streak</div>
-  <div style="color:#8aa;font-size:11px;margin-bottom:8px">Consecutive games with {SOG_REAL_STREAK_THRESHOLD}+ shots on goal (oldest→newest shown)</div>
+  <div style="font-weight:bold;margin-bottom:2px">{streak_title}</div>
+  <div style="color:#8aa;font-size:11px;margin-bottom:8px">{streak_note}</div>
   {streak_rows}
 </div>"""
 
@@ -396,6 +434,8 @@ hot_form_entries=[]
 real_streak_entries=[]
 player_hot_form_entries=[]
 player_real_streak_entries=[]
+goalie_hot_form_entries=[]
+goalie_real_streak_entries=[]
 
 BUILDER_TEMPLATE = """
 <div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0">
@@ -629,6 +669,32 @@ for g in games:
             "game_id": game_id, "date": game_date,
           })
 
+    # Goalie Saves Hot Form/Real Streak -- goalie_h/goalie_a already carry
+    # saves_recent (oldest-first) from get_goalie_props, only for the 1
+    # top-projected starter shown per team.
+    for team_label, opp_label, is_home_flag, goalies in [
+      (home, away, True, goalie_h), (away, home, False, goalie_a)
+    ]:
+      for x in goalies:
+        saves_hist = x.get("saves_recent") or []
+        if len(saves_hist) >= SAVES_HOT_FORM_MIN_GAMES:
+          avg5 = round(sum(saves_hist)/len(saves_hist), 2)
+          if avg5 >= SAVES_HOT_FORM_MIN:
+            goalie_hot_form_entries.append({
+              "player": x["name"], "player_id": x.get("player_id"), "pos": "G",
+              "team": team_label, "opponent": opp_label, "is_home": is_home_flag,
+              "last5_avg": avg5, "game_id": game_id, "date": game_date,
+            })
+        streak_len = _current_goal_streak(saves_hist, SAVES_REAL_STREAK_THRESHOLD)
+        if streak_len >= SAVES_REAL_STREAK_MIN_LENGTH:
+          goalie_real_streak_entries.append({
+            "player": x["name"], "player_id": x.get("player_id"), "pos": "G",
+            "team": team_label, "opponent": opp_label, "is_home": is_home_flag,
+            "streak_len": streak_len, "streak_games": saves_hist[-streak_len:],
+            "full_sample": streak_len >= len(saves_hist),
+            "game_id": game_id, "date": game_date,
+          })
+
     for team_label, lam in [(home, lh), (away, la)]:
       line = safe_line(lam)
       all_legs.append({
@@ -682,11 +748,19 @@ for g in games:
 builder = BUILDER_TEMPLATE.format(legs_json=json.dumps(all_legs)) if all_legs else ""
 streak_panel = render_streak_panel(hot_form_entries, real_streak_entries)
 player_streak_panel = render_player_streak_panel(player_hot_form_entries, player_real_streak_entries)
+goalie_streak_panel = render_player_streak_panel(
+  goalie_hot_form_entries, goalie_real_streak_entries,
+  hot_title="📊 Goalie Saves Hot Form",
+  hot_note=f"Averaging {SAVES_HOT_FORM_MIN}+ saves over their last {SAVES_HOT_FORM_MIN_GAMES} games (top-projected starter only)",
+  hot_unit=f"saves/g (L{SAVES_HOT_FORM_MIN_GAMES})",
+  streak_title="🔥 Goalie Saves Real Streak",
+  streak_note=f"Consecutive games with {SAVES_REAL_STREAK_THRESHOLD}+ saves (oldest→newest shown)",
+)
 
 fallback_note = ('<p style="margin:4px 0 0;color:#ffb84e;font-size:12px">⚠️ Early season — projections use last season\'s final standings '
                   'until this season has a few games of its own on the board.</p>') if using_fallback_standings else ""
 
-html=f"""<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blue Line v2 Clean</title><style>body{{background:#081229;color:#fff;font-family:-apple-system,system-ui,sans-serif;padding:16px;max-width:800px;margin:0 auto}}h1{{color:#4ea1ff;font-size:22px}}</style></head><body><h1>🔵 Blue Line v2 — Patched</h1><p style="color:#8aa;font-size:12px">Last: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} | Games: {len(games)}</p>{fallback_note}<p style="margin:4px 0 0"><a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a></p>{builder}{streak_panel}{player_streak_panel}{cards or '<p>No games today — model ready.</p>'}<p style="font-size:11px;color:#5a6a8a;margin-top:24px">Fixes: cached club-stats, logged excepts, utcnow→now(utc), total clamp 4.5-8.0. Added: Safest Bet Builder (goals/props markets only — no moneyline, since ph/pa are regulation-time only and would understate a favorite's true win odds through OT/SO). Games and standings are now fetched/validated independently so a thin preseason sample can't wipe out a valid schedule.</p></body></html>"""
+html=f"""<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blue Line v2 Clean</title><style>body{{background:#081229;color:#fff;font-family:-apple-system,system-ui,sans-serif;padding:16px;max-width:800px;margin:0 auto}}h1{{color:#4ea1ff;font-size:22px}}</style></head><body><h1>🔵 Blue Line v2 — Patched</h1><p style="color:#8aa;font-size:12px">Last: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} | Games: {len(games)}</p>{fallback_note}<p style="margin:4px 0 0"><a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a></p>{builder}{streak_panel}{player_streak_panel}{goalie_streak_panel}{cards or '<p>No games today — model ready.</p>'}<p style="font-size:11px;color:#5a6a8a;margin-top:24px">Fixes: cached club-stats, logged excepts, utcnow→now(utc), total clamp 4.5-8.0. Added: Safest Bet Builder (goals/props markets only — no moneyline, since ph/pa are regulation-time only and would understate a favorite's true win odds through OT/SO). Games and standings are now fetched/validated independently so a thin preseason sample can't wipe out a valid schedule.</p></body></html>"""
 import os as _os; _os.makedirs("docs/blue-line", exist_ok=True)
 with open("docs/blue-line/index.html","w") as f: f.write(html)
 
@@ -695,6 +769,7 @@ try:
   results_tracker_blue_line.run_results_tracker(
     all_legs, hot_form_entries, real_streak_entries,
     player_hot_form_entries, player_real_streak_entries,
+    goalie_hot_form_entries, goalie_real_streak_entries,
   )
 except Exception as e:
   # Results tracking sits on top of everything above, which has already
