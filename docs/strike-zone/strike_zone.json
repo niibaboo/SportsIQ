@@ -1,138 +1,240 @@
 [
   {
-    "match": "Milwaukee Brewers @ Los Angeles Dodgers",
-    "subject": "Robert Gasser",
-    "market": "Robert Gasser Over 3.0 Strikeouts",
-    "prob": 70,
+    "match": "Tampa Bay Rays @ Cleveland Guardians",
+    "subject": "Griffin Jax",
+    "market": "Griffin Jax Over 2.0 Strikeouts",
+    "prob": 66,
+    "category": "Strikeouts",
+    "hit_rate": {
+      "hits": 2,
+      "total": 5
+    },
+    "detail": "Tampa Bay Rays vs Cleveland Guardians \u00b7 proj 3.39 K",
+    "history": "1/2/7/5/1",
+    "game_pk": 849818,
+    "game_date": "2026-10-15",
+    "pitcher_id": 643377,
+    "line": 2.0
+  },
+  {
+    "match": "Tampa Bay Rays @ Cleveland Guardians",
+    "subject": "Griffin Jax",
+    "market": "Griffin Jax Over 8.5 Outs Recorded",
+    "prob": 87,
+    "category": "Outs Recorded",
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "detail": "Tampa Bay Rays vs Cleveland Guardians \u00b7 proj 4.1 IP",
+    "history": "8/15/15/15/9",
+    "game_pk": 849818,
+    "game_date": "2026-10-15",
+    "pitcher_id": 643377,
+    "line": 8.5
+  },
+  {
+    "match": "Tampa Bay Rays @ Cleveland Guardians",
+    "subject": "Gavin Williams",
+    "market": "Gavin Williams Over 4.5 Strikeouts",
+    "prob": 80,
     "category": "Strikeouts",
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
-    "detail": "Milwaukee Brewers vs Los Angeles Dodgers \u00b7 proj 4.77 K",
-    "history": "4/5/5/2/9",
-    "game_pk": 849811,
-    "game_date": "2026-10-14",
-    "pitcher_id": 688107,
-    "line": 3.0
+    "detail": "Cleveland Guardians vs Tampa Bay Rays \u00b7 proj 6.75 K",
+    "history": "13/11/7/9/4",
+    "game_pk": 849818,
+    "game_date": "2026-10-15",
+    "pitcher_id": 668909,
+    "line": 4.5
   },
   {
-    "match": "Milwaukee Brewers @ Los Angeles Dodgers",
-    "subject": "Robert Gasser",
-    "market": "Robert Gasser Over 11.5 Outs Recorded",
-    "prob": 88,
+    "match": "Tampa Bay Rays @ Cleveland Guardians",
+    "subject": "Gavin Williams",
+    "market": "Gavin Williams Over 12.0 Outs Recorded",
+    "prob": 86,
     "category": "Outs Recorded",
     "hit_rate": {
-      "hits": 5,
+      "hits": 4,
       "total": 5
     },
-    "detail": "Milwaukee Brewers vs Los Angeles Dodgers \u00b7 proj 5.4 IP",
-    "history": "13/14/15/21/18",
-    "game_pk": 849811,
-    "game_date": "2026-10-14",
-    "pitcher_id": 688107,
-    "line": 11.5
+    "detail": "Cleveland Guardians vs Tampa Bay Rays \u00b7 proj 5.7 IP",
+    "history": "21/18/15/21/10",
+    "game_pk": 849818,
+    "game_date": "2026-10-15",
+    "pitcher_id": 668909,
+    "line": 12.0
   },
   {
-    "match": "Milwaukee Brewers @ Los Angeles Dodgers",
-    "subject": "Blake Snell",
-    "market": "Blake Snell Over 3.5 Strikeouts",
-    "prob": 76,
-    "category": "Strikeouts",
+    "match": "Tampa Bay Rays @ Cleveland Guardians",
+    "subject": "Tampa Bay Rays",
+    "market": "Tampa Bay Rays Over 2.0 Runs",
+    "prob": 67,
+    "category": "Team Runs",
     "hit_rate": {
       "hits": 3,
       "total": 5
     },
-    "detail": "Los Angeles Dodgers vs Milwaukee Brewers \u00b7 proj 5.15 K",
-    "history": "10/7/8/1/3",
-    "game_pk": 849811,
-    "game_date": "2026-10-14",
-    "pitcher_id": 605483,
-    "line": 3.5
-  },
-  {
-    "match": "Milwaukee Brewers @ Los Angeles Dodgers",
-    "subject": "Blake Snell",
-    "market": "Blake Snell Over 9.0 Outs Recorded",
-    "prob": 82,
-    "category": "Outs Recorded",
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "detail": "Los Angeles Dodgers vs Milwaukee Brewers \u00b7 proj 4.3 IP",
-    "history": "15/18/17/3/12",
-    "game_pk": 849811,
-    "game_date": "2026-10-14",
-    "pitcher_id": 605483,
-    "line": 9.0
-  },
-  {
-    "match": "Milwaukee Brewers @ Los Angeles Dodgers",
-    "subject": "Milwaukee Brewers",
-    "market": "Milwaukee Brewers Over 2.5 Runs",
-    "prob": 78,
-    "category": "Team Runs",
-    "hit_rate": {
-      "hits": 5,
-      "total": 5
-    },
-    "detail": "vs Los Angeles Dodgers \u00b7 proj 4.1 runs",
-    "history": "4/5/8/3/6",
-    "game_pk": 849811,
-    "game_date": "2026-10-14",
+    "detail": "vs Cleveland Guardians \u00b7 proj 3.43 runs",
+    "history": "2/4/2/12/3",
+    "game_pk": 849818,
+    "game_date": "2026-10-15",
     "is_home": false,
-    "line": 2.5
+    "line": 2.0
   },
   {
-    "match": "Milwaukee Brewers @ Los Angeles Dodgers",
-    "subject": "Milwaukee Brewers",
-    "market": "Milwaukee Brewers Over 5.0 Hits",
-    "prob": 77,
+    "match": "Tampa Bay Rays @ Cleveland Guardians",
+    "subject": "Tampa Bay Rays",
+    "market": "Tampa Bay Rays Over 5.0 Hits",
+    "prob": 76,
     "category": "Team Hits",
     "hit_rate": {
       "hits": 5,
       "total": 5
     },
-    "detail": "vs Los Angeles Dodgers \u00b7 proj 7.59 hits",
-    "history": "6/11/12/8/10",
-    "game_pk": 849811,
-    "game_date": "2026-10-14",
+    "detail": "vs Cleveland Guardians \u00b7 proj 7.51 hits",
+    "history": "6/9/6/17/8",
+    "game_pk": 849818,
+    "game_date": "2026-10-15",
     "is_home": false,
     "line": 5.0
+  },
+  {
+    "match": "Tampa Bay Rays @ Cleveland Guardians",
+    "subject": "Cleveland Guardians",
+    "market": "Cleveland Guardians Over 1.5 Runs",
+    "prob": 76,
+    "category": "Team Runs",
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "detail": "vs Tampa Bay Rays \u00b7 proj 2.73 runs",
+    "history": "0/1/12/11/2",
+    "game_pk": 849818,
+    "game_date": "2026-10-15",
+    "is_home": true,
+    "line": 1.5
+  },
+  {
+    "match": "Tampa Bay Rays @ Cleveland Guardians",
+    "subject": "Cleveland Guardians",
+    "market": "Cleveland Guardians Over 5.5 Hits",
+    "prob": 80,
+    "category": "Team Hits",
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "detail": "vs Tampa Bay Rays \u00b7 proj 7.93 hits",
+    "history": "5/4/9/14/9",
+    "game_pk": 849818,
+    "game_date": "2026-10-15",
+    "is_home": true,
+    "line": 5.5
+  },
+  {
+    "match": "Milwaukee Brewers @ Los Angeles Dodgers",
+    "subject": "Tyler Glasnow",
+    "market": "Tyler Glasnow Over 6.0 Strikeouts",
+    "prob": 76,
+    "category": "Strikeouts",
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "detail": "Los Angeles Dodgers vs Milwaukee Brewers \u00b7 proj 8.64 K",
+    "history": "6/8/7/10/11",
+    "game_pk": 849810,
+    "game_date": "2026-10-15",
+    "pitcher_id": 607192,
+    "line": 6.0
+  },
+  {
+    "match": "Milwaukee Brewers @ Los Angeles Dodgers",
+    "subject": "Tyler Glasnow",
+    "market": "Tyler Glasnow Over 12.5 Outs Recorded",
+    "prob": 89,
+    "category": "Outs Recorded",
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "detail": "Los Angeles Dodgers vs Milwaukee Brewers \u00b7 proj 5.9 IP",
+    "history": "21/18/12/18/19",
+    "game_pk": 849810,
+    "game_date": "2026-10-15",
+    "pitcher_id": 607192,
+    "line": 12.5
+  },
+  {
+    "match": "Milwaukee Brewers @ Los Angeles Dodgers",
+    "subject": "Milwaukee Brewers",
+    "market": "Milwaukee Brewers Over 3.0 Runs",
+    "prob": 69,
+    "category": "Team Runs",
+    "hit_rate": {
+      "hits": 4,
+      "total": 5
+    },
+    "detail": "vs Los Angeles Dodgers \u00b7 proj 4.72 runs",
+    "history": "4/5/8/3/6",
+    "game_pk": 849810,
+    "game_date": "2026-10-15",
+    "is_home": false,
+    "line": 3.0
+  },
+  {
+    "match": "Milwaukee Brewers @ Los Angeles Dodgers",
+    "subject": "Milwaukee Brewers",
+    "market": "Milwaukee Brewers Over 4.5 Hits",
+    "prob": 80,
+    "category": "Team Hits",
+    "hit_rate": {
+      "hits": 5,
+      "total": 5
+    },
+    "detail": "vs Los Angeles Dodgers \u00b7 proj 6.68 hits",
+    "history": "6/11/12/8/10",
+    "game_pk": 849810,
+    "game_date": "2026-10-15",
+    "is_home": false,
+    "line": 4.5
   },
   {
     "match": "Milwaukee Brewers @ Los Angeles Dodgers",
     "subject": "Los Angeles Dodgers",
     "market": "Los Angeles Dodgers Over 2.0 Runs",
-    "prob": 66,
+    "prob": 62,
     "category": "Team Runs",
     "hit_rate": {
       "hits": 2,
       "total": 5
     },
-    "detail": "vs Milwaukee Brewers \u00b7 proj 3.38 runs",
+    "detail": "vs Milwaukee Brewers \u00b7 proj 3.2 runs",
     "history": "1/2/2/4/5",
-    "game_pk": 849811,
-    "game_date": "2026-10-14",
+    "game_pk": 849810,
+    "game_date": "2026-10-15",
     "is_home": true,
     "line": 2.0
   },
   {
     "match": "Milwaukee Brewers @ Los Angeles Dodgers",
     "subject": "Los Angeles Dodgers",
-    "market": "Los Angeles Dodgers Over 5.0 Hits",
-    "prob": 76,
+    "market": "Los Angeles Dodgers Over 5.5 Hits",
+    "prob": 80,
     "category": "Team Hits",
     "hit_rate": {
       "hits": 5,
       "total": 5
     },
-    "detail": "vs Milwaukee Brewers \u00b7 proj 7.47 hits",
+    "detail": "vs Milwaukee Brewers \u00b7 proj 7.88 hits",
     "history": "10/7/7/9/8",
-    "game_pk": 849811,
-    "game_date": "2026-10-14",
+    "game_pk": 849810,
+    "game_date": "2026-10-15",
     "is_home": true,
-    "line": 5.0
+    "line": 5.5
   }
 ]
