@@ -306,8 +306,35 @@ def get_player_recent_sog(player_id):
   return _recent_stat(player_id, "shots", SOG_HOT_FORM_MIN_GAMES)
 
 def get_player_recent_saves(player_id):
-  """Last SAVES_HOT_FORM_MIN_GAMES games' saves for a goalie."""
-  return _recent_stat(player_id, "saves", SAVES_HOT_FORM_MIN_GAMES)
+  """Last SAVES_HOT_FORM_MIN_GAMES games' saves for a goalie.
+
+  Field-name hedge: unlike skater shots (confirmed indirectly -- the
+  live site is showing real Player SOG Hot Form/Real Streak data, so
+  "shots" is the right key), a goalie's game-log entry shape was never
+  confirmed live at all. The NHL boxscore endpoint confirms "saves" as
+  a flat count (already relied on by the results tracker), but
+  game-log is a different endpoint and might report shotsAgainst/
+  goalsAgainst instead. Tries "saves" first; if that field is simply
+  absent from every entry (not just this player having no saves, which
+  would be a real 0 and still match), falls back to deriving it from
+  shotsAgainst-goalsAgainst. If NEITHER shape matches, logs once to
+  stderr so a quiet "no Goalie Saves panel" has a concrete next step
+  instead of just silently returning nothing forever."""
+  log=_get_player_gamelog(player_id)
+  if not log:
+    return []
+  entries=log.get("gameLog",[])
+  if any(g.get("saves") is not None for g in entries):
+    return _recent_stat(player_id, "saves", SAVES_HOT_FORM_MIN_GAMES)
+  derived=[g for g in entries if g.get("shotsAgainst") is not None and g.get("goalsAgainst") is not None]
+  if derived:
+    print(f"game-log {player_id}: no 'saves' field on goalie entries, deriving from shotsAgainst-goalsAgainst instead", file=sys.stderr)
+    derived.sort(key=lambda g: g.get("gameDate") or "")
+    last=derived[-SAVES_HOT_FORM_MIN_GAMES:]
+    return [g["shotsAgainst"]-g["goalsAgainst"] for g in last]
+  if entries:
+    print(f"game-log {player_id}: no usable saves field found on goalie entries (checked 'saves' and shotsAgainst/goalsAgainst) -- keys seen: {sorted(entries[0].keys())}", file=sys.stderr)
+  return []
 
 def get_team_recent_goals(team):
   """Last HOT_FORM_MIN_GAMES FINISHED games' goals-for for `team`,
