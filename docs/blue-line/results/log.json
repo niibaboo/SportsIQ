@@ -18561,5 +18561,43 @@
     "status": "pending",
     "result": null,
     "actual": null
+  },
+  {
+    "id": "d9d75bc189d1d7c4",
+    "scanner": "hot_form",
+    "subject": "WSH",
+    "match": "WSH vs MTL",
+    "market": "Hot Form vs MTL",
+    "value": 3.6,
+    "detail": "is_home=True",
+    "line": null,
+    "game_id": 2026020106,
+    "game_date": "2026-10-14",
+    "is_home": true,
+    "player_id": null,
+    "date_key": "2026-10-14",
+    "logged_at": "2026-10-15T13:59:24.154862+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "80982889a32dfac4",
+    "scanner": "hot_form",
+    "subject": "DAL",
+    "match": "DAL @ COL",
+    "market": "Hot Form vs COL",
+    "value": 3.0,
+    "detail": "is_home=False",
+    "line": null,
+    "game_id": 2026020107,
+    "game_date": "2026-10-15",
+    "is_home": false,
+    "player_id": null,
+    "date_key": "2026-10-15",
+    "logged_at": "2026-10-15T13:59:24.154886+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
   }
 ]
