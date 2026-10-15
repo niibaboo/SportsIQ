@@ -6,7 +6,8 @@ Same architecture as the other four trackers, adapted for the NHL's
 official public API (api-web.nhle.com, no key needed) and Blue Line's
 mixed structure: team markets (Team Total, Game Total) need a final
 score, player props (Anytime Goalscorer, To Record a Point, Shots on
-Goal) need a specific player's actual boxscore line in a specific game.
+Goal, Goalie Saves) need a specific player's actual boxscore line in
+a specific game.
 
 FIELD-NAME CAVEAT (read before trusting this blindly): unlike the MLB/
 TheStatsAPI trackers, this file's exact field names (gameState, score,
@@ -88,18 +89,23 @@ def save_log(entries):
 CATEGORY_SCANNER = {
     "Team Total": "team_total", "Game Total": "game_total",
     "Anytime Goalscorer": "anytime_goal", "To Record a Point": "to_record_point",
-    "Shots on Goal": "shots_on_goal",
+    "Shots on Goal": "shots_on_goal", "Goalie Saves": "goalie_saves",
 }
 
 
-def log_todays_signals(legs, hot_form_entries, real_streak_entries, log):
+def log_todays_signals(legs, hot_form_entries, real_streak_entries, log,
+                        player_hot_form_entries=None, player_real_streak_entries=None):
     """Legs already carry game_id, game_date, is_home, line, and (for
     player props) player_id -- added specifically for this tracker when
     the legs were built. hot_form_entries/real_streak_entries are
     per-team (not per-market) and carry game_id/date/opponent instead --
     unlike Euro Ice's version of these, Blue Line already knows the
     game_id at the point they're built, so no separate date+name
-    fixture lookup is needed to verify them later."""
+    fixture lookup is needed to verify them later. player_hot_form_entries/
+    player_real_streak_entries are the same idea for skater SOG -- same
+    shape, plus player/player_id."""
+    player_hot_form_entries = player_hot_form_entries or []
+    player_real_streak_entries = player_real_streak_entries or []
     existing_ids = {e["id"] for e in log}
     added = 0
 
@@ -151,6 +157,40 @@ def log_todays_signals(legs, hot_form_entries, real_streak_entries, log):
             "detail": f"is_home={e['is_home']}", "line": None,
             "game_id": e["game_id"], "game_date": e["date"],
             "is_home": e["is_home"], "player_id": None, "date_key": e["date"],
+            "logged_at": datetime.now(timezone.utc).isoformat(),
+            "status": "pending", "result": None, "actual": None,
+        })
+        existing_ids.add(eid)
+        added += 1
+
+    for e in player_hot_form_entries:
+        eid = _entry_id("sog_hot_form", e.get("player_id") or e["player"], e["date"], e["opponent"])
+        if eid in existing_ids or not e.get("game_id"):
+            continue
+        log.append({
+            "id": eid, "scanner": "sog_hot_form", "subject": e["player"],
+            "match": f"{e['team']} {'vs' if e['is_home'] else '@'} {e['opponent']}",
+            "market": f"{e['player']} SOG Hot Form vs {e['opponent']}", "value": e["last5_avg"],
+            "detail": f"{e['team']} · {e.get('pos','')} · is_home={e['is_home']}", "line": None,
+            "game_id": e["game_id"], "game_date": e["date"],
+            "is_home": e["is_home"], "player_id": e.get("player_id"), "date_key": e["date"],
+            "logged_at": datetime.now(timezone.utc).isoformat(),
+            "status": "pending", "result": None, "actual": None,
+        })
+        existing_ids.add(eid)
+        added += 1
+
+    for e in player_real_streak_entries:
+        eid = _entry_id("sog_real_streak", e.get("player_id") or e["player"], e["date"], e["opponent"])
+        if eid in existing_ids or not e.get("game_id"):
+            continue
+        log.append({
+            "id": eid, "scanner": "sog_real_streak", "subject": e["player"],
+            "match": f"{e['team']} {'vs' if e['is_home'] else '@'} {e['opponent']}",
+            "market": f"{e['player']} SOG Real Streak vs {e['opponent']}", "value": e["streak_len"],
+            "detail": f"{e['team']} · {e.get('pos','')} · is_home={e['is_home']}", "line": None,
+            "game_id": e["game_id"], "game_date": e["date"],
+            "is_home": e["is_home"], "player_id": e.get("player_id"), "date_key": e["date"],
             "logged_at": datetime.now(timezone.utc).isoformat(),
             "status": "pending", "result": None, "actual": None,
         })
@@ -231,6 +271,11 @@ def _verify_player_leg(entry):
         if actual is None:
             return None
         return {"actual": actual, "result": "hit" if actual > entry["line"] else "miss"}
+    if entry["scanner"] == "goalie_saves":
+        actual = p.get("saves")
+        if actual is None:
+            return None
+        return {"actual": actual, "result": "hit" if actual > entry["line"] else "miss"}
     return None
 
 
@@ -254,6 +299,35 @@ def _verify_form_streak_entry(entry, real_streak_threshold=3):
     return {"actual": actual, "result": "hit" if actual >= real_streak_threshold else "miss"}
 
 
+# Must match blue_line.py's SOG_REAL_STREAK_THRESHOLD -- duplicated here
+# rather than imported since this file is meant to be runnable standalone
+# against an existing log.json, same pattern as _FINISHED_STATES above.
+SOG_REAL_STREAK_THRESHOLD = 2
+
+
+def _verify_player_form_streak_entry(entry):
+    """Skater SOG Hot Form/Real Streak -- same 'did it hold up in the
+    flagged game' check as _verify_form_streak_entry above, just checked
+    against the player's own boxscore shots line instead of the team's
+    final score."""
+    if not entry.get("player_id"):
+        return None
+    box = _get_boxscore(entry["game_id"])
+    if not box:
+        print(f"    [!] no boxscore for game {entry['game_id']} ({entry['match']})")
+        return None
+    if box.get("gameState") not in _FINISHED_STATES:
+        print(f"    [!] game {entry['game_id']} ({entry['match']}) not finished yet -- gameState={box.get('gameState')!r}")
+        return None
+    p = _find_player_stat(box, entry["is_home"], entry["player_id"])
+    if not p:
+        return None
+    actual = p.get("shots")
+    if actual is None:
+        return None
+    return {"actual": actual, "result": "hit" if actual >= SOG_REAL_STREAK_THRESHOLD else "miss"}
+
+
 def verify_pending_results(log, max_checks=60):
     today = datetime.now(timezone.utc).date().isoformat()
     checked = 0
@@ -272,10 +346,12 @@ def verify_pending_results(log, max_checks=60):
         try:
             if entry["scanner"] in ("team_total", "game_total"):
                 result = _verify_team_leg(entry)
-            elif entry["scanner"] in ("anytime_goal", "to_record_point", "shots_on_goal"):
+            elif entry["scanner"] in ("anytime_goal", "to_record_point", "shots_on_goal", "goalie_saves"):
                 result = _verify_player_leg(entry)
             elif entry["scanner"] in ("hot_form", "real_streak"):
                 result = _verify_form_streak_entry(entry)
+            elif entry["scanner"] in ("sog_hot_form", "sog_real_streak"):
+                result = _verify_player_form_streak_entry(entry)
         except Exception as e:
             print(f"    [!] verification error for entry {entry['id']} ({entry['scanner']}): {e}")
             result = None
@@ -303,8 +379,9 @@ def build_results_dashboard(log):
     SCANNER_LABELS = {
         "team_total": "Team Total", "game_total": "Game Total",
         "anytime_goal": "Anytime Goalscorer", "to_record_point": "To Record a Point",
-        "shots_on_goal": "Shots on Goal",
+        "shots_on_goal": "Shots on Goal", "goalie_saves": "Goalie Saves",
         "hot_form": "Hot Form", "real_streak": "Real Streak",
+        "sog_hot_form": "Player SOG Hot Form", "sog_real_streak": "Player SOG Real Streak",
     }
 
     total_hit = sum(d["hit"] for d in by_scanner.values())
@@ -368,11 +445,13 @@ def build_results_dashboard(log):
     print(f"  Results dashboard: {total} verified, {overall_pct}% overall" if total else "  Results dashboard: no verified picks yet")
 
 
-def run_results_tracker(legs, hot_form_entries=None, real_streak_entries=None):
+def run_results_tracker(legs, hot_form_entries=None, real_streak_entries=None,
+                         player_hot_form_entries=None, player_real_streak_entries=None):
     """Single entry point called from blue_line.py's main()."""
     print("\nRunning results tracker...")
     log = load_log()
-    log = log_todays_signals(legs, hot_form_entries or [], real_streak_entries or [], log)
+    log = log_todays_signals(legs, hot_form_entries or [], real_streak_entries or [], log,
+                              player_hot_form_entries or [], player_real_streak_entries or [])
     log = verify_pending_results(log)
     save_log(log)
     build_results_dashboard(log)
