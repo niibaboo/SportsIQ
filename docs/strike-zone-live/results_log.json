@@ -466,5 +466,21 @@
     "status": "hit",
     "final_home_runs": 3.0,
     "final_away_runs": 1.0
+  },
+  "849811_Game_Total_Under": {
+    "id": "849811_Game_Total_Under",
+    "game_pk": 849811,
+    "home_team": "Los Angeles Dodgers",
+    "away_team": "Milwaukee Brewers",
+    "label": "Game Total Under",
+    "prob": 100,
+    "logged_at": "2026-10-15T01:40:52.572539+00:00",
+    "logged_inning": 6,
+    "logged_inning_state": "Bottom",
+    "logged_half_index": 11,
+    "logged_home_runs": 0.0,
+    "logged_away_runs": 1.0,
+    "pregame_total": 7.48,
+    "status": "pending"
   }
 }
