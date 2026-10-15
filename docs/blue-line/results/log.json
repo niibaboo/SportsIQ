@@ -27575,5 +27575,24 @@
     "status": "pending",
     "result": null,
     "actual": null
+  },
+  {
+    "id": "a70251a9131d37aa",
+    "scanner": "saves_real_streak",
+    "subject": "Sergei Bobrovsky",
+    "match": "TOR vs BUF",
+    "market": "Sergei Bobrovsky Saves Real Streak vs BUF",
+    "value": 3,
+    "detail": "TOR \u00b7 G \u00b7 is_home=True",
+    "line": null,
+    "game_id": 2026020108,
+    "game_date": "2026-10-15",
+    "is_home": true,
+    "player_id": 8475683,
+    "date_key": "2026-10-15",
+    "logged_at": "2026-10-15T22:28:04.160173+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
   }
 ]
