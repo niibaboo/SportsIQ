@@ -1,38 +1,5 @@
 {
-  "generated": "2026-10-13T01:23:22.926871+00:00",
-  "total_live": 1,
-  "games": [
-    {
-      "game_id": "401872994",
-      "home_id": "14",
-      "away_id": "2",
-      "home_team": "Los Angeles Rams",
-      "away_team": "Buffalo Bills",
-      "home_score": 7.0,
-      "away_score": 13.0,
-      "period": 2,
-      "display_clock": "2:20",
-      "status": "2:20 - 2nd",
-      "elapsed_minute": 27.7,
-      "minutes_remaining": 32.3,
-      "next_score": {
-        "home": 35,
-        "away": 65
-      },
-      "game_total_pace": {
-        "prob": 38,
-        "status": "On Pace: Under"
-      },
-      "model_signal": {
-        "label": "Away Next Score",
-        "prob": 65,
-        "qualifies": false
-      },
-      "pregame_projection": {
-        "exp_home": 24.6,
-        "exp_away": 25.7,
-        "exp_total": 50.4
-      }
-    }
-  ]
+  "generated": "2026-10-15T02:17:49.322379+00:00",
+  "total_live": 0,
+  "games": []
 }
