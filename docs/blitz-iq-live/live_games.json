@@ -1,5 +1,38 @@
 {
-  "generated": "2026-10-15T23:09:24.094222+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-10-16T01:16:36.494058+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_id": "401872995",
+      "home_id": "7",
+      "away_id": "26",
+      "home_team": "Denver Broncos",
+      "away_team": "Seattle Seahawks",
+      "home_score": 14.0,
+      "away_score": 3.0,
+      "period": 2,
+      "display_clock": "5:15",
+      "status": "5:15 - 2nd",
+      "elapsed_minute": 24.8,
+      "minutes_remaining": 35.2,
+      "next_score": {
+        "home": 73,
+        "away": 27
+      },
+      "game_total_pace": {
+        "prob": 42,
+        "status": "On Pace: Under"
+      },
+      "model_signal": {
+        "label": "Home Next Score",
+        "prob": 73,
+        "qualifies": true
+      },
+      "pregame_projection": {
+        "exp_home": 21.8,
+        "exp_away": 25.0,
+        "exp_total": 46.8
+      }
+    }
+  ]
 }
