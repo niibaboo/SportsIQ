@@ -807,30 +807,45 @@ def run_competition_scan(competition_id: str, days_ahead: int = 7) -> list[dict]
     """Scan every team with a fixture in a competition over the next N days."""
     matches = get_upcoming_matches(competition_id, days_ahead)
 
-    # team_id -> fixture info for THAT team's match in this window, so
-    # every report built from it can carry match_id/match_date/opponent
-    # for the results tracker to verify against later. If a team somehow
-    # has two matches in the window, the last one found wins — fine for
-    # days_ahead=0 (the automated daily run), where a team plays at most
-    # once that day; a multi-day manual scan just tags the latest.
-    team_fixture: dict[str, dict] = {}
+    # team_id -> list of fixture info dicts, one per match that team plays
+    # in this window. A multi-day window (DAILY_SCAN_DAYS_AHEAD=3 as of
+    # 2026-10-16) can genuinely hand a team two fixtures -- a midweek +
+    # weekend game is normal in a congested Championship schedule -- so
+    # this tracks ALL of them rather than letting the last one found
+    # silently overwrite the first (that was fine back when only
+    # days_ahead=0 ran automatically; it would now misattribute a
+    # player's props to the wrong match on the fixture-grouped page).
+    team_fixtures: dict[str, list[dict]] = {}
     for m in matches:
         home = m.get("home_team", {}) or {}
         away = m.get("away_team", {}) or {}
         home_id, away_id = home.get("id") or m.get("home_team_id"), away.get("id") or m.get("away_team_id")
         match_id, match_date = m.get("id"), m.get("utc_date")
         if home_id:
-            team_fixture[home_id] = {"match_id": match_id, "match_date": match_date,
-                                      "opponent": away.get("name")}
+            team_fixtures.setdefault(home_id, []).append(
+                {"match_id": match_id, "match_date": match_date, "opponent": away.get("name")})
         if away_id:
-            team_fixture[away_id] = {"match_id": match_id, "match_date": match_date,
-                                      "opponent": home.get("name")}
+            team_fixtures.setdefault(away_id, []).append(
+                {"match_id": match_id, "match_date": match_date, "opponent": home.get("name")})
 
-    team_ids = set(team_fixture)
-    print(f"{len(matches)} fixtures found, {len(team_ids)} teams to scan.")
+    print(f"{len(matches)} fixtures found, {len(team_fixtures)} teams to scan.")
     all_reports = []
-    for team_id in team_ids:
-        all_reports.extend(scan_team(team_id, fixture=team_fixture.get(team_id)))
+    for team_id, fixtures in team_fixtures.items():
+        # The scan itself (squad + rolling form) doesn't depend on which
+        # fixture it's for, so it only runs once per team even when that
+        # team has several fixtures in the window -- quota stays the
+        # same as before. Each extra fixture just gets its own tagged
+        # copy of the same reports, so the player shows up correctly
+        # grouped under every match they're actually playing.
+        base_reports = scan_team(team_id, fixture=fixtures[0])
+        all_reports.extend(base_reports)
+        for extra_fixture in fixtures[1:]:
+            for r in base_reports:
+                dup = dict(r)
+                dup["match_id"] = extra_fixture["match_id"]
+                dup["match_date"] = extra_fixture["match_date"]
+                dup["opponent"] = extra_fixture["opponent"]
+                all_reports.append(dup)
     return all_reports
 
 
@@ -851,11 +866,19 @@ DAILY_SCAN_LEAGUES = [
 ]
 
 
+DAILY_SCAN_DAYS_AHEAD = 3
+
+
 def run_daily_fixture_scan(league_names: list[str] = DAILY_SCAN_LEAGUES) -> list[dict]:
-    """Scan every team with a fixture TODAY (days_ahead=0) across the
-    configured leagues. This is the automated-run entry point — see
-    DAILY_SCAN_LEAGUES for the quota reasoning behind keeping it to one
-    league by default."""
+    """Scan every team with a fixture in the next DAILY_SCAN_DAYS_AHEAD
+    days (user request, 2026-10-16: a single day of fixtures left the new
+    fixture-grouped Player Stat Model page showing only one match group
+    most days) across the configured leagues. This is the automated-run
+    entry point — see DAILY_SCAN_LEAGUES for the quota reasoning behind
+    keeping it to two leagues by default; widening the window multiplies
+    calls roughly with however many more teams have a fixture in range,
+    not with the day count itself, but it's still a real quota increase
+    over the old days_ahead=0 behavior."""
     all_reports = []
     for name in league_names:
         try:
@@ -863,8 +886,8 @@ def run_daily_fixture_scan(league_names: list[str] = DAILY_SCAN_LEAGUES) -> list
         except Exception as exc:
             print(f"  Skipping '{name}': {exc}")
             continue
-        print(f"Scanning today's fixtures — {comp.get('name', name)}...")
-        all_reports.extend(run_competition_scan(comp["id"], days_ahead=0))
+        print(f"Scanning the next {DAILY_SCAN_DAYS_AHEAD} days' fixtures — {comp.get('name', name)}...")
+        all_reports.extend(run_competition_scan(comp["id"], days_ahead=DAILY_SCAN_DAYS_AHEAD))
     return all_reports
 
 
