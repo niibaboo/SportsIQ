@@ -101,21 +101,6 @@
       display: grid;
       gap: 16px;
     }
-
-    .fixture-header {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--accent);
-      padding: 10px 2px 2px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: -4px;
-    }
-
-    .fixture-header .fixture-date {
-      color: var(--sub);
-      font-weight: 400;
-      margin-right: 8px;
-    }
     
     .card {
       background: var(--panel);
@@ -335,9 +320,9 @@
   <div class="header">
     <a href="../" class="back-link">← Back to SportsIQ</a>
     <h1>📊 Player Stat Model</h1>
-    <div class="subtitle">Football player props — shots, cards, goals+assists, tackles, fouls, goalkeeper saves</div>
+    <div class="subtitle">Football player props — shots, cards, goals+assists, tackles, fouls</div>
   </div>
-
+  
   <div class="filters">
     <button class="filter-btn active" data-filter="all">All players</button>
     <button class="filter-btn" data-filter="shots">Shots</button>
@@ -345,7 +330,6 @@
     <button class="filter-btn" data-filter="goals_assists">Goals+Assists</button>
     <button class="filter-btn" data-filter="tackles">Tackles</button>
     <button class="filter-btn" data-filter="fouls">Fouls</button>
-    <button class="filter-btn" data-filter="saves">Saves</button>
   </div>
   
   <div id="hotFormPanel"></div>
@@ -366,11 +350,6 @@
       goals_assists: ['goal_or_assist'],
       tackles: ['tackles_over_1.5', 'tackles_over_2.5'],
       fouls: ['fouls_over_1.5', 'fouls_over_2.5'],
-      // Every non-goalkeeper projects at exactly 0% on both saves lines
-      // (their rows have nothing to extract a save from), so this filter
-      // naturally shows only goalkeepers -- same reasoning as the zero-
-      // probability guard in build_legs() server-side.
-      saves: ['saves_over_1.5', 'saves_over_2.5'],
     };
     
     let allPlayers = [];
@@ -410,94 +389,22 @@
     // alongside the per-player reports and builder legs -- rendered
     // here as two standing panels, independent of the filter buttons
     // above (those only affect the player card list below).
-    // Readable kickoff label from an ISO date string -- used on every
-    // fixture-header divider so cards/rows are easy to scan by match day.
-    function formatFixtureDate(iso) {
-      if (!iso) return '';
-      const d = new Date(iso);
-      if (isNaN(d.getTime())) return '';
-      return d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }) +
-        ' ' + d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
-    }
-
-    // Buckets a list of items that each carry match_id/match_date/opponent
-    // into one group per fixture, sorted by kickoff ascending -- so
-    // upcoming matches render nearest-first. teamField differs by caller:
-    // player reports use "team_name", Hot Form/Real Streak entries use
-    // "team" (see build_hot_form_entries/build_real_streak_entries in
-    // player_stat_model.py). match_id/match_date/opponent are only
-    // populated for picks from the daily fixture scan -- watchlist/manual
-    // lookups carry none of them, so those items fall into a trailing
-    // "no fixture" bucket instead of being dropped.
-    function groupByFixture(items, teamField) {
-      const groups = new Map();
-      const noFixture = [];
-      items.forEach(item => {
-        if (!item.match_id) {
-          noFixture.push(item);
-          return;
-        }
-        if (!groups.has(item.match_id)) {
-          groups.set(item.match_id, {
-            match_id: item.match_id,
-            match_date: item.match_date,
-            label: item.opponent ? `${item[teamField] || ''} vs ${item.opponent}` : (item[teamField] || ''),
-            items: [],
-          });
-        }
-        groups.get(item.match_id).items.push(item);
-      });
-      const fixtures = Array.from(groups.values()).sort((a, b) => {
-        if (!a.match_date) return 1;
-        if (!b.match_date) return -1;
-        return new Date(a.match_date) - new Date(b.match_date);
-      });
-      return { fixtures, noFixture };
-    }
-
     function renderStreakPanels(hotForm, realStreak) {
       const hf = hotForm || [];
       const rs = realStreak || [];
       const hfPanel = document.getElementById('hotFormPanel');
       const rsPanel = document.getElementById('realStreakPanel');
 
-      const renderHfRow = e => `
-        <div class="streakRow">
-          <div class="srMain"><b>${e.player}</b><br><span class="srSub">${e.team} · ${e.league} · ${e.label}</span></div>
-          <div class="streakValue"><span class="big">${e.avg} avg</span><br><span class="srSub">${e.n_games}gm · ${e.history}</span></div>
-        </div>
-      `;
-      const renderRsRow = e => `
-        <div class="streakRow">
-          <div class="srMain"><b>${e.player}</b><br><span class="srSub">${e.team} · ${e.league} · ${e.label}</span></div>
-          <div class="streakValue"><span class="big">${e.streak}+ straight</span><br><span class="srSub">${e.history}</span></div>
-        </div>
-      `;
-
-      // Each panel's entries are already sorted (avg desc / streak desc)
-      // coming in from the backend; grouping by fixture preserves that
-      // relative order within each group (Map insertion order), so only
-      // the fixture groups themselves need their own date sort.
-      function renderGrouped(entries, rowFn) {
-        const { fixtures, noFixture } = groupByFixture(entries, 'team');
-        let out = fixtures.map(g => `
-          <div class="fixture-header">${g.match_date ? `<span class="fixture-date">${formatFixtureDate(g.match_date)}</span>` : ''}${g.label}</div>
-          ${g.items.map(rowFn).join('')}
-        `).join('');
-        if (noFixture.length) {
-          out += `
-            <div class="fixture-header">Other (no upcoming fixture)</div>
-            ${noFixture.map(rowFn).join('')}
-          `;
-        }
-        return out;
-      }
-
       hfPanel.innerHTML = !hf.length ? '' : `
         <div class="streakPanel">
           <div class="panelTitle">📊 Hot Form</div>
           <div class="panelNote">Average over the player's recent games clears the line — can mask a bad most recent game. Not a streak.</div>
-          ${renderGrouped(hf, renderHfRow)}
+          ${hf.map(e => `
+            <div class="streakRow">
+              <div class="srMain"><b>${e.player}</b><br><span class="srSub">${e.team} · ${e.league} · ${e.label}</span></div>
+              <div class="streakValue"><span class="big">${e.avg} avg</span><br><span class="srSub">${e.n_games}gm · ${e.history}</span></div>
+            </div>
+          `).join('')}
         </div>
       `;
 
@@ -505,7 +412,12 @@
         <div class="streakPanel">
           <div class="panelTitle">🔥 Real Streak</div>
           <div class="panelNote">Genuinely CONSECUTIVE recent games clearing the line, walking backward from the most recent game.</div>
-          ${renderGrouped(rs, renderRsRow)}
+          ${rs.map(e => `
+            <div class="streakRow">
+              <div class="srMain"><b>${e.player}</b><br><span class="srSub">${e.team} · ${e.league} · ${e.label}</span></div>
+              <div class="streakValue"><span class="big">${e.streak}+ straight</span><br><span class="srSub">${e.history}</span></div>
+            </div>
+          `).join('')}
         </div>
       `;
     }
@@ -541,28 +453,20 @@
     
     function renderPlayers() {
       const filtered = allPlayers.filter(p => shouldShowPlayer(p, currentFilter));
-
+      
       if (filtered.length === 0) {
         document.getElementById('content').innerHTML = '<div class="loading">No players found for this filter.</div>';
         return;
       }
-
+      
       // Sort by highest probability
-      const byMaxProb = (a, b) => {
+      filtered.sort((a, b) => {
         const aMax = Math.max(...Object.values(a.props || {}));
         const bMax = Math.max(...Object.values(b.props || {}));
         return bMax - aMax;
-      };
-
-      // Group by fixture (match_id) so cards for the same upcoming match
-      // sit together, nearest kickoff first. Players with no match_id --
-      // watchlist/manual lookups, which don't carry fixture data -- fall
-      // into a trailing "no fixture" bucket, sorted the old way.
-      const { fixtures, noFixture } = groupByFixture(filtered, 'team_name');
-      fixtures.forEach(g => g.items.sort(byMaxProb));
-      noFixture.sort(byMaxProb);
-
-      const renderCard = player => {
+      });
+      
+      const html = filtered.map(player => {
         const gameLog = player.game_log || {};
         const hitRates = player.hit_rates || {};
         
@@ -607,30 +511,14 @@
                     <div class="history-label" style="margin-top:10px">Shots on Target — last ${gameLog.shots_on_target.length} games</div>
                     <div class="dots">${gameLog.shots_on_target.map((v, i) => `<span class="dot ${v > 0 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>
                   ` : ''}
-                  ${gameLog.saves && gameLog.saves.some(v => v > 0) ? `
-                    <div class="history-label" style="margin-top:10px">Saves — last ${gameLog.saves.length} games</div>
-                    <div class="dots">${gameLog.saves.map((v, i) => `<span class="dot ${v > 1 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>
-                  ` : ''}
                   <div class="raw-data">${player.rolling_form_summary || '—'}</div>
                 </div>
               ` : ''}
             </div>
           </div>
         `;
-      };
-
-      let html = fixtures.map(g => `
-        <div class="fixture-header">${g.match_date ? `<span class="fixture-date">${formatFixtureDate(g.match_date)}</span>` : ''}${g.label}</div>
-        ${g.items.map(renderCard).join('')}
-      `).join('');
-
-      if (noFixture.length) {
-        html += `
-          <div class="fixture-header">Other players (no upcoming fixture)</div>
-          ${noFixture.map(renderCard).join('')}
-        `;
-      }
-
+      }).join('');
+      
       document.getElementById('content').innerHTML = html;
     }
     
