@@ -53,6 +53,26 @@ def _tackles(row): return row.get("defending", {}).get("tackles", 0)
 def _fouls(row): return row.get("general", {}).get("fouls", 0)
 def _goal_or_assist(row): return _goals(row) + _assists(row)
 
+
+def _saves(row):
+    """UNCONFIRMED, same as player_stat_model.py's _extract_match_saves
+    -- duplicated here rather than imported (see this module's own
+    docstring on why), so kept in sync by hand: same fallback order
+    (goalkeeping.saves, then general.saves / defending.saves), no
+    diagnostic logging here since this only runs for picks that were
+    already logged (i.e. a goalkeeper DID project a nonzero saves
+    probability at log time, so a 0 back here on verification is a
+    real mismatch worth investigating, not routine outfielder noise)."""
+    gk = row.get("goalkeeping")
+    if isinstance(gk, dict) and gk.get("saves") is not None:
+        return gk["saves"]
+    for section in ("general", "defending"):
+        val = row.get(section, {}).get("saves")
+        if val is not None:
+            return val
+    return 0
+
+
 PROP_VERIFY_MAP = {
     "shots_over_1.5": (_shots, 1.5),
     "shots_over_2.5": (_shots, 2.5),
@@ -66,6 +86,8 @@ PROP_VERIFY_MAP = {
     "tackles_over_2.5": (_tackles, 2.5),
     "fouls_over_1.5": (_fouls, 1.5),
     "fouls_over_2.5": (_fouls, 2.5),
+    "saves_over_1.5": (_saves, 1.5),
+    "saves_over_2.5": (_saves, 2.5),
 }
 
 # stat_key (as used by STREAK_CONFIG / build_hot_form_entries /
@@ -82,6 +104,7 @@ STAT_KEY_EXTRACTOR = {
     "tackles": _tackles,
     "fouls": _fouls,
     "goal_or_assist": _goal_or_assist,
+    "saves": _saves,
 }
 
 SCANNER_LABELS = {
