@@ -320,9 +320,9 @@
   <div class="header">
     <a href="../" class="back-link">← Back to SportsIQ</a>
     <h1>📊 Player Stat Model</h1>
-    <div class="subtitle">Football player props — shots, cards, goals+assists, tackles, fouls, goalkeeper saves</div>
+    <div class="subtitle">Football player props — shots, cards, goals+assists, tackles, fouls</div>
   </div>
-
+  
   <div class="filters">
     <button class="filter-btn active" data-filter="all">All players</button>
     <button class="filter-btn" data-filter="shots">Shots</button>
@@ -330,7 +330,6 @@
     <button class="filter-btn" data-filter="goals_assists">Goals+Assists</button>
     <button class="filter-btn" data-filter="tackles">Tackles</button>
     <button class="filter-btn" data-filter="fouls">Fouls</button>
-    <button class="filter-btn" data-filter="saves">Saves</button>
   </div>
   
   <div id="hotFormPanel"></div>
@@ -351,11 +350,6 @@
       goals_assists: ['goal_or_assist'],
       tackles: ['tackles_over_1.5', 'tackles_over_2.5'],
       fouls: ['fouls_over_1.5', 'fouls_over_2.5'],
-      // Every non-goalkeeper projects at exactly 0% on both saves lines
-      // (their rows have nothing to extract a save from), so this filter
-      // naturally shows only goalkeepers -- same reasoning as the zero-
-      // probability guard in build_legs() server-side.
-      saves: ['saves_over_1.5', 'saves_over_2.5'],
     };
     
     let allPlayers = [];
@@ -516,10 +510,6 @@
                   ${gameLog.shots_on_target ? `
                     <div class="history-label" style="margin-top:10px">Shots on Target — last ${gameLog.shots_on_target.length} games</div>
                     <div class="dots">${gameLog.shots_on_target.map((v, i) => `<span class="dot ${v > 0 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>
-                  ` : ''}
-                  ${gameLog.saves && gameLog.saves.some(v => v > 0) ? `
-                    <div class="history-label" style="margin-top:10px">Saves — last ${gameLog.saves.length} games</div>
-                    <div class="dots">${gameLog.saves.map((v, i) => `<span class="dot ${v > 1 ? 'over' : 'under'}" title="Match ${i+1}">${v}</span>`).join('')}</div>
                   ` : ''}
                   <div class="raw-data">${player.rolling_form_summary || '—'}</div>
                 </div>
