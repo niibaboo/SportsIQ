@@ -1,9 +1,10 @@
 """
 Player Stat Model
 ------------------
-Player prop predictor covering shots / shots on target, cards, and
-goals + assists. Sibling project to Corner Flag (football-data.org),
-Blue Line (NHL) and Match IQ (TheStatsAPI match-level model).
+Player prop predictor covering shots / shots on target, cards, goals
++ assists, tackles, fouls, and goalkeeper saves. Sibling project to
+Corner Flag (football-data.org), Blue Line (NHL) and Match IQ
+(TheStatsAPI match-level model).
 
 Pulls per-player data from TheStatsAPI (api.thestatsapi.com):
   - season profile stats (appearances, goals, assists, minutes)
@@ -29,8 +30,15 @@ On top of the Poisson-priced props, also surfaces Hot Form (a player's
 rolling-window AVERAGE for a stat clears a line -- can mask a bad most
 recent game) and Real Streak (a genuinely CONSECUTIVE run of games
 clearing a line, walking backward from the most recent game) across
-shots, shots on target, tackles, fouls, and combined goal involvement
--- see STREAK_CONFIG.
+shots, shots on target, tackles, fouls, combined goal involvement, and
+goalkeeper saves -- see STREAK_CONFIG.
+
+Saves is the newest stat here and, unlike every other one, has no
+confirmed field shape behind it -- see _extract_match_saves()'s own
+docstring. It's wired up defensively (tries the likely shapes, logs
+the real keys once if none match, never fabricates a season baseline
+for it) the same way Blue Line's NHL goalie saves field had to be,
+after that one turned out to need a live run to get right.
 
 Usage:
     python3 player_stat_model.py
@@ -390,6 +398,7 @@ STAT_FIELDS = {
     # season per90 as unavailable (None) rather than fabricating a 0,
     # and blend() falls back to rolling-only for it — see both for why.
     "fouls": lambda row: row.get("general", {}).get("fouls", 0),
+    "saves": lambda row: _extract_match_saves(row),
 }
 
 # Stats with no season-endpoint source at all (see "fouls" above) — a
@@ -397,7 +406,54 @@ STAT_FIELDS = {
 # ~40% (season's blend weight) versus what recent matches actually show,
 # every time, not just for thin samples. Tracked explicitly so
 # season_baseline/blend can skip blending for these instead.
-SEASON_UNAVAILABLE_STATS = {"fouls"}
+#
+# "saves" is in here too, for the same reason as "fouls" but weaker:
+# none of this file's other confirmed response shapes (shooting/
+# general/passing/defending, all corrected against real API responses
+# at least once -- see the CORRECTED comments above) include a
+# goalkeeping section at all, and no tutorial/spec excerpt anywhere in
+# this file confirms one exists on the season-stats endpoint either.
+# Rather than guess a season-stats field path with zero confirmation
+# behind it, this stays rolling-form-only until a real run confirms
+# the shape (see _extract_match_saves' own diagnostic below for the
+# match-level side of the same problem).
+SEASON_UNAVAILABLE_STATS = {"fouls", "saves"}
+
+_SAVES_SHAPE_LOGGED = False
+
+
+def _extract_match_saves(row: dict) -> float:
+    """Goalkeeper saves from a /matches/{id}/player-stats row.
+
+    UNCONFIRMED -- unlike every other STAT_FIELDS extractor above (each
+    corrected at least once against a real API response), there is no
+    confirmed goalkeeping section anywhere in this file's research.
+    Tries the most likely shapes in order (a dedicated "goalkeeping"
+    section first, since that would mirror shooting/passing/defending/
+    general; then "saves" tucked into "general" or "defending" instead,
+    since several OTHER stats on this endpoint turned out to live in an
+    unexpected section — cards came from "general" not "discipline",
+    for instance). Logs the row's actual keys ONCE per run if nothing
+    matches, so a real run's logs show exactly what shape to correct
+    this against — the same hedge pattern already proven necessary for
+    Blue Line's NHL goalie saves field (assumed a flat "saves" field,
+    a live run showed it wasn't there, had to derive it from
+    shotsAgainst-goalsAgainst instead once the real shape was known)."""
+    global _SAVES_SHAPE_LOGGED
+    gk = row.get("goalkeeping")
+    if isinstance(gk, dict) and gk.get("saves") is not None:
+        return gk["saves"]
+    for section in ("general", "defending"):
+        val = row.get(section, {}).get("saves")
+        if val is not None:
+            return val
+    if not _SAVES_SHAPE_LOGGED:
+        print(f"  [!] no 'saves' field found on a match-stats row (checked "
+              f"goalkeeping.saves, general.saves, defending.saves) -- top-level "
+              f"keys seen: {sorted(row.keys())}"
+              + (f", goalkeeping sub-keys: {sorted(gk.keys())}" if isinstance(gk, dict) else ""))
+        _SAVES_SHAPE_LOGGED = True
+    return 0
 
 
 def per90(total: float, minutes: float) -> float:
@@ -573,6 +629,8 @@ PROP_LINE_MAP = {
     "tackles_over_2.5": ("tackles", 2.5),
     "fouls_over_1.5": ("fouls", 1.5),
     "fouls_over_2.5": ("fouls", 2.5),
+    "saves_over_1.5": ("saves", 1.5),
+    "saves_over_2.5": ("saves", 2.5),
 }
 
 
@@ -656,6 +714,8 @@ def build_report(player: dict, stats: dict, team_id: str, expected_minutes: floa
             "tackles_over_2.5": round(prob_over(projected["tackles"], 2.5), 3),
             "fouls_over_1.5": round(prob_over(projected["fouls"], 1.5), 3),
             "fouls_over_2.5": round(prob_over(projected["fouls"], 2.5), 3),
+            "saves_over_1.5": round(prob_over(projected["saves"], 1.5), 3),
+            "saves_over_2.5": round(prob_over(projected["saves"], 2.5), 3),
         },
     }
 
@@ -894,6 +954,8 @@ PROP_CATEGORY_MAP = {
     "tackles_over_2.5": ("Tackles", "Over 2.5 Tackles"),
     "fouls_over_1.5": ("Fouls", "Over 1.5 Fouls"),
     "fouls_over_2.5": ("Fouls", "Over 2.5 Fouls"),
+    "saves_over_1.5": ("Saves", "Over 1.5 Saves"),
+    "saves_over_2.5": ("Saves", "Over 2.5 Saves"),
 }
 
 # category -> which game_log key backs its "last games" history string.
@@ -902,6 +964,7 @@ PROP_CATEGORY_MAP = {
 CATEGORY_STAT_KEY = {
     "Shots": "shots", "Shots on Target": "shots_on_target", "Cards": "cards",
     "Goals": "goals", "Assists": "assists", "Tackles": "tackles", "Fouls": "fouls",
+    "Saves": "saves",
 }
 
 
@@ -936,6 +999,8 @@ STREAK_CONFIG = {
               "min_games": 3, "min_streak_len": 3},
     "goal_or_assist": {"hot_form_min": 0.5, "real_streak_threshold": 1, "label": "Goal Involvement",
                         "min_games": 3, "min_streak_len": 3},
+    "saves": {"hot_form_min": 3.0, "real_streak_threshold": 2, "label": "Saves",
+              "min_games": 3, "min_streak_len": 3},
 }
 
 
@@ -1046,7 +1111,18 @@ def build_legs(reports: list[dict]) -> list[dict]:
         has_rolling = r.get("rolling_matches_used", 0) > 0
         for prop_key, (category, label) in PROP_CATEGORY_MAP.items():
             prob = r["props"].get(prop_key)
-            if prob is None:
+            # prob is None when the market just doesn't exist for this
+            # report; prob == 0 is different -- a genuine, confident
+            # "never happens" read. The distinction matters most for
+            # "Saves": every non-goalkeeper projects at exactly 0% on
+            # both saves lines (their rows simply have no saves to
+            # extract), so without this a 20-outfield-player squad scan
+            # would flood the leg list -- and the results tracker's log
+            # -- with ~40 guaranteed-miss "Saves" picks, which is both
+            # dead weight here and actively misleading on the results
+            # dashboard's Saves category hit-rate (dragging it toward
+            # 0% from noise, not from any real goalkeeper pick missing).
+            if prob is None or prob <= 0:
                 continue
             history = None
             if has_rolling:
@@ -1124,7 +1200,7 @@ def format_game_log(game_log: dict) -> str:
     labels = [
         ("shots", "shots"), ("shots_on_target", "SoT"), ("goals", "goals"),
         ("assists", "assists"), ("cards", "cards"), ("tackles", "tackles"),
-        ("fouls", "fouls"),
+        ("fouls", "fouls"), ("saves", "saves"),
     ]
     parts = []
     for stat, label in labels:
