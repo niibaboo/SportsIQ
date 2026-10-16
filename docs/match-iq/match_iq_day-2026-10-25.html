@@ -1,0 +1,660 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Match IQ</title></head>
+<body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
+<h2 style="text-align:center">⚽ MATCH IQ — Full Stats</h2>
+<p style="text-align:center;color:#888;font-size:11px">Powered by TheStatsAPI · 16 Oct 11:08</p>
+<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Safe Corners</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a>·<a href="scanners/away_to_score/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Away to Score</a>·<a href="scanners/home_over15/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Home O1.5</a>·<a href="scanners/goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Hot Form/Streak</a></p>
+<p style="text-align:center;margin:4px 0 0;font-size:12px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none">📊 Results Tracker</a></p>
+
+<div style="display:flex;align-items:center;justify-content:center;gap:20px;margin:10px 0 4px">
+  <a href="match_iq_day-2026-10-24.html" style="color:#7ec8ff;text-decoration:none;font-size:20px">◀</a>
+  <span style="font-size:15px;font-weight:bold">Sun 25 Oct</span>
+  <a href="match_iq_day-2026-10-26.html" style="color:#7ec8ff;text-decoration:none;font-size:20px">▶</a>
+</div>
+<p style="text-align:center;margin-bottom:16px"><a href="match_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
+
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:10px">🎯 Safest Bet Builder</div>
+  <div id="categoryToggles" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;font-size:12px"></div>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+    <label style="font-size:12px;color:#aaa">Target odds:</label>
+    <input id="targetOdds" type="number" step="0.1" min="1.1" value="5.0"
+      style="width:70px;background:#0f1318;border:1px solid #333;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
+    <label style="font-size:12px;color:#aaa">Max legs:</label>
+    <input id="maxLegs" type="number" step="1" min="2" value="8"
+      style="width:55px;background:#0f1318;border:1px solid #333;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
+    <button onclick="buildSafest()"
+      style="background:#3a7d7a;border:none;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
+      Build
+    </button>
+    <button onclick="buildSafest()"
+      style="background:#2a3038;border:1px solid #444;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
+      🔀 Shuffle
+    </button>
+  </div>
+  <div id="builderResult" style="font-size:12px;color:#888">
+    Untick any market type you don't want considered (Corners starts unticked —
+    lower counts mean more relative variance than shots/SoT), set a target odds
+    and leg cap, then tap Build. It rotates through whichever categories are
+    ticked, groups near-tied legs and shuffles within each group so it draws
+    from more of the day's matches rather than always the exact same few, and
+    caps at 2 legs per match to avoid stacking correlated legs from one game.
+    Tap Shuffle for a fresh pick among equally-safe options without changing
+    your settings.
+  </div>
+</div>
+<script>
+const LEGS = [{"match": "AC Horsens v S\u00f8nderjyske Fodbold", "market": "Over 2.5 Goals", "prob": 89, "category": "Goals", "detail": "5.12 exp goals (7v7gm)", "history": "H 2/2/2/5/0/2/3 \u00b7 A 2/0/1/2/1/4/0"}, {"match": "AC Horsens v S\u00f8nderjyske Fodbold", "market": "BTTS", "prob": 80, "category": "BTTS", "detail": "5.12 exp goals (7v7gm)", "history": "H 2/2/2/5/0/2/3 \u00b7 A 2/0/1/2/1/4/0"}, {"match": "AC Horsens v S\u00f8nderjyske Fodbold", "market": "S\u00f8nderjyske Fodbold to Score (Over 0.5)", "prob": 83, "category": "Team to Score", "detail": "1.78 exp goals vs 7v7gm sample", "history": "2/0/1/2/1/4/0"}, {"match": "AC Horsens v S\u00f8nderjyske Fodbold", "market": "AC Horsens Over 1.5 Goals", "prob": 85, "category": "Team Goals", "detail": "3.35 exp goals (7v7gm)", "history": "2/2/2/5/0/2/3"}, {"match": "AC Horsens v S\u00f8nderjyske Fodbold", "market": "FH Corners Over 3.5", "prob": 70, "category": "FH Corners", "detail": "4.79 exp FH corners (7v7gm)", "history": "H 1/2/1/0/3/2/3 \u00b7 A 0/3/0/1/2/2/0"}, {"match": "AC Horsens v S\u00f8nderjyske Fodbold", "market": "AC Horsens Over 9.5 Shots", "prob": 88, "category": "Shots", "detail": "avg 13.7 (7gm)", "history": "13/10/9/16/11/20/17"}, {"match": "AC Horsens v S\u00f8nderjyske Fodbold", "market": "AC Horsens Over 4.0 Shots on Target", "prob": 67, "category": "Shots on Target", "detail": "avg 5.7 (7gm)", "history": "6/5/5/9/3/5/7"}, {"match": "AC Horsens v S\u00f8nderjyske Fodbold", "market": "AC Horsens Over 2.0 Corners", "prob": 55, "category": "Corners", "detail": "avg 2.9 (7gm)", "history": "3/2/3/1/4/3/4"}, {"match": "AC Horsens v S\u00f8nderjyske Fodbold", "market": "AC Horsens Over 0.5 Cards", "prob": 93, "category": "Cards", "detail": "avg 2.6 (7gm)", "history": "0/4/3/3/3/2/3"}, {"match": "AC Horsens v S\u00f8nderjyske Fodbold", "market": "S\u00f8nderjyske Fodbold Over 8.5 Shots", "prob": 84, "category": "Shots", "detail": "avg 12.0 (7gm)", "history": "10/10/11/11/18/10/14"}, {"match": "AC Horsens v S\u00f8nderjyske Fodbold", "market": "S\u00f8nderjyske Fodbold Over 3.0 Shots on Target", "prob": 62, "category": "Shots on Target", "detail": "avg 4.3 (7gm)", "history": "5/5/2/3/3/7/5"}, {"match": "AC Horsens v S\u00f8nderjyske Fodbold", "market": "S\u00f8nderjyske Fodbold Over 2.5 Corners", "prob": 78, "category": "Corners", "detail": "avg 4.1 (7gm)", "history": "1/6/3/1/6/5/7"}, {"match": "AC Horsens v S\u00f8nderjyske Fodbold", "market": "S\u00f8nderjyske Fodbold Over 0.5 Cards", "prob": 91, "category": "Cards", "detail": "avg 2.4 (7gm)", "history": "4/2/2/4/1/3/1"}, {"match": "Sparta Rotterdam v AFC Ajax", "market": "Over 2.5 Goals", "prob": 87, "category": "Goals", "detail": "4.92 exp goals (7v7gm)", "history": "H 3/3/1/2/1/0/3 \u00b7 A 2/4/1/5/5/2/1"}, {"match": "Sparta Rotterdam v AFC Ajax", "market": "BTTS", "prob": 76, "category": "BTTS", "detail": "4.92 exp goals (7v7gm)", "history": "H 3/3/1/2/1/0/3 \u00b7 A 2/4/1/5/5/2/1"}, {"match": "Sparta Rotterdam v AFC Ajax", "market": "AFC Ajax to Score (Over 0.5)", "prob": 97, "category": "Team to Score", "detail": "3.37 exp goals vs 7v7gm sample", "history": "2/4/1/5/5/2/1"}, {"match": "Sparta Rotterdam v AFC Ajax", "market": "Sparta Rotterdam Over 1.5 Goals", "prob": 46, "category": "Team Goals", "detail": "1.55 exp goals (7v7gm)", "history": "3/3/1/2/1/0/3"}, {"match": "Sparta Rotterdam v AFC Ajax", "market": "FH Corners Over 3.5", "prob": 88, "category": "FH Corners", "detail": "6.36 exp FH corners (7v7gm)", "history": "H 4/4/2/7/0/2/3 \u00b7 A 3/3/0/6/6/2/3"}, {"match": "Sparta Rotterdam v AFC Ajax", "market": "Sparta Rotterdam Over 10.0 Shots", "prob": 84, "category": "Shots", "detail": "avg 14.3 (7gm)", "history": "16/14/10/21/10/11/18"}, {"match": "Sparta Rotterdam v AFC Ajax", "market": "Sparta Rotterdam Over 3.5 Shots on Target", "prob": 79, "category": "Shots on Target", "detail": "avg 5.4 (7gm)", "history": "9/5/2/8/6/0/8"}, {"match": "Sparta Rotterdam v AFC Ajax", "market": "Sparta Rotterdam Over 4.0 Corners", "prob": 73, "category": "Corners", "detail": "avg 6.1 (7gm)", "history": "5/5/4/15/5/3/6"}, {"match": "Sparta Rotterdam v AFC Ajax", "market": "Sparta Rotterdam Over 0.5 Cards", "prob": 67, "category": "Cards", "detail": "avg 1.1 (7gm)", "history": "1/0/1/0/1/2/3"}, {"match": "Sparta Rotterdam v AFC Ajax", "market": "AFC Ajax Over 16.5 Shots", "prob": 93, "category": "Shots", "detail": "avg 23.6 (7gm)", "history": "23/12/19/27/33/33/18"}, {"match": "Sparta Rotterdam v AFC Ajax", "market": "AFC Ajax Over 5.5 Shots on Target", "prob": 80, "category": "Shots on Target", "detail": "avg 7.9 (7gm)", "history": "4/9/6/11/12/8/5"}, {"match": "Sparta Rotterdam v AFC Ajax", "market": "AFC Ajax Over 5.0 Corners", "prob": 71, "category": "Corners", "detail": "avg 7.1 (7gm)", "history": "7/4/1/11/14/9/4"}, {"match": "Sparta Rotterdam v AFC Ajax", "market": "AFC Ajax Over 0.5 Cards", "prob": 86, "category": "Cards", "detail": "avg 2.0 (7gm)", "history": "3/0/3/5/0/1/2"}, {"match": "Inter v Fiorentina", "market": "Over 2.5 Goals", "prob": 85, "category": "Goals", "detail": "4.71 exp goals (6v6gm)", "history": "H 4/1/3/5/2/3 \u00b7 A 0/0/1/4/1/1"}, {"match": "Inter v Fiorentina", "market": "BTTS", "prob": 68, "category": "BTTS", "detail": "4.71 exp goals (6v6gm)", "history": "H 4/1/3/5/2/3 \u00b7 A 0/0/1/4/1/1"}, {"match": "Inter v Fiorentina", "market": "Fiorentina to Score (Over 0.5)", "prob": 70, "category": "Team to Score", "detail": "1.2 exp goals vs 6v6gm sample", "history": "0/0/1/4/1/1"}, {"match": "Inter v Fiorentina", "market": "Inter Over 1.5 Goals", "prob": 87, "category": "Team Goals", "detail": "3.51 exp goals (6v6gm)", "history": "4/1/3/5/2/3"}, {"match": "Inter v Fiorentina", "market": "FH Corners Over 3.5", "prob": 44, "category": "FH Corners", "detail": "3.41 exp FH corners (6v6gm)", "history": "H 1/3/4/3/1/1 \u00b7 A 1/4/1/1/1/2"}, {"match": "Inter v Fiorentina", "market": "Inter Over 16.0 Shots", "prob": 90, "category": "Shots", "detail": "avg 22.5 (6gm)", "history": "13/31/29/27/16/19"}, {"match": "Inter v Fiorentina", "market": "Inter Over 5.0 Shots on Target", "prob": 72, "category": "Shots on Target", "detail": "avg 7.2 (6gm)", "history": "5/7/8/12/5/6"}, {"match": "Inter v Fiorentina", "market": "Inter Over 4.0 Corners", "prob": 67, "category": "Corners", "detail": "avg 5.7 (6gm)", "history": "3/6/10/10/2/3"}, {"match": "Inter v Fiorentina", "market": "Inter Over 0.5 Cards", "prob": 73, "category": "Cards", "detail": "avg 1.3 (6gm)", "history": "2/1/1/1/3/0"}, {"match": "Inter v Fiorentina", "market": "Fiorentina Over 11.5 Shots", "prob": 88, "category": "Shots", "detail": "avg 16.2 (6gm)", "history": "9/25/14/19/17/13"}, {"match": "Inter v Fiorentina", "market": "Fiorentina Over 3.5 Shots on Target", "prob": 76, "category": "Shots on Target", "detail": "avg 5.2 (6gm)", "history": "4/4/6/10/4/3"}, {"match": "Inter v Fiorentina", "market": "Fiorentina Over 3.0 Corners", "prob": 62, "category": "Corners", "detail": "avg 4.3 (6gm)", "history": "3/8/3/4/4/4"}, {"match": "Inter v Fiorentina", "market": "Fiorentina Over 0.5 Cards", "prob": 86, "category": "Cards", "detail": "avg 2.0 (6gm)", "history": "2/3/0/1/3/3"}, {"match": "TSG Hoffenheim v Bayer 04 Leverkusen", "market": "Over 2.5 Goals", "prob": 85, "category": "Goals", "detail": "4.68 exp goals (5v5gm)", "history": "H 2/2/2/1/2 \u00b7 A 2/4/2/2/4"}, {"match": "TSG Hoffenheim v Bayer 04 Leverkusen", "market": "BTTS", "prob": 77, "category": "BTTS", "detail": "4.68 exp goals (5v5gm)", "history": "H 2/2/2/1/2 \u00b7 A 2/4/2/2/4"}, {"match": "TSG Hoffenheim v Bayer 04 Leverkusen", "market": "Bayer 04 Leverkusen to Score (Over 0.5)", "prob": 95, "category": "Team to Score", "detail": "3.02 exp goals vs 5v5gm sample", "history": "2/4/2/2/4"}, {"match": "TSG Hoffenheim v Bayer 04 Leverkusen", "market": "TSG Hoffenheim Over 1.5 Goals", "prob": 49, "category": "Team Goals", "detail": "1.66 exp goals (5v5gm)", "history": "2/2/2/1/2"}, {"match": "TSG Hoffenheim v Bayer 04 Leverkusen", "market": "FH Corners Over 3.5", "prob": 57, "category": "FH Corners", "detail": "4.0 exp FH corners (5v5gm)", "history": "H 1/3/1/0/3 \u00b7 A 1/5/5/1/0"}, {"match": "TSG Hoffenheim v Bayer 04 Leverkusen", "market": "TSG Hoffenheim Over 13.0 Shots", "prob": 89, "category": "Shots", "detail": "avg 18.6 (5gm)", "history": "15/18/20/23/17"}, {"match": "TSG Hoffenheim v Bayer 04 Leverkusen", "market": "TSG Hoffenheim Over 3.0 Shots on Target", "prob": 71, "category": "Shots on Target", "detail": "avg 4.8 (5gm)", "history": "4/6/8/2/4"}, {"match": "TSG Hoffenheim v Bayer 04 Leverkusen", "market": "TSG Hoffenheim Over 4.5 Corners", "prob": 81, "category": "Corners", "detail": "avg 6.8 (5gm)", "history": "7/10/5/5/7"}, {"match": "TSG Hoffenheim v Bayer 04 Leverkusen", "market": "TSG Hoffenheim Over 0.5 Cards", "prob": 91, "category": "Cards", "detail": "avg 2.4 (5gm)", "history": "2/4/1/1/4"}, {"match": "TSG Hoffenheim v Bayer 04 Leverkusen", "market": "Bayer 04 Leverkusen Over 15.0 Shots", "prob": 90, "category": "Shots", "detail": "avg 21.2 (5gm)", "history": "21/21/30/18/16"}, {"match": "TSG Hoffenheim v Bayer 04 Leverkusen", "market": "Bayer 04 Leverkusen Over 4.5 Shots on Target", "prob": 76, "category": "Shots on Target", "detail": "avg 6.4 (5gm)", "history": "4/10/5/6/7"}, {"match": "TSG Hoffenheim v Bayer 04 Leverkusen", "market": "Bayer 04 Leverkusen Over 5.5 Corners", "prob": 81, "category": "Corners", "detail": "avg 8.0 (5gm)", "history": "3/11/14/9/3"}, {"match": "TSG Hoffenheim v Bayer 04 Leverkusen", "market": "Bayer 04 Leverkusen Over 0.5 Cards", "prob": 80, "category": "Cards", "detail": "avg 1.6 (5gm)", "history": "2/2/1/2/1"}, {"match": "PSV Eindhoven v Feyenoord", "market": "Over 2.5 Goals", "prob": 80, "category": "Goals", "detail": "4.3 exp goals (7v7gm)", "history": "H 2/5/6/3/4/2/2 \u00b7 A 2/5/2/3/7/5/2"}, {"match": "PSV Eindhoven v Feyenoord", "market": "BTTS", "prob": 78, "category": "BTTS", "detail": "4.3 exp goals (7v7gm)", "history": "H 2/5/6/3/4/2/2 \u00b7 A 2/5/2/3/7/5/2"}, {"match": "PSV Eindhoven v Feyenoord", "market": "Feyenoord to Score (Over 0.5)", "prob": 90, "category": "Team to Score", "detail": "2.3 exp goals vs 7v7gm sample", "history": "2/5/2/3/7/5/2"}, {"match": "PSV Eindhoven v Feyenoord", "market": "PSV Eindhoven Over 1.5 Goals", "prob": 59, "category": "Team Goals", "detail": "2.0 exp goals (7v7gm)", "history": "2/5/6/3/4/2/2"}, {"match": "PSV Eindhoven v Feyenoord", "market": "FH Corners Over 3.5", "prob": 49, "category": "FH Corners", "detail": "3.64 exp FH corners (7v7gm)", "history": "H 3/2/7/1/5/3/2 \u00b7 A 3/2/5/1/6/1/4"}, {"match": "PSV Eindhoven v Feyenoord", "market": "PSV Eindhoven Over 14.5 Shots", "prob": 91, "category": "Shots", "detail": "avg 20.3 (7gm)", "history": "20/24/30/13/28/11/16"}, {"match": "PSV Eindhoven v Feyenoord", "market": "PSV Eindhoven Over 5.5 Shots on Target", "prob": 80, "category": "Shots on Target", "detail": "avg 7.9 (7gm)", "history": "8/12/14/5/10/4/2"}, {"match": "PSV Eindhoven v Feyenoord", "market": "PSV Eindhoven Over 4.5 Corners", "prob": 82, "category": "Corners", "detail": "avg 6.9 (7gm)", "history": "7/9/13/1/9/5/4"}, {"match": "PSV Eindhoven v Feyenoord", "market": "PSV Eindhoven Over 0.5 Cards", "prob": 82, "category": "Cards", "detail": "avg 1.7 (7gm)", "history": "0/1/1/6/1/2/1"}, {"match": "PSV Eindhoven v Feyenoord", "market": "Feyenoord Over 15.0 Shots", "prob": 90, "category": "Shots", "detail": "avg 21.3 (7gm)", "history": "27/14/33/11/26/23/15"}, {"match": "PSV Eindhoven v Feyenoord", "market": "Feyenoord Over 6.0 Shots on Target", "prob": 73, "category": "Shots on Target", "detail": "avg 8.4 (7gm)", "history": "6/7/12/6/12/12/4"}, {"match": "PSV Eindhoven v Feyenoord", "market": "Feyenoord Over 4.0 Corners", "prob": 67, "category": "Corners", "detail": "avg 5.7 (7gm)", "history": "6/3/11/1/6/6/7"}, {"match": "PSV Eindhoven v Feyenoord", "market": "Feyenoord Over 0.5 Cards", "prob": 59, "category": "Cards", "detail": "avg 0.9 (7gm)", "history": "0/1/0/2/0/2/1"}, {"match": "Viking FK v Troms\u00f8 IL", "market": "Over 2.5 Goals", "prob": 80, "category": "Goals", "detail": "4.29 exp goals (7v7gm)", "history": "H 2/1/2/1/8/3/2 \u00b7 A 6/2/0/0/3/3/1"}, {"match": "Viking FK v Troms\u00f8 IL", "market": "BTTS", "prob": 70, "category": "BTTS", "detail": "4.29 exp goals (7v7gm)", "history": "H 2/1/2/1/8/3/2 \u00b7 A 6/2/0/0/3/3/1"}, {"match": "Viking FK v Troms\u00f8 IL", "market": "Troms\u00f8 IL to Score (Over 0.5)", "prob": 74, "category": "Team to Score", "detail": "1.34 exp goals vs 7v7gm sample", "history": "6/2/0/0/3/3/1"}, {"match": "Viking FK v Troms\u00f8 IL", "market": "Viking FK Over 1.5 Goals", "prob": 79, "category": "Team Goals", "detail": "2.95 exp goals (7v7gm)", "history": "2/1/2/1/8/3/2"}, {"match": "Viking FK v Troms\u00f8 IL", "market": "FH Corners Over 3.5", "prob": 80, "category": "FH Corners", "detail": "5.54 exp FH corners (7v7gm)", "history": "H 8/4/6/3/2/6/3 \u00b7 A 3/2/1/3/2/4/1"}, {"match": "Viking FK v Troms\u00f8 IL", "market": "Viking FK Over 12.5 Shots", "prob": 89, "category": "Shots", "detail": "avg 17.6 (7gm)", "history": "17/6/22/18/28/23/9"}, {"match": "Viking FK v Troms\u00f8 IL", "market": "Viking FK Over 4.5 Shots on Target", "prob": 76, "category": "Shots on Target", "detail": "avg 6.4 (7gm)", "history": "8/1/6/4/13/9/4"}, {"match": "Viking FK v Troms\u00f8 IL", "market": "Viking FK Over 5.5 Corners", "prob": 78, "category": "Corners", "detail": "avg 7.7 (7gm)", "history": "11/6/14/5/7/7/4"}, {"match": "Viking FK v Troms\u00f8 IL", "market": "Viking FK Over 0.5 Cards", "prob": 63, "category": "Cards", "detail": "avg 1.0 (7gm)", "history": "2/0/1/2/0/1/1"}, {"match": "Viking FK v Troms\u00f8 IL", "market": "Troms\u00f8 IL Over 8.5 Shots", "prob": 86, "category": "Shots", "detail": "avg 12.3 (7gm)", "history": "12/7/15/8/15/18/11"}, {"match": "Viking FK v Troms\u00f8 IL", "market": "Troms\u00f8 IL Over 4.5 Shots on Target", "prob": 75, "category": "Shots on Target", "detail": "avg 6.3 (7gm)", "history": "6/3/7/3/9/11/5"}, {"match": "Viking FK v Troms\u00f8 IL", "market": "Troms\u00f8 IL Over 3.0 Corners", "prob": 64, "category": "Corners", "detail": "avg 4.4 (7gm)", "history": "4/2/5/7/4/7/2"}, {"match": "Viking FK v Troms\u00f8 IL", "market": "Troms\u00f8 IL Over 0.5 Cards", "prob": 86, "category": "Cards", "detail": "avg 2.0 (7gm)", "history": "1/1/2/3/3/0/4"}, {"match": "Basel v Grasshopper Club Z\u00fcrich", "market": "Over 2.5 Goals", "prob": 79, "category": "Goals", "detail": "4.18 exp goals (7v7gm)", "history": "H 2/3/1/1/4/1/0 \u00b7 A 2/2/2/1/2/1/0"}, {"match": "Basel v Grasshopper Club Z\u00fcrich", "market": "BTTS", "prob": 76, "category": "BTTS", "detail": "4.18 exp goals (7v7gm)", "history": "H 2/3/1/1/4/1/0 \u00b7 A 2/2/2/1/2/1/0"}, {"match": "Basel v Grasshopper Club Z\u00fcrich", "market": "Grasshopper Club Z\u00fcrich to Score (Over 0.5)", "prob": 85, "category": "Team to Score", "detail": "1.88 exp goals vs 7v7gm sample", "history": "2/2/2/1/2/1/0"}, {"match": "Basel v Grasshopper Club Z\u00fcrich", "market": "Basel Over 1.5 Goals", "prob": 67, "category": "Team Goals", "detail": "2.3 exp goals (7v7gm)", "history": "2/3/1/1/4/1/0"}, {"match": "Basel v Grasshopper Club Z\u00fcrich", "market": "FH Corners Over 3.5", "prob": 76, "category": "FH Corners", "detail": "5.17 exp FH corners (7v7gm)", "history": "H 4/1/2/0/3/2/2 \u00b7 A 4/3/7/3/0/1/1"}, {"match": "Basel v Grasshopper Club Z\u00fcrich", "market": "Basel Over 8.0 Shots", "prob": 82, "category": "Shots", "detail": "avg 11.6 (7gm)", "history": "14/12/11/5/17/10/12"}, {"match": "Basel v Grasshopper Club Z\u00fcrich", "market": "Basel Over 2.0 Shots on Target", "prob": 66, "category": "Shots on Target", "detail": "avg 3.4 (7gm)", "history": "6/4/3/2/6/2/1"}, {"match": "Basel v Grasshopper Club Z\u00fcrich", "market": "Basel Over 2.5 Corners", "prob": 75, "category": "Corners", "detail": "avg 3.9 (7gm)", "history": "6/3/4/1/3/5/5"}, {"match": "Basel v Grasshopper Club Z\u00fcrich", "market": "Basel Over 0.5 Cards", "prob": 95, "category": "Cards", "detail": "avg 3.0 (7gm)", "history": "7/2/4/1/2/4/1"}, {"match": "Basel v Grasshopper Club Z\u00fcrich", "market": "Grasshopper Club Z\u00fcrich Over 11.5 Shots", "prob": 87, "category": "Shots", "detail": "avg 16.0 (7gm)", "history": "16/22/20/17/8/21/8"}, {"match": "Basel v Grasshopper Club Z\u00fcrich", "market": "Grasshopper Club Z\u00fcrich Over 3.5 Shots on Target", "prob": 72, "category": "Shots on Target", "detail": "avg 4.9 (7gm)", "history": "3/8/7/5/3/6/2"}, {"match": "Basel v Grasshopper Club Z\u00fcrich", "market": "Grasshopper Club Z\u00fcrich Over 4.0 Corners", "prob": 70, "category": "Corners", "detail": "avg 5.9 (7gm)", "history": "9/7/8/5/1/8/3"}, {"match": "Basel v Grasshopper Club Z\u00fcrich", "market": "Grasshopper Club Z\u00fcrich Over 0.5 Cards", "prob": 85, "category": "Cards", "detail": "avg 1.9 (7gm)", "history": "1/1/2/3/3/2/1"}, {"match": "San Diego FC v Seattle Sounders FC", "market": "Over 2.5 Goals", "prob": 78, "category": "Goals", "detail": "4.16 exp goals (7v7gm)", "history": "H 0/2/0/2/3/1/3 \u00b7 A 1/3/2/3/2/3/0"}, {"match": "San Diego FC v Seattle Sounders FC", "market": "BTTS", "prob": 65, "category": "BTTS", "detail": "4.16 exp goals (7v7gm)", "history": "H 0/2/0/2/3/1/3 \u00b7 A 1/3/2/3/2/3/0"}, {"match": "San Diego FC v Seattle Sounders FC", "market": "Seattle Sounders FC to Score (Over 0.5)", "prob": 95, "category": "Team to Score", "detail": "3.0 exp goals vs 7v7gm sample", "history": "1/3/2/3/2/3/0"}, {"match": "San Diego FC v Seattle Sounders FC", "market": "San Diego FC Over 1.5 Goals", "prob": 32, "category": "Team Goals", "detail": "1.16 exp goals (7v7gm)", "history": "0/2/0/2/3/1/3"}, {"match": "San Diego FC v Seattle Sounders FC", "market": "FH Corners Over 3.5", "prob": 82, "category": "FH Corners", "detail": "5.74 exp FH corners (7v7gm)", "history": "H 2/0/4/1/0/4/4 \u00b7 A 1/2/3/3/7/3/4"}, {"match": "San Diego FC v Seattle Sounders FC", "market": "San Diego FC Over 8.0 Shots", "prob": 82, "category": "Shots", "detail": "avg 11.6 (7gm)", "history": "7/10/10/8/15/14/17"}, {"match": "San Diego FC v Seattle Sounders FC", "market": "San Diego FC Over 3.0 Shots on Target", "prob": 67, "category": "Shots on Target", "detail": "avg 4.6 (7gm)", "history": "2/6/5/3/5/5/6"}, {"match": "San Diego FC v Seattle Sounders FC", "market": "San Diego FC Over 3.5 Corners", "prob": 73, "category": "Corners", "detail": "avg 5.0 (7gm)", "history": "4/1/11/1/1/7/10"}, {"match": "San Diego FC v Seattle Sounders FC", "market": "San Diego FC Over 0.5 Cards", "prob": 90, "category": "Cards", "detail": "avg 2.3 (7gm)", "history": "2/5/2/1/0/3/3"}, {"match": "San Diego FC v Seattle Sounders FC", "market": "Seattle Sounders FC Over 10.5 Shots", "prob": 88, "category": "Shots", "detail": "avg 14.9 (7gm)", "history": "17/16/11/13/21/9/17"}, {"match": "San Diego FC v Seattle Sounders FC", "market": "Seattle Sounders FC Over 4.5 Shots on Target", "prob": 76, "category": "Shots on Target", "detail": "avg 6.4 (7gm)", "history": "8/6/4/8/7/5/7"}, {"match": "San Diego FC v Seattle Sounders FC", "market": "Seattle Sounders FC Over 4.5 Corners", "prob": 82, "category": "Corners", "detail": "avg 6.9 (7gm)", "history": "3/6/7/5/11/5/11"}, {"match": "San Diego FC v Seattle Sounders FC", "market": "Seattle Sounders FC Over 0.5 Cards", "prob": 80, "category": "Cards", "detail": "avg 1.6 (7gm)", "history": "2/0/4/2/1/2/0"}, {"match": "Barcelona v Real Madrid", "market": "Over 2.5 Goals", "prob": 78, "category": "Goals", "detail": "4.14 exp goals (7v7gm)", "history": "H 2/5/5/4/7/3/3 \u00b7 A 4/4/0/4/3/1/1"}, {"match": "Barcelona v Real Madrid", "market": "BTTS", "prob": 74, "category": "BTTS", "detail": "4.14 exp goals (7v7gm)", "history": "H 2/5/5/4/7/3/3 \u00b7 A 4/4/0/4/3/1/1"}, {"match": "Barcelona v Real Madrid", "market": "Real Madrid to Score (Over 0.5)", "prob": 80, "category": "Team to Score", "detail": "1.62 exp goals vs 7v7gm sample", "history": "4/4/0/4/3/1/1"}, {"match": "Barcelona v Real Madrid", "market": "Barcelona Over 1.5 Goals", "prob": 72, "category": "Team Goals", "detail": "2.52 exp goals (7v7gm)", "history": "2/5/5/4/7/3/3"}, {"match": "Barcelona v Real Madrid", "market": "FH Corners Over 3.5", "prob": 74, "category": "FH Corners", "detail": "5.03 exp FH corners (7v7gm)", "history": "H 7/9/1/0/9/2/3 \u00b7 A 0/6/6/4/4/1/4"}, {"match": "Barcelona v Real Madrid", "market": "Barcelona Over 16.5 Shots", "prob": 92, "category": "Shots", "detail": "avg 23.1 (7gm)", "history": "22/26/25/12/30/24/23"}, {"match": "Barcelona v Real Madrid", "market": "Barcelona Over 6.0 Shots on Target", "prob": 73, "category": "Shots on Target", "detail": "avg 8.4 (7gm)", "history": "10/9/10/6/9/7/8"}, {"match": "Barcelona v Real Madrid", "market": "Barcelona Over 6.0 Corners", "prob": 75, "category": "Corners", "detail": "avg 8.6 (7gm)", "history": "12/9/4/5/18/3/9"}, {"match": "Barcelona v Real Madrid", "market": "Barcelona Over 0.5 Cards", "prob": 75, "category": "Cards", "detail": "avg 1.4 (7gm)", "history": "1/0/3/1/3/0/2"}, {"match": "Barcelona v Real Madrid", "market": "Real Madrid Over 12.5 Shots", "prob": 88, "category": "Shots", "detail": "avg 17.4 (7gm)", "history": "20/19/20/24/20/8/11"}, {"match": "Barcelona v Real Madrid", "market": "Real Madrid Over 5.0 Shots on Target", "prob": 70, "category": "Shots on Target", "detail": "avg 7.0 (7gm)", "history": "11/8/8/11/4/3/4"}, {"match": "Barcelona v Real Madrid", "market": "Real Madrid Over 5.0 Corners", "prob": 70, "category": "Corners", "detail": "avg 7.0 (7gm)", "history": "4/9/10/11/5/1/9"}, {"match": "Barcelona v Real Madrid", "market": "Real Madrid Over 0.5 Cards", "prob": 93, "category": "Cards", "detail": "avg 2.6 (7gm)", "history": "3/0/4/0/2/3/6"}, {"match": "Sporting Kansas City v Austin FC", "market": "Over 2.5 Goals", "prob": 78, "category": "Goals", "detail": "4.13 exp goals (7v7gm)", "history": "H 3/3/3/2/1/3/0 \u00b7 A 1/1/2/0/3/1/1"}, {"match": "Sporting Kansas City v Austin FC", "market": "BTTS", "prob": 76, "category": "BTTS", "detail": "4.13 exp goals (7v7gm)", "history": "H 3/3/3/2/1/3/0 \u00b7 A 1/1/2/0/3/1/1"}, {"match": "Sporting Kansas City v Austin FC", "market": "Austin FC to Score (Over 0.5)", "prob": 86, "category": "Team to Score", "detail": "1.95 exp goals vs 7v7gm sample", "history": "1/1/2/0/3/1/1"}, {"match": "Sporting Kansas City v Austin FC", "market": "Sporting Kansas City Over 1.5 Goals", "prob": 64, "category": "Team Goals", "detail": "2.18 exp goals (7v7gm)", "history": "3/3/3/2/1/3/0"}, {"match": "Sporting Kansas City v Austin FC", "market": "FH Corners Over 3.5", "prob": 87, "category": "FH Corners", "detail": "6.22 exp FH corners (7v7gm)", "history": "H 3/3/2/1/3/2/0 \u00b7 A 5/3/0/3/4/3/3"}, {"match": "Sporting Kansas City v Austin FC", "market": "Sporting Kansas City Over 11.0 Shots", "prob": 85, "category": "Shots", "detail": "avg 15.6 (7gm)", "history": "26/20/10/10/22/12/9"}, {"match": "Sporting Kansas City v Austin FC", "market": "Sporting Kansas City Over 4.5 Shots on Target", "prob": 76, "category": "Shots on Target", "detail": "avg 6.4 (7gm)", "history": "10/8/6/4/11/5/1"}, {"match": "Sporting Kansas City v Austin FC", "market": "Sporting Kansas City Over 3.5 Corners", "prob": 72, "category": "Corners", "detail": "avg 4.9 (7gm)", "history": "7/6/3/2/6/6/4"}, {"match": "Sporting Kansas City v Austin FC", "market": "Sporting Kansas City Over 0.5 Cards", "prob": 82, "category": "Cards", "detail": "avg 1.7 (7gm)", "history": "2/2/3/4/1/0/0"}, {"match": "Sporting Kansas City v Austin FC", "market": "Austin FC Over 7.5 Shots", "prob": 86, "category": "Shots", "detail": "avg 11.0 (7gm)", "history": "16/11/4/8/13/11/14"}, {"match": "Sporting Kansas City v Austin FC", "market": "Austin FC Over 2.5 Shots on Target", "prob": 70, "category": "Shots on Target", "detail": "avg 3.6 (7gm)", "history": "3/2/2/3/6/5/4"}, {"match": "Sporting Kansas City v Austin FC", "market": "Austin FC Over 3.5 Corners", "prob": 72, "category": "Corners", "detail": "avg 4.9 (7gm)", "history": "7/8/0/6/4/4/5"}, {"match": "Sporting Kansas City v Austin FC", "market": "Austin FC Over 0.5 Cards", "prob": 80, "category": "Cards", "detail": "avg 1.6 (7gm)", "history": "1/0/6/2/1/1/0"}, {"match": "Houston Dynamo v Minnesota United", "market": "Over 2.5 Goals", "prob": 77, "category": "Goals", "detail": "4.05 exp goals (7v7gm)", "history": "H 0/2/0/2/0/2/3 \u00b7 A 4/1/2/2/1/2/2"}, {"match": "Houston Dynamo v Minnesota United", "market": "BTTS", "prob": 75, "category": "BTTS", "detail": "4.05 exp goals (7v7gm)", "history": "H 0/2/0/2/0/2/3 \u00b7 A 4/1/2/2/1/2/2"}, {"match": "Houston Dynamo v Minnesota United", "market": "Minnesota United to Score (Over 0.5)", "prob": 84, "category": "Team to Score", "detail": "1.84 exp goals vs 7v7gm sample", "history": "4/1/2/2/1/2/2"}, {"match": "Houston Dynamo v Minnesota United", "market": "Houston Dynamo Over 1.5 Goals", "prob": 65, "category": "Team Goals", "detail": "2.21 exp goals (7v7gm)", "history": "0/2/0/2/0/2/3"}, {"match": "Houston Dynamo v Minnesota United", "market": "FH Corners Over 3.5", "prob": 72, "category": "FH Corners", "detail": "4.87 exp FH corners (7v7gm)", "history": "H 2/0/0/3/4/3/2 \u00b7 A 3/1/1/1/5/2/3"}, {"match": "Houston Dynamo v Minnesota United", "market": "Houston Dynamo Over 9.5 Shots", "prob": 86, "category": "Shots", "detail": "avg 13.4 (7gm)", "history": "18/12/11/7/21/15/10"}, {"match": "Houston Dynamo v Minnesota United", "market": "Houston Dynamo Over 3.0 Shots on Target", "prob": 64, "category": "Shots on Target", "detail": "avg 4.4 (7gm)", "history": "5/6/5/2/4/6/3"}, {"match": "Houston Dynamo v Minnesota United", "market": "Houston Dynamo Over 2.5 Corners", "prob": 78, "category": "Corners", "detail": "avg 4.1 (7gm)", "history": "6/1/3/3/8/5/3"}, {"match": "Houston Dynamo v Minnesota United", "market": "Houston Dynamo Over 0.5 Cards", "prob": 80, "category": "Cards", "detail": "avg 1.6 (7gm)", "history": "4/1/1/0/2/0/3"}, {"match": "Houston Dynamo v Minnesota United", "market": "Minnesota United Over 9.0 Shots", "prob": 84, "category": "Shots", "detail": "avg 13.1 (7gm)", "history": "17/9/11/15/14/15/11"}, {"match": "Houston Dynamo v Minnesota United", "market": "Minnesota United Over 2.5 Shots on Target", "prob": 76, "category": "Shots on Target", "detail": "avg 4.0 (7gm)", "history": "8/2/3/5/2/6/2"}, {"match": "Houston Dynamo v Minnesota United", "market": "Minnesota United Over 2.5 Corners", "prob": 76, "category": "Corners", "detail": "avg 4.0 (7gm)", "history": "3/2/5/5/7/2/4"}, {"match": "Houston Dynamo v Minnesota United", "market": "Minnesota United Over 0.5 Cards", "prob": 88, "category": "Cards", "detail": "avg 2.1 (7gm)", "history": "3/2/4/1/2/2/1"}, {"match": "NEC Nijmegen v FC Groningen", "market": "Over 2.5 Goals", "prob": 76, "category": "Goals", "detail": "3.98 exp goals (7v7gm)", "history": "H 4/3/1/2/0/1/1 \u00b7 A 4/1/2/2/1/3/5"}, {"match": "NEC Nijmegen v FC Groningen", "market": "BTTS", "prob": 74, "category": "BTTS", "detail": "3.98 exp goals (7v7gm)", "history": "H 4/3/1/2/0/1/1 \u00b7 A 4/1/2/2/1/3/5"}, {"match": "NEC Nijmegen v FC Groningen", "market": "FC Groningen to Score (Over 0.5)", "prob": 89, "category": "Team to Score", "detail": "2.22 exp goals vs 7v7gm sample", "history": "4/1/2/2/1/3/5"}, {"match": "NEC Nijmegen v FC Groningen", "market": "NEC Nijmegen Over 1.5 Goals", "prob": 52, "category": "Team Goals", "detail": "1.75 exp goals (7v7gm)", "history": "4/3/1/2/0/1/1"}, {"match": "NEC Nijmegen v FC Groningen", "market": "FH Corners Over 3.5", "prob": 30, "category": "FH Corners", "detail": "2.78 exp FH corners (7v7gm)", "history": "H 0/1/1/1/2/1/0 \u00b7 A 0/1/2/4/0/2/5"}, {"match": "NEC Nijmegen v FC Groningen", "market": "NEC Nijmegen Over 8.5 Shots", "prob": 87, "category": "Shots", "detail": "avg 12.4 (7gm)", "history": "21/8/12/11/10/17/8"}, {"match": "NEC Nijmegen v FC Groningen", "market": "NEC Nijmegen Over 2.5 Shots on Target", "prob": 75, "category": "Shots on Target", "detail": "avg 3.9 (7gm)", "history": "10/4/2/3/1/5/2"}, {"match": "NEC Nijmegen v FC Groningen", "market": "NEC Nijmegen Over 2.5 Corners", "prob": 71, "category": "Corners", "detail": "avg 3.7 (7gm)", "history": "2/7/1/2/5/5/4"}, {"match": "NEC Nijmegen v FC Groningen", "market": "NEC Nijmegen Over 0.5 Cards", "prob": 80, "category": "Cards", "detail": "avg 1.6 (7gm)", "history": "0/3/1/1/4/0/2"}, {"match": "NEC Nijmegen v FC Groningen", "market": "FC Groningen Over 10.5 Shots", "prob": 87, "category": "Shots", "detail": "avg 14.7 (7gm)", "history": "17/7/23/21/4/17/14"}, {"match": "NEC Nijmegen v FC Groningen", "market": "FC Groningen Over 4.0 Shots on Target", "prob": 71, "category": "Shots on Target", "detail": "avg 6.0 (7gm)", "history": "14/4/2/4/2/7/9"}, {"match": "NEC Nijmegen v FC Groningen", "market": "FC Groningen Over 3.0 Corners", "prob": 67, "category": "Corners", "detail": "avg 4.6 (7gm)", "history": "2/4/7/8/0/5/6"}, {"match": "NEC Nijmegen v FC Groningen", "market": "FC Groningen Over 0.5 Cards", "prob": 67, "category": "Cards", "detail": "avg 1.1 (7gm)", "history": "1/1/3/1/0/0/2"}, {"match": "Real Sociedad v Levante UD", "market": "Over 2.5 Goals", "prob": 76, "category": "Goals", "detail": "3.98 exp goals (7v7gm)", "history": "H 1/2/0/3/0/3/3 \u00b7 A 0/0/5/0/2/1/3"}, {"match": "Real Sociedad v Levante UD", "market": "BTTS", "prob": 74, "category": "BTTS", "detail": "3.98 exp goals (7v7gm)", "history": "H 1/2/0/3/0/3/3 \u00b7 A 0/0/5/0/2/1/3"}, {"match": "Real Sociedad v Levante UD", "market": "Levante UD to Score (Over 0.5)", "prob": 85, "category": "Team to Score", "detail": "1.88 exp goals vs 7v7gm sample", "history": "0/0/5/0/2/1/3"}, {"match": "Real Sociedad v Levante UD", "market": "Real Sociedad Over 1.5 Goals", "prob": 62, "category": "Team Goals", "detail": "2.1 exp goals (7v7gm)", "history": "1/2/0/3/0/3/3"}, {"match": "Real Sociedad v Levante UD", "market": "FH Corners Over 3.5", "prob": 84, "category": "FH Corners", "detail": "5.86 exp FH corners (7v7gm)", "history": "H 3/6/6/3/6/3/4 \u00b7 A 1/1/3/0/1/0/4"}, {"match": "Real Sociedad v Levante UD", "market": "Real Sociedad Over 10.0 Shots", "prob": 82, "category": "Shots", "detail": "avg 13.9 (7gm)", "history": "10/17/16/13/8/21/12"}, {"match": "Real Sociedad v Levante UD", "market": "Real Sociedad Over 3.5 Shots on Target", "prob": 77, "category": "Shots on Target", "detail": "avg 5.3 (7gm)", "history": "3/10/5/6/3/6/4"}, {"match": "Real Sociedad v Levante UD", "market": "Real Sociedad Over 5.0 Corners", "prob": 77, "category": "Corners", "detail": "avg 7.6 (7gm)", "history": "7/7/11/7/9/5/7"}, {"match": "Real Sociedad v Levante UD", "market": "Real Sociedad Over 0.5 Cards", "prob": 91, "category": "Cards", "detail": "avg 2.4 (7gm)", "history": "3/2/2/2/2/4/2"}, {"match": "Real Sociedad v Levante UD", "market": "Levante UD Over 8.5 Shots", "prob": 84, "category": "Shots", "detail": "avg 12.0 (7gm)", "history": "4/11/19/11/13/6/20"}, {"match": "Real Sociedad v Levante UD", "market": "Levante UD Over 3.0 Shots on Target", "prob": 62, "category": "Shots on Target", "detail": "avg 4.3 (7gm)", "history": "0/1/10/3/7/1/8"}, {"match": "Real Sociedad v Levante UD", "market": "Levante UD Over 2.0 Corners", "prob": 64, "category": "Corners", "detail": "avg 3.3 (7gm)", "history": "1/4/5/4/3/1/5"}, {"match": "Real Sociedad v Levante UD", "market": "Levante UD Over 0.5 Cards", "prob": 67, "category": "Cards", "detail": "avg 1.1 (7gm)", "history": "0/1/1/2/1/1/2"}, {"match": "Crystal Palace v Newcastle United", "market": "Over 2.5 Goals", "prob": 75, "category": "Goals", "detail": "3.94 exp goals (6v6gm)", "history": "H 0/1/3/2/0/3 \u00b7 A 2/2/2/1/2/1"}, {"match": "Crystal Palace v Newcastle United", "market": "BTTS", "prob": 74, "category": "BTTS", "detail": "3.94 exp goals (6v6gm)", "history": "H 0/1/3/2/0/3 \u00b7 A 2/2/2/1/2/1"}, {"match": "Crystal Palace v Newcastle United", "market": "Newcastle United to Score (Over 0.5)", "prob": 86, "category": "Team to Score", "detail": "1.99 exp goals vs 6v6gm sample", "history": "2/2/2/1/2/1"}, {"match": "Crystal Palace v Newcastle United", "market": "Crystal Palace Over 1.5 Goals", "prob": 58, "category": "Team Goals", "detail": "1.96 exp goals (6v6gm)", "history": "0/1/3/2/0/3"}, {"match": "Crystal Palace v Newcastle United", "market": "FH Corners Over 3.5", "prob": 73, "category": "FH Corners", "detail": "4.99 exp FH corners (6v6gm)", "history": "H 0/2/1/5/1/2 \u00b7 A 2/5/2/2/2/3"}, {"match": "Crystal Palace v Newcastle United", "market": "Crystal Palace Over 7.5 Shots", "prob": 86, "category": "Shots", "detail": "avg 11.0 (6gm)", "history": "11/9/10/11/12/13"}, {"match": "Crystal Palace v Newcastle United", "market": "Crystal Palace Over 3.0 Shots on Target", "prob": 60, "category": "Shots on Target", "detail": "avg 4.2 (6gm)", "history": "4/1/5/4/4/7"}, {"match": "Crystal Palace v Newcastle United", "market": "Crystal Palace Over 2.0 Corners", "prob": 53, "category": "Corners", "detail": "avg 2.8 (6gm)", "history": "0/2/1/6/3/5"}, {"match": "Crystal Palace v Newcastle United", "market": "Crystal Palace Over 0.5 Cards", "prob": 78, "category": "Cards", "detail": "avg 1.5 (6gm)", "history": "1/1/0/2/3/2"}, {"match": "Crystal Palace v Newcastle United", "market": "Newcastle United Over 8.0 Shots", "prob": 82, "category": "Shots", "detail": "avg 11.7 (6gm)", "history": "13/11/8/7/12/19"}, {"match": "Crystal Palace v Newcastle United", "market": "Newcastle United Over 2.5 Shots on Target", "prob": 76, "category": "Shots on Target", "detail": "avg 4.0 (6gm)", "history": "4/2/2/5/5/6"}, {"match": "Crystal Palace v Newcastle United", "market": "Newcastle United Over 3.0 Corners", "prob": 69, "category": "Corners", "detail": "avg 4.7 (6gm)", "history": "2/7/4/5/4/6"}, {"match": "Crystal Palace v Newcastle United", "market": "Newcastle United Over 0.5 Cards", "prob": 89, "category": "Cards", "detail": "avg 2.2 (6gm)", "history": "5/2/2/2/1/1"}, {"match": "FC Thun v FC Lugano", "market": "Over 2.5 Goals", "prob": 75, "category": "Goals", "detail": "3.93 exp goals (7v7gm)", "history": "H 4/0/2/0/2/2/2 \u00b7 A 2/1/3/2/4/4/4"}, {"match": "FC Thun v FC Lugano", "market": "BTTS", "prob": 60, "category": "BTTS", "detail": "3.93 exp goals (7v7gm)", "history": "H 4/0/2/0/2/2/2 \u00b7 A 2/1/3/2/4/4/4"}, {"match": "FC Thun v FC Lugano", "market": "FC Lugano to Score (Over 0.5)", "prob": 95, "category": "Team to Score", "detail": "2.94 exp goals vs 7v7gm sample", "history": "2/1/3/2/4/4/4"}, {"match": "FC Thun v FC Lugano", "market": "FC Thun Over 1.5 Goals", "prob": 26, "category": "Team Goals", "detail": "1.0 exp goals (7v7gm)", "history": "4/0/2/0/2/2/2"}, {"match": "FC Thun v FC Lugano", "market": "FH Corners Over 3.5", "prob": 81, "category": "FH Corners", "detail": "5.65 exp FH corners (7v7gm)", "history": "H 1/2/1/4/1/3/5 \u00b7 A 3/3/4/3/2/3/5"}, {"match": "FC Thun v FC Lugano", "market": "FC Thun Over 11.0 Shots", "prob": 85, "category": "Shots", "detail": "avg 15.6 (7gm)", "history": "7/22/15/20/17/15/13"}, {"match": "FC Thun v FC Lugano", "market": "FC Thun Over 2.5 Shots on Target", "prob": 76, "category": "Shots on Target", "detail": "avg 4.0 (7gm)", "history": "5/5/4/1/2/6/5"}, {"match": "FC Thun v FC Lugano", "market": "FC Thun Over 4.0 Corners", "prob": 70, "category": "Corners", "detail": "avg 5.9 (7gm)", "history": "1/6/4/10/7/7/6"}, {"match": "FC Thun v FC Lugano", "market": "FC Thun Over 0.5 Cards", "prob": 94, "category": "Cards", "detail": "avg 2.9 (7gm)", "history": "2/3/2/4/2/4/3"}, {"match": "FC Thun v FC Lugano", "market": "FC Lugano Over 12.0 Shots", "prob": 86, "category": "Shots", "detail": "avg 17.0 (7gm)", "history": "7/20/23/17/12/21/19"}, {"match": "FC Thun v FC Lugano", "market": "FC Lugano Over 4.0 Shots on Target", "prob": 66, "category": "Shots on Target", "detail": "avg 5.6 (7gm)", "history": "4/3/5/7/8/5/7"}, {"match": "FC Thun v FC Lugano", "market": "FC Lugano Over 4.0 Corners", "prob": 71, "category": "Corners", "detail": "avg 6.0 (7gm)", "history": "4/11/7/4/2/6/8"}, {"match": "FC Thun v FC Lugano", "market": "FC Lugano Over 0.5 Cards", "prob": 96, "category": "Cards", "detail": "avg 3.3 (7gm)", "history": "3/2/5/3/4/3/3"}, {"match": "Sarpsborg 08 v Aalesunds FK", "market": "Over 2.5 Goals", "prob": 73, "category": "Goals", "detail": "3.82 exp goals (7v7gm)", "history": "H 1/1/0/2/1/1/4 \u00b7 A 1/5/1/2/1/2/2"}, {"match": "Sarpsborg 08 v Aalesunds FK", "market": "BTTS", "prob": 72, "category": "BTTS", "detail": "3.82 exp goals (7v7gm)", "history": "H 1/1/0/2/1/1/4 \u00b7 A 1/5/1/2/1/2/2"}, {"match": "Sarpsborg 08 v Aalesunds FK", "market": "Aalesunds FK to Score (Over 0.5)", "prob": 86, "category": "Team to Score", "detail": "1.97 exp goals vs 7v7gm sample", "history": "1/5/1/2/1/2/2"}, {"match": "Sarpsborg 08 v Aalesunds FK", "market": "Sarpsborg 08 Over 1.5 Goals", "prob": 55, "category": "Team Goals", "detail": "1.84 exp goals (7v7gm)", "history": "1/1/0/2/1/1/4"}, {"match": "Sarpsborg 08 v Aalesunds FK", "market": "FH Corners Over 3.5", "prob": 89, "category": "FH Corners", "detail": "6.5 exp FH corners (7v7gm)", "history": "H 1/1/1/3/1/2/3 \u00b7 A 2/3/1/3/2/4/5"}, {"match": "Sarpsborg 08 v Aalesunds FK", "market": "Sarpsborg 08 Over 11.5 Shots", "prob": 89, "category": "Shots", "detail": "avg 16.4 (7gm)", "history": "25/20/5/19/6/22/18"}, {"match": "Sarpsborg 08 v Aalesunds FK", "market": "Sarpsborg 08 Over 4.0 Shots on Target", "prob": 66, "category": "Shots on Target", "detail": "avg 5.6 (7gm)", "history": "3/6/2/8/4/8/8"}, {"match": "Sarpsborg 08 v Aalesunds FK", "market": "Sarpsborg 08 Over 4.0 Corners", "prob": 71, "category": "Corners", "detail": "avg 6.0 (7gm)", "history": "8/4/3/7/3/11/6"}, {"match": "Sarpsborg 08 v Aalesunds FK", "market": "Sarpsborg 08 Over 0.5 Cards", "prob": 73, "category": "Cards", "detail": "avg 1.3 (7gm)", "history": "3/1/1/1/0/1/2"}, {"match": "Sarpsborg 08 v Aalesunds FK", "market": "Aalesunds FK Over 12.0 Shots", "prob": 88, "category": "Shots", "detail": "avg 17.3 (7gm)", "history": "10/24/9/24/19/12/23"}, {"match": "Sarpsborg 08 v Aalesunds FK", "market": "Aalesunds FK Over 4.0 Shots on Target", "prob": 70, "category": "Shots on Target", "detail": "avg 5.9 (7gm)", "history": "2/8/4/12/3/5/7"}, {"match": "Sarpsborg 08 v Aalesunds FK", "market": "Aalesunds FK Over 4.0 Corners", "prob": 71, "category": "Corners", "detail": "avg 6.0 (7gm)", "history": "4/10/3/7/4/6/8"}, {"match": "Sarpsborg 08 v Aalesunds FK", "market": "Aalesunds FK Over 0.5 Cards", "prob": 91, "category": "Cards", "detail": "avg 2.4 (7gm)", "history": "1/0/4/2/5/4/1"}, {"match": "Portland Timbers v Charlotte FC", "market": "Over 2.5 Goals", "prob": 73, "category": "Goals", "detail": "3.78 exp goals (7v7gm)", "history": "H 5/2/1/0/1/3/0 \u00b7 A 0/2/3/2/0/3/1"}, {"match": "Portland Timbers v Charlotte FC", "market": "BTTS", "prob": 71, "category": "BTTS", "detail": "3.78 exp goals (7v7gm)", "history": "H 5/2/1/0/1/3/0 \u00b7 A 0/2/3/2/0/3/1"}, {"match": "Portland Timbers v Charlotte FC", "market": "Charlotte FC to Score (Over 0.5)", "prob": 88, "category": "Team to Score", "detail": "2.13 exp goals vs 7v7gm sample", "history": "0/2/3/2/0/3/1"}, {"match": "Portland Timbers v Charlotte FC", "market": "Portland Timbers Over 1.5 Goals", "prob": 49, "category": "Team Goals", "detail": "1.65 exp goals (7v7gm)", "history": "5/2/1/0/1/3/0"}, {"match": "Portland Timbers v Charlotte FC", "market": "FH Corners Over 3.5", "prob": 82, "category": "FH Corners", "detail": "5.66 exp FH corners (7v7gm)", "history": "H 2/5/1/1/3/1/0 \u00b7 A 5/1/2/3/4/6/4"}, {"match": "Portland Timbers v Charlotte FC", "market": "Portland Timbers Over 10.5 Shots", "prob": 88, "category": "Shots", "detail": "avg 15.0 (7gm)", "history": "11/16/18/21/18/9/12"}, {"match": "Portland Timbers v Charlotte FC", "market": "Portland Timbers Over 2.5 Shots on Target", "prob": 78, "category": "Shots on Target", "detail": "avg 4.1 (7gm)", "history": "5/3/4/3/6/5/3"}, {"match": "Portland Timbers v Charlotte FC", "market": "Portland Timbers Over 3.5 Corners", "prob": 79, "category": "Corners", "detail": "avg 5.4 (7gm)", "history": "4/9/5/5/9/1/5"}, {"match": "Portland Timbers v Charlotte FC", "market": "Portland Timbers Over 0.5 Cards", "prob": 73, "category": "Cards", "detail": "avg 1.3 (7gm)", "history": "1/1/0/2/1/1/3"}, {"match": "Portland Timbers v Charlotte FC", "market": "Charlotte FC Over 8.0 Shots", "prob": 80, "category": "Shots", "detail": "avg 11.4 (7gm)", "history": "9/15/8/10/11/18/9"}, {"match": "Portland Timbers v Charlotte FC", "market": "Charlotte FC Over 3.0 Shots on Target", "prob": 62, "category": "Shots on Target", "detail": "avg 4.3 (7gm)", "history": "3/4/4/7/2/8/2"}, {"match": "Portland Timbers v Charlotte FC", "market": "Charlotte FC Over 4.0 Corners", "prob": 66, "category": "Corners", "detail": "avg 5.6 (7gm)", "history": "8/3/3/3/4/14/4"}, {"match": "Portland Timbers v Charlotte FC", "market": "Charlotte FC Over 0.5 Cards", "prob": 93, "category": "Cards", "detail": "avg 2.6 (7gm)", "history": "6/1/1/2/7/1/0"}, {"match": "Fortuna Sittard v Excelsior", "market": "Over 2.5 Goals", "prob": 70, "category": "Goals", "detail": "3.6 exp goals (7v7gm)", "history": "H 3/0/3/3/1/1/1 \u00b7 A 1/2/3/2/1/2/1"}, {"match": "Fortuna Sittard v Excelsior", "market": "BTTS", "prob": 70, "category": "BTTS", "detail": "3.6 exp goals (7v7gm)", "history": "H 3/0/3/3/1/1/1 \u00b7 A 1/2/3/2/1/2/1"}, {"match": "Fortuna Sittard v Excelsior", "market": "Excelsior to Score (Over 0.5)", "prob": 83, "category": "Team to Score", "detail": "1.75 exp goals vs 7v7gm sample", "history": "1/2/3/2/1/2/1"}, {"match": "Fortuna Sittard v Excelsior", "market": "Fortuna Sittard Over 1.5 Goals", "prob": 55, "category": "Team Goals", "detail": "1.85 exp goals (7v7gm)", "history": "3/0/3/3/1/1/1"}, {"match": "Fortuna Sittard v Excelsior", "market": "FH Corners Over 3.5", "prob": 50, "category": "FH Corners", "detail": "3.66 exp FH corners (7v7gm)", "history": "H 2/0/0/0/1/1/1 \u00b7 A 1/3/6/0/0/0/2"}, {"match": "Fortuna Sittard v Excelsior", "market": "Fortuna Sittard Over 7.5 Shots", "prob": 86, "category": "Shots", "detail": "avg 11.1 (7gm)", "history": "17/4/9/8/8/17/15"}, {"match": "Fortuna Sittard v Excelsior", "market": "Fortuna Sittard Over 3.0 Shots on Target", "prob": 64, "category": "Shots on Target", "detail": "avg 4.4 (7gm)", "history": "7/2/5/5/4/3/5"}, {"match": "Fortuna Sittard v Excelsior", "market": "Fortuna Sittard Over 2.0 Corners", "prob": 55, "category": "Corners", "detail": "avg 2.9 (7gm)", "history": "6/1/2/0/3/3/5"}, {"match": "Fortuna Sittard v Excelsior", "market": "Fortuna Sittard Over 0.5 Cards", "prob": 80, "category": "Cards", "detail": "avg 1.6 (7gm)", "history": "0/1/4/4/1/1/0"}, {"match": "Fortuna Sittard v Excelsior", "market": "Excelsior Over 7.5 Shots", "prob": 86, "category": "Shots", "detail": "avg 11.0 (7gm)", "history": "5/15/13/14/10/4/16"}, {"match": "Fortuna Sittard v Excelsior", "market": "Excelsior Over 2.5 Shots on Target", "prob": 71, "category": "Shots on Target", "detail": "avg 3.7 (7gm)", "history": "2/5/6/5/4/2/2"}, {"match": "Fortuna Sittard v Excelsior", "market": "Excelsior Over 2.5 Corners", "prob": 70, "category": "Corners", "detail": "avg 3.6 (7gm)", "history": "1/6/6/4/5/0/3"}, {"match": "Fortuna Sittard v Excelsior", "market": "Excelsior Over 0.5 Cards", "prob": 80, "category": "Cards", "detail": "avg 1.6 (7gm)", "history": "1/2/1/3/2/2/0"}, {"match": "Kristiansund BK v KFUM Oslo", "market": "Over 2.5 Goals", "prob": 66, "category": "Goals", "detail": "3.4 exp goals (7v7gm)", "history": "H 2/0/2/2/1/1/1 \u00b7 A 1/1/1/0/2/3/2"}, {"match": "Kristiansund BK v KFUM Oslo", "market": "BTTS", "prob": 64, "category": "BTTS", "detail": "3.4 exp goals (7v7gm)", "history": "H 2/0/2/2/1/1/1 \u00b7 A 1/1/1/0/2/3/2"}, {"match": "Kristiansund BK v KFUM Oslo", "market": "KFUM Oslo to Score (Over 0.5)", "prob": 88, "category": "Team to Score", "detail": "2.12 exp goals vs 7v7gm sample", "history": "1/1/1/0/2/3/2"}, {"match": "Kristiansund BK v KFUM Oslo", "market": "Kristiansund BK Over 1.5 Goals", "prob": 37, "category": "Team Goals", "detail": "1.28 exp goals (7v7gm)", "history": "2/0/2/2/1/1/1"}, {"match": "Kristiansund BK v KFUM Oslo", "market": "FH Corners Over 3.5", "prob": 79, "category": "FH Corners", "detail": "5.42 exp FH corners (7v7gm)", "history": "H 1/4/1/2/3/2/0 \u00b7 A 4/1/2/0/3/0/3"}, {"match": "Kristiansund BK v KFUM Oslo", "market": "Kristiansund BK Over 8.5 Shots", "prob": 87, "category": "Shots", "detail": "avg 12.4 (7gm)", "history": "10/18/19/9/12/15/4"}, {"match": "Kristiansund BK v KFUM Oslo", "market": "Kristiansund BK Over 2.0 Shots on Target", "prob": 66, "category": "Shots on Target", "detail": "avg 3.4 (7gm)", "history": "2/3/5/2/2/7/3"}, {"match": "Kristiansund BK v KFUM Oslo", "market": "Kristiansund BK Over 2.5 Corners", "prob": 76, "category": "Corners", "detail": "avg 4.0 (7gm)", "history": "1/10/4/4/5/4/0"}, {"match": "Kristiansund BK v KFUM Oslo", "market": "Kristiansund BK Over 0.5 Cards", "prob": 75, "category": "Cards", "detail": "avg 1.4 (7gm)", "history": "2/3/1/1/1/1/1"}, {"match": "Kristiansund BK v KFUM Oslo", "market": "KFUM Oslo Over 7.0 Shots", "prob": 79, "category": "Shots", "detail": "avg 10.1 (7gm)", "history": "16/9/9/5/9/10/13"}, {"match": "Kristiansund BK v KFUM Oslo", "market": "KFUM Oslo Over 2.5 Shots on Target", "prob": 71, "category": "Shots on Target", "detail": "avg 3.7 (7gm)", "history": "7/3/1/1/5/4/5"}, {"match": "Kristiansund BK v KFUM Oslo", "market": "KFUM Oslo Over 3.0 Corners", "prob": 67, "category": "Corners", "detail": "avg 4.6 (7gm)", "history": "6/3/7/2/6/1/7"}, {"match": "Kristiansund BK v KFUM Oslo", "market": "KFUM Oslo Over 0.5 Cards", "prob": 88, "category": "Cards", "detail": "avg 2.1 (7gm)", "history": "3/1/5/3/1/2/0"}];
+
+function initCategoryToggles() {
+  const container = document.getElementById('categoryToggles');
+  const cats = [...new Set(LEGS.map(l => l.category))];
+  container.innerHTML = cats.map(c => `
+    <label style="display:flex;align-items:center;gap:4px;color:#ccc;cursor:pointer">
+      <input type="checkbox" class="catToggle" value="${c}" ${c === 'Corners' ? '' : 'checked'}>
+      ${c}
+    </label>
+  `).join('');
+}
+initCategoryToggles();
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Sorts safest-first at a coarse level (5-point probability bands) but
+// shuffles legs WITHIN each band, so e.g. five different legs all sitting
+// at 84-88% get picked in a different order each time instead of always
+// the same one — this is what actually lets the builder draw from the
+// full pool of matches instead of fixating on whichever leg happens to
+// be a fraction of a percent ahead.
+function tieredShuffle(legs, bandSize) {
+  const bands = {};
+  legs.forEach(l => {
+    const band = Math.floor(l.prob / bandSize);
+    (bands[band] = bands[band] || []).push(l);
+  });
+  const bandKeys = Object.keys(bands).map(Number).sort((a, b) => b - a);
+  let result = [];
+  bandKeys.forEach(b => { result = result.concat(shuffle(bands[b])); });
+  return result;
+}
+
+function buildSafest() {
+  const target = parseFloat(document.getElementById('targetOdds').value) || 5.0;
+  const maxLegs = parseInt(document.getElementById('maxLegs').value) || 8;
+  const activeCats = [...document.querySelectorAll('.catToggle:checked')].map(el => el.value);
+
+  // Group legs by category, tiered-shuffled within each, so the builder can
+  // round-robin across market types instead of exhausting one category
+  // (usually Shots, since it tends to have the highest raw probabilities)
+  // before touching any other — and so it doesn't fixate on the same
+  // handful of matches every time when many legs are near-equally safe.
+  const byCategory = {};
+  LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category)).forEach(l => {
+    (byCategory[l.category] = byCategory[l.category] || []).push(l);
+  });
+  const categories = Object.keys(byCategory);
+  categories.forEach(c => { byCategory[c] = tieredShuffle(byCategory[c], 5); });
+  const cursor = {};
+  categories.forEach(c => cursor[c] = 0);
+
+  const chosen = [];
+  const matchCount = {};
+  let combinedOdds = 1;
+  let addedThisPass = true;
+
+  while (addedThisPass && combinedOdds < target && chosen.length < maxLegs) {
+    addedThisPass = false;
+    for (const cat of categories) {
+      if (combinedOdds >= target || chosen.length >= maxLegs) break;
+      const arr = byCategory[cat];
+      while (cursor[cat] < arr.length) {
+        const leg = arr[cursor[cat]];
+        cursor[cat]++;
+        const count = matchCount[leg.match] || 0;
+        if (count >= 2) continue;  // cap legs per match to limit correlation risk
+        chosen.push(leg);
+        combinedOdds *= 100 / leg.prob;
+        matchCount[leg.match] = count + 1;
+        addedThisPass = true;
+        break;
+      }
+    }
+  }
+
+  const el = document.getElementById('builderResult');
+  if (!chosen.length) {
+    el.innerHTML = 'No legs available to build from.';
+    return;
+  }
+
+  const rows = chosen.map(l =>
+    `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #2a3038">
+       <span>${l.match}<br><span style="color:#7ec8ff">${l.market}</span> <span style="color:#555">· ${l.category}</span>
+       ${l.detail ? `<br><span style="color:#666;font-size:10px">${l.detail}</span>` : ''}
+       ${l.history ? `<br><span style="color:#555;font-size:10px">last games: ${l.history}</span>` : ''}</span>
+       <span style="color:#ffeb3b;font-weight:bold">${l.prob}%</span>
+     </div>`
+  ).join('');
+
+  const capNote = chosen.length >= maxLegs && combinedOdds < target
+    ? ' (hit the leg cap before reaching target — raise Max legs or lower Target odds)'
+    : (combinedOdds < target ? ' (ran out of legs before reaching target)' : '');
+
+  el.innerHTML = `
+    <div style="color:white;font-size:13px;margin-bottom:6px">
+      ${chosen.length} legs · est. combined odds ~<b>${combinedOdds.toFixed(2)}</b>${capNote}
+    </div>
+    ${rows}
+    <div style="color:#666;font-size:10px;margin-top:8px;line-height:1.4">
+      Estimate multiplies each leg's fair odds (100/probability) — real bookmaker
+      odds include their margin and legs within the same match aren't fully
+      independent, so treat this as a ranking tool, not a firm price. Shots/SoT/
+      corners lines are set automatically below each team's recent-form average
+      for a safety margin; goals/BTTS/FH-corners use the model's own probabilities.
+    </div>
+  `;
+}
+</script>
+
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Danish Superliga · 2026-10-25 15:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">AC Horsens vs Sønderjyske Fodbold</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">5.12</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">89%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">80%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">67%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">15%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">17%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">4.79</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">70%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">52%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>AC Horsens: 2.29 goals/gm · shots 13.7 · SoT 5.7 · corners 2.9 (FH 1.7) · tackles 15.0 · saves 2.9 · cards 2.6 (7gm)</div>
+    <div style="margin-top:4px">Sønderjyske Fodbold: 1.43 goals/gm · shots 12.0 · SoT 4.3 · corners 4.1 (FH 1.1) · tackles 14.3 · saves 3.6 · cards 2.4 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">AC Horsens last games</span> — goals 2/2/2/5/0/2/3 · shots 13/10/9/16/11/20/17 · SoT 6/5/5/9/3/5/7 · corners 3/2/3/1/4/3/4 · cards 0/4/3/3/3/2/3</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Sønderjyske Fodbold last games</span> — goals 2/0/1/2/1/4/0 · shots 10/10/11/11/18/10/14 · SoT 5/5/2/3/3/7/5 · corners 1/6/3/1/6/5/7 · cards 4/2/2/4/1/3/1</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Eredivisie · 2026-10-25 15:45</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Sparta Rotterdam vs AFC Ajax</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.92</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">87%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">76%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">14%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">14%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">72%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">6.36</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">88%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">76%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Sparta Rotterdam: 1.86 goals/gm · shots 14.3 · SoT 5.4 · corners 6.1 (FH 3.1) · tackles 17.6 · saves 3.4 · cards 1.1 (7gm)</div>
+    <div style="margin-top:4px">AFC Ajax: 2.86 goals/gm · shots 23.6 · SoT 7.9 · corners 7.1 (FH 3.3) · tackles 13.7 · saves 2.9 · cards 2.0 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Sparta Rotterdam last games</span> — goals 3/3/1/2/1/0/3 · shots 16/14/10/21/10/11/18 · SoT 9/5/2/8/6/0/8 · corners 5/5/4/15/5/3/6 · cards 1/0/1/0/1/2/3</div>
+    <div style="margin-top:3px"><span style="color:#aaa">AFC Ajax last games</span> — goals 2/4/1/5/5/2/1 · shots 23/12/19/27/33/33/18 · SoT 4/9/6/11/12/8/5 · corners 7/4/1/11/14/9/4 · cards 3/0/3/5/0/1/2</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Serie A · 2026-10-25 11:30</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Inter vs Fiorentina</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.71</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">85%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">68%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">79%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">11%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">9%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">3.41</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">44%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">26%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Inter: 3.0 goals/gm · shots 22.5 · SoT 7.2 · corners 5.7 (FH 2.2) · tackles 17.2 · saves 2.3 · cards 1.3 (6gm)</div>
+    <div style="margin-top:4px">Fiorentina: 1.17 goals/gm · shots 16.2 · SoT 5.2 · corners 4.3 (FH 1.7) · tackles 15.0 · saves 2.7 · cards 2.0 (6gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Inter last games</span> — goals 4/1/3/5/2/3 · shots 13/31/29/27/16/19 · SoT 5/7/8/12/5/6 · corners 3/6/10/10/2/3 · cards 2/1/1/1/3/0</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Fiorentina last games</span> — goals 0/0/1/4/1/1 · shots 9/25/14/19/17/13 · SoT 4/4/6/10/4/3 · corners 3/8/3/4/4/4 · cards 2/3/0/1/3/3</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Bundesliga · 2026-10-25 14:30</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">TSG Hoffenheim vs Bayer 04 Leverkusen</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.68</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">85%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">77%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">19%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">16%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">65%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">4.0</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">57%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">37%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>TSG Hoffenheim: 1.8 goals/gm · shots 18.6 · SoT 4.8 · corners 6.8 (FH 1.6) · tackles 15.2 · saves 2.4 · cards 2.4 (5gm)</div>
+    <div style="margin-top:4px">Bayer 04 Leverkusen: 2.8 goals/gm · shots 21.2 · SoT 6.4 · corners 8.0 (FH 2.4) · tackles 14.0 · saves 2.0 · cards 1.6 (5gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">TSG Hoffenheim last games</span> — goals 2/2/2/1/2 · shots 15/18/20/23/17 · SoT 4/6/8/2/4 · corners 7/10/5/5/7 · cards 2/4/1/1/4</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Bayer 04 Leverkusen last games</span> — goals 2/4/2/2/4 · shots 21/21/30/18/16 · SoT 4/10/5/6/7 · corners 3/11/14/9/3 · cards 2/2/1/2/1</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Eredivisie · 2026-10-25 13:30</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">PSV Eindhoven vs Feyenoord</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.3</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">80%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">78%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">35%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">20%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">46%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">3.64</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">49%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">30%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>PSV Eindhoven: 3.43 goals/gm · shots 20.3 · SoT 7.9 · corners 6.9 (FH 3.3) · tackles 18.0 · saves 2.7 · cards 1.7 (7gm)</div>
+    <div style="margin-top:4px">Feyenoord: 3.71 goals/gm · shots 21.3 · SoT 8.4 · corners 5.7 (FH 3.1) · tackles 15.4 · saves 2.0 · cards 0.9 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">PSV Eindhoven last games</span> — goals 2/5/6/3/4/2/2 · shots 20/24/30/13/28/11/16 · SoT 8/12/14/5/10/4/2 · corners 7/9/13/1/9/5/4 · cards 0/1/1/6/1/2/1</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Feyenoord last games</span> — goals 2/5/2/3/7/5/2 · shots 27/14/33/11/26/23/15 · SoT 6/7/12/6/12/12/4 · corners 6/3/11/1/6/6/7 · cards 0/1/0/2/0/2/1</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Eliteserien · 2026-10-25 13:30</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Viking FK vs Tromsø IL</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.29</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">80%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">70%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">70%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">15%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">15%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">5.54</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">80%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">65%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Viking FK: 2.71 goals/gm · shots 17.6 · SoT 6.4 · corners 7.7 (FH 4.6) · tackles 16.3 · saves 3.1 · cards 1.0 (7gm)</div>
+    <div style="margin-top:4px">Tromsø IL: 2.14 goals/gm · shots 12.3 · SoT 6.3 · corners 4.4 (FH 2.3) · tackles 15.1 · saves 2.1 · cards 2.0 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Viking FK last games</span> — goals 2/1/2/1/8/3/2 · shots 17/6/22/18/28/23/9 · SoT 8/1/6/4/13/9/4 · corners 11/6/14/5/7/7/4 · cards 2/0/1/2/0/1/1</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Tromsø IL last games</span> — goals 6/2/0/0/3/3/1 · shots 12/7/15/8/15/18/11 · SoT 6/3/7/3/9/11/5 · corners 4/2/5/7/4/7/2 · cards 1/1/2/3/3/0/4</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Swiss Super League · 2026-10-25 15:30</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Basel vs Grasshopper Club Zürich</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.18</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">79%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">76%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">48%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">20%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">32%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">5.17</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">76%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">59%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Basel: 1.71 goals/gm · shots 11.6 · SoT 3.4 · corners 3.9 (FH 2.0) · tackles 13.9 · saves 3.7 · cards 3.0 (7gm)</div>
+    <div style="margin-top:4px">Grasshopper Club Zürich: 1.43 goals/gm · shots 16.0 · SoT 4.9 · corners 5.9 (FH 2.7) · tackles 21.1 · saves 3.0 · cards 1.9 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Basel last games</span> — goals 2/3/1/1/4/1/0 · shots 14/12/11/5/17/10/12 · SoT 6/4/3/2/6/2/1 · corners 6/3/4/1/3/5/5 · cards 7/2/4/1/2/4/1</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Grasshopper Club Zürich last games</span> — goals 2/2/2/1/2/1/0 · shots 16/22/20/17/8/21/8 · SoT 3/8/7/5/3/6/2 · corners 9/7/8/5/1/8/3 · cards 1/1/2/3/3/2/1</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">MLS · 2026-10-25 02:30</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">San Diego FC vs Seattle Sounders FC</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.16</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">78%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">65%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">12%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">14%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">74%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">5.74</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">82%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">68%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>San Diego FC: 1.57 goals/gm · shots 11.6 · SoT 4.6 · corners 5.0 (FH 2.1) · tackles 13.0 · saves 3.4 · cards 2.3 (7gm)</div>
+    <div style="margin-top:4px">Seattle Sounders FC: 2.0 goals/gm · shots 14.9 · SoT 6.4 · corners 6.9 (FH 3.3) · tackles 13.0 · saves 3.9 · cards 1.6 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">San Diego FC last games</span> — goals 0/2/0/2/3/1/3 · shots 7/10/10/8/15/14/17 · SoT 2/6/5/3/5/5/6 · corners 4/1/11/1/1/7/10 · cards 2/5/2/1/0/3/3</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Seattle Sounders FC last games</span> — goals 1/3/2/3/2/3/0 · shots 17/16/11/13/21/9/17 · SoT 8/6/4/8/7/5/7 · corners 3/6/7/5/11/5/11 · cards 2/0/4/2/1/2/0</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">LaLiga · 2026-10-25 20:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Barcelona vs Real Madrid</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.14</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">78%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">74%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">57%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">19%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">24%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">5.03</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">74%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">56%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Barcelona: 4.14 goals/gm · shots 23.1 · SoT 8.4 · corners 8.6 (FH 4.4) · tackles 15.4 · saves 1.7 · cards 1.4 (7gm)</div>
+    <div style="margin-top:4px">Real Madrid: 2.43 goals/gm · shots 17.4 · SoT 7.0 · corners 7.0 (FH 3.6) · tackles 14.9 · saves 3.3 · cards 2.6 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Barcelona last games</span> — goals 2/5/5/4/7/3/3 · shots 22/26/25/12/30/24/23 · SoT 10/9/10/6/9/7/8 · corners 12/9/4/5/18/3/9 · cards 1/0/3/1/3/0/2</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Real Madrid last games</span> — goals 4/4/0/4/3/1/1 · shots 20/19/20/24/20/8/11 · SoT 11/8/8/11/4/3/4 · corners 4/9/10/11/5/1/9 · cards 3/0/4/0/2/3/6</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">MLS · 2026-10-25 00:30</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Sporting Kansas City vs Austin FC</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.13</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">78%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">76%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">44%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">20%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">36%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">6.22</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">87%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">74%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Sporting Kansas City: 2.14 goals/gm · shots 15.6 · SoT 6.4 · corners 4.9 (FH 2.0) · tackles 13.0 · saves 4.9 · cards 1.7 (7gm)</div>
+    <div style="margin-top:4px">Austin FC: 1.29 goals/gm · shots 11.0 · SoT 3.6 · corners 4.9 (FH 3.0) · tackles 11.4 · saves 4.6 · cards 1.6 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Sporting Kansas City last games</span> — goals 3/3/3/2/1/3/0 · shots 26/20/10/10/22/12/9 · SoT 10/8/6/4/11/5/1 · corners 7/6/3/2/6/6/4 · cards 2/2/3/4/1/0/0</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Austin FC last games</span> — goals 1/1/2/0/3/1/1 · shots 16/11/4/8/13/11/14 · SoT 3/2/2/3/6/5/4 · corners 7/8/0/6/4/4/5 · cards 1/0/6/2/1/1/0</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">MLS · 2026-10-25 00:30</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Houston Dynamo vs Minnesota United</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.05</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">77%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">75%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">47%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">20%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">33%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">4.87</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">72%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">54%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Houston Dynamo: 1.29 goals/gm · shots 13.4 · SoT 4.4 · corners 4.1 (FH 2.0) · tackles 12.4 · saves 2.9 · cards 1.6 (7gm)</div>
+    <div style="margin-top:4px">Minnesota United: 2.0 goals/gm · shots 13.1 · SoT 4.0 · corners 4.0 (FH 2.3) · tackles 15.4 · saves 3.0 · cards 2.1 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Houston Dynamo last games</span> — goals 0/2/0/2/0/2/3 · shots 18/12/11/7/21/15/10 · SoT 5/6/5/2/4/6/3 · corners 6/1/3/3/8/5/3 · cards 4/1/1/0/2/0/3</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Minnesota United last games</span> — goals 4/1/2/2/1/2/2 · shots 17/9/11/15/14/15/11 · SoT 8/2/3/5/2/6/2 · corners 3/2/5/5/7/2/4 · cards 3/2/4/1/2/2/1</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Eredivisie · 2026-10-25 13:30</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">NEC Nijmegen vs FC Groningen</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.98</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">76%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">74%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">31%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">20%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">49%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">2.78</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">30%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">15%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>NEC Nijmegen: 1.71 goals/gm · shots 12.4 · SoT 3.9 · corners 3.7 (FH 0.9) · tackles 15.7 · saves 2.9 · cards 1.6 (7gm)</div>
+    <div style="margin-top:4px">FC Groningen: 2.57 goals/gm · shots 14.7 · SoT 6.0 · corners 4.6 (FH 2.0) · tackles 13.9 · saves 3.1 · cards 1.1 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">NEC Nijmegen last games</span> — goals 4/3/1/2/0/1/1 · shots 21/8/12/11/10/17/8 · SoT 10/4/2/3/1/5/2 · corners 2/7/1/2/5/5/4 · cards 0/3/1/1/4/0/2</div>
+    <div style="margin-top:3px"><span style="color:#aaa">FC Groningen last games</span> — goals 4/1/2/2/1/3/5 · shots 17/7/23/21/4/17/14 · SoT 14/4/2/4/2/7/9 · corners 2/4/7/8/0/5/6 · cards 1/1/3/1/0/0/2</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">LaLiga · 2026-10-25 17:30</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Real Sociedad vs Levante UD</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.98</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">76%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">74%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">44%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">21%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">35%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">5.86</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">84%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">70%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Real Sociedad: 1.71 goals/gm · shots 13.9 · SoT 5.3 · corners 7.6 (FH 4.4) · tackles 18.0 · saves 4.4 · cards 2.4 (7gm)</div>
+    <div style="margin-top:4px">Levante UD: 1.57 goals/gm · shots 12.0 · SoT 4.3 · corners 3.3 (FH 1.4) · tackles 19.3 · saves 3.4 · cards 1.1 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Real Sociedad last games</span> — goals 1/2/0/3/0/3/3 · shots 10/17/16/13/8/21/12 · SoT 3/10/5/6/3/6/4 · corners 7/7/11/7/9/5/7 · cards 3/2/2/2/2/4/2</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Levante UD last games</span> — goals 0/0/5/0/2/1/3 · shots 4/11/19/11/13/6/20 · SoT 0/1/10/3/7/1/8 · corners 1/4/5/4/3/1/5 · cards 0/1/1/2/1/1/2</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Premier League · 2026-10-25 14:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Crystal Palace vs Newcastle United</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.94</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">75%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">74%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">39%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">21%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">40%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">4.99</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">73%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">56%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Crystal Palace: 1.5 goals/gm · shots 11.0 · SoT 4.2 · corners 2.8 (FH 1.8) · tackles 22.2 · saves 3.5 · cards 1.5 (6gm)</div>
+    <div style="margin-top:4px">Newcastle United: 1.67 goals/gm · shots 11.7 · SoT 4.0 · corners 4.7 (FH 2.7) · tackles 13.7 · saves 3.5 · cards 2.2 (6gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Crystal Palace last games</span> — goals 0/1/3/2/0/3 · shots 11/9/10/11/12/13 · SoT 4/1/5/4/4/7 · corners 0/2/1/6/3/5 · cards 1/1/0/2/3/2</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Newcastle United last games</span> — goals 2/2/2/1/2/1 · shots 13/11/8/7/12/19 · SoT 4/2/2/5/5/6 · corners 2/7/4/5/4/6 · cards 5/2/2/2/1/1</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Swiss Super League · 2026-10-25 13:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">FC Thun vs FC Lugano</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.93</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">75%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">60%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">10%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">14%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">76%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">5.65</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">81%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">67%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>FC Thun: 1.71 goals/gm · shots 15.6 · SoT 4.0 · corners 5.9 (FH 2.4) · tackles 19.7 · saves 2.7 · cards 2.9 (7gm)</div>
+    <div style="margin-top:4px">FC Lugano: 2.86 goals/gm · shots 17.0 · SoT 5.6 · corners 6.0 (FH 3.3) · tackles 16.7 · saves 3.1 · cards 3.3 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">FC Thun last games</span> — goals 4/0/2/0/2/2/2 · shots 7/22/15/20/17/15/13 · SoT 5/5/4/1/2/6/5 · corners 1/6/4/10/7/7/6 · cards 2/3/2/4/2/4/3</div>
+    <div style="margin-top:3px"><span style="color:#aaa">FC Lugano last games</span> — goals 2/1/3/2/4/4/4 · shots 7/20/23/17/12/21/19 · SoT 4/3/5/7/8/5/7 · corners 4/11/7/4/2/6/8 · cards 3/2/5/3/4/3/3</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Eliteserien · 2026-10-25 16:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Sarpsborg 08 vs Aalesunds FK</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.82</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">73%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">72%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">37%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">21%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">42%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">6.5</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">89%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">78%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Sarpsborg 08: 1.43 goals/gm · shots 16.4 · SoT 5.6 · corners 6.0 (FH 1.7) · tackles 15.9 · saves 4.6 · cards 1.3 (7gm)</div>
+    <div style="margin-top:4px">Aalesunds FK: 2.0 goals/gm · shots 17.3 · SoT 5.9 · corners 6.0 (FH 2.9) · tackles 15.9 · saves 4.7 · cards 2.4 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Sarpsborg 08 last games</span> — goals 1/1/0/2/1/1/4 · shots 25/20/5/19/6/22/18 · SoT 3/6/2/8/4/8/8 · corners 8/4/3/7/3/11/6 · cards 3/1/1/1/0/1/2</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Aalesunds FK last games</span> — goals 1/5/1/2/1/2/2 · shots 10/24/9/24/19/12/23 · SoT 2/8/4/12/3/5/7 · corners 4/10/3/7/4/6/8 · cards 1/0/4/2/5/4/1</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">MLS · 2026-10-25 02:30</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Portland Timbers vs Charlotte FC</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.78</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">73%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">71%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">30%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">21%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">49%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">5.66</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">82%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">67%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Portland Timbers: 1.71 goals/gm · shots 15.0 · SoT 4.1 · corners 5.4 (FH 1.9) · tackles 14.4 · saves 3.0 · cards 1.3 (7gm)</div>
+    <div style="margin-top:4px">Charlotte FC: 1.57 goals/gm · shots 11.4 · SoT 4.3 · corners 5.6 (FH 3.6) · tackles 11.6 · saves 6.9 · cards 2.6 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Portland Timbers last games</span> — goals 5/2/1/0/1/3/0 · shots 11/16/18/21/18/9/12 · SoT 5/3/4/3/6/5/3 · corners 4/9/5/5/9/1/5 · cards 1/1/0/2/1/1/3</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Charlotte FC last games</span> — goals 0/2/3/2/0/3/1 · shots 9/15/8/10/11/18/9 · SoT 3/4/4/7/2/8/2 · corners 8/3/3/3/4/14/4 · cards 6/1/1/2/7/1/0</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Eredivisie · 2026-10-25 11:15</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Fortuna Sittard vs Excelsior</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.6</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">70%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">70%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">41%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">22%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">37%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">3.66</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">50%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">31%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Fortuna Sittard: 1.71 goals/gm · shots 11.1 · SoT 4.4 · corners 2.9 (FH 0.7) · tackles 11.9 · saves 4.4 · cards 1.6 (7gm)</div>
+    <div style="margin-top:4px">Excelsior: 1.71 goals/gm · shots 11.0 · SoT 3.7 · corners 3.6 (FH 1.7) · tackles 14.3 · saves 3.7 · cards 1.6 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Fortuna Sittard last games</span> — goals 3/0/3/3/1/1/1 · shots 17/4/9/8/8/17/15 · SoT 7/2/5/5/4/3/5 · corners 6/1/2/0/3/3/5 · cards 0/1/4/4/1/1/0</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Excelsior last games</span> — goals 1/2/3/2/1/2/1 · shots 5/15/13/14/10/4/16 · SoT 2/5/6/5/4/2/2 · corners 1/6/6/4/5/0/3 · cards 1/2/1/3/2/2/0</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Eliteserien · 2026-10-25 16:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Kristiansund BK vs KFUM Oslo</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.4</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">66%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">64%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">23%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">21%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">57%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">5.42</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">79%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">63%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Kristiansund BK: 1.29 goals/gm · shots 12.4 · SoT 3.4 · corners 4.0 (FH 1.9) · tackles 14.1 · saves 4.6 · cards 1.4 (7gm)</div>
+    <div style="margin-top:4px">KFUM Oslo: 1.43 goals/gm · shots 10.1 · SoT 3.7 · corners 4.6 (FH 1.9) · tackles 15.7 · saves 3.7 · cards 2.1 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Kristiansund BK last games</span> — goals 2/0/2/2/1/1/1 · shots 10/18/19/9/12/15/4 · SoT 2/3/5/2/2/7/3 · corners 1/10/4/4/5/4/0 · cards 2/3/1/1/1/1/1</div>
+    <div style="margin-top:3px"><span style="color:#aaa">KFUM Oslo last games</span> — goals 1/1/1/0/2/3/2 · shots 16/9/9/5/9/10/13 · SoT 7/3/1/1/5/4/5 · corners 6/3/7/2/6/1/7 · cards 3/1/5/3/1/2/0</div>
+  </div>
+</div>
+</body></html>
