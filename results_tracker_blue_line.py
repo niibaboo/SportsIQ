@@ -124,6 +124,12 @@ def log_todays_signals(legs, hot_form_entries, real_streak_entries, log,
             "id": eid, "scanner": scanner, "subject": leg["market"].rsplit(" ", 0)[0],
             "match": leg["match"], "market": leg["market"], "value": leg["prob"],
             "detail": leg.get("detail"), "line": leg.get("line"),
+            # Team Total now logs both Over and Under legs (user request,
+            # 2026-10-18) -- direction defaults to "over" for every other
+            # scanner, which only ever had one direction anyway, and for
+            # any already-logged Team Total entry from before this field
+            # existed (those were all Over legs, the only kind logged then).
+            "direction": leg.get("direction", "over"),
             "game_id": leg["game_id"], "game_date": leg["game_date"],
             "is_home": leg.get("is_home"), "player_id": leg.get("player_id"),
             "date_key": leg["game_date"],
@@ -306,7 +312,15 @@ def _verify_team_leg(entry):
         actual = home_score + away_score
     else:
         actual = home_score if entry["is_home"] else away_score
-    return {"actual": actual, "result": "hit" if actual > entry["line"] else "miss"}
+    # Team Total now has Under legs too (direction defaults to "over" for
+    # every pre-existing entry, including game_total which only ever had
+    # one direction). Line is always an X.5 half-line, so there's never a
+    # push either way.
+    if entry.get("direction", "over") == "under":
+        hit = actual < entry["line"]
+    else:
+        hit = actual > entry["line"]
+    return {"actual": actual, "result": "hit" if hit else "miss"}
 
 
 def _verify_player_leg(entry):
