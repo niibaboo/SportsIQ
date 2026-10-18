@@ -463,6 +463,28 @@ def normal_prop(mean, std, factor=0.72, round_to=0.5):
     return {"line": line, "prob": round(prob_over * 100), "avg": mean}
 
 
+# Team Total Under counterpart (user request, 2026-10-18 -- same fix as
+# Blue Line's safe_line_under). Deliberately NOT the same line as
+# normal_prop() above with the comparison flipped: factor=0.72 there
+# picks a line intentionally LOW relative to the projection so the Over
+# is an easy clear, so using that line for Under would make it a
+# near-guaranteed miss, not a real prediction. factor=1.28 mirrors
+# 0.72 around 1.0 (0.72+1.28=2.0), scaling the line UP from the
+# projection by roughly the same distance 0.72 scales it down, landing
+# on a line genuinely likely to hold for Under -- the natural fit here
+# too since Blitz IQ already models team totals as normal (not
+# Poisson), so this just reuses norm_cdf the same way.
+def normal_prop_under(mean, std, factor=1.28, round_to=0.5):
+    if mean is None or std is None:
+        return None
+    raw_line = mean * factor
+    line = math.floor(raw_line / round_to) * round_to
+    if line < round_to:
+        line = round_to
+    prob_under = norm_cdf(line, mean, std)
+    return {"line": line, "prob": round(prob_under * 100), "avg": mean}
+
+
 def poisson_prop(mean, factor=0.72):
     if mean is None:
         return None
@@ -475,10 +497,10 @@ def poisson_prop(mean, factor=0.72):
     return {"line": line, "prob": round(prob * 100), "avg": mean}
 
 
-def hit_rate(values, line):
+def hit_rate(values, line, under=False):
     if not values:
         return None
-    hits = sum(1 for v in values if v > line)
+    hits = sum(1 for v in values if (v < line if under else v > line))
     return {"hits": hits, "total": len(values)}
 
 
@@ -632,6 +654,19 @@ def build_legs(predictions):
                 "detail": f"proj {home_total['avg']} pts ({hf['n_games']}gm{' · last season' if hf.get('source') == 'prior_season' else ''})",
                 "history": format_history(hf.get("scored_list")),
                 "game_id": game_id, "game_date": game_date, "is_home": True, "line": home_total["line"],
+                "direction": "over",
+            })
+        home_total_under = normal_prop_under(p["exp_home"], DEFAULT_TEAM_STD)
+        if home_total_under:
+            legs.append({
+                "match": match_label,
+                "market": f"{p['home_team']} Under {home_total_under['line']} Points",
+                "prob": home_total_under["prob"], "category": "Team Total",
+                "hit_rate": hit_rate(hf.get("scored_list"), home_total_under["line"], under=True),
+                "detail": f"proj {home_total_under['avg']} pts ({hf['n_games']}gm{' · last season' if hf.get('source') == 'prior_season' else ''})",
+                "history": format_history(hf.get("scored_list")),
+                "game_id": game_id, "game_date": game_date, "is_home": True, "line": home_total_under["line"],
+                "direction": "under",
             })
         away_total = normal_prop(p["exp_away"], DEFAULT_TEAM_STD)
         if away_total:
@@ -643,6 +678,19 @@ def build_legs(predictions):
                 "detail": f"proj {away_total['avg']} pts ({af['n_games']}gm{' · last season' if af.get('source') == 'prior_season' else ''})",
                 "history": format_history(af.get("scored_list")),
                 "game_id": game_id, "game_date": game_date, "is_home": False, "line": away_total["line"],
+                "direction": "over",
+            })
+        away_total_under = normal_prop_under(p["exp_away"], DEFAULT_TEAM_STD)
+        if away_total_under:
+            legs.append({
+                "match": match_label,
+                "market": f"{p['away_team']} Under {away_total_under['line']} Points",
+                "prob": away_total_under["prob"], "category": "Team Total",
+                "hit_rate": hit_rate(af.get("scored_list"), away_total_under["line"], under=True),
+                "detail": f"proj {away_total_under['avg']} pts ({af['n_games']}gm{' · last season' if af.get('source') == 'prior_season' else ''})",
+                "history": format_history(af.get("scored_list")),
+                "game_id": game_id, "game_date": game_date, "is_home": False, "line": away_total_under["line"],
+                "direction": "under",
             })
 
         game_total = normal_prop(p["exp_total"], p["total_std"])
