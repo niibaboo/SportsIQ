@@ -1012,6 +1012,7 @@ CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;padding:16p
   <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
     {home_team}: {home_scored} scored/gm • {home_allowed} allowed/gm ({home_n}gm{home_source_tag})
   </div>
+  <div style="color:#888;font-size:11px;margin-top:8px">Team Total — {away_team} O{away_o_line} {away_o_prob}% / U{away_u_line} {away_u_prob}% • {home_team} O{home_o_line} {home_o_prob}% / U{home_u_line} {home_u_prob}%</div>
   {player_props_html}
 </div>"""
 
@@ -1029,6 +1030,23 @@ def player_props_section(team_label, props):
 
 
 def make_html(predictions):
+    # Team Total Over/Under surfaced directly on the card (user request,
+    # 2026-10-18 -- same gap/fix as Blue Line: previously this only showed
+    # up in the Safest Bet Builder, easy to miss on the live page). Reuses
+    # the exact same normal_prop/normal_prop_under the builder uses, so
+    # the numbers always match.
+    def _team_total(p):
+        home_o = normal_prop(p["exp_home"], DEFAULT_TEAM_STD)
+        home_u = normal_prop_under(p["exp_home"], DEFAULT_TEAM_STD)
+        away_o = normal_prop(p["exp_away"], DEFAULT_TEAM_STD)
+        away_u = normal_prop_under(p["exp_away"], DEFAULT_TEAM_STD)
+        return {
+            "home_o_line": home_o["line"] if home_o else "—", "home_o_prob": home_o["prob"] if home_o else "—",
+            "home_u_line": home_u["line"] if home_u else "—", "home_u_prob": home_u["prob"] if home_u else "—",
+            "away_o_line": away_o["line"] if away_o else "—", "away_o_prob": away_o["prob"] if away_o else "—",
+            "away_u_line": away_u["line"] if away_u else "—", "away_u_prob": away_u["prob"] if away_u else "—",
+        }
+
     cards = "".join(CARD_TEMPLATE.format(
         date=p['date'][:16].replace('T', ' '), match=p['match'],
         away_team=p['away_team'], home_team=p['home_team'],
@@ -1043,6 +1061,7 @@ def make_html(predictions):
             player_props_section(p['away_team'], p.get('away_props', []))
             + player_props_section(p['home_team'], p.get('home_props', []))
         ),
+        **_team_total(p),
     ) for p in predictions)
     if not cards:
         cards = '<p style="text-align:center;color:#888">No upcoming games with usable form data this week.</p>'
