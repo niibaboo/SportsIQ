@@ -1,245 +1,1147 @@
 #!/usr/bin/env python3
 """
-Blitz IQ Live Signals — live in-game score-pace signals for NFL games in
-progress, same "Model Signal" pattern as Match IQ Live (a green-dot signal
-that only qualifies once its probability clears 70%, same bar as the
-suite's Daily Signals scanners).
+Blitz IQ — NFL Team Points Over/Under Predictor
+Same architecture as the MLB (Strike Zone) and soccer (Goal IQ) tools, adapted
+for NFL scoring:
 
-Reuses nfl_model.py's existing season-form model (last-5-games scored/allowed
-rates, shrunk toward league average) as the baseline, then adjusts each
-team's remaining expected points for how their actual scoring pace THIS
-game compares to what that model expected by now — same idea as Match IQ
-Live's live-xG adjustment. Unlike the soccer version, ESPN's scoreboard
-already carries score, quarter and clock directly on the same response used
-for the main model's weekly scoreboard fetch, so no extra live-stats API
-call is needed per game.
-
-Two live signals per game:
-  - Next Score: which team is more likely to score next, given time
-    remaining and each team's pace-adjusted remaining scoring rate.
-  - Game Total Pace: whether the game's combined score is tracking clearly
-    above/below the model's pregame total projection.
+- Uses ESPN's public (undocumented but documented-elsewhere and no-key-needed)
+  API — no signup required.
+- Team point totals are modeled with a NORMAL distribution, not Poisson.
+  Poisson fits well for low-count events like goals or strikeouts; NFL scores
+  are larger, non-1-point increments (3, 6, 7, 8...) and behave much closer
+  to a bell curve in practice.
+- Recency-weighted last-5-games average, shrunk toward the league average
+  for small samples (same small-sample protection built for MLB/soccer,
+  since NFL teams only play ~17 games/season — "last 5" is meaningfully
+  more of the season than in MLB or soccer).
+- Hot Form / Real Streak screens (added 2026-09-27), for both team scoring
+  and player props — same distinction fixed across every other tool in the
+  suite: Hot Form is an average over the recent-games window (can mask a
+  bad MOST RECENT game); Real Streak is a genuine CONSECUTIVE run above a
+  threshold, walking backward from the most recent game and stopping at
+  the first break.
 
 Setup:
-    python3 blitz_iq_live.py
-    (nfl_model.py must be importable — same folder / on PYTHONPATH — this
-    script reuses its team-form fetching and pregame projection model
-    rather than duplicating them)
+    pip3 install requests --break-system-packages
+    python3 nfl_model.py
 
 Output:
-    docs/blitz-iq-live/live_games.json (consumed by live.html every 60s)
+    docs/index.html, docs/blitz_iq_predictions.csv
+
+Note: ESPN doesn't publish an official rate limit for this endpoint, but
+"excessive requests may be blocked" per their own docs — this script paces
+itself conservatively (1.2s between calls) to stay well clear of that,
+rather than assuming no limit means no risk.
 """
 
 import os
-import json
+import sys
+import time
 import math
-from datetime import datetime, timezone
+import csv
+import json
+from datetime import datetime, timedelta
+import requests
 
-import nfl_model  # reuse the existing season-form model rather than duplicate it
+BASE = "https://site.api.espn.com/apis/site/v2/sports/football/nfl"
+REQUEST_DELAY = 1.2  # no official ESPN rate limit is published — paced conservatively anyway
+RECENT_GAMES = 5
+PRIOR_STRENGTH = 3  # same "worth" of league-average games blended in for small samples as MLB/soccer
+DEFAULT_TEAM_STD = 10.0  # rough per-team point stdev; used until we compute a real one from data
 
-MODEL_SIGNAL_THRESHOLD = 70  # same bar as Match IQ Live / Daily Signals scanners
-GAME_MINUTES = 60  # regulation; overtime is handled as bonus time, see elapsed_minutes()
 
-
-def elapsed_minutes(status):
-    """ESPN's scoreboard gives 'period' (quarter: 1-4, 5+ = OT) and
-    'displayClock' (mm:ss REMAINING in that period) directly on the same
-    response nfl_model.get_week_scoreboard() already fetches — no extra
-    per-game API call needed, unlike Match IQ Live's separate live-stats
-    endpoint."""
-    period = status.get('period')
-    clock = status.get('displayClock', '15:00')
-    if period is None:
-        return None
+def _get(url, params=None, timeout=15):
     try:
-        mins, secs = clock.split(':')
-        remaining_in_period = int(mins) + int(secs) / 60.0
-    except (ValueError, AttributeError):
-        remaining_in_period = 15.0
-
-    if period <= 4:
-        return (period - 1) * 15 + (15 - remaining_in_period)
-    # Overtime: 10-minute periods (regular season). Treated as bonus time
-    # past the 60-minute regulation mark — pace projections get rougher
-    # this far out, but still directionally useful.
-    ot_period_num = period - 4
-    return 60 + (ot_period_num - 1) * 10 + (10 - remaining_in_period)
+        r = requests.get(url, params=params or {}, timeout=timeout)
+        time.sleep(REQUEST_DELAY)
+        if r.status_code != 200:
+            print(f"  [!] {r.status_code} on {url}")
+            return None
+        return r
+    except Exception as e:
+        time.sleep(REQUEST_DELAY)
+        print(f"  [!] request failed: {url} ({e})")
+        return None
 
 
-def calc_pace_adjustment(actual_scored, exp_scored_pregame, elapsed_fraction):
-    """How a team's ACTUAL scoring so far this game compares to what their
-    pregame projection implied by this point — same idea as Match IQ
-    Live's live-xG adjustment. Capped so a small early-game sample (e.g. one
-    early touchdown) doesn't swing the remaining-time projection to an
-    extreme; a 3-point floor on "expected by now" avoids dividing by a
-    near-zero expectation in the opening minutes."""
-    expected_by_now = exp_scored_pregame * elapsed_fraction if elapsed_fraction > 0 else 0.1
-    adjustment = actual_scored / max(expected_by_now, 3.0)
-    return min(max(adjustment, 0.5), 2.0)
+def norm_cdf(x, mean, std):
+    """Standard normal CDF via the error function — no scipy dependency."""
+    if std <= 0:
+        return 1.0 if x >= mean else 0.0
+    z = (x - mean) / (std * math.sqrt(2))
+    return 0.5 * (1 + math.erf(z))
 
 
-def calc_next_score_prob(home_exp_remaining, away_exp_remaining):
-    """P(each team scores next) ≈ ratio of their pace-adjusted remaining
-    expected points — same ratio approach as Match IQ Live's next-goal
-    calculation, adapted from goals to points."""
-    total = home_exp_remaining + away_exp_remaining
-    if total <= 0:
-        return {"home": 50, "away": 50}
+def get_teams():
+    r = _get(f"{BASE}/teams", params={"limit": 40})
+    if r is None:
+        return []
+    try:
+        return r.json()['sports'][0]['leagues'][0]['teams']
+    except Exception as e:
+        print(f"  [!] couldn't parse teams response: {e}")
+        return []
+
+
+team_form_cache = {}
+
+
+def _extract_completed_games(events, team_id):
+    """Shared parsing logic for a schedule response — pulls each completed
+    game's scored/allowed for one team. NOTE: events are sorted ASCENDING
+    by date before slicing, so the resulting scored/allowed lists are
+    OLDEST-FIRST — this is the ordering recency_weighted() (below) and the
+    Hot Form / Real Streak helpers (further below) both rely on: higher
+    weight / streak-priority goes to the LATER index in the list."""
+    completed = [e for e in events if e.get('competitions', [{}])[0].get('status', {})
+                 .get('type', {}).get('completed')]
+    completed.sort(key=lambda e: e.get('date', ''))
+    recent = completed[-RECENT_GAMES:]
+    scored, allowed = [], []
+    for e in recent:
+        comp = e['competitions'][0]
+        competitors = comp.get('competitors', [])
+        me = next((c for c in competitors if str(c['team']['id']) == str(team_id)), None)
+        opp = next((c for c in competitors if str(c['team']['id']) != str(team_id)), None)
+        if not me or not opp:
+            continue
+        try:
+            scored.append(float(me['score']['value']))
+            allowed.append(float(opp['score']['value']))
+        except (KeyError, TypeError, ValueError):
+            continue
+    return scored, allowed
+
+
+def get_team_form(team_id):
+    """Last N completed games for a team — points scored and allowed.
+
+    Early in a new season (Week 1, before most/all games have kicked off),
+    a team can have ZERO completed games this season — that's not a parse
+    bug, it's genuinely no data yet. In that case, fall back to the tail
+    end of LAST season, so the tool isn't dead for the whole first week or
+    two of the year. A form dict is tagged with which source it actually
+    used ('current' or 'prior_season') so that's visible on the page rather
+    than silently blending two different seasons' games without saying so.
+    """
+    if team_id in team_form_cache:
+        return team_form_cache[team_id]
+
+    r = _get(f"{BASE}/teams/{team_id}/schedule")
+    scored, allowed, source = [], [], 'current'
+    if r is not None:
+        try:
+            events = r.json().get('events', [])
+            scored, allowed = _extract_completed_games(events, team_id)
+        except Exception as e:
+            print(f"  [!] couldn't parse schedule for team {team_id}: {e}")
+
+    if not scored:
+        current_year = datetime.now().year
+        prior_season = current_year - 1
+        r2 = _get(f"{BASE}/teams/{team_id}/schedule", params={"season": prior_season})
+        if r2 is not None:
+            try:
+                events2 = r2.json().get('events', [])
+                scored, allowed = _extract_completed_games(events2, team_id)
+                source = 'prior_season'
+            except Exception as e:
+                print(f"  [!] couldn't parse prior-season schedule for team {team_id}: {e}")
+
+    if not scored:
+        return None
+
+    n = len(scored)
+    form = {
+        'avg_scored': round(sum(scored) / n, 1),
+        'avg_allowed': round(sum(allowed) / n, 1),
+        'n_games': n,
+        'source': source,
+        'scored_list': scored,
+        'allowed_list': allowed,
+    }
+    team_form_cache[team_id] = form
+    return form
+
+
+def recency_weighted(values):
+    n = len(values)
+    if n == 0:
+        return None
+    wts = [1.3 ** i for i in range(n)]
+    return sum(w * v for w, v in zip(wts, values)) / sum(wts)
+
+
+def shrink(value, n, league_avg, prior=PRIOR_STRENGTH):
+    return (n * value + prior * league_avg) / (n + prior)
+
+
+def league_averages(all_forms):
+    scored = [f['avg_scored'] for f in all_forms if f]
+    allowed = [f['avg_allowed'] for f in all_forms if f]
+    lg_scored = sum(scored) / len(scored) if scored else 22.0
+    lg_allowed = sum(allowed) / len(allowed) if allowed else 22.0
+    return lg_scored, lg_allowed
+
+
+def predict(h_form, a_form, lg_scored, lg_allowed):
+    h_recent_scored = recency_weighted(h_form['scored_list'])
+    h_recent_allowed = recency_weighted(h_form['allowed_list'])
+    a_recent_scored = recency_weighted(a_form['scored_list'])
+    a_recent_allowed = recency_weighted(a_form['allowed_list'])
+
+    h_scored = shrink(h_recent_scored, h_form['n_games'], lg_scored)
+    h_allowed = shrink(h_recent_allowed, h_form['n_games'], lg_allowed)
+    a_scored = shrink(a_recent_scored, a_form['n_games'], lg_scored)
+    a_allowed = shrink(a_recent_allowed, a_form['n_games'], lg_allowed)
+
+    exp_home = h_scored * (a_allowed / lg_allowed)
+    exp_away = a_scored * (h_allowed / lg_allowed)
+    exp_total = round(exp_home + exp_away, 1)
+
+    total_std = math.sqrt(DEFAULT_TEAM_STD ** 2 + DEFAULT_TEAM_STD ** 2)
+
     return {
-        "home": round((home_exp_remaining / total) * 100),
-        "away": round((away_exp_remaining / total) * 100),
+        'exp_home': round(exp_home, 1), 'exp_away': round(exp_away, 1),
+        'exp_total': exp_total, 'total_std': round(total_std, 1),
     }
 
 
-def calc_game_total_pace(actual_total, exp_total_pregame, total_std, minutes_remaining):
-    """Probability the final combined score clears the model's PREGAME total
-    projection, given what's already on the board plus the remaining time's
-    share of that projection (variance scaled down with time remaining).
-    Mirrors calc_btts_prob's remaining-time-aware structure from Match IQ
-    Live, applied to a live "game total" market instead of BTTS."""
-    if minutes_remaining <= 0:
-        prob_over = 100 if actual_total > exp_total_pregame else 0
-        status = "Final: Over pregame total" if prob_over else "Final: Under pregame total"
-        return {"prob": prob_over, "status": status}
-
-    remaining_fraction = minutes_remaining / GAME_MINUTES
-    remaining_std = total_std * math.sqrt(max(remaining_fraction, 0.05))
-    remaining_mean = exp_total_pregame * remaining_fraction
-    needed = exp_total_pregame - actual_total
-    prob_over = round((1 - nfl_model.norm_cdf(needed, remaining_mean, remaining_std)) * 100)
-    status = "On Pace: Over" if prob_over >= 50 else "On Pace: Under"
-    return {"prob": prob_over, "status": status}
+def over_under_prob(exp_total, total_std, line):
+    p_under = norm_cdf(line, exp_total, total_std)
+    return round((1 - p_under) * 100), round(p_under * 100)
 
 
-def calc_model_signal(next_score, total_pace):
-    """Pick the single highest-confidence qualifying signal, same convention
-    as Match IQ Live: only flagged (green dot) once it clears
-    MODEL_SIGNAL_THRESHOLD (70%). For the Game Total candidate, confidence
-    is in whichever direction (Over/Under) the pace already points, not
-    raw prob_over."""
-    total_direction = total_pace["status"].split(": ")[-1] if ": " in total_pace["status"] else total_pace["status"]
-    total_confidence = total_pace["prob"] if "Over" in total_direction else (100 - total_pace["prob"])
+def get_week_scoreboard():
+    r = _get(f"{BASE}/scoreboard")
+    if r is None:
+        return []
+    try:
+        return r.json().get('events', [])
+    except Exception as e:
+        print(f"  [!] couldn't parse scoreboard: {e}")
+        return []
 
-    candidates = [
-        {"label": "Home Next Score", "prob": next_score["home"]},
-        {"label": "Away Next Score", "prob": next_score["away"]},
-        {"label": f"Game Total {total_direction}", "prob": total_confidence},
-    ]
-    best = max(candidates, key=lambda c: c["prob"])
+
+PLAYER_STAT_CONFIG = {
+    'QB': {'stat': 'YDS', 'label': 'Passing Yards', 'dist': 'normal', 'std': 55, 'prior': 235},
+    'RB': {'stat': 'YDS', 'label': 'Rushing Yards', 'dist': 'normal', 'std': 28, 'prior': 60},
+    'WR': {'stat': 'REC', 'label': 'Receptions', 'dist': 'poisson', 'std': None, 'prior': 4.0},
+    'TE': {'stat': 'REC', 'label': 'Receptions', 'dist': 'poisson', 'std': None, 'prior': 3.5},
+}
+
+# Anytime Touchdown -- a separate prop alongside each position's primary
+# stat above (RB keeps its Rushing Yards prop AND gets an Anytime TD
+# prop; same for WR/TE's Receptions). QB deliberately excluded: a
+# thrown TD doesn't pay out an "Anytime TD" bet, and modeling QB
+# rushing TDs separately isn't worth the added complexity for a hobby
+# tool -- can be added later if wanted.
+#
+# This reuses get_player_gamelog(athlete_id, 'TD') exactly like the
+# YDS/REC stats above -- ESPN's gamelog endpoint appears to key its
+# root-level 'labels' to whichever stat category is that athlete's
+# primary one (passing for a QB, rushing for a RB, receiving for a
+# WR/TE), the same assumption PLAYER_STAT_CONFIG's stat/label pairs
+# above already rely on working correctly in production, so 'TD' comes
+# back as THAT player's rushing or receiving TDs, not a mix.
+#
+# 'prior' here is a per-game TD-RATE prior (not a yardage/reception
+# count) -- fed into the same recency_weighted()+shrink() pipeline,
+# then converted to an anytime-TD probability via the Poisson
+# "at least 1" pattern (1 - P(0)), the same shape Player Stat Model
+# uses for to_score/to_be_carded/goal_or_assist.
+PLAYER_TD_CONFIG = {
+    'RB': {'stat': 'TD', 'prior': 0.45},
+    'WR': {'stat': 'TD', 'prior': 0.35},
+    'TE': {'stat': 'TD', 'prior': 0.30},
+}
+
+depth_chart_cache = {}
+
+
+def get_starters(team_id):
+    if team_id in depth_chart_cache:
+        return depth_chart_cache[team_id]
+    r = _get(f"{BASE}/teams/{team_id}/depthcharts")
+    starters = {}
+    if r is None:
+        print(f"    [!] depth chart fetch failed for team {team_id} (no response)")
+        depth_chart_cache[team_id] = starters
+        return starters
+    try:
+        data = r.json()
+        top_keys = list(data.keys())
+        depthchart_raw = data.get('depthchart')
+        if isinstance(depthchart_raw, list):
+            groups = depthchart_raw
+        elif isinstance(depthchart_raw, dict):
+            groups = depthchart_raw.get('items') or depthchart_raw.get('athletes') or []
+            if not groups:
+                print(f"    [!] depth chart for team {team_id}: 'depthchart' is a dict with keys {list(depthchart_raw.keys())} — none matched expected wrapper keys")
+        else:
+            groups = []
+        if not groups:
+            print(f"    [!] depth chart for team {team_id}: 'depthchart' key present but empty/unrecognized shape (type={type(depthchart_raw).__name__}). Top-level keys were: {top_keys}")
+        for group in groups:
+            positions = group.get('positions', {})
+            for pos_key, pos_data in positions.items():
+                pos_abbr = (pos_data.get('position', {}).get('abbreviation')
+                            or pos_key or '').upper()
+                if pos_abbr not in PLAYER_STAT_CONFIG:
+                    continue
+                if pos_abbr in starters:
+                    continue
+                slots = pos_data.get('athletes', [])
+                if slots:
+                    athlete = slots[0].get('athlete', slots[0])
+                    starters[pos_abbr] = {
+                        'id': athlete.get('id'), 'name': athlete.get('displayName', athlete.get('fullName', '?')),
+                    }
+        if groups and not starters:
+            sample = groups[0]
+            print(f"    [!] depth chart for team {team_id}: found {len(groups)} group(s) but matched 0 of QB/RB/WR/TE. "
+                  f"First group's keys: {list(sample.keys()) if isinstance(sample, dict) else type(sample).__name__}, "
+                  f"positions sub-keys (if any): {list(sample.get('positions', {}).keys()) if isinstance(sample, dict) else 'n/a'}")
+    except Exception as e:
+        print(f"  [!] couldn't parse depth chart for team {team_id}: {e}")
+    depth_chart_cache[team_id] = starters
+    return starters
+
+
+player_gamelog_cache = {}
+
+
+def _fetch_gamelog_values(athlete_id, stat_key, season):
+    r = _get(f"https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/{athlete_id}/gamelog",
+             params={"season": season})
+    values = []
+    if r is None:
+        print(f"    [!] gamelog fetch failed for athlete {athlete_id}, season {season} (no response)")
+        return values
+    try:
+        data = r.json()
+        top_keys = list(data.keys())
+        if top_keys == ['filters']:
+            print(f"    [!] gamelog for athlete {athlete_id}, season {season}: still only got 'filters' even with season param. Filters content: {data.get('filters')}")
+        season_data = data.get('seasonTypes', [])
+        if not season_data and top_keys != ['filters']:
+            print(f"    [!] gamelog for athlete {athlete_id}, season {season}: no 'seasonTypes' key. Top-level keys were: {top_keys}")
+
+        root_labels = data.get('labels') or data.get('names') or data.get('displayNames')
+        if season_data and not root_labels:
+            print(f"    [DIAG] athlete {athlete_id}, season {season}: no root-level labels/names/displayNames found. Full top-level keys: {top_keys}")
+
+        found_any_label_set = bool(root_labels)
+        printed_sample = False
+        for st in season_data:
+            for cat in st.get('categories', []):
+                if not printed_sample:
+                    cat_keys = list(cat.keys())
+                    events_sample = cat.get('events', [])[:1]
+                    totals_sample = cat.get('totals')
+                    print(f"    [DIAG] athlete {athlete_id}, season {season}: category top-level keys: {cat_keys}, root_labels sample: {str(root_labels)[:200]}")
+                    print(f"    [DIAG] first event (raw, truncated to 500 chars): {str(events_sample)[:500]}")
+                    print(f"    [DIAG] category 'totals' (raw, truncated to 500 chars): {str(totals_sample)[:500]}")
+                    printed_sample = True
+                if not root_labels:
+                    continue
+                for game in cat.get('events', []):
+                    stats = game.get('stats', [])
+                    if stat_key in root_labels:
+                        idx = root_labels.index(stat_key)
+                        try:
+                            values.append(float(stats[idx]))
+                        except (IndexError, ValueError, TypeError):
+                            continue
+        if season_data and not values:
+            print(f"    [!] gamelog for athlete {athlete_id}, season {season}, stat '{stat_key}': parsed categories but found no matching values (found_any_labels={found_any_label_set}) — stat_key likely doesn't match ESPN's actual label name")
+    except Exception as e:
+        print(f"  [!] couldn't parse gamelog for athlete {athlete_id}, season {season}: {e}")
+    return values
+
+
+def get_player_gamelog(athlete_id, stat_key):
+    cache_key = (athlete_id, stat_key)
+    if cache_key in player_gamelog_cache:
+        return player_gamelog_cache[cache_key]
+
+    current_year = datetime.now().year
+    values = _fetch_gamelog_values(athlete_id, stat_key, current_year)
+    if not values:
+        values = _fetch_gamelog_values(athlete_id, stat_key, current_year - 1)
+
+    values = values[-RECENT_GAMES:]
+    player_gamelog_cache[cache_key] = values
+    return values
+
+
+def project_player_stat(pos_abbr, athlete_id, name):
+    cfg = PLAYER_STAT_CONFIG[pos_abbr]
+    values = get_player_gamelog(athlete_id, cfg['stat'])
+    if not values:
+        return None
+    n = len(values)
+    recent = recency_weighted(values)
+    shrunk = shrink(recent, n, cfg['prior'])
     return {
-        "label": best["label"],
-        "prob": best["prob"],
-        "qualifies": best["prob"] >= MODEL_SIGNAL_THRESHOLD,
+        'name': name, 'position': pos_abbr, 'label': cfg['label'],
+        'dist': cfg['dist'], 'std': cfg['std'],
+        'projected': round(shrunk, 1), 'n_games': n, 'recent_values': values,
+        'athlete_id': athlete_id,  # NEW: needed later to look up this
+                                     # player's actual boxscore line for
+                                     # the results tracker
     }
 
 
-def build_live_signals():
-    """Fetch live NFL games, calculate next-score and game-total-pace
-    signals, return list of live game objects."""
-    print("Fetching teams & season form (same model as nfl_model.py)...")
-    teams = nfl_model.get_teams()
+def project_player_touchdown(pos_abbr, athlete_id, name):
+    cfg = PLAYER_TD_CONFIG.get(pos_abbr)
+    if not cfg:
+        return None
+    values = get_player_gamelog(athlete_id, cfg['stat'])
+    if not values:
+        return None
+    n = len(values)
+    recent = recency_weighted(values)
+    shrunk = shrink(recent, n, cfg['prior'])
+    prob_any = round((1 - poisson_pmf(0, shrunk)) * 100)
+    return {
+        'name': name, 'position': pos_abbr, 'label': 'Anytime TD', 'kind': 'td',
+        'dist': None, 'std': None,
+        'projected': f"{prob_any}%",  # kept as a display-ready string so this
+                                        # drops straight into PLAYER_PROP_ROW /
+                                        # the props CSV without a separate
+                                        # template -- those just show whatever
+                                        # 'projected' holds next to 'n_games'.
+        'prob_any': prob_any, 'projected_rate': round(shrunk, 2),
+        'n_games': n, 'recent_values': values, 'athlete_id': athlete_id,
+    }
+
+
+def get_team_player_props(team_id):
+    starters = get_starters(team_id)
+    if not starters:
+        print(f"    no starters identified for team {team_id} — 0 player props possible for this team")
+    props = []
+    for pos_abbr, athlete in starters.items():
+        if not athlete.get('id'):
+            continue
+        proj = project_player_stat(pos_abbr, athlete['id'], athlete['name'])
+        if proj:
+            props.append(proj)
+        else:
+            print(f"    {athlete['name']} ({pos_abbr}): no gamelog data found")
+        td_proj = project_player_touchdown(pos_abbr, athlete['id'], athlete['name'])
+        if td_proj:
+            props.append(td_proj)
+    return props
+
+
+def player_over_under_prob(proj, line):
+    if proj['dist'] == 'poisson':
+        p_under = poisson_cdf(math.floor(line), proj['projected'])
+    else:
+        p_under = norm_cdf(line, proj['projected'], proj['std'])
+    return round((1 - p_under) * 100), round(p_under * 100)
+
+
+def poisson_pmf(k, lam):
+    return math.exp(-lam) * (lam ** k) / math.factorial(k)
+
+
+def poisson_cdf(k, lam):
+    return sum(poisson_pmf(i, lam) for i in range(int(k) + 1))
+
+
+def normal_prop(mean, std, factor=0.72, round_to=0.5):
+    if mean is None or std is None:
+        return None
+    raw_line = mean * factor
+    line = math.floor(raw_line / round_to) * round_to
+    if line < round_to:
+        line = round_to
+    prob_over = 1 - norm_cdf(line, mean, std)
+    return {"line": line, "prob": round(prob_over * 100), "avg": mean}
+
+
+# Team Total Under counterpart (user request, 2026-10-18 -- same fix as
+# Blue Line's safe_line_under). Deliberately NOT the same line as
+# normal_prop() above with the comparison flipped: factor=0.72 there
+# picks a line intentionally LOW relative to the projection so the Over
+# is an easy clear, so using that line for Under would make it a
+# near-guaranteed miss, not a real prediction. factor=1.28 mirrors
+# 0.72 around 1.0 (0.72+1.28=2.0), scaling the line UP from the
+# projection by roughly the same distance 0.72 scales it down, landing
+# on a line genuinely likely to hold for Under -- the natural fit here
+# too since Blitz IQ already models team totals as normal (not
+# Poisson), so this just reuses norm_cdf the same way.
+def normal_prop_under(mean, std, factor=1.28, round_to=0.5):
+    if mean is None or std is None:
+        return None
+    raw_line = mean * factor
+    line = math.floor(raw_line / round_to) * round_to
+    if line < round_to:
+        line = round_to
+    prob_under = norm_cdf(line, mean, std)
+    return {"line": line, "prob": round(prob_under * 100), "avg": mean}
+
+
+def poisson_prop(mean, factor=0.72):
+    if mean is None:
+        return None
+    raw_line = mean * factor
+    line = math.floor(raw_line * 2) / 2
+    if line < 0.5:
+        line = 0.5
+    threshold = int(math.floor(line)) + 1
+    prob = 1 - poisson_cdf(threshold - 1, mean)
+    return {"line": line, "prob": round(prob * 100), "avg": mean}
+
+
+def hit_rate(values, line, under=False):
+    if not values:
+        return None
+    hits = sum(1 for v in values if (v < line if under else v > line))
+    return {"hits": hits, "total": len(values)}
+
+
+def format_history(lst):
+    if not lst:
+        return None
+    return "/".join(str(v) for v in lst)
+
+
+# ---------------------------------------------------------------------
+# Hot Form (average) vs Real Streak (genuine consecutive run) -- same
+# fix already applied to Match IQ, Euro Ice, Strike Zone, Under IQ,
+# Orange Line, and Cards & Corners IQ after the Guardians-style edge case
+# (high average, but the MOST RECENT game breaks the pattern). Applied
+# here to BOTH team scoring and player props, since Blitz IQ's own model
+# spans a team-facing market (Team Total) and a player-facing one
+# (QB/RB/WR/TE props).
+# ---------------------------------------------------------------------
+
+TEAM_HOT_FORM_MIN = 24.0
+TEAM_HOT_FORM_MIN_GAMES = 3
+TEAM_REAL_STREAK_THRESHOLD = 24
+TEAM_REAL_STREAK_MIN_LENGTH = 3
+
+# Starting guesses, NOT backtested -- roughly "a clearly good game" for
+# each stat, set a bit above that position's own PLAYER_STAT_CONFIG prior
+# so a "hot" or "streaking" tag means genuinely above the typical game,
+# not just an ordinary one. Tune once there's tracked results data to
+# check these against (the same reasoning as FORM_ADJUST_WEIGHT in the
+# Horse Racing tool, and every other unvalidated threshold in this suite).
+PLAYER_STREAK_THRESHOLDS = {
+    'QB': 250,  # passing yards
+    'RB': 75,   # rushing yards
+    'WR': 5,    # receptions
+    'TE': 4,    # receptions
+}
+PLAYER_HOT_FORM_MIN_GAMES = 3
+PLAYER_REAL_STREAK_MIN_LENGTH = 3
+TD_HOT_FORM_THRESHOLD = 0.5  # Anytime TD's recent_values are raw per-game TD
+                              # counts (0, 1, 2...), not yards/receptions, so
+                              # this isn't position-keyed like
+                              # PLAYER_STREAK_THRESHOLDS -- 0.5 means "scored
+                              # in at least every other recent game" counts as
+                              # hot, and _current_streak(values, 0.5) counts
+                              # consecutive games with >=1 TD correctly since
+                              # any non-zero game count clears 0.5.
+
+
+def _current_streak(values_oldest_first, threshold):
+    """Walks backward from the most recent value, counting consecutive
+    values >= threshold, stopping at the first break. Both team
+    scored_list (see _extract_completed_games -- sorted ascending by
+    date, then sliced from the end) and player recent_values (see
+    get_player_gamelog) are already oldest-first -- the same ordering
+    recency_weighted() already relies on (higher weight for a later
+    index) -- so this reuses that existing assumption instead of
+    re-sorting anything."""
+    streak = 0
+    for v in reversed(values_oldest_first):
+        if v >= threshold:
+            streak += 1
+        else:
+            break
+    return streak
+
+
+def build_team_form_entries(predictions):
+    """game_id/is_home are carried on every entry (even though the HTML
+    panels don't display them) specifically so blitz_iq_results_tracker.py
+    can look up the real final score for the exact game each pick was
+    flagged alongside -- same as build_legs() already does for its own
+    Team Total / Game Total legs."""
+    hot_form, real_streak = [], []
+    for p in predictions:
+        for team_name, form, opponent, is_home in (
+            (p['home_team'], p['home_form'], p['away_team'], True),
+            (p['away_team'], p['away_form'], p['home_team'], False),
+        ):
+            scored = form.get('scored_list') or []
+            n = form.get('n_games', 0)
+            avg = form.get('avg_scored')
+            entry_base = {
+                'team': team_name, 'opponent': opponent, 'match': p['match'],
+                'date': p['date'], 'n_games': n, 'list': scored,
+                'source_tag': ' · last season' if form.get('source') == 'prior_season' else '',
+                'game_id': p.get('game_id'), 'is_home': is_home,
+            }
+            if n >= TEAM_HOT_FORM_MIN_GAMES and avg is not None and avg >= TEAM_HOT_FORM_MIN:
+                hot_form.append({**entry_base, 'avg': avg, 'threshold': TEAM_HOT_FORM_MIN})
+            streak = _current_streak(scored, TEAM_REAL_STREAK_THRESHOLD)
+            if streak >= TEAM_REAL_STREAK_MIN_LENGTH:
+                real_streak.append({**entry_base, 'streak': streak, 'threshold': TEAM_REAL_STREAK_THRESHOLD})
+    hot_form.sort(key=lambda e: -e['avg'])
+    real_streak.sort(key=lambda e: -e['streak'])
+    return hot_form, real_streak
+
+
+def build_player_form_entries(predictions):
+    """game_id/athlete_id/stat_key are carried on every entry so the
+    results tracker can pull that exact player's real boxscore line for
+    that exact game -- same fields build_legs() already attaches to its
+    own player-prop legs."""
+    hot_form, real_streak = [], []
+    for p in predictions:
+        for team_name, props in ((p['home_team'], p.get('home_props') or []),
+                                   (p['away_team'], p.get('away_props') or [])):
+            for prop in props:
+                if prop.get('kind') == 'td':
+                    threshold = TD_HOT_FORM_THRESHOLD
+                    stat_key = 'TD'
+                else:
+                    threshold = PLAYER_STREAK_THRESHOLDS.get(prop['position'])
+                    stat_key = PLAYER_STAT_CONFIG[prop['position']]['stat']
+                if threshold is None:
+                    continue
+                values = prop.get('recent_values') or []
+                n = prop.get('n_games', 0)
+                entry_base = {
+                    'name': prop['name'], 'position': prop['position'], 'label': prop['label'],
+                    'team': team_name, 'match': p['match'], 'date': p['date'],
+                    'n_games': n, 'list': values, 'threshold': threshold,
+                    'game_id': p.get('game_id'), 'athlete_id': prop.get('athlete_id'),
+                    'stat_key': stat_key,
+                }
+                avg = (sum(values) / len(values)) if values else None
+                if n >= PLAYER_HOT_FORM_MIN_GAMES and avg is not None and avg >= threshold:
+                    hot_form.append({**entry_base, 'avg': round(avg, 1)})
+                streak = _current_streak(values, threshold)
+                if streak >= PLAYER_REAL_STREAK_MIN_LENGTH:
+                    real_streak.append({**entry_base, 'streak': streak})
+    hot_form.sort(key=lambda e: -e['avg'])
+    real_streak.sort(key=lambda e: -e['streak'])
+    return hot_form, real_streak
+
+
+def build_legs(predictions):
+    legs = []
+    for p in predictions:
+        match_label = p["match"]
+        hf, af = p["home_form"], p["away_form"]
+        game_id = p.get("game_id")  # NEW
+        game_date = (p.get("date") or "")[:10]  # NEW
+
+        home_total = normal_prop(p["exp_home"], DEFAULT_TEAM_STD)
+        if home_total:
+            legs.append({
+                "match": match_label,
+                "market": f"{p['home_team']} Over {home_total['line']} Points",
+                "prob": home_total["prob"], "category": "Team Total",
+                "hit_rate": hit_rate(hf.get("scored_list"), home_total["line"]),
+                "detail": f"proj {home_total['avg']} pts ({hf['n_games']}gm{' · last season' if hf.get('source') == 'prior_season' else ''})",
+                "history": format_history(hf.get("scored_list")),
+                "game_id": game_id, "game_date": game_date, "is_home": True, "line": home_total["line"],
+                "direction": "over",
+            })
+        home_total_under = normal_prop_under(p["exp_home"], DEFAULT_TEAM_STD)
+        if home_total_under:
+            legs.append({
+                "match": match_label,
+                "market": f"{p['home_team']} Under {home_total_under['line']} Points",
+                "prob": home_total_under["prob"], "category": "Team Total",
+                "hit_rate": hit_rate(hf.get("scored_list"), home_total_under["line"], under=True),
+                "detail": f"proj {home_total_under['avg']} pts ({hf['n_games']}gm{' · last season' if hf.get('source') == 'prior_season' else ''})",
+                "history": format_history(hf.get("scored_list")),
+                "game_id": game_id, "game_date": game_date, "is_home": True, "line": home_total_under["line"],
+                "direction": "under",
+            })
+        away_total = normal_prop(p["exp_away"], DEFAULT_TEAM_STD)
+        if away_total:
+            legs.append({
+                "match": match_label,
+                "market": f"{p['away_team']} Over {away_total['line']} Points",
+                "prob": away_total["prob"], "category": "Team Total",
+                "hit_rate": hit_rate(af.get("scored_list"), away_total["line"]),
+                "detail": f"proj {away_total['avg']} pts ({af['n_games']}gm{' · last season' if af.get('source') == 'prior_season' else ''})",
+                "history": format_history(af.get("scored_list")),
+                "game_id": game_id, "game_date": game_date, "is_home": False, "line": away_total["line"],
+                "direction": "over",
+            })
+        away_total_under = normal_prop_under(p["exp_away"], DEFAULT_TEAM_STD)
+        if away_total_under:
+            legs.append({
+                "match": match_label,
+                "market": f"{p['away_team']} Under {away_total_under['line']} Points",
+                "prob": away_total_under["prob"], "category": "Team Total",
+                "hit_rate": hit_rate(af.get("scored_list"), away_total_under["line"], under=True),
+                "detail": f"proj {away_total_under['avg']} pts ({af['n_games']}gm{' · last season' if af.get('source') == 'prior_season' else ''})",
+                "history": format_history(af.get("scored_list")),
+                "game_id": game_id, "game_date": game_date, "is_home": False, "line": away_total_under["line"],
+                "direction": "under",
+            })
+
+        game_total = normal_prop(p["exp_total"], p["total_std"])
+        if game_total:
+            legs.append({
+                "match": match_label,
+                "market": f"Game Over {game_total['line']} Total Points",
+                "prob": game_total["prob"], "category": "Game Total",
+                "hit_rate": None,
+                "detail": f"proj {game_total['avg']} pts ({hf['n_games']}v{af['n_games']}gm)",
+                "history": None,
+                "game_id": game_id, "game_date": game_date, "line": game_total["line"],
+            })
+
+        for team_name, props in [(p["home_team"], p.get("home_props") or []),
+                                   (p["away_team"], p.get("away_props") or [])]:
+            for prop in props:
+                if prop.get("kind") == "td":
+                    # Anytime TD is a binary "at least 1" event, not an
+                    # over/under line -- represented as "Over 0.5 TDs" so it
+                    # drops straight into the exact same leg/results-tracker
+                    # schema (line + stat_key='TD') as every other prop here.
+                    result = {"line": 0.5, "prob": prop["prob_any"], "avg": prop["projected_rate"]}
+                    stat_key = "TD"
+                    market = f"{prop['name']} Anytime TD"
+                elif prop["dist"] == "poisson":
+                    result = poisson_prop(prop["projected"])
+                    stat_key = PLAYER_STAT_CONFIG[prop["position"]]["stat"]
+                    market = None
+                else:
+                    result = normal_prop(prop["projected"], prop["std"])
+                    stat_key = PLAYER_STAT_CONFIG[prop["position"]]["stat"]
+                    market = None
+                if not result:
+                    continue
+                if market is None:
+                    market = f"{prop['name']} Over {result['line']} {prop['label']}"
+                legs.append({
+                    "match": match_label,
+                    "market": market,
+                    "prob": result["prob"], "category": prop["label"],
+                    "hit_rate": hit_rate(prop.get("recent_values"), result["line"]),
+                    "detail": f"proj {result['avg']} ({prop['n_games']}gm)",
+                    "history": format_history(prop.get("recent_values")),
+                    "game_id": game_id, "game_date": game_date, "line": result["line"],
+                    "athlete_id": prop.get("athlete_id"), "stat_key": stat_key,
+                    "is_home": team_name == p["home_team"],
+                })
+    return legs
+
+
+BUILDER_TEMPLATE = """
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:10px">🎯 Safest Bet Builder</div>
+  <div id="categoryToggles" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;font-size:12px"></div>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+    <label style="font-size:12px;color:#aaa">Target odds:</label>
+    <input id="targetOdds" type="number" step="0.1" min="1.1" value="5.0"
+      style="width:70px;background:#0f1318;border:1px solid #333;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
+    <label style="font-size:12px;color:#aaa">Max legs:</label>
+    <input id="maxLegs" type="number" step="1" min="2" value="8"
+      style="width:55px;background:#0f1318;border:1px solid #333;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
+    <button onclick="buildSafest()"
+      style="background:#3a7d7a;border:none;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
+      Build
+    </button>
+    <button onclick="buildSafest()"
+      style="background:#2a3038;border:1px solid #444;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
+      🔀 Shuffle
+    </button>
+  </div>
+  <div id="builderResult" style="font-size:12px;color:#888">
+    Untick any market type you don't want considered, set a target odds and
+    leg cap, then tap Build. It rotates through whichever categories are
+    ticked, groups near-tied legs and shuffles within each group so it draws
+    from more of the week's games rather than always the exact same few, and
+    caps at 2 legs per game to avoid stacking correlated legs from one
+    matchup. Tap Shuffle for a fresh pick among equally-safe options without
+    changing your settings.
+  </div>
+</div>
+<script>
+const LEGS = {legs_json};
+
+function initCategoryToggles() {{
+  const container = document.getElementById('categoryToggles');
+  const cats = [...new Set(LEGS.map(l => l.category))];
+  container.innerHTML = cats.map(c => `
+    <label style="display:flex;align-items:center;gap:4px;color:#ccc;cursor:pointer">
+      <input type="checkbox" class="catToggle" value="${{c}}" checked>
+      ${{c}}
+    </label>
+  `).join('');
+}}
+initCategoryToggles();
+
+function shuffle(arr) {{
+  for (let i = arr.length - 1; i > 0; i--) {{
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }}
+  return arr;
+}}
+
+function tieredShuffle(legs, bandSize) {{
+  const bands = {{}};
+  legs.forEach(l => {{
+    const band = Math.floor(l.prob / bandSize);
+    (bands[band] = bands[band] || []).push(l);
+  }});
+  const bandKeys = Object.keys(bands).map(Number).sort((a, b) => b - a);
+  let result = [];
+  bandKeys.forEach(b => {{ result = result.concat(shuffle(bands[b])); }});
+  return result;
+}}
+
+function buildSafest() {{
+  const target = parseFloat(document.getElementById('targetOdds').value) || 5.0;
+  const maxLegs = parseInt(document.getElementById('maxLegs').value) || 8;
+  const activeCats = [...document.querySelectorAll('.catToggle:checked')].map(el => el.value);
+
+  const byCategory = {{}};
+  LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category)).forEach(l => {{
+    (byCategory[l.category] = byCategory[l.category] || []).push(l);
+  }});
+  const categories = Object.keys(byCategory);
+  categories.forEach(c => {{ byCategory[c] = tieredShuffle(byCategory[c], 5); }});
+  const cursor = {{}};
+  categories.forEach(c => cursor[c] = 0);
+
+  const chosen = [];
+  const matchCount = {{}};
+  let combinedOdds = 1;
+  let addedThisPass = true;
+
+  while (addedThisPass && combinedOdds < target && chosen.length < maxLegs) {{
+    addedThisPass = false;
+    for (const cat of categories) {{
+      if (combinedOdds >= target || chosen.length >= maxLegs) break;
+      const arr = byCategory[cat];
+      while (cursor[cat] < arr.length) {{
+        const leg = arr[cursor[cat]];
+        cursor[cat]++;
+        const count = matchCount[leg.match] || 0;
+        if (count >= 2) continue;
+        chosen.push(leg);
+        combinedOdds *= 100 / leg.prob;
+        matchCount[leg.match] = count + 1;
+        addedThisPass = true;
+        break;
+      }}
+    }}
+  }}
+
+  const el = document.getElementById('builderResult');
+  if (!chosen.length) {{
+    el.innerHTML = 'No legs available to build from.';
+    return;
+  }}
+
+  const rows = chosen.map(l =>
+    `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #2a3038">
+       <span>${{l.match}}<br><span style="color:#7ec8ff">${{l.market}}</span> <span style="color:#555">· ${{l.category}}</span>
+       ${{l.detail ? `<br><span style="color:#666;font-size:10px">${{l.detail}}</span>` : ''}}
+       ${{l.history ? `<br><span style="color:#555;font-size:10px">last games: ${{l.history}}</span>` : ''}}</span>
+       <span style="text-align:right"><span style="color:#ffeb3b;font-weight:bold">${{l.prob}}%</span>${{l.hit_rate ? `<br><span style="color:#888;font-size:11px">${{l.hit_rate.hits}}/${{l.hit_rate.total}}</span>` : ''}}</span>
+     </div>`
+  ).join('');
+
+  const capNote = chosen.length >= maxLegs && combinedOdds < target
+    ? ' (hit the leg cap before reaching target — raise Max legs or lower Target odds)'
+    : (combinedOdds < target ? ' (ran out of legs before reaching target)' : '');
+
+  el.innerHTML = `
+    <div style="color:white;font-size:13px;margin-bottom:6px">
+      ${{chosen.length}} legs · est. combined odds ~<b>${{combinedOdds.toFixed(2)}}</b>${{capNote}}
+    </div>
+    ${{rows}}
+    <div style="color:#666;font-size:10px;margin-top:8px;line-height:1.4">
+      Estimate multiplies each leg's fair odds (100/probability) — real
+      sportsbook odds include their margin and legs within the same game
+      aren't fully independent, so treat this as a ranking tool, not a firm
+      price. Team/game totals use a Normal-distribution projection; WR/TE
+      receptions use Poisson. All lines are set automatically below the
+      model's projection for a safety margin.
+    </div>
+  `;
+}}
+</script>
+"""
+
+TEAM_STREAK_ROW = """<div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #232a33">
+  <div><b>{team}</b><br><span style="color:#888">{match}{source_tag}</span></div>
+  <div style="text-align:right"><span style="color:{color};font-weight:bold">{value}</span><br><span style="color:#666;font-size:10px">{history}</span></div>
+</div>"""
+
+PLAYER_STREAK_ROW = """<div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid #232a33">
+  <div><b>{name}</b> ({position})<br><span style="color:#888">{team} · {label} · {match}</span></div>
+  <div style="text-align:right"><span style="color:{color};font-weight:bold">{value}</span><br><span style="color:#666;font-size:10px">{history}</span></div>
+</div>"""
+
+STREAK_PANEL = """<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:6px">{icon} {title}</div>
+  <div style="font-size:11px;color:#888;margin-bottom:10px">{note}</div>
+  {rows}
+</div>"""
+
+
+def _team_streak_panel(entries, icon, title, note, color, value_fn):
+    if not entries:
+        return ""
+    rows = "".join(TEAM_STREAK_ROW.format(
+        team=e['team'], match=e['match'], source_tag=e.get('source_tag', ''),
+        color=color, value=value_fn(e), history=format_history(e['list']) or '—',
+    ) for e in entries)
+    return STREAK_PANEL.format(icon=icon, title=title, note=note, rows=rows)
+
+
+def _player_streak_panel(entries, icon, title, note, color, value_fn):
+    if not entries:
+        return ""
+    rows = "".join(PLAYER_STREAK_ROW.format(
+        name=e['name'], position=e['position'], team=e['team'], label=e['label'], match=e['match'],
+        color=color, value=value_fn(e), history=format_history(e['list']) or '—',
+    ) for e in entries)
+    return STREAK_PANEL.format(icon=icon, title=title, note=note, rows=rows)
+
+
+def build_predictions():
+    print("Fetching teams…")
+    teams = get_teams()
     if not teams:
         print("No teams returned — aborting.")
         return []
 
+    print(f"Fetching form for {len(teams)} teams…")
     all_forms = {}
     for t in teams:
         tid = t['team']['id']
-        all_forms[tid] = nfl_model.get_team_form(tid)
-    lg_scored, lg_allowed = nfl_model.league_averages(all_forms.values())
+        form = get_team_form(tid)
+        all_forms[tid] = form
+        tag = f" (source: {form['source']})" if form else " (no data)"
+        print(f"  {t['team']['displayName']}{tag}")
 
-    print("Fetching scoreboard for live games...")
-    events = nfl_model.get_week_scoreboard()
-    live_games = []
+    lg_scored, lg_allowed = league_averages(all_forms.values())
+    print(f"League averages: {lg_scored:.1f} scored/game, {lg_allowed:.1f} allowed/game")
 
+    print("Fetching this week's scoreboard…")
+    events = get_week_scoreboard()
+    print(f"{len(events)} games this week")
+
+    predictions = []
     for e in events:
         comp = e.get('competitions', [{}])[0]
-        status = comp.get('status', {})
-        state = status.get('type', {}).get('state')
-        if state != 'in':  # only in-progress games
-            continue
-
         competitors = comp.get('competitors', [])
         home = next((c for c in competitors if c.get('homeAway') == 'home'), None)
         away = next((c for c in competitors if c.get('homeAway') == 'away'), None)
         if not home or not away:
             continue
+        if comp.get('status', {}).get('type', {}).get('completed'):
+            continue
 
         h_id, a_id = home['team']['id'], away['team']['id']
         h_form, a_form = all_forms.get(h_id), all_forms.get(a_id)
         if not h_form or not a_form:
-            print(f"  Skipping {away['team']['displayName']} @ {home['team']['displayName']} — missing form data")
+            print(f"  skipping {away['team']['displayName']} @ {home['team']['displayName']}: missing form data")
             continue
 
-        try:
-            home_score = float(home.get('score', 0) or 0)
-            away_score = float(away.get('score', 0) or 0)
-        except (TypeError, ValueError):
-            home_score, away_score = 0.0, 0.0
-
-        elapsed = elapsed_minutes(status)
-        if elapsed is None:
-            print(f"  Skipping {away['team']['displayName']} @ {home['team']['displayName']} — no clock data")
-            continue
-        minutes_left = max(0, GAME_MINUTES - elapsed)
-        elapsed_fraction = min(elapsed / GAME_MINUTES, 1.0) if elapsed > 0 else 0.0
-
-        proj = nfl_model.predict(h_form, a_form, lg_scored, lg_allowed)
-
-        home_adj = calc_pace_adjustment(home_score, proj['exp_home'], elapsed_fraction)
-        away_adj = calc_pace_adjustment(away_score, proj['exp_away'], elapsed_fraction)
-
-        home_exp_remaining = proj['exp_home'] * (minutes_left / GAME_MINUTES) * home_adj
-        away_exp_remaining = proj['exp_away'] * (minutes_left / GAME_MINUTES) * away_adj
-
-        next_score = calc_next_score_prob(home_exp_remaining, away_exp_remaining)
-        total_pace = calc_game_total_pace(home_score + away_score, proj['exp_total'], proj['total_std'], minutes_left)
-        model_signal = calc_model_signal(next_score, total_pace)
-
-        live_games.append({
-            "game_id": e.get('id'),
-            "home_id": h_id,
-            "away_id": a_id,
-            "home_team": home['team']['displayName'],
-            "away_team": away['team']['displayName'],
-            "home_score": home_score,
-            "away_score": away_score,
-            "period": status.get('period'),
-            "display_clock": status.get('displayClock'),
-            "status": status.get('type', {}).get('shortDetail', 'Live'),
-            "elapsed_minute": round(elapsed, 1),
-            "minutes_remaining": round(minutes_left, 1),
-            "next_score": next_score,
-            "game_total_pace": total_pace,
-            "model_signal": model_signal,
-            "pregame_projection": {
-                "exp_home": proj['exp_home'],
-                "exp_away": proj['exp_away'],
-                "exp_total": proj['exp_total'],
-            },
+        proj = predict(h_form, a_form, lg_scored, lg_allowed)
+        print(f"  Player props: {away['team']['displayName']} @ {home['team']['displayName']}")
+        home_props = get_team_player_props(h_id)
+        away_props = get_team_player_props(a_id)
+        predictions.append({
+            'date': e.get('date', ''),
+            'game_id': e.get('id'),  # NEW: needed later to look up the real
+                                       # final result for the results tracker
+            'match': f"{away['team']['displayName']} @ {home['team']['displayName']}",
+            'home_team': home['team']['displayName'], 'away_team': away['team']['displayName'],
+            'home_form': h_form, 'away_form': a_form,
+            'home_props': home_props, 'away_props': away_props,
+            **proj,
         })
 
-    return live_games
+    predictions.sort(key=lambda x: x['exp_total'], reverse=True)
+    return predictions
+
+
+HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Blitz IQ — NFL</title></head>
+<body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
+<h2 style="text-align:center">🏈 BLITZ IQ — NFL Team Points</h2>
+<p style="text-align:center;color:#888;font-size:11px">Recency-weighted scoring/allowed rates, Normal-distribution projected · {generated}</p>
+<p style="text-align:center;margin-bottom:16px"><a href="blitz_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
+<p style="text-align:center;margin-bottom:16px">
+  <a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a>
+  &nbsp;·&nbsp;
+  <a href="../blitz-iq-live/index.html" style="color:#7ec8ff;text-decoration:none;font-size:12px">⚡ Live Signals</a>
+</p>
+{builder}
+{team_hot_form}
+{team_real_streak}
+{player_hot_form}
+{player_real_streak}
+{cards}
+<p style="text-align:center;color:#666;font-size:10px;margin-top:20px">Enter your book's Over/Under line and odds to compute an edge the same way as the MLB/soccer tools — this page shows the model's own projection only. Hot Form = average over the last {recent_games} games (can mask a bad most recent game). Real Streak = genuinely CONSECUTIVE recent games clearing the threshold, walking backward from the most recent game.</p>
+</body></html>"""
+
+CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">{date}</div>
+  <div style="font-size:17px;font-weight:bold;margin-bottom:10px">{match}</div>
+  <div style="display:flex;justify-content:space-between;text-align:center">
+    <div><div style="color:#aaa;font-size:11px">{away_team}</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">{exp_away}</div></div>
+    <div><div style="color:#aaa;font-size:11px">TOTAL</div><div style="color:#7ec8ff;font-size:22px;font-weight:bold">{exp_total}</div></div>
+    <div><div style="color:#aaa;font-size:11px">{home_team}</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">{exp_home}</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:10px;display:flex;justify-content:space-between;font-size:11px">
+    <div>{away_team}: {away_scored} scored/gm • {away_allowed} allowed/gm ({away_n}gm{away_source_tag})</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
+    {home_team}: {home_scored} scored/gm • {home_allowed} allowed/gm ({home_n}gm{home_source_tag})
+  </div>
+  {player_props_html}
+</div>"""
+
+PLAYER_PROP_ROW = """<div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #232a33">
+  <div>{name} ({position}) — {label}</div>
+  <div style="color:#c792ea;font-weight:bold">{projected} <span style="color:#666;font-weight:normal">({n_games}gm)</span></div>
+</div>"""
+
+
+def player_props_section(team_label, props):
+    if not props:
+        return ""
+    rows = "".join(PLAYER_PROP_ROW.format(**p) for p in props)
+    return f'<div style="margin-top:8px"><div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:2px">{team_label} Player Props</div>{rows}</div>'
+
+
+def make_html(predictions):
+    cards = "".join(CARD_TEMPLATE.format(
+        date=p['date'][:16].replace('T', ' '), match=p['match'],
+        away_team=p['away_team'], home_team=p['home_team'],
+        exp_away=p['exp_away'], exp_home=p['exp_home'], exp_total=p['exp_total'],
+        away_scored=p['away_form']['avg_scored'], away_allowed=p['away_form']['avg_allowed'],
+        away_n=p['away_form']['n_games'],
+        away_source_tag=' · last season' if p['away_form'].get('source') == 'prior_season' else '',
+        home_scored=p['home_form']['avg_scored'], home_allowed=p['home_form']['avg_allowed'],
+        home_n=p['home_form']['n_games'],
+        home_source_tag=' · last season' if p['home_form'].get('source') == 'prior_season' else '',
+        player_props_html=(
+            player_props_section(p['away_team'], p.get('away_props', []))
+            + player_props_section(p['home_team'], p.get('home_props', []))
+        ),
+    ) for p in predictions)
+    if not cards:
+        cards = '<p style="text-align:center;color:#888">No upcoming games with usable form data this week.</p>'
+
+    legs = build_legs(predictions)
+    builder = BUILDER_TEMPLATE.format(legs_json=json.dumps(legs)) if legs else ""
+
+    team_hot_form_entries, team_real_streak_entries = build_team_form_entries(predictions)
+    player_hot_form_entries, player_real_streak_entries = build_player_form_entries(predictions)
+
+    team_hot_form_html = _team_streak_panel(
+        team_hot_form_entries, "📊", "Team Hot Form",
+        f"Averaging {TEAM_HOT_FORM_MIN}+ points over the last {RECENT_GAMES} games — can mask a bad most recent game. Not a streak.",
+        "#a0e8a0", lambda e: f"{e['avg']} avg",
+    )
+    team_real_streak_html = _team_streak_panel(
+        team_real_streak_entries, "🔥", "Team Real Scoring Streak",
+        f"Genuinely CONSECUTIVE recent games scoring {TEAM_REAL_STREAK_THRESHOLD}+ points, walking back from the most recent.",
+        "#ff9a2e", lambda e: f"{e['streak']}+ straight",
+    )
+    player_hot_form_html = _player_streak_panel(
+        player_hot_form_entries, "📊", "Player Hot Form",
+        f"Averaging above this stat's own hot-form threshold over the last {RECENT_GAMES} games — can mask a bad most recent game.",
+        "#a0e8a0", lambda e: f"{e['avg']} avg",
+    )
+    player_real_streak_html = _player_streak_panel(
+        player_real_streak_entries, "🔥", "Player Real Streak",
+        "Genuinely CONSECUTIVE recent games clearing that stat's threshold, walking back from the most recent.",
+        "#ff9a2e", lambda e: f"{e['streak']}+ straight (≥{e['threshold']})",
+    )
+
+    return HTML_TEMPLATE.format(
+        generated=datetime.now().strftime('%d %b %H:%M'), builder=builder,
+        team_hot_form=team_hot_form_html, team_real_streak=team_real_streak_html,
+        player_hot_form=player_hot_form_html, player_real_streak=player_real_streak_html,
+        cards=cards, recent_games=RECENT_GAMES,
+    )
+
+
+def write_csv(predictions, path):
+    with open(path, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow([
+            'Date', 'Match', 'HomeTeam', 'AwayTeam',
+            'HomeScoredAvg', 'HomeAllowedAvg', 'HomeSampleSize',
+            'AwayScoredAvg', 'AwayAllowedAvg', 'AwaySampleSize',
+            'ExpHome', 'ExpAway', 'ExpTotal', 'TotalStd',
+            'Line', 'OverOdds', 'UnderOdds',
+            'ActualHomeScore', 'ActualAwayScore', 'HitOrMiss',
+        ])
+        for p in predictions:
+            writer.writerow([
+                p['date'], p['match'], p['home_team'], p['away_team'],
+                p['home_form']['avg_scored'], p['home_form']['avg_allowed'], p['home_form']['n_games'],
+                p['away_form']['avg_scored'], p['away_form']['avg_allowed'], p['away_form']['n_games'],
+                p['exp_home'], p['exp_away'], p['exp_total'], p['total_std'],
+                '', '', '',
+                '', '', '',
+            ])
+
+
+def write_player_props_csv(predictions, path):
+    with open(path, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow([
+            'Date', 'Match', 'Team', 'Player', 'Position', 'PropType',
+            'Projected', 'SampleSize', 'RecentValues',
+            'Line', 'OverOdds', 'UnderOdds', 'ActualValue', 'HitOrMiss',
+        ])
+        for p in predictions:
+            for team_label, props in [(p['away_team'], p.get('away_props', [])),
+                                       (p['home_team'], p.get('home_props', []))]:
+                for prop in props:
+                    writer.writerow([
+                        p['date'], p['match'], team_label, prop['name'], prop['position'], prop['label'],
+                        prop['projected'], prop['n_games'], '; '.join(str(v) for v in prop['recent_values']),
+                        '', '', '', '', '',
+                    ])
 
 
 if __name__ == "__main__":
-    live = build_live_signals()
-
-    os.makedirs("docs/blitz-iq-live", exist_ok=True)
-
-    output = {
-        "generated": datetime.now(timezone.utc).isoformat(),
-        "total_live": len(live),
-        "games": live,
-    }
-
-    with open("docs/blitz-iq-live/live_games.json", "w") as f:
-        json.dump(output, f, indent=2, default=str)
+    predictions = build_predictions()
+    os.makedirs('docs/blitz-iq', exist_ok=True)
+    with open('docs/blitz-iq/index.html', 'w') as f:
+        f.write(make_html(predictions))
+    write_csv(predictions, 'docs/blitz-iq/blitz_iq_predictions.csv')
+    write_player_props_csv(predictions, 'docs/blitz-iq/blitz_iq_player_props.csv')
+    with open('docs/blitz-iq/blitz_iq.json', 'w') as f:
+        json.dump(predictions, f, indent=2, default=str)
 
     try:
-        import blitz_iq_live_results_tracker
-        blitz_iq_live_results_tracker.run_results_tracker(live)
+        import blitz_iq_results_tracker
+        team_hot_form, team_real_streak = build_team_form_entries(predictions)
+        player_hot_form, player_real_streak = build_player_form_entries(predictions)
+        blitz_iq_results_tracker.run_results_tracker(
+            build_legs(predictions), team_hot_form, team_real_streak,
+            player_hot_form, player_real_streak,
+        )
     except Exception as e:
         print(f"[!] Results tracker failed, but the rest of this run succeeded: {e}")
 
-    print(f"\nDone — {len(live)} live game(s) found and written to live_games.json")
+    print(f"\nDone — {len(predictions)} games projected.")
