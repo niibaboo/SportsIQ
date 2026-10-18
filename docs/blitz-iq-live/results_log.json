@@ -496,7 +496,9 @@
     "logged_home_score": 0.0,
     "logged_away_score": 10.0,
     "pregame_total": 45.5,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 13.0,
+    "final_away_score": 10.0
   },
   "401873003_Game_Total_Under": {
     "id": "401873003_Game_Total_Under",
@@ -513,7 +515,9 @@
     "logged_home_score": 10.0,
     "logged_away_score": 0.0,
     "pregame_total": 40.1,
-    "status": "pending"
+    "status": "miss",
+    "final_home_score": 20.0,
+    "final_away_score": 26.0
   },
   "401873001_Game_Total_Under": {
     "id": "401873001_Game_Total_Under",
@@ -530,7 +534,9 @@
     "logged_home_score": 10.0,
     "logged_away_score": 3.0,
     "pregame_total": 40.6,
-    "status": "pending"
+    "status": "miss",
+    "final_home_score": 26.0,
+    "final_away_score": 19.0
   },
   "401873000_Game_Total_Under": {
     "id": "401873000_Game_Total_Under",
@@ -547,7 +553,9 @@
     "logged_home_score": 10.0,
     "logged_away_score": 0.0,
     "pregame_total": 49.5,
-    "status": "pending"
+    "status": "miss",
+    "final_home_score": 27.0,
+    "final_away_score": 34.0
   },
   "401872998_Away_Next_Score": {
     "id": "401872998_Away_Next_Score",
@@ -564,7 +572,10 @@
     "logged_home_score": 0.0,
     "logged_away_score": 10.0,
     "pregame_total": 46.7,
-    "status": "pending"
+    "status": "miss",
+    "scorer_team_id": "21",
+    "final_home_score": 14.0,
+    "final_away_score": 25.0
   },
   "401873002_Game_Total_Under": {
     "id": "401873002_Game_Total_Under",
@@ -581,6 +592,42 @@
     "logged_home_score": 13.0,
     "logged_away_score": 0.0,
     "pregame_total": 43.2,
+    "status": "miss",
+    "final_home_score": 19.0,
+    "final_away_score": 26.0
+  },
+  "401873004_Game_Total_Under": {
+    "id": "401873004_Game_Total_Under",
+    "game_id": "401873004",
+    "home_id": "14",
+    "away_id": "22",
+    "home_team": "Los Angeles Rams",
+    "away_team": "Arizona Cardinals",
+    "label": "Game Total Under",
+    "prob": 79,
+    "logged_at": "2026-10-18T20:50:42.644367+00:00",
+    "logged_period": 2,
+    "logged_clock": "10:55",
+    "logged_home_score": 3.0,
+    "logged_away_score": 6.0,
+    "pregame_total": 57.7,
+    "status": "pending"
+  },
+  "401873006_Home_Next_Score": {
+    "id": "401873006_Home_Next_Score",
+    "game_id": "401873006",
+    "home_id": "12",
+    "away_id": "24",
+    "home_team": "Kansas City Chiefs",
+    "away_team": "Los Angeles Chargers",
+    "label": "Home Next Score",
+    "prob": 82,
+    "logged_at": "2026-10-18T20:50:42.644377+00:00",
+    "logged_period": 1,
+    "logged_clock": "2:20",
+    "logged_home_score": 9.0,
+    "logged_away_score": 0.0,
+    "pregame_total": 46.6,
     "status": "pending"
   }
 }
