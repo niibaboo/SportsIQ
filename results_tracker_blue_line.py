@@ -379,7 +379,21 @@ def _verify_player_form_streak_entry(entry):
     return {"actual": actual, "result": "hit" if actual >= threshold else "miss"}
 
 
-def verify_pending_results(log, max_checks=60):
+# RAISED from 60 (user report, 2026-10-18: dashboard stuck at 9/27
+# verified with 2213 pending -- several whole categories sitting at
+# "0/0" despite having entries logged). Blue Line logs across 8 scanner
+# categories every day the NHL plays (team legs + hot form/real streak
+# x3 subject types), so new pending entries pile up far faster than 60/
+# run can drain -- the oldest, most-likely-resolvable entries at the
+# front of the log were eating the whole budget while everything behind
+# them, including entire newer categories, never got examined at all.
+# Safe to raise a lot: this is the NHL's free public API (no key, no
+# documented rate limit, unlike the paid-quota TheStatsAPI trackers),
+# and _get_boxscore's BOXSCORE_CACHE already dedupes by game_id, so the
+# real number of HTTP calls per run is bounded by unique games in the
+# backlog, not by entry count -- checking 3000 entries that mostly share
+# a few hundred games costs a few hundred requests, not 3000.
+def verify_pending_results(log, max_checks=3000):
     today = datetime.now(timezone.utc).date().isoformat()
     checked = 0
     updated = 0
