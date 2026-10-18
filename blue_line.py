@@ -77,10 +77,17 @@ def safe_line(lam, factor=0.55):
 # 0.55 scales it down, so Under also lands on a line that's genuinely
 # likely to hold, not just the arithmetic inverse of a line picked to
 # favor Over.
-def safe_line_under(lam, factor=1.45):
+def safe_line_under(lam, factor=1.45, max_line=5.5):
   raw=lam*factor
   line=math.floor(raw*2)/2
   if line<0.5: line=0.5
+  # bet365 (and books generally) only lists NHL team total goals up to
+  # 5.5 -- a hot team's projection * 1.45 can float past that (e.g. lam
+  # 5.2 -> raw 7.5), landing on a line nobody can actually bet (user
+  # report, 2026-10-18: Blue Line showed "U7.5" for Carolina but bet365's
+  # own market tops out at 5.5). Cap it so the prediction always matches
+  # a real, bettable line.
+  if line>max_line: line=max_line
   return line
 
 # Schedule and standings are fetched independently now -- a bad/thin
