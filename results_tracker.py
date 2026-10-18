@@ -340,6 +340,14 @@ def build_results_dashboard(log):
         d = by_scanner.setdefault(e["scanner"], {"hit": 0, "miss": 0})
         d[e["result"]] += 1
 
+    # By-league breakdown (added 2026-10-06, same panel already added to
+    # Spin Line/Euro Ice's dashboards) -- 11 leagues feed these scanners,
+    # so a blended overall % can hide one league dragging the rest down.
+    by_league = {}
+    for e in verified:
+        d = by_league.setdefault(e.get("league") or "Unknown", {"hit": 0, "miss": 0})
+        d[e["result"]] += 1
+
     SCANNER_LABELS = {
         "over25": "Over 2.5 Goals", "btts": "BTTS", "corners": "Over 10.5 Corners",
         "corners_safe": "Safe Corners", "over45": "Over 4.5 Goals", "away_to_score": "Away to Score",
@@ -363,6 +371,48 @@ def build_results_dashboard(log):
   <span style="color:#a0e8a0;font-weight:bold">{pct_str}</span>
   <span style="color:#8b98a8;font-size:12px">{d['hit']}/{n}</span>
 </div>"""
+
+    league_rows = ""
+    for league, d in sorted(by_league.items(), key=lambda kv: -(kv[1]["hit"] + kv[1]["miss"])):
+        n = d["hit"] + d["miss"]
+        pct = round(100 * d["hit"] / n) if n else None
+        pct_str = f"{pct}%" if pct is not None else "—"
+        league_rows += f"""<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #233040">
+  <span>{league}</span>
+  <span style="color:#a0e8a0;font-weight:bold">{pct_str}</span>
+  <span style="color:#8b98a8;font-size:12px">{d['hit']}/{n}</span>
+</div>"""
+    if not league_rows:
+        league_rows = '<p style="color:#888;font-size:12px">No verified picks yet.</p>'
+
+    # Per-market league breakdowns for Over 2.5 and BTTS specifically (user
+    # request, 2026-10-19) -- the "By League" panel above blends every
+    # scanner together, which can hide a league that's great for Over 2.5
+    # but weak for BTTS or vice versa. Same row shape/sort as that panel,
+    # just pre-filtered to one scanner each.
+    def _market_league_rows(scanner):
+        by_league_market = {}
+        for e in verified:
+            if e["scanner"] != scanner:
+                continue
+            d = by_league_market.setdefault(e.get("league") or "Unknown", {"hit": 0, "miss": 0})
+            d[e["result"]] += 1
+        rows_html = ""
+        for league, d in sorted(by_league_market.items(), key=lambda kv: -(kv[1]["hit"] + kv[1]["miss"])):
+            n = d["hit"] + d["miss"]
+            pct = round(100 * d["hit"] / n) if n else None
+            pct_str = f"{pct}%" if pct is not None else "—"
+            rows_html += f"""<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #233040">
+  <span>{league}</span>
+  <span style="color:#a0e8a0;font-weight:bold">{pct_str}</span>
+  <span style="color:#8b98a8;font-size:12px">{d['hit']}/{n}</span>
+</div>"""
+        if not rows_html:
+            rows_html = '<p style="color:#888;font-size:12px">No verified picks yet.</p>'
+        return rows_html
+
+    over25_league_rows = _market_league_rows("over25")
+    btts_league_rows = _market_league_rows("btts")
 
     recent = sorted(verified, key=lambda e: e.get("verified_at", ""), reverse=True)[:30]
     recent_rows = ""
@@ -389,6 +439,22 @@ def build_results_dashboard(log):
 <div style="background:#1a1f26;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #2a3038">
   <div style="font-weight:bold;margin-bottom:8px">By Scanner</div>
   {rows}
+</div>
+
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #2a3038">
+  <div style="font-weight:bold;margin-bottom:8px">By League</div>
+  <div style="color:#8b98a8;font-size:11px;margin-bottom:8px">All scanners combined, per league</div>
+  {league_rows}
+</div>
+
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #2a3038">
+  <div style="font-weight:bold;margin-bottom:8px">Over 2.5 Goals — By League</div>
+  {over25_league_rows}
+</div>
+
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #2a3038">
+  <div style="font-weight:bold;margin-bottom:8px">BTTS — By League</div>
+  {btts_league_rows}
 </div>
 
 <div style="background:#1a1f26;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #2a3038">
