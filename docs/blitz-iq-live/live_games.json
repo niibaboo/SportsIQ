@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-18T20:50:42.641159+00:00",
+  "generated": "2026-10-18T22:38:59.462782+00:00",
   "total_live": 3,
   "games": [
     {
@@ -8,24 +8,24 @@
       "away_id": "22",
       "home_team": "Los Angeles Rams",
       "away_team": "Arizona Cardinals",
-      "home_score": 3.0,
-      "away_score": 6.0,
-      "period": 2,
-      "display_clock": "10:55",
-      "status": "10:55 - 2nd",
-      "elapsed_minute": 19.1,
-      "minutes_remaining": 40.9,
+      "home_score": 9.0,
+      "away_score": 15.0,
+      "period": 4,
+      "display_clock": "3:09",
+      "status": "3:09 - 4th",
+      "elapsed_minute": 56.9,
+      "minutes_remaining": 3.1,
       "next_score": {
-        "home": 47,
-        "away": 53
+        "home": 51,
+        "away": 49
       },
       "game_total_pace": {
-        "prob": 21,
+        "prob": 0,
         "status": "On Pace: Under"
       },
       "model_signal": {
         "label": "Game Total Under",
-        "prob": 79,
+        "prob": 100,
         "qualifies": true
       },
       "pregame_projection": {
@@ -40,24 +40,24 @@
       "away_id": "24",
       "home_team": "Kansas City Chiefs",
       "away_team": "Los Angeles Chargers",
-      "home_score": 9.0,
-      "away_score": 0.0,
-      "period": 1,
-      "display_clock": "2:20",
-      "status": "2:20 - 1st",
-      "elapsed_minute": 12.7,
-      "minutes_remaining": 47.3,
+      "home_score": 19.0,
+      "away_score": 6.0,
+      "period": 3,
+      "display_clock": "0:21",
+      "status": "0:21 - 3rd",
+      "elapsed_minute": 44.6,
+      "minutes_remaining": 15.4,
       "next_score": {
-        "home": 82,
-        "away": 18
+        "home": 74,
+        "away": 26
       },
       "game_total_pace": {
-        "prob": 47,
+        "prob": 9,
         "status": "On Pace: Under"
       },
       "model_signal": {
-        "label": "Home Next Score",
-        "prob": 82,
+        "label": "Game Total Under",
+        "prob": 91,
         "qualifies": true
       },
       "pregame_projection": {
@@ -72,25 +72,25 @@
       "away_id": "2",
       "home_team": "Las Vegas Raiders",
       "away_team": "Buffalo Bills",
-      "home_score": 7.0,
-      "away_score": 3.0,
-      "period": 1,
-      "display_clock": "0:00",
-      "status": "End of 1st",
-      "elapsed_minute": 15.0,
-      "minutes_remaining": 45.0,
+      "home_score": 13.0,
+      "away_score": 23.0,
+      "period": 3,
+      "display_clock": "0:07",
+      "status": "0:07 - 3rd",
+      "elapsed_minute": 44.9,
+      "minutes_remaining": 15.1,
       "next_score": {
-        "home": 62,
-        "away": 38
+        "home": 36,
+        "away": 64
       },
       "game_total_pace": {
-        "prob": 32,
+        "prob": 7,
         "status": "On Pace: Under"
       },
       "model_signal": {
         "label": "Game Total Under",
-        "prob": 68,
-        "qualifies": false
+        "prob": 93,
+        "qualifies": true
       },
       "pregame_projection": {
         "exp_home": 28.1,

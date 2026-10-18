@@ -629,5 +629,39 @@
     "logged_away_score": 0.0,
     "pregame_total": 46.6,
     "status": "pending"
+  },
+  "401873006_Game_Total_Under": {
+    "id": "401873006_Game_Total_Under",
+    "game_id": "401873006",
+    "home_id": "12",
+    "away_id": "24",
+    "home_team": "Kansas City Chiefs",
+    "away_team": "Los Angeles Chargers",
+    "label": "Game Total Under",
+    "prob": 91,
+    "logged_at": "2026-10-18T22:38:59.467248+00:00",
+    "logged_period": 3,
+    "logged_clock": "0:21",
+    "logged_home_score": 19.0,
+    "logged_away_score": 6.0,
+    "pregame_total": 46.6,
+    "status": "pending"
+  },
+  "401873005_Game_Total_Under": {
+    "id": "401873005_Game_Total_Under",
+    "game_id": "401873005",
+    "home_id": "13",
+    "away_id": "2",
+    "home_team": "Las Vegas Raiders",
+    "away_team": "Buffalo Bills",
+    "label": "Game Total Under",
+    "prob": 93,
+    "logged_at": "2026-10-18T22:38:59.467259+00:00",
+    "logged_period": 3,
+    "logged_clock": "0:07",
+    "logged_home_score": 13.0,
+    "logged_away_score": 23.0,
+    "pregame_total": 62.4,
+    "status": "pending"
   }
 }
