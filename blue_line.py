@@ -55,7 +55,29 @@ def over_prob(line,lam):
   thr=math.floor(line)+1
   return 1-sum(pois(i,lam) for i in range(thr))
 
+def under_prob(line,lam):
+  # line is always an X.5 half-line (from safe_line/safe_line_under), so
+  # there's never a push -- exactly 1-over_prob, no edge case to handle.
+  return 1-over_prob(line,lam)
+
 def safe_line(lam, factor=0.55):
+  raw=lam*factor
+  line=math.floor(raw*2)/2
+  if line<0.5: line=0.5
+  return line
+
+# Team Total Under counterpart (user request, 2026-10-18). Deliberately
+# NOT the same line as safe_line() above with the comparison flipped --
+# safe_line's factor=0.55 picks a line intentionally LOW relative to the
+# projection so the Over is an easy clear (same shape as the Over1.5/
+# Over IQ "safest pick" lines elsewhere in this suite); using that same
+# low line for Under would make the Under leg a near-guaranteed MISS,
+# not a real prediction. factor=1.45 is the mirror-image heuristic:
+# scales the line UP from the projection by roughly the same distance
+# 0.55 scales it down, so Under also lands on a line that's genuinely
+# likely to hold, not just the arithmetic inverse of a line picked to
+# favor Over.
+def safe_line_under(lam, factor=1.45):
   raw=lam*factor
   line=math.floor(raw*2)/2
   if line<0.5: line=0.5
@@ -729,7 +751,15 @@ for g in games:
         "prob": round(over_prob(line, lam)*100), "category": "Team Total",
         "detail": f"proj {lam:.2f} goals",
         "game_id": game_id, "game_date": game_date,
-        "is_home": team_label == home, "line": line,
+        "is_home": team_label == home, "line": line, "direction": "over",
+      })
+      under_line = safe_line_under(lam)
+      all_legs.append({
+        "match": match_label, "market": f"{team_label} Under {under_line} Goals",
+        "prob": round(under_prob(under_line, lam)*100), "category": "Team Total",
+        "detail": f"proj {lam:.2f} goals",
+        "game_id": game_id, "game_date": game_date,
+        "is_home": team_label == home, "line": under_line, "direction": "under",
       })
     all_legs.append({
       "match": match_label, "market": "Game Over 5.5 Total Goals",
