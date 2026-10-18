@@ -249,6 +249,34 @@ def _find_player_stat(boxscore, is_home, player_id):
     return None
 
 
+# FIXED (user report, 2026-10-18: Shots on Goal / Player SOG Hot Form /
+# Player SOG Real Streak stuck at 0/0 while every other category,
+# including the structurally identical Goalie Saves, verifies fine).
+# This file's p.get("shots") was reading the wrong field for this
+# endpoint: confirmed against fastRhockey's R parser (which actually
+# reads a live api-web.nhle.com boxscore), a skater's shots-on-goal
+# count here is "sog", not "shots". "shots" IS the right key, but only
+# on the SEPARATE /player/{id}/game-log/now endpoint blue_line.py's own
+# Hot Form panel reads from (different endpoint, different schema) --
+# easy to conflate since both describe the same real-world stat. Tries
+# "sog" first (the confirmed name for THIS endpoint), falls back to
+# "shots" in case a future API revision renames it back, and logs once
+# if neither is present so a silent 0/0 has a concrete next step.
+_SOG_FIELD_LOGGED = False
+
+
+def _skater_sog(p):
+    global _SOG_FIELD_LOGGED
+    if "sog" in p:
+        return p.get("sog")
+    if "shots" in p:
+        return p.get("shots")
+    if not _SOG_FIELD_LOGGED:
+        print(f"    [!] no 'sog' or 'shots' field on skater boxscore line -- actual keys: {sorted(p.keys())}")
+        _SOG_FIELD_LOGGED = True
+    return None
+
+
 # FIXED: this used to require gameState == "OFF" exactly. "OFF" is the
 # NHL API's brief "game just ended, not yet officially final" state --
 # it settles to "FINAL" within a day or so of the game finishing, which
@@ -305,7 +333,7 @@ def _verify_player_leg(entry):
             return None
         return {"actual": actual, "result": "hit" if actual >= 1 else "miss"}
     if entry["scanner"] == "shots_on_goal":
-        actual = p.get("shots")
+        actual = _skater_sog(p)
         if actual is None:
             return None
         return {"actual": actual, "result": "hit" if actual > entry["line"] else "miss"}
@@ -344,11 +372,15 @@ def _verify_form_streak_entry(entry, real_streak_threshold=3):
 SOG_REAL_STREAK_THRESHOLD = 2
 SAVES_REAL_STREAK_THRESHOLD = 25
 
-# Which boxscore stat + "still holding up" threshold each per-player
-# streak scanner checks against.
+# Which "still holding up" threshold each per-player streak scanner
+# checks against. sog_hot_form/sog_real_streak use _skater_sog() below
+# instead of a plain field lookup (see its docstring for why "shots"
+# alone is wrong on this endpoint); saves_hot_form/saves_real_streak
+# read "saves" directly since that field name is already confirmed
+# correct here (Goalie Saves verifies fine).
 _PLAYER_STREAK_STAT = {
-    "sog_hot_form": ("shots", SOG_REAL_STREAK_THRESHOLD),
-    "sog_real_streak": ("shots", SOG_REAL_STREAK_THRESHOLD),
+    "sog_hot_form": (None, SOG_REAL_STREAK_THRESHOLD),
+    "sog_real_streak": (None, SOG_REAL_STREAK_THRESHOLD),
     "saves_hot_form": ("saves", SAVES_REAL_STREAK_THRESHOLD),
     "saves_real_streak": ("saves", SAVES_REAL_STREAK_THRESHOLD),
 }
@@ -360,9 +392,9 @@ def _verify_player_form_streak_entry(entry):
     above, just checked against the player's own boxscore line instead
     of the team's final score. Which stat and threshold to check against
     is picked by scanner via _PLAYER_STREAK_STAT above."""
-    stat_key, threshold = _PLAYER_STREAK_STAT.get(entry["scanner"], (None, None))
-    if not stat_key or not entry.get("player_id"):
+    if entry["scanner"] not in _PLAYER_STREAK_STAT or not entry.get("player_id"):
         return None
+    stat_key, threshold = _PLAYER_STREAK_STAT[entry["scanner"]]
     box = _get_boxscore(entry["game_id"])
     if not box:
         print(f"    [!] no boxscore for game {entry['game_id']} ({entry['match']})")
@@ -373,7 +405,7 @@ def _verify_player_form_streak_entry(entry):
     p = _find_player_stat(box, entry["is_home"], entry["player_id"])
     if not p:
         return None
-    actual = p.get(stat_key)
+    actual = _skater_sog(p) if stat_key is None else p.get(stat_key)
     if actual is None:
         return None
     return {"actual": actual, "result": "hit" if actual >= threshold else "miss"}
