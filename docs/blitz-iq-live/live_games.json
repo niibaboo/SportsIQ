@@ -1,38 +1,5 @@
 {
-  "generated": "2026-10-19T00:28:21.825450+00:00",
-  "total_live": 1,
-  "games": [
-    {
-      "game_id": "401873007",
-      "home_id": "9",
-      "away_id": "6",
-      "home_team": "Green Bay Packers",
-      "away_team": "Dallas Cowboys",
-      "home_score": 0.0,
-      "away_score": 0.0,
-      "period": 1,
-      "display_clock": "11:13",
-      "status": "11:13 - 1st",
-      "elapsed_minute": 3.8,
-      "minutes_remaining": 56.2,
-      "next_score": {
-        "home": 53,
-        "away": 47
-      },
-      "game_total_pace": {
-        "prob": 41,
-        "status": "On Pace: Under"
-      },
-      "model_signal": {
-        "label": "Game Total Under",
-        "prob": 59,
-        "qualifies": false
-      },
-      "pregame_projection": {
-        "exp_home": 24.8,
-        "exp_away": 22.4,
-        "exp_total": 47.2
-      }
-    }
-  ]
+  "generated": "2026-10-19T05:03:30.415159+00:00",
+  "total_live": 0,
+  "games": []
 }
