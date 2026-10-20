@@ -1,0 +1,42 @@
+name: Orange Line
+
+on:
+  schedule:
+    # NBA plays most days during the season, so this runs daily, same
+    # cadence as Blue Line. The NBA regular season runs roughly late
+    # October through mid-June -- earlier/later runs outside that window
+    # will just find no games, same as Blue Line during NHL's offseason.
+    - cron: '0 10 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Orange Line
+        # No API key needed — this uses ESPN's public API, same host
+        # family as Blitz IQ.
+        run: python3 orange_line.py
+
+      - name: Commit and push updated predictions
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/orange-line/
+          git diff --staged --quiet || git commit -m "Update Orange Line predictions"
+          git pull --rebase --autostash origin main
+          git push
