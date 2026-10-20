@@ -218,6 +218,7 @@ def log_todays_signals(legs, hot_form, real_streak, log):
                 "category": e["label"],
                 "value": value,
                 "threshold": e.get("threshold"),
+                "streak_games": e.get("history") if scanner == "player_real_streak" else None,
                 "detail": f"{e.get('team', 'Unknown team')} · {e.get('league', 'Unknown league')}",
                 "opponent": e.get("opponent"),
                 "match_id": e["match_id"],
