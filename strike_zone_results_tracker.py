@@ -89,14 +89,14 @@ def log_todays_signals(legs, run_entries, real_run_entries, k_entries, real_k_en
     added = 0
 
     def add(scanner, subject, market, value, game_pk, game_date, pitcher_id=None,
-             is_home=None, line=None, threshold=None, detail=None):
+             is_home=None, line=None, threshold=None, detail=None, streak_games=None):
         nonlocal added
         eid = _entry_id(scanner, subject, game_date, market)
         if eid in existing_ids:
             return
         log.append({
             "id": eid, "scanner": scanner, "subject": subject, "market": market,
-            "value": value, "detail": detail,
+            "value": value, "detail": detail, "streak_games": streak_games,
             "game_pk": game_pk, "pitcher_id": pitcher_id, "is_home": is_home,
             "line": line, "threshold": threshold,
             "game_date": game_date, "date_key": game_date,
@@ -124,7 +124,8 @@ def log_todays_signals(legs, run_entries, real_run_entries, k_entries, real_k_en
         if not e.get("game_pk"):
             continue
         add("real_run_streak", e["team"], f"Real Run Streak vs {e['opponent']}", e["streak_len"],
-            e["game_pk"], e["game_date"], is_home=e["is_home"], threshold=REAL_RUN_STREAK_THRESHOLD)
+            e["game_pk"], e["game_date"], is_home=e["is_home"], threshold=REAL_RUN_STREAK_THRESHOLD,
+            streak_games=e.get("streak_games"))
 
     for e in hit_entries:
         if not e.get("game_pk"):
@@ -136,7 +137,8 @@ def log_todays_signals(legs, run_entries, real_run_entries, k_entries, real_k_en
         if not e.get("game_pk"):
             continue
         add("real_hit_streak", e["team"], f"Real Hit Streak vs {e['opponent']}", e["streak_len"],
-            e["game_pk"], e["game_date"], is_home=e["is_home"], threshold=REAL_HIT_STREAK_THRESHOLD)
+            e["game_pk"], e["game_date"], is_home=e["is_home"], threshold=REAL_HIT_STREAK_THRESHOLD,
+            streak_games=e.get("streak_games"))
 
     for e in k_entries:
         if not e.get("game_pk"):
@@ -148,7 +150,8 @@ def log_todays_signals(legs, run_entries, real_run_entries, k_entries, real_k_en
         if not e.get("game_pk"):
             continue
         add("real_k_streak", e["name"], f"Real K Streak ({e['team']} vs {e['opp']})", e["streak_len"],
-            e["game_pk"], e["game_date"], pitcher_id=e.get("pitcher_id"), threshold=REAL_K_STREAK_THRESHOLD)
+            e["game_pk"], e["game_date"], pitcher_id=e.get("pitcher_id"), threshold=REAL_K_STREAK_THRESHOLD,
+            streak_games=e.get("streak_games"))
 
     print(f"  Results log: {added} new pick(s) logged, {len(log)} total in log")
     return log
