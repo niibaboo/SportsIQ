@@ -169,9 +169,10 @@ def log_todays_signals(legs, team_hot_form, team_real_streak, player_hot_form, p
 
     for e in (team_real_streak or []):
         date_key = (e.get("date") or "")[:10]
+        streak_games = (e.get("list") or [])[-e["streak"]:] if e.get("list") else None
         _add_form("team_real_streak", e["team"], e["match"], date_key, e.get("game_id"), e["threshold"],
                   f"{e['team']} Real Streak ({e['streak']}+ straight {e['threshold']}+ pt games)",
-                  extra={"is_home": e.get("is_home")})
+                  extra={"is_home": e.get("is_home"), "streak_games": streak_games, "value": e["streak"]})
 
     for e in (player_hot_form or []):
         date_key = (e.get("date") or "")[:10]
@@ -181,9 +182,11 @@ def log_todays_signals(legs, team_hot_form, team_real_streak, player_hot_form, p
 
     for e in (player_real_streak or []):
         date_key = (e.get("date") or "")[:10]
+        streak_games = (e.get("list") or [])[-e["streak"]:] if e.get("list") else None
         _add_form("player_real_streak", e["name"], e["match"], date_key, e.get("game_id"), e["threshold"],
                   f"{e['name']} Real Streak ({e['streak']}+ straight games ≥{e['threshold']} {e['label'].lower()})",
-                  extra={"athlete_id": e.get("athlete_id"), "stat_key": e.get("stat_key"), "label": e.get("label")})
+                  extra={"athlete_id": e.get("athlete_id"), "stat_key": e.get("stat_key"), "label": e.get("label"),
+                         "streak_games": streak_games, "value": e["streak"]})
 
     print(f"  Results log: {added} new pick(s) logged, {len(log)} total in log")
     return log
