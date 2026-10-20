@@ -94,14 +94,14 @@ def log_todays_signals(legs, streak_entries, real_streak_entries, log):
     added = 0
 
     def add(scanner, subject, market, value, league, league_id, date, date_key,
-             home_name, away_name, is_home=None, detail=None):
+             home_name, away_name, is_home=None, detail=None, streak_games=None):
         nonlocal added
         eid = _entry_id(scanner, subject, date_key, market)
         if eid in existing_ids:
             return
         log.append({
             "id": eid, "scanner": scanner, "subject": subject, "market": market,
-            "value": value, "detail": detail, "is_home": is_home,
+            "value": value, "detail": detail, "streak_games": streak_games, "is_home": is_home,
             "league": league, "league_id": league_id,
             "home_name": home_name, "away_name": away_name,
             "match_date": date, "date_key": date_key,
@@ -138,7 +138,7 @@ def log_todays_signals(legs, streak_entries, real_streak_entries, log):
         date_key = (e["date"] or "")[:10]
         add("real_streak", e["team"], f"Real Streak vs {e['opponent']}", e["streak_len"],
             e["league"], e["league_id"], e["date"], date_key,
-            e["home_name"], e["away_name"], is_home=e["is_home"])
+            e["home_name"], e["away_name"], is_home=e["is_home"], streak_games=e.get("streak_games"))
 
     print(f"  Results log: {added} new pick(s) logged, {len(log)} total in log")
     return log
