@@ -1,0 +1,39 @@
+name: Streaks Scanner
+
+on:
+  schedule:
+    # This only reads the log.json files each sibling tool's own workflow
+    # already writes -- no API calls of its own -- so it's safe to run
+    # more often than any individual sport's scanner. Every 2 hours keeps
+    # the combined page reasonably current without being wasteful.
+    - cron: '0 */2 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Streaks Scanner
+        # No dependencies beyond the standard library -- this only reads
+        # JSON files already in the repo, it doesn't call any sport API.
+        run: python3 streaks_scanner.py
+
+      - name: Commit and push updated streaks page
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/streaks/
+          git diff --staged --quiet || git commit -m "Update Streaks Scanner"
+          git pull --rebase --autostash origin main
+          git push
