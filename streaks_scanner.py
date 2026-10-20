@@ -80,7 +80,38 @@ def _load_log(path):
 
 
 def _subject(e):
-    return e.get("subject") or e.get("player") or e.get("team") or "Unknown"
+    """Most trackers store the streaking team/player under "subject",
+    "player" or "team". A couple (EuroLeague IQ, Orange Line) only store
+    a combined "{team} vs {opponent}" string under "match" -- split that
+    on " vs " and take the team side rather than falling through to
+    "Unknown" (user report, 2026-10-20: EuroLeague IQ rows were showing
+    "Unknown" as the subject for exactly this reason)."""
+    subject = e.get("subject") or e.get("player") or e.get("team")
+    if subject:
+        return subject
+    match = e.get("match")
+    if match and " vs " in match:
+        return match.split(" vs ", 1)[0]
+    return match or "Unknown"
+
+
+def _detail(e):
+    """Surfaces each entry's "detail" field when it has one -- several
+    trackers (EuroLeague IQ, Player Stat Model) pack real context in
+    here (the actual threshold cleared, team/league), which the plain
+    subject/market/value row was dropping entirely (user report,
+    2026-10-20: "not much information on the streak"). The couple of
+    trackers that only ever stash a raw "is_home=True/False" flag in
+    this field get it turned into a plain "Home"/"Away" label instead
+    of showing the raw Python repr."""
+    detail = e.get("detail")
+    if not detail:
+        return None
+    if detail == "is_home=True":
+        return "Home"
+    if detail == "is_home=False":
+        return "Away"
+    return detail
 
 
 def _date_key(e):
@@ -105,7 +136,8 @@ def collect():
                 live.append({
                     "source": src["label"], "sport": src["sport"],
                     "subject": _subject(e), "market": e.get("market", ""),
-                    "value": e.get("value"), "date": _date_key(e),
+                    "value": e.get("value"), "detail": _detail(e),
+                    "threshold": e.get("threshold"), "date": _date_key(e),
                 })
             elif e.get("result") == "hit":
                 stats["hit"] += 1
@@ -151,12 +183,22 @@ def build_html(live, by_source):
     live_rows = ""
     for e in live:
         value_str = f" · streak {e['value']}" if e.get("value") is not None else ""
+        # Threshold shown only when the market text doesn't already spell
+        # it out itself (Orange Line/EuroLeague IQ already embed it, e.g.
+        # "...≥2 REB" or "...above league avg (18+)" -- repeating it would
+        # just be noise).
+        threshold = e.get("threshold")
+        already_shown = str(threshold) in e["market"] or str(threshold) in (e.get("detail") or "")
+        threshold_str = f" (needs {threshold}+)" if threshold is not None and not already_shown else ""
+        detail_line = (f'<div style="font-size:11px;color:#8b98a8;margin-top:2px">{e["detail"]}</div>'
+                        if e.get("detail") else "")
         live_rows += f"""<div class="live-row" data-source="{e['source']}" data-date="{e['date']}" style="padding:8px 0;border-bottom:1px solid #1a2029">
   <div style="display:flex;justify-content:space-between;font-size:12px;color:#8b98a8;margin-bottom:2px">
     <span>{e['source']} · {e['sport']}</span>
     <span>{e['date']}</span>
   </div>
-  <div style="font-size:13px">{e['subject']} — {e['market']}{value_str}</div>
+  <div style="font-size:13px">{e['subject']} — {e['market']}{value_str}{threshold_str}</div>
+  {detail_line}
 </div>"""
     if not live_rows:
         live_rows = '<p style="color:#888;font-size:12px">No live Real Streak picks right now across any tool.</p>'
