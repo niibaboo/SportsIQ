@@ -109,14 +109,16 @@ def log_todays_signals(legs, streak_entries, real_streak_entries, log):
     added = 0
 
     def add(scanner, match, market, value, detail, season, game_code, date_key,
-             is_home=None, line=None, player_code=None, stat_key=None, threshold=None):
+             is_home=None, line=None, player_code=None, stat_key=None, threshold=None,
+             streak_games=None):
         nonlocal added
         eid = _entry_id(scanner, market, date_key, match)
         if eid in existing_ids:
             return
         log.append({
             "id": eid, "scanner": scanner, "match": match, "market": market,
-            "value": value, "detail": detail, "line": line, "threshold": threshold,
+            "value": value, "detail": detail, "streak_games": streak_games,
+            "line": line, "threshold": threshold,
             "season": season, "game_code": game_code, "game_date": date_key,
             "date_key": date_key, "is_home": is_home,
             "player_code": player_code, "stat_key": stat_key,
@@ -151,7 +153,7 @@ def log_todays_signals(legs, streak_entries, real_streak_entries, log):
         add("real_streak", match, f"Real Streak vs {e['opponent']}", e["streak_len"],
             f"{e['streak_len']} straight above league avg ({e['threshold']}+)",
             e["season"], e["game_code"], (e.get("date") or "")[:10],
-            is_home=e["is_home"], threshold=e["threshold"])
+            is_home=e["is_home"], threshold=e["threshold"], streak_games=e.get("streak_games"))
 
     print(f"  Results log: {added} new pick(s) logged, {len(log)} total in log")
     return log
