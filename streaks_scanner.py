@@ -114,6 +114,26 @@ def _detail(e):
     return detail
 
 
+def _streak_games_str(e):
+    """Normalizes each tool's per-game streak-value history into a single
+    "oldest→newest" slash-joined string, matching the convention each
+    tool's own page already uses (user request, 2026-10-20: "can it add
+    the exact last stats from the original page?"). Every tracker but
+    Player Stat Model stores this as a raw list under "streak_games";
+    Player Stat Model pre-joins it into a string already. Missing/None
+    (older log entries logged before this field existed) returns None so
+    the caller can skip the line entirely rather than show "None"."""
+    sg = e.get("streak_games")
+    if not sg:
+        return None
+    if isinstance(sg, str):
+        return sg
+    try:
+        return "/".join(str(int(v)) if float(v) == int(v) else str(v) for v in sg)
+    except (TypeError, ValueError):
+        return "/".join(str(v) for v in sg)
+
+
 def _date_key(e):
     return (e.get("date_key") or e.get("match_date") or e.get("game_date")
             or e.get("date") or "")[:10]
@@ -138,6 +158,7 @@ def collect():
                     "subject": _subject(e), "market": e.get("market", ""),
                     "value": e.get("value"), "detail": _detail(e),
                     "threshold": e.get("threshold"), "date": _date_key(e),
+                    "streak_games": _streak_games_str(e),
                 })
             elif e.get("result") == "hit":
                 stats["hit"] += 1
@@ -192,6 +213,8 @@ def build_html(live, by_source):
         threshold_str = f" (needs {threshold}+)" if threshold is not None and not already_shown else ""
         detail_line = (f'<div style="font-size:11px;color:#8b98a8;margin-top:2px">{e["detail"]}</div>'
                         if e.get("detail") else "")
+        streak_line = (f'<div style="font-size:11px;color:#f59e0b;margin-top:2px">Last games (old→new): {e["streak_games"]}</div>'
+                        if e.get("streak_games") else "")
         live_rows += f"""<div class="live-row" data-source="{e['source']}" data-date="{e['date']}" style="padding:8px 0;border-bottom:1px solid #1a2029">
   <div style="display:flex;justify-content:space-between;font-size:12px;color:#8b98a8;margin-bottom:2px">
     <span>{e['source']} · {e['sport']}</span>
@@ -199,6 +222,7 @@ def build_html(live, by_source):
   </div>
   <div style="font-size:13px">{e['subject']} — {e['market']}{value_str}{threshold_str}</div>
   {detail_line}
+  {streak_line}
 </div>"""
     if not live_rows:
         live_rows = '<p style="color:#888;font-size:12px">No live Real Streak picks right now across any tool.</p>'
