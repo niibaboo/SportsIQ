@@ -672,5 +672,22 @@
     "status": "miss",
     "final_home_score": 30.0,
     "final_away_score": 33.0
+  },
+  "401873008_Home_Next_Score": {
+    "id": "401873008_Home_Next_Score",
+    "game_id": "401873008",
+    "home_id": "25",
+    "away_id": "28",
+    "home_team": "San Francisco 49ers",
+    "away_team": "Washington Commanders",
+    "label": "Home Next Score",
+    "prob": 70,
+    "logged_at": "2026-10-20T00:36:57.727148+00:00",
+    "logged_period": 1,
+    "logged_clock": "6:30",
+    "logged_home_score": 7.0,
+    "logged_away_score": 3.0,
+    "pregame_total": 54.7,
+    "status": "pending"
   }
 }
