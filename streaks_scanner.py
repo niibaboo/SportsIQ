@@ -141,10 +141,17 @@ def build_html(live, by_source):
   </div>
 </div></a>"""
 
+    # Tool filter + date filter on "Live Real Streaks" (user request,
+    # 2026-10-20) -- pending entries can sit in a tool's log for weeks
+    # if a game never got verified (API hiccup, postponed fixture, etc),
+    # so without a filter this list mixes genuinely live picks with
+    # month-old stragglers. Both filters are client-side, same pattern
+    # as the date filter already on the Over IQ dashboard, and combine
+    # with AND logic (a row shows only when it passes both).
     live_rows = ""
     for e in live:
         value_str = f" · streak {e['value']}" if e.get("value") is not None else ""
-        live_rows += f"""<div style="padding:8px 0;border-bottom:1px solid #1a2029">
+        live_rows += f"""<div class="live-row" data-source="{e['source']}" data-date="{e['date']}" style="padding:8px 0;border-bottom:1px solid #1a2029">
   <div style="display:flex;justify-content:space-between;font-size:12px;color:#8b98a8;margin-bottom:2px">
     <span>{e['source']} · {e['sport']}</span>
     <span>{e['date']}</span>
@@ -153,6 +160,53 @@ def build_html(live, by_source):
 </div>"""
     if not live_rows:
         live_rows = '<p style="color:#888;font-size:12px">No live Real Streak picks right now across any tool.</p>'
+
+    tools_with_live = sorted({e["source"] for e in live})
+    tool_filter_bar = ""
+    if tools_with_live:
+        tool_buttons = ''.join(
+            f'<button class="tool-filter-btn" data-tool="{t}" onclick="filterLive(\'tool\',\'{t}\',this)" '
+            f'style="background:#1a2433;border:1px solid #233040;color:#7ec8ff;padding:5px 10px;border-radius:999px;font-size:11px;cursor:pointer">{t}</button>'
+            for t in tools_with_live
+        )
+        tool_filter_bar = f"""<div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">
+          <button class="tool-filter-btn active-filter" data-tool="all" onclick="filterLive('tool','all',this)" style="background:#7ec8ff;border:1px solid #7ec8ff;color:#0b0f14;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer">All tools</button>
+          {tool_buttons}
+        </div>"""
+
+    date_filter_bar = """<div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+          <button class="date-filter-btn" data-range="7" onclick="filterLive('date',7,this)" style="background:#1a2433;border:1px solid #233040;color:#f59e0b;padding:6px 12px;border-radius:999px;font-size:12px;cursor:pointer">Last 7 Days</button>
+          <button class="date-filter-btn" data-range="30" onclick="filterLive('date',30,this)" style="background:#1a2433;border:1px solid #233040;color:#f59e0b;padding:6px 12px;border-radius:999px;font-size:12px;cursor:pointer">Last 30 Days</button>
+          <button class="date-filter-btn active-filter" data-range="all" onclick="filterLive('date','all',this)" style="background:#f59e0b;border:1px solid #f59e0b;color:#0b0f14;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer">All</button>
+        </div>
+        <script>
+        var _liveFilters = {tool: 'all', date: 'all'};
+        function filterLive(kind, val, btn) {
+          _liveFilters[kind] = val;
+          var rows = document.querySelectorAll('.live-row');
+          var cutoff = null;
+          if (_liveFilters.date !== 'all') {
+            cutoff = new Date();
+            cutoff.setHours(0,0,0,0);
+            cutoff.setDate(cutoff.getDate() - _liveFilters.date);
+          }
+          rows.forEach(function(row) {
+            var toolOk = (_liveFilters.tool === 'all') || (row.getAttribute('data-source') === _liveFilters.tool);
+            var dateOk = true;
+            if (cutoff !== null) {
+              var d = new Date(row.getAttribute('data-date') + 'T00:00:00');
+              dateOk = (d >= cutoff);
+            }
+            row.style.display = (toolOk && dateOk) ? 'block' : 'none';
+          });
+          var btnClass = (kind === 'tool') ? 'tool-filter-btn' : 'date-filter-btn';
+          var activeColor = (kind === 'tool') ? '#7ec8ff' : '#f59e0b';
+          document.querySelectorAll('.' + btnClass).forEach(function(b) {
+            b.style.background = '#1a2433'; b.style.color = activeColor; b.style.fontWeight = 'normal';
+          });
+          btn.style.background = activeColor; btn.style.color = '#0b0f14'; btn.style.fontWeight = '700';
+        }
+        </script>"""
 
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Real Streaks — All Models</title></head>
@@ -174,6 +228,8 @@ def build_html(live, by_source):
 
 <div style="background:#1a1f26;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #2a3038">
   <div style="font-weight:bold;margin-bottom:8px">Live Real Streaks right now</div>
+  {tool_filter_bar}
+  {date_filter_bar}
   {live_rows}
 </div>
 
