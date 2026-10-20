@@ -160,7 +160,8 @@ def log_todays_signals(legs, hot_form_entries, real_streak_entries, log):
             return
         log.append({
             "id": eid, "scanner": scanner, "match": e["match"], "market": market,
-            "value": None, "detail": None, "line": None, "threshold": e["threshold"],
+            "value": e.get("streak_len") if scanner == "player_real_streak" else None,
+            "detail": None, "streak_games": e.get("streak_games"), "line": None, "threshold": e["threshold"],
             "league": e.get("league"), "game_id": game_id, "game_date": date_key, "date_key": date_key,
             "is_home": None, "player_id": player_id, "stat_key": e["stat"],
             "logged_at": datetime.now(timezone.utc).isoformat(),
