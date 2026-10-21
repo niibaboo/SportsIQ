@@ -644,7 +644,14 @@ def build_legs(predictions):
         game_id = p.get("game_id")  # NEW
         game_date = (p.get("date") or "")[:10]  # NEW
 
-        home_total = normal_prop(p["exp_home"], DEFAULT_TEAM_STD)
+        # factor=1.0 on every Team/Game Total call below -- unlike player
+        # props, these need to sit at the model's actual projected number,
+        # not shaded by the same 0.72/1.28 margins player props use. The
+        # shared defaults produced lines far off the real projection (e.g.
+        # a 230.6pt Orange Line game total printing "Over 166.0"), numbers
+        # no real book offers -- user report, 2026-10-21, same bug
+        # confirmed here since this shares orange_line.py's normal_prop().
+        home_total = normal_prop(p["exp_home"], DEFAULT_TEAM_STD, factor=1.0)
         if home_total:
             legs.append({
                 "match": match_label,
@@ -656,7 +663,7 @@ def build_legs(predictions):
                 "game_id": game_id, "game_date": game_date, "is_home": True, "line": home_total["line"],
                 "direction": "over",
             })
-        home_total_under = normal_prop_under(p["exp_home"], DEFAULT_TEAM_STD)
+        home_total_under = normal_prop_under(p["exp_home"], DEFAULT_TEAM_STD, factor=1.0)
         if home_total_under:
             legs.append({
                 "match": match_label,
@@ -668,7 +675,7 @@ def build_legs(predictions):
                 "game_id": game_id, "game_date": game_date, "is_home": True, "line": home_total_under["line"],
                 "direction": "under",
             })
-        away_total = normal_prop(p["exp_away"], DEFAULT_TEAM_STD)
+        away_total = normal_prop(p["exp_away"], DEFAULT_TEAM_STD, factor=1.0)
         if away_total:
             legs.append({
                 "match": match_label,
@@ -680,7 +687,7 @@ def build_legs(predictions):
                 "game_id": game_id, "game_date": game_date, "is_home": False, "line": away_total["line"],
                 "direction": "over",
             })
-        away_total_under = normal_prop_under(p["exp_away"], DEFAULT_TEAM_STD)
+        away_total_under = normal_prop_under(p["exp_away"], DEFAULT_TEAM_STD, factor=1.0)
         if away_total_under:
             legs.append({
                 "match": match_label,
@@ -693,7 +700,7 @@ def build_legs(predictions):
                 "direction": "under",
             })
 
-        game_total = normal_prop(p["exp_total"], p["total_std"])
+        game_total = normal_prop(p["exp_total"], p["total_std"], factor=1.0)
         if game_total:
             legs.append({
                 "match": match_label,
@@ -1036,10 +1043,10 @@ def make_html(predictions):
     # the exact same normal_prop/normal_prop_under the builder uses, so
     # the numbers always match.
     def _team_total(p):
-        home_o = normal_prop(p["exp_home"], DEFAULT_TEAM_STD)
-        home_u = normal_prop_under(p["exp_home"], DEFAULT_TEAM_STD)
-        away_o = normal_prop(p["exp_away"], DEFAULT_TEAM_STD)
-        away_u = normal_prop_under(p["exp_away"], DEFAULT_TEAM_STD)
+        home_o = normal_prop(p["exp_home"], DEFAULT_TEAM_STD, factor=1.0)
+        home_u = normal_prop_under(p["exp_home"], DEFAULT_TEAM_STD, factor=1.0)
+        away_o = normal_prop(p["exp_away"], DEFAULT_TEAM_STD, factor=1.0)
+        away_u = normal_prop_under(p["exp_away"], DEFAULT_TEAM_STD, factor=1.0)
         return {
             "home_o_line": home_o["line"] if home_o else "—", "home_o_prob": home_o["prob"] if home_o else "—",
             "home_u_line": home_u["line"] if home_u else "—", "home_u_prob": home_u["prob"] if home_u else "—",
