@@ -769,7 +769,7 @@ STREAK_ENTRY_TEMPLATE = """<div style="background:#161d27;border-radius:8px;padd
   </div>
   <div style="flex:1;min-width:0">
     <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{team} <span style="color:#888;font-weight:normal;font-size:11px">({home_away})</span> vs {opponent}</div>
-    <div style="font-size:10px;color:#888">last {n} (old→new): {last5_str} · league avg {lg_scored}</div>
+    <div style="font-size:10px;color:#cbd5e1">last {n} (old→new): {last5_str} · league avg {lg_scored}</div>
   </div>
 </div>"""
 
@@ -780,7 +780,7 @@ REAL_STREAK_ENTRY_TEMPLATE = """<div style="background:#161d27;border-radius:8px
   </div>
   <div style="flex:1;min-width:0">
     <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{team} <span style="color:#888;font-weight:normal;font-size:11px">({home_away})</span> vs {opponent}</div>
-    <div style="font-size:10px;color:#888">{streak_len} straight above league avg ({threshold}+) (old→new): {streak_str}</div>
+    <div style="font-size:10px;color:#cbd5e1">{streak_len} straight above league avg ({threshold}+) (old→new): {streak_str}</div>
   </div>
 </div>"""
 
