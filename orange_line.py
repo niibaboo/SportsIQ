@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Orange Line — NBA Player Props Predictor (Rebounds, Assists, RA)
+Orange Line — NBA Player Props Predictor (Points, Rebounds, Assists, RA)
 Same architecture as Blitz IQ (NFL) and the rest of this suite, adapted for
 NBA player props:
 
@@ -38,7 +38,7 @@ import time
 import math
 import csv
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import requests
 
 LEAGUES = [
@@ -89,8 +89,12 @@ def get_teams(league_key):
         return []
 
 
-def get_scoreboard(league_key):
-    r = _get(f"{BASE_FMT.format(league=league_key)}/scoreboard")
+def get_scoreboard(league_key, date_str=None):
+    """date_str: optional ESPN-style YYYYMMDD -- omit for "today" (ESPN's own
+    default), pass tomorrow's date to pull that day's slate too (see
+    build_predictions(), which calls this twice and merges the two)."""
+    params = {"dates": date_str} if date_str else None
+    r = _get(f"{BASE_FMT.format(league=league_key)}/scoreboard", params=params)
     if r is None:
         return []
     try:
@@ -372,6 +376,7 @@ def get_player_gamelog(league_key, athlete_id, stat_key):
 PROP_CONFIG = {
     'REB': {'stat': 'REB', 'label': 'Rebounds', 'prior': 5.5},
     'AST': {'stat': 'AST', 'label': 'Assists', 'prior': 3.0},
+    'PTS': {'stat': 'PTS', 'label': 'Points', 'prior': 10.0},
 }
 
 
@@ -385,19 +390,22 @@ def project_player_props(league_key, team_id):
             continue
         rebs = get_player_gamelog(league_key, player['id'], PROP_CONFIG['REB']['stat'])
         asts = get_player_gamelog(league_key, player['id'], PROP_CONFIG['AST']['stat'])
-        if len(rebs) < 3 or len(asts) < 3 or len(rebs) != len(asts):
+        pts = get_player_gamelog(league_key, player['id'], PROP_CONFIG['PTS']['stat'])
+        if len(rebs) < 3 or len(asts) < 3 or len(pts) < 3 or len(rebs) != len(asts) or len(rebs) != len(pts):
             continue  # not enough data, or mismatched game counts between
-                        # the two separate stat pulls -- skip rather than
-                        # pair up games that may not actually correspond
+                        # the separate stat pulls -- skip rather than pair
+                        # up games that may not actually correspond
         n = len(rebs)
         reb_proj = shrink(recency_weighted(rebs), n, PROP_CONFIG['REB']['prior'])
         ast_proj = shrink(recency_weighted(asts), n, PROP_CONFIG['AST']['prior'])
+        pts_proj = shrink(recency_weighted(pts), n, PROP_CONFIG['PTS']['prior'])
         ra_values = [r + a for r, a in zip(rebs, asts)]
         ra_proj = reb_proj + ast_proj
         props.append({
             'name': player['name'], 'player_id': player['id'],
             'reb_proj': round(reb_proj, 1), 'ast_proj': round(ast_proj, 1), 'ra_proj': round(ra_proj, 1),
-            'rebs': rebs, 'asts': asts, 'ra_values': ra_values, 'n_games': n,
+            'pts_proj': round(pts_proj, 1),
+            'rebs': rebs, 'asts': asts, 'ra_values': ra_values, 'pts': pts, 'n_games': n,
         })
     return props
 
@@ -444,9 +452,21 @@ def build_predictions():
         lg_scored, lg_allowed = league_averages(all_forms.values(), LEAGUE_FALLBACK_AVG.get(league_key, 100.0))
         print(f"  {league_name} averages: {lg_scored:.1f} scored/game, {lg_allowed:.1f} allowed/game")
 
-        print(f"Fetching {league_name}'s today's scoreboard…")
-        events = get_scoreboard(league_key)
-        print(f"{len(events)} {league_name} games today")
+        print(f"Fetching {league_name}'s scoreboard for today and tomorrow…")
+        tomorrow = (datetime.now(timezone.utc) + timedelta(days=1)).strftime('%Y%m%d')
+        events_today = get_scoreboard(league_key)
+        events_tomorrow = get_scoreboard(league_key, tomorrow)
+        seen_ids = set()
+        events = []
+        for ev in events_today + events_tomorrow:
+            eid = ev.get('id')
+            if eid and eid in seen_ids:
+                continue  # same game showed up in both pulls -- keep the first copy only
+            if eid:
+                seen_ids.add(eid)
+            events.append(ev)
+        print(f"{len(events)} {league_name} games today & tomorrow "
+              f"({len(events_today)} today, {len(events_tomorrow)} tomorrow)")
 
         for e in events:
             comp = e.get('competitions', [{}])[0]
@@ -542,6 +562,7 @@ def build_legs(predictions):
                     ("REB", prop["rebs"], prop["reb_proj"], "Rebounds"),
                     ("AST", prop["asts"], prop["ast_proj"], "Assists"),
                     ("RA", prop["ra_values"], prop["ra_proj"], "Rebounds+Assists"),
+                    ("PTS", prop["pts"], prop["pts_proj"], "Points"),
                 ]:
                     result = safe_line(proj)
                     if not result:
@@ -568,11 +589,17 @@ def build_legs(predictions):
 # walking backward from the most recent game (now that _fetch_gamelog_values
 # sorts by date rather than trusting API order) and counting how many in a
 # ROW cleared a per-game threshold, stopping at the first one that didn't.
-HOT_FORM_MIN = {"REB": 8.0, "AST": 5.0, "RA": 13.0}
+# PTS thresholds follow the same ratio every other stat here already uses
+# between its Hot Form bar (an AVERAGE, so set higher) and its Real Streak
+# bar (every one of several CONSECUTIVE games must individually clear it,
+# so set lower) -- roughly 1.3x. Real Streak's 15.0 is per user request
+# (2026-10-21: "include 15 point streak players"); Hot Form's 20.0 follows
+# from that same ratio, not a separate request -- easy to retune later.
+HOT_FORM_MIN = {"REB": 8.0, "AST": 5.0, "RA": 13.0, "PTS": 20.0}
 HOT_FORM_MIN_GAMES = 5
-REAL_STREAK_THRESHOLD = {"REB": 6.0, "AST": 4.0, "RA": 10.0}
+REAL_STREAK_THRESHOLD = {"REB": 6.0, "AST": 4.0, "RA": 10.0, "PTS": 15.0}
 REAL_STREAK_MIN_LENGTH = 3
-STAT_LABELS = {"REB": "Rebounds", "AST": "Assists", "RA": "Rebounds+Assists"}
+STAT_LABELS = {"REB": "Rebounds", "AST": "Assists", "RA": "Rebounds+Assists", "PTS": "Points"}
 
 
 def _last_n_avg(values, n):
@@ -600,7 +627,7 @@ def build_hot_form_entries(predictions):
         for team_name, props in [(p["home_team"], p.get("home_props") or []),
                                    (p["away_team"], p.get("away_props") or [])]:
             for prop in props:
-                for stat_key, values in [("REB", prop["rebs"]), ("AST", prop["asts"]), ("RA", prop["ra_values"])]:
+                for stat_key, values in [("REB", prop["rebs"]), ("AST", prop["asts"]), ("RA", prop["ra_values"]), ("PTS", prop["pts"])]:
                     result = _last_n_avg(values, HOT_FORM_MIN_GAMES)
                     if not result:
                         continue
@@ -622,7 +649,7 @@ def build_real_streak_entries(predictions):
         for team_name, props in [(p["home_team"], p.get("home_props") or []),
                                    (p["away_team"], p.get("away_props") or [])]:
             for prop in props:
-                for stat_key, values in [("REB", prop["rebs"]), ("AST", prop["asts"]), ("RA", prop["ra_values"])]:
+                for stat_key, values in [("REB", prop["rebs"]), ("AST", prop["asts"]), ("RA", prop["ra_values"]), ("PTS", prop["pts"])]:
                     streak_len = _current_stat_streak(values, REAL_STREAK_THRESHOLD[stat_key])
                     if streak_len >= REAL_STREAK_MIN_LENGTH:
                         entries.append({
@@ -644,7 +671,7 @@ STREAK_ENTRY_TEMPLATE = """<div style="background:#241a14;border-radius:8px;padd
   <div style="flex:1;min-width:0">
     <div style="font-size:10px;color:#998">{league} · {match}</div>
     <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{name} ({team}) <span style="color:#998;font-weight:normal;font-size:11px">{stat_label}</span></div>
-    <div style="font-size:10px;color:#998">last {n} (old→new): {values_str}</div>
+    <div style="font-size:10px;color:#cbd5e1">last {n} (old→new): {values_str}</div>
   </div>
 </div>"""
 
@@ -656,7 +683,7 @@ REAL_STREAK_ENTRY_TEMPLATE = """<div style="background:#241a14;border-radius:8px
   <div style="flex:1;min-width:0">
     <div style="font-size:10px;color:#998">{league} · {match}</div>
     <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{name} ({team}) <span style="color:#998;font-weight:normal;font-size:11px">{stat_label}</span></div>
-    <div style="font-size:10px;color:#998">{streak_len} straight ≥{threshold} (old→new): {values_str}</div>
+    <div style="font-size:10px;color:#cbd5e1">{streak_len} straight ≥{threshold} (old→new): {values_str}</div>
   </div>
 </div>"""
 
@@ -871,7 +898,7 @@ TEAM_TOTAL_ROW = """<div style="display:flex;justify-content:space-between;text-
 
 PLAYER_PROP_ROW = """<div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #3a2a20">
   <div>{name}</div>
-  <div style="color:#ff9a2e;font-weight:bold">REB {reb_proj} · AST {ast_proj} · RA {ra_proj} <span style="color:#776;font-weight:normal">({n_games}gm)</span></div>
+  <div style="color:#ff9a2e;font-weight:bold">PTS {pts_proj} · REB {reb_proj} · AST {ast_proj} · RA {ra_proj} <span style="color:#776;font-weight:normal">({n_games}gm)</span></div>
 </div>"""
 
 
@@ -898,7 +925,7 @@ def make_html(predictions):
         ),
     ) for p in predictions)
     if not cards:
-        cards = '<p style="text-align:center;color:#998">No games today with usable player data.</p>'
+        cards = '<p style="text-align:center;color:#998">No games today or tomorrow with usable player data.</p>'
 
     legs = build_legs(predictions)
     builder = BUILDER_TEMPLATE.format(legs_json=json.dumps(legs)) if legs else ""
@@ -917,8 +944,8 @@ def write_csv(predictions, path):
     with open(path, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(['Date', 'League', 'Match', 'HomeTeam', 'AwayTeam', 'ExpHome', 'ExpAway', 'ExpTotal',
-                          'Team', 'Player', 'RebProj', 'AstProj', 'RaProj', 'SampleSize',
-                          'RebValues', 'AstValues'])
+                          'Team', 'Player', 'PtsProj', 'RebProj', 'AstProj', 'RaProj', 'SampleSize',
+                          'PtsValues', 'RebValues', 'AstValues'])
         for p in predictions:
             for team_label, props in [(p['away_team'], p.get('away_props', [])),
                                        (p['home_team'], p.get('home_props', []))]:
@@ -927,8 +954,8 @@ def write_csv(predictions, path):
                         p['date'], p.get('league', ''), p['match'], p['home_team'], p['away_team'],
                         p.get('exp_home', ''), p.get('exp_away', ''), p.get('exp_total', ''),
                         team_label, prop['name'],
-                        prop['reb_proj'], prop['ast_proj'], prop['ra_proj'], prop['n_games'],
-                        '; '.join(str(v) for v in prop['rebs']), '; '.join(str(v) for v in prop['asts']),
+                        prop['pts_proj'], prop['reb_proj'], prop['ast_proj'], prop['ra_proj'], prop['n_games'],
+                        '; '.join(str(v) for v in prop['pts']), '; '.join(str(v) for v in prop['rebs']), '; '.join(str(v) for v in prop['asts']),
                     ])
 
 
