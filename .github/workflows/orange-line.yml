@@ -38,5 +38,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/orange-line/
           git diff --staged --quiet || git commit -m "Update Orange Line predictions"
-          git pull --rebase --autostash origin main
+          git pull --rebase -X theirs --autostash origin main
           git push
