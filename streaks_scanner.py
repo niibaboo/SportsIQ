@@ -53,6 +53,8 @@ SOURCES = [
      "page": "../euroleague-iq/index.html"},
     {"label": "Strike Zone", "sport": "MLB", "log_path": "docs/strike-zone/results/log.json",
      "page": "../strike-zone/index.html"},
+    {"label": "Cards & Corners IQ", "sport": "Soccer Props", "log_path": "docs/cards-corners/results/log.json",
+     "page": "../cards-corners/index.html"},
 ]
 
 
