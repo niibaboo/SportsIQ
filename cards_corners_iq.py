@@ -464,7 +464,8 @@ def build_real_streak_entries(team_rows, threshold, min_length, label, unit):
     for t in team_rows:
         streak = _current_streak(t["list"], threshold)
         if streak >= min_length:
-            entries.append({**t, "streak": streak, "threshold": threshold, "label": label, "unit": unit})
+            entries.append({**t, "streak": streak, "threshold": threshold, "label": label, "unit": unit,
+                             "streak_games": t["list"][-streak:] if t.get("list") else None})
     entries.sort(key=lambda e: -e["streak"])
     return entries
 
@@ -585,8 +586,10 @@ def build_legs(predictions):
 
 def _team_rows(predictions, side_key, form_key, stat_avg_key, stat_list_key):
     rows = []
+    is_home = side_key == "home"
     for p in predictions:
         team_name = p[f"{side_key}_team"]
+        opponent = p["away_team"] if is_home else p["home_team"]
         form = p[form_key]
         match_label = f"{p['home_team']} vs {p['away_team']}"
         avg = form.get(stat_avg_key)
@@ -594,7 +597,8 @@ def _team_rows(predictions, side_key, form_key, stat_avg_key, stat_list_key):
         if avg is None:
             continue
         rows.append({
-            "team": team_name, "match": match_label, "league": p["league"],
+            "team": team_name, "opponent": opponent, "is_home": is_home,
+            "match": match_label, "match_id": p["match_id"], "league": p["league"],
             "date": p["date"], "date_key": p["date_key"],
             "n_games": form["n_games"], "avg": avg, "list": lst,
         })
@@ -1079,6 +1083,16 @@ if __name__ == "__main__":
 
     try:
         import cards_corners_results_tracker
-        cards_corners_results_tracker.run_results_tracker(predictions, api_key)
+        # build_all_form_entries() is pure (no API calls) -- cheap to call
+        # again here rather than threading make_html()'s local `forms`
+        # out through a return value, same self-contained-step precedent
+        # as write_csv() above recomputing its own rows from predictions.
+        forms = build_all_form_entries(predictions)
+        cards_corners_results_tracker.run_results_tracker(
+            predictions, api_key,
+            corners_real_streak=forms["corners_real_streak"],
+            cards_real_streak=forms["cards_real_streak"],
+            sot_real_streak=forms["sot_real_streak"],
+        )
     except Exception as e:
         print(f"[!] results tracker failed (main run unaffected): {e}")
