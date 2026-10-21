@@ -423,12 +423,12 @@ def render_match_card(league_name, home_name, away_name, lh, la, tot, o55,
       <div style="display:flex;justify-content:space-between;align-items:flex-start;font-size:12px;margin-bottom:4px">
         <div>
           <div>{away_name} {pa*100:.0f}%</div>
-          <div style="font-size:10px;color:var(--sub);margin-top:2px">last 5 (old→new): {away_hist}</div>
+          <div style="font-size:10px;color:#cbd5e1;margin-top:2px">last 5 (old→new): {away_hist}</div>
         </div>
         <span>Tie {pt*100:.0f}%</span>
         <div style="text-align:right">
           <div>{home_name} {ph*100:.0f}%</div>
-          <div style="font-size:10px;color:var(--sub);margin-top:2px">last 5 (old→new): {home_hist}</div>
+          <div style="font-size:10px;color:#cbd5e1;margin-top:2px">last 5 (old→new): {home_hist}</div>
         </div>
       </div>
       <div style="display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--panel2)">
@@ -598,7 +598,7 @@ STREAK_ENTRY_TEMPLATE = """<div style="background:var(--panel2);border-radius:8p
   <div style="flex:1;min-width:0">
     <div style="font-size:10px;color:var(--sub)">{league}</div>
     <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{team} <span style="color:var(--sub);font-weight:normal;font-size:11px">({home_away})</span> vs {opponent}</div>
-    <div style="font-size:10px;color:var(--sub)">last 5 (old→new): {last5_str}</div>
+    <div style="font-size:10px;color:#cbd5e1">last 5 (old→new): {last5_str}</div>
   </div>
 </div>"""
 
@@ -610,12 +610,13 @@ REAL_STREAK_ENTRY_TEMPLATE = """<div style="background:var(--panel2);border-radi
   <div style="flex:1;min-width:0">
     <div style="font-size:10px;color:var(--sub)">{league}</div>
     <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{team} <span style="color:var(--sub);font-weight:normal;font-size:11px">({home_away})</span> vs {opponent}</div>
-    <div style="font-size:10px;color:var(--sub)">{streak_len} straight scoring {threshold}+ (old→new): {streak_str}</div>
+    <div style="font-size:10px;color:#cbd5e1">{streak_len} straight scoring {threshold}+ (old→new): {streak_str}</div>
     {h2h_line}
   </div>
 </div>"""
 
-REAL_STREAK_H2H_LINE = """<div style="font-size:10px;color:#7ec8ff;margin-top:3px">H2H vs {opponent} (last {games_played}): {record} · avg {avg_goals_for} goals ({goals_str})</div>"""
+REAL_STREAK_H2H_LINE = """<div style="font-size:10px;color:#7ec8ff;margin-top:3px">H2H vs {opponent} (last {games_played}): {record} · avg {avg_goals_for} goals ({goals_str})</div>
+    <div style="font-size:10px;color:{flag_color};font-weight:700;margin-top:2px">{flag_icon} {flag_label}</div>"""
 REAL_STREAK_H2H_NONE = """<div style="font-size:10px;color:var(--sub);font-style:italic;margin-top:3px">No H2H history found for this matchup.</div>"""
 
 STREAK_PANEL_TEMPLATE = """<div class="builderPanel">
@@ -645,10 +646,28 @@ def render_streak_panel(hot_form_entries, real_streak_entries):
         for e in hot_form_entries
     ) or '<p style="color:var(--sub);font-size:11px">None currently.</p>'
     def _h2h_line(e):
+        # Flag whether this specific H2H matchup actually backs the streak
+        # or quietly contradicts it -- user feedback, 2026-10-21, after
+        # Olimpija's "5 straight scoring 4+" Real Streak missed Over 1.5
+        # live: the streak was a league-wide signal, but the H2H vs that
+        # exact opponent (2-3, avg 2.2 goals) was already well below the
+        # REAL_STREAK_THRESHOLD and would have flagged the risk up front,
+        # instead of only being visible as plain unstyled text next to a
+        # confident-looking streak badge. Compares H2H's avg goals FOR
+        # this team against the same threshold the streak itself requires
+        # -- the one number both signals can be judged against directly.
         h2h = e.get("h2h")
         if not h2h:
             return REAL_STREAK_H2H_NONE
-        return REAL_STREAK_H2H_LINE.format(opponent=e["opponent"], **h2h)
+        if h2h["avg_goals_for"] >= REAL_STREAK_THRESHOLD:
+            flag_icon, flag_label, flag_color = "✅", "Backed by H2H", "#22c55e"
+        else:
+            flag_icon, flag_label, flag_color = (
+                "⚠️", f"H2H below streak threshold ({h2h['avg_goals_for']} < {REAL_STREAK_THRESHOLD})", "#ef4444"
+            )
+        return REAL_STREAK_H2H_LINE.format(
+            opponent=e["opponent"], flag_icon=flag_icon, flag_label=flag_label, flag_color=flag_color, **h2h
+        )
 
     streak_html = "".join(
         REAL_STREAK_ENTRY_TEMPLATE.format(
