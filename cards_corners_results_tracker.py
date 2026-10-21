@@ -125,11 +125,31 @@ def save_log(entries):
         json.dump(entries, f, indent=2, default=str)
 
 
-def log_todays_signals(predictions, log):
+def _streak_entry_id(scanner, subject, date_key, market):
+    """Separate id scheme from the Safest-Bet-Builder legs' _entry_id()
+    (category|match_id|team) -- Real Streak entries don't have a stable
+    match_id attached the same way (a streak is a property of the TEAM
+    across several matches, not one match), so this follows the same
+    scanner|subject|date_key|market convention every other sibling
+    tracker's Real Streak logging uses."""
+    raw = f"{scanner}|{subject}|{date_key}|{market}"
+    return hashlib.sha256(raw.encode()).hexdigest()[:16]
+
+
+def log_todays_signals(predictions, log, corners_real_streak=None, cards_real_streak=None,
+                        sot_real_streak=None):
     """Appends one pending entry per team per market (Corners, Cards)
     for every upcoming match in this run's predictions -- skipping
     anything already logged under the same category+match+team, so
-    re-running the same day's build never duplicates rows."""
+    re-running the same day's build never duplicates rows. Also logs
+    every Real Streak entry across all three markets (Corners/Cards/SOT)
+    the same way every other sibling tool's tracker does, so the Streaks
+    Scanner page can pick these up too (previously this tool's Real
+    Streak picks, shown on its own page, were never logged anywhere --
+    user report, 2026-10-20: "We left out this one our new model")."""
+    corners_real_streak = corners_real_streak or []
+    cards_real_streak = cards_real_streak or []
+    sot_real_streak = sot_real_streak or []
     existing_ids = {e["id"] for e in log}
     added = 0
 
@@ -149,6 +169,32 @@ def log_todays_signals(predictions, log):
         })
         existing_ids.add(eid)
         added += 1
+
+    def add_streak(scanner, e):
+        nonlocal added
+        market = f"Real Streak vs {e['opponent']}"
+        eid = _streak_entry_id(scanner, e["team"], e["date_key"], market)
+        if eid in existing_ids:
+            return
+        log.append({
+            "id": eid, "scanner": scanner, "subject": e["team"], "team": e["team"],
+            "opponent": e.get("opponent"), "is_home": e.get("is_home"),
+            "match": e.get("match"), "match_id": e.get("match_id"),
+            "market": market, "value": e["streak"], "detail": f"is_home={e.get('is_home')}",
+            "streak_games": e.get("streak_games"), "threshold": e.get("threshold"),
+            "league": e.get("league"), "match_date": e.get("date"), "date_key": e["date_key"],
+            "logged_at": datetime.now(timezone.utc).isoformat(),
+            "status": "pending", "result": None, "actual": None,
+        })
+        existing_ids.add(eid)
+        added += 1
+
+    for e in corners_real_streak:
+        add_streak("corners_real_streak", e)
+    for e in cards_real_streak:
+        add_streak("cards_real_streak", e)
+    for e in sot_real_streak:
+        add_streak("sot_real_streak", e)
 
     for p in predictions:
         base = dict(match_id=p["match_id"], league=p["league"], date=p["date"], date_key=p["date_key"],
@@ -227,6 +273,46 @@ def _verify_entry(entry, key):
     return {"actual": side_val, "result": "hit" if hit else "miss"}
 
 
+STREAK_STAT_KEY = {
+    "corners_real_streak": "corner_kicks",
+    "cards_real_streak": "yellow_cards",
+    "sot_real_streak": "shots_on_target",
+}
+
+
+def _verify_streak_entry(entry, key):
+    """Real Streak entries describe a team's PAST form, not a prediction
+    about the specific upcoming match they're logged alongside -- same
+    continuity-check semantics as every other sibling tracker's Real
+    Streak verification (see results_tracker.py's _verify_form_streak_entry
+    docstring): did the team keep clearing its own threshold in the very
+    match this streak was flagged next to? Reuses _finished_match /
+    _match_stats (and their in-run cache) since it's the same match data
+    a Safest-Bet-Builder-leg verification would fetch for that match_id
+    anyway. Entries logged before match_id was attached to Real Streak
+    rows (i.e. from before this field existed) have no match_id and stay
+    pending indefinitely rather than being guessed at."""
+    if not entry.get("match_id"):
+        return None
+    m = _finished_match(entry["match_id"], key)
+    if not m:
+        return None
+    overview = _match_stats(entry["match_id"], key)
+    if not overview:
+        return None
+    stat_key = STREAK_STAT_KEY.get(entry["scanner"], "yellow_cards")
+    item = overview.get(stat_key, {}).get("all")
+    if not item:
+        return None
+    side_val = item["home"] if entry.get("is_home") else item["away"]
+    if side_val is None:
+        return None
+    threshold = entry.get("threshold")
+    if threshold is None:
+        return None
+    return {"actual": side_val, "result": "hit" if side_val >= threshold else "miss"}
+
+
 def verify_pending_results(log, key, max_checks=MAX_CHECKS_PER_RUN):
     """Looks at every PENDING entry whose match date has already passed
     (so the game should be over by now), tries to fetch the real result,
@@ -246,9 +332,13 @@ def verify_pending_results(log, key, max_checks=MAX_CHECKS_PER_RUN):
         checked += 1
 
         try:
-            result = _verify_entry(entry, key)
+            if "scanner" in entry:
+                result = _verify_streak_entry(entry, key)
+            else:
+                result = _verify_entry(entry, key)
         except Exception as e:
-            print(f"    [!] verification error for entry {entry['id']} ({entry['category']}): {e}")
+            label = entry.get("scanner") or entry.get("category")
+            print(f"    [!] verification error for entry {entry['id']} ({label}): {e}")
             result = None
 
         if result:
@@ -262,20 +352,39 @@ def verify_pending_results(log, key, max_checks=MAX_CHECKS_PER_RUN):
     return log
 
 
+STREAK_CATEGORY_LABEL = {
+    "corners_real_streak": "Real Corner Streak",
+    "cards_real_streak": "Real Card Streak",
+    "sot_real_streak": "Real SOT Streak",
+}
+
+
+def _cat(e):
+    """Safest-Bet-Builder legs are grouped by their "category" field;
+    Real Streak entries carry a "scanner" field instead (no "category"
+    key at all), so this normalizes both into one grouping key rather
+    than KeyError-ing on entry["category"] for streak rows."""
+    return e.get("category") or STREAK_CATEGORY_LABEL.get(e.get("scanner"), e.get("scanner", "Unknown"))
+
+
 def build_results_dashboard(log):
     verified = [e for e in log if e["status"] == "verified"]
     pending = [e for e in log if e["status"] == "pending"]
 
     by_cat = {}
     for e in verified:
-        d = by_cat.setdefault(e["category"], {"hit": 0, "miss": 0})
+        d = by_cat.setdefault(_cat(e), {"hit": 0, "miss": 0})
         d[e["result"]] += 1
 
-    CATEGORY_ORDER = ["Team Corners", "Team Cards", "Team Shots on Target"]
+    CATEGORY_ORDER = ["Team Corners", "Team Cards", "Team Shots on Target",
+                       "Real Corner Streak", "Real Card Streak", "Real SOT Streak"]
     CATEGORY_NOTE = {
         "Team Corners": "opponent-adjusted projection · safety-margined line",
         "Team Cards": "yellow cards only, no opponent adjustment · safety-margined line",
         "Team Shots on Target": "opponent-adjusted projection · safety-margined line",
+        "Real Corner Streak": "genuinely consecutive games clearing the corners threshold",
+        "Real Card Streak": "genuinely consecutive games clearing the cards threshold",
+        "Real SOT Streak": "genuinely consecutive games clearing the shots-on-target threshold",
     }
 
     total_hit = sum(d["hit"] for d in by_cat.values())
@@ -298,8 +407,9 @@ def build_results_dashboard(log):
     recent_rows = ""
     for e in recent:
         color = "#22c55e" if e["result"] == "hit" else "#ef4444"
+        detail = f"line {e['line']}" if "line" in e else f"needs {e.get('threshold')}+"
         recent_rows += f"""<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #233040;font-size:12px">
-  <div><b>{e['team']}</b><br><span style="color:#8b98a8">{e['category']} · line {e['line']} · actual {e['actual']}</span></div>
+  <div><b>{e['team']}</b><br><span style="color:#8b98a8">{_cat(e)} · {detail} · actual {e['actual']}</span></div>
   <span style="color:{color};font-weight:bold">{e['result'].upper()}</span>
 </div>"""
 
@@ -340,11 +450,12 @@ def build_results_dashboard(log):
     print(f"  Results dashboard: {total} verified, {overall_pct}% overall" if total else "  Results dashboard: no verified picks yet")
 
 
-def run_results_tracker(predictions, key):
+def run_results_tracker(predictions, key, corners_real_streak=None, cards_real_streak=None,
+                         sot_real_streak=None):
     """Single entry point called from cards_corners_iq.py's main block."""
     print("\nRunning results tracker...")
     log = load_log()
-    log = log_todays_signals(predictions, log)
+    log = log_todays_signals(predictions, log, corners_real_streak, cards_real_streak, sot_real_streak)
     log = verify_pending_results(log, key)
     save_log(log)
     build_results_dashboard(log)
