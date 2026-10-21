@@ -531,7 +531,13 @@ def build_legs(predictions):
         hf, af = p.get("home_form"), p.get("away_form")
 
         if hf and af and p.get("exp_home") is not None:
-            home_total = normal_prop(p["exp_home"], DEFAULT_TEAM_STD)
+            # factor=1.0 -- unlike player props, a Team/Game Total line
+            # needs to sit at the model's actual projected number, not
+            # shaded down by the same 0.72 margin player props use. The
+            # shared default produced lines ~28% below the projection
+            # (e.g. a 230.6pt projected game total printing "Over 166.0"),
+            # a number no real book offers -- user report, 2026-10-21.
+            home_total = normal_prop(p["exp_home"], DEFAULT_TEAM_STD, factor=1.0)
             if home_total:
                 legs.append({
                     "match": f"{match_label} ({league_name})",
@@ -544,7 +550,7 @@ def build_legs(predictions):
                     "game_id": game_id, "game_date": game_date, "line": home_total["line"],
                     "is_home": True, "league": league_name,
                 })
-            away_total = normal_prop(p["exp_away"], DEFAULT_TEAM_STD)
+            away_total = normal_prop(p["exp_away"], DEFAULT_TEAM_STD, factor=1.0)
             if away_total:
                 legs.append({
                     "match": f"{match_label} ({league_name})",
@@ -557,7 +563,7 @@ def build_legs(predictions):
                     "game_id": game_id, "game_date": game_date, "line": away_total["line"],
                     "is_home": False, "league": league_name,
                 })
-            game_total = normal_prop(p["exp_total"], p["total_std"])
+            game_total = normal_prop(p["exp_total"], p["total_std"], factor=1.0)
             if game_total:
                 legs.append({
                     "match": f"{match_label} ({league_name})",
