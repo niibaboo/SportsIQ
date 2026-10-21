@@ -38,8 +38,23 @@ import time
 import math
 import csv
 import json
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 import requests
+
+# NBA/WNBA schedules are published on a US Eastern "game day" boundary (a
+# 7pm ET tip-off is still "today" in ESPN's own scheduling, even though
+# it's already past midnight UTC/past midnight in the UK) -- using UTC
+# calendar dates for "today"/"tomorrow" drifts by a day depending on what
+# time this script happens to run and what timezone is reading the result
+# (user report, 2026-10-21: Orange Line showing the 23rd's games and
+# missing the 22nd's, while bet365 -- showing UK local time -- had the
+# 22nd's slate live). Both scoreboard pulls below are pinned to this same
+# Eastern "today"/"tomorrow", computed fresh each run, rather than mixing
+# ESPN's own undocumented "today" default (unknown timezone) with an
+# explicitly UTC-computed "tomorrow" -- that mismatch between the two
+# calls' timezone bases was the actual bug.
+EASTERN = ZoneInfo("America/New_York")
 
 LEAGUES = [
     {"key": "nba", "name": "NBA"},
@@ -453,9 +468,11 @@ def build_predictions():
         print(f"  {league_name} averages: {lg_scored:.1f} scored/game, {lg_allowed:.1f} allowed/game")
 
         print(f"Fetching {league_name}'s scoreboard for today and tomorrow…")
-        tomorrow = (datetime.now(timezone.utc) + timedelta(days=1)).strftime('%Y%m%d')
-        events_today = get_scoreboard(league_key)
-        events_tomorrow = get_scoreboard(league_key, tomorrow)
+        now_et = datetime.now(EASTERN)
+        today_et = now_et.strftime('%Y%m%d')
+        tomorrow_et = (now_et + timedelta(days=1)).strftime('%Y%m%d')
+        events_today = get_scoreboard(league_key, today_et)
+        events_tomorrow = get_scoreboard(league_key, tomorrow_et)
         seen_ids = set()
         events = []
         for ev in events_today + events_tomorrow:
@@ -887,7 +904,6 @@ CARD_TEMPLATE = """<div style="background:#1a1310;border-radius:12px;padding:16p
   <div style="font-size:11px;color:#998;margin-bottom:4px">{date} · <span style="color:#ff9a2e">{league}</span></div>
   <div style="font-size:17px;font-weight:bold;margin-bottom:10px">{match}</div>
   {team_total_html}
-  {player_props_html}
 </div>"""
 
 TEAM_TOTAL_ROW = """<div style="display:flex;justify-content:space-between;text-align:center;background:#0f0a08;border-radius:8px;padding:8px;margin-bottom:8px">
@@ -896,20 +912,13 @@ TEAM_TOTAL_ROW = """<div style="display:flex;justify-content:space-between;text-
   <div><div style="color:#998;font-size:11px">{home_team}</div><div style="color:#ffeb3b;font-size:18px;font-weight:bold">{exp_home}</div></div>
 </div>"""
 
-PLAYER_PROP_ROW = """<div style="display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-top:1px solid #3a2a20">
-  <div>{name}</div>
-  <div style="color:#ff9a2e;font-weight:bold">PTS {pts_proj} · REB {reb_proj} · AST {ast_proj} · RA {ra_proj} <span style="color:#776;font-weight:normal">({n_games}gm)</span></div>
-</div>"""
-
-
-def player_props_section(team_label, props):
-    if not props:
-        return ""
-    rows = "".join(PLAYER_PROP_ROW.format(**p) for p in props)
-    return f'<div style="margin-top:8px"><div style="color:#998;font-size:10px;text-transform:uppercase;margin-bottom:2px">{team_label}</div>{rows}</div>'
-
-
 def make_html(predictions):
+    # Game cards show Team Total only now -- the per-player PTS/REB/AST/RA
+    # list that used to sit under each card was dropped per user request
+    # (2026-10-21: "take off the player stats from the card and keep only
+    # the form and streak"). Props are still computed and still feed the
+    # Safest Bet Builder legs and the Hot Form & Real Streak panel below --
+    # only this card-level listing is gone.
     cards = "".join(CARD_TEMPLATE.format(
         date=p['date'][:16].replace('T', ' '), match=p['match'], league=p.get('league', ''),
         team_total_html=(
@@ -918,10 +927,6 @@ def make_html(predictions):
                 exp_away=p['exp_away'], exp_home=p['exp_home'], exp_total=p['exp_total'],
             ) if p.get('exp_total') is not None else
             '<div style="color:#776;font-size:11px;margin-bottom:8px">Team Total unavailable for this game (missing team form)</div>'
-        ),
-        player_props_html=(
-            player_props_section(p['away_team'], p.get('away_props', []))
-            + player_props_section(p['home_team'], p.get('home_props', []))
         ),
     ) for p in predictions)
     if not cards:
