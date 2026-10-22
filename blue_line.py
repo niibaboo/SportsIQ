@@ -115,6 +115,21 @@ try:
   sched=fetch(f"{BASE}/schedule/now")
   game_weeks=sched.get("gameWeek",[])
   games=game_weeks[0].get("games",[]) if game_weeks else []
+  # EXTENDED (user request, 2026-10-22 -- "more games in UK midnight
+  # time" than the page showed): this used to stop at gameWeek[0], NHL's
+  # own "today" bucket. Blue Line only runs once a day (09:00 UTC, see
+  # blue_line.yml), so by UK midnight that night's US slate is often
+  # already deep in or over, and the NEXT scheduled NHL day's games --
+  # the ones bet365 still has lines open for deep into UK night/next
+  # morning -- weren't included at all until the following day's run.
+  # gameWeek[1] is that next day, same NHL-API-grouped bucket gameWeek[0]
+  # already relies on, so this sidesteps re-deriving "tomorrow" from a
+  # raw timestamp the same way the gameWeek[0] fix avoided doing for
+  # "today". Each game already carries its own date downstream
+  # (game_date = startTimeUTC[:10]), so nothing else needs to change to
+  # keep next-day picks distinguishable from tonight's.
+  if len(game_weeks) > 1:
+    games = games + game_weeks[1].get("games", [])
 except Exception as e:
   print(f"schedule error: {e}", file=sys.stderr)
   games=[]
@@ -637,6 +652,16 @@ cards=""
 for g in games:
   try:
     home=g["homeTeam"]["abbrev"]; away=g["awayTeam"]["abbrev"]
+    game_date = g.get("startTimeUTC", "")[:10]
+    # Shown on the card now that `games` can span two NHL schedule days
+    # (today + tomorrow, see the gameWeek[1] extension above) -- without
+    # this, a tonight's-slate card and a tomorrow's-slate card look
+    # identical. Falls back to the raw date string if parsing fails
+    # rather than dropping the card.
+    try:
+      date_label = datetime.strptime(game_date, "%Y-%m-%d").strftime("%a %b %-d")
+    except ValueError:
+      date_label = game_date
     lh,la=pred(home,away)
     tot=lh+la
     o55=1-sum(pois(i,tot) for i in range(6))
@@ -673,7 +698,7 @@ for g in games:
     home_hist = "/".join(str(v) for v in recent_goals_by_team[home]) or "—"
     away_hist = "/".join(str(v) for v in recent_goals_by_team[away]) or "—"
 
-    win_bar=f"""<div style="margin:10px 0 6px 0"><div style="display:flex;justify-content:space-between;align-items:flex-start;font-size:12px;margin-bottom:4px"><div><div>{away} {pa*100:.0f}%</div><div style="font-size:10px;color:#8aa;margin-top:2px">last 5 (old→new): {away_hist}</div></div><span>Tie {pt*100:.0f}%</span><div style="text-align:right"><div>{home} {ph*100:.0f}%</div><div style="font-size:10px;color:#8aa;margin-top:2px">last 5 (old→new): {home_hist}</div></div></div><div style="display:flex;height:10px;border-radius:999px;overflow:hidden;background:#0a1730"><div style="width:{pa*100:.1f}%;background:#ff4d5a"></div><div style="width:{pt*100:.1f}%;background:#5a5f7a"></div><div style="width:{ph*100:.1f}%;background:#4ea1ff"></div></div></div>"""
+    win_bar=f"""<div style="margin:10px 0 6px 0"><div style="display:flex;justify-content:space-between;align-items:flex-start;font-size:12px;margin-bottom:4px"><div><div>{away} {pa*100:.0f}%</div><div style="font-size:10px;color:#cbd5e1;margin-top:2px">last 5 (old→new): {away_hist}</div></div><span>Tie {pt*100:.0f}%</span><div style="text-align:right"><div>{home} {ph*100:.0f}%</div><div style="font-size:10px;color:#cbd5e1;margin-top:2px">last 5 (old→new): {home_hist}</div></div></div><div style="display:flex;height:10px;border-radius:999px;overflow:hidden;background:#0a1730"><div style="width:{pa*100:.1f}%;background:#ff4d5a"></div><div style="width:{pt*100:.1f}%;background:#5a5f7a"></div><div style="width:{ph*100:.1f}%;background:#4ea1ff"></div></div></div>"""
 
     # Team Total Over/Under summary shown directly on the card (user
     # request, 2026-10-18 -- previously Team Total only appeared inside
@@ -684,12 +709,11 @@ for g in games:
     home_u_line, away_u_line = safe_line_under(lh), safe_line_under(la)
     team_total_line=f"""<p style="margin:4px 0 0;color:#8aa;font-size:12px">Team Total — {away} O{away_o_line} {over_prob(away_o_line,la)*100:.0f}% / U{away_u_line} {under_prob(away_u_line,la)*100:.0f}% · {home} O{home_o_line} {over_prob(home_o_line,lh)*100:.0f}% / U{home_u_line} {under_prob(home_u_line,lh)*100:.0f}%</p>"""
 
-    cards+=f"""<div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0"><h3 style="margin:0 0 4px 0">{away} @ {home} — Total {tot:.2f}</h3><p style="margin:0;color:#b7c5e6;font-size:13px">Proj: {away} {la:.2f} - {lh:.2f} {home} | O5.5 {o55*100:.0f}%</p>{team_total_line}{win_bar}<div style="margin-top:12px"><div style="font-size:12px;color:#8aa;margin-bottom:6px">Correct Score</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">{render_scores()}</div></div><details style="margin-top:12px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">{home} Props</summary><div style="margin-top:8px">{render_props(props_h) or 'No data'}</div></details><details style="margin-top:8px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">{away} Props</summary><div style="margin-top:8px">{render_props(props_a) or 'No data'}</div></details><details style="margin-top:8px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">Goalie Saves</summary><div style="margin-top:8px">{render_goalie(goalie_h+goalie_a) or 'No data'}</div></details></div>"""
+    cards+=f"""<div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0"><h3 style="margin:0 0 4px 0">{away} @ {home} <span style="color:#7ec8ff;font-weight:normal;font-size:13px">· {date_label}</span> — Total {tot:.2f}</h3><p style="margin:0;color:#b7c5e6;font-size:13px">Proj: {away} {la:.2f} - {lh:.2f} {home} | O5.5 {o55*100:.0f}%</p>{team_total_line}{win_bar}<div style="margin-top:12px"><div style="font-size:12px;color:#8aa;margin-bottom:6px">Correct Score</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">{render_scores()}</div></div><details style="margin-top:12px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">{home} Props</summary><div style="margin-top:8px">{render_props(props_h) or 'No data'}</div></details><details style="margin-top:8px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">{away} Props</summary><div style="margin-top:8px">{render_props(props_a) or 'No data'}</div></details><details style="margin-top:8px"><summary style="cursor:pointer;color:#4ea1ff;font-size:13px">Goalie Saves</summary><div style="margin-top:8px">{render_goalie(goalie_h+goalie_a) or 'No data'}</div></details></div>"""
 
     match_label = f"{away} @ {home}"
     game_id = g.get("id")  # NEW: needed later to look up the real final
                              # result for the results tracker
-    game_date = g.get("startTimeUTC", "")[:10]
 
     for team_label, opp_label, is_home_flag in [(home, away, True), (away, home, False)]:
       recent_goals = recent_goals_by_team[team_label]
