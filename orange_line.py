@@ -801,7 +801,7 @@ def build_real_streak_entries(predictions):
     return entries
 
 
-STREAK_ENTRY_TEMPLATE = """<div style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+STREAK_ENTRY_TEMPLATE = """<div class="streak-row" data-match="{match}" data-date="{date_key}" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
   <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #3a2a20;border-radius:8px;padding:6px 4px;flex-shrink:0">
     <div style="font-size:9px;color:#998">AVG</div>
     <div style="font-size:17px;font-weight:bold;color:#7dd3a8">{avg}</div>
@@ -813,7 +813,7 @@ STREAK_ENTRY_TEMPLATE = """<div style="background:#241a14;border-radius:8px;padd
   </div>
 </div>"""
 
-REAL_STREAK_ENTRY_TEMPLATE = """<div style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+REAL_STREAK_ENTRY_TEMPLATE = """<div class="streak-row" data-match="{match}" data-date="{date_key}" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
   <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #f59e0b;border-radius:8px;padding:6px 4px;flex-shrink:0">
     <div style="font-size:9px;color:#998">STREAK</div>
     <div style="font-size:17px;font-weight:bold;color:#f59e0b">{streak_len}{plus}</div>
@@ -833,9 +833,54 @@ STREAK_PANEL_TEMPLATE = """<div style="background:#1a1310;border-radius:12px;pad
     a player can appear in one, both, or neither. Cross-check against that player's own prop
     line above before treating either alone as a signal.
   </div>
+  {fixture_filter_bar}
   {hot_form_section}
   {real_streak_section}
 </div>"""
+
+# Fixture filter bar (user request, 2026-10-22: "the form and streak
+# look clamzy at a glance" -- this panel is one flat list across every
+# game on the slate, today AND tomorrow, both leagues, sorted by
+# avg/streak length rather than grouped by game, so a busy slate turns
+# into a wall of cards with no way to jump to one fixture). Same
+# client-side button-filter pattern already used on the Streaks Scanner
+# page (streaks_scanner.py's tool/date filter) -- no server round trip,
+# just toggling data-match on each row.
+FIXTURE_FILTER_BAR = """<div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+  <button class="fixture-filter-btn active-filter" data-match="all" onclick="filterStreaksByFixture('all',this)" style="background:#f59e0b;border:1px solid #f59e0b;color:#1a1310;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer">All Fixtures</button>
+  {buttons}
+</div>
+<script>
+function filterStreaksByFixture(match, btn) {{
+  var rows = document.querySelectorAll('.streak-row');
+  rows.forEach(function(row) {{
+    row.style.display = (match === 'all' || row.getAttribute('data-match') === match) ? 'flex' : 'none';
+  }});
+  document.querySelectorAll('.fixture-filter-btn').forEach(function(b) {{
+    b.style.background = '#241a14'; b.style.color = '#f59e0b'; b.style.fontWeight = 'normal';
+  }});
+  btn.style.background = '#f59e0b'; btn.style.color = '#1a1310'; btn.style.fontWeight = '700';
+}}
+</script>"""
+
+
+def _fixture_filter_bar(entries):
+    # One button per unique fixture appearing in either section, in the
+    # order each match first appears (entries are already sorted by
+    # avg/streak_len, not match, so this naturally groups same-game
+    # buttons together without a separate sort pass).
+    seen = []
+    for e in entries:
+        if e["match"] not in seen:
+            seen.append(e["match"])
+    if len(seen) <= 1:
+        return ""  # nothing to filter with only one (or zero) fixtures on the slate
+    buttons = "".join(
+        f'''<button class="fixture-filter-btn" data-match="{m}" onclick="filterStreaksByFixture('{m}',this)" '''
+        f'''style="background:#241a14;border:1px solid #3a2a20;color:#f59e0b;padding:5px 10px;border-radius:999px;font-size:11px;cursor:pointer">{m}</button>'''
+        for m in seen
+    )
+    return FIXTURE_FILTER_BAR.format(buttons=buttons)
 
 
 def _render_stat_section(entries, template, icon, label, extra_fields_fn):
@@ -843,7 +888,7 @@ def _render_stat_section(entries, template, icon, label, extra_fields_fn):
         return ""
     cards = "".join(
         template.format(**extra_fields_fn(e), name=e["name"], team=e["team"], league=e["league"],
-                         match=e["match"], stat_label=STAT_LABELS[e["stat"]])
+                         match=e["match"], date_key=(e.get("date") or "")[:10], stat_label=STAT_LABELS[e["stat"]])
         for e in entries
     )
     return f'<div style="font-size:12px;font-weight:700;color:#e8dcd0;margin:10px 0 4px">{icon} {label}</div>{cards}'
@@ -864,7 +909,10 @@ def render_streak_panel(hot_form_entries, real_streak_entries):
                     "threshold": REAL_STREAK_THRESHOLD[e["stat"]],
                     "values_str": "/".join(str(v) for v in e["streak_games"])},
     )
-    return STREAK_PANEL_TEMPLATE.format(hot_form_section=hot_form_html, real_streak_section=real_streak_html)
+    fixture_filter_bar = _fixture_filter_bar(hot_form_entries + real_streak_entries)
+    return STREAK_PANEL_TEMPLATE.format(
+        fixture_filter_bar=fixture_filter_bar, hot_form_section=hot_form_html, real_streak_section=real_streak_html,
+    )
 
 
 
