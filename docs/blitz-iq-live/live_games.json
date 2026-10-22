@@ -1,38 +1,5 @@
 {
-  "generated": "2026-10-20T00:36:57.724205+00:00",
-  "total_live": 1,
-  "games": [
-    {
-      "game_id": "401873008",
-      "home_id": "25",
-      "away_id": "28",
-      "home_team": "San Francisco 49ers",
-      "away_team": "Washington Commanders",
-      "home_score": 7.0,
-      "away_score": 3.0,
-      "period": 1,
-      "display_clock": "6:30",
-      "status": "6:30 - 1st",
-      "elapsed_minute": 8.5,
-      "minutes_remaining": 51.5,
-      "next_score": {
-        "home": 70,
-        "away": 30
-      },
-      "game_total_pace": {
-        "prob": 57,
-        "status": "On Pace: Over"
-      },
-      "model_signal": {
-        "label": "Home Next Score",
-        "prob": 70,
-        "qualifies": true
-      },
-      "pregame_projection": {
-        "exp_home": 32.9,
-        "exp_away": 21.8,
-        "exp_total": 54.7
-      }
-    }
-  ]
+  "generated": "2026-10-22T02:23:01.243120+00:00",
+  "total_live": 0,
+  "games": []
 }
