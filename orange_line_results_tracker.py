@@ -58,9 +58,17 @@ SUMMARY_CACHE = {}  # (league_key, game_id) -> summary, several legs share a gam
 CATEGORY_SCANNER = {
     "Team Total": "team_total", "Game Total": "game_total",
     "Rebounds": "rebounds", "Assists": "assists", "Rebounds+Assists": "ra",
+    # Points added 2026-10-22 -- orange_line.py's build_legs() has logged
+    # "Points" category legs (STAT_LABELS["PTS"]) since the Points prop
+    # was added, but this tracker was never updated to recognize that
+    # category, so every Points pick has been silently skipped by
+    # log_todays_signals() ("if not scanner... continue") and never shown
+    # on the results dashboard at all -- same class of gap as Cards &
+    # Corners IQ's Real Streak picks missing their own tracker earlier.
+    "Points": "points",
 }
-STAT_LABEL_BY_KEY = {"REB": "REB", "AST": "AST"}  # RA is REB+AST combined below, not a single label
-SCANNER_TO_STAT_KEY = {"rebounds": "REB", "assists": "AST"}  # ra handled separately (both summed)
+STAT_LABEL_BY_KEY = {"REB": "REB", "AST": "AST", "PTS": "PTS"}  # RA is REB+AST combined below, not a single label
+SCANNER_TO_STAT_KEY = {"rebounds": "REB", "assists": "AST", "points": "PTS"}  # ra handled separately (both summed)
 
 
 def _get(league_key, params):
@@ -285,7 +293,14 @@ def _verify_player_form_entry(entry):
     summary = _get_summary(entry["league"], entry["game_id"])
     if not summary or not _is_final(summary):
         return None
-    scanner_key = {"REB": "rebounds", "AST": "assists", "RA": "ra"}.get(entry["stat_key"])
+    # PTS added alongside the Points category above -- without it, any
+    # Points-based Hot Form/Real Streak entry (orange_line.py has flagged
+    # these since HOT_FORM_MIN['PTS']/REAL_STREAK_THRESHOLD['PTS'] were
+    # added) was already being logged fine, but could never verify: this
+    # map returned None for stat_key "PTS", so _player_stat_value got
+    # scanner=None and always returned None, leaving those entries stuck
+    # "pending" forever instead of counted hit/miss.
+    scanner_key = {"REB": "rebounds", "AST": "assists", "RA": "ra", "PTS": "points"}.get(entry["stat_key"])
     actual = _player_stat_value(summary, entry["player_id"], scanner_key)
     if actual is None:
         return None
@@ -310,7 +325,7 @@ def verify_pending_results(log, max_checks=60):
         try:
             if entry["scanner"] in ("team_total", "game_total"):
                 result = _verify_team_leg(entry)
-            elif entry["scanner"] in ("rebounds", "assists", "ra"):
+            elif entry["scanner"] in ("rebounds", "assists", "ra", "points"):
                 result = _verify_player_leg(entry)
             elif entry["scanner"] in ("player_hot_form", "player_real_streak"):
                 result = _verify_player_form_entry(entry)
@@ -342,6 +357,7 @@ def build_results_dashboard(log):
     SCANNER_LABELS = {
         "team_total": "Team Total", "game_total": "Game Total",
         "rebounds": "Rebounds", "assists": "Assists", "ra": "Rebounds+Assists",
+        "points": "Points",
         "player_hot_form": "Player Hot Form", "player_real_streak": "Player Real Streak",
     }
 
@@ -394,7 +410,7 @@ def build_results_dashboard(log):
 
 <div style="font-size:11px;color:#998;text-align:center;margin-top:20px;line-height:1.6">
   Team Total / Game Total use the same proven score field this model already relies on.
-  Rebounds / Assists / Rebounds+Assists / Hot Form / Real Streak use a best-effort read of
+  Rebounds / Assists / Rebounds+Assists / Points / Hot Form / Real Streak use a best-effort read of
   ESPN's basketball boxscore that wasn't confirmed against a live response — if those
   categories stay empty for more than a few days after games finish, check the Actions log
   for [DIAG] lines, which show exactly what shape the boxscore actually came back in. Sample
