@@ -4450,9 +4450,10 @@
     "player_id": "4278073",
     "stat_key": "REB",
     "logged_at": "2026-10-20T07:11:13.305420+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 6.0,
+    "verified_at": "2026-10-22T19:04:26.613684+00:00"
   },
   {
     "id": "b2af5af33ca463ff",
@@ -4471,9 +4472,10 @@
     "player_id": "4278073",
     "stat_key": "AST",
     "logged_at": "2026-10-20T07:11:13.305424+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4.0,
+    "verified_at": "2026-10-22T19:04:26.613704+00:00"
   },
   {
     "id": "bb40e416efdcc6ae",
@@ -4492,9 +4494,10 @@
     "player_id": "4278073",
     "stat_key": "RA",
     "logged_at": "2026-10-20T07:11:13.305428+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 10.0,
+    "verified_at": "2026-10-22T19:04:26.613710+00:00"
   },
   {
     "id": "afaa7fb301ecfab7",
@@ -4513,9 +4516,10 @@
     "player_id": "4222252",
     "stat_key": "REB",
     "logged_at": "2026-10-20T07:11:13.305431+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 3.0,
+    "verified_at": "2026-10-22T19:04:26.613714+00:00"
   },
   {
     "id": "1bcedf85b1854104",
@@ -4534,9 +4538,10 @@
     "player_id": "4222252",
     "stat_key": "AST",
     "logged_at": "2026-10-20T07:11:13.305435+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3.0,
+    "verified_at": "2026-10-22T19:04:26.613717+00:00"
   },
   {
     "id": "d539d70674f92ede",
@@ -4555,9 +4560,10 @@
     "player_id": "4222252",
     "stat_key": "RA",
     "logged_at": "2026-10-20T07:11:13.305438+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 6.0,
+    "verified_at": "2026-10-22T19:04:26.613721+00:00"
   },
   {
     "id": "9ca3453260c2aa0b",
