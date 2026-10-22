@@ -2,12 +2,21 @@ name: EuroLeague IQ
 
 on:
   schedule:
-    # EuroLeague round nights run Tue-Fri (occasionally weekends for
-    # rescheduled games), and the predictor scans an 8-day-ahead window
-    # regardless of today's date, so 3x/week keeps it current without
-    # hammering an undocumented, keyless, no-published-rate-limit API
-    # more than necessary -- same reasoning as Match IQ's own schedule.
-    - cron: '0 7 * * 1,3,5'
+    # FIXED (user report, 2026-10-22 -- a full Thu EuroLeague slate,
+    # Anadolu Efes/Besiktas/Bayern Munich/BC Dubai/Maccabi Tel
+    # Aviv/Real Madrid/Panathinaikos/Baskonia, missing from the page):
+    # this comment always said round nights run Tue-Fri, but the actual
+    # cron below ran Mon/Wed/Fri -- Monday isn't even a round night by
+    # this same comment's own reasoning, while Tuesday and Thursday
+    # (real round nights) were never run at all. The 8-day lookahead
+    # window usually papered over that (a Wed run already knows about
+    # Thursday's games), but any fixture added or confirmed to the
+    # schedule API AFTER the last run and BEFORE a day this cron skips
+    # fell straight through with no run left to catch it before tipoff.
+    # Switched to daily so a late-added or rescheduled fixture always
+    # has a same-morning run to pick it up, at the cost of more calls
+    # against this undocumented, keyless, no-published-rate-limit API.
+    - cron: '0 7 * * *'
   workflow_dispatch: {}
 
 permissions:
