@@ -276,13 +276,30 @@ def get_roster(league_key, team_id):
         # ESPN sometimes groups roster by position group (a list of
         # groups each with their own 'items'), sometimes returns a flat
         # list directly -- handle both rather than assume one shape.
+        # Position (user request, 2026-10-22 -- wants scorers and real
+        # ball-handlers told apart rather than picking an assist prop on
+        # name recognition; a scoring wing/forward going 3+ assists is a
+        # much shakier bet than a team's actual point guard at the same
+        # line). ESPN's athlete objects elsewhere in this API family
+        # carry a "position" object with an "abbreviation" (PG/SG/SF/PF/C)
+        # -- not confirmed live for THIS specific roster endpoint, so
+        # pulled defensively: missing/unexpected shape degrades to "" (no
+        # tag shown) rather than crashing, same diagnostic-first style as
+        # _fetch_gamelog_values above.
+        def _position(a):
+            pos = a.get('position')
+            if isinstance(pos, dict):
+                return pos.get('abbreviation', '') or ''
+            return ''
         if athletes and isinstance(athletes[0], dict) and 'items' in athletes[0]:
             for group in athletes:
                 for a in group.get('items', []):
-                    players.append({'id': a.get('id'), 'name': a.get('displayName', a.get('fullName', '?'))})
+                    players.append({'id': a.get('id'), 'name': a.get('displayName', a.get('fullName', '?')),
+                                     'position': _position(a)})
         else:
             for a in athletes:
-                players.append({'id': a.get('id'), 'name': a.get('displayName', a.get('fullName', '?'))})
+                players.append({'id': a.get('id'), 'name': a.get('displayName', a.get('fullName', '?')),
+                                 'position': _position(a)})
     except Exception as e:
         print(f"  [!] couldn't parse roster for team {team_id}: {e}")
     players = players[:ROSTER_CAP]
@@ -417,7 +434,7 @@ def project_player_props(league_key, team_id):
         ra_values = [r + a for r, a in zip(rebs, asts)]
         ra_proj = reb_proj + ast_proj
         props.append({
-            'name': player['name'], 'player_id': player['id'],
+            'name': player['name'], 'player_id': player['id'], 'position': player.get('position', ''),
             'reb_proj': round(reb_proj, 1), 'ast_proj': round(ast_proj, 1), 'ra_proj': round(ra_proj, 1),
             'pts_proj': round(pts_proj, 1),
             'rebs': rebs, 'asts': asts, 'ra_values': ra_values, 'pts': pts, 'n_games': n,
@@ -910,6 +927,7 @@ CARD_TEMPLATE = """<div style="background:#1a1310;border-radius:12px;padding:16p
   <div style="font-size:11px;color:#998;margin-bottom:4px">{date} · <span style="color:#ff9a2e">{league}</span></div>
   <div style="font-size:17px;font-weight:bold;margin-bottom:10px">{match}</div>
   {team_total_html}
+  {top_players_html}
 </div>"""
 
 TEAM_TOTAL_ROW = """<div style="display:flex;justify-content:space-between;text-align:center;background:#0f0a08;border-radius:8px;padding:8px;margin-bottom:8px">
@@ -918,13 +936,72 @@ TEAM_TOTAL_ROW = """<div style="display:flex;justify-content:space-between;text-
   <div><div style="color:#998;font-size:11px">{home_team}</div><div style="color:#ffeb3b;font-size:18px;font-weight:bold">{exp_home}</div></div>
 </div>"""
 
+# Top 3 Point Shooters / Top 3 Rebounders / Top 3 Playmakers per team
+# (user request, 2026-10-22). Different from the full-roster per-player
+# listing dropped on 2026-10-21 -- that was every projected player with
+# all 4 stats; this is just the ranked top 3 by pts_proj/reb_proj/ast_proj
+# each, a leaner "who to look at" view rather than a full stat dump.
+#
+# Playmakers added same day, separately from Shooters/Rebounders, after
+# the user flagged that their own bet-builder slips kept missing on
+# assist legs specifically for scoring wings (Booker, Siakam, Curry --
+# all 3+ AST picks chosen "on instinct") while assist picks for actual
+# primary ball-handlers (Haliburton, Lillard, Doncic) hit. Ranking by
+# ast_proj surfaces who's genuinely producing assists for THIS team
+# right now, rather than picking a scorer's name on recognition. The
+# position tag (PG/SG/SF/PF/C) is shown alongside each name too, pulled
+# from get_roster's defensive position lookup above, as a second,
+# independent signal -- not confirmed live for this roster endpoint, so
+# it degrades to no tag rather than a wrong one if ESPN's shape differs.
+# Reuses the same props already computed for the Safest Bet
+# Builder/Hot Form panel, no new API calls.
+TOP_PLAYERS_TEAM_BLOCK = """<div style="flex:1;min-width:0">
+    <div style="font-size:11px;color:#998;margin-bottom:3px">{team}</div>
+    <div style="font-size:10px;color:#ff9a2e;text-transform:uppercase;margin-bottom:1px">Top Shooters</div>
+    {pts_rows}
+    <div style="font-size:10px;color:#7ec8ff;text-transform:uppercase;margin:4px 0 1px">Top Rebounders</div>
+    {reb_rows}
+    <div style="font-size:10px;color:#9a7ec8;text-transform:uppercase;margin:4px 0 1px">Top Playmakers</div>
+    {ast_rows}
+  </div>"""
+TOP_PLAYER_ROW = """<div style="display:flex;justify-content:space-between;font-size:12px;padding:1px 0"><span>{name}{pos_tag}</span><span style="color:#e8dcd0;font-weight:bold">{val}</span></div>"""
+TOP_PLAYERS_SECTION = """<div style="display:flex;gap:14px;background:#0f0a08;border-radius:8px;padding:8px 10px;margin-top:4px">{away_block}{home_block}</div>"""
+
+
+def top_n(props, key, n=3):
+    return sorted((p for p in props if p.get(key) is not None), key=lambda p: p[key], reverse=True)[:n]
+
+
+def _pos_tag(p):
+    pos = p.get('position')
+    return f""" <span style="color:#776;font-weight:normal;font-size:10px">({pos})</span>""" if pos else ""
+
+
+def _top_rows(top, val_key):
+    return "".join(
+        TOP_PLAYER_ROW.format(name=p['name'], pos_tag=_pos_tag(p), val=p[val_key]) for p in top
+    ) or '<div style="font-size:11px;color:#776">No data</div>'
+
+
+def _top_players_team_block(team, props):
+    return TOP_PLAYERS_TEAM_BLOCK.format(
+        team=team,
+        pts_rows=_top_rows(top_n(props, 'pts_proj'), 'pts_proj'),
+        reb_rows=_top_rows(top_n(props, 'reb_proj'), 'reb_proj'),
+        ast_rows=_top_rows(top_n(props, 'ast_proj'), 'ast_proj'),
+    )
+
+
 def make_html(predictions):
-    # Game cards show Team Total only now -- the per-player PTS/REB/AST/RA
-    # list that used to sit under each card was dropped per user request
-    # (2026-10-21: "take off the player stats from the card and keep only
-    # the form and streak"). Props are still computed and still feed the
-    # Safest Bet Builder legs and the Hot Form & Real Streak panel below --
-    # only this card-level listing is gone.
+    # Game cards show Team Total, then Top Shooters/Rebounders -- the
+    # full per-player PTS/REB/AST/RA list that used to sit under each
+    # card was dropped per user request (2026-10-21: "take off the
+    # player stats from the card and keep only the form and streak").
+    # The ranked top-3 view below is a separate, later request
+    # (2026-10-22) for a leaner "who to look at" summary, not a return
+    # to the full listing. Props are still computed once and feed the
+    # Safest Bet Builder legs, the Hot Form & Real Streak panel, and now
+    # this block too -- no extra API calls.
     cards = "".join(CARD_TEMPLATE.format(
         date=p['date'][:16].replace('T', ' '), match=p['match'], league=p.get('league', ''),
         team_total_html=(
@@ -933,6 +1010,12 @@ def make_html(predictions):
                 exp_away=p['exp_away'], exp_home=p['exp_home'], exp_total=p['exp_total'],
             ) if p.get('exp_total') is not None else
             '<div style="color:#776;font-size:11px;margin-bottom:8px">Team Total unavailable for this game (missing team form)</div>'
+        ),
+        top_players_html=(
+            TOP_PLAYERS_SECTION.format(
+                away_block=_top_players_team_block(p['away_team'], p.get('away_props') or []),
+                home_block=_top_players_team_block(p['home_team'], p.get('home_props') or []),
+            ) if (p.get('away_props') or p.get('home_props')) else ""
         ),
     ) for p in predictions)
     if not cards:
