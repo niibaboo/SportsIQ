@@ -238,6 +238,53 @@ def predict_team_total(h_form, a_form, lg_scored, lg_allowed):
     }
 
 
+PACE_FAST_THRESHOLD = 1.04   # combined scoring env >= 4% above league -> "Fast"
+PACE_SLOW_THRESHOLD = 0.96   # combined scoring env <= 4% below league -> "Slow"
+
+
+def _pace_label(team_form, lg_scored, lg_allowed):
+    """Pace/style proxy (user request, 2026-10-22). ESPN's scoreboard/
+    team endpoints used elsewhere in this script don't carry a real
+    possessions-per-game figure, so this uses the same combined
+    scored+allowed environment a team's games actually play out in as a
+    stand-in -- a team involved in high-combined-scoring games on both
+    ends tends to be a fast, possession-heavy team even without a true
+    pace count, the same practical proxy bettors reach for when real
+    pace data isn't on hand. Informational only, same as Euro Ice's H2H
+    line -- NOT blended into predict_team_total()'s projection, which
+    already properly accounts for scored/allowed on each side."""
+    team_env = team_form['avg_scored'] + team_form['avg_allowed']
+    lg_env = lg_scored + lg_allowed
+    if lg_env <= 0:
+        return 'Average', 0.0
+    ratio = team_env / lg_env
+    if ratio >= PACE_FAST_THRESHOLD:
+        label = 'Fast'
+    elif ratio <= PACE_SLOW_THRESHOLD:
+        label = 'Slow'
+    else:
+        label = 'Average'
+    return label, round((ratio - 1) * 100, 1)  # label, % vs league
+
+
+def pace_matchup(h_form, a_form, lg_scored, lg_allowed):
+    h_label, h_pct = _pace_label(h_form, lg_scored, lg_allowed)
+    a_label, a_pct = _pace_label(a_form, lg_scored, lg_allowed)
+    if h_label == 'Fast' and a_label == 'Fast':
+        verdict, icon = 'Fast-paced matchup — leans Over', '🔥'
+    elif h_label == 'Slow' and a_label == 'Slow':
+        verdict, icon = 'Slow-paced matchup — leans Under', '🐢'
+    elif 'Average' in (h_label, a_label) and h_label == a_label:
+        verdict, icon = 'Average pace both sides', '⚖️'
+    else:
+        verdict, icon = 'Mixed pace — no clear lean', '↔️'
+    return {
+        'home_label': h_label, 'home_pct': h_pct,
+        'away_label': a_label, 'away_pct': a_pct,
+        'verdict': verdict, 'icon': icon,
+    }
+
+
 def norm_cdf(x, mean, std):
     if std <= 0:
         return 1.0 if x >= mean else 0.0
@@ -412,7 +459,27 @@ PROP_CONFIG = {
 }
 
 
-def project_player_props(league_key, team_id):
+PACE_SCALE_MIN = 0.85
+PACE_SCALE_MAX = 1.15
+MIN_REST_RISK_RATIO = 0.70  # last game's minutes vs recent avg, below this -> flagged
+MIN_REST_RISK_FLOOR = 15.0  # don't flag bench noise -- only players averaging real minutes
+
+
+def project_player_props(league_key, team_id, pts_scale=1.0):
+    """pts_scale (user request, 2026-10-22 -- "will top scorers hit their
+    average point zone" given the pace matchup): scales pts_proj by how
+    much MORE or LESS this team is projected to score in TONIGHT's
+    specific matchup vs their own season average, i.e.
+    exp_team / team_form['avg_scored'] from predict_team_total() --
+    already accounts for both pace AND the opponent's own defense
+    (exp_home/exp_away are themselves scored * opponent_allowed/lg_allowed),
+    so this is a better-grounded adjustment than reapplying the blunt
+    pace label a second time. Clamped to [0.85, 1.15] -- same defensive
+    clamping philosophy as predict_team_total()'s own lh/la bounds --
+    so one early-season outlier game can't send a player's whole
+    projection off a cliff. Caller passes 1.0 (the default) when no team
+    form was available, leaving pts_proj unadjusted. Scoped to points
+    only, per the specific ask -- rebounds/assists/RA are untouched."""
     roster = get_roster(league_key, team_id)
     if not roster:
         print(f"    no roster found for team {team_id} — 0 player props possible")
@@ -430,13 +497,30 @@ def project_player_props(league_key, team_id):
         n = len(rebs)
         reb_proj = shrink(recency_weighted(rebs), n, PROP_CONFIG['REB']['prior'])
         ast_proj = shrink(recency_weighted(asts), n, PROP_CONFIG['AST']['prior'])
-        pts_proj = shrink(recency_weighted(pts), n, PROP_CONFIG['PTS']['prior'])
+        pts_proj_raw = shrink(recency_weighted(pts), n, PROP_CONFIG['PTS']['prior'])
+        pts_proj = pts_proj_raw * pts_scale
         ra_values = [r + a for r, a in zip(rebs, asts)]
         ra_proj = reb_proj + ast_proj
+
+        # Minutes/rest risk (user request, same turn) -- same gamelog
+        # endpoint already hit for REB/AST/PTS, 'MIN' is one of the same
+        # root-level labels (confirmed live via the [DIAG] sample the
+        # user shared earlier: ['MIN','FG','FG%','3PT','3P%','FT','FT%',
+        # 'REB','AST','BLK','STL','PF','TO','PTS']). Best-effort: missing
+        # or short minutes data just leaves rest_risk False rather than
+        # blocking the rest of this player's prop.
+        mins = get_player_gamelog(league_key, player['id'], 'MIN')
+        min_avg, min_last, rest_risk = None, None, False
+        if len(mins) >= 3:
+            min_avg = round(recency_weighted(mins), 1)
+            min_last = mins[-1]
+            rest_risk = min_avg >= MIN_REST_RISK_FLOOR and min_last < MIN_REST_RISK_RATIO * min_avg
+
         props.append({
             'name': player['name'], 'player_id': player['id'], 'position': player.get('position', ''),
             'reb_proj': round(reb_proj, 1), 'ast_proj': round(ast_proj, 1), 'ra_proj': round(ra_proj, 1),
-            'pts_proj': round(pts_proj, 1),
+            'pts_proj': round(pts_proj, 1), 'pts_proj_raw': round(pts_proj_raw, 1),
+            'min_avg': min_avg, 'min_last': min_last, 'rest_risk': rest_risk,
             'rebs': rebs, 'asts': asts, 'ra_values': ra_values, 'pts': pts, 'n_games': n,
         })
     return props
@@ -516,23 +600,37 @@ def build_predictions():
             h_form = all_forms.get(h_id) or get_team_form(league_key, h_id)
             a_form = all_forms.get(a_id) or get_team_form(league_key, a_id)
             team_total_proj = {}
+            pace = None
+            home_pts_scale, away_pts_scale = 1.0, 1.0
             if h_form and a_form:
                 team_total_proj = predict_team_total(h_form, a_form, lg_scored, lg_allowed)
+                pace = pace_matchup(h_form, a_form, lg_scored, lg_allowed)
+                # Points pace-adjustment scale -- see project_player_props()'s
+                # own docstring for why this ratio (not the pace label) is
+                # used. avg_scored is already a confirmed-nonzero value by
+                # the time a form dict exists (get_team_form only returns
+                # one once it has at least one completed game).
+                if team_total_proj.get('exp_home') is not None:
+                    home_pts_scale = min(max(team_total_proj['exp_home'] / h_form['avg_scored'],
+                                              PACE_SCALE_MIN), PACE_SCALE_MAX)
+                if team_total_proj.get('exp_away') is not None:
+                    away_pts_scale = min(max(team_total_proj['exp_away'] / a_form['avg_scored'],
+                                              PACE_SCALE_MIN), PACE_SCALE_MAX)
             else:
                 print(f"    no team form for one/both sides of {away['team']['displayName']} @ "
                       f"{home['team']['displayName']} — Team/Game Total skipped for this game, "
                       f"player props unaffected")
 
             print(f"  Player props: {away['team']['displayName']} @ {home['team']['displayName']} ({league_name})")
-            home_props = project_player_props(league_key, h_id)
-            away_props = project_player_props(league_key, a_id)
+            home_props = project_player_props(league_key, h_id, pts_scale=home_pts_scale)
+            away_props = project_player_props(league_key, a_id, pts_scale=away_pts_scale)
             predictions.append({
                 'date': e.get('date', ''), 'game_id': e.get('id'),
                 'league': league_name,
                 'match': f"{away['team']['displayName']} @ {home['team']['displayName']}",
                 'home_team': home['team']['displayName'], 'away_team': away['team']['displayName'],
                 'home_props': home_props, 'away_props': away_props,
-                'home_form': h_form, 'away_form': a_form,
+                'home_form': h_form, 'away_form': a_form, 'pace': pace,
                 **team_total_proj,
             })
     return predictions
@@ -927,8 +1025,11 @@ CARD_TEMPLATE = """<div style="background:#1a1310;border-radius:12px;padding:16p
   <div style="font-size:11px;color:#998;margin-bottom:4px">{date} · <span style="color:#ff9a2e">{league}</span></div>
   <div style="font-size:17px;font-weight:bold;margin-bottom:10px">{match}</div>
   {team_total_html}
+  {pace_html}
   {top_players_html}
 </div>"""
+
+PACE_ROW = """<div style="font-size:11px;color:#998;margin-bottom:8px">{icon} <span style="color:#e8dcd0">{verdict}</span> — {away_team} {away_label} ({away_pct_str}) · {home_team} {home_label} ({home_pct_str})</div>"""
 
 TEAM_TOTAL_ROW = """<div style="display:flex;justify-content:space-between;text-align:center;background:#0f0a08;border-radius:8px;padding:8px;margin-bottom:8px">
   <div><div style="color:#998;font-size:11px">{away_team}</div><div style="color:#ffeb3b;font-size:18px;font-weight:bold">{exp_away}</div></div>
@@ -964,7 +1065,7 @@ TOP_PLAYERS_TEAM_BLOCK = """<div style="flex:1;min-width:0">
     <div style="font-size:10px;color:#9a7ec8;text-transform:uppercase;margin:4px 0 1px">Top Playmakers</div>
     {ast_rows}
   </div>"""
-TOP_PLAYER_ROW = """<div style="display:flex;justify-content:space-between;font-size:12px;padding:1px 0"><span>{name}{pos_tag}</span><span style="color:#e8dcd0;font-weight:bold">{val}</span></div>"""
+TOP_PLAYER_ROW = """<div style="display:flex;justify-content:space-between;font-size:12px;padding:1px 0"><span>{name}{pos_tag}{rest_tag}</span><span style="color:#e8dcd0;font-weight:bold">{val}{raw_note}</span></div>"""
 TOP_PLAYERS_SECTION = """<div style="display:flex;gap:14px;background:#0f0a08;border-radius:8px;padding:8px 10px;margin-top:4px">{away_block}{home_block}</div>"""
 
 
@@ -977,10 +1078,35 @@ def _pos_tag(p):
     return f""" <span style="color:#776;font-weight:normal;font-size:10px">({pos})</span>""" if pos else ""
 
 
+def _rest_tag(p):
+    # Minutes/rest risk (user request, 2026-10-22): flags a player whose
+    # most recent game's minutes dropped well below their own recent
+    # average -- blowout garbage time, load management, etc. -- a signal
+    # that their point/rebound/assist average may not be a reliable
+    # floor tonight even before accounting for pace. Shown wherever the
+    # player appears (Shooters/Rebounders/Playmakers alike), since a
+    # minutes cut affects all three the same way.
+    if not p.get('rest_risk'):
+        return ""
+    return (f""" <span title="Last game: {p['min_last']} min vs recent avg {p['min_avg']} min" """
+            f"""style="color:#f59e0b;font-weight:normal;font-size:10px">⚠️ rest risk</span>""")
+
+
 def _top_rows(top, val_key):
-    return "".join(
-        TOP_PLAYER_ROW.format(name=p['name'], pos_tag=_pos_tag(p), val=p[val_key]) for p in top
-    ) or '<div style="font-size:11px;color:#776">No data</div>'
+    rows = []
+    for p in top:
+        raw_note = ""
+        if val_key == 'pts_proj' and p.get('pts_proj_raw') is not None and p['pts_proj_raw'] != p[val_key]:
+            # Pace-adjusted projection now feeds the actual number/line
+            # (see project_player_props()'s pts_scale docstring) -- the
+            # raw season average is kept visible alongside it rather than
+            # silently replaced, same honesty standard as every other
+            # adjustment in this suite.
+            raw_note = f""" <span style="color:#776;font-weight:normal;font-size:10px">(season {p['pts_proj_raw']})</span>"""
+        rows.append(TOP_PLAYER_ROW.format(
+            name=p['name'], pos_tag=_pos_tag(p), rest_tag=_rest_tag(p), val=p[val_key], raw_note=raw_note,
+        ))
+    return "".join(rows) or '<div style="font-size:11px;color:#776">No data</div>'
 
 
 def _top_players_team_block(team, props):
@@ -1010,6 +1136,15 @@ def make_html(predictions):
                 exp_away=p['exp_away'], exp_home=p['exp_home'], exp_total=p['exp_total'],
             ) if p.get('exp_total') is not None else
             '<div style="color:#776;font-size:11px;margin-bottom:8px">Team Total unavailable for this game (missing team form)</div>'
+        ),
+        pace_html=(
+            PACE_ROW.format(
+                icon=p['pace']['icon'], verdict=p['pace']['verdict'],
+                away_team=p['away_team'], away_label=p['pace']['away_label'],
+                away_pct_str=f"{p['pace']['away_pct']:+.1f}%",
+                home_team=p['home_team'], home_label=p['pace']['home_label'],
+                home_pct_str=f"{p['pace']['home_pct']:+.1f}%",
+            ) if p.get('pace') else ""
         ),
         top_players_html=(
             TOP_PLAYERS_SECTION.format(
