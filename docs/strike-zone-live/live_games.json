@@ -1,5 +1,47 @@
 {
-  "generated": "2026-10-23T22:05:40.686683+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-10-24T00:35:58.896965+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_pk": 849805,
+      "home_team": "Milwaukee Brewers",
+      "away_team": "Tampa Bay Rays",
+      "home_runs": 2.0,
+      "away_runs": 0.0,
+      "home_hits": 3.0,
+      "away_hits": 2.0,
+      "inning": 1,
+      "inning_state": "Bottom",
+      "status": "In Progress",
+      "half_innings_remaining": 17,
+      "next_run": {
+        "home": 89,
+        "away": 11
+      },
+      "game_total_pace": {
+        "prob": 93,
+        "status": "On Pace: Over"
+      },
+      "inning_winner": {
+        "home": 64,
+        "away": 5,
+        "tie": 31
+      },
+      "inning_hits": {
+        "home": 52,
+        "away": 26,
+        "tie": 22
+      },
+      "model_signal": {
+        "label": "Game Total Over",
+        "prob": 93,
+        "qualifies": true
+      },
+      "pregame_projection": {
+        "home_lambda": 5.34,
+        "away_lambda": 2.68,
+        "pregame_total": 8.02
+      }
+    }
+  ]
 }
