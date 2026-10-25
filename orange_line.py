@@ -368,6 +368,102 @@ def shrink(value, n, prior, prior_strength=PRIOR_STRENGTH):
 
 player_gamelog_cache = {}
 
+# Side-channel cache, populated as a byproduct of the SAME fetch
+# get_player_gamelog already triggers for REB/AST/PTS/MIN -- holds each
+# game's opponent tag alongside its date/value (the main cache above
+# only keeps the plain value list, since every existing caller --
+# recency_weighted, shrink, hit_rate, Hot Form/Real Streak, card
+# rendering -- expects that exact shape and changing it would risk all
+# of those). Keyed the same way: (league_key, athlete_id, stat_key,
+# season) -> list of (date_str, value, opponent_dict_or_None), sorted
+# the same as the main cache. Used only by get_player_vs_opponent()
+# below, added for the "matchup history vs this exact opponent" feature
+# (user request, 2026-10-25, reverse-engineering props.cash) -- reading
+# this cache triggers ZERO extra API calls beyond what Orange Line was
+# already making for its existing props.
+player_gamelog_meta_cache = {}
+
+_OPPONENT_SHAPE_LOGGED = False
+
+
+def _extract_game_opponent(game, root_events):
+    """Best-effort opponent tag for one gamelog event.
+
+    UNCONFIRMED against a live response, same honesty-first caveat as
+    every other gamelog field in this file (see this function's own
+    module docstring) -- no [DIAG] sample gathered so far happened to
+    include an opponent field, so this tries several plausible shapes
+    rather than assuming one:
+      1. An inline 'opponent' dict on the per-stat event itself
+         (mirrors how 'gameDate' is read inline just above).
+      2. The SAME event cross-referenced by id against this gamelog
+         response's top-level 'events' dict, if there is one -- some of
+         ESPN's other gamelog-shaped endpoints put per-game metadata
+         there instead of inline on the stat-category event.
+      3. A short 'atVs' text field (e.g. "vs LAL" / "@ BOS"), stripped
+         down to a best-effort abbreviation.
+    Returns {'abbrev', 'name'} (either half may be '') if ANY of these
+    matched, or None if none did -- callers must treat None as "can't
+    tell", never as "no opponent", and must degrade to showing nothing
+    rather than a wrong matchup."""
+    def _from_dict(d):
+        if isinstance(d, dict) and (d.get('abbreviation') or d.get('displayName')):
+            return {"abbrev": d.get('abbreviation', '') or '', "name": d.get('displayName', '') or ''}
+        return None
+
+    found = _from_dict(game.get('opponent'))
+    if found:
+        return found
+
+    event_id = game.get('eventId') or game.get('id')
+    if event_id and isinstance(root_events, dict):
+        ev = root_events.get(str(event_id)) or root_events.get(event_id)
+        if isinstance(ev, dict):
+            found = _from_dict(ev.get('opponent'))
+            if found:
+                return found
+
+    at_vs = game.get('atVs')
+    if isinstance(at_vs, str) and at_vs.strip():
+        token = at_vs.replace('vs', '').replace('@', '').strip()
+        if token:
+            return {"abbrev": token, "name": ""}
+
+    return None
+
+
+def get_player_vs_opponent(league_key, athlete_id, stat_key, opponent_abbr, opponent_name):
+    """This player's raw per-game values (current + prior season,
+    whichever have already been fetched via get_player_gamelog) from
+    games specifically against `opponent_abbr`/`opponent_name` -- the
+    "matchup history vs this exact opponent" props.cash has and Orange
+    Line's own recent-form screens don't (those are opponent-agnostic).
+
+    Reads ONLY from player_gamelog_meta_cache -- never fetches on its
+    own -- so this costs zero extra API calls on top of whatever Orange
+    Line was already pulling for this player's props, but also means it
+    can only see opponent data for seasons a normal prop call already
+    touched (current season, and prior season only if current season's
+    fetch came back empty). Returns [] whenever nothing matched --
+    which, given _extract_game_opponent's own unconfirmed-shape caveat
+    above, may mean "no data available to tell" rather than a genuine
+    "never played them" -- never treat an empty list here as proof of
+    anything."""
+    if not opponent_abbr and not opponent_name:
+        return []
+    out = []
+    current_year = datetime.now().year
+    for season in (current_year, current_year - 1):
+        meta = player_gamelog_meta_cache.get((league_key, athlete_id, stat_key, season), [])
+        for date_str, value, opp in meta:
+            if not opp:
+                continue
+            abbr_match = bool(opponent_abbr) and opp.get('abbrev', '').lower() == opponent_abbr.lower()
+            name_match = bool(opponent_name) and opp.get('name') and opponent_name.lower() in opp.get('name', '').lower()
+            if abbr_match or name_match:
+                out.append(value)
+    return out
+
 
 def _fetch_gamelog_values(league_key, athlete_id, stat_key, season):
     """Same defensive parsing as Blitz IQ's _fetch_gamelog_values --
@@ -385,14 +481,16 @@ def _fetch_gamelog_values(league_key, athlete_id, stat_key, season):
     If no date field is found at all, falls back to API order as-is and
     prints a diagnostic -- so a missing date field degrades visibly
     (streak feature may be unreliable) instead of silently."""
+    global _OPPONENT_SHAPE_LOGGED
     r = _get(GAMELOG_BASE_FMT.format(league=league_key, athlete_id=athlete_id),
              params={"season": season})
-    dated_values = []  # (date_str_or_None, value)
+    dated_values = []  # (date_str_or_None, value, opponent_dict_or_None)
     if r is None:
         print(f"    [!] gamelog fetch failed for athlete {athlete_id}, season {season} (no response)")
         return dated_values
     try:
         data = r.json()
+        root_events = data.get('events')  # see _extract_game_opponent's cross-reference path
         top_keys = list(data.keys())
         if top_keys == ['filters']:
             print(f"    [!] gamelog for athlete {athlete_id}, season {season}: still only got 'filters' even with season param.")
@@ -423,20 +521,30 @@ def _fetch_gamelog_values(league_key, athlete_id, stat_key, season):
                             continue
                         date_str = (game.get('gameDate') or game.get('date')
                                     or game.get('eventDate') or None)
-                        dated_values.append((date_str, value))
+                        opp = _extract_game_opponent(game, root_events)
+                        dated_values.append((date_str, value, opp))
         if season_data and not dated_values:
             print(f"    [!] gamelog for athlete {athlete_id}, season {season}, stat '{stat_key}': no matching values found "
                   f"-- stat_key likely doesn't match ESPN's actual label name. Check the [DIAG] line above for real labels.")
     except Exception as e:
         print(f"  [!] couldn't parse gamelog for athlete {athlete_id}, season {season}: {e}")
 
-    if dated_values and all(d is not None for d, _ in dated_values):
-        dated_values.sort(key=lambda pair: pair[0])  # guarantees oldest -> newest
+    if dated_values and all(d is not None for d, _, _ in dated_values):
+        dated_values.sort(key=lambda t: t[0])  # guarantees oldest -> newest
     elif dated_values:
         print(f"    [DIAG] athlete {athlete_id}, season {season}, stat '{stat_key}': some/all games missing a "
               f"date field -- falling back to API order as-is. Real Streak for this player may be unreliable "
               f"until this is confirmed against a real response.")
-    return [v for _, v in dated_values]
+
+    if dated_values and not _OPPONENT_SHAPE_LOGGED and all(opp is None for _, _, opp in dated_values):
+        print(f"    [DIAG] athlete {athlete_id}, season {season}: no opponent field found on any gamelog event "
+              f"(checked inline 'opponent', a top-level 'events' cross-reference, and 'atVs') -- matchup-history "
+              f"vs a specific opponent will show nothing until this is confirmed against a real response.")
+        _OPPONENT_SHAPE_LOGGED = True
+
+    player_gamelog_meta_cache[(league_key, athlete_id, stat_key, season)] = \
+        [(d, v, opp) for d, v, opp in dated_values]
+    return [v for _, v, _ in dated_values]
 
 
 def get_player_gamelog(league_key, athlete_id, stat_key):
@@ -629,6 +737,11 @@ def build_predictions():
                 'league': league_name,
                 'match': f"{away['team']['displayName']} @ {home['team']['displayName']}",
                 'home_team': home['team']['displayName'], 'away_team': away['team']['displayName'],
+                # Abbreviations, for matching against get_player_vs_opponent's
+                # opponent tags (matchup-history feature, see that function) --
+                # UNCONFIRMED field on this scoreboard competitor shape, same
+                # defensive '' fallback as get_roster's own position lookup.
+                'home_abbr': home['team'].get('abbreviation', ''), 'away_abbr': away['team'].get('abbreviation', ''),
                 'home_props': home_props, 'away_props': away_props,
                 'home_form': h_form, 'away_form': a_form, 'pace': pace,
                 **team_total_proj,
@@ -705,6 +818,33 @@ def build_legs(predictions):
                     result = safe_line(proj)
                     if not result:
                         continue
+
+                    # Matchup history vs the EXACT upcoming opponent (user
+                    # request, 2026-10-25, reverse-engineering props.cash) --
+                    # scoped to PTS only to keep this to one stat while the
+                    # underlying opponent-tag extraction is still unconfirmed
+                    # against a live response (see get_player_vs_opponent's
+                    # own docstring). Costs zero extra API calls: reads from
+                    # whatever get_player_gamelog('PTS') already populated
+                    # for this player a few lines up in project_player_props.
+                    vs_opponent = None
+                    if stat_key == "PTS":
+                        is_home_leg = team_name == p["home_team"]
+                        opp_abbr = p.get("away_abbr") if is_home_leg else p.get("home_abbr")
+                        opp_name = p["away_team"] if is_home_leg else p["home_team"]
+                        # league_name.lower() ("NBA"->"nba"/"WNBA"->"wnba")
+                        # recovers the lowercase league_key get_player_gamelog
+                        # was actually cached under -- true by construction of
+                        # the LEAGUES config above, not a guess.
+                        vs_values = get_player_vs_opponent(
+                            league_name.lower(), prop["player_id"], "PTS", opp_abbr, opp_name)
+                        if vs_values:
+                            vs_opponent = {
+                                "opponent": opp_name,
+                                "values": vs_values,
+                                "hit_rate": hit_rate(vs_values, result["line"]),
+                            }
+
                     legs.append({
                         "match": f"{match_label} ({league_name})",
                         "market": f"{prop['name']} Over {result['line']} {label}",
@@ -712,6 +852,7 @@ def build_legs(predictions):
                         "hit_rate": hit_rate(values, result["line"]),
                         "detail": f"{team_name} · {league_name} · proj {result['avg']} ({prop['n_games']}gm)",
                         "history": "/".join(str(v) for v in values),
+                        "vs_opponent": vs_opponent,
                         "game_id": game_id, "game_date": game_date, "line": result["line"],
                         "player_id": prop["player_id"], "stat_key": stat_key,
                         "is_home": team_name == p["home_team"], "league": league_name,
@@ -1025,14 +1166,39 @@ function buildSafest() {{
     return;
   }}
 
-  const rows = chosen.map(l =>
-    `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #3a2a20">
-       <span>${{l.match}}<br><span style="color:#ff9a2e">${{l.market}}</span> <span style="color:#665">· ${{l.category}}</span>
-       ${{l.detail ? `<br><span style="color:#776;font-size:10px">${{l.detail}}</span>` : ''}}
-       ${{l.history ? `<br><span style="color:#665;font-size:10px">last games: ${{l.history}}</span>` : ''}}</span>
-       <span style="text-align:right"><span style="color:#ffeb3b;font-weight:bold">${{l.prob}}%</span>${{l.hit_rate ? `<br><span style="color:#998;font-size:11px">${{l.hit_rate.hits}}/${{l.hit_rate.total}}</span>` : ''}}</span>
-     </div>`
-  ).join('');
+  // Reverse-engineered from props.cash (user request, 2026-10-25):
+  // "Hit Rate -> Fair Odds" (prob%, as a comparable price) and an
+  // adjustable custom line with a live-recomputed hit-rate, both now
+  // added per leg below -- see recomputeCustomLine()/fairOddsStr().
+  window.__CHOSEN_LEGS = chosen;
+
+  const rows = chosen.map((l, idx) => {{
+    const fo = fairOddsStr(l.prob);
+    const vsOppLine = l.vs_opponent
+      ? `<br><span style="color:#7dd3a8;font-size:10px">vs ${{l.vs_opponent.opponent}} (all-time): `
+        + `${{l.vs_opponent.hit_rate ? l.vs_opponent.hit_rate.hits + '/' + l.vs_opponent.hit_rate.total : '—'}} `
+        + `(${{l.vs_opponent.values.join('/')}})</span>`
+      : '';
+    return `<div style="padding:5px 0;border-bottom:1px solid #3a2a20">
+       <div style="display:flex;justify-content:space-between">
+         <span>${{l.match}}<br><span style="color:#ff9a2e">${{l.market}}</span> <span style="color:#665">· ${{l.category}}</span>
+         ${{l.detail ? `<br><span style="color:#776;font-size:10px">${{l.detail}}</span>` : ''}}
+         ${{l.history ? `<br><span style="color:#665;font-size:10px">last games: ${{l.history}}</span>` : ''}}${{vsOppLine}}</span>
+         <span style="text-align:right">
+           <span style="color:#ffeb3b;font-weight:bold">${{l.prob}}%</span>
+           ${{fo ? `<br><span style="color:#998;font-size:11px">fair ${{fo.decimal}} / ${{fo.american}}</span>` : ''}}
+           ${{l.hit_rate ? `<br><span style="color:#998;font-size:11px">${{l.hit_rate.hits}}/${{l.hit_rate.total}}</span>` : ''}}
+         </span>
+       </div>
+       ${{l.history ? `<div style="display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px;color:#998">
+         <label>Try line:</label>
+         <input type="number" step="0.5" value="${{l.line}}" id="customLine${{idx}}"
+           oninput="recomputeCustomLine(${{idx}})"
+           style="width:55px;background:#0f0a08;border:1px solid #443;color:white;border-radius:4px;padding:3px 5px;font-size:11px">
+         <span id="customLineResult${{idx}}"></span>
+       </div>` : ''}}
+     </div>`;
+  }}).join('');
 
   const capNote = chosen.length >= maxLegs && combinedOdds < target
     ? ' (hit the leg cap before reaching target — raise Max legs or lower Target odds)'
@@ -1048,9 +1214,46 @@ function buildSafest() {{
       sportsbook odds include their margin and legs within the same game
       aren't fully independent, so treat this as a ranking tool, not a firm
       price. All three markets use Poisson projections with the line set
-      below the model's expectation for a safety margin.
+      below the model's expectation for a safety margin. "Fair" odds above
+      are the zero-margin break-even price for that probability (1/prob) —
+      a real sportsbook price will always be a little worse than this.
+      "Try line" recomputes an EMPIRICAL hit-rate straight from the actual
+      recent games shown, not a re-run of the model.
     </div>
   `;
+}}
+
+// Converts a probability percentage (0-100) into a zero-vig "fair"
+// price -- same hit-rate-to-odds conversion props.cash's own tool does
+// (user request, 2026-10-25). This is a ceiling to compare a real book
+// price against, not a quote you'd actually get -- any real sportsbook
+// price is worse than this by their margin.
+function fairOddsStr(probPct) {{
+  if (!probPct || probPct <= 0 || probPct >= 100) return null;
+  const decimal = 100 / probPct;
+  const american = decimal >= 2
+    ? '+' + Math.round((decimal - 1) * 100)
+    : String(Math.round(-100 / (decimal - 1)));
+  return {{ decimal: decimal.toFixed(2), american }};
+}}
+
+// Adjustable custom line (user request, 2026-10-25, reverse-engineering
+// props.cash's own "change the line, see the value" filter) -- recomputes
+// an empirical hit-rate (and its own fair-odds-from-hit-rate) straight
+// from the SAME raw per-game values already shown in "last games", with
+// no server round trip and no re-running the Poisson model.
+function recomputeCustomLine(idx) {{
+  const leg = window.__CHOSEN_LEGS[idx];
+  const input = document.getElementById('customLine' + idx);
+  const out = document.getElementById('customLineResult' + idx);
+  const line = parseFloat(input.value);
+  if (isNaN(line) || !leg || !leg.history) {{ out.textContent = ''; return; }}
+  const values = leg.history.split('/').map(Number).filter(v => !isNaN(v));
+  if (!values.length) {{ out.textContent = 'no game data'; return; }}
+  const hits = values.filter(v => v > line).length;
+  const pct = Math.round((hits / values.length) * 100);
+  const fo = fairOddsStr(pct);
+  out.textContent = `${{hits}}/${{values.length}} (${{pct}}%)` + (fo ? ` · fair ${{fo.decimal}} / ${{fo.american}}` : '');
 }}
 </script>
 """
