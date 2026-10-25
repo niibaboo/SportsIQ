@@ -4997,9 +4997,10 @@
     "player_id": "4433255",
     "stat_key": "REB",
     "logged_at": "2026-10-20T07:11:13.305519+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 7.0,
+    "verified_at": "2026-10-25T17:13:53.592217+00:00"
   },
   {
     "id": "bd2ef15f15596a0d",
@@ -5128,9 +5129,10 @@
     "player_id": "4066259",
     "stat_key": "AST",
     "logged_at": "2026-10-20T07:11:13.305553+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 7.0,
+    "verified_at": "2026-10-25T17:13:53.592243+00:00"
   },
   {
     "id": "60115ba1591e7796",
@@ -5149,9 +5151,10 @@
     "player_id": "4593803",
     "stat_key": "AST",
     "logged_at": "2026-10-20T07:11:13.305559+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-10-25T17:13:53.592248+00:00"
   },
   {
     "id": "7c995a7706f63a28",
