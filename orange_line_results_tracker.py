@@ -66,9 +66,19 @@ CATEGORY_SCANNER = {
     # on the results dashboard at all -- same class of gap as Cards &
     # Corners IQ's Real Streak picks missing their own tracker earlier.
     "Points": "points",
+    # 3-Pointers Made added 2026-10-22 -- same gap as Points above: Orange
+    # Line's build_legs() now logs "3-Pointers Made" category legs
+    # (STAT_LABELS["3PM"]) but without this entry they'd be silently
+    # skipped by log_todays_signals() the exact same way Points was.
+    "3-Pointers Made": "tpm",
 }
-STAT_LABEL_BY_KEY = {"REB": "REB", "AST": "AST", "PTS": "PTS"}  # RA is REB+AST combined below, not a single label
-SCANNER_TO_STAT_KEY = {"rebounds": "REB", "assists": "AST", "points": "PTS"}  # ra handled separately (both summed)
+STAT_LABEL_BY_KEY = {"REB": "REB", "AST": "AST", "PTS": "PTS", "3PM": "3PT"}  # RA is REB+AST combined below, not a single label
+# "tpm" maps to the real ESPN boxscore label "3PT" (not "3PM" -- orange_line.py's
+# own PROP_CONFIG uses the same '3PT' root label for the live gamelog pull, and
+# this tracker's final-boxscore endpoint is assumed to share it, unconfirmed
+# either way). See _player_stat_value()'s value_parser note below for why this
+# one stat can't just be float()'d like the others.
+SCANNER_TO_STAT_KEY = {"rebounds": "REB", "assists": "AST", "points": "PTS", "tpm": "3PT"}  # ra handled separately (both summed)
 
 
 def _get(league_key, params):
@@ -219,14 +229,41 @@ def _verify_team_leg(entry):
     return {"actual": actual, "result": "hit" if actual > entry["line"] else "miss"}
 
 
-def _find_player_boxscore_stat(summary, player_id, stat_key):
+def _parse_makes_attempts(raw):
+    """Value parser for a combined 'makes-attempts' boxscore stat, e.g.
+    3PT commonly rendering as "3-7" -- same handling, and same
+    unconfirmed-against-a-live-response caveat, as orange_line.py's own
+    _parse_makes_attempts (duplicated here, not imported, per this
+    suite's one-script-per-tool convention). Returns None (not 0) on
+    total failure, so the caller treats it as "couldn't read this
+    stat", not a real zero."""
+    s = str(raw).strip()
+    if '-' in s:
+        made_str = s.split('-', 1)[0].strip()
+        try:
+            return float(made_str)
+        except (ValueError, TypeError):
+            return None
+    try:
+        return float(s)
+    except (ValueError, TypeError):
+        return None
+
+
+def _find_player_boxscore_stat(summary, player_id, stat_key, value_parser=None):
     """DEFENSIVE, label-based lookup -- same philosophy as Blitz IQ's own
     _find_player_boxscore_stat, simplified for basketball's single
     stat-category-per-team boxscore shape (unlike football's separate
     passing/rushing/receiving categories, so there's no category-keyword
     disambiguation needed here -- just find the category whose labels
     include stat_key, same REB/AST label orange_line.py's own gamelog
-    fetcher already assumes)."""
+    fetcher already assumes).
+
+    value_parser (added for 3-Pointers Made, user request, 2026-10-25):
+    every OTHER stat this tracker reads is a confirmed-plain number and
+    uses the default plain float(); 3PT is passed _parse_makes_attempts
+    instead, since ESPN's shooting splits are commonly rendered as a
+    combined "makes-attempts" string rather than a made-only column."""
     players = summary.get("boxscore", {}).get("players", [])
     if not players:
         print(f"    [DIAG] boxscore has no 'players' key or it's empty. "
@@ -245,8 +282,17 @@ def _find_player_boxscore_stat(summary, player_id, stat_key):
                     continue
                 stats = a.get("stats", [])
                 try:
-                    return float(stats[idx])
-                except (IndexError, ValueError, TypeError):
+                    raw = stats[idx]
+                except IndexError:
+                    continue
+                if value_parser:
+                    val = value_parser(raw)
+                    if val is not None:
+                        return val
+                    continue
+                try:
+                    return float(raw)
+                except (ValueError, TypeError):
                     continue
     print(f"    [DIAG] couldn't find player {player_id}'s '{stat_key}' stat in boxscore -- "
           f"either the shape assumed here doesn't match ESPN's real response, or this player "
@@ -268,7 +314,11 @@ def _player_stat_value(summary, player_id, scanner):
     stat_key = SCANNER_TO_STAT_KEY.get(scanner)
     if not stat_key:
         return None
-    return _find_player_boxscore_stat(summary, player_id, stat_key)
+    # "tpm" (3-Pointers Made) needs the makes-attempts parser -- see
+    # _find_player_boxscore_stat's own value_parser note. Every other
+    # scanner here reads a confirmed-plain number via the default.
+    value_parser = _parse_makes_attempts if scanner == "tpm" else None
+    return _find_player_boxscore_stat(summary, player_id, stat_key, value_parser=value_parser)
 
 
 def _verify_player_leg(entry):
@@ -300,7 +350,7 @@ def _verify_player_form_entry(entry):
     # map returned None for stat_key "PTS", so _player_stat_value got
     # scanner=None and always returned None, leaving those entries stuck
     # "pending" forever instead of counted hit/miss.
-    scanner_key = {"REB": "rebounds", "AST": "assists", "RA": "ra", "PTS": "points"}.get(entry["stat_key"])
+    scanner_key = {"REB": "rebounds", "AST": "assists", "RA": "ra", "PTS": "points", "3PM": "tpm"}.get(entry["stat_key"])
     actual = _player_stat_value(summary, entry["player_id"], scanner_key)
     if actual is None:
         return None
@@ -325,7 +375,7 @@ def verify_pending_results(log, max_checks=60):
         try:
             if entry["scanner"] in ("team_total", "game_total"):
                 result = _verify_team_leg(entry)
-            elif entry["scanner"] in ("rebounds", "assists", "ra", "points"):
+            elif entry["scanner"] in ("rebounds", "assists", "ra", "points", "tpm"):
                 result = _verify_player_leg(entry)
             elif entry["scanner"] in ("player_hot_form", "player_real_streak"):
                 result = _verify_player_form_entry(entry)
@@ -357,7 +407,7 @@ def build_results_dashboard(log):
     SCANNER_LABELS = {
         "team_total": "Team Total", "game_total": "Game Total",
         "rebounds": "Rebounds", "assists": "Assists", "ra": "Rebounds+Assists",
-        "points": "Points",
+        "points": "Points", "tpm": "3-Pointers Made",
         "player_hot_form": "Player Hot Form", "player_real_streak": "Player Real Streak",
     }
 
@@ -410,7 +460,7 @@ def build_results_dashboard(log):
 
 <div style="font-size:11px;color:#998;text-align:center;margin-top:20px;line-height:1.6">
   Team Total / Game Total use the same proven score field this model already relies on.
-  Rebounds / Assists / Rebounds+Assists / Points / Hot Form / Real Streak use a best-effort read of
+  Rebounds / Assists / Rebounds+Assists / Points / 3-Pointers Made / Hot Form / Real Streak use a best-effort read of
   ESPN's basketball boxscore that wasn't confirmed against a live response — if those
   categories stay empty for more than a few days after games finish, check the Actions log
   for [DIAG] lines, which show exactly what shape the boxscore actually came back in. Sample
