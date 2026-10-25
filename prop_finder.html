@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prop Finder — Football Player Stats</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #121820;
+      --panel2: #161d27;
+      --border: #233040;
+      --text: #e8edf2;
+      --sub: #8b98a8;
+      --accent: #facc15;
+      --green: #10b981;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 20px; max-width: 900px; margin: 0 auto; line-height: 1.6;
+    }
+    h1 { font-size: 26px; margin-bottom: 4px; }
+    .subtitle { color: var(--sub); font-size: 12px; margin-bottom: 20px; }
+    .filter-group { margin-bottom: 14px; }
+    .filter-label { font-size: 11px; color: var(--sub); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 8px 14px; min-height: 38px; background: var(--panel); border: 1px solid var(--border);
+      color: var(--sub); border-radius: 8px; cursor: pointer; font-size: 13px;
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none;
+    }
+    .filter-btn.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
+    select {
+      background: var(--panel); border: 1px solid var(--border); color: var(--text);
+      padding: 8px 12px; border-radius: 8px; font-size: 13px; min-height: 38px;
+    }
+    input[type=number] {
+      background: var(--panel); border: 1px solid var(--border); color: var(--text);
+      padding: 8px 10px; border-radius: 8px; font-size: 13px; width: 70px; min-height: 38px;
+    }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    th, td { text-align: left; padding: 8px 6px; font-size: 13px; border-bottom: 1px solid var(--border); }
+    th { color: var(--sub); font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; cursor: default; }
+    tr:hover td { background: var(--panel2); }
+    .rank { color: var(--sub); width: 24px; }
+    .player-name { font-weight: 700; }
+    .team { color: var(--sub); font-size: 11px; }
+    .stat-val { color: var(--accent); font-weight: 700; text-align: right; }
+    .games-count { color: var(--sub); text-align: right; font-size: 12px; }
+    .game-dots { display: flex; gap: 2px; justify-content: flex-end; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); }
+    .dot.hit { background: var(--green); }
+    .empty { color: var(--sub); font-size: 13px; padding: 30px 0; text-align: center; }
+    .footer { color: var(--sub); font-size: 11px; text-align: center; margin-top: 28px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <h1>🔎 Prop Finder</h1>
+  <div class="subtitle" id="subtitle">Loading…</div>
+
+  <div class="filter-group">
+    <div class="filter-label">League</div>
+    <select id="leagueSelect"></select>
+  </div>
+
+  <div class="filter-group">
+    <div class="filter-label">Stat</div>
+    <select id="statSelect"></select>
+  </div>
+
+  <div class="filter-group">
+    <div class="filter-label">Form window</div>
+    <div class="filters" id="windowFilters">
+      <button class="filter-btn active" data-window="10">Last 10</button>
+      <button class="filter-btn" data-window="20">Last 20</button>
+    </div>
+  </div>
+
+  <div class="filter-group">
+    <div class="filter-label">Appearance</div>
+    <div class="filters" id="appearanceFilters">
+      <button class="filter-btn active" data-appearance="any">Any</button>
+      <button class="filter-btn" data-appearance="started">Started only</button>
+    </div>
+  </div>
+
+  <div class="filter-group">
+    <div class="filter-label">Min minutes played (per game, to count it)</div>
+    <div class="filters" id="minutesFilters">
+      <button class="filter-btn active" data-minutes="1">1+</button>
+      <button class="filter-btn" data-minutes="45">45+</button>
+      <button class="filter-btn" data-minutes="60">60+</button>
+      <button class="filter-btn" data-minutes="custom">Custom</button>
+    </div>
+    <input type="number" id="customMinutes" min="0" value="60" style="display:none;margin-top:8px" placeholder="mins">
+  </div>
+
+  <div id="content"></div>
+
+  <div class="footer">
+    Raw stat leaderboard, not a prediction — ranks players by average over the selected
+    window using actual recent games only (no betting lines, no probabilities).
+    Modeled on playerstats.football's Prop Finder. "Started" is a 60+ minutes-played
+    proxy, not a confirmed field from the data source.
+  </div>
+
+  <script>
+    let DATA = null;
+    let state = { league: null, stat: null, window: 10, appearance: "any", minutes: 1 };
+
+    async function loadData() {
+      try {
+        const response = await fetch('prop_finder_data.json?' + Date.now());
+        DATA = await response.json();
+        init();
+      } catch (e) {
+        document.getElementById('content').innerHTML = '<div class="empty">Couldn\'t load prop_finder_data.json — run prop_finder.py first.</div>';
+        document.getElementById('subtitle').textContent = 'No data loaded.';
+      }
+    }
+
+    function init() {
+      const leagues = [...new Set(DATA.players.map(p => p.league))];
+      const leagueSelect = document.getElementById('leagueSelect');
+      leagueSelect.innerHTML = leagues.map(l => `<option value="${l}">${l}</option>`).join('');
+      state.league = leagues[0] || null;
+
+      const statSelect = document.getElementById('statSelect');
+      statSelect.innerHTML = Object.entries(DATA.stats).map(([key, label]) => `<option value="${key}">${label}</option>`).join('');
+      state.stat = Object.keys(DATA.stats)[0] || null;
+
+      document.getElementById('subtitle').textContent =
+        `${DATA.players.length} players · updated ${DATA.generated_at}`;
+
+      leagueSelect.addEventListener('change', e => { state.league = e.target.value; render(); });
+      statSelect.addEventListener('change', e => { state.stat = e.target.value; render(); });
+
+      setupToggleGroup('windowFilters', 'window', v => parseInt(v, 10));
+      setupToggleGroup('appearanceFilters', 'appearance', v => v);
+      setupToggleGroup('minutesFilters', 'minutes', v => v === 'custom' ? 'custom' : parseInt(v, 10));
+
+      const customInput = document.getElementById('customMinutes');
+      customInput.addEventListener('input', () => {
+        if (state.minutes === 'custom') render();
+      });
+
+      render();
+    }
+
+    function setupToggleGroup(containerId, stateKey, parse) {
+      // Each button's own data-<stateKey> attribute carries the raw value
+      // (data-window, data-appearance, data-minutes) -- dataset[stateKey]
+      // reads it directly, since none of these three keys need hyphen
+      // de-camelCasing.
+      const container = document.getElementById(containerId);
+      container.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          state[stateKey] = parse(btn.dataset[stateKey]);
+          document.getElementById('customMinutes').style.display =
+            (stateKey === 'minutes' && state.minutes === 'custom') ? 'block' : 'none';
+          render();
+        });
+      });
+    }
+
+    function minutesFloor() {
+      if (state.minutes === 'custom') {
+        const v = parseInt(document.getElementById('customMinutes').value, 10);
+        return isNaN(v) ? 0 : v;
+      }
+      return state.minutes;
+    }
+
+    function render() {
+      if (!DATA) return;
+      const floor = minutesFloor();
+      const pool = DATA.players.filter(p => p.league === state.league);
+
+      const rows = pool.map(p => {
+        let games = p.game_log.filter(g => g.minutes >= floor);
+        if (state.appearance === 'started') games = games.filter(g => g.started);
+        games = games.slice(0, state.window); // game_log is newest-first
+        if (games.length === 0) return null;
+        const total = games.reduce((sum, g) => sum + (g[state.stat] || 0), 0);
+        const avg = total / games.length;
+        return { player: p, games, total, avg };
+      }).filter(Boolean);
+
+      rows.sort((a, b) => b.avg - a.avg || b.total - a.total);
+
+      const content = document.getElementById('content');
+      if (rows.length === 0) {
+        content.innerHTML = '<div class="empty">No players match these filters for this league.</div>';
+        return;
+      }
+
+      const statLabel = DATA.stats[state.stat];
+      let html = `<table><thead><tr>
+        <th class="rank">#</th><th>Player</th><th class="stat-val">Avg ${statLabel}</th>
+        <th class="games-count">Games</th><th>Last ${state.window}</th>
+      </tr></thead><tbody>`;
+
+      rows.forEach((r, i) => {
+        const line = r.avg >= 1 ? Math.floor(r.avg) + 0.5 : 0.5; // quick visual "clears X.5" reference, not a betting line
+        const dots = r.games.map(g => `<span class="dot ${g[state.stat] > line ? 'hit' : ''}"></span>`).join('');
+        html += `<tr>
+          <td class="rank">${i + 1}</td>
+          <td><div class="player-name">${r.player.name}</div><div class="team">${r.player.team}</div></td>
+          <td class="stat-val">${r.avg.toFixed(2)}</td>
+          <td class="games-count">${r.games.length}</td>
+          <td><div class="game-dots">${dots}</div></td>
+        </tr>`;
+      });
+
+      html += '</tbody></table>';
+      content.innerHTML = html;
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
