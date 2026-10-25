@@ -434,22 +434,78 @@ def _current_goal_streak(goals_oldest_first, threshold=REAL_STREAK_THRESHOLD):
       break
   return streak
 
+def _format_date_label(date_str):
+  try:
+    return datetime.strptime(date_str, "%Y-%m-%d").strftime("%a %b %-d")
+  except ValueError:
+    return date_str or "—"
+
+# Date filter bar (user request, 2026-10-22 on Orange Line -- "the form
+# and streak look clamzy at a glance" -- then 2026-10-25 here: "add date
+# filter to blue line"). Blue Line's slate now spans TWO NHL schedule
+# days (today + tomorrow, see the gameWeek[1] merge above), so unlike
+# Orange Line's per-fixture filter, the natural axis to declutter by
+# here is DATE -- a flat Hot Form/Real Streak list mixes tonight's and
+# tomorrow's games together with no way to isolate one night. Same
+# client-side button-filter pattern as streaks_scanner.py/orange_line.py
+# (no server round trip, just toggling display via a data attribute),
+# parameterized by row_class so each of Blue Line's THREE separate
+# streak panels (team goals, player SOG, goalie saves) gets its own
+# independent filter scoped to its own rows only.
+DATE_FILTER_BAR = """<div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+  <button class="date-filter-btn-{row_class} active-filter" data-date="all" onclick="filterRowsByDate('all',this,'{row_class}')" style="background:#4ea1ff;border:1px solid #4ea1ff;color:#0a1730;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer">All Dates</button>
+  {buttons}
+</div>
+<script>
+function filterRowsByDate(date, btn, rowClass) {{
+  var rows = document.querySelectorAll('.streak-row-' + rowClass);
+  rows.forEach(function(row) {{
+    row.style.display = (date === 'all' || row.getAttribute('data-date') === date) ? 'flex' : 'none';
+  }});
+  document.querySelectorAll('.date-filter-btn-' + rowClass).forEach(function(b) {{
+    b.style.background = '#0a1730'; b.style.color = '#4ea1ff'; b.style.fontWeight = 'normal'; b.style.border = '1px solid #1e3a6a';
+  }});
+  btn.style.background = '#4ea1ff'; btn.style.color = '#0a1730'; btn.style.fontWeight = '700'; btn.style.border = '1px solid #4ea1ff';
+}}
+</script>"""
+
+def _date_filter_bar(entries, row_class):
+  # One button per unique game date appearing in either section, earliest
+  # first. Returns "" with 0 or 1 distinct dates -- nothing to filter.
+  seen = []
+  for e in entries:
+    dk = (e.get("date") or "")[:10]
+    if dk and dk not in seen:
+      seen.append(dk)
+  seen.sort()
+  if len(seen) <= 1:
+    return ""
+  buttons = "".join(
+    f'''<button class="date-filter-btn-{row_class}" data-date="{dk}" onclick="filterRowsByDate('{dk}',this,'{row_class}')" '''
+    f'''style="background:#0a1730;border:1px solid #1e3a6a;color:#4ea1ff;padding:5px 10px;border-radius:999px;font-size:11px;cursor:pointer">{_format_date_label(dk)}</button>'''
+    for dk in seen
+  )
+  return DATE_FILTER_BAR.format(buttons=buttons, row_class=row_class)
+
 def render_streak_panel(hot_form_entries, real_streak_entries):
   if not hot_form_entries and not real_streak_entries:
     return ""
   def row(e, kind):
     vs=f"{'vs' if e['is_home'] else '@'} {e['opponent']}"
+    date_key=(e.get("date") or "")[:10]
     if kind=="hot":
-      return f"""<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
+      return f"""<div class="streak-row-team" data-date="{date_key}" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
   <span>{e['team']} {vs}</span><span style="color:#4ea1ff;font-weight:bold">{e['last5_avg']} gpg (L{HOT_FORM_MIN_GAMES})</span>
 </div>"""
     plus="+" if e["full_sample"] else ""
-    return f"""<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
+    return f"""<div class="streak-row-team" data-date="{date_key}" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
   <span>{e['team']} {vs}</span><span style="color:#2a6f6a;font-weight:bold">{e['streak_len']}{plus} straight ({'/'.join(str(g) for g in e['streak_games'])})</span>
 </div>"""
   hot_rows="".join(row(e,"hot") for e in hot_form_entries) or '<p style="color:#8aa;font-size:12px">None today.</p>'
   streak_rows="".join(row(e,"streak") for e in real_streak_entries) or '<p style="color:#8aa;font-size:12px">None today.</p>'
+  date_filter_bar=_date_filter_bar(hot_form_entries + real_streak_entries, "team")
   return f"""
+{date_filter_bar}
 <div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0">
   <div style="font-weight:bold;margin-bottom:2px">📊 Hot Form</div>
   <div style="color:#8aa;font-size:11px;margin-bottom:8px">Averaging {HOT_FORM_MIN}+ goals over their last {HOT_FORM_MIN_GAMES} games</div>
@@ -468,27 +524,33 @@ def render_player_streak_panel(
     hot_unit=f"SOG/g (L{SOG_HOT_FORM_MIN_GAMES})",
     streak_title="🔥 Player SOG Real Streak",
     streak_note=f"Consecutive games with {SOG_REAL_STREAK_THRESHOLD}+ shots on goal (oldest→newest shown)",
+    row_class="player",
 ):
   """Same layout as render_streak_panel above, but for a per-player stat
   (skater SOG by default, also reused for goalie saves below via the
-  hot_*/streak_* overrides) -- separate from render_streak_panel since
-  rows need a player name alongside the team, not just the team."""
+  hot_*/streak_*/row_class overrides) -- separate from render_streak_panel
+  since rows need a player name alongside the team, not just the team.
+  row_class scopes the date filter so the goalie panel's filter buttons
+  never hide rows in the skater panel, or vice versa."""
   if not hot_form_entries and not real_streak_entries:
     return ""
   def row(e, kind):
     vs=f"{'vs' if e['is_home'] else '@'} {e['opponent']}"
     who=f"{e['player']} ({e['team']} {vs})"
+    date_key=(e.get("date") or "")[:10]
     if kind=="hot":
-      return f"""<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
+      return f"""<div class="streak-row-{row_class}" data-date="{date_key}" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
   <span>{who}</span><span style="color:#4ea1ff;font-weight:bold">{e['last5_avg']} {hot_unit}</span>
 </div>"""
     plus="+" if e["full_sample"] else ""
-    return f"""<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
+    return f"""<div class="streak-row-{row_class}" data-date="{date_key}" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e3a6a;font-size:13px">
   <span>{who}</span><span style="color:#2a6f6a;font-weight:bold">{e['streak_len']}{plus} straight ({'/'.join(str(g) for g in e['streak_games'])})</span>
 </div>"""
   hot_rows="".join(row(e,"hot") for e in hot_form_entries) or '<p style="color:#8aa;font-size:12px">None today.</p>'
   streak_rows="".join(row(e,"streak") for e in real_streak_entries) or '<p style="color:#8aa;font-size:12px">None today.</p>'
+  date_filter_bar=_date_filter_bar(hot_form_entries + real_streak_entries, row_class)
   return f"""
+{date_filter_bar}
 <div style="background:#0f1e3a;border:1px solid #1e3a6a;border-radius:14px;padding:16px;margin:18px 0">
   <div style="font-weight:bold;margin-bottom:2px">{hot_title}</div>
   <div style="color:#8aa;font-size:11px;margin-bottom:8px">{hot_note}</div>
@@ -852,6 +914,7 @@ goalie_streak_panel = render_player_streak_panel(
   hot_unit=f"saves/g (L{SAVES_HOT_FORM_MIN_GAMES})",
   streak_title="🔥 Goalie Saves Real Streak",
   streak_note=f"Consecutive games with {SAVES_REAL_STREAK_THRESHOLD}+ saves (oldest→newest shown)",
+  row_class="goalie",
 )
 
 fallback_note = ('<p style="margin:4px 0 0;color:#ffb84e;font-size:12px">⚠️ Early season — projections use last season\'s final standings '
