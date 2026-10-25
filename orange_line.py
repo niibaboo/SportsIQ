@@ -465,7 +465,38 @@ def get_player_vs_opponent(league_key, athlete_id, stat_key, opponent_abbr, oppo
     return out
 
 
-def _fetch_gamelog_values(league_key, athlete_id, stat_key, season):
+def _parse_plain_stat(raw):
+    """Default value parser -- REB/AST/PTS/MIN are confirmed-plain
+    numbers on this endpoint, so this is just float()."""
+    return float(raw)
+
+
+def _parse_makes_attempts(raw):
+    """Value parser for a combined 'makes-attempts' stat, e.g. 3PT
+    commonly rendering as "3-7" (3 made, 7 attempted) rather than a
+    separate made-only column -- UNCONFIRMED for this specific gamelog
+    endpoint (no [DIAG] sample gathered so far happened to include a
+    3PT value), same honesty-first caveat as every other field in this
+    file not yet proven against a live response. Tries the
+    "makes-attempts" shape first (splits on '-', keeps the made count);
+    falls back to treating the whole field as a plain number, in case
+    this one turns out to already be made-only like every OTHER
+    confirmed stat here. Returns None (not 0) on total failure, so the
+    caller can skip the game rather than silently recording a zero."""
+    s = str(raw).strip()
+    if '-' in s:
+        made_str = s.split('-', 1)[0].strip()
+        try:
+            return float(made_str)
+        except (ValueError, TypeError):
+            return None
+    try:
+        return float(s)
+    except (ValueError, TypeError):
+        return None
+
+
+def _fetch_gamelog_values(league_key, athlete_id, stat_key, season, value_parser=_parse_plain_stat):
     """Same defensive parsing as Blitz IQ's _fetch_gamelog_values --
     identical API family, identical uncertainty about exact label names,
     so identical treatment: try the plausible label, print a diagnostic
@@ -480,7 +511,14 @@ def _fetch_gamelog_values(league_key, athlete_id, stat_key, season):
     it, rather than trusting whatever order the API happens to return.
     If no date field is found at all, falls back to API order as-is and
     prints a diagnostic -- so a missing date field degrades visibly
-    (streak feature may be unreliable) instead of silently."""
+    (streak feature may be unreliable) instead of silently.
+
+    value_parser (added for 3-Pointers Made, user request, 2026-10-25):
+    REB/AST/PTS/MIN are confirmed-plain numbers and use the default
+    _parse_plain_stat (a thin float() wrapper, same behavior as before
+    this parameter existed). 3PT is passed _parse_makes_attempts
+    instead, since ESPN's shooting splits are commonly rendered as a
+    combined "makes-attempts" string rather than a made-only column."""
     global _OPPONENT_SHAPE_LOGGED
     r = _get(GAMELOG_BASE_FMT.format(league=league_key, athlete_id=athlete_id),
              params={"season": season})
@@ -516,8 +554,10 @@ def _fetch_gamelog_values(league_key, athlete_id, stat_key, season):
                     if stat_key in root_labels:
                         idx = root_labels.index(stat_key)
                         try:
-                            value = float(stats[idx])
+                            value = value_parser(stats[idx])
                         except (IndexError, ValueError, TypeError):
+                            continue
+                        if value is None:
                             continue
                         date_str = (game.get('gameDate') or game.get('date')
                                     or game.get('eventDate') or None)
@@ -547,14 +587,18 @@ def _fetch_gamelog_values(league_key, athlete_id, stat_key, season):
     return [v for _, v, _ in dated_values]
 
 
-def get_player_gamelog(league_key, athlete_id, stat_key):
+def get_player_gamelog(league_key, athlete_id, stat_key, value_parser=_parse_plain_stat):
+    # value_parser isn't part of the cache key -- a given (league, athlete,
+    # stat) is only ever fetched with one parser in practice (PROP_CONFIG
+    # fixes the pairing per stat_key), so this mirrors the existing
+    # cache-key shape rather than adding a parser identity to it.
     cache_key = (league_key, athlete_id, stat_key)
     if cache_key in player_gamelog_cache:
         return player_gamelog_cache[cache_key]
     current_year = datetime.now().year
-    values = _fetch_gamelog_values(league_key, athlete_id, stat_key, current_year)
+    values = _fetch_gamelog_values(league_key, athlete_id, stat_key, current_year, value_parser=value_parser)
     if not values:
-        values = _fetch_gamelog_values(league_key, athlete_id, stat_key, current_year - 1)
+        values = _fetch_gamelog_values(league_key, athlete_id, stat_key, current_year - 1, value_parser=value_parser)
     values = values[-RECENT_GAMES:]  # oldest-first list -- last N entries ARE the most recent N games
     player_gamelog_cache[cache_key] = values
     return values
@@ -564,6 +608,16 @@ PROP_CONFIG = {
     'REB': {'stat': 'REB', 'label': 'Rebounds', 'prior': 5.5},
     'AST': {'stat': 'AST', 'label': 'Assists', 'prior': 3.0},
     'PTS': {'stat': 'PTS', 'label': 'Points', 'prior': 10.0},
+    # 3-Pointers Made (user request, 2026-10-25). 'stat': '3PT' is the
+    # confirmed-live root label (seen in project_player_props' own 'MIN'
+    # comment: [...'3PT','3P%'...]) -- but that confirmation only covers
+    # the LABEL existing, not its value shape, so this pairs it with
+    # _parse_makes_attempts rather than the plain-float default every
+    # other stat here uses. prior=1.2 is a rough role-player-average
+    # starting point (lower than REB/AST's priors, matching that most
+    # rotation players make 0-2 threes/game) -- easy to retune once real
+    # data is flowing.
+    '3PM': {'stat': '3PT', 'label': '3-Pointers Made', 'prior': 1.2, 'value_parser': _parse_makes_attempts},
 }
 
 
@@ -610,6 +664,23 @@ def project_player_props(league_key, team_id, pts_scale=1.0):
         ra_values = [r + a for r, a in zip(rebs, asts)]
         ra_proj = reb_proj + ast_proj
 
+        # 3-Pointers Made (user request, 2026-10-25) -- fetched and
+        # gated SEPARATELY from the REB/AST/PTS trio above rather than
+        # folded into that same mismatch check: _parse_makes_attempts is
+        # unconfirmed against a live response (see its own docstring)
+        # and may legitimately drop more games than the plain-float
+        # stats do, so a thin/failed 3PT pull degrades to "no 3PM prop
+        # for this player" rather than killing their REB/AST/PTS/RA
+        # props too. tpm_n_games tracked separately from `n` for the
+        # same reason -- build_legs uses it instead of `n` for this
+        # stat's own game-count display.
+        tpm = get_player_gamelog(league_key, player['id'], PROP_CONFIG['3PM']['stat'],
+                                  value_parser=PROP_CONFIG['3PM']['value_parser'])
+        tpm_proj, tpm_n_games = None, 0
+        if len(tpm) >= 3:
+            tpm_n_games = len(tpm)
+            tpm_proj = round(shrink(recency_weighted(tpm), tpm_n_games, PROP_CONFIG['3PM']['prior']), 1)
+
         # Minutes/rest risk (user request, same turn) -- same gamelog
         # endpoint already hit for REB/AST/PTS, 'MIN' is one of the same
         # root-level labels (confirmed live via the [DIAG] sample the
@@ -628,8 +699,10 @@ def project_player_props(league_key, team_id, pts_scale=1.0):
             'name': player['name'], 'player_id': player['id'], 'position': player.get('position', ''),
             'reb_proj': round(reb_proj, 1), 'ast_proj': round(ast_proj, 1), 'ra_proj': round(ra_proj, 1),
             'pts_proj': round(pts_proj, 1), 'pts_proj_raw': round(pts_proj_raw, 1),
+            'tpm_proj': tpm_proj,
             'min_avg': min_avg, 'min_last': min_last, 'rest_risk': rest_risk,
-            'rebs': rebs, 'asts': asts, 'ra_values': ra_values, 'pts': pts, 'n_games': n,
+            'rebs': rebs, 'asts': asts, 'ra_values': ra_values, 'pts': pts, 'tpm': tpm,
+            'n_games': n, 'tpm_n_games': tpm_n_games,
         })
     return props
 
@@ -809,11 +882,20 @@ def build_legs(predictions):
         for team_name, props in [(p["home_team"], p.get("home_props") or []),
                                    (p["away_team"], p.get("away_props") or [])]:
             for prop in props:
-                for stat_key, values, proj, label in [
-                    ("REB", prop["rebs"], prop["reb_proj"], "Rebounds"),
-                    ("AST", prop["asts"], prop["ast_proj"], "Assists"),
-                    ("RA", prop["ra_values"], prop["ra_proj"], "Rebounds+Assists"),
-                    ("PTS", prop["pts"], prop["pts_proj"], "Points"),
+                for stat_key, values, proj, label, n_games in [
+                    ("REB", prop["rebs"], prop["reb_proj"], "Rebounds", prop["n_games"]),
+                    ("AST", prop["asts"], prop["ast_proj"], "Assists", prop["n_games"]),
+                    ("RA", prop["ra_values"], prop["ra_proj"], "Rebounds+Assists", prop["n_games"]),
+                    ("PTS", prop["pts"], prop["pts_proj"], "Points", prop["n_games"]),
+                    # 3-Pointers Made (user request, 2026-10-25) -- its own
+                    # n_games (tpm_n_games), separate from the REB/AST/PTS
+                    # trio's shared `n_games`, since _parse_makes_attempts
+                    # can legitimately drop a different number of games
+                    # (see project_player_props). tpm_proj is None whenever
+                    # fewer than 3 games parsed, and safe_line(None) already
+                    # returns None -- same "if not result: continue" skip
+                    # below handles that with no extra check needed here.
+                    ("3PM", prop["tpm"], prop["tpm_proj"], "3-Pointers Made", prop["tpm_n_games"]),
                 ]:
                     result = safe_line(proj)
                     if not result:
@@ -850,7 +932,7 @@ def build_legs(predictions):
                         "market": f"{prop['name']} Over {result['line']} {label}",
                         "prob": result["prob"], "category": label,
                         "hit_rate": hit_rate(values, result["line"]),
-                        "detail": f"{team_name} · {league_name} · proj {result['avg']} ({prop['n_games']}gm)",
+                        "detail": f"{team_name} · {league_name} · proj {result['avg']} ({n_games}gm)",
                         "history": "/".join(str(v) for v in values),
                         "vs_opponent": vs_opponent,
                         "game_id": game_id, "game_date": game_date, "line": result["line"],
@@ -874,11 +956,19 @@ def build_legs(predictions):
 # so set lower) -- roughly 1.3x. Real Streak's 15.0 is per user request
 # (2026-10-21: "include 15 point streak players"); Hot Form's 20.0 follows
 # from that same ratio, not a separate request -- easy to retune later.
-HOT_FORM_MIN = {"REB": 8.0, "AST": 5.0, "RA": 13.0, "PTS": 20.0}
+HOT_FORM_MIN = {"REB": 8.0, "AST": 5.0, "RA": 13.0, "PTS": 20.0,
+                 # 3-Pointers Made (user request, 2026-10-25) -- a looser
+                 # ~1.5x ratio to its own Real Streak bar below rather than
+                 # the ~1.3x every other stat here uses, since 3PM is a much
+                 # lower-count stat where that smaller gap would barely
+                 # separate the two screens at all. Both numbers are a
+                 # starting judgment call, not derived from real data yet --
+                 # easy to retune once results are flowing.
+                 "3PM": 3.0}
 HOT_FORM_MIN_GAMES = 5
-REAL_STREAK_THRESHOLD = {"REB": 6.0, "AST": 4.0, "RA": 10.0, "PTS": 15.0}
+REAL_STREAK_THRESHOLD = {"REB": 6.0, "AST": 4.0, "RA": 10.0, "PTS": 15.0, "3PM": 2.0}
 REAL_STREAK_MIN_LENGTH = 3
-STAT_LABELS = {"REB": "Rebounds", "AST": "Assists", "RA": "Rebounds+Assists", "PTS": "Points"}
+STAT_LABELS = {"REB": "Rebounds", "AST": "Assists", "RA": "Rebounds+Assists", "PTS": "Points", "3PM": "3-Pointers Made"}
 
 
 def _last_n_avg(values, n):
@@ -906,7 +996,8 @@ def build_hot_form_entries(predictions):
         for team_name, props in [(p["home_team"], p.get("home_props") or []),
                                    (p["away_team"], p.get("away_props") or [])]:
             for prop in props:
-                for stat_key, values in [("REB", prop["rebs"]), ("AST", prop["asts"]), ("RA", prop["ra_values"]), ("PTS", prop["pts"])]:
+                for stat_key, values in [("REB", prop["rebs"]), ("AST", prop["asts"]), ("RA", prop["ra_values"]),
+                                          ("PTS", prop["pts"]), ("3PM", prop["tpm"])]:
                     result = _last_n_avg(values, HOT_FORM_MIN_GAMES)
                     if not result:
                         continue
@@ -928,7 +1019,8 @@ def build_real_streak_entries(predictions):
         for team_name, props in [(p["home_team"], p.get("home_props") or []),
                                    (p["away_team"], p.get("away_props") or [])]:
             for prop in props:
-                for stat_key, values in [("REB", prop["rebs"]), ("AST", prop["asts"]), ("RA", prop["ra_values"]), ("PTS", prop["pts"])]:
+                for stat_key, values in [("REB", prop["rebs"]), ("AST", prop["asts"]), ("RA", prop["ra_values"]),
+                                          ("PTS", prop["pts"]), ("3PM", prop["tpm"])]:
                     streak_len = _current_stat_streak(values, REAL_STREAK_THRESHOLD[stat_key])
                     if streak_len >= REAL_STREAK_MIN_LENGTH:
                         entries.append({
