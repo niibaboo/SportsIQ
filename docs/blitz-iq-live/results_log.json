@@ -708,7 +708,9 @@
     "logged_home_score": 14.0,
     "logged_away_score": 17.0,
     "pregame_total": 33.9,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 24.0,
+    "final_away_score": 27.0
   },
   "401873014_Game_Total_Under": {
     "id": "401873014_Game_Total_Under",
@@ -725,7 +727,9 @@
     "logged_home_score": 13.0,
     "logged_away_score": 10.0,
     "pregame_total": 39.3,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 16.0,
+    "final_away_score": 10.0
   },
   "401873015_Game_Total_Over": {
     "id": "401873015_Game_Total_Over",
@@ -742,7 +746,9 @@
     "logged_home_score": 17.0,
     "logged_away_score": 21.0,
     "pregame_total": 38.9,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 25.0,
+    "final_away_score": 28.0
   },
   "401873018_Game_Total_Over": {
     "id": "401873018_Game_Total_Over",
@@ -759,7 +765,9 @@
     "logged_home_score": 6.0,
     "logged_away_score": 43.0,
     "pregame_total": 44.4,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 13.0,
+    "final_away_score": 43.0
   },
   "401873016_Game_Total_Under": {
     "id": "401873016_Game_Total_Under",
@@ -776,6 +784,59 @@
     "logged_home_score": 14.0,
     "logged_away_score": 14.0,
     "pregame_total": 49.6,
+    "status": "hit",
+    "final_home_score": 21.0,
+    "final_away_score": 27.0
+  },
+  "401873019_Game_Total_Under": {
+    "id": "401873019_Game_Total_Under",
+    "game_id": "401873019",
+    "home_id": "22",
+    "away_id": "7",
+    "home_team": "Arizona Cardinals",
+    "away_team": "Denver Broncos",
+    "label": "Game Total Under",
+    "prob": 70,
+    "logged_at": "2026-10-25T21:57:14.557593+00:00",
+    "logged_period": 3,
+    "logged_clock": "12:51",
+    "logged_home_score": 6.0,
+    "logged_away_score": 13.0,
+    "pregame_total": 45.0,
+    "status": "pending"
+  },
+  "401873020_Game_Total_Under": {
+    "id": "401873020_Game_Total_Under",
+    "game_id": "401873020",
+    "home_id": "8",
+    "away_id": "9",
+    "home_team": "Detroit Lions",
+    "away_team": "Green Bay Packers",
+    "label": "Game Total Under",
+    "prob": 79,
+    "logged_at": "2026-10-25T21:57:14.557602+00:00",
+    "logged_period": 2,
+    "logged_clock": "0:00",
+    "logged_home_score": 10.0,
+    "logged_away_score": 7.0,
+    "pregame_total": 49.8,
+    "status": "pending"
+  },
+  "401873021_Away_Next_Score": {
+    "id": "401873021_Away_Next_Score",
+    "game_id": "401873021",
+    "home_id": "13",
+    "away_id": "14",
+    "home_team": "Las Vegas Raiders",
+    "away_team": "Los Angeles Rams",
+    "label": "Away Next Score",
+    "prob": 81,
+    "logged_at": "2026-10-25T21:57:14.557607+00:00",
+    "logged_period": 2,
+    "logged_clock": "0:00",
+    "logged_home_score": 6.0,
+    "logged_away_score": 28.0,
+    "pregame_total": 56.1,
     "status": "pending"
   }
 }
