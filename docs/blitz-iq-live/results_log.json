@@ -803,7 +803,9 @@
     "logged_home_score": 6.0,
     "logged_away_score": 13.0,
     "pregame_total": 45.0,
-    "status": "pending"
+    "status": "miss",
+    "final_home_score": 16.0,
+    "final_away_score": 30.0
   },
   "401873020_Game_Total_Under": {
     "id": "401873020_Game_Total_Under",
@@ -820,7 +822,9 @@
     "logged_home_score": 10.0,
     "logged_away_score": 7.0,
     "pregame_total": 49.8,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 20.0,
+    "final_away_score": 17.0
   },
   "401873021_Away_Next_Score": {
     "id": "401873021_Away_Next_Score",
@@ -837,6 +841,9 @@
     "logged_home_score": 6.0,
     "logged_away_score": 28.0,
     "pregame_total": 56.1,
-    "status": "pending"
+    "status": "miss",
+    "scorer_team_id": "13",
+    "final_home_score": 21.0,
+    "final_away_score": 35.0
   }
 }
