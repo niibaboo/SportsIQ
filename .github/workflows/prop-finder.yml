@@ -1,0 +1,40 @@
+name: Prop Finder
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Generate Prop Finder
+        env:
+          THESTATSAPI_KEY: ${{ secrets.THESTATSAPI_KEY }}
+        run: python3 prop_finder.py
+      - name: Copy data to docs
+        run: |
+          mkdir -p docs/prop-finder
+          if [ -f prop_finder_data.json ]; then
+            cp prop_finder_data.json docs/prop-finder/prop_finder_data.json
+            echo "✓ Copied prop_finder_data.json"
+          fi
+          if [ -f prop_finder.html ]; then
+            cp prop_finder.html docs/prop-finder/index.html
+            echo "✓ Copied index.html"
+          fi
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/prop-finder/
+          git commit -m "Prop Finder update $(date -u +'%Y-%m-%d %H:%M UTC')" || true
+          git push
