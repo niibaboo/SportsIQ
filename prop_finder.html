@@ -71,6 +71,20 @@
   </div>
 
   <div class="filter-group">
+    <div class="filter-label">View</div>
+    <div class="filters" id="viewFilters">
+      <button class="filter-btn active" data-view="leaderboard">Leaderboard</button>
+      <button class="filter-btn" data-view="hotform">Hot Form</button>
+      <button class="filter-btn" data-view="streak">Real Streak</button>
+    </div>
+  </div>
+
+  <div class="filter-group" id="lineGroup" style="display:none">
+    <div class="filter-label" id="lineLabel">Line</div>
+    <input type="number" id="lineInput" step="0.5" min="0">
+  </div>
+
+  <div class="filter-group">
     <div class="filter-label">Form window</div>
     <div class="filters" id="windowFilters">
       <button class="filter-btn active" data-window="10">Last 10</button>
@@ -102,13 +116,34 @@
   <div class="footer">
     Raw stat leaderboard, not a prediction — ranks players by average over the selected
     window using actual recent games only (no betting lines, no probabilities).
-    Modeled on playerstats.football's Prop Finder. "Started" is a 60+ minutes-played
-    proxy, not a confirmed field from the data source.
+    Hot Form and Real Streak views work off a line YOU set (there's no fixed model
+    threshold here) — Hot Form is the average over the window clearing that line,
+    Real Streak is a genuine consecutive run of games each individually clearing it,
+    counted back from the most recent game. Modeled on playerstats.football's
+    Prop Finder. "Started" is a 60+ minutes-played proxy, not a confirmed field
+    from the data source.
   </div>
 
   <script>
     let DATA = null;
-    let state = { league: null, stat: null, window: 10, appearance: "any", minutes: 1 };
+    let state = { league: null, stat: null, window: 10, appearance: "any", minutes: 1, view: "leaderboard" };
+
+    // Starting point for the user-editable "Line" input when switching into
+    // Hot Form / Real Streak or changing stat -- these are rough, easy to
+    // retune judgment calls (football stat scales vary a lot), not a model
+    // output. The user can type over them instantly.
+    const DEFAULT_LINES = {
+      goals: 0.5,
+      shots: 1.5,
+      shots_on_target: 0.5,
+      tackles: 1.5,
+      fouls: 1.5,
+      cards: 0.5,
+    };
+
+    // Real Streak needs at least this many consecutive qualifying games to
+    // bother showing a player -- a streak of 1 is just "hit last game".
+    const MIN_STREAK = 2;
 
     async function loadData() {
       try {
@@ -130,21 +165,30 @@
       const statSelect = document.getElementById('statSelect');
       statSelect.innerHTML = Object.entries(DATA.stats).map(([key, label]) => `<option value="${key}">${label}</option>`).join('');
       state.stat = Object.keys(DATA.stats)[0] || null;
+      document.getElementById('lineInput').value = DEFAULT_LINES[state.stat] ?? 0.5;
 
       document.getElementById('subtitle').textContent =
         `${DATA.players.length} players · updated ${DATA.generated_at}`;
 
       leagueSelect.addEventListener('change', e => { state.league = e.target.value; render(); });
-      statSelect.addEventListener('change', e => { state.stat = e.target.value; render(); });
+      statSelect.addEventListener('change', e => {
+        state.stat = e.target.value;
+        document.getElementById('lineInput').value = DEFAULT_LINES[state.stat] ?? 0.5;
+        render();
+      });
 
       setupToggleGroup('windowFilters', 'window', v => parseInt(v, 10));
       setupToggleGroup('appearanceFilters', 'appearance', v => v);
       setupToggleGroup('minutesFilters', 'minutes', v => v === 'custom' ? 'custom' : parseInt(v, 10));
+      setupToggleGroup('viewFilters', 'view', v => v);
 
       const customInput = document.getElementById('customMinutes');
       customInput.addEventListener('input', () => {
         if (state.minutes === 'custom') render();
       });
+
+      const lineInput = document.getElementById('lineInput');
+      lineInput.addEventListener('input', render);
 
       render();
     }
@@ -162,6 +206,7 @@
           state[stateKey] = parse(btn.dataset[stateKey]);
           document.getElementById('customMinutes').style.display =
             (stateKey === 'minutes' && state.minutes === 'custom') ? 'block' : 'none';
+          if (stateKey === 'view') updateLineVisibility();
           render();
         });
       });
@@ -175,12 +220,26 @@
       return state.minutes;
     }
 
-    function render() {
-      if (!DATA) return;
+    function updateLineVisibility() {
+      const show = state.view === 'hotform' || state.view === 'streak';
+      document.getElementById('lineGroup').style.display = show ? 'block' : 'none';
+      document.getElementById('lineLabel').textContent =
+        state.view === 'hotform' ? 'Hot Form line (avg must clear this)' : 'Real Streak line (each game must clear this)';
+    }
+
+    function lineValue() {
+      const v = parseFloat(document.getElementById('lineInput').value);
+      return isNaN(v) ? 0 : v;
+    }
+
+    // Shared pool builder: applies league/appearance/minutes/window filters
+    // the same way for every view, so Hot Form and Real Streak are reading
+    // the exact same filtered game logs as the Leaderboard, just scored
+    // differently.
+    function buildRows() {
       const floor = minutesFloor();
       const pool = DATA.players.filter(p => p.league === state.league);
-
-      const rows = pool.map(p => {
+      return pool.map(p => {
         let games = p.game_log.filter(g => g.minutes >= floor);
         if (state.appearance === 'started') games = games.filter(g => g.started);
         games = games.slice(0, state.window); // game_log is newest-first
@@ -189,7 +248,17 @@
         const avg = total / games.length;
         return { player: p, games, total, avg };
       }).filter(Boolean);
+    }
 
+    function render() {
+      if (!DATA) return;
+      const rows = buildRows();
+      if (state.view === 'hotform') return renderHotForm(rows);
+      if (state.view === 'streak') return renderRealStreak(rows);
+      return renderLeaderboard(rows);
+    }
+
+    function renderLeaderboard(rows) {
       rows.sort((a, b) => b.avg - a.avg || b.total - a.total);
 
       const content = document.getElementById('content');
@@ -212,6 +281,81 @@
           <td><div class="player-name">${r.player.name}</div><div class="team">${r.player.team}</div></td>
           <td class="stat-val">${r.avg.toFixed(2)}</td>
           <td class="games-count">${r.games.length}</td>
+          <td><div class="game-dots">${dots}</div></td>
+        </tr>`;
+      });
+
+      html += '</tbody></table>';
+      content.innerHTML = html;
+    }
+
+    function renderHotForm(rows) {
+      const line = lineValue();
+      const statLabel = DATA.stats[state.stat];
+      const hits = rows.filter(r => r.avg >= line);
+      hits.sort((a, b) => b.avg - a.avg || b.total - a.total);
+
+      const content = document.getElementById('content');
+      if (hits.length === 0) {
+        content.innerHTML = `<div class="empty">No players averaging ${line}+ ${statLabel} over the Last ${state.window} with these filters.</div>`;
+        return;
+      }
+
+      let html = `<table><thead><tr>
+        <th class="rank">#</th><th>Player</th><th class="stat-val">Avg ${statLabel}</th>
+        <th class="games-count">Games</th><th>Last ${state.window}</th>
+      </tr></thead><tbody>`;
+
+      hits.forEach((r, i) => {
+        const dots = r.games.map(g => `<span class="dot ${g[state.stat] >= line ? 'hit' : ''}"></span>`).join('');
+        html += `<tr>
+          <td class="rank">${i + 1}</td>
+          <td><div class="player-name">${r.player.name}</div><div class="team">${r.player.team}</div></td>
+          <td class="stat-val">${r.avg.toFixed(2)}</td>
+          <td class="games-count">${r.games.length}</td>
+          <td><div class="game-dots">${dots}</div></td>
+        </tr>`;
+      });
+
+      html += '</tbody></table>';
+      content.innerHTML = html;
+    }
+
+    function renderRealStreak(rows) {
+      const line = lineValue();
+      const statLabel = DATA.stats[state.stat];
+
+      // games is newest-first, so walking forward from index 0 counts the
+      // CURRENT consecutive run, stopping at the first game that misses.
+      const streaks = rows.map(r => {
+        let len = 0;
+        for (const g of r.games) {
+          if ((g[state.stat] || 0) >= line) len++;
+          else break;
+        }
+        return { ...r, streak: len };
+      }).filter(r => r.streak >= MIN_STREAK);
+
+      streaks.sort((a, b) => b.streak - a.streak || b.avg - a.avg);
+
+      const content = document.getElementById('content');
+      if (streaks.length === 0) {
+        content.innerHTML = `<div class="empty">No players on a ${MIN_STREAK}+ game streak of ${line}+ ${statLabel} with these filters.</div>`;
+        return;
+      }
+
+      let html = `<table><thead><tr>
+        <th class="rank">#</th><th>Player</th><th class="stat-val">Streak</th>
+        <th class="games-count">Avg</th><th>Last ${state.window}</th>
+      </tr></thead><tbody>`;
+
+      streaks.forEach((r, i) => {
+        const dots = r.games.map(g => `<span class="dot ${g[state.stat] >= line ? 'hit' : ''}"></span>`).join('');
+        html += `<tr>
+          <td class="rank">${i + 1}</td>
+          <td><div class="player-name">${r.player.name}</div><div class="team">${r.player.team}</div></td>
+          <td class="stat-val">${r.streak}</td>
+          <td class="games-count">${r.avg.toFixed(2)}</td>
           <td><div class="game-dots">${dots}</div></td>
         </tr>`;
       });
