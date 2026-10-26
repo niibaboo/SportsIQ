@@ -14553,9 +14553,10 @@
     "athlete_id": "4432620",
     "stat_key": "TD",
     "logged_at": "2026-10-08T06:56:09.415338+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2.0,
+    "verified_at": "2026-10-26T14:49:41.766614+00:00"
   },
   {
     "id": "e7f505fedced2331",
@@ -14572,9 +14573,10 @@
     "athlete_id": "4430539",
     "stat_key": "TD",
     "logged_at": "2026-10-08T06:56:09.415343+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-10-26T14:49:41.766664+00:00"
   },
   {
     "id": "72112753ae70a96b",
@@ -14591,9 +14593,10 @@
     "athlete_id": "4882093",
     "stat_key": "TD",
     "logged_at": "2026-10-08T06:56:09.415348+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-10-26T14:49:41.766695+00:00"
   },
   {
     "id": "83d2a64388c7f1ab",
@@ -14629,9 +14632,10 @@
     "athlete_id": "3121023",
     "stat_key": "TD",
     "logged_at": "2026-10-08T06:56:09.415358+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-10-26T14:49:41.766745+00:00"
   },
   {
     "id": "2a4836196f9d29ed",
@@ -14667,9 +14671,10 @@
     "athlete_id": "4569603",
     "stat_key": "TD",
     "logged_at": "2026-10-08T06:56:09.415370+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-10-26T14:49:41.880189+00:00"
   },
   {
     "id": "2783b2c65c70925c",
@@ -14686,9 +14691,10 @@
     "athlete_id": "4367209",
     "stat_key": "TD",
     "logged_at": "2026-10-08T06:56:09.415375+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-10-26T14:49:41.880226+00:00"
   },
   {
     "id": "b559c2c72654c151",
@@ -14705,9 +14711,10 @@
     "athlete_id": "4711533",
     "stat_key": "TD",
     "logged_at": "2026-10-08T06:56:09.415380+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 1.0,
+    "verified_at": "2026-10-26T14:49:41.880245+00:00"
   },
   {
     "id": "71015e395c29a06f",
@@ -14724,9 +14731,10 @@
     "athlete_id": "4362628",
     "stat_key": "TD",
     "logged_at": "2026-10-08T06:56:09.415385+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 1.0,
+    "verified_at": "2026-10-26T14:49:41.880264+00:00"
   },
   {
     "id": "ce9a8a56558cf544",
@@ -14743,9 +14751,10 @@
     "athlete_id": "3116164",
     "stat_key": "TD",
     "logged_at": "2026-10-08T06:56:09.415390+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 1.0,
+    "verified_at": "2026-10-26T14:49:41.880282+00:00"
   },
   {
     "id": "5de100351157bc20",
@@ -14762,9 +14771,10 @@
     "athlete_id": "4362238",
     "stat_key": "TD",
     "logged_at": "2026-10-08T06:56:09.415395+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-10-26T14:49:41.880300+00:00"
   },
   {
     "id": "41e2652b39055896",
@@ -14800,12 +14810,13 @@
     "game_date": "2026-10-11",
     "date_key": "2026-10-11",
     "logged_at": "2026-10-08T06:56:09.415546+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "hit",
+    "actual": 1.0,
     "athlete_id": "3117251",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:41.975454+00:00"
   },
   {
     "id": "9d084a7afc4d6aba",
@@ -14841,12 +14852,13 @@
     "game_date": "2026-10-13",
     "date_key": "2026-10-13",
     "logged_at": "2026-10-08T06:56:09.415558+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "hit",
+    "actual": 1.0,
     "athlete_id": "4430737",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:41.975542+00:00"
   },
   {
     "id": "d8b43365753f1149",
@@ -14861,12 +14873,13 @@
     "game_date": "2026-10-11",
     "date_key": "2026-10-11",
     "logged_at": "2026-10-08T06:56:09.415567+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
     "athlete_id": "4685382",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:41.975582+00:00"
   },
   {
     "id": "c78a61af5dbe823f",
@@ -14881,12 +14894,13 @@
     "game_date": "2026-10-11",
     "date_key": "2026-10-11",
     "logged_at": "2026-10-08T06:56:09.415577+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "hit",
+    "actual": 1.0,
     "athlete_id": "3116164",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:41.975623+00:00"
   },
   {
     "id": "c778c1a4854f6de8",
@@ -14901,12 +14915,13 @@
     "game_date": "2026-10-11",
     "date_key": "2026-10-11",
     "logged_at": "2026-10-08T06:56:09.415584+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
     "athlete_id": "3054850",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:42.091412+00:00"
   },
   {
     "id": "86f9a8dcb77891a6",
@@ -14921,12 +14936,13 @@
     "game_date": "2026-10-11",
     "date_key": "2026-10-11",
     "logged_at": "2026-10-08T06:56:09.415588+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "hit",
+    "actual": 1.0,
     "athlete_id": "4262921",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:42.091451+00:00"
   },
   {
     "id": "e08aec38514760c9",
@@ -14941,12 +14957,13 @@
     "game_date": "2026-10-11",
     "date_key": "2026-10-11",
     "logged_at": "2026-10-08T06:56:09.415598+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "hit",
+    "actual": 1.0,
     "athlete_id": "16737",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:42.091510+00:00"
   },
   {
     "id": "587d185d13f00786",
@@ -14961,12 +14978,13 @@
     "game_date": "2026-10-11",
     "date_key": "2026-10-11",
     "logged_at": "2026-10-08T06:56:09.415606+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
     "athlete_id": "4361432",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:42.217196+00:00"
   },
   {
     "id": "0ef65701dc3cc978",
@@ -14981,12 +14999,13 @@
     "game_date": "2026-10-11",
     "date_key": "2026-10-11",
     "logged_at": "2026-10-08T06:56:09.415613+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "hit",
+    "actual": 1.0,
     "athlete_id": "4832800",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:42.217264+00:00"
   },
   {
     "id": "47d300561edb9c98",
@@ -15001,12 +15020,13 @@
     "game_date": "2026-10-11",
     "date_key": "2026-10-11",
     "logged_at": "2026-10-08T06:56:09.415617+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
     "athlete_id": "4035538",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:42.311441+00:00"
   },
   {
     "id": "210b91f24d42c714",
@@ -15021,12 +15041,13 @@
     "game_date": "2026-10-11",
     "date_key": "2026-10-11",
     "logged_at": "2026-10-08T06:56:09.415622+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "hit",
+    "actual": 2.0,
     "athlete_id": "4432620",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:42.311557+00:00"
   },
   {
     "id": "11240edfa19ed0be",
@@ -15041,12 +15062,13 @@
     "game_date": "2026-10-11",
     "date_key": "2026-10-11",
     "logged_at": "2026-10-08T06:56:09.415626+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
     "athlete_id": "4882093",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:42.311586+00:00"
   },
   {
     "id": "f7a59b8c46db7f7b",
@@ -15061,12 +15083,13 @@
     "game_date": "2026-10-11",
     "date_key": "2026-10-11",
     "logged_at": "2026-10-08T06:56:09.415630+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "hit",
+    "actual": 1.0,
     "athlete_id": "4711533",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:42.311631+00:00"
   },
   {
     "id": "4c977ac5f5e92cd9",
@@ -15081,12 +15104,13 @@
     "game_date": "2026-10-12",
     "date_key": "2026-10-12",
     "logged_at": "2026-10-08T06:56:09.415638+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null,
+    "status": "verified",
+    "result": "hit",
+    "actual": 1.0,
     "athlete_id": "3043078",
     "stat_key": "TD",
-    "label": "Anytime TD"
+    "label": "Anytime TD",
+    "verified_at": "2026-10-26T14:49:42.311674+00:00"
   },
   {
     "id": "1c1ebfec1b228e1a",
