@@ -49,9 +49,12 @@
     .team { color: var(--sub); font-size: 11px; }
     .stat-val { color: var(--accent); font-weight: 700; text-align: right; }
     .games-count { color: var(--sub); text-align: right; font-size: 12px; }
-    .game-dots { display: flex; gap: 2px; justify-content: flex-end; }
-    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); }
-    .dot.hit { background: var(--green); }
+    .game-dots { display: flex; gap: 3px; justify-content: flex-end; flex-wrap: wrap; }
+    .dot {
+      min-width: 18px; padding: 1px 3px; border-radius: 4px; background: var(--panel2);
+      color: var(--sub); font-size: 10px; font-weight: 700; text-align: center; line-height: 1.5;
+    }
+    .dot.hit { background: var(--green); color: #06281c; }
     .empty { color: var(--sub); font-size: 13px; padding: 30px 0; text-align: center; }
     .footer { color: var(--sub); font-size: 11px; text-align: center; margin-top: 28px; line-height: 1.6; }
   </style>
@@ -87,8 +90,9 @@
   <div class="filter-group">
     <div class="filter-label">Form window</div>
     <div class="filters" id="windowFilters">
+      <button class="filter-btn" data-window="5">Last 5</button>
+      <button class="filter-btn" data-window="7">Last 7</button>
       <button class="filter-btn active" data-window="10">Last 10</button>
-      <button class="filter-btn" data-window="20">Last 20</button>
     </div>
   </div>
 
@@ -275,7 +279,7 @@
 
       rows.forEach((r, i) => {
         const line = r.avg >= 1 ? Math.floor(r.avg) + 0.5 : 0.5; // quick visual "clears X.5" reference, not a betting line
-        const dots = r.games.map(g => `<span class="dot ${g[state.stat] > line ? 'hit' : ''}"></span>`).join('');
+        const dots = r.games.map(g => `<span class="dot ${g[state.stat] > line ? 'hit' : ''}">${g[state.stat]}</span>`).join('');
         html += `<tr>
           <td class="rank">${i + 1}</td>
           <td><div class="player-name">${r.player.name}</div><div class="team">${r.player.team}</div></td>
@@ -307,7 +311,7 @@
       </tr></thead><tbody>`;
 
       hits.forEach((r, i) => {
-        const dots = r.games.map(g => `<span class="dot ${g[state.stat] >= line ? 'hit' : ''}"></span>`).join('');
+        const dots = r.games.map(g => `<span class="dot ${g[state.stat] >= line ? 'hit' : ''}">${g[state.stat]}</span>`).join('');
         html += `<tr>
           <td class="rank">${i + 1}</td>
           <td><div class="player-name">${r.player.name}</div><div class="team">${r.player.team}</div></td>
@@ -346,11 +350,16 @@
 
       let html = `<table><thead><tr>
         <th class="rank">#</th><th>Player</th><th class="stat-val">Streak</th>
-        <th class="games-count">Avg</th><th>Last ${state.window}</th>
+        <th class="games-count">Avg</th><th>Streak games</th>
       </tr></thead><tbody>`;
 
       streaks.forEach((r, i) => {
-        const dots = r.games.map(g => `<span class="dot ${g[state.stat] >= line ? 'hit' : ''}"></span>`).join('');
+        // Only the games that make up the streak itself -- showing the
+        // full Last-N window here was misleading (older hits beyond the
+        // break aren't part of a "continuous run without a break", same
+        // fix as Orange Line's own Real Streak history display).
+        const streakGames = r.games.slice(0, r.streak);
+        const dots = streakGames.map(g => `<span class="dot hit">${g[state.stat]}</span>`).join('');
         html += `<tr>
           <td class="rank">${i + 1}</td>
           <td><div class="player-name">${r.player.name}</div><div class="team">${r.player.team}</div></td>
