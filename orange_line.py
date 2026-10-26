@@ -63,6 +63,35 @@ LEAGUES = [
 BASE_FMT = "https://site.api.espn.com/apis/site/v2/sports/basketball/{league}"
 GAMELOG_BASE_FMT = "https://site.web.api.espn.com/apis/common/v3/sports/basketball/{league}/athletes/{athlete_id}/gamelog"
 REQUEST_DELAY = 1.2  # same conservative pacing as Blitz IQ -- no official rate limit published
+
+
+def _current_season_year(league_key):
+    """ESPN's basketball 'season' param is keyed by the year a season
+    ENDS. True for NBA, which crosses the calendar year -- the 2026-27
+    season (tips off October 2026, Finals June 2027) is season=2027, not
+    2026 -- but NOT for WNBA, which runs entirely within one calendar
+    year (May-Oct), so season == datetime.now().year with no October
+    rollover needed there.
+
+    Every "current season" lookup in this file used to just take
+    datetime.now().year regardless of league. That's only right for
+    NBA's January-September tail (and for WNBA year-round) -- wrong for
+    NBA's own October-December season START, where it silently pointed
+    at the season that JUST ENDED (a full ~82-game past season) instead
+    of the handful of games played so far this season.
+
+    CONFIRMED as a real bug, not a theory (2026-10-26): the "100% This
+    Season" panel showed players with 55-63/55-63 streaks only two
+    weeks into the 2026-27 NBA season -- those counts only exist in a
+    season that's already finished. This is also the most likely real
+    explanation for an earlier, separate user report that DeAndre
+    Ayton's Rebounds and LaMelo Ball's 3-Pointers Made history didn't
+    match their actual recent games -- real numbers, just pulled from
+    the wrong (just-finished) season rather than the current one."""
+    now = datetime.now()
+    if league_key == "nba" and now.month >= 10:
+        return now.year + 1
+    return now.year
 RECENT_GAMES = 7  # matches this project's existing "last 7 games" framing
 PRIOR_STRENGTH = 4
 DEFAULT_TEAM_STD = 11.0  # rough per-team points stdev, same role as Blitz IQ's
@@ -166,7 +195,7 @@ def get_team_form(league_key, team_id):
             print(f"  [!] couldn't parse schedule for team {team_id}: {e}")
 
     if not scored:
-        current_year = datetime.now().year
+        current_year = _current_season_year(league_key)
         r2 = _get(f"{BASE_FMT.format(league=league_key)}/teams/{team_id}/schedule",
                    params={"season": current_year - 1})
         if r2 is not None:
@@ -521,7 +550,7 @@ def get_player_vs_opponent(league_key, athlete_id, stat_key, opponent_abbr, oppo
     if not opponent_abbr and not opponent_name:
         return []
     out = []
-    current_year = datetime.now().year
+    current_year = _current_season_year(league_key)
     for season in (current_year, current_year - 1):
         meta = player_gamelog_meta_cache.get((league_key, athlete_id, stat_key, season), [])
         for date_str, value, opp in meta:
@@ -676,7 +705,7 @@ def get_player_gamelog(league_key, athlete_id, stat_key, value_parser=_parse_pla
     cache_key = (league_key, athlete_id, stat_key)
     if cache_key in player_gamelog_cache:
         return player_gamelog_cache[cache_key]
-    current_year = datetime.now().year
+    current_year = _current_season_year(league_key)
     values = _fetch_gamelog_values(league_key, athlete_id, stat_key, current_year, value_parser=value_parser)
     if not values:
         values = _fetch_gamelog_values(league_key, athlete_id, stat_key, current_year - 1, value_parser=value_parser)
@@ -1168,10 +1197,10 @@ SEASON_STREAK_UNDER_THRESHOLD = {"REB": 4.0, "AST": 2.0, "RA": 6.0, "PTS": 10.0,
 
 
 def build_season_perfect_entries(predictions):
-    current_year = datetime.now().year
     entries = []
     for p in predictions:
         league_key = p.get("league", "").lower()
+        current_year = _current_season_year(league_key)  # NBA/WNBA differ -- see _current_season_year
         for team_name, props in [(p["home_team"], p.get("home_props") or []),
                                    (p["away_team"], p.get("away_props") or [])]:
             for prop in props:
