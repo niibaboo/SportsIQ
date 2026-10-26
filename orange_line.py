@@ -303,6 +303,31 @@ def normal_prop(mean, std, factor=0.72, round_to=0.5):
     return {"line": line, "prob": round(prob_over * 100), "avg": mean}
 
 
+def both_teams_over_ladder(exp_home, exp_away, std=DEFAULT_TEAM_STD):
+    """'Both Teams to Score X Points' -- a bet365 market, NOT a combined/sum
+    total (a real NBA game total is always 200+, so odds like "90 Points
+    Yes 1.005 / 100 Points Yes 1.10 / 110 Points Yes 1.66" only make sense
+    read as each team INDIVIDUALLY clearing X -- an AND of two Team
+    Totals). Modeled as P(home >= X) * P(away >= X), same independence
+    assumption Game Total already makes when it adds the two teams' std
+    together. User request, 2026-10-26.
+
+    Three rungs around the LOWER-projected team (the binding constraint
+    for an AND condition, same logic as a parlay's weakest leg), stepped
+    by 10 points and rounded to the nearest 10 -- a rough, easy-to-retune
+    ladder shape, not calibrated against a real book's specific rungs."""
+    if exp_home is None or exp_away is None:
+        return []
+    base = round(min(exp_home, exp_away) / 10) * 10
+    rungs = []
+    for x in (base - 10, base, base + 10):
+        if x <= 0:
+            continue
+        prob = (1 - norm_cdf(x, exp_home, std)) * (1 - norm_cdf(x, exp_away, std))
+        rungs.append({"threshold": x, "prob": round(prob * 100)})
+    return rungs
+
+
 def get_roster(league_key, team_id):
     """Full team roster -- NBA/WNBA don't have as clean a "starters by
     position" concept as NFL's depth chart, so instead of guessing at a
@@ -876,6 +901,23 @@ def build_legs(predictions):
                     "detail": f"{league_name} · proj {game_total['avg']} pts ({hf['n_games']}v{af['n_games']}gm)",
                     "history": None,
                     "game_id": game_id, "game_date": game_date, "line": game_total["line"],
+                    "league": league_name,
+                })
+
+            for rung in both_teams_over_ladder(p["exp_home"], p["exp_away"]):
+                if rung["prob"] <= 0 or rung["prob"] >= 100:
+                    continue  # a 0% or 100% rung tells the user nothing a real ladder doesn't already imply
+                legs.append({
+                    "match": f"{match_label} ({league_name})",
+                    "market": f"Both Teams Over {rung['threshold']} Points",
+                    "prob": rung["prob"], "category": "Both Teams Total",
+                    # Same reasoning as Game Total -- no real paired "both
+                    # teams' actual scores together" history exists.
+                    "hit_rate": None,
+                    "detail": f"{league_name} · needs {p['home_team']} AND {p['away_team']} each "
+                              f"{rung['threshold']}+ · proj {p['exp_home']} / {p['exp_away']}",
+                    "history": None,
+                    "game_id": game_id, "game_date": game_date, "line": rung["threshold"],
                     "league": league_name,
                 })
 
