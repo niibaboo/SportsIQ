@@ -457,6 +457,50 @@ def _extract_game_opponent(game, root_events):
     return None
 
 
+def _extract_game_date(game, root_events):
+    """Best-effort date for one gamelog event -- same honesty-first,
+    try-several-shapes approach as _extract_game_opponent just above
+    (added 2026-10-26, after a real [DIAG] log confirmed the inline
+    'gameDate'/'date'/'eventDate' fields this used to rely on ARE
+    missing on ESPN's actual response, silently tripping the "falling
+    back to API order as-is" branch below -- the leading suspect for
+    Orange Line showing the wrong games/wrong order for real players
+    (user report, 2026-10-26: DeAndre Ayton's Rebounds and LaMelo
+    Ball's 3-Pointers Made history both failed to match real box
+    scores/odds, on two different stats for two different players,
+    which points at something upstream of any single stat's column
+    lookup -- this ordering bug is exactly that kind of upstream
+    issue).
+
+    Tries, in order:
+      1. The same inline fields previously tried directly.
+      2. The SAME event cross-referenced by id against this response's
+         top-level 'events' -- exactly like _extract_game_opponent
+         already does (root_events' real shape, dict-keyed-by-id vs a
+         plain list, is handled either way, same as there).
+    Returns a date string, or None if nothing matched -- the caller
+    already has a visible, documented fallback for None (sorts by API
+    order and prints a [DIAG] line), so this never has to guess."""
+    inline = game.get('gameDate') or game.get('date') or game.get('eventDate')
+    if inline:
+        return inline
+
+    event_id = game.get('eventId') or game.get('id')
+    if not event_id:
+        return None
+
+    ev = None
+    if isinstance(root_events, dict):
+        ev = root_events.get(str(event_id)) or root_events.get(event_id)
+    elif isinstance(root_events, list):
+        ev = next((e for e in root_events
+                   if isinstance(e, dict) and str(e.get('id')) == str(event_id)), None)
+
+    if isinstance(ev, dict):
+        return ev.get('date') or ev.get('gameDate') or ev.get('eventDate')
+    return None
+
+
 def get_player_vs_opponent(league_key, athlete_id, stat_key, opponent_abbr, opponent_name):
     """This player's raw per-game values (current + prior season,
     whichever have already been fetched via get_player_gamelog) from
@@ -567,14 +611,27 @@ def _fetch_gamelog_values(league_key, athlete_id, stat_key, season, value_parser
 
         printed_sample = False
         for st in season_data:
-            for cat in st.get('categories', []):
+            # Logs EVERY category now, not just the first -- if ESPN's
+            # response actually carries more than one category here
+            # (e.g. a totals/split row alongside the real per-game
+            # list), the old "only log the first" version would have
+            # hidden that completely, silently concatenating whatever
+            # categories exist into one game list. Added 2026-10-26
+            # alongside _extract_game_date, chasing the same user
+            # report (see that function's own comment).
+            cats = st.get('categories', [])
+            for cat in cats:
+                cat_events = cat.get('events', [])
+                print(f"    [DIAG] athlete {athlete_id}, season {season}: category "
+                      f"'{cat.get('type') or cat.get('displayName') or '?'}' has {len(cat_events)} events, "
+                      f"keys: {list(cat.keys())}")
                 if not printed_sample:
-                    print(f"    [DIAG] athlete {athlete_id}, season {season}: category keys: {list(cat.keys())}, "
+                    print(f"    [DIAG] athlete {athlete_id}, season {season}: {len(cats)} total categories, "
                           f"root_labels sample: {str(root_labels)[:200]}")
                     printed_sample = True
                 if not root_labels:
                     continue
-                for game in cat.get('events', []):
+                for game in cat_events:
                     stats = game.get('stats', [])
                     if stat_key in root_labels:
                         idx = root_labels.index(stat_key)
@@ -584,8 +641,7 @@ def _fetch_gamelog_values(league_key, athlete_id, stat_key, season, value_parser
                             continue
                         if value is None:
                             continue
-                        date_str = (game.get('gameDate') or game.get('date')
-                                    or game.get('eventDate') or None)
+                        date_str = _extract_game_date(game, root_events)
                         opp = _extract_game_opponent(game, root_events)
                         dated_values.append((date_str, value, opp))
         if season_data and not dated_values:
