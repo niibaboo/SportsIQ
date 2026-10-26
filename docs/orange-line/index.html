@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Orange Line — NBA</title></head>
 <body style="background:#0f0a08;color:#e8dcd0;font-family:Arial;padding:12px;max-width:600px;margin:auto">
 <h2 style="text-align:center;color:#ff9a2e">🟠 ORANGE LINE — NBA Player Props</h2>
-<p style="text-align:center;color:#998;font-size:11px">Recency-weighted, Poisson-projected · Last 7g · 26 Oct 21:08</p>
+<p style="text-align:center;color:#998;font-size:11px">Recency-weighted, Poisson-projected · Last 7g · 26 Oct 22:09</p>
 <p style="text-align:center;margin-bottom:16px"><a href="orange_line_predictions.csv" download style="background:#2a201a;border:1px solid #443;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
 <p style="text-align:center;margin-bottom:16px">
   <a href="results/index.html" style="color:#ffeb3b;text-decoration:none;font-size:12px">📊 Results Tracker</a>
@@ -3313,6 +3313,644 @@ function filterStreaksByFixture(match, btn) {
     <div style="font-size:10px;color:#cbd5e1">3 straight ≥10.0 (old→new): 11.0/12.0/16.0</div>
   </div>
 </div>
+</div>
+<div style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:10px">💯 100% This Season</div>
+  <div style="font-size:11px;color:#998;margin-bottom:10px">
+    Every game played so far THIS SEASON has cleared the line shown -- a stricter, longer
+    window than Real Streak above (which caps at the last 7). Resets each new
+    season. A perfect record over a short season is still a short sample -- "3/3" means
+    three games, not three months.
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;font-size:11px">
+  <select id="seasonFixtureFilter" onchange="filterSeasonPerfect()" style="background:#0f0a08;border:1px solid #3a2a20;color:#f59e0b;padding:5px 8px;border-radius:6px">
+    <option value="all">All Fixtures</option>
+    <option value="Phoenix Suns @ Oklahoma City Thunder">Phoenix Suns @ Oklahoma City Thunder</option><option value="Atlanta Hawks @ Houston Rockets">Atlanta Hawks @ Houston Rockets</option><option value="Sacramento Kings @ San Antonio Spurs">Sacramento Kings @ San Antonio Spurs</option><option value="Atlanta Dream @ Golden State Valkyries">Atlanta Dream @ Golden State Valkyries</option><option value="Dallas Mavericks @ Miami Heat">Dallas Mavericks @ Miami Heat</option><option value="Detroit Pistons @ New York Knicks">Detroit Pistons @ New York Knicks</option><option value="Golden State Warriors @ Denver Nuggets">Golden State Warriors @ Denver Nuggets</option><option value="Portland Trail Blazers @ Los Angeles Lakers">Portland Trail Blazers @ Los Angeles Lakers</option><option value="Washington Wizards @ Charlotte Hornets">Washington Wizards @ Charlotte Hornets</option><option value="Minnesota Timberwolves @ Cleveland Cavaliers">Minnesota Timberwolves @ Cleveland Cavaliers</option><option value="Memphis Grizzlies @ Utah Jazz">Memphis Grizzlies @ Utah Jazz</option><option value="Chicago Bulls @ Boston Celtics">Chicago Bulls @ Boston Celtics</option><option value="Brooklyn Nets @ Boston Celtics">Brooklyn Nets @ Boston Celtics</option>
+  </select>
+  <select id="seasonDirectionFilter" onchange="filterSeasonPerfect()" style="background:#0f0a08;border:1px solid #3a2a20;color:#f59e0b;padding:5px 8px;border-radius:6px">
+    <option value="all">Over &amp; Under</option>
+    <option value="over">Over only</option>
+    <option value="under">Under only</option>
+  </select>
+  <select id="seasonStatFilter" onchange="filterSeasonPerfect()" style="background:#0f0a08;border:1px solid #3a2a20;color:#f59e0b;padding:5px 8px;border-radius:6px">
+    <option value="all">All Bet Types</option>
+    <option value="AST">Assists</option><option value="REB">Rebounds</option><option value="PTS">Points</option>
+  </select>
+</div>
+<script>
+function filterSeasonPerfect() {
+  var fixture = document.getElementById('seasonFixtureFilter').value;
+  var direction = document.getElementById('seasonDirectionFilter').value;
+  var stat = document.getElementById('seasonStatFilter').value;
+  document.querySelectorAll('.season-row').forEach(function(row) {
+    var show = (fixture === 'all' || row.getAttribute('data-match') === fixture)
+      && (direction === 'all' || row.getAttribute('data-direction') === direction)
+      && (stat === 'all' || row.getAttribute('data-stat') === stat);
+    row.style.display = show ? 'flex' : 'none';
+  });
+}
+</script>
+  <div id="seasonPerfectRows"><div class="season-row" data-match="Phoenix Suns @ Oklahoma City Thunder" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">63/63</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Phoenix Suns @ Oklahoma City Thunder</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Rasheer Fleming (Phoenix Suns) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/0.0/1.0/0.0/2.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/1.0/0.0/0.0/0.0/2.0/0.0/0.0/0.0/0.0/1.0/1.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/2.0/2.0/0.0/0.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Phoenix Suns @ Oklahoma City Thunder" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">55/55</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Phoenix Suns @ Oklahoma City Thunder</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Khaman Maluach (Phoenix Suns) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/2.0/0.0/2.0/0.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/1.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Hawks @ Houston Rockets" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">55/55</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Atlanta Hawks @ Houston Rockets</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Julian Phillips (Houston Rockets) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/1.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/1.0/0.0/1.0/0.0/0.0/1.0/1.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/1.0/0.0/0.0/0.0/1.0/0.0/0.0/1.0/0.0/1.0</div>
+  </div>
+</div><div class="season-row" data-match="Sacramento Kings @ San Antonio Spurs" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">55/55</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Sacramento Kings @ San Antonio Spurs</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Jordan McLaughlin (San Antonio Spurs) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/0.0/0.0/0.0/0.0/2.0/3.0/0.0/1.0/0.0/1.0/3.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/3.0/0.0/0.0/1.0/1.0/0.0/2.0/0.0/0.0/2.0/0.0/1.0/0.0/1.0/0.0/2.0/0.0/2.0/0.0/0.0/1.0/0.0/0.0/2.0/2.0/1.0/0.0/0.0/0.0/0.0/1.0/1.0/1.0/1.0/0.0/4.0</div>
+  </div>
+</div><div class="season-row" data-match="Sacramento Kings @ San Antonio Spurs" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">55/55</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Sacramento Kings @ San Antonio Spurs</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Jordan McLaughlin (San Antonio Spurs) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 3.0/2.0/3.0/0.0/5.0/6.0/3.0/0.0/9.0/0.0/1.0/4.0/2.0/3.0/0.0/3.0/0.0/0.0/0.0/0.0/0.0/0.0/3.0/3.0/0.0/7.0/0.0/0.0/2.0/2.0/3.0/0.0/3.0/0.0/3.0/3.0/0.0/6.0/0.0/2.0/2.0/2.0/2.0/3.0/2.0/2.0/0.0/2.0/0.0/2.0/6.0/0.0/3.0/4.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Dream @ Golden State Valkyries" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">51/51</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">WNBA · Atlanta Dream @ Golden State Valkyries</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Madina Okot (Atlanta Dream) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/1.0/0.0/0.0/1.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/1.0/0.0/1.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/1.0/2.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Dallas Mavericks @ Miami Heat" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">50/50</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Dallas Mavericks @ Miami Heat</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Nick Richards (Miami Heat) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/0.0/2.0/0.0/0.0/0.0/0.0/0.0/0.0/2.0/1.0/0.0/0.0/1.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/1.0/1.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/1.0/1.0/1.0/1.0/1.0/1.0/0.0/0.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Sacramento Kings @ San Antonio Spurs" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">47/47</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Sacramento Kings @ San Antonio Spurs</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Jonathan Mogbo (Sacramento Kings) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 6.0/5.0/8.0/2.0/6.0/0.0/4.0/0.0/0.0/2.0/0.0/0.0/0.0/2.0/0.0/2.0/3.0/0.0/0.0/6.0/2.0/0.0/4.0/2.0/3.0/0.0/0.0/0.0/0.0/0.0/2.0/0.0/2.0/1.0/8.0/4.0/4.0/0.0/2.0/0.0/0.0/0.0/0.0/6.0/2.0/2.0/2.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Hawks @ Houston Rockets" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">41/41</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Atlanta Hawks @ Houston Rockets</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Dorian Finney-Smith (Atlanta Hawks) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/3.0/6.0/0.0/3.0/3.0/3.0/3.0/4.0/0.0/8.0/2.0/6.0/3.0/0.0/2.0/4.0/2.0/3.0/3.0/8.0/2.0/3.0/3.0/0.0/5.0/5.0/8.0/3.0/0.0/8.0/3.0/1.0/0.0/0.0/7.0/9.0/0.0/2.0/6.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Dallas Mavericks @ Miami Heat" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">40/40</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Dallas Mavericks @ Miami Heat</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Moussa Cisse (Dallas Mavericks) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/0.0/1.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/2.0/0.0/1.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/1.0</div>
+  </div>
+</div><div class="season-row" data-match="Detroit Pistons @ New York Knicks" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">40/40</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Detroit Pistons @ New York Knicks</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Chaz Lanier (Detroit Pistons) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 3.0/1.0/0.0/0.0/0.0/0.0/1.0/0.0/1.0/3.0/1.0/4.0/2.0/2.0/0.0/0.0/0.0/0.0/1.0/2.0/0.0/2.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/1.0/2.0/0.0/0.0/0.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Detroit Pistons @ New York Knicks" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">39/39</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Detroit Pistons @ New York Knicks</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Pacome Dadiet (New York Knicks) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/1.0/1.0/0.0/0.0/0.0/1.0/0.0/1.0/0.0/0.0/0.0/1.0/1.0/1.0/1.0/0.0/0.0/0.0/1.0/1.0/0.0/1.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/2.0/0.0/0.0/2.0/0.0/1.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Dream @ Golden State Valkyries" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">38/38</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">WNBA · Atlanta Dream @ Golden State Valkyries</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Sika Kone (Atlanta Dream) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/2.0/0.0/0.0/0.0/0.0/1.0/0.0/1.0/2.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/1.0</div>
+  </div>
+</div><div class="season-row" data-match="Phoenix Suns @ Oklahoma City Thunder" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">34/34</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Phoenix Suns @ Oklahoma City Thunder</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Duop Reath (Phoenix Suns) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/1.0/0.0/0.0/2.0/0.0/2.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/1.0/0.0/0.0/1.0/1.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/1.0</div>
+  </div>
+</div><div class="season-row" data-match="Golden State Warriors @ Denver Nuggets" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">31/31</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Golden State Warriors @ Denver Nuggets</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">DaRon Holmes II (Denver Nuggets) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/2.0/0.0/1.0/4.0/0.0/0.0/3.0/3.0/4.0/1.0/1.0/2.0/1.0/2.0/3.0/4.0/0.0/0.0/0.0/3.0/1.0/0.0/1.0/1.0/0.0/0.0/4.0/0.0/1.0/2.0</div>
+  </div>
+</div><div class="season-row" data-match="Portland Trail Blazers @ Los Angeles Lakers" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">31/31</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Portland Trail Blazers @ Los Angeles Lakers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Adou Thiero (Los Angeles Lakers) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/0.0/0.0/2.0/0.0/1.0/1.0/0.0/0.0/1.0/0.0/0.0/0.0/2.0/0.0/0.0/2.0/0.0/0.0/0.0/0.0/1.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Portland Trail Blazers @ Los Angeles Lakers" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">31/31</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Portland Trail Blazers @ Los Angeles Lakers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Adou Thiero (Los Angeles Lakers) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 4.0/2.0/0.0/0.0/0.0/4.0/0.0/0.0/0.0/0.0/0.0/6.0/2.0/2.0/0.0/3.0/2.0/3.0/0.0/1.0/0.0/10.0/0.0/0.0/8.0/3.0/2.0/0.0/0.0/4.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Dream @ Golden State Valkyries" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">24/24</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">WNBA · Atlanta Dream @ Golden State Valkyries</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Indya Nivar (Atlanta Dream) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 7.0/4.0/0.0/0.0/2.0/3.0/0.0/4.0/0.0/1.0/2.0/0.0/0.0/3.0/0.0/2.0/0.0/0.0/0.0/0.0/0.0/5.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Portland Trail Blazers @ Los Angeles Lakers" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">23/23</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Portland Trail Blazers @ Los Angeles Lakers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Kevon Looney (Los Angeles Lakers) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 3.0/4.0/3.0/0.0/8.0/5.0/2.0/0.0/2.0/0.0/2.0/4.0/6.0/0.0/2.0/2.0/4.0/2.0/4.0/6.0/0.0/7.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Washington Wizards @ Charlotte Hornets" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">22/22</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Washington Wizards @ Charlotte Hornets</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">PJ Hall (Charlotte Hornets) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/1.0/1.0/0.0/0.0/0.0/0.0/0.0/1.0/1.0/0.0/0.0/2.0/1.0/0.0/1.0/0.0/1.0/0.0/1.0/1.0/1.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Dream @ Golden State Valkyries" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">22/22</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">WNBA · Atlanta Dream @ Golden State Valkyries</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Shatori Walker-Kimbrough (Atlanta Dream) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 4.0/2.0/4.0/0.0/0.0/0.0/1.0/1.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0/0.0/2.0/1.0/0.0/0.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Phoenix Suns @ Oklahoma City Thunder" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">20/20</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Phoenix Suns @ Oklahoma City Thunder</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Nikola Topic (Oklahoma City Thunder) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 4.0/1.0/3.0/2.0/0.0/2.0/2.0/2.0/1.0/2.0/4.0/0.0/0.0/0.0/0.0/2.0/0.0/0.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Dream @ Golden State Valkyries" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">18/18</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">WNBA · Atlanta Dream @ Golden State Valkyries</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Juste Jocyte (Golden State Valkyries) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/0.0/1.0/2.0/0.0/0.0/2.0/0.0/0.0/0.0/0.0/0.0/0.0/2.0/2.0/3.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Golden State Warriors @ Denver Nuggets" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">16/16</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Golden State Warriors @ Denver Nuggets</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Charles Bassey (Golden State Warriors) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/1.0/1.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0/1.0/0.0/1.0/1.0/2.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Minnesota Timberwolves @ Cleveland Cavaliers" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">14/14</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Minnesota Timberwolves @ Cleveland Cavaliers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Riley Minix (Cleveland Cavaliers) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/0.0/2.0/3.0/3.0/1.0/0.0/1.0/0.0/3.0/0.0/0.0/0.0/1.0</div>
+  </div>
+</div><div class="season-row" data-match="Dallas Mavericks @ Miami Heat" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">12/12</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Dallas Mavericks @ Miami Heat</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Vladislav Goldin (Miami Heat) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/0.0/0.0/1.0/1.0/0.0/0.0/0.0/0.0/1.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Dallas Mavericks @ Miami Heat" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">12/12</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Dallas Mavericks @ Miami Heat</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Vladislav Goldin (Miami Heat) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 2.0/0.0/3.0/0.0/4.0/0.0/0.0/0.0/0.0/0.0/0.0/3.0</div>
+  </div>
+</div><div class="season-row" data-match="Memphis Grizzlies @ Utah Jazz" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">12/12</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Memphis Grizzlies @ Utah Jazz</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Trey Alexander (Utah Jazz) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 3.0/0.0/0.0/2.0/2.0/0.0/0.0/0.0/2.0/2.0/2.0/1.0</div>
+  </div>
+</div><div class="season-row" data-match="Minnesota Timberwolves @ Cleveland Cavaliers" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">11/11</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Minnesota Timberwolves @ Cleveland Cavaliers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Tristan Enaruna (Cleveland Cavaliers) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/0.0/2.0/3.0/1.0/1.0/1.0/1.0/1.0/1.0/3.0</div>
+  </div>
+</div><div class="season-row" data-match="Memphis Grizzlies @ Utah Jazz" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">11/11</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Memphis Grizzlies @ Utah Jazz</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Harrison Ingram (Utah Jazz) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 6.0/2.0/9.0/0.0/3.0/0.0/2.0/2.0/2.0/2.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Memphis Grizzlies @ Utah Jazz" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">11/11</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Memphis Grizzlies @ Utah Jazz</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Scotty Pippen Jr. (Memphis Grizzlies) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 2.0/3.0/0.0/0.0/3.0/2.0/3.0/2.0/3.0/3.0/3.0</div>
+  </div>
+</div><div class="season-row" data-match="Detroit Pistons @ New York Knicks" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">11/11</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Detroit Pistons @ New York Knicks</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Isaac Jones (Detroit Pistons) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/2.0/3.0/3.0/2.0/0.0/0.0/0.0/2.0/1.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Detroit Pistons @ New York Knicks" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">11/11</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Detroit Pistons @ New York Knicks</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Isaac Jones (Detroit Pistons) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/0.0/0.0/2.0/1.0/0.0/0.0/0.0/0.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Detroit Pistons @ New York Knicks" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">11/11</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Detroit Pistons @ New York Knicks</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Isaac Jones (Detroit Pistons) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 3.0/1.0/5.0/10.0/2.0/0.0/1.0/2.0/2.0/0.0/2.0</div>
+  </div>
+</div><div class="season-row" data-match="Minnesota Timberwolves @ Cleveland Cavaliers" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">9/9</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Minnesota Timberwolves @ Cleveland Cavaliers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Zyon Pullin (Minnesota Timberwolves) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/1.0/1.0/1.0/0.0/0.0/0.0/0.0/3.0</div>
+  </div>
+</div><div class="season-row" data-match="Portland Trail Blazers @ Los Angeles Lakers" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">9/9</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Portland Trail Blazers @ Los Angeles Lakers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Chris Manon (Los Angeles Lakers) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/1.0/1.0/0.0/1.0/2.0/2.0/0.0/2.0</div>
+  </div>
+</div><div class="season-row" data-match="Portland Trail Blazers @ Los Angeles Lakers" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">9/9</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Portland Trail Blazers @ Los Angeles Lakers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Chris Manon (Los Angeles Lakers) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/0.0/0.0/0.0/1.0/0.0/1.0/0.0/1.0</div>
+  </div>
+</div><div class="season-row" data-match="Portland Trail Blazers @ Los Angeles Lakers" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">9/9</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Portland Trail Blazers @ Los Angeles Lakers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Chris Manon (Los Angeles Lakers) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/0.0/0.0/0.0/2.0/0.0/2.0/1.0/2.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Dream @ Golden State Valkyries" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">8/8</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">WNBA · Atlanta Dream @ Golden State Valkyries</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Ashten Prechtel (Golden State Valkyries) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/1.0/0.0/2.0/1.0/0.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Dream @ Golden State Valkyries" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">8/8</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">WNBA · Atlanta Dream @ Golden State Valkyries</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Ashten Prechtel (Golden State Valkyries) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 9.0/0.0/5.0/3.0/0.0/3.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Dream @ Golden State Valkyries" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">8/8</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">WNBA · Atlanta Dream @ Golden State Valkyries</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Miela Sowah (Golden State Valkyries) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 2.0/0.0/0.0/0.0/3.0/1.0/1.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Dream @ Golden State Valkyries" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">8/8</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">WNBA · Atlanta Dream @ Golden State Valkyries</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Miela Sowah (Golden State Valkyries) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/0.0/0.0/0.0/0.0/0.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Chicago Bulls @ Boston Celtics" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">7/7</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Chicago Bulls @ Boston Celtics</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Noa Essengue (Chicago Bulls) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/2.0/1.0/1.0/1.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Chicago Bulls @ Boston Celtics" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">7/7</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Chicago Bulls @ Boston Celtics</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Noa Essengue (Chicago Bulls) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 8.0/2.0/5.0/2.0/2.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Sacramento Kings @ San Antonio Spurs" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">7/7</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Sacramento Kings @ San Antonio Spurs</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Sean Pedulla (Sacramento Kings) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/0.0/0.0/1.0/0.0/1.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Sacramento Kings @ San Antonio Spurs" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">7/7</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Sacramento Kings @ San Antonio Spurs</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Sean Pedulla (Sacramento Kings) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 6.0/2.0/5.0/0.0/0.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Portland Trail Blazers @ Los Angeles Lakers" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">7/7</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Portland Trail Blazers @ Los Angeles Lakers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">John Tonje (Portland Trail Blazers) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/3.0/0.0/2.0/0.0/0.0/4.0</div>
+  </div>
+</div><div class="season-row" data-match="Portland Trail Blazers @ Los Angeles Lakers" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">7/7</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Portland Trail Blazers @ Los Angeles Lakers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">John Tonje (Portland Trail Blazers) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/0.0/0.0/1.0/0.0/0.0/1.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Dream @ Golden State Valkyries" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">7/7</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">WNBA · Atlanta Dream @ Golden State Valkyries</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Aminata Gueye (Golden State Valkyries) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/3.0/2.0/2.0/3.0/1.0/3.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Dream @ Golden State Valkyries" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">7/7</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">WNBA · Atlanta Dream @ Golden State Valkyries</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Aminata Gueye (Golden State Valkyries) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/2.0/1.0/1.0/0.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Dream @ Golden State Valkyries" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">7/7</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">WNBA · Atlanta Dream @ Golden State Valkyries</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Aminata Gueye (Golden State Valkyries) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/2.0/9.0/2.0/0.0/0.0/6.0</div>
+  </div>
+</div><div class="season-row" data-match="Portland Trail Blazers @ Los Angeles Lakers" data-direction="over" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">6/6</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Portland Trail Blazers @ Los Angeles Lakers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Walker Kessler (Los Angeles Lakers) <span style="color:#998;font-weight:normal;font-size:11px">Over 6.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 10.0/9.0/9.0/11.0/12.0/13.0</div>
+  </div>
+</div><div class="season-row" data-match="Memphis Grizzlies @ Utah Jazz" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">5/5</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Memphis Grizzlies @ Utah Jazz</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Mo Bamba (Utah Jazz) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 2.0/0.0/0.0/1.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Memphis Grizzlies @ Utah Jazz" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">5/5</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Memphis Grizzlies @ Utah Jazz</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Mo Bamba (Utah Jazz) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 8.0/0.0/0.0/4.0/6.0</div>
+  </div>
+</div><div class="season-row" data-match="Portland Trail Blazers @ Los Angeles Lakers" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">5/5</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Portland Trail Blazers @ Los Angeles Lakers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Jayson Kent (Portland Trail Blazers) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 1.0/1.0/2.0/1.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Portland Trail Blazers @ Los Angeles Lakers" data-direction="under" data-stat="AST" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">5/5</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Portland Trail Blazers @ Los Angeles Lakers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Jayson Kent (Portland Trail Blazers) <span style="color:#998;font-weight:normal;font-size:11px">Under 2.0 Assists</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/0.0/0.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Portland Trail Blazers @ Los Angeles Lakers" data-direction="under" data-stat="PTS" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">5/5</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Portland Trail Blazers @ Los Angeles Lakers</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Jayson Kent (Portland Trail Blazers) <span style="color:#998;font-weight:normal;font-size:11px">Under 10.0 Points</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 2.0/3.0/5.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Atlanta Hawks @ Houston Rockets" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">4/4</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Atlanta Hawks @ Houston Rockets</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Keshon Gilbert (Atlanta Hawks) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 3.0/1.0/1.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Brooklyn Nets @ Boston Celtics" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">4/4</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Brooklyn Nets @ Boston Celtics</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Grant Nelson (Brooklyn Nets) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 2.0/4.0/0.0/0.0</div>
+  </div>
+</div><div class="season-row" data-match="Washington Wizards @ Charlotte Hornets" data-direction="under" data-stat="REB" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">3/3</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">NBA · Washington Wizards @ Charlotte Hornets</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">Reece Beekman (Washington Wizards) <span style="color:#998;font-weight:normal;font-size:11px">Under 4.0 Rebounds</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: 0.0/2.0/1.0</div>
+  </div>
+</div></div>
 </div>
 <div style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
   <div style="font-size:11px;color:#998;margin-bottom:4px">2026-10-26 23:00 · <span style="color:#ff9a2e">NBA</span></div>
