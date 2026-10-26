@@ -1,1 +1,161 @@
-[]
+[
+  {
+    "away": "Milwaukee Brewers",
+    "home": "Tampa Bay Rays",
+    "time": "12:00 AM GMT",
+    "pitchers": [
+      {
+        "side": "away",
+        "name": "Robert Gasser",
+        "pitcher_id": 688107,
+        "team": "Milwaukee Brewers",
+        "opp": "Tampa Bay Rays",
+        "opp_kpct": 18.8,
+        "fip": 4.23382,
+        "xfip": 4.34214,
+        "lambda": 4.39,
+        "lo": 2,
+        "hi": 7,
+        "proj_ip": 5.4,
+        "outs_lambda": 16.2,
+        "outs_lo": 11,
+        "outs_hi": 21,
+        "season_era": "3.87",
+        "season_k9": "8.48",
+        "season_hits9": "7.82",
+        "bb9": 2.88,
+        "whip": "1.19",
+        "l5_str": "4\u00b75\u00b75\u00b72\u00b79",
+        "l5_vs_season": 3.0,
+        "k_last5": [
+          4,
+          5,
+          5,
+          2,
+          9
+        ],
+        "outs_last5": [
+          13,
+          14,
+          15,
+          21,
+          18
+        ]
+      },
+      {
+        "side": "home",
+        "name": "Freddy Peralta",
+        "pitcher_id": 642547,
+        "team": "Tampa Bay Rays",
+        "opp": "Milwaukee Brewers",
+        "opp_kpct": 22.0,
+        "fip": 4.283104358974359,
+        "xfip": 4.372095009861933,
+        "lambda": 4.72,
+        "lo": 2,
+        "hi": 8,
+        "proj_ip": 5.5,
+        "outs_lambda": 16.62,
+        "outs_lo": 12,
+        "outs_hi": 22,
+        "season_era": "4.42",
+        "season_k9": "8.31",
+        "season_hits9": "8.57",
+        "bb9": 3.36,
+        "whip": "1.33",
+        "l5_str": "7\u00b72\u00b74\u00b76\u00b74",
+        "l5_vs_season": -11.0,
+        "k_last5": [
+          7,
+          2,
+          4,
+          6,
+          4
+        ],
+        "outs_last5": [
+          18,
+          18,
+          15,
+          17,
+          16
+        ]
+      }
+    ],
+    "game_pk": 849804,
+    "game_date": "2026-10-26",
+    "team_runs": {
+      "away": {
+        "team": "Milwaukee Brewers",
+        "opp": "Tampa Bay Rays",
+        "lambda": 5.17,
+        "lo": 2,
+        "hi": 8,
+        "l5_str": "4\u00b75\u00b78\u00b73\u00b76",
+        "last5_runs": [
+          4,
+          5,
+          8,
+          3,
+          6
+        ],
+        "season_rpg": 5.14,
+        "run_factor": 1.0,
+        "xfip_used": true
+      },
+      "home": {
+        "team": "Tampa Bay Rays",
+        "opp": "Milwaukee Brewers",
+        "lambda": 3.48,
+        "lo": 1,
+        "hi": 6,
+        "l5_str": "2\u00b74\u00b72\u00b712\u00b73",
+        "last5_runs": [
+          2,
+          4,
+          2,
+          12,
+          3
+        ],
+        "season_rpg": 4.54,
+        "run_factor": 0.94,
+        "xfip_used": true
+      }
+    },
+    "team_hits": {
+      "away": {
+        "team": "Milwaukee Brewers",
+        "opp": "Tampa Bay Rays",
+        "lambda": 9.03,
+        "lo": 5,
+        "hi": 13,
+        "l5_str": "6\u00b711\u00b712\u00b78\u00b710",
+        "last5_hits": [
+          6,
+          11,
+          12,
+          8,
+          10
+        ],
+        "season_hpg": 8.78,
+        "hit_factor": 0.97
+      },
+      "home": {
+        "team": "Tampa Bay Rays",
+        "opp": "Milwaukee Brewers",
+        "lambda": 7.75,
+        "lo": 4,
+        "hi": 11,
+        "l5_str": "6\u00b79\u00b76\u00b717\u00b78",
+        "last5_hits": [
+          6,
+          9,
+          6,
+          17,
+          8
+        ],
+        "season_hpg": 8.67,
+        "hit_factor": 0.9
+      }
+    }
+  }
+]
