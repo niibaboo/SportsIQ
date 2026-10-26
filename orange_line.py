@@ -1132,6 +1132,149 @@ def build_real_streak_entries(predictions):
     return entries
 
 
+# --- 100% This Season -----------------------------------------------------
+# A stricter, SEASON-LONG cousin of Real Streak (user request, 2026-10-26,
+# reverse-engineered from a props.cash-style "Props" screen showing e.g.
+# "100% 3/3" / "100% 10/10" per player+line): every game played so far
+# THIS SEASON clears the line, not just the last RECENT_GAMES=7 window Real
+# Streak is capped to. Both an Over and an Under version, since the
+# screenshot's own list mixes both directions.
+#
+# Reads straight from player_gamelog_meta_cache -- the FULL, un-trimmed
+# per-game list _fetch_gamelog_values already builds for the CURRENT season
+# before get_player_gamelog slices it down to RECENT_GAMES -- so this costs
+# zero extra API calls, the same reuse trick get_player_vs_opponent already
+# relies on. Only the current season's cache entry is read (never the
+# prior-season fallback get_player_gamelog falls back to), since "this
+# season only" is the whole point -- a player whose current season hasn't
+# started yet just won't appear.
+#
+# Being a perfect-record check (every value must clear the line) makes this
+# ORDER-INDEPENDENT, unlike Real Streak -- it doesn't matter whether
+# _extract_game_date's cross-reference fix actually recovered every game's
+# real date, since "all N values clear the line" gives the same answer
+# regardless of what order those N values are listed in. It can still be
+# thrown off by a DIFFERENT, not-yet-ruled-out failure mode though (extra or
+# wrong games getting concatenated into the per-game list in the first
+# place, from _fetch_gamelog_values' per-category loop) -- the expanded
+# [DIAG] category logging added alongside _extract_game_date will show that
+# if it's happening.
+#
+# Lines reuse REAL_STREAK_THRESHOLD (Over) and a parallel, separately tuned
+# SEASON_STREAK_UNDER_THRESHOLD (Under) -- both rough judgment calls like
+# every other threshold in this file, not fitted to real data yet.
+SEASON_STREAK_MIN_GAMES = 3  # "100%, 1/1" after one game isn't a signal worth flagging
+SEASON_STREAK_UNDER_THRESHOLD = {"REB": 4.0, "AST": 2.0, "RA": 6.0, "PTS": 10.0, "3PM": 1.0}
+
+
+def build_season_perfect_entries(predictions):
+    current_year = datetime.now().year
+    entries = []
+    for p in predictions:
+        league_key = p.get("league", "").lower()
+        for team_name, props in [(p["home_team"], p.get("home_props") or []),
+                                   (p["away_team"], p.get("away_props") or [])]:
+            for prop in props:
+                for stat_key in ("REB", "AST", "RA", "PTS", "3PM"):
+                    dated = player_gamelog_meta_cache.get((league_key, prop["player_id"], stat_key, current_year))
+                    if not dated:
+                        continue
+                    values = [v for _, v, _ in dated]
+                    if len(values) < SEASON_STREAK_MIN_GAMES:
+                        continue
+                    base = {
+                        "name": prop["name"], "team": team_name, "league": p.get("league", ""),
+                        "match": p["match"], "stat": stat_key, "total": len(values), "values": values,
+                        "player_id": prop["player_id"], "game_id": p.get("game_id"), "date": p.get("date", ""),
+                    }
+                    over_line = REAL_STREAK_THRESHOLD[stat_key]
+                    if all(v >= over_line for v in values):
+                        entries.append({**base, "direction": "over", "line": over_line})
+                    under_line = SEASON_STREAK_UNDER_THRESHOLD[stat_key]
+                    if all(v <= under_line for v in values):
+                        entries.append({**base, "direction": "under", "line": under_line})
+    entries.sort(key=lambda e: -e["total"])
+    return entries
+
+
+SEASON_PERFECT_ENTRY_TEMPLATE = """<div class="season-row" data-match="{match}" data-direction="{direction}" data-stat="{stat}" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">{hits}/{hits}</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">{league} · {match}</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{name} ({team}) <span style="color:#998;font-weight:normal;font-size:11px">{direction_label} {line} {stat_label}</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: {values_str}</div>
+  </div>
+</div>"""
+
+SEASON_FILTER_BAR = """<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;font-size:11px">
+  <select id="seasonFixtureFilter" onchange="filterSeasonPerfect()" style="background:#0f0a08;border:1px solid #3a2a20;color:#f59e0b;padding:5px 8px;border-radius:6px">
+    <option value="all">All Fixtures</option>
+    {fixture_options}
+  </select>
+  <select id="seasonDirectionFilter" onchange="filterSeasonPerfect()" style="background:#0f0a08;border:1px solid #3a2a20;color:#f59e0b;padding:5px 8px;border-radius:6px">
+    <option value="all">Over &amp; Under</option>
+    <option value="over">Over only</option>
+    <option value="under">Under only</option>
+  </select>
+  <select id="seasonStatFilter" onchange="filterSeasonPerfect()" style="background:#0f0a08;border:1px solid #3a2a20;color:#f59e0b;padding:5px 8px;border-radius:6px">
+    <option value="all">All Bet Types</option>
+    {stat_options}
+  </select>
+</div>
+<script>
+function filterSeasonPerfect() {{
+  var fixture = document.getElementById('seasonFixtureFilter').value;
+  var direction = document.getElementById('seasonDirectionFilter').value;
+  var stat = document.getElementById('seasonStatFilter').value;
+  document.querySelectorAll('.season-row').forEach(function(row) {{
+    var show = (fixture === 'all' || row.getAttribute('data-match') === fixture)
+      && (direction === 'all' || row.getAttribute('data-direction') === direction)
+      && (stat === 'all' || row.getAttribute('data-stat') === stat);
+    row.style.display = show ? 'flex' : 'none';
+  }});
+}}
+</script>"""
+
+SEASON_PERFECT_PANEL_TEMPLATE = """<div style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:10px">💯 100% This Season</div>
+  <div style="font-size:11px;color:#998;margin-bottom:10px">
+    Every game played so far THIS SEASON has cleared the line shown -- a stricter, longer
+    window than Real Streak above (which caps at the last {recent}). Resets each new
+    season. A perfect record over a short season is still a short sample -- "3/3" means
+    three games, not three months.
+  </div>
+  {filters}
+  <div id="seasonPerfectRows">{cards}</div>
+</div>"""
+
+
+def render_season_perfect_panel(entries):
+    if not entries:
+        return ""
+    seen_fixtures, seen_stats = [], []
+    for e in entries:
+        if e["match"] not in seen_fixtures:
+            seen_fixtures.append(e["match"])
+        if e["stat"] not in seen_stats:
+            seen_stats.append(e["stat"])
+    fixture_options = "".join(f'<option value="{m}">{m}</option>' for m in seen_fixtures)
+    stat_options = "".join(f'<option value="{s}">{STAT_LABELS[s]}</option>' for s in seen_stats)
+    cards = "".join(
+        SEASON_PERFECT_ENTRY_TEMPLATE.format(
+            match=e["match"], direction=e["direction"], stat=e["stat"], hits=e["total"],
+            league=e["league"], name=e["name"], team=e["team"],
+            direction_label="Over" if e["direction"] == "over" else "Under", line=e["line"],
+            stat_label=STAT_LABELS[e["stat"]], values_str="/".join(str(v) for v in e["values"]),
+        )
+        for e in entries
+    )
+    filters = SEASON_FILTER_BAR.format(fixture_options=fixture_options, stat_options=stat_options)
+    return SEASON_PERFECT_PANEL_TEMPLATE.format(recent=RECENT_GAMES, filters=filters, cards=cards)
+
+
 STREAK_ENTRY_TEMPLATE = """<div class="streak-row" data-match="{match}" data-date="{date_key}" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
   <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #3a2a20;border-radius:8px;padding:6px 4px;flex-shrink:0">
     <div style="font-size:9px;color:#998">AVG</div>
@@ -1459,6 +1602,7 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 </p>
 {builder}
 {streak_panel}
+{season_panel}
 {cards}
 </body></html>"""
 
@@ -1603,10 +1747,11 @@ def make_html(predictions):
     hot_form_entries = build_hot_form_entries(predictions)
     real_streak_entries = build_real_streak_entries(predictions)
     streak_panel = render_streak_panel(hot_form_entries, real_streak_entries)
+    season_panel = render_season_perfect_panel(build_season_perfect_entries(predictions))
 
     return HTML_TEMPLATE.format(
         recent=RECENT_GAMES, generated=datetime.now().strftime('%d %b %H:%M'),
-        builder=builder, streak_panel=streak_panel, cards=cards,
+        builder=builder, streak_panel=streak_panel, season_panel=season_panel, cards=cards,
     )
 
 
