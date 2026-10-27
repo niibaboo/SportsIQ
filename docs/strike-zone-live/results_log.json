@@ -590,5 +590,21 @@
     "logged_away_runs": 0.0,
     "pregame_total": 8.65,
     "status": "pending"
+  },
+  "849804_Game_Total_Over": {
+    "id": "849804_Game_Total_Over",
+    "game_pk": 849804,
+    "home_team": "Tampa Bay Rays",
+    "away_team": "Milwaukee Brewers",
+    "label": "Game Total Over",
+    "prob": 100,
+    "logged_at": "2026-10-27T02:27:20.415498+00:00",
+    "logged_inning": 7,
+    "logged_inning_state": "Bottom",
+    "logged_half_index": 13,
+    "logged_home_runs": 0.0,
+    "logged_away_runs": 10.0,
+    "pregame_total": 8.65,
+    "status": "pending"
   }
 }
