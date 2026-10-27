@@ -150,6 +150,9 @@ def get_scoreboard(league_key, date_str=None):
 
 roster_cache = {}
 team_form_cache = {}
+team_season_meta_cache = {}  # (league_key, team_id) -> FULL current-season dated
+                               # (date, scored, allowed) tuples, no RECENT_GAMES trim --
+                               # feeds the "100% Team Total" season feature below.
 
 
 def _extract_completed_team_games(events, team_id):
@@ -176,6 +179,76 @@ def _extract_completed_team_games(events, team_id):
     return scored, allowed
 
 
+def _is_regular_season_event(e):
+    """Same uncertainty, same reason to check, as the gamelog's own
+    season-type filter (see _fetch_gamelog_values' _season_type_name,
+    fixed 2026-10-27 for the identical preseason-leak bug on the PLAYER
+    gamelog endpoint). The team SCHEDULE endpoint (/teams/{id}/schedule)
+    can plausibly carry preseason games the same way -- not yet confirmed
+    against a live response in this environment either way, so this
+    tries the plausible shapes (a 'seasonType' dict with name/type, or a
+    numeric season.type using ESPN's own convention of 1=pre, 2=regular,
+    3=post) and returns None when it can't tell, so the caller can log
+    and fall back to including everything rather than guess."""
+    st = e.get('seasonType')
+    if isinstance(st, dict):
+        name = str(st.get('name') or st.get('abbreviation') or '').lower()
+        if 'regular' in name:
+            return True
+        if 'pre' in name or 'post' in name or 'playoff' in name:
+            return False
+        type_val = st.get('type') or st.get('id')
+        if type_val is not None:
+            try:
+                return int(type_val) == 2
+            except (TypeError, ValueError):
+                pass
+    season = e.get('season')
+    if isinstance(season, dict) and season.get('type') is not None:
+        try:
+            return int(season['type']) == 2
+        except (TypeError, ValueError):
+            pass
+    return None
+
+
+def _extract_all_completed_team_games(events, team_id):
+    """Same parsing as _extract_completed_team_games, but returns the
+    FULL season's dated (date, scored, allowed) tuples with no
+    RECENT_GAMES trim -- feeds the season-long "100% Team Total"
+    feature, which needs every game played this season, not just the
+    last {RECENT_GAMES}. Filters to games identifiable as regular
+    season via _is_regular_season_event; if none can be identified,
+    logs a diagnostic and falls back to including everything, same
+    fallback philosophy as the gamelog fix."""
+    completed = [e for e in events if e.get('competitions', [{}])[0].get('status', {})
+                 .get('type', {}).get('completed')]
+    flags = [_is_regular_season_event(e) for e in completed]
+    if any(f is True for f in flags):
+        completed = [e for e, f in zip(completed, flags) if f]
+    elif completed:
+        print(f"    [DIAG] team {team_id}: couldn't identify season type on team-schedule events "
+              f"(checked 'seasonType' and 'season.type') -- including ALL completed games for the "
+              f"100% Team Total feature, which may mix in preseason until this is confirmed against "
+              f"a real response.")
+    completed.sort(key=lambda e: e.get('date', ''))
+    dated = []
+    for e in completed:
+        comp = e['competitions'][0]
+        competitors = comp.get('competitors', [])
+        me = next((c for c in competitors if str(c['team']['id']) == str(team_id)), None)
+        opp = next((c for c in competitors if str(c['team']['id']) != str(team_id)), None)
+        if not me or not opp:
+            continue
+        try:
+            scored = float(me['score']['value'])
+            allowed = float(opp['score']['value'])
+        except (KeyError, TypeError, ValueError):
+            continue
+        dated.append((e.get('date', ''), scored, allowed))
+    return dated
+
+
 def get_team_form(league_key, team_id):
     """Last N completed games for a team -- points scored and allowed.
     Same Week-1-style fallback as Blitz IQ: early in a new season a team
@@ -187,12 +260,21 @@ def get_team_form(league_key, team_id):
 
     r = _get(f"{BASE_FMT.format(league=league_key)}/teams/{team_id}/schedule")
     scored, allowed, source = [], [], 'current'
+    current_events = []
     if r is not None:
         try:
-            events = r.json().get('events', [])
-            scored, allowed = _extract_completed_team_games(events, team_id)
+            current_events = r.json().get('events', [])
+            scored, allowed = _extract_completed_team_games(current_events, team_id)
         except Exception as e:
             print(f"  [!] couldn't parse schedule for team {team_id}: {e}")
+
+    # Current season's FULL dated game list -- cached regardless of
+    # whether `scored` above ends up using the prior-season fallback
+    # below, since "this season" for the 100% feature must never include
+    # last season's games. Reuses current_events, so zero extra calls.
+    team_season_meta_cache[cache_key] = (
+        _extract_all_completed_team_games(current_events, team_id) if current_events else []
+    )
 
     if not scored:
         current_year = _current_season_year(league_key)
@@ -962,6 +1044,7 @@ def build_predictions():
                 # UNCONFIRMED field on this scoreboard competitor shape, same
                 # defensive '' fallback as get_roster's own position lookup.
                 'home_abbr': home['team'].get('abbreviation', ''), 'away_abbr': away['team'].get('abbreviation', ''),
+                'home_team_id': h_id, 'away_team_id': a_id,
                 'home_props': home_props, 'away_props': away_props,
                 'home_form': h_form, 'away_form': a_form, 'pace': pace,
                 **team_total_proj,
@@ -1341,7 +1424,113 @@ def render_season_perfect_panel(entries):
     return SEASON_PERFECT_PANEL_TEMPLATE.format(recent=RECENT_GAMES, filters=filters, cards=cards)
 
 
-STREAK_ENTRY_TEMPLATE = """<div class="streak-row" data-match="{match}" data-date="{date_key}" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+# --- 100% Team Total ---------------------------------------------------
+# Same "100% This Season" idea as above, but for a TEAM's own game total
+# instead of a player prop -- user request, 2026-10-27: "100% team season
+# total above 105". Reads from team_season_meta_cache, the full-season
+# dated (date, scored, allowed) list get_team_form already builds (and
+# now filters to regular season -- see _extract_all_completed_team_games)
+# for zero extra API calls, same reuse trick as the player version.
+#
+# Over-only, fixed line, unlike the player panel's per-stat Over/Under
+# pair -- that's what was asked for, not a limitation worth generalizing
+# ahead of an actual second use case. A flat 105.0 line is an NBA-scale
+# number; WNBA teams average meaningfully fewer points per game (see
+# league_averages' own comment), so this will likely show NBA teams only
+# -- an accurate reflection of the real scoring gap between the two
+# leagues, not a bug, same as the Assists/Rebounds Over thresholds being
+# lopsided toward Under for low-usage bigs.
+SEASON_TEAM_TOTAL_MIN_GAMES = 3
+SEASON_TEAM_TOTAL_OVER_LINE = 105.0
+
+
+def build_season_team_total_entries(predictions):
+    entries = []
+    seen = set()
+    for p in predictions:
+        league_key = p.get("league", "").lower()
+        for team_name, team_id in [(p["home_team"], p.get("home_team_id")),
+                                     (p["away_team"], p.get("away_team_id"))]:
+            if not team_id:
+                continue
+            key = (league_key, team_id)
+            if key in seen:
+                continue  # same team can't appear twice in one slate (one game/day)
+            seen.add(key)
+            dated = team_season_meta_cache.get(key)
+            if not dated:
+                continue
+            values = [v for _, v, _ in dated]
+            if len(values) < SEASON_TEAM_TOTAL_MIN_GAMES:
+                continue
+            if all(v > SEASON_TEAM_TOTAL_OVER_LINE for v in values):
+                entries.append({
+                    "name": team_name, "league": p.get("league", ""), "match": p["match"],
+                    "total": len(values), "values": values, "line": SEASON_TEAM_TOTAL_OVER_LINE,
+                    "game_id": p.get("game_id"), "date": p.get("date", ""),
+                })
+    entries.sort(key=lambda e: -e["total"])
+    return entries
+
+
+SEASON_TEAM_TOTAL_ENTRY_TEMPLATE = """<div class="team-total-row" data-match="{match}" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:#998">100%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">{hits}/{hits}</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:#998">{league} · {match}</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{name} <span style="color:#998;font-weight:normal;font-size:11px">Over {line} Team Total</span></div>
+    <div style="font-size:10px;color:#cbd5e1">every game this season: {values_str}</div>
+  </div>
+</div>"""
+
+TEAM_TOTAL_FILTER_BAR = """<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;font-size:11px">
+  <select id="teamTotalFixtureFilter" onchange="filterTeamTotal()" style="background:#0f0a08;border:1px solid #3a2a20;color:#f59e0b;padding:5px 8px;border-radius:6px">
+    <option value="all">All Fixtures</option>
+    {fixture_options}
+  </select>
+</div>
+<script>
+function filterTeamTotal() {{
+  var fixture = document.getElementById('teamTotalFixtureFilter').value;
+  document.querySelectorAll('.team-total-row').forEach(function(row) {{
+    row.style.display = (fixture === 'all' || row.getAttribute('data-match') === fixture) ? 'flex' : 'none';
+  }});
+}}
+</script>"""
+
+SEASON_TEAM_TOTAL_PANEL_TEMPLATE = """<div style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:10px">💯 100% Team Total</div>
+  <div style="font-size:11px;color:#998;margin-bottom:10px">
+    Every game this team has played so far THIS SEASON, their own total has finished above
+    {line}. Resets each new season -- "3/3" means three games, not three months.
+  </div>
+  {filters}
+  <div id="teamTotalRows">{cards}</div>
+</div>"""
+
+
+def render_season_team_total_panel(entries):
+    if not entries:
+        return ""
+    seen_fixtures = []
+    for e in entries:
+        if e["match"] not in seen_fixtures:
+            seen_fixtures.append(e["match"])
+    fixture_options = "".join(f'<option value="{m}">{m}</option>' for m in seen_fixtures)
+    cards = "".join(
+        SEASON_TEAM_TOTAL_ENTRY_TEMPLATE.format(
+            match=e["match"], hits=e["total"], league=e["league"], name=e["name"],
+            line=e["line"], values_str="/".join(str(v) for v in e["values"]),
+        )
+        for e in entries
+    )
+    filters = TEAM_TOTAL_FILTER_BAR.format(fixture_options=fixture_options)
+    return SEASON_TEAM_TOTAL_PANEL_TEMPLATE.format(line=SEASON_TEAM_TOTAL_OVER_LINE, filters=filters, cards=cards)
+
+
+STREAK_ENTRY_TEMPLATE ="""<div class="streak-row" data-match="{match}" data-date="{date_key}" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
   <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #3a2a20;border-radius:8px;padding:6px 4px;flex-shrink:0">
     <div style="font-size:9px;color:#998">AVG</div>
     <div style="font-size:17px;font-weight:bold;color:#7dd3a8">{avg}</div>
@@ -1669,6 +1858,7 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 {builder}
 {streak_panel}
 {season_panel}
+{team_total_panel}
 {cards}
 </body></html>"""
 
@@ -1814,10 +2004,12 @@ def make_html(predictions):
     real_streak_entries = build_real_streak_entries(predictions)
     streak_panel = render_streak_panel(hot_form_entries, real_streak_entries)
     season_panel = render_season_perfect_panel(build_season_perfect_entries(predictions))
+    team_total_panel = render_season_team_total_panel(build_season_team_total_entries(predictions))
 
     return HTML_TEMPLATE.format(
         recent=RECENT_GAMES, generated=datetime.now().strftime('%d %b %H:%M'),
-        builder=builder, streak_panel=streak_panel, season_panel=season_panel, cards=cards,
+        builder=builder, streak_panel=streak_panel, season_panel=season_panel,
+        team_total_panel=team_total_panel, cards=cards,
     )
 
 
