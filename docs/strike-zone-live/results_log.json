@@ -589,7 +589,9 @@
     "logged_home_runs": 0.0,
     "logged_away_runs": 0.0,
     "pregame_total": 8.65,
-    "status": "pending"
+    "status": "miss",
+    "final_home_runs": 1.0,
+    "final_away_runs": 10.0
   },
   "849804_Game_Total_Over": {
     "id": "849804_Game_Total_Over",
@@ -605,6 +607,8 @@
     "logged_home_runs": 0.0,
     "logged_away_runs": 10.0,
     "pregame_total": 8.65,
-    "status": "pending"
+    "status": "hit",
+    "final_home_runs": 1.0,
+    "final_away_runs": 10.0
   }
 }
