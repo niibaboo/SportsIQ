@@ -466,6 +466,88 @@
         ],
         "n_games": 3,
         "tpm_n_games": 3
+      },
+      {
+        "name": "Derrick White",
+        "player_id": "3078576",
+        "position": "G",
+        "reb_proj": 4.9,
+        "ast_proj": 4.1,
+        "ra_proj": 9.0,
+        "pts_proj": 10.5,
+        "pts_proj_raw": 10.1,
+        "tpm_proj": 1.5,
+        "min_avg": 27.4,
+        "min_last": 18.0,
+        "rest_risk": true,
+        "rebs": [
+          1.0,
+          4.0,
+          6.0
+        ],
+        "asts": [
+          8.0,
+          6.0,
+          4.0
+        ],
+        "ra_values": [
+          9.0,
+          10.0,
+          10.0
+        ],
+        "pts": [
+          17.0,
+          12.0,
+          5.0
+        ],
+        "tpm": [
+          3.0,
+          2.0,
+          1.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Amari Williams",
+        "player_id": "4702745",
+        "position": "F",
+        "reb_proj": 4.1,
+        "ast_proj": 2.3,
+        "ra_proj": 6.4,
+        "pts_proj": 6.7,
+        "pts_proj_raw": 6.4,
+        "tpm_proj": 0.7,
+        "min_avg": 8.5,
+        "min_last": 14.0,
+        "rest_risk": false,
+        "rebs": [
+          4.0,
+          0.0,
+          3.0
+        ],
+        "asts": [
+          1.0,
+          1.0,
+          2.0
+        ],
+        "ra_values": [
+          5.0,
+          1.0,
+          5.0
+        ],
+        "pts": [
+          0.0,
+          0.0,
+          4.0
+        ],
+        "tpm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
       }
     ],
     "away_props": [
@@ -839,6 +921,88 @@
           0.0,
           1.0,
           1.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Nolan Traore",
+        "player_id": "5279130",
+        "position": "G",
+        "reb_proj": 4.0,
+        "ast_proj": 2.6,
+        "ra_proj": 6.6,
+        "pts_proj": 9.4,
+        "pts_proj_raw": 9.5,
+        "tpm_proj": 1.0,
+        "min_avg": 16.2,
+        "min_last": 25.0,
+        "rest_risk": false,
+        "rebs": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "asts": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "ra_values": [
+          2.0,
+          2.0,
+          7.0
+        ],
+        "pts": [
+          3.0,
+          3.0,
+          17.0
+        ],
+        "tpm": [
+          0.0,
+          0.0,
+          2.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Moritz Wagner",
+        "player_id": "3150844",
+        "position": "C",
+        "reb_proj": 4.2,
+        "ast_proj": 2.1,
+        "ra_proj": 6.4,
+        "pts_proj": 9.5,
+        "pts_proj_raw": 9.7,
+        "tpm_proj": 1.3,
+        "min_avg": 14.9,
+        "min_last": 15.0,
+        "rest_risk": false,
+        "rebs": [
+          0.0,
+          4.0,
+          3.0
+        ],
+        "asts": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "ra_values": [
+          1.0,
+          5.0,
+          4.0
+        ],
+        "pts": [
+          7.0,
+          6.0,
+          13.0
+        ],
+        "tpm": [
+          1.0,
+          1.0,
+          2.0
         ],
         "n_games": 3,
         "tpm_n_games": 3
@@ -1422,6 +1586,47 @@
         ],
         "n_games": 3,
         "tpm_n_games": 3
+      },
+      {
+        "name": "Karl-Anthony Towns",
+        "player_id": "3136195",
+        "position": "C",
+        "reb_proj": 8.4,
+        "ast_proj": 3.0,
+        "ra_proj": 11.3,
+        "pts_proj": 15.3,
+        "pts_proj_raw": 14.8,
+        "tpm_proj": 1.3,
+        "min_avg": 32.0,
+        "min_last": 33.0,
+        "rest_risk": false,
+        "rebs": [
+          12.0,
+          10.0,
+          14.0
+        ],
+        "asts": [
+          1.0,
+          3.0,
+          4.0
+        ],
+        "ra_values": [
+          13.0,
+          13.0,
+          18.0
+        ],
+        "pts": [
+          19.0,
+          22.0,
+          22.0
+        ],
+        "tpm": [
+          3.0,
+          2.0,
+          0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
       }
     ],
     "away_props": [
@@ -1921,6 +2126,47 @@
         ],
         "n_games": 3,
         "tpm_n_games": 3
+      },
+      {
+        "name": "Duncan Robinson",
+        "player_id": "3157465",
+        "position": "F",
+        "reb_proj": 4.0,
+        "ast_proj": 2.8,
+        "ra_proj": 6.8,
+        "pts_proj": 13.5,
+        "pts_proj_raw": 14.2,
+        "tpm_proj": 2.8,
+        "min_avg": 29.7,
+        "min_last": 32.0,
+        "rest_risk": false,
+        "rebs": [
+          2.0,
+          1.0,
+          3.0
+        ],
+        "asts": [
+          2.0,
+          2.0,
+          3.0
+        ],
+        "ra_values": [
+          4.0,
+          3.0,
+          6.0
+        ],
+        "pts": [
+          21.0,
+          17.0,
+          21.0
+        ],
+        "tpm": [
+          5.0,
+          5.0,
+          5.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
       }
     ],
     "home_form": {
@@ -2368,6 +2614,88 @@
         ],
         "n_games": 3,
         "tpm_n_games": 3
+      },
+      {
+        "name": "Devin Vassell",
+        "player_id": "4395630",
+        "position": "G",
+        "reb_proj": 4.7,
+        "ast_proj": 3.2,
+        "ra_proj": 7.9,
+        "pts_proj": 10.4,
+        "pts_proj_raw": 9.9,
+        "tpm_proj": 1.3,
+        "min_avg": 33.1,
+        "min_last": 32.0,
+        "rest_risk": false,
+        "rebs": [
+          3.0,
+          4.0,
+          4.0
+        ],
+        "asts": [
+          1.0,
+          2.0,
+          6.0
+        ],
+        "ra_values": [
+          4.0,
+          6.0,
+          10.0
+        ],
+        "pts": [
+          7.0,
+          10.0,
+          11.0
+        ],
+        "tpm": [
+          1.0,
+          2.0,
+          1.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Victor Wembanyama",
+        "player_id": "5104157",
+        "position": "F",
+        "reb_proj": 7.6,
+        "ast_proj": 2.7,
+        "ra_proj": 10.3,
+        "pts_proj": 15.5,
+        "pts_proj_raw": 14.7,
+        "tpm_proj": 1.3,
+        "min_avg": 31.2,
+        "min_last": 29.0,
+        "rest_risk": false,
+        "rebs": [
+          13.0,
+          13.0,
+          7.0
+        ],
+        "asts": [
+          3.0,
+          2.0,
+          2.0
+        ],
+        "ra_values": [
+          16.0,
+          15.0,
+          9.0
+        ],
+        "pts": [
+          12.0,
+          25.0,
+          23.0
+        ],
+        "tpm": [
+          0.0,
+          2.0,
+          2.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
       }
     ],
     "away_props": [
@@ -2759,6 +3087,47 @@
         ],
         "n_games": 3,
         "tpm_n_games": 3
+      },
+      {
+        "name": "Emanuel Sharp",
+        "player_id": "5106058",
+        "position": "G",
+        "reb_proj": 3.4,
+        "ast_proj": 1.9,
+        "ra_proj": 5.3,
+        "pts_proj": 8.0,
+        "pts_proj_raw": 7.8,
+        "tpm_proj": 1.2,
+        "min_avg": 14.8,
+        "min_last": 14.0,
+        "rest_risk": false,
+        "rebs": [
+          1.0,
+          0.0,
+          1.0
+        ],
+        "asts": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "ra_values": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "pts": [
+          8.0,
+          5.0,
+          3.0
+        ],
+        "tpm": [
+          2.0,
+          1.0,
+          1.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
       }
     ],
     "home_form": {
@@ -3142,6 +3511,134 @@
           0.0,
           0.0,
           0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Matisse Thybulle",
+        "player_id": "3907498",
+        "position": "G",
+        "reb_proj": 3.8,
+        "ast_proj": 2.3,
+        "ra_proj": 6.1,
+        "pts_proj": 9.0,
+        "pts_proj_raw": 9.8,
+        "tpm_proj": 1.8,
+        "min_avg": 24.6,
+        "min_last": 26.0,
+        "rest_risk": false,
+        "rebs": [
+          3.0,
+          1.0,
+          1.0
+        ],
+        "asts": [
+          1.0,
+          2.0,
+          1.0
+        ],
+        "ra_values": [
+          4.0,
+          3.0,
+          2.0
+        ],
+        "pts": [
+          3.0,
+          13.0,
+          11.0
+        ],
+        "tpm": [
+          1.0,
+          3.0,
+          3.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Jarred Vanderbilt",
+        "player_id": "4278077",
+        "position": "F",
+        "reb_proj": 4.8,
+        "ast_proj": 1.7,
+        "ra_proj": 6.5,
+        "pts_proj": 5.9,
+        "pts_proj_raw": 6.4,
+        "tpm_proj": 0.6,
+        "min_avg": 9.4,
+        "min_last": 5.0,
+        "rest_risk": false,
+        "rebs": [
+          2.0,
+          5.0,
+          6.0,
+          3.0
+        ],
+        "asts": [
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "ra_values": [
+          3.0,
+          6.0,
+          6.0,
+          3.0
+        ],
+        "pts": [
+          4.0,
+          2.0,
+          4.0,
+          2.0
+        ],
+        "tpm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "Ziaire Williams",
+        "player_id": "4433137",
+        "position": "F",
+        "reb_proj": 4.5,
+        "ast_proj": 2.3,
+        "ra_proj": 6.9,
+        "pts_proj": 9.7,
+        "pts_proj_raw": 10.6,
+        "tpm_proj": 1.5,
+        "min_avg": 28.8,
+        "min_last": 30.0,
+        "rest_risk": false,
+        "rebs": [
+          3.0,
+          5.0,
+          2.0
+        ],
+        "asts": [
+          4.0,
+          0.0,
+          1.0
+        ],
+        "ra_values": [
+          7.0,
+          5.0,
+          3.0
+        ],
+        "pts": [
+          9.0,
+          14.0,
+          11.0
+        ],
+        "tpm": [
+          1.0,
+          1.0,
+          3.0
         ],
         "n_games": 3,
         "tpm_n_games": 3
@@ -3831,6 +4328,98 @@
         ],
         "n_games": 4,
         "tpm_n_games": 4
+      },
+      {
+        "name": "Aaron Wiggins",
+        "player_id": "4397183",
+        "position": "G",
+        "reb_proj": 4.5,
+        "ast_proj": 2.4,
+        "ra_proj": 6.9,
+        "pts_proj": 12.4,
+        "pts_proj_raw": 12.6,
+        "tpm_proj": 2.1,
+        "min_avg": 27.3,
+        "min_last": 27.0,
+        "rest_risk": false,
+        "rebs": [
+          3.0,
+          1.0,
+          5.0,
+          4.0
+        ],
+        "asts": [
+          0.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "ra_values": [
+          3.0,
+          2.0,
+          7.0,
+          7.0
+        ],
+        "pts": [
+          16.0,
+          19.0,
+          16.0,
+          12.0
+        ],
+        "tpm": [
+          3.0,
+          3.0,
+          4.0,
+          2.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "Jalen Wilson",
+        "player_id": "4431714",
+        "position": "F",
+        "reb_proj": 4.7,
+        "ast_proj": 1.8,
+        "ra_proj": 6.5,
+        "pts_proj": 9.3,
+        "pts_proj_raw": 9.4,
+        "tpm_proj": 1.7,
+        "min_avg": 18.5,
+        "min_last": 30.0,
+        "rest_risk": false,
+        "rebs": [
+          0.0,
+          1.0,
+          3.0,
+          8.0
+        ],
+        "asts": [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        "ra_values": [
+          0.0,
+          2.0,
+          3.0,
+          9.0
+        ],
+        "pts": [
+          12.0,
+          2.0,
+          8.0,
+          12.0
+        ],
+        "tpm": [
+          2.0,
+          0.0,
+          2.0,
+          4.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
       }
     ],
     "away_props": [
@@ -4280,6 +4869,98 @@
           3.0,
           2.0,
           3.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "Klay Thompson",
+        "player_id": "6475",
+        "position": "G",
+        "reb_proj": 3.6,
+        "ast_proj": 1.9,
+        "ra_proj": 5.5,
+        "pts_proj": 9.6,
+        "pts_proj_raw": 9.4,
+        "tpm_proj": 2.0,
+        "min_avg": 20.3,
+        "min_last": 15.0,
+        "rest_risk": false,
+        "rebs": [
+          1.0,
+          2.0,
+          3.0,
+          1.0
+        ],
+        "asts": [
+          0.0,
+          2.0,
+          0.0,
+          1.0
+        ],
+        "ra_values": [
+          1.0,
+          4.0,
+          3.0,
+          2.0
+        ],
+        "pts": [
+          10.0,
+          6.0,
+          14.0,
+          6.0
+        ],
+        "tpm": [
+          3.0,
+          2.0,
+          4.0,
+          2.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "Andrew Wiggins",
+        "player_id": "3059319",
+        "position": "F",
+        "reb_proj": 4.4,
+        "ast_proj": 2.1,
+        "ra_proj": 6.5,
+        "pts_proj": 9.6,
+        "pts_proj_raw": 9.4,
+        "tpm_proj": 0.8,
+        "min_avg": 26.8,
+        "min_last": 34.0,
+        "rest_risk": false,
+        "rebs": [
+          2.0,
+          8.0,
+          1.0,
+          3.0
+        ],
+        "asts": [
+          1.0,
+          2.0,
+          1.0,
+          1.0
+        ],
+        "ra_values": [
+          3.0,
+          10.0,
+          2.0,
+          4.0
+        ],
+        "pts": [
+          11.0,
+          8.0,
+          4.0,
+          12.0
+        ],
+        "tpm": [
+          1.0,
+          1.0,
+          0.0,
+          0.0
         ],
         "n_games": 4,
         "tpm_n_games": 4
@@ -5253,6 +5934,174 @@
         ],
         "n_games": 4,
         "tpm_n_games": 4
+      },
+      {
+        "name": "Tristan Vukcevic",
+        "player_id": "4997537",
+        "position": "F",
+        "reb_proj": 3.8,
+        "ast_proj": 1.7,
+        "ra_proj": 5.5,
+        "pts_proj": 12.5,
+        "pts_proj_raw": 12.2,
+        "tpm_proj": 1.7,
+        "min_avg": 16.1,
+        "min_last": 11.0,
+        "rest_risk": true,
+        "rebs": [
+          4.0,
+          4.0,
+          7.0,
+          1.0,
+          2.0,
+          3.0,
+          2.0
+        ],
+        "asts": [
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          2.0
+        ],
+        "ra_values": [
+          5.0,
+          5.0,
+          7.0,
+          2.0,
+          2.0,
+          4.0,
+          4.0
+        ],
+        "pts": [
+          9.0,
+          21.0,
+          6.0,
+          13.0,
+          10.0,
+          14.0,
+          17.0
+        ],
+        "tpm": [
+          0.0,
+          3.0,
+          1.0,
+          3.0,
+          2.0,
+          1.0,
+          3.0
+        ],
+        "n_games": 7,
+        "tpm_n_games": 7
+      },
+      {
+        "name": "Jamir Watkins",
+        "player_id": "4606840",
+        "position": "G",
+        "reb_proj": 5.4,
+        "ast_proj": 2.4,
+        "ra_proj": 7.7,
+        "pts_proj": 13.1,
+        "pts_proj_raw": 12.9,
+        "tpm_proj": 1.9,
+        "min_avg": 29.9,
+        "min_last": 34.0,
+        "rest_risk": false,
+        "rebs": [
+          5.0,
+          3.0,
+          8.0,
+          7.0,
+          6.0,
+          5.0,
+          4.0
+        ],
+        "asts": [
+          2.0,
+          1.0,
+          2.0,
+          1.0,
+          3.0,
+          1.0,
+          3.0
+        ],
+        "ra_values": [
+          7.0,
+          4.0,
+          10.0,
+          8.0,
+          9.0,
+          6.0,
+          7.0
+        ],
+        "pts": [
+          7.0,
+          14.0,
+          20.0,
+          13.0,
+          9.0,
+          7.0,
+          24.0
+        ],
+        "tpm": [
+          1.0,
+          2.0,
+          2.0,
+          1.0,
+          1.0,
+          1.0,
+          5.0
+        ],
+        "n_games": 7,
+        "tpm_n_games": 7
+      },
+      {
+        "name": "Trae Young",
+        "player_id": "4277905",
+        "position": "G",
+        "reb_proj": 4.5,
+        "ast_proj": 6.8,
+        "ra_proj": 11.3,
+        "pts_proj": 16.6,
+        "pts_proj_raw": 16.2,
+        "tpm_proj": 1.7,
+        "min_avg": 36.7,
+        "min_last": 38.0,
+        "rest_risk": false,
+        "rebs": [
+          0.0,
+          1.0,
+          4.0,
+          6.0
+        ],
+        "asts": [
+          13.0,
+          12.0,
+          9.0,
+          10.0
+        ],
+        "ra_values": [
+          13.0,
+          13.0,
+          13.0,
+          16.0
+        ],
+        "pts": [
+          20.0,
+          22.0,
+          25.0,
+          22.0
+        ],
+        "tpm": [
+          0.0,
+          4.0,
+          4.0,
+          1.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
       }
     ],
     "home_form": {
@@ -5810,6 +6659,47 @@
         ],
         "n_games": 3,
         "tpm_n_games": 3
+      },
+      {
+        "name": "Duncan Robinson",
+        "player_id": "3157465",
+        "position": "F",
+        "reb_proj": 4.0,
+        "ast_proj": 2.8,
+        "ra_proj": 6.8,
+        "pts_proj": 13.6,
+        "pts_proj_raw": 14.2,
+        "tpm_proj": 2.8,
+        "min_avg": 29.7,
+        "min_last": 32.0,
+        "rest_risk": false,
+        "rebs": [
+          2.0,
+          1.0,
+          3.0
+        ],
+        "asts": [
+          2.0,
+          2.0,
+          3.0
+        ],
+        "ra_values": [
+          4.0,
+          3.0,
+          6.0
+        ],
+        "pts": [
+          21.0,
+          17.0,
+          21.0
+        ],
+        "tpm": [
+          5.0,
+          5.0,
+          5.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
       }
     ],
     "away_props": [
@@ -6328,6 +7218,128 @@
         ],
         "n_games": 4,
         "tpm_n_games": 4
+      },
+      {
+        "name": "Coby White",
+        "player_id": "4395651",
+        "position": "G",
+        "reb_proj": 3.2,
+        "ast_proj": 2.1,
+        "ra_proj": 5.4,
+        "pts_proj": 12.2,
+        "pts_proj_raw": 12.0,
+        "tpm_proj": 1.9,
+        "min_avg": 18.9,
+        "min_last": 17.0,
+        "rest_risk": false,
+        "rebs": [
+          4.0,
+          3.0,
+          0.0,
+          2.0,
+          1.0,
+          5.0,
+          0.0
+        ],
+        "asts": [
+          3.0,
+          4.0,
+          1.0,
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "ra_values": [
+          7.0,
+          7.0,
+          1.0,
+          3.0,
+          3.0,
+          8.0,
+          0.0
+        ],
+        "pts": [
+          19.0,
+          11.0,
+          17.0,
+          11.0,
+          19.0,
+          19.0,
+          4.0
+        ],
+        "tpm": [
+          3.0,
+          1.0,
+          3.0,
+          2.0,
+          3.0,
+          5.0,
+          0.0
+        ],
+        "n_games": 7,
+        "tpm_n_games": 7
+      },
+      {
+        "name": "Grant Williams",
+        "player_id": "4066218",
+        "position": "F",
+        "reb_proj": 4.1,
+        "ast_proj": 1.4,
+        "ra_proj": 5.5,
+        "pts_proj": 6.9,
+        "pts_proj_raw": 6.8,
+        "tpm_proj": 1.1,
+        "min_avg": 19.2,
+        "min_last": 15.0,
+        "rest_risk": false,
+        "rebs": [
+          7.0,
+          4.0,
+          2.0,
+          4.0,
+          6.0,
+          2.0,
+          2.0
+        ],
+        "asts": [
+          2.0,
+          1.0,
+          0.0,
+          0.0,
+          2.0,
+          0.0,
+          0.0
+        ],
+        "ra_values": [
+          9.0,
+          5.0,
+          2.0,
+          4.0,
+          8.0,
+          2.0,
+          2.0
+        ],
+        "pts": [
+          10.0,
+          8.0,
+          9.0,
+          2.0,
+          8.0,
+          5.0,
+          1.0
+        ],
+        "tpm": [
+          2.0,
+          2.0,
+          3.0,
+          0.0,
+          2.0,
+          1.0,
+          0.0
+        ],
+        "n_games": 7,
+        "tpm_n_games": 7
       }
     ],
     "home_form": {
@@ -6950,6 +7962,93 @@
         ],
         "n_games": 4,
         "tpm_n_games": 4
+      },
+      {
+        "name": "Jarace Walker",
+        "player_id": "5106060",
+        "position": "F",
+        "reb_proj": 5.7,
+        "ast_proj": 2.3,
+        "ra_proj": 8.0,
+        "pts_proj": 7.7,
+        "pts_proj_raw": 8.0,
+        "tpm_proj": 1.0,
+        "min_avg": 22.1,
+        "min_last": 29.0,
+        "rest_risk": false,
+        "rebs": [
+          6.0,
+          1.0,
+          7.0,
+          8.0
+        ],
+        "asts": [
+          2.0,
+          1.0,
+          1.0,
+          2.0
+        ],
+        "ra_values": [
+          8.0,
+          2.0,
+          8.0,
+          10.0
+        ],
+        "pts": [
+          3.0,
+          2.0,
+          6.0,
+          10.0
+        ],
+        "tpm": [
+          1.0,
+          0.0,
+          0.0,
+          2.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "Ivica Zubac",
+        "player_id": "4017837",
+        "position": "C",
+        "reb_proj": 6.5,
+        "ast_proj": 2.4,
+        "ra_proj": 8.8,
+        "pts_proj": 8.7,
+        "pts_proj_raw": 9.1,
+        "tpm_proj": 0.7,
+        "min_avg": 19.3,
+        "min_last": 7.0,
+        "rest_risk": true,
+        "rebs": [
+          15.0,
+          11.0,
+          1.0
+        ],
+        "asts": [
+          0.0,
+          2.0,
+          2.0
+        ],
+        "ra_values": [
+          15.0,
+          13.0,
+          3.0
+        ],
+        "pts": [
+          16.0,
+          9.0,
+          2.0
+        ],
+        "tpm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
       }
     ],
     "away_props": [
@@ -7412,6 +8511,47 @@
         ],
         "n_games": 4,
         "tpm_n_games": 4
+      },
+      {
+        "name": "Jabari Walker",
+        "player_id": "4432446",
+        "position": "F",
+        "reb_proj": 3.8,
+        "ast_proj": 2.0,
+        "ra_proj": 5.8,
+        "pts_proj": 7.2,
+        "pts_proj_raw": 7.1,
+        "tpm_proj": 0.7,
+        "min_avg": 7.1,
+        "min_last": 12.0,
+        "rest_risk": false,
+        "rebs": [
+          0.0,
+          1.0,
+          3.0
+        ],
+        "asts": [
+          1.0,
+          0.0,
+          1.0
+        ],
+        "ra_values": [
+          1.0,
+          1.0,
+          4.0
+        ],
+        "pts": [
+          0.0,
+          2.0,
+          6.0
+        ],
+        "tpm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
       }
     ],
     "home_form": {
@@ -7976,6 +9116,47 @@
         ],
         "n_games": 5,
         "tpm_n_games": 5
+      },
+      {
+        "name": "Ja'Kobe Walter",
+        "player_id": "4684272",
+        "position": "G",
+        "reb_proj": 4.7,
+        "ast_proj": 2.8,
+        "ra_proj": 7.5,
+        "pts_proj": 11.6,
+        "pts_proj_raw": 11.8,
+        "tpm_proj": 2.0,
+        "min_avg": 26.7,
+        "min_last": 31.0,
+        "rest_risk": false,
+        "rebs": [
+          3.0,
+          4.0,
+          4.0
+        ],
+        "asts": [
+          4.0,
+          2.0,
+          2.0
+        ],
+        "ra_values": [
+          7.0,
+          6.0,
+          6.0
+        ],
+        "pts": [
+          10.0,
+          7.0,
+          22.0
+        ],
+        "tpm": [
+          1.0,
+          2.0,
+          5.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
       }
     ],
     "away_props": [
@@ -8321,6 +9502,88 @@
         ],
         "tpm": [
           0.0,
+          1.0,
+          0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Nikola Vucevic",
+        "player_id": "6478",
+        "position": "C",
+        "reb_proj": 4.1,
+        "ast_proj": 2.4,
+        "ra_proj": 6.4,
+        "pts_proj": 6.5,
+        "pts_proj_raw": 6.6,
+        "tpm_proj": 0.9,
+        "min_avg": 8.9,
+        "min_last": 15.0,
+        "rest_risk": false,
+        "rebs": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "asts": [
+          1.0,
+          0.0,
+          3.0
+        ],
+        "ra_values": [
+          2.0,
+          2.0,
+          6.0
+        ],
+        "pts": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "tpm": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Franz Wagner",
+        "player_id": "4566434",
+        "position": "F",
+        "reb_proj": 7.0,
+        "ast_proj": 4.6,
+        "ra_proj": 11.6,
+        "pts_proj": 14.6,
+        "pts_proj_raw": 14.8,
+        "tpm_proj": 1.0,
+        "min_avg": 33.7,
+        "min_last": 37.0,
+        "rest_risk": false,
+        "rebs": [
+          6.0,
+          6.0,
+          13.0
+        ],
+        "asts": [
+          5.0,
+          5.0,
+          9.0
+        ],
+        "ra_values": [
+          11.0,
+          11.0,
+          22.0
+        ],
+        "pts": [
+          22.0,
+          18.0,
+          23.0
+        ],
+        "tpm": [
+          2.0,
           1.0,
           0.0
         ],
@@ -8895,6 +10158,103 @@
         ],
         "n_games": 4,
         "tpm_n_games": 4
+      },
+      {
+        "name": "Patrick Williams",
+        "player_id": "4431687",
+        "position": "F",
+        "reb_proj": 4.1,
+        "ast_proj": 1.8,
+        "ra_proj": 5.9,
+        "pts_proj": 7.7,
+        "pts_proj_raw": 7.7,
+        "tpm_proj": 0.9,
+        "min_avg": 12.2,
+        "min_last": 13.0,
+        "rest_risk": false,
+        "rebs": [
+          1.0,
+          3.0,
+          4.0,
+          4.0,
+          2.0
+        ],
+        "asts": [
+          0.0,
+          0.0,
+          3.0,
+          0.0,
+          1.0
+        ],
+        "ra_values": [
+          1.0,
+          3.0,
+          7.0,
+          4.0,
+          3.0
+        ],
+        "pts": [
+          6.0,
+          3.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "tpm": [
+          2.0,
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "n_games": 5,
+        "tpm_n_games": 5
+      },
+      {
+        "name": "Caleb Wilson",
+        "player_id": "5095151",
+        "position": "F",
+        "reb_proj": 6.5,
+        "ast_proj": 2.5,
+        "ra_proj": 9.1,
+        "pts_proj": 15.5,
+        "pts_proj_raw": 15.6,
+        "tpm_proj": 1.2,
+        "min_avg": 33.8,
+        "min_last": 32.0,
+        "rest_risk": false,
+        "rebs": [
+          4.0,
+          6.0,
+          14.0,
+          5.0
+        ],
+        "asts": [
+          0.0,
+          1.0,
+          3.0,
+          3.0
+        ],
+        "ra_values": [
+          4.0,
+          7.0,
+          17.0,
+          8.0
+        ],
+        "pts": [
+          16.0,
+          21.0,
+          30.0,
+          17.0
+        ],
+        "tpm": [
+          1.0,
+          2.0,
+          1.0,
+          1.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
       }
     ],
     "away_props": [
@@ -9416,6 +10776,47 @@
           1.0,
           2.0,
           2.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Karl-Anthony Towns",
+        "player_id": "3136195",
+        "position": "C",
+        "reb_proj": 8.4,
+        "ast_proj": 3.0,
+        "ra_proj": 11.3,
+        "pts_proj": 17.0,
+        "pts_proj_raw": 14.8,
+        "tpm_proj": 1.3,
+        "min_avg": 32.0,
+        "min_last": 33.0,
+        "rest_risk": false,
+        "rebs": [
+          12.0,
+          10.0,
+          14.0
+        ],
+        "asts": [
+          1.0,
+          3.0,
+          4.0
+        ],
+        "ra_values": [
+          13.0,
+          13.0,
+          18.0
+        ],
+        "pts": [
+          19.0,
+          22.0,
+          22.0
+        ],
+        "tpm": [
+          3.0,
+          2.0,
+          0.0
         ],
         "n_games": 3,
         "tpm_n_games": 3
@@ -10057,6 +11458,98 @@
         ],
         "n_games": 3,
         "tpm_n_games": 3
+      },
+      {
+        "name": "Myles Turner",
+        "player_id": "3133628",
+        "position": "C",
+        "reb_proj": 5.8,
+        "ast_proj": 2.7,
+        "ra_proj": 8.4,
+        "pts_proj": 8.0,
+        "pts_proj_raw": 8.2,
+        "tpm_proj": 1.0,
+        "min_avg": 26.9,
+        "min_last": 28.0,
+        "rest_risk": false,
+        "rebs": [
+          5.0,
+          3.0,
+          5.0,
+          9.0
+        ],
+        "asts": [
+          3.0,
+          1.0,
+          1.0,
+          4.0
+        ],
+        "ra_values": [
+          8.0,
+          4.0,
+          6.0,
+          13.0
+        ],
+        "pts": [
+          11.0,
+          12.0,
+          0.0,
+          6.0
+        ],
+        "tpm": [
+          2.0,
+          2.0,
+          0.0,
+          0.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "Kel'el Ware",
+        "player_id": "5105623",
+        "position": "C",
+        "reb_proj": 7.7,
+        "ast_proj": 1.7,
+        "ra_proj": 9.4,
+        "pts_proj": 11.8,
+        "pts_proj_raw": 12.2,
+        "tpm_proj": 1.0,
+        "min_avg": 20.1,
+        "min_last": 19.0,
+        "rest_risk": false,
+        "rebs": [
+          3.0,
+          4.0,
+          13.0,
+          14.0
+        ],
+        "asts": [
+          1.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "ra_values": [
+          4.0,
+          4.0,
+          14.0,
+          14.0
+        ],
+        "pts": [
+          7.0,
+          11.0,
+          19.0,
+          16.0
+        ],
+        "tpm": [
+          0.0,
+          1.0,
+          2.0,
+          0.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
       }
     ],
     "away_props": [
@@ -10618,6 +12111,88 @@
         "tpm": [
           0.0,
           0.0,
+          0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Oscar Tshiebwe",
+        "player_id": "4432827",
+        "position": "C",
+        "reb_proj": 4.6,
+        "ast_proj": 2.3,
+        "ra_proj": 6.9,
+        "pts_proj": 8.2,
+        "pts_proj_raw": 8.3,
+        "tpm_proj": 0.7,
+        "min_avg": 11.2,
+        "min_last": 10.0,
+        "rest_risk": false,
+        "rebs": [
+          3.0,
+          4.0,
+          3.0
+        ],
+        "asts": [
+          1.0,
+          1.0,
+          2.0
+        ],
+        "ra_values": [
+          4.0,
+          5.0,
+          5.0
+        ],
+        "pts": [
+          5.0,
+          12.0,
+          2.0
+        ],
+        "tpm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Fred VanVleet",
+        "player_id": "2991230",
+        "position": "G",
+        "reb_proj": 4.5,
+        "ast_proj": 4.5,
+        "ra_proj": 9.0,
+        "pts_proj": 9.2,
+        "pts_proj_raw": 9.2,
+        "tpm_proj": 1.3,
+        "min_avg": 30.2,
+        "min_last": 29.0,
+        "rest_risk": false,
+        "rebs": [
+          2.0,
+          3.0,
+          4.0
+        ],
+        "asts": [
+          11.0,
+          5.0,
+          5.0
+        ],
+        "ra_values": [
+          13.0,
+          8.0,
+          9.0
+        ],
+        "pts": [
+          6.0,
+          14.0,
+          5.0
+        ],
+        "tpm": [
+          2.0,
+          3.0,
           0.0
         ],
         "n_games": 3,
@@ -11948,6 +13523,144 @@
         ],
         "n_games": 7,
         "tpm_n_games": 7
+      },
+      {
+        "name": "Will Richard",
+        "player_id": "4897262",
+        "position": "G",
+        "reb_proj": 3.2,
+        "ast_proj": 1.7,
+        "ra_proj": 4.9,
+        "pts_proj": 7.0,
+        "pts_proj_raw": 7.1,
+        "tpm_proj": 1.0,
+        "min_avg": 13.4,
+        "min_last": 3.0,
+        "rest_risk": false,
+        "rebs": [
+          5.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "asts": [
+          1.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "ra_values": [
+          6.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "pts": [
+          8.0,
+          0.0,
+          11.0,
+          0.0
+        ],
+        "tpm": [
+          0.0,
+          0.0,
+          3.0,
+          0.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "Gui Santos",
+        "player_id": "4997536",
+        "position": "F",
+        "reb_proj": 4.7,
+        "ast_proj": 2.3,
+        "ra_proj": 7.0,
+        "pts_proj": 9.5,
+        "pts_proj_raw": 9.8,
+        "tpm_proj": 1.1,
+        "min_avg": 24.5,
+        "min_last": 28.0,
+        "rest_risk": false,
+        "rebs": [
+          5.0,
+          4.0,
+          4.0,
+          3.0
+        ],
+        "asts": [
+          0.0,
+          2.0,
+          3.0,
+          1.0
+        ],
+        "ra_values": [
+          5.0,
+          6.0,
+          7.0,
+          4.0
+        ],
+        "pts": [
+          12.0,
+          5.0,
+          7.0,
+          13.0
+        ],
+        "tpm": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "Brandon Williams",
+        "player_id": "4397040",
+        "position": "G",
+        "reb_proj": 4.2,
+        "ast_proj": 3.1,
+        "ra_proj": 7.3,
+        "pts_proj": 10.1,
+        "pts_proj_raw": 10.3,
+        "tpm_proj": 1.3,
+        "min_avg": 16.7,
+        "min_last": 15.0,
+        "rest_risk": false,
+        "rebs": [
+          4.0,
+          2.0,
+          3.0,
+          3.0
+        ],
+        "asts": [
+          3.0,
+          1.0,
+          5.0,
+          3.0
+        ],
+        "ra_values": [
+          7.0,
+          3.0,
+          8.0,
+          6.0
+        ],
+        "pts": [
+          14.0,
+          4.0,
+          20.0,
+          6.0
+        ],
+        "tpm": [
+          1.0,
+          0.0,
+          2.0,
+          2.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
       }
     ],
     "home_form": {
@@ -12430,6 +14143,134 @@
         ],
         "n_games": 3,
         "tpm_n_games": 3
+      },
+      {
+        "name": "Julian Reese",
+        "player_id": "4683742",
+        "position": "F",
+        "reb_proj": 3.3,
+        "ast_proj": 1.7,
+        "ra_proj": 5.0,
+        "pts_proj": 6.5,
+        "pts_proj_raw": 6.6,
+        "tpm_proj": 0.7,
+        "min_avg": 6.5,
+        "min_last": 9.0,
+        "rest_risk": false,
+        "rebs": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "asts": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "ra_values": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "pts": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "tpm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Trendon Watford",
+        "player_id": "4431675",
+        "position": "F",
+        "reb_proj": 4.3,
+        "ast_proj": 1.8,
+        "ra_proj": 6.1,
+        "pts_proj": 6.6,
+        "pts_proj_raw": 6.6,
+        "tpm_proj": 0.6,
+        "min_avg": 11.6,
+        "min_last": 9.0,
+        "rest_risk": false,
+        "rebs": [
+          6.0,
+          7.0,
+          1.0,
+          1.0
+        ],
+        "asts": [
+          1.0,
+          2.0,
+          0.0,
+          0.0
+        ],
+        "ra_values": [
+          7.0,
+          9.0,
+          1.0,
+          1.0
+        ],
+        "pts": [
+          7.0,
+          2.0,
+          1.0,
+          4.0
+        ],
+        "tpm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "Zion Williamson",
+        "player_id": "4395628",
+        "position": "F",
+        "reb_proj": 4.3,
+        "ast_proj": 2.7,
+        "ra_proj": 7.0,
+        "pts_proj": 14.3,
+        "pts_proj_raw": 14.4,
+        "tpm_proj": 0.9,
+        "min_avg": 32.7,
+        "min_last": 33.0,
+        "rest_risk": false,
+        "rebs": [
+          3.0,
+          5.0,
+          1.0
+        ],
+        "asts": [
+          3.0,
+          2.0,
+          2.0
+        ],
+        "ra_values": [
+          6.0,
+          7.0,
+          3.0
+        ],
+        "pts": [
+          22.0,
+          23.0,
+          17.0
+        ],
+        "tpm": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
       }
     ],
     "away_props": [
@@ -12862,6 +14703,52 @@
         ],
         "n_games": 3,
         "tpm_n_games": 3
+      },
+      {
+        "name": "Julian Strawther",
+        "player_id": "4432181",
+        "position": "G",
+        "reb_proj": 4.0,
+        "ast_proj": 1.9,
+        "ra_proj": 5.9,
+        "pts_proj": 12.3,
+        "pts_proj_raw": 11.4,
+        "tpm_proj": 1.9,
+        "min_avg": 18.4,
+        "min_last": 19.0,
+        "rest_risk": false,
+        "rebs": [
+          3.0,
+          4.0,
+          2.0,
+          2.0
+        ],
+        "asts": [
+          1.0,
+          3.0,
+          0.0,
+          0.0
+        ],
+        "ra_values": [
+          4.0,
+          7.0,
+          2.0,
+          2.0
+        ],
+        "pts": [
+          14.0,
+          15.0,
+          13.0,
+          11.0
+        ],
+        "tpm": [
+          1.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
       }
     ],
     "home_form": {
@@ -13365,6 +15252,139 @@
         ],
         "n_games": 4,
         "tpm_n_games": 4
+      },
+      {
+        "name": "Josh Okogie",
+        "player_id": "4065663",
+        "position": "G",
+        "reb_proj": 3.9,
+        "ast_proj": 2.0,
+        "ra_proj": 5.9,
+        "pts_proj": 6.0,
+        "pts_proj_raw": 6.0,
+        "tpm_proj": 0.7,
+        "min_avg": 14.2,
+        "min_last": 21.0,
+        "rest_risk": false,
+        "rebs": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "asts": [
+          0.0,
+          2.0,
+          0.0
+        ],
+        "ra_values": [
+          1.0,
+          4.0,
+          2.0
+        ],
+        "pts": [
+          0.0,
+          2.0,
+          0.0
+        ],
+        "tpm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Darryn Peterson",
+        "player_id": "5041955",
+        "position": "G",
+        "reb_proj": 5.0,
+        "ast_proj": 2.8,
+        "ra_proj": 7.9,
+        "pts_proj": 10.8,
+        "pts_proj_raw": 10.9,
+        "tpm_proj": 1.2,
+        "min_avg": 28.7,
+        "min_last": 26.0,
+        "rest_risk": false,
+        "rebs": [
+          4.0,
+          3.0,
+          3.0,
+          7.0
+        ],
+        "asts": [
+          3.0,
+          1.0,
+          2.0,
+          4.0
+        ],
+        "ra_values": [
+          7.0,
+          4.0,
+          5.0,
+          11.0
+        ],
+        "pts": [
+          9.0,
+          15.0,
+          8.0,
+          14.0
+        ],
+        "tpm": [
+          0.0,
+          1.0,
+          0.0,
+          3.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "Brice Sensabaugh",
+        "player_id": "5105839",
+        "position": "F",
+        "reb_proj": 4.4,
+        "ast_proj": 1.9,
+        "ra_proj": 6.3,
+        "pts_proj": 9.1,
+        "pts_proj_raw": 9.1,
+        "tpm_proj": 1.5,
+        "min_avg": 13.5,
+        "min_last": 9.0,
+        "rest_risk": false,
+        "rebs": [
+          2.0,
+          3.0,
+          6.0,
+          2.0
+        ],
+        "asts": [
+          1.0,
+          2.0,
+          1.0,
+          0.0
+        ],
+        "ra_values": [
+          3.0,
+          5.0,
+          7.0,
+          2.0
+        ],
+        "pts": [
+          2.0,
+          10.0,
+          7.0,
+          11.0
+        ],
+        "tpm": [
+          0.0,
+          2.0,
+          1.0,
+          3.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
       }
     ],
     "away_props": [
@@ -13753,6 +15773,88 @@
           0.0,
           0.0,
           0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Devin Vassell",
+        "player_id": "4395630",
+        "position": "G",
+        "reb_proj": 4.7,
+        "ast_proj": 3.2,
+        "ra_proj": 7.9,
+        "pts_proj": 10.3,
+        "pts_proj_raw": 9.9,
+        "tpm_proj": 1.3,
+        "min_avg": 33.1,
+        "min_last": 32.0,
+        "rest_risk": false,
+        "rebs": [
+          3.0,
+          4.0,
+          4.0
+        ],
+        "asts": [
+          1.0,
+          2.0,
+          6.0
+        ],
+        "ra_values": [
+          4.0,
+          6.0,
+          10.0
+        ],
+        "pts": [
+          7.0,
+          10.0,
+          11.0
+        ],
+        "tpm": [
+          1.0,
+          2.0,
+          1.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Victor Wembanyama",
+        "player_id": "5104157",
+        "position": "F",
+        "reb_proj": 7.6,
+        "ast_proj": 2.7,
+        "ra_proj": 10.3,
+        "pts_proj": 15.3,
+        "pts_proj_raw": 14.7,
+        "tpm_proj": 1.3,
+        "min_avg": 31.2,
+        "min_last": 29.0,
+        "rest_risk": false,
+        "rebs": [
+          13.0,
+          13.0,
+          7.0
+        ],
+        "asts": [
+          3.0,
+          2.0,
+          2.0
+        ],
+        "ra_values": [
+          16.0,
+          15.0,
+          9.0
+        ],
+        "pts": [
+          12.0,
+          25.0,
+          23.0
+        ],
+        "tpm": [
+          0.0,
+          2.0,
+          2.0
         ],
         "n_games": 3,
         "tpm_n_games": 3
@@ -14409,6 +16511,144 @@
         ],
         "n_games": 3,
         "tpm_n_games": 3
+      },
+      {
+        "name": "Zaccharie Risacher",
+        "player_id": "5211175",
+        "position": "F",
+        "reb_proj": 5.8,
+        "ast_proj": 2.2,
+        "ra_proj": 8.0,
+        "pts_proj": 8.7,
+        "pts_proj_raw": 9.0,
+        "tpm_proj": 1.0,
+        "min_avg": 30.5,
+        "min_last": 30.0,
+        "rest_risk": false,
+        "rebs": [
+          6.0,
+          6.0,
+          4.0,
+          8.0
+        ],
+        "asts": [
+          2.0,
+          1.0,
+          2.0,
+          1.0
+        ],
+        "ra_values": [
+          8.0,
+          7.0,
+          6.0,
+          9.0
+        ],
+        "pts": [
+          4.0,
+          11.0,
+          11.0,
+          6.0
+        ],
+        "tpm": [
+          0.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "Marcus Sasser",
+        "player_id": "4432107",
+        "position": "G",
+        "reb_proj": 3.6,
+        "ast_proj": 2.6,
+        "ra_proj": 6.2,
+        "pts_proj": 8.3,
+        "pts_proj_raw": 8.6,
+        "tpm_proj": 1.4,
+        "min_avg": 19.8,
+        "min_last": 8.0,
+        "rest_risk": true,
+        "rebs": [
+          1.0,
+          2.0,
+          3.0,
+          1.0
+        ],
+        "asts": [
+          1.0,
+          3.0,
+          5.0,
+          0.0
+        ],
+        "ra_values": [
+          2.0,
+          5.0,
+          8.0,
+          1.0
+        ],
+        "pts": [
+          17.0,
+          6.0,
+          12.0,
+          0.0
+        ],
+        "tpm": [
+          4.0,
+          2.0,
+          2.0,
+          0.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "P.J. Washington",
+        "player_id": "4278078",
+        "position": "F",
+        "reb_proj": 6.6,
+        "ast_proj": 2.3,
+        "ra_proj": 8.9,
+        "pts_proj": 12.5,
+        "pts_proj_raw": 13.1,
+        "tpm_proj": 1.7,
+        "min_avg": 36.3,
+        "min_last": 41.0,
+        "rest_risk": false,
+        "rebs": [
+          4.0,
+          13.0,
+          4.0,
+          9.0
+        ],
+        "asts": [
+          2.0,
+          0.0,
+          2.0,
+          2.0
+        ],
+        "ra_values": [
+          6.0,
+          13.0,
+          6.0,
+          11.0
+        ],
+        "pts": [
+          10.0,
+          20.0,
+          12.0,
+          20.0
+        ],
+        "tpm": [
+          2.0,
+          2.0,
+          0.0,
+          4.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
       }
     ],
     "away_props": [
@@ -15024,6 +17264,139 @@
         ],
         "n_games": 3,
         "tpm_n_games": 3
+      },
+      {
+        "name": "Jalen Williams",
+        "player_id": "4593803",
+        "position": "G",
+        "reb_proj": 5.0,
+        "ast_proj": 3.3,
+        "ra_proj": 8.2,
+        "pts_proj": 11.7,
+        "pts_proj_raw": 11.4,
+        "tpm_proj": 1.1,
+        "min_avg": 31.8,
+        "min_last": 32.0,
+        "rest_risk": false,
+        "rebs": [
+          7.0,
+          5.0,
+          2.0
+        ],
+        "asts": [
+          2.0,
+          3.0,
+          5.0
+        ],
+        "ra_values": [
+          9.0,
+          8.0,
+          7.0
+        ],
+        "pts": [
+          12.0,
+          21.0,
+          8.0
+        ],
+        "tpm": [
+          1.0,
+          2.0,
+          0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Jaylin Williams",
+        "player_id": "4432823",
+        "position": "F",
+        "reb_proj": 4.9,
+        "ast_proj": 2.4,
+        "ra_proj": 7.3,
+        "pts_proj": 6.9,
+        "pts_proj_raw": 6.8,
+        "tpm_proj": 1.1,
+        "min_avg": 16.5,
+        "min_last": 26.0,
+        "rest_risk": false,
+        "rebs": [
+          4.0,
+          7.0,
+          0.0,
+          6.0
+        ],
+        "asts": [
+          1.0,
+          3.0,
+          0.0,
+          3.0
+        ],
+        "ra_values": [
+          5.0,
+          10.0,
+          0.0,
+          9.0
+        ],
+        "pts": [
+          5.0,
+          3.0,
+          0.0,
+          6.0
+        ],
+        "tpm": [
+          1.0,
+          1.0,
+          0.0,
+          2.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "Kenrich Williams",
+        "player_id": "3133626",
+        "position": "G",
+        "reb_proj": 4.4,
+        "ast_proj": 1.6,
+        "ra_proj": 6.0,
+        "pts_proj": 6.7,
+        "pts_proj_raw": 6.5,
+        "tpm_proj": 0.9,
+        "min_avg": 12.8,
+        "min_last": 24.0,
+        "rest_risk": false,
+        "rebs": [
+          2.0,
+          1.0,
+          1.0,
+          7.0
+        ],
+        "asts": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "ra_values": [
+          2.0,
+          2.0,
+          1.0,
+          7.0
+        ],
+        "pts": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "tpm": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
       }
     ],
     "home_form": {
@@ -15612,6 +17985,88 @@
         ],
         "n_games": 7,
         "tpm_n_games": 7
+      },
+      {
+        "name": "Kobe Sanders",
+        "player_id": "4702352",
+        "position": "G",
+        "reb_proj": 4.3,
+        "ast_proj": 3.1,
+        "ra_proj": 7.4,
+        "pts_proj": 8.9,
+        "pts_proj_raw": 8.8,
+        "tpm_proj": 1.2,
+        "min_avg": 19.4,
+        "min_last": 20.0,
+        "rest_risk": false,
+        "rebs": [
+          0.0,
+          3.0,
+          4.0
+        ],
+        "asts": [
+          3.0,
+          5.0,
+          2.0
+        ],
+        "ra_values": [
+          3.0,
+          8.0,
+          6.0
+        ],
+        "pts": [
+          2.0,
+          5.0,
+          12.0
+        ],
+        "tpm": [
+          0.0,
+          1.0,
+          2.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Keaton Wagler",
+        "player_id": "5254165",
+        "position": "G",
+        "reb_proj": 5.0,
+        "ast_proj": 3.4,
+        "ra_proj": 8.4,
+        "pts_proj": 11.2,
+        "pts_proj_raw": 11.1,
+        "tpm_proj": 1.5,
+        "min_avg": 26.1,
+        "min_last": 26.0,
+        "rest_risk": false,
+        "rebs": [
+          5.0,
+          3.0,
+          5.0
+        ],
+        "asts": [
+          5.0,
+          3.0,
+          4.0
+        ],
+        "ra_values": [
+          10.0,
+          6.0,
+          9.0
+        ],
+        "pts": [
+          15.0,
+          13.0,
+          11.0
+        ],
+        "tpm": [
+          3.0,
+          2.0,
+          1.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
       }
     ],
     "away_props": [
@@ -15939,6 +18394,134 @@
           0.0,
           0.0,
           0.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Matisse Thybulle",
+        "player_id": "3907498",
+        "position": "G",
+        "reb_proj": 3.8,
+        "ast_proj": 2.3,
+        "ra_proj": 6.1,
+        "pts_proj": 9.1,
+        "pts_proj_raw": 9.8,
+        "tpm_proj": 1.8,
+        "min_avg": 24.6,
+        "min_last": 26.0,
+        "rest_risk": false,
+        "rebs": [
+          3.0,
+          1.0,
+          1.0
+        ],
+        "asts": [
+          1.0,
+          2.0,
+          1.0
+        ],
+        "ra_values": [
+          4.0,
+          3.0,
+          2.0
+        ],
+        "pts": [
+          3.0,
+          13.0,
+          11.0
+        ],
+        "tpm": [
+          1.0,
+          3.0,
+          3.0
+        ],
+        "n_games": 3,
+        "tpm_n_games": 3
+      },
+      {
+        "name": "Jarred Vanderbilt",
+        "player_id": "4278077",
+        "position": "F",
+        "reb_proj": 4.8,
+        "ast_proj": 1.7,
+        "ra_proj": 6.5,
+        "pts_proj": 6.0,
+        "pts_proj_raw": 6.4,
+        "tpm_proj": 0.6,
+        "min_avg": 9.4,
+        "min_last": 5.0,
+        "rest_risk": false,
+        "rebs": [
+          2.0,
+          5.0,
+          6.0,
+          3.0
+        ],
+        "asts": [
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "ra_values": [
+          3.0,
+          6.0,
+          6.0,
+          3.0
+        ],
+        "pts": [
+          4.0,
+          2.0,
+          4.0,
+          2.0
+        ],
+        "tpm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_games": 4,
+        "tpm_n_games": 4
+      },
+      {
+        "name": "Ziaire Williams",
+        "player_id": "4433137",
+        "position": "F",
+        "reb_proj": 4.5,
+        "ast_proj": 2.3,
+        "ra_proj": 6.9,
+        "pts_proj": 9.9,
+        "pts_proj_raw": 10.6,
+        "tpm_proj": 1.5,
+        "min_avg": 28.8,
+        "min_last": 30.0,
+        "rest_risk": false,
+        "rebs": [
+          3.0,
+          5.0,
+          2.0
+        ],
+        "asts": [
+          4.0,
+          0.0,
+          1.0
+        ],
+        "ra_values": [
+          7.0,
+          5.0,
+          3.0
+        ],
+        "pts": [
+          9.0,
+          14.0,
+          11.0
+        ],
+        "tpm": [
+          1.0,
+          1.0,
+          3.0
         ],
         "n_games": 3,
         "tpm_n_games": 3
