@@ -864,5 +864,22 @@
     "status": "hit",
     "final_home_score": 20.0,
     "final_away_score": 3.0
+  },
+  "401873009_Game_Total_Over": {
+    "id": "401873009_Game_Total_Over",
+    "game_id": "401873009",
+    "home_id": "21",
+    "away_id": "6",
+    "home_team": "Philadelphia Eagles",
+    "away_team": "Dallas Cowboys",
+    "label": "Game Total Over",
+    "prob": 94,
+    "logged_at": "2026-10-27T02:16:14.290032+00:00",
+    "logged_period": 3,
+    "logged_clock": "5:44",
+    "logged_home_score": 21.0,
+    "logged_away_score": 20.0,
+    "pregame_total": 43.0,
+    "status": "pending"
   }
 }
