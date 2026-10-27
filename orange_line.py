@@ -1441,7 +1441,10 @@ def render_season_perfect_panel(entries):
 # leagues, not a bug, same as the Assists/Rebounds Over thresholds being
 # lopsided toward Under for low-usage bigs.
 SEASON_TEAM_TOTAL_MIN_GAMES = 3
-SEASON_TEAM_TOTAL_OVER_LINE = 105.0
+SEASON_TEAM_TOTAL_OVER_LINE = 115.0  # raised from 105 -- user feedback 2026-10-27:
+                                       # 105 was too soft, nearly every NBA team was
+                                       # clearing it every game, so the panel wasn't
+                                       # a meaningful "hot scoring" signal
 
 
 def build_season_team_total_entries(predictions):
