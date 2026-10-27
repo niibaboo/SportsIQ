@@ -64,26 +64,27 @@ OUTPUT_JSON = Path(__file__).parent / "prop_finder_data.json"
 
 HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 
-# Leagues scanned. DELIBERATELY NOT Premier League or Championship
-# (user request, 2026-10-25, after noticing the overlap): Player Stat
-# Model's own DAILY_SCAN_LEAGUES already runs a squad scan of this
-# exact shape against both of those every day, and TheStatsAPI quota
-# isn't shared across workflow runs (GitHub Actions starts each one
-# from a clean checkout, so the file cache both scripts use never
-# actually survives between separate workflow runs) -- scanning the
-# same two leagues here would just double that cost for genuinely
-# duplicate data. League One/League Two are the next rung of English
-# football Player Stat Model's own comment already earmarked as
-# "add more leagues" candidates but never scanned, so this covers new
-# ground instead of re-covering Player Stat Model's. Same quota math
-# applies here as there (League One/Two have fewer EFL-sized squads
-# than the Premier League, but it's still the same per-player cost
-# shape) — start with these two, expand once quota is confirmed to
-# hold. Add more competition names here (anything find_competition()
-# can resolve) to widen coverage.
+# Leagues scanned. SWITCHED from League One/League Two to Championship
+# (user request, 2026-10-27): bet365 doesn't offer player-prop markets
+# for League One/Two at all, only down to Championship, so a raw-stat
+# research tool for leagues with no market to apply it against wasn't
+# useful in practice -- the quota-overlap tradeoff the original
+# League One/Two choice was weighing (see below) is moot if the
+# research itself can't be acted on.
+#
+# This DOES reintroduce the overlap the original choice was avoiding:
+# Player Stat Model's own DAILY_SCAN_LEAGUES already runs a squad scan
+# of this same shape against Championship every day, and TheStatsAPI
+# quota isn't shared across workflow runs (GitHub Actions starts each
+# one from a clean checkout, so the file cache both scripts use never
+# actually survives between separate runs) -- so this run now re-fetches
+# data Player Stat Model's run already paid for today, rather than
+# covering new ground. Accepted as the right trade here since a
+# bettable league beats a cheaper non-bettable one. Add more
+# competition names here (anything find_competition() can resolve) to
+# widen coverage.
 LEAGUES = [
-    "League One",
-    "League Two",
+    "Championship",
 ]
 
 # Longest form window the page offers (Last 20) — fetch this many of
