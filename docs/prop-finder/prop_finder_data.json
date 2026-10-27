@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-26",
+  "generated_at": "2026-10-27",
   "leagues": [
     "League One",
     "League Two"
@@ -56598,6 +56598,19 @@
       "league": "League Two",
       "game_log": [
         {
+          "date": "2026-10-26",
+          "opponent": "Walsall",
+          "is_home": false,
+          "minutes": 17,
+          "started": false,
+          "goals": 1,
+          "shots": 1,
+          "shots_on_target": 1,
+          "tackles": 1,
+          "fouls": 0,
+          "cards": 0
+        },
+        {
           "date": "2026-10-20",
           "opponent": "Bristol Rovers",
           "is_home": false,
@@ -56817,19 +56830,6 @@
           "tackles": 1,
           "fouls": 2,
           "cards": 0
-        },
-        {
-          "date": "2026-04-23",
-          "opponent": "Bromley",
-          "is_home": true,
-          "minutes": 90,
-          "started": true,
-          "goals": 0,
-          "shots": 1,
-          "shots_on_target": 0,
-          "tackles": 0,
-          "fouls": 0,
-          "cards": 0
         }
       ]
     },
@@ -56917,19 +56917,6 @@
           "tackles": 0,
           "fouls": 0,
           "cards": 0
-        },
-        {
-          "date": "2026-04-23",
-          "opponent": "Bromley",
-          "is_home": true,
-          "minutes": 90,
-          "started": true,
-          "goals": 0,
-          "shots": 0,
-          "shots_on_target": 0,
-          "tackles": 1,
-          "fouls": 0,
-          "cards": 0
         }
       ]
     },
@@ -56940,6 +56927,19 @@
       "team": "Salford City",
       "league": "League Two",
       "game_log": [
+        {
+          "date": "2026-10-26",
+          "opponent": "Walsall",
+          "is_home": false,
+          "minutes": 73,
+          "started": true,
+          "goals": 0,
+          "shots": 2,
+          "shots_on_target": 0,
+          "tackles": 2,
+          "fouls": 1,
+          "cards": 0
+        },
         {
           "date": "2026-10-20",
           "opponent": "Bristol Rovers",
@@ -57093,6 +57093,19 @@
       "league": "League Two",
       "game_log": [
         {
+          "date": "2026-10-26",
+          "opponent": "Walsall",
+          "is_home": false,
+          "minutes": 90,
+          "started": true,
+          "goals": 0,
+          "shots": 0,
+          "shots_on_target": 0,
+          "tackles": 0,
+          "fouls": 1,
+          "cards": 0
+        },
+        {
           "date": "2026-10-20",
           "opponent": "Bristol Rovers",
           "is_home": false,
@@ -57192,6 +57205,19 @@
       "team": "Salford City",
       "league": "League Two",
       "game_log": [
+        {
+          "date": "2026-10-26",
+          "opponent": "Walsall",
+          "is_home": false,
+          "minutes": 90,
+          "started": true,
+          "goals": 0,
+          "shots": 5,
+          "shots_on_target": 1,
+          "tackles": 2,
+          "fouls": 4,
+          "cards": 0
+        },
         {
           "date": "2026-10-20",
           "opponent": "Bristol Rovers",
@@ -57431,6 +57457,19 @@
       "team": "Salford City",
       "league": "League Two",
       "game_log": [
+        {
+          "date": "2026-10-26",
+          "opponent": "Walsall",
+          "is_home": false,
+          "minutes": 30,
+          "started": false,
+          "goals": 1,
+          "shots": 1,
+          "shots_on_target": 1,
+          "tackles": 3,
+          "fouls": 0,
+          "cards": 0
+        },
         {
           "date": "2026-10-20",
           "opponent": "Bristol Rovers",
@@ -57838,19 +57877,6 @@
           "tackles": 1,
           "fouls": 1,
           "cards": 0
-        },
-        {
-          "date": "2026-04-23",
-          "opponent": "Bromley",
-          "is_home": true,
-          "minutes": 90,
-          "started": true,
-          "goals": 0,
-          "shots": 1,
-          "shots_on_target": 1,
-          "tackles": 2,
-          "fouls": 0,
-          "cards": 0
         }
       ]
     },
@@ -57861,6 +57887,19 @@
       "team": "Salford City",
       "league": "League Two",
       "game_log": [
+        {
+          "date": "2026-10-26",
+          "opponent": "Walsall",
+          "is_home": false,
+          "minutes": 90,
+          "started": true,
+          "goals": 0,
+          "shots": 3,
+          "shots_on_target": 1,
+          "tackles": 0,
+          "fouls": 1,
+          "cards": 0
+        },
         {
           "date": "2026-10-20",
           "opponent": "Bristol Rovers",
@@ -58026,6 +58065,19 @@
       "team": "Salford City",
       "league": "League Two",
       "game_log": [
+        {
+          "date": "2026-10-26",
+          "opponent": "Walsall",
+          "is_home": false,
+          "minutes": 89,
+          "started": true,
+          "goals": 1,
+          "shots": 4,
+          "shots_on_target": 1,
+          "tackles": 0,
+          "fouls": 0,
+          "cards": 0
+        },
         {
           "date": "2026-10-20",
           "opponent": "Bristol Rovers",
@@ -58198,197 +58250,6 @@
       ]
     },
     {
-      "player_id": "pl_45728771",
-      "name": "Matt Butcher",
-      "position": "M",
-      "team": "Salford City",
-      "league": "League Two",
-      "game_log": [
-        {
-          "date": "2026-10-20",
-          "opponent": "Bristol Rovers",
-          "is_home": false,
-          "minutes": 23,
-          "started": false,
-          "goals": 0,
-          "shots": 1,
-          "shots_on_target": 1,
-          "tackles": 1,
-          "fouls": 0,
-          "cards": 0
-        },
-        {
-          "date": "2026-10-17",
-          "opponent": "Crawley Town",
-          "is_home": true,
-          "minutes": 66,
-          "started": true,
-          "goals": 0,
-          "shots": 2,
-          "shots_on_target": 0,
-          "tackles": 0,
-          "fouls": 0,
-          "cards": 0
-        },
-        {
-          "date": "2026-10-10",
-          "opponent": "Cheltenham Town",
-          "is_home": false,
-          "minutes": 1,
-          "started": false,
-          "goals": 0,
-          "shots": 0,
-          "shots_on_target": 0,
-          "tackles": 0,
-          "fouls": 0,
-          "cards": 0
-        },
-        {
-          "date": "2026-10-06",
-          "opponent": "Accrington Stanley",
-          "is_home": false,
-          "minutes": 90,
-          "started": true,
-          "goals": 0,
-          "shots": 1,
-          "shots_on_target": 0,
-          "tackles": 2,
-          "fouls": 1,
-          "cards": 1
-        },
-        {
-          "date": "2026-10-03",
-          "opponent": "Fleetwood Town",
-          "is_home": true,
-          "minutes": 13,
-          "started": false,
-          "goals": 0,
-          "shots": 0,
-          "shots_on_target": 0,
-          "tackles": 0,
-          "fouls": 0,
-          "cards": 0
-        },
-        {
-          "date": "2026-09-26",
-          "opponent": "Oldham Athletic",
-          "is_home": false,
-          "minutes": 12,
-          "started": false,
-          "goals": 0,
-          "shots": 0,
-          "shots_on_target": 0,
-          "tackles": 0,
-          "fouls": 1,
-          "cards": 0
-        },
-        {
-          "date": "2026-09-22",
-          "opponent": "Sheffield Wednesday",
-          "is_home": true,
-          "minutes": 81,
-          "started": true,
-          "goals": 0,
-          "shots": 0,
-          "shots_on_target": 0,
-          "tackles": 1,
-          "fouls": 1,
-          "cards": 1
-        },
-        {
-          "date": "2026-08-15",
-          "opponent": "Barnet",
-          "is_home": false,
-          "minutes": 61,
-          "started": true,
-          "goals": 0,
-          "shots": 0,
-          "shots_on_target": 0,
-          "tackles": 2,
-          "fouls": 1,
-          "cards": 0
-        },
-        {
-          "date": "2026-08-08",
-          "opponent": "Shrewsbury Town",
-          "is_home": true,
-          "minutes": 62,
-          "started": true,
-          "goals": 0,
-          "shots": 0,
-          "shots_on_target": 0,
-          "tackles": 1,
-          "fouls": 1,
-          "cards": 1
-        },
-        {
-          "date": "2026-05-25",
-          "opponent": "Notts County",
-          "is_home": false,
-          "minutes": 45,
-          "started": false,
-          "goals": 0,
-          "shots": 2,
-          "shots_on_target": 0,
-          "tackles": 0,
-          "fouls": 3,
-          "cards": 0
-        },
-        {
-          "date": "2026-05-15",
-          "opponent": "Grimsby Town",
-          "is_home": true,
-          "minutes": 116,
-          "started": true,
-          "goals": 0,
-          "shots": 1,
-          "shots_on_target": 0,
-          "tackles": 1,
-          "fouls": 0,
-          "cards": 0
-        },
-        {
-          "date": "2026-05-10",
-          "opponent": "Grimsby Town",
-          "is_home": false,
-          "minutes": 90,
-          "started": true,
-          "goals": 0,
-          "shots": 1,
-          "shots_on_target": 1,
-          "tackles": 2,
-          "fouls": 1,
-          "cards": 1
-        },
-        {
-          "date": "2026-05-02",
-          "opponent": "Crawley Town",
-          "is_home": false,
-          "minutes": 90,
-          "started": true,
-          "goals": 0,
-          "shots": 1,
-          "shots_on_target": 0,
-          "tackles": 0,
-          "fouls": 2,
-          "cards": 0
-        },
-        {
-          "date": "2026-04-23",
-          "opponent": "Bromley",
-          "is_home": true,
-          "minutes": 90,
-          "started": true,
-          "goals": 0,
-          "shots": 0,
-          "shots_on_target": 0,
-          "tackles": 2,
-          "fouls": 0,
-          "cards": 0
-        }
-      ]
-    },
-    {
       "player_id": "pl_8302753",
       "name": "Ollie Turton",
       "position": "D",
@@ -58511,19 +58372,6 @@
           "tackles": 3,
           "fouls": 2,
           "cards": 0
-        },
-        {
-          "date": "2026-04-23",
-          "opponent": "Bromley",
-          "is_home": true,
-          "minutes": 90,
-          "started": true,
-          "goals": 1,
-          "shots": 1,
-          "shots_on_target": 1,
-          "tackles": 0,
-          "fouls": 1,
-          "cards": 1
         }
       ]
     },
@@ -58728,19 +58576,6 @@
           "tackles": 0,
           "fouls": 1,
           "cards": 0
-        },
-        {
-          "date": "2026-04-23",
-          "opponent": "Bromley",
-          "is_home": true,
-          "minutes": 90,
-          "started": true,
-          "goals": 0,
-          "shots": 3,
-          "shots_on_target": 1,
-          "tackles": 2,
-          "fouls": 1,
-          "cards": 0
         }
       ]
     },
@@ -58751,6 +58586,19 @@
       "team": "Salford City",
       "league": "League Two",
       "game_log": [
+        {
+          "date": "2026-10-26",
+          "opponent": "Walsall",
+          "is_home": false,
+          "minutes": 90,
+          "started": true,
+          "goals": 0,
+          "shots": 0,
+          "shots_on_target": 0,
+          "tackles": 1,
+          "fouls": 0,
+          "cards": 0
+        },
         {
           "date": "2026-10-20",
           "opponent": "Bristol Rovers",
@@ -58890,6 +58738,19 @@
       "team": "Salford City",
       "league": "League Two",
       "game_log": [
+        {
+          "date": "2026-10-26",
+          "opponent": "Walsall",
+          "is_home": false,
+          "minutes": 90,
+          "started": true,
+          "goals": 0,
+          "shots": 1,
+          "shots_on_target": 0,
+          "tackles": 4,
+          "fouls": 0,
+          "cards": 0
+        },
         {
           "date": "2026-10-20",
           "opponent": "Bristol Rovers",
@@ -59068,6 +58929,19 @@
       "team": "Salford City",
       "league": "League Two",
       "game_log": [
+        {
+          "date": "2026-10-26",
+          "opponent": "Walsall",
+          "is_home": false,
+          "minutes": 90,
+          "started": true,
+          "goals": 0,
+          "shots": 0,
+          "shots_on_target": 0,
+          "tackles": 0,
+          "fouls": 0,
+          "cards": 0
+        },
         {
           "date": "2026-10-20",
           "opponent": "Bristol Rovers",
@@ -66777,6 +66651,19 @@
       "league": "League Two",
       "game_log": [
         {
+          "date": "2026-10-26",
+          "opponent": "Salford City",
+          "is_home": true,
+          "minutes": 90,
+          "started": true,
+          "goals": 1,
+          "shots": 4,
+          "shots_on_target": 2,
+          "tackles": 1,
+          "fouls": 1,
+          "cards": 0
+        },
+        {
           "date": "2026-10-20",
           "opponent": "Oldham Athletic",
           "is_home": true,
@@ -66996,19 +66883,6 @@
           "tackles": 0,
           "fouls": 1,
           "cards": 0
-        },
-        {
-          "date": "2026-04-06",
-          "opponent": "Swindon Town",
-          "is_home": false,
-          "minutes": 21,
-          "started": false,
-          "goals": 0,
-          "shots": 0,
-          "shots_on_target": 0,
-          "tackles": 0,
-          "fouls": 0,
-          "cards": 0
         }
       ]
     },
@@ -67076,6 +66950,19 @@
       "team": "Walsall",
       "league": "League Two",
       "game_log": [
+        {
+          "date": "2026-10-26",
+          "opponent": "Salford City",
+          "is_home": true,
+          "minutes": 90,
+          "started": true,
+          "goals": 0,
+          "shots": 0,
+          "shots_on_target": 0,
+          "tackles": 6,
+          "fouls": 1,
+          "cards": 0
+        },
         {
           "date": "2026-10-20",
           "opponent": "Oldham Athletic",
@@ -67420,6 +67307,19 @@
       "league": "League Two",
       "game_log": [
         {
+          "date": "2026-10-26",
+          "opponent": "Salford City",
+          "is_home": true,
+          "minutes": 90,
+          "started": true,
+          "goals": 0,
+          "shots": 1,
+          "shots_on_target": 1,
+          "tackles": 0,
+          "fouls": 3,
+          "cards": 1
+        },
+        {
           "date": "2026-10-20",
           "opponent": "Oldham Athletic",
           "is_home": true,
@@ -67611,6 +67511,19 @@
       "league": "League Two",
       "game_log": [
         {
+          "date": "2026-10-26",
+          "opponent": "Salford City",
+          "is_home": true,
+          "minutes": 90,
+          "started": true,
+          "goals": 0,
+          "shots": 1,
+          "shots_on_target": 0,
+          "tackles": 0,
+          "fouls": 1,
+          "cards": 0
+        },
+        {
           "date": "2026-10-20",
           "opponent": "Oldham Athletic",
           "is_home": true,
@@ -67769,86 +67682,25 @@
       ]
     },
     {
-      "player_id": "pl_72655555",
-      "name": "James Furlong",
-      "position": "M",
-      "team": "Walsall",
-      "league": "League Two",
-      "game_log": [
-        {
-          "date": "2026-10-20",
-          "opponent": "Oldham Athletic",
-          "is_home": true,
-          "minutes": 68,
-          "started": true,
-          "goals": 0,
-          "shots": 0,
-          "shots_on_target": 0,
-          "tackles": 0,
-          "fouls": 1,
-          "cards": 0
-        },
-        {
-          "date": "2026-10-17",
-          "opponent": "Swindon Town",
-          "is_home": false,
-          "minutes": 9,
-          "started": false,
-          "goals": 0,
-          "shots": 0,
-          "shots_on_target": 0,
-          "tackles": 0,
-          "fouls": 0,
-          "cards": 0
-        },
-        {
-          "date": "2026-10-13",
-          "opponent": "Fulham U21",
-          "is_home": true,
-          "minutes": 90,
-          "started": true,
-          "goals": 1,
-          "shots": 1,
-          "shots_on_target": 1,
-          "tackles": 4,
-          "fouls": 0,
-          "cards": 0
-        },
-        {
-          "date": "2026-09-22",
-          "opponent": "Stevenage",
-          "is_home": true,
-          "minutes": 90,
-          "started": true,
-          "goals": 0,
-          "shots": 0,
-          "shots_on_target": 0,
-          "tackles": 2,
-          "fouls": 0,
-          "cards": 0
-        },
-        {
-          "date": "2026-08-25",
-          "opponent": "Leyton Orient",
-          "is_home": true,
-          "minutes": 60,
-          "started": true,
-          "goals": 0,
-          "shots": 0,
-          "shots_on_target": 0,
-          "tackles": 3,
-          "fouls": 0,
-          "cards": 0
-        }
-      ]
-    },
-    {
       "player_id": "pl_36540837",
       "name": "Jed Ward",
       "position": "G",
       "team": "Walsall",
       "league": "League Two",
       "game_log": [
+        {
+          "date": "2026-10-26",
+          "opponent": "Salford City",
+          "is_home": true,
+          "minutes": 90,
+          "started": true,
+          "goals": 0,
+          "shots": 0,
+          "shots_on_target": 0,
+          "tackles": 0,
+          "fouls": 0,
+          "cards": 0
+        },
         {
           "date": "2026-10-20",
           "opponent": "Oldham Athletic",
@@ -68027,6 +67879,19 @@
       "team": "Walsall",
       "league": "League Two",
       "game_log": [
+        {
+          "date": "2026-10-26",
+          "opponent": "Salford City",
+          "is_home": true,
+          "minutes": 90,
+          "started": true,
+          "goals": 0,
+          "shots": 0,
+          "shots_on_target": 0,
+          "tackles": 1,
+          "fouls": 0,
+          "cards": 0
+        },
         {
           "date": "2026-10-20",
           "opponent": "Oldham Athletic",
@@ -68247,19 +68112,6 @@
           "tackles": 2,
           "fouls": 0,
           "cards": 1
-        },
-        {
-          "date": "2026-04-06",
-          "opponent": "Swindon Town",
-          "is_home": false,
-          "minutes": 90,
-          "started": true,
-          "goals": 0,
-          "shots": 1,
-          "shots_on_target": 0,
-          "tackles": 2,
-          "fouls": 0,
-          "cards": 0
         }
       ]
     },
@@ -68270,6 +68122,19 @@
       "team": "Walsall",
       "league": "League Two",
       "game_log": [
+        {
+          "date": "2026-10-26",
+          "opponent": "Salford City",
+          "is_home": true,
+          "minutes": 90,
+          "started": true,
+          "goals": 0,
+          "shots": 0,
+          "shots_on_target": 0,
+          "tackles": 1,
+          "fouls": 0,
+          "cards": 0
+        },
         {
           "date": "2026-10-20",
           "opponent": "Oldham Athletic",
@@ -68461,6 +68326,19 @@
       "team": "Walsall",
       "league": "League Two",
       "game_log": [
+        {
+          "date": "2026-10-26",
+          "opponent": "Salford City",
+          "is_home": true,
+          "minutes": 58,
+          "started": false,
+          "goals": 0,
+          "shots": 0,
+          "shots_on_target": 0,
+          "tackles": 0,
+          "fouls": 2,
+          "cards": 0
+        },
         {
           "date": "2026-10-20",
           "opponent": "Oldham Athletic",

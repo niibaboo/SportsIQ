@@ -79,6 +79,7 @@
       <button class="filter-btn active" data-view="leaderboard">Leaderboard</button>
       <button class="filter-btn" data-view="hotform">Hot Form</button>
       <button class="filter-btn" data-view="streak">Real Streak</button>
+      <button class="filter-btn" data-view="perfect">100%</button>
     </div>
   </div>
 
@@ -87,7 +88,7 @@
     <input type="number" id="lineInput" step="0.5" min="0">
   </div>
 
-  <div class="filter-group">
+  <div class="filter-group" id="windowGroup">
     <div class="filter-label">Form window</div>
     <div class="filters" id="windowFilters">
       <button class="filter-btn" data-window="5">Last 5</button>
@@ -120,12 +121,14 @@
   <div class="footer">
     Raw stat leaderboard, not a prediction — ranks players by average over the selected
     window using actual recent games only (no betting lines, no probabilities).
-    Hot Form and Real Streak views work off a line YOU set (there's no fixed model
-    threshold here) — Hot Form is the average over the window clearing that line,
-    Real Streak is a genuine consecutive run of games each individually clearing it,
-    counted back from the most recent game. Modeled on playerstats.football's
-    Prop Finder. "Started" is a 60+ minutes-played proxy, not a confirmed field
-    from the data source.
+    Hot Form, Real Streak and 100% views all work off a line YOU set (there's no fixed
+    model threshold here) — Hot Form is the average over the window clearing that line,
+    Real Streak is a genuine consecutive run of games each individually clearing it
+    counted back from the most recent game, and 100% is a perfect record across every
+    fetched game (ignores the Form window filter — reads up to the full fetch, not
+    "this season": each team's match fetch is capped, well short of a full League One/
+    Two season). Modeled on playerstats.football's Prop Finder. "Started" is a 60+
+    minutes-played proxy, not a confirmed field from the data source.
   </div>
 
   <script>
@@ -148,6 +151,18 @@
     // Real Streak needs at least this many consecutive qualifying games to
     // bother showing a player -- a streak of 1 is just "hit last game".
     const MIN_STREAK = 2;
+
+    // 100% (perfect record) view -- Orange Line's "100% This Season"
+    // panel, user request 2026-10-27 ("remodel prop finder like orange
+    // line" -> scoped down to just the 100%/streak-style panels). Needs
+    // at least this many games before a perfect record means anything.
+    // NOTE: unlike Orange Line's player version, this ISN'T a full
+    // season -- GAMES_TO_FETCH in prop_finder.py caps each team's fetch
+    // at 20 matches, well short of a League One/Two season (46 games),
+    // so this is honestly labeled "across the last {n} fetched games"
+    // rather than claiming "this season" when the data doesn't back
+    // that up.
+    const MIN_PERFECT_GAMES = 3;
 
     async function loadData() {
       try {
@@ -225,10 +240,17 @@
     }
 
     function updateLineVisibility() {
-      const show = state.view === 'hotform' || state.view === 'streak';
+      const show = state.view === 'hotform' || state.view === 'streak' || state.view === 'perfect';
       document.getElementById('lineGroup').style.display = show ? 'block' : 'none';
       document.getElementById('lineLabel').textContent =
-        state.view === 'hotform' ? 'Hot Form line (avg must clear this)' : 'Real Streak line (each game must clear this)';
+        state.view === 'hotform' ? 'Hot Form line (avg must clear this)'
+        : state.view === 'streak' ? 'Real Streak line (each game must clear this)'
+        : 'Line (every fetched game must clear this)';
+      // Form window (5/7/10) doesn't apply to 100% -- that view always
+      // reads every fetched game (up to GAMES_TO_FETCH), same reasoning
+      // as Orange Line's "100% This Season" being deliberately NOT capped
+      // to Real Streak's shorter window.
+      document.getElementById('windowGroup').style.display = state.view === 'perfect' ? 'none' : 'block';
     }
 
     function lineValue() {
@@ -254,8 +276,25 @@
       }).filter(Boolean);
     }
 
+    // Same league/appearance/minutes filters as buildRows(), but WITHOUT
+    // the state.window slice -- the 100% view reads every game the fetch
+    // actually got for that player, not just the selected form window.
+    function buildFullRows() {
+      const floor = minutesFloor();
+      const pool = DATA.players.filter(p => p.league === state.league);
+      return pool.map(p => {
+        let games = p.game_log.filter(g => g.minutes >= floor);
+        if (state.appearance === 'started') games = games.filter(g => g.started);
+        if (games.length === 0) return null;
+        const total = games.reduce((sum, g) => sum + (g[state.stat] || 0), 0);
+        const avg = total / games.length;
+        return { player: p, games, total, avg };
+      }).filter(Boolean);
+    }
+
     function render() {
       if (!DATA) return;
+      if (state.view === 'perfect') return renderPerfect(buildFullRows());
       const rows = buildRows();
       if (state.view === 'hotform') return renderHotForm(rows);
       if (state.view === 'streak') return renderRealStreak(rows);
@@ -364,6 +403,47 @@
           <td class="rank">${i + 1}</td>
           <td><div class="player-name">${r.player.name}</div><div class="team">${r.player.team}</div></td>
           <td class="stat-val">${r.streak}</td>
+          <td class="games-count">${r.avg.toFixed(2)}</td>
+          <td><div class="game-dots">${dots}</div></td>
+        </tr>`;
+      });
+
+      html += '</tbody></table>';
+      content.innerHTML = html;
+    }
+
+    function renderPerfect(rows) {
+      const line = lineValue();
+      const statLabel = DATA.stats[state.stat];
+
+      // Order-independent, unlike Real Streak -- every fetched game must
+      // clear the line, not just a consecutive run from the most recent
+      // one, so it doesn't matter whether games is sorted newest-first or
+      // not (same reasoning as Orange Line's build_season_perfect_entries).
+      const perfect = rows
+        .filter(r => r.games.length >= MIN_PERFECT_GAMES)
+        .filter(r => r.games.every(g => (g[state.stat] || 0) >= line))
+        .map(r => ({ ...r, hits: r.games.length }));
+
+      perfect.sort((a, b) => b.hits - a.hits || b.avg - a.avg);
+
+      const content = document.getElementById('content');
+      if (perfect.length === 0) {
+        content.innerHTML = `<div class="empty">No players with ${MIN_PERFECT_GAMES}+ fetched games where EVERY game cleared ${line}+ ${statLabel} with these filters.</div>`;
+        return;
+      }
+
+      let html = `<table><thead><tr>
+        <th class="rank">#</th><th>Player</th><th class="stat-val">100%</th>
+        <th class="games-count">Avg</th><th>Every fetched game</th>
+      </tr></thead><tbody>`;
+
+      perfect.forEach((r, i) => {
+        const dots = r.games.map(g => `<span class="dot hit">${g[state.stat]}</span>`).join('');
+        html += `<tr>
+          <td class="rank">${i + 1}</td>
+          <td><div class="player-name">${r.player.name}</div><div class="team">${r.player.team}</div></td>
+          <td class="stat-val">${r.hits}/${r.hits}</td>
           <td class="games-count">${r.avg.toFixed(2)}</td>
           <td><div class="game-dots">${dots}</div></td>
         </tr>`;
