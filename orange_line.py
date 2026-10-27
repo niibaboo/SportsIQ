@@ -95,7 +95,22 @@ def _current_season_year(league_key):
 RECENT_GAMES = 7  # matches this project's existing "last 7 games" framing
 PRIOR_STRENGTH = 4
 DEFAULT_TEAM_STD = 11.0  # rough per-team points stdev, same role as Blitz IQ's
-ROSTER_CAP = 15  # players checked per team -- covers the full rotation without
+ROSTER_CAP = 18  # raised from 15 -- user report, 2026-10-27: Portland's own
+                   # top-5 projected starters (Lillard, Morant, Avdija, Camara,
+                   # Clingan) were ENTIRELY missing from the Top Shooters/
+                   # Rebounders/Playmakers block for a POR @ LAL game, all 5 at
+                   # once -- too many, and too clearly "the actual starters",
+                   # to be the games<3 floor coincidentally catching all of
+                   # them. A 15-man cap sits right at a modern NBA active
+                   # roster's own typical size, so if ESPN's roster response
+                   # lists two-way/inactive players ahead of some rotation
+                   # players (order isn't confirmed to be "starters first"),
+                   # the real starters could land just past the old cutoff
+                   # and get silently dropped before project_player_props
+                   # ever sees them. Raised as a defensive margin while the
+                   # new [DIAG] logging below (get_roster, project_player_props)
+                   # confirms whether this was actually it.
+                   # players checked per team -- covers the full rotation without
                    # hammering the gamelog endpoint for deep-bench players who'd
                    # get filtered out by the games-played floor anyway
 
@@ -485,6 +500,14 @@ def get_roster(league_key, team_id):
                                  'position': _position(a)})
     except Exception as e:
         print(f"  [!] couldn't parse roster for team {team_id}: {e}")
+    # [DIAG] full raw roster order before the ROSTER_CAP slice, added
+    # 2026-10-27 chasing a user report of real starters (Lillard, Morant,
+    # Avdija, Camara, Clingan for POR) missing entirely from the props
+    # list -- this confirms whether ESPN's roster response lists them
+    # at all, and if so, whether they land before or after the cap.
+    if players:
+        print(f"    [DIAG] team {team_id}: raw roster has {len(players)} players before ROSTER_CAP={ROSTER_CAP}: "
+              f"{[p['name'] for p in players]}")
     players = players[:ROSTER_CAP]
     roster_cache[cache_key] = players
     return players
@@ -882,6 +905,14 @@ def project_player_props(league_key, team_id, pts_scale=1.0):
         asts = get_player_gamelog(league_key, player['id'], PROP_CONFIG['AST']['stat'])
         pts = get_player_gamelog(league_key, player['id'], PROP_CONFIG['PTS']['stat'])
         if len(rebs) < 3 or len(asts) < 3 or len(pts) < 3 or len(rebs) != len(asts) or len(rebs) != len(pts):
+            # [DIAG] added 2026-10-27, same user report as the ROSTER_CAP
+            # comment above -- a skip here was previously silent, so a
+            # whole team's worth of real starters going missing from the
+            # Top Shooters/Rebounders/Playmakers block left no trace of
+            # WHY. Now every skip names the player and the exact counts
+            # that failed the floor/mismatch check.
+            print(f"    [DIAG] {player['name']} (team {team_id}): skipped from props -- "
+                  f"REB={len(rebs)} AST={len(asts)} PTS={len(pts)} games (need 3+ each, matching counts)")
             continue  # not enough data, or mismatched game counts between
                         # the separate stat pulls -- skip rather than pair
                         # up games that may not actually correspond
