@@ -638,6 +638,43 @@ def _fetch_gamelog_values(league_key, athlete_id, stat_key, season, value_parser
         if season_data and not root_labels:
             print(f"    [DIAG] athlete {athlete_id}, season {season}: no root-level labels/names/displayNames. Top-level keys: {top_keys}")
 
+        # CONFIRMED bug, 2026-10-27: season_data was being looped over
+        # in full with no filter for season TYPE -- ESPN's 'seasonTypes'
+        # list holds preseason, regular season, and (eventually)
+        # postseason as SEPARATE entries, and this was silently
+        # concatenating all of them into one "this season" game list.
+        # Caught because SGA's "100% This Season" card showed 6/6 games
+        # by Oct 27, but the Thunder's real schedule (confirmed via web
+        # search of the official 2026-27 schedule) shows only 4 games
+        # played by that date -- the extra 2 match their October
+        # preseason slate. Filtering to the regular-season entry only
+        # below. ESPN's exact field name for season type isn't confirmed
+        # from a live response in this environment, so this tries a few
+        # plausible shapes (displayName/name/shortDisplayName, plus a
+        # 'type' field that may itself be a dict) and only filters when
+        # at least one entry is positively identified as regular season
+        # -- if none can be identified, it logs a loud diagnostic and
+        # falls back to the old include-everything behavior rather than
+        # risk silently dropping all games on an unexpected shape.
+        def _season_type_name(st):
+            name = st.get('displayName') or st.get('name') or st.get('shortDisplayName') or ''
+            type_field = st.get('type')
+            if isinstance(type_field, dict):
+                type_name = type_field.get('name') or type_field.get('type') or type_field.get('abbreviation') or ''
+            else:
+                type_name = type_field or ''
+            return f"{name} {type_name}".strip().lower()
+
+        regular_season_data = [st for st in season_data if 'regular' in _season_type_name(st)]
+        if regular_season_data:
+            season_data = regular_season_data
+        elif season_data:
+            print(f"    [DIAG] athlete {athlete_id}, season {season}: couldn't identify a 'regular season' "
+                  f"entry among {len(season_data)} seasonTypes entries -- shapes seen: "
+                  f"{[{k: st.get(k) for k in ('displayName', 'name', 'shortDisplayName', 'type')} for st in season_data]}. "
+                  f"Including ALL season types (may mix preseason/postseason games into 'this season' counts) "
+                  f"until this is confirmed against a real response.")
+
         printed_sample = False
         for st in season_data:
             # Logs EVERY category now, not just the first -- if ESPN's
