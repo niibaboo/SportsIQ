@@ -6,54 +6,54 @@
     "pitchers": [
       {
         "side": "away",
-        "name": null
+        "name": "Jacob Misiorowski",
+        "pitcher_id": 694819,
+        "team": "Milwaukee Brewers",
+        "opp": "Tampa Bay Rays",
+        "opp_kpct": 18.8,
+        "fip": 2.16647,
+        "xfip": 2.29141,
+        "lambda": 5.15,
+        "lo": 2,
+        "hi": 8,
+        "proj_ip": 4.7,
+        "outs_lambda": 14.2,
+        "outs_lo": 9,
+        "outs_hi": 19,
+        "season_era": "1.80",
+        "season_k9": "12.98",
+        "season_hits9": "4.95",
+        "bb9": 2.27,
+        "whip": "0.80",
+        "l5_str": "5\u00b79\u00b77\u00b74\u00b75",
+        "l5_vs_season": -17.0,
+        "k_last5": [
+          5,
+          9,
+          7,
+          4,
+          5
+        ],
+        "outs_last5": [
+          12,
+          19,
+          15,
+          9,
+          16
+        ]
       },
       {
         "side": "home",
-        "name": "Griffin Jax",
-        "pitcher_id": 643377,
-        "team": "Tampa Bay Rays",
-        "opp": "Milwaukee Brewers",
-        "opp_kpct": 22.0,
-        "fip": 3.75843,
-        "xfip": 3.40688,
-        "lambda": 3.58,
-        "lo": 1,
-        "hi": 6,
-        "proj_ip": 4.1,
-        "outs_lambda": 12.4,
-        "outs_lo": 8,
-        "outs_hi": 17,
-        "season_era": "3.53",
-        "season_k9": "9.29",
-        "season_hits9": "7.77",
-        "bb9": 2.8,
-        "whip": "1.18",
-        "l5_str": "1\u00b72\u00b77\u00b75\u00b71",
-        "l5_vs_season": -24.0,
-        "k_last5": [
-          1,
-          2,
-          7,
-          5,
-          1
-        ],
-        "outs_last5": [
-          8,
-          15,
-          15,
-          15,
-          9
-        ]
+        "name": null
       }
     ],
-    "game_pk": 849803,
-    "game_date": "2026-10-27",
+    "game_pk": 849799,
+    "game_date": "2026-10-28",
     "team_runs": {
       "away": {
         "team": "Milwaukee Brewers",
         "opp": "Tampa Bay Rays",
-        "lambda": 4.86,
+        "lambda": 5.03,
         "lo": 2,
         "hi": 8,
         "l5_str": "4\u00b75\u00b78\u00b73\u00b76",
@@ -65,15 +65,15 @@
           6
         ],
         "season_rpg": 5.14,
-        "run_factor": 0.94,
-        "xfip_used": true
+        "run_factor": 0.97,
+        "xfip_used": false
       },
       "home": {
         "team": "Tampa Bay Rays",
         "opp": "Milwaukee Brewers",
-        "lambda": 3.52,
+        "lambda": 3.05,
         "lo": 1,
-        "hi": 6,
+        "hi": 5,
         "l5_str": "2\u00b74\u00b72\u00b712\u00b73",
         "last5_runs": [
           2,
@@ -83,17 +83,17 @@
           3
         ],
         "season_rpg": 4.54,
-        "run_factor": 0.95,
-        "xfip_used": false
+        "run_factor": 0.83,
+        "xfip_used": true
       }
     },
     "team_hits": {
       "away": {
         "team": "Milwaukee Brewers",
         "opp": "Tampa Bay Rays",
-        "lambda": 8.48,
+        "lambda": 8.98,
         "lo": 5,
-        "hi": 12,
+        "hi": 13,
         "l5_str": "6\u00b711\u00b712\u00b78\u00b710",
         "last5_hits": [
           6,
@@ -103,14 +103,14 @@
           10
         ],
         "season_hpg": 8.78,
-        "hit_factor": 0.91
+        "hit_factor": 0.96
       },
       "home": {
         "team": "Tampa Bay Rays",
         "opp": "Milwaukee Brewers",
-        "lambda": 8.18,
-        "lo": 5,
-        "hi": 12,
+        "lambda": 6.2,
+        "lo": 3,
+        "hi": 9,
         "l5_str": "6\u00b79\u00b76\u00b717\u00b78",
         "last5_hits": [
           6,
@@ -120,7 +120,7 @@
           8
         ],
         "season_hpg": 8.67,
-        "hit_factor": 0.95
+        "hit_factor": 0.72
       }
     }
   }

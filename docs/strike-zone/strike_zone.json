@@ -1,104 +1,104 @@
 [
   {
     "match": "Milwaukee Brewers @ Tampa Bay Rays",
-    "subject": "Griffin Jax",
-    "market": "Griffin Jax Over 2.5 Strikeouts",
-    "prob": 69,
+    "subject": "Jacob Misiorowski",
+    "market": "Jacob Misiorowski Over 3.5 Strikeouts",
+    "prob": 76,
     "category": "Strikeouts",
     "hit_rate": {
-      "hits": 2,
+      "hits": 5,
       "total": 5
     },
-    "detail": "Tampa Bay Rays vs Milwaukee Brewers \u00b7 proj 3.58 K",
-    "history": "1/2/7/5/1",
-    "game_pk": 849803,
-    "game_date": "2026-10-27",
-    "pitcher_id": 643377,
-    "line": 2.5
+    "detail": "Milwaukee Brewers vs Tampa Bay Rays \u00b7 proj 5.15 K",
+    "history": "5/9/7/4/5",
+    "game_pk": 849799,
+    "game_date": "2026-10-28",
+    "pitcher_id": 694819,
+    "line": 3.5
   },
   {
     "match": "Milwaukee Brewers @ Tampa Bay Rays",
-    "subject": "Griffin Jax",
-    "market": "Griffin Jax Over 8.5 Outs Recorded",
-    "prob": 87,
+    "subject": "Jacob Misiorowski",
+    "market": "Jacob Misiorowski Over 10.0 Outs Recorded",
+    "prob": 84,
     "category": "Outs Recorded",
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
-    "detail": "Tampa Bay Rays vs Milwaukee Brewers \u00b7 proj 4.1 IP",
-    "history": "8/15/15/15/9",
-    "game_pk": 849803,
-    "game_date": "2026-10-27",
-    "pitcher_id": 643377,
-    "line": 8.5
+    "detail": "Milwaukee Brewers vs Tampa Bay Rays \u00b7 proj 4.7 IP",
+    "history": "12/19/15/9/16",
+    "game_pk": 849799,
+    "game_date": "2026-10-28",
+    "pitcher_id": 694819,
+    "line": 10.0
   },
   {
     "match": "Milwaukee Brewers @ Tampa Bay Rays",
     "subject": "Milwaukee Brewers",
-    "market": "Milwaukee Brewers Over 3.0 Runs",
-    "prob": 71,
+    "market": "Milwaukee Brewers Over 3.5 Runs",
+    "prob": 74,
     "category": "Team Runs",
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
-    "detail": "vs Tampa Bay Rays \u00b7 proj 4.86 runs",
+    "detail": "vs Tampa Bay Rays \u00b7 proj 5.03 runs",
     "history": "4/5/8/3/6",
-    "game_pk": 849803,
-    "game_date": "2026-10-27",
+    "game_pk": 849799,
+    "game_date": "2026-10-28",
     "is_home": false,
-    "line": 3.0
+    "line": 3.5
   },
   {
     "match": "Milwaukee Brewers @ Tampa Bay Rays",
     "subject": "Milwaukee Brewers",
     "market": "Milwaukee Brewers Over 6.0 Hits",
-    "prob": 74,
+    "prob": 79,
     "category": "Team Hits",
     "hit_rate": {
       "hits": 4,
       "total": 5
     },
-    "detail": "vs Tampa Bay Rays \u00b7 proj 8.48 hits",
+    "detail": "vs Tampa Bay Rays \u00b7 proj 8.98 hits",
     "history": "6/11/12/8/10",
-    "game_pk": 849803,
-    "game_date": "2026-10-27",
+    "game_pk": 849799,
+    "game_date": "2026-10-28",
     "is_home": false,
     "line": 6.0
   },
   {
     "match": "Milwaukee Brewers @ Tampa Bay Rays",
     "subject": "Tampa Bay Rays",
-    "market": "Tampa Bay Rays Over 2.5 Runs",
-    "prob": 68,
+    "market": "Tampa Bay Rays Over 2.0 Runs",
+    "prob": 59,
     "category": "Team Runs",
     "hit_rate": {
       "hits": 3,
       "total": 5
     },
-    "detail": "vs Milwaukee Brewers \u00b7 proj 3.52 runs",
+    "detail": "vs Milwaukee Brewers \u00b7 proj 3.05 runs",
     "history": "2/4/2/12/3",
-    "game_pk": 849803,
-    "game_date": "2026-10-27",
+    "game_pk": 849799,
+    "game_date": "2026-10-28",
     "is_home": true,
-    "line": 2.5
+    "line": 2.0
   },
   {
     "match": "Milwaukee Brewers @ Tampa Bay Rays",
     "subject": "Tampa Bay Rays",
-    "market": "Tampa Bay Rays Over 5.5 Hits",
-    "prob": 82,
+    "market": "Tampa Bay Rays Over 4.0 Hits",
+    "prob": 74,
     "category": "Team Hits",
     "hit_rate": {
       "hits": 5,
       "total": 5
     },
-    "detail": "vs Milwaukee Brewers \u00b7 proj 8.18 hits",
+    "detail": "vs Milwaukee Brewers \u00b7 proj 6.2 hits",
     "history": "6/9/6/17/8",
-    "game_pk": 849803,
-    "game_date": "2026-10-27",
+    "game_pk": 849799,
+    "game_date": "2026-10-28",
     "is_home": true,
-    "line": 5.5
+    "line": 4.0
   }
 ]
