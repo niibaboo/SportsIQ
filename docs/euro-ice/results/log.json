@@ -35551,9 +35551,10 @@
     "match_date": "2026-10-25T18:00:00.000Z",
     "date_key": "2026-10-25",
     "logged_at": "2026-10-25T14:38:28.965333+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2,
+    "verified_at": "2026-10-28T16:52:21.604839+00:00"
   },
   {
     "id": "bd0219ae160cf4a7",
@@ -35571,9 +35572,10 @@
     "match_date": "2026-10-25T15:00:00.000Z",
     "date_key": "2026-10-25",
     "logged_at": "2026-10-25T14:38:28.965336+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 6,
+    "verified_at": "2026-10-28T16:52:21.912431+00:00"
   },
   {
     "id": "cc2fb11516804e77",
@@ -35591,9 +35593,10 @@
     "match_date": "2026-10-25T15:30:00.000Z",
     "date_key": "2026-10-25",
     "logged_at": "2026-10-25T14:38:28.965340+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-10-28T16:52:22.158671+00:00"
   },
   {
     "id": "9a0de083d398ebcc",
@@ -35617,9 +35620,10 @@
     "match_date": "2026-10-25T16:30:00.000Z",
     "date_key": "2026-10-25",
     "logged_at": "2026-10-25T14:38:28.965344+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5,
+    "verified_at": "2026-10-28T16:52:22.406800+00:00"
   },
   {
     "id": "784fde80c45c11d2",
@@ -35637,9 +35641,10 @@
     "match_date": "2026-10-27T18:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242317+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 8,
+    "verified_at": "2026-10-28T16:52:22.662752+00:00"
   },
   {
     "id": "02634f1a4f3a270b",
@@ -35657,9 +35662,10 @@
     "match_date": "2026-10-27T18:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242339+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2,
+    "verified_at": "2026-10-28T16:52:22.943477+00:00"
   },
   {
     "id": "828bbad7b0d2fbbe",
@@ -35677,9 +35683,10 @@
     "match_date": "2026-10-27T18:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242346+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 10,
+    "verified_at": "2026-10-28T16:52:23.198231+00:00"
   },
   {
     "id": "6ea227f162d42de4",
@@ -35697,9 +35704,10 @@
     "match_date": "2026-10-27T18:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242352+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-10-28T16:52:23.459259+00:00"
   },
   {
     "id": "7fbe005fca8e94b0",
@@ -35717,9 +35725,10 @@
     "match_date": "2026-10-27T18:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242356+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5,
+    "verified_at": "2026-10-28T16:52:23.703582+00:00"
   },
   {
     "id": "254acb237ed9376b",
@@ -35737,9 +35746,10 @@
     "match_date": "2026-10-27T18:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242361+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 9,
+    "verified_at": "2026-10-28T16:52:23.957235+00:00"
   },
   {
     "id": "0cb4019ddebe200f",
@@ -35757,9 +35767,10 @@
     "match_date": "2026-10-27T17:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242366+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5,
+    "verified_at": "2026-10-28T16:52:24.237193+00:00"
   },
   {
     "id": "b3d570f17a75b69f",
@@ -35777,9 +35788,10 @@
     "match_date": "2026-10-27T17:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242377+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-10-28T16:52:24.490080+00:00"
   },
   {
     "id": "48bce304307fda54",
@@ -35797,9 +35809,10 @@
     "match_date": "2026-10-27T17:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242384+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 6,
+    "verified_at": "2026-10-28T16:52:24.770467+00:00"
   },
   {
     "id": "81f8210e70ab36eb",
@@ -35817,9 +35830,10 @@
     "match_date": "2026-10-27T17:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242389+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2,
+    "verified_at": "2026-10-28T16:52:25.024734+00:00"
   },
   {
     "id": "937ec36b67c48ceb",
@@ -35837,9 +35851,10 @@
     "match_date": "2026-10-27T17:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242398+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-10-28T16:52:25.413947+00:00"
   },
   {
     "id": "c14c888d685da51b",
@@ -35857,9 +35872,10 @@
     "match_date": "2026-10-27T17:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242405+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5,
+    "verified_at": "2026-10-28T16:52:25.694837+00:00"
   },
   {
     "id": "de2bf51b67b5c722",
@@ -35877,9 +35893,10 @@
     "match_date": "2026-10-27T17:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242410+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-10-28T16:52:25.957155+00:00"
   },
   {
     "id": "9f8effcc0158f28a",
@@ -35897,9 +35914,10 @@
     "match_date": "2026-10-27T17:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242414+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2,
+    "verified_at": "2026-10-28T16:52:26.225167+00:00"
   },
   {
     "id": "fe6e94194636bdac",
@@ -35917,9 +35935,10 @@
     "match_date": "2026-10-27T17:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242418+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 3,
+    "verified_at": "2026-10-28T16:52:26.475265+00:00"
   },
   {
     "id": "f593e8d6857cf0a8",
@@ -35937,9 +35956,10 @@
     "match_date": "2026-10-27T16:30:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242424+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-10-28T16:52:26.726948+00:00"
   },
   {
     "id": "5c14910f91ee682a",
@@ -35957,9 +35977,10 @@
     "match_date": "2026-10-27T16:30:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242428+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2,
+    "verified_at": "2026-10-28T16:52:26.990534+00:00"
   },
   {
     "id": "b438be103e500279",
@@ -35977,9 +35998,10 @@
     "match_date": "2026-10-27T16:30:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242433+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5,
+    "verified_at": "2026-10-28T16:52:27.240957+00:00"
   },
   {
     "id": "873495ec8a441300",
@@ -35997,9 +36019,10 @@
     "match_date": "2026-10-27T16:30:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242437+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-10-28T16:52:27.478596+00:00"
   },
   {
     "id": "992437876dfa8994",
@@ -36017,9 +36040,10 @@
     "match_date": "2026-10-27T16:30:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242441+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0,
+    "verified_at": "2026-10-28T16:52:27.728061+00:00"
   },
   {
     "id": "2eae18532c376c2d",
@@ -36037,9 +36061,10 @@
     "match_date": "2026-10-27T16:30:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242448+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 3,
+    "verified_at": "2026-10-28T16:52:27.994863+00:00"
   },
   {
     "id": "148821b94a4c3380",
@@ -36057,9 +36082,10 @@
     "match_date": "2026-10-27T18:30:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242453+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5,
+    "verified_at": "2026-10-28T16:52:28.250893+00:00"
   },
   {
     "id": "1e668bc818538d74",
@@ -36077,9 +36103,10 @@
     "match_date": "2026-10-27T18:30:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242457+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 6,
+    "verified_at": "2026-10-28T16:52:28.495040+00:00"
   },
   {
     "id": "393bee3b21dfe708",
@@ -36097,9 +36124,10 @@
     "match_date": "2026-10-27T18:30:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242461+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 11,
+    "verified_at": "2026-10-28T16:52:28.744592+00:00"
   },
   {
     "id": "f3d311ada4d10e7c",
@@ -36117,9 +36145,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242468+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-10-28T16:52:29.058978+00:00"
   },
   {
     "id": "9b4f316092e531c8",
@@ -36137,9 +36166,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242472+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-10-28T16:52:29.325982+00:00"
   },
   {
     "id": "ff749499943dd2d6",
@@ -36157,9 +36187,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242478+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 7,
+    "verified_at": "2026-10-28T16:52:29.604013+00:00"
   },
   {
     "id": "06110e53b2847771",
@@ -36177,9 +36208,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242483+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 7,
+    "verified_at": "2026-10-28T16:52:29.869219+00:00"
   },
   {
     "id": "56a0fbc87334a221",
@@ -36197,9 +36229,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242487+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-10-28T16:52:30.248679+00:00"
   },
   {
     "id": "2265dcd88b32c572",
@@ -36217,9 +36250,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242491+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 11,
+    "verified_at": "2026-10-28T16:52:30.512773+00:00"
   },
   {
     "id": "fead68d3883faeba",
@@ -36237,9 +36271,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242497+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-10-28T16:52:30.855919+00:00"
   },
   {
     "id": "0d99a7a47edae4cc",
@@ -36257,9 +36292,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242507+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-10-28T16:52:31.183455+00:00"
   },
   {
     "id": "43ef83b88ed0f5ec",
@@ -36277,9 +36313,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242511+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-10-28T16:52:31.443908+00:00"
   },
   {
     "id": "5a9b66729cec4c1c",
@@ -36297,9 +36334,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242518+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-10-28T16:52:31.700188+00:00"
   },
   {
     "id": "d8d108ac697e4778",
@@ -36317,9 +36355,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242523+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-10-28T16:52:31.997242+00:00"
   },
   {
     "id": "f59141270cd79c29",
@@ -36337,9 +36376,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242527+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 5,
+    "verified_at": "2026-10-28T16:52:32.301281+00:00"
   },
   {
     "id": "5dfbc4f2fdf2ffae",
@@ -36357,9 +36397,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242533+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-10-28T16:52:32.605395+00:00"
   },
   {
     "id": "1ceb20e63590b8e6",
@@ -36377,9 +36418,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242537+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2,
+    "verified_at": "2026-10-28T16:52:32.872298+00:00"
   },
   {
     "id": "5f8f6b9e0b6f45a3",
@@ -36397,9 +36439,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242541+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 3,
+    "verified_at": "2026-10-28T16:52:33.143310+00:00"
   },
   {
     "id": "56f2a418b83378ca",
@@ -36417,9 +36460,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242545+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 7,
+    "verified_at": "2026-10-28T16:52:33.400878+00:00"
   },
   {
     "id": "97b97144deecc6cd",
@@ -36437,9 +36481,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242551+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2,
+    "verified_at": "2026-10-28T16:52:33.676484+00:00"
   },
   {
     "id": "4b294b794fbcaa60",
@@ -36457,9 +36502,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242555+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 9,
+    "verified_at": "2026-10-28T16:52:33.919905+00:00"
   },
   {
     "id": "0fbcb5ca4f9a7ca8",
@@ -36477,9 +36523,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242559+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-10-28T16:52:34.169855+00:00"
   },
   {
     "id": "149443898e6e72a8",
@@ -36497,9 +36544,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242563+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 9,
+    "verified_at": "2026-10-28T16:52:34.409917+00:00"
   },
   {
     "id": "0cc72d4ee27cedb0",
@@ -36517,9 +36565,10 @@
     "match_date": "2026-10-27T18:45:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242567+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 12,
+    "verified_at": "2026-10-28T16:52:34.663190+00:00"
   },
   {
     "id": "15a25bf26bfebf35",
@@ -36537,9 +36586,10 @@
     "match_date": "2026-10-27T16:30:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242571+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5,
+    "verified_at": "2026-10-28T16:52:34.927808+00:00"
   },
   {
     "id": "d8f9dbdcba304066",
@@ -36557,9 +36607,10 @@
     "match_date": "2026-10-27T16:30:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242575+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2,
+    "verified_at": "2026-10-28T16:52:35.224835+00:00"
   },
   {
     "id": "37e6bfc62238705d",
@@ -36577,9 +36628,10 @@
     "match_date": "2026-10-27T16:30:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242580+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 7,
+    "verified_at": "2026-10-28T16:52:35.464837+00:00"
   },
   {
     "id": "e34143f62fc6cb37",
@@ -36597,9 +36649,10 @@
     "match_date": "2026-10-27T18:15:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242584+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-10-28T16:52:35.711288+00:00"
   },
   {
     "id": "8ef4735ff3a6d040",
@@ -36697,6 +36750,656 @@
     "match_date": "2026-10-27T18:00:00.000Z",
     "date_key": "2026-10-27",
     "logged_at": "2026-10-27T13:17:09.242608+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "c5fc56a389be0f72",
+    "scanner": "team_total",
+    "subject": "Kometa Brno",
+    "market": "Kometa Brno Over 1.5 Goals",
+    "value": 71,
+    "detail": "line=1.5",
+    "streak_games": null,
+    "is_home": true,
+    "league": "Extraliga",
+    "league_id": 9294,
+    "home_name": "Kometa Brno",
+    "away_name": "T\u0159inec",
+    "match_date": "2026-10-28T17:00:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118704+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "529a52ae5c16614a",
+    "scanner": "team_total",
+    "subject": "T\u0159inec",
+    "market": "T\u0159inec Over 2.0 Goals",
+    "value": 55,
+    "detail": "line=2.0",
+    "streak_games": null,
+    "is_home": false,
+    "league": "Extraliga",
+    "league_id": 9294,
+    "home_name": "Kometa Brno",
+    "away_name": "T\u0159inec",
+    "match_date": "2026-10-28T17:00:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118720+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "04735067f844c265",
+    "scanner": "game_total",
+    "subject": "Kometa Brno vs T\u0159inec",
+    "market": "Game Over 3.5 Total Goals",
+    "value": 78,
+    "detail": "line=3.5",
+    "streak_games": null,
+    "is_home": null,
+    "league": "Extraliga",
+    "league_id": 9294,
+    "home_name": "Kometa Brno",
+    "away_name": "T\u0159inec",
+    "match_date": "2026-10-28T17:00:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118725+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "cf7fb60e0282b5ba",
+    "scanner": "team_total",
+    "subject": "Krefeld Pinguine",
+    "market": "Krefeld Pinguine Over 1.0 Goals",
+    "value": 53,
+    "detail": "line=1.0",
+    "streak_games": null,
+    "is_home": true,
+    "league": "DEL",
+    "league_id": 16953,
+    "home_name": "Krefeld Pinguine",
+    "away_name": "Schwenninger",
+    "match_date": "2026-10-28T18:30:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118728+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "75b81ed862ee579b",
+    "scanner": "team_total",
+    "subject": "Schwenninger",
+    "market": "Schwenninger Over 2.0 Goals",
+    "value": 54,
+    "detail": "line=2.0",
+    "streak_games": null,
+    "is_home": false,
+    "league": "DEL",
+    "league_id": 16953,
+    "home_name": "Krefeld Pinguine",
+    "away_name": "Schwenninger",
+    "match_date": "2026-10-28T18:30:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118731+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "f32b5001e7531ceb",
+    "scanner": "game_total",
+    "subject": "Krefeld Pinguine vs Schwenninger",
+    "market": "Game Over 3.0 Total Goals",
+    "value": 68,
+    "detail": "line=3.0",
+    "streak_games": null,
+    "is_home": null,
+    "league": "DEL",
+    "league_id": 16953,
+    "home_name": "Krefeld Pinguine",
+    "away_name": "Schwenninger",
+    "match_date": "2026-10-28T18:30:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118734+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "2a47772a1ec8cd11",
+    "scanner": "team_total",
+    "subject": "Langnau Tigers",
+    "market": "Langnau Tigers Over 2.0 Goals",
+    "value": 54,
+    "detail": "line=2.0",
+    "streak_games": null,
+    "is_home": true,
+    "league": "National League",
+    "league_id": 44185,
+    "home_name": "Langnau Tigers",
+    "away_name": "Fribourg-Gott\u00e9ron",
+    "match_date": "2026-10-28T18:45:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118742+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "cf6ad83113d80e23",
+    "scanner": "team_total",
+    "subject": "Fribourg-Gott\u00e9ron",
+    "market": "Fribourg-Gott\u00e9ron Over 2.0 Goals",
+    "value": 56,
+    "detail": "line=2.0",
+    "streak_games": null,
+    "is_home": false,
+    "league": "National League",
+    "league_id": 44185,
+    "home_name": "Langnau Tigers",
+    "away_name": "Fribourg-Gott\u00e9ron",
+    "match_date": "2026-10-28T18:45:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118749+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "95ac5009ed8df700",
+    "scanner": "game_total",
+    "subject": "Langnau Tigers vs Fribourg-Gott\u00e9ron",
+    "market": "Game Over 4.0 Total Goals",
+    "value": 68,
+    "detail": "line=4.0",
+    "streak_games": null,
+    "is_home": null,
+    "league": "National League",
+    "league_id": 44185,
+    "home_name": "Langnau Tigers",
+    "away_name": "Fribourg-Gott\u00e9ron",
+    "match_date": "2026-10-28T18:45:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118755+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "5500a2e3b8eb08fd",
+    "scanner": "team_total",
+    "subject": "Slovan Bratislava HC",
+    "market": "Slovan Bratislava HC Over 2.0 Goals",
+    "value": 57,
+    "detail": "line=2.0",
+    "streak_games": null,
+    "is_home": true,
+    "league": "Extraliga",
+    "league_id": 78225,
+    "home_name": "Slovan Bratislava HC",
+    "away_name": "Dukla Trencin",
+    "match_date": "2026-10-28T17:30:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118758+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "804483127eaf829f",
+    "scanner": "team_total",
+    "subject": "Dukla Trencin",
+    "market": "Dukla Trencin Over 2.0 Goals",
+    "value": 54,
+    "detail": "line=2.0",
+    "streak_games": null,
+    "is_home": false,
+    "league": "Extraliga",
+    "league_id": 78225,
+    "home_name": "Slovan Bratislava HC",
+    "away_name": "Dukla Trencin",
+    "match_date": "2026-10-28T17:30:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118761+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "7462ccf262a047bd",
+    "scanner": "game_total",
+    "subject": "Slovan Bratislava HC vs Dukla Trencin",
+    "market": "Game Over 4.0 Total Goals",
+    "value": 69,
+    "detail": "line=4.0",
+    "streak_games": null,
+    "is_home": null,
+    "league": "Extraliga",
+    "league_id": 78225,
+    "home_name": "Slovan Bratislava HC",
+    "away_name": "Dukla Trencin",
+    "match_date": "2026-10-28T17:30:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118765+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "33a7a49183d3b907",
+    "scanner": "team_total",
+    "subject": "Bolzano",
+    "market": "Bolzano Over 3.5 Goals",
+    "value": 73,
+    "detail": "line=3.5",
+    "streak_games": null,
+    "is_home": true,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Bolzano",
+    "away_name": "Villach",
+    "match_date": "2026-10-28T18:45:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118768+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "5caacb239f03bf54",
+    "scanner": "team_total",
+    "subject": "Villach",
+    "market": "Villach Over 1.5 Goals",
+    "value": 75,
+    "detail": "line=1.5",
+    "streak_games": null,
+    "is_home": false,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Bolzano",
+    "away_name": "Villach",
+    "match_date": "2026-10-28T18:45:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118771+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "f7449db81f6930bf",
+    "scanner": "game_total",
+    "subject": "Bolzano vs Villach",
+    "market": "Game Over 5.5 Total Goals",
+    "value": 78,
+    "detail": "line=5.5",
+    "streak_games": null,
+    "is_home": null,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Bolzano",
+    "away_name": "Villach",
+    "match_date": "2026-10-28T18:45:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118773+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "d407d9ddba7240ae",
+    "scanner": "team_total",
+    "subject": "Vorarlberg",
+    "market": "Vorarlberg Over 1.5 Goals",
+    "value": 65,
+    "detail": "line=1.5",
+    "streak_games": null,
+    "is_home": true,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Vorarlberg",
+    "away_name": "HK Olimpija",
+    "match_date": "2026-10-28T18:30:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118775+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "9cbc8ef6e731d083",
+    "scanner": "team_total",
+    "subject": "HK Olimpija",
+    "market": "HK Olimpija Over 2.0 Goals",
+    "value": 60,
+    "detail": "line=2.0",
+    "streak_games": null,
+    "is_home": false,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Vorarlberg",
+    "away_name": "HK Olimpija",
+    "match_date": "2026-10-28T18:30:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118777+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "b8ff4c5255e564e1",
+    "scanner": "game_total",
+    "subject": "Vorarlberg vs HK Olimpija",
+    "market": "Game Over 3.5 Total Goals",
+    "value": 78,
+    "detail": "line=3.5",
+    "streak_games": null,
+    "is_home": null,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Vorarlberg",
+    "away_name": "HK Olimpija",
+    "match_date": "2026-10-28T18:30:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118780+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "1c9b312acf82553b",
+    "scanner": "team_total",
+    "subject": "Salzburg",
+    "market": "Salzburg Over 1.5 Goals",
+    "value": 72,
+    "detail": "line=1.5",
+    "streak_games": null,
+    "is_home": true,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Salzburg",
+    "away_name": "Vienna Capitals",
+    "match_date": "2026-10-28T18:15:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118783+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "8ca1e45b9b47c06f",
+    "scanner": "team_total",
+    "subject": "Vienna Capitals",
+    "market": "Vienna Capitals Over 1.5 Goals",
+    "value": 72,
+    "detail": "line=1.5",
+    "streak_games": null,
+    "is_home": false,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Salzburg",
+    "away_name": "Vienna Capitals",
+    "match_date": "2026-10-28T18:15:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118785+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "19d1109015639c12",
+    "scanner": "game_total",
+    "subject": "Salzburg vs Vienna Capitals",
+    "market": "Game Over 3.5 Total Goals",
+    "value": 75,
+    "detail": "line=3.5",
+    "streak_games": null,
+    "is_home": null,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Salzburg",
+    "away_name": "Vienna Capitals",
+    "match_date": "2026-10-28T18:15:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118788+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "a3b884a33378a96b",
+    "scanner": "team_total",
+    "subject": "Black Wings Linz",
+    "market": "Black Wings Linz Over 3.0 Goals",
+    "value": 65,
+    "detail": "line=3.0",
+    "streak_games": null,
+    "is_home": true,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Black Wings Linz",
+    "away_name": "TWK Innsbruck",
+    "match_date": "2026-10-28T17:45:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118792+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "24c683d6f43c3b07",
+    "scanner": "team_total",
+    "subject": "TWK Innsbruck",
+    "market": "TWK Innsbruck Over 1.0 Goals",
+    "value": 43,
+    "detail": "line=1.0",
+    "streak_games": null,
+    "is_home": false,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Black Wings Linz",
+    "away_name": "TWK Innsbruck",
+    "match_date": "2026-10-28T17:45:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118794+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "1c41f93df452657c",
+    "scanner": "game_total",
+    "subject": "Black Wings Linz vs TWK Innsbruck",
+    "market": "Game Over 4.0 Total Goals",
+    "value": 70,
+    "detail": "line=4.0",
+    "streak_games": null,
+    "is_home": null,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Black Wings Linz",
+    "away_name": "TWK Innsbruck",
+    "match_date": "2026-10-28T17:45:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118797+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "7a71ec90c1d86dbb",
+    "scanner": "team_total",
+    "subject": "Ferencvaros",
+    "market": "Ferencvaros Over 1.5 Goals",
+    "value": 67,
+    "detail": "line=1.5",
+    "streak_games": null,
+    "is_home": true,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Ferencvaros",
+    "away_name": "Graz 99ers",
+    "match_date": "2026-10-28T17:30:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118799+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "500333e130e35bf3",
+    "scanner": "team_total",
+    "subject": "Graz 99ers",
+    "market": "Graz 99ers Over 2.0 Goals",
+    "value": 64,
+    "detail": "line=2.0",
+    "streak_games": null,
+    "is_home": false,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Ferencvaros",
+    "away_name": "Graz 99ers",
+    "match_date": "2026-10-28T17:30:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118801+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "e593ad136022f623",
+    "scanner": "game_total",
+    "subject": "Ferencvaros vs Graz 99ers",
+    "market": "Game Over 4.0 Total Goals",
+    "value": 65,
+    "detail": "line=4.0",
+    "streak_games": null,
+    "is_home": null,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Ferencvaros",
+    "away_name": "Graz 99ers",
+    "match_date": "2026-10-28T17:30:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118803+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "62cd2717f72804f8",
+    "scanner": "hot_form",
+    "subject": "Bolzano",
+    "market": "Hot Form vs Villach",
+    "value": 5.2,
+    "detail": null,
+    "streak_games": null,
+    "is_home": true,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Bolzano",
+    "away_name": "Villach",
+    "match_date": "2026-10-28T18:45:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118806+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "39e3fde0c8498730",
+    "scanner": "hot_form",
+    "subject": "Black Wings Linz",
+    "market": "Hot Form vs TWK Innsbruck",
+    "value": 4.2,
+    "detail": null,
+    "streak_games": null,
+    "is_home": true,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Black Wings Linz",
+    "away_name": "TWK Innsbruck",
+    "match_date": "2026-10-28T17:45:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118809+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "3700848290d41952",
+    "scanner": "hot_form",
+    "subject": "Graz 99ers",
+    "market": "Hot Form vs Ferencvaros",
+    "value": 4.0,
+    "detail": null,
+    "streak_games": null,
+    "is_home": false,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Ferencvaros",
+    "away_name": "Graz 99ers",
+    "match_date": "2026-10-28T17:30:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118811+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "a5a7e526fc961f6d",
+    "scanner": "real_streak",
+    "subject": "Bolzano",
+    "market": "Real Streak vs Villach",
+    "value": 5,
+    "detail": null,
+    "streak_games": [
+      4,
+      5,
+      6,
+      6,
+      5
+    ],
+    "is_home": true,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Bolzano",
+    "away_name": "Villach",
+    "match_date": "2026-10-28T18:45:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118813+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "3860255e303ee0c3",
+    "scanner": "real_streak",
+    "subject": "Black Wings Linz",
+    "market": "Real Streak vs TWK Innsbruck",
+    "value": 3,
+    "detail": null,
+    "streak_games": [
+      4,
+      5,
+      6
+    ],
+    "is_home": true,
+    "league": "ICE Hockey League",
+    "league_id": 60354,
+    "home_name": "Black Wings Linz",
+    "away_name": "TWK Innsbruck",
+    "match_date": "2026-10-28T17:45:00.000Z",
+    "date_key": "2026-10-28",
+    "logged_at": "2026-10-28T16:52:19.118815+00:00",
     "status": "pending",
     "result": null,
     "actual": null
