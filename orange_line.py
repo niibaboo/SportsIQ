@@ -393,6 +393,130 @@ def _pace_label(team_form, lg_scored, lg_allowed):
     return label, round((ratio - 1) * 100, 1)  # label, % vs league
 
 
+# --- NBA Playstyle Matrix -----------------------------------------------
+# User-supplied data (NBA_Playstyle_Matrix.xlsx, 2026-10-29) -- a manual
+# tactical categorization of all 30 NBA teams (primary system, pace tier,
+# 3PT volume tier, defensive identity, playstyle focus). This is NOT
+# derived from any API or live stat -- it's a static, hand-curated
+# reference table, so it goes stale the moment a team's system changes
+# (new coach, trade, in-season adjustment) and has no mechanism here to
+# refresh itself. Treated as qualitative CONTEXT alongside the model's
+# actual projections (Team Total, pace_matchup -- both still numeric and
+# derived from real recent-game data), not a replacement for either.
+#
+# Keys are team displayName strings, matching ESPN's own naming exactly
+# as pace_matchup/get_team_form etc. already use it (e.g. "LA Clippers",
+# not "Los Angeles Clippers") -- confirmed against the spreadsheet's own
+# team column, which already uses ESPN's short form for the Clippers.
+PLAYSTYLE_MATRIX = {
+    "Boston Celtics": {"category": "Pace-and-Space / High 3PT", "pace": "Moderate / Half-Court", "three_pt": "Very High", "defense": "Switchable Length", "focus": "5-Out Spacing, Mismatch Hunting, Drive & Kick"},
+    "Indiana Pacers": {"category": "Pace-and-Space / High 3PT", "pace": "Very Fast", "three_pt": "High", "defense": "Up-Tempo / Risk-Taking", "focus": "7-Seconds-or-Less, Transition Pressure, Secondary Breaks"},
+    "Sacramento Kings": {"category": "Pace-and-Space / High 3PT", "pace": "Fast", "three_pt": "High", "defense": "Standard Half-Court", "focus": "High Elbow DHOs, Backdoor Cutting, Motion Offense"},
+    "Golden State Warriors": {"category": "Pace-and-Space / High 3PT", "pace": "Fast", "three_pt": "Very High", "defense": "Helper-Heavy / Rotational", "focus": "Off-Ball Screening, Split-Cuts, Motion & Perimeter Volume"},
+    "Oklahoma City Thunder": {"category": "Defensive & Physical Length", "pace": "Fast", "three_pt": "Moderate-High", "defense": "Disruptive / Turnover Forcing", "focus": "Positionless Length, Isolation Drives, Drive & Kick"},
+    "Minnesota Timberwolves": {"category": "Defensive & Physical Length", "pace": "Moderate-Slow", "three_pt": "Moderate", "defense": "Twin-Towers Rim Protection", "focus": "Drop Coverage, Aggressive Perimeter Contest, Interior Power"},
+    "Orlando Magic": {"category": "Defensive & Physical Length", "pace": "Moderate", "three_pt": "Low-Moderate", "defense": "Physical Paint Denier", "focus": "Physical Ball-Pressure, Downhill Rim Attacks, Forcing Turnovers"},
+    "Miami Heat": {"category": "Defensive & Physical Length", "pace": "Slow", "three_pt": "Moderate", "defense": "Zone Concepts & Gritty Pressure", "focus": "Tactical Half-Court Execution, Ball-Pressure, 'Heat Culture' Grind"},
+    "Houston Rockets": {"category": "Defensive & Physical Length", "pace": "Fast", "three_pt": "Moderate", "defense": "Aggressive Help & Rebounding", "focus": "High-Energy Trapping, Glass Crashing, Early Transition"},
+    "Denver Nuggets": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Moderate-Slow", "three_pt": "Moderate", "defense": "Positioning / Team Scheme", "focus": "High-Post Jokić Hub, Elbow Hand-Offs, Backdoor Cutting"},
+    "Dallas Mavericks": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Slow", "three_pt": "High", "defense": "Rim Protection & Wing Help", "focus": "Heavy PnR / Iso, Double-Team Manipulation, Corner 3s"},
+    "Cleveland Cavaliers": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Moderate-Fast", "three_pt": "High", "defense": "Twin-Tower Interior Wall", "focus": "Dual-Guard PnR, High-Octane Motion, Perimeter Spacing"},
+    "Atlanta Hawks": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Fast", "three_pt": "High", "defense": "Perimeter Scramble", "focus": "Deep Guard PnR, Lob Threats, Pull-Up 3s & Floaters"},
+    "Milwaukee Bucks": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Moderate-Fast", "three_pt": "High", "defense": "Drop Coverage Rim Protection", "focus": "Spread PnR, Downhill Power Drives, Kick-out Spot-ups"},
+    "Phoenix Suns": {"category": "Heavy Isolation & Mid-Range", "pace": "Moderate-Slow", "three_pt": "Moderate", "defense": "Switch & Scramble", "focus": "Mid-Range Masterclass, Pick-and-Pop, Elbow Isos"},
+    "Los Angeles Lakers": {"category": "Heavy Isolation & Mid-Range", "pace": "Moderate-Fast", "three_pt": "Moderate-Low", "defense": "Interior Rim Wall", "focus": "Inside-Out Paint Pressure, Post-ups, Transition Scoring"},
+    "LA Clippers": {"category": "Heavy Isolation & Mid-Range", "pace": "Slow", "three_pt": "Moderate", "defense": "Wing Switching", "focus": "Methodical Half-Court PnR, Isolation, Pull-Up Jumpers"},
+    "Philadelphia 76ers": {"category": "Heavy Isolation & Mid-Range", "pace": "Slow", "three_pt": "Moderate", "defense": "Anchor Rim Protection", "focus": "Post-Dominant Paint Attack, Drawing Fouls, Secondary PnR"},
+    "Memphis Grizzlies": {"category": "Athletic & Transition-Driven", "pace": "Fast", "three_pt": "Moderate", "defense": "Grit-and-Grind Pressure", "focus": "Downhill Rim Pressure, Offensive Rebounding, Secondary Breaks"},
+    "New Orleans Pelicans": {"category": "Athletic & Transition-Driven", "pace": "Moderate-Fast", "three_pt": "Moderate-Low", "defense": "Long-Wing Deflections", "focus": "Bully-Ball Rim Attack, Glass Crashes, Deflection-to-Break"},
+    "Toronto Raptors": {"category": "Athletic & Transition-Driven", "pace": "Fast", "three_pt": "Moderate", "defense": "Full-Court Aggressive Havoc", "focus": "Turnover Creation, Glass Crashing, Open-Floor Athletics"},
+    "San Antonio Spurs": {"category": "Athletic & Transition-Driven", "pace": "Fast", "three_pt": "Moderate", "defense": "Length-Based Rim Protection", "focus": "High-Passing Motion, Dynamic Interior Size, Versatile Pace"},
+    "Detroit Pistons": {"category": "Developing / Rebuilding System", "pace": "Moderate", "three_pt": "Low-Moderate", "defense": "Physical Interior", "focus": "Drive-Heavy Guard Play, Rim Rolling, Physical Glass"},
+    "Charlotte Hornets": {"category": "Developing / Rebuilding System", "pace": "Fast", "three_pt": "High", "defense": "Perimeter Gambling", "focus": "Transition Threes, Open-Floor Playmaking, High-Volume 3s"},
+    "New York Knicks": {"category": "Developing / Rebuilding System", "pace": "Slow", "three_pt": "Moderate-High", "defense": "Relentless Physical Half-Court", "focus": "Heavy Offensive Glass, Methodical PnR, Physical Defense"},
+    "Utah Jazz": {"category": "Developing / Rebuilding System", "pace": "Fast", "three_pt": "High", "defense": "Length & Rim Size", "focus": "5-Out Motion, Screening Actions, Interior Size"},
+    "Portland Trail Blazers": {"category": "Developing / Rebuilding System", "pace": "Fast", "three_pt": "Moderate", "defense": "Youthful Perimeter Pressure", "focus": "Rapid Guard PnR, Floor Spacing, Development Pace"},
+    "Brooklyn Nets": {"category": "Developing / Rebuilding System", "pace": "Moderate-Fast", "three_pt": "High", "defense": "Perimeter Switching", "focus": "Transition Pushing, Flexible Perimeter Defense, Spacing"},
+    "Washington Wizards": {"category": "Developing / Rebuilding System", "pace": "Very Fast", "three_pt": "Moderate-High", "defense": "Rebuilding Transition", "focus": "Quick Perimeter Touches, High-Pace Open Floor"},
+    "Chicago Bulls": {"category": "Developing / Rebuilding System", "pace": "Moderate", "three_pt": "Low-Moderate", "defense": "Guard Pressure & Help", "focus": "Mid-Range Jumpers, Half-Court PnR Execution"},
+}
+
+# Ordinal rank maps for the matrix's own pace/3PT text tiers -- used only
+# to compare two teams against EACH OTHER (a signed gap), never shown as
+# a number themselves. Covers every exact label string appearing in
+# PLAYSTYLE_MATRIX above; an unrecognized label (a typo, or the sheet
+# being hand-edited later with a new tier name) falls back to a middle
+# value AND prints a diagnostic, same honesty-first approach as the rest
+# of this file, rather than silently miscomparing two teams.
+PLAYSTYLE_PACE_RANK = {
+    "Very Fast": 6, "Fast": 5, "Moderate-Fast": 4,
+    "Moderate": 3, "Moderate / Half-Court": 3,
+    "Moderate-Slow": 2, "Slow": 1,
+}
+PLAYSTYLE_3PT_RANK = {
+    "Very High": 5, "High": 4, "Moderate-High": 3,
+    "Moderate": 2, "Moderate-Low": 1, "Low-Moderate": 1, "Low": 0,
+}
+
+
+def _playstyle_rank(label, rank_map, mid, field_name):
+    rank = rank_map.get(label)
+    if rank is None:
+        print(f"    [DIAG] unrecognized playstyle {field_name} label '{label}' -- "
+              f"not in {sorted(rank_map)}, treating as a middle/neutral value")
+        return mid
+    return rank
+
+
+def build_playstyle_matchup(home_team, away_team):
+    """Qualitative pace/3PT-volume comparison from the static
+    PLAYSTYLE_MATRIX, for display alongside (not instead of) the model's
+    own numeric Team Total and pace_matchup sections. Returns None if
+    either team isn't in the matrix (e.g. a franchise name mismatch, or
+    the sheet genuinely not covering every team) -- the card simply
+    skips this section rather than guessing at a team's playstyle."""
+    h, a = PLAYSTYLE_MATRIX.get(home_team), PLAYSTYLE_MATRIX.get(away_team)
+    if not h or not a:
+        return None
+
+    h_pace = _playstyle_rank(h["pace"], PLAYSTYLE_PACE_RANK, 3, "pace")
+    a_pace = _playstyle_rank(a["pace"], PLAYSTYLE_PACE_RANK, 3, "pace")
+    h_3pt = _playstyle_rank(h["three_pt"], PLAYSTYLE_3PT_RANK, 2, "3PT volume")
+    a_3pt = _playstyle_rank(a["three_pt"], PLAYSTYLE_3PT_RANK, 2, "3PT volume")
+    pace_gap, three_gap = h_pace - a_pace, h_3pt - a_3pt
+
+    def _poss(name):
+        # Plain English possessive -- team names ending in 's' (Pacers,
+        # Celtics, Mavericks never do, but Jazz/Wizards/76ers etc. might
+        # read oddly either way) get a trailing apostrophe only, not 's.
+        return f"{name}'" if name.endswith('s') else f"{name}'s"
+
+    notes = []
+    if abs(pace_gap) >= 3:
+        faster, slower = (home_team, away_team) if pace_gap > 0 else (away_team, home_team)
+        notes.append(f"Big pace mismatch — {_poss(faster)} tempo vs {_poss(slower)} control could decide who dictates possessions.")
+    elif abs(pace_gap) <= 1:
+        notes.append("Similar pace profiles — tempo likely settles near both teams' own norms.")
+    else:
+        faster, slower = (home_team, away_team) if pace_gap > 0 else (away_team, home_team)
+        notes.append(f"Moderate pace gap — {faster} likely pushes tempo above {_poss(slower)} preference.")
+
+    if abs(three_gap) >= 2:
+        heavier, lighter = (home_team, away_team) if three_gap > 0 else (away_team, home_team)
+        notes.append(f"{heavier} leans far more on 3PT volume than {lighter} — more shooting variance in play.")
+
+    if h["category"] == a["category"]:
+        notes.append(f"Same primary system ({h['category']}) on both sides.")
+
+    return {
+        "home_category": h["category"], "away_category": a["category"],
+        "home_pace": h["pace"], "away_pace": a["pace"],
+        "home_3pt": h["three_pt"], "away_3pt": a["three_pt"],
+        "home_defense": h["defense"], "away_defense": a["defense"],
+        "note": " ".join(notes),
+    }
+
+
 def pace_matchup(h_form, a_form, lg_scored, lg_allowed):
     h_label, h_pct = _pace_label(h_form, lg_scored, lg_allowed)
     a_label, a_pct = _pace_label(a_form, lg_scored, lg_allowed)
@@ -1078,6 +1202,11 @@ def build_predictions():
                 'home_team_id': h_id, 'away_team_id': a_id,
                 'home_props': home_props, 'away_props': away_props,
                 'home_form': h_form, 'away_form': a_form, 'pace': pace,
+                # NBA-only (PLAYSTYLE_MATRIX has no WNBA entries) -- returns
+                # None for WNBA games and for any NBA team name mismatch,
+                # which the card template below already treats as "section
+                # not shown" rather than an error.
+                'playstyle': build_playstyle_matchup(home['team']['displayName'], away['team']['displayName']),
                 **team_total_proj,
             })
     return predictions
@@ -1901,10 +2030,23 @@ CARD_TEMPLATE = """<div style="background:#1a1310;border-radius:12px;padding:16p
   <div style="font-size:17px;font-weight:bold;margin-bottom:10px">{match}</div>
   {team_total_html}
   {pace_html}
+  {playstyle_html}
   {top_players_html}
 </div>"""
 
 PACE_ROW = """<div style="font-size:11px;color:#998;margin-bottom:8px">{icon} <span style="color:#e8dcd0">{verdict}</span> — {away_team} {away_label} ({away_pct_str}) · {home_team} {home_label} ({home_pct_str})</div>"""
+
+# Playstyle matchup (user-supplied NBA_Playstyle_Matrix.xlsx, 2026-10-29)
+# -- qualitative tactical context, clearly visually separated (its own
+# boxed row) from the numeric Team Total/pace sections above it, since
+# this data is hand-curated and NOT derived from live stats the way
+# everything else on the card is.
+PLAYSTYLE_ROW = """<div style="background:#0f0a08;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:11px">
+  <div style="color:#776;text-transform:uppercase;font-size:9px;margin-bottom:3px">Playstyle Matchup</div>
+  <div style="color:#e8dcd0;margin-bottom:3px"><b>{away_team}</b> — {away_category} · {away_pace} pace · {away_3pt} 3PT · {away_defense}</div>
+  <div style="color:#e8dcd0;margin-bottom:5px"><b>{home_team}</b> — {home_category} · {home_pace} pace · {home_3pt} 3PT · {home_defense}</div>
+  <div style="color:#998">{note}</div>
+</div>"""
 
 TEAM_TOTAL_ROW = """<div style="display:flex;justify-content:space-between;text-align:center;background:#0f0a08;border-radius:8px;padding:8px;margin-bottom:8px">
   <div><div style="color:#998;font-size:11px">{away_team}</div><div style="color:#ffeb3b;font-size:18px;font-weight:bold">{exp_away}</div></div>
@@ -2020,6 +2162,16 @@ def make_html(predictions):
                 home_team=p['home_team'], home_label=p['pace']['home_label'],
                 home_pct_str=f"{p['pace']['home_pct']:+.1f}%",
             ) if p.get('pace') else ""
+        ),
+        playstyle_html=(
+            PLAYSTYLE_ROW.format(
+                away_team=p['away_team'], home_team=p['home_team'],
+                away_category=p['playstyle']['away_category'], away_pace=p['playstyle']['away_pace'],
+                away_3pt=p['playstyle']['away_3pt'], away_defense=p['playstyle']['away_defense'],
+                home_category=p['playstyle']['home_category'], home_pace=p['playstyle']['home_pace'],
+                home_3pt=p['playstyle']['home_3pt'], home_defense=p['playstyle']['home_defense'],
+                note=p['playstyle']['note'],
+            ) if p.get('playstyle') else ""
         ),
         top_players_html=(
             TOP_PLAYERS_SECTION.format(
