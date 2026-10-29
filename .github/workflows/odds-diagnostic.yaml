@@ -1,0 +1,25 @@
+name: Odds 1X2 Diagnostic
+
+on:
+  workflow_dispatch: {}
+
+# Manual-trigger only -- no schedule. One-off confirmation run, not a
+# recurring tool: checks whether TheStatsAPI's odds endpoint actually
+# works with the repo's THESTATSAPI_KEY secret before any real
+# "predict 1X2 from bookmaker odds" model gets built on top of it (see
+# odds_1x2_diagnostic.py's own docstring). Prints everything to the
+# Action's own log -- no files generated, nothing to commit or push.
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Run odds diagnostic
+        env:
+          THESTATSAPI_KEY: ${{ secrets.THESTATSAPI_KEY }}
+        run: python3 odds_1x2_diagnostic.py
