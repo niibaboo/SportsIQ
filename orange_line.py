@@ -409,36 +409,36 @@ def _pace_label(team_form, lg_scored, lg_allowed):
 # not "Los Angeles Clippers") -- confirmed against the spreadsheet's own
 # team column, which already uses ESPN's short form for the Clippers.
 PLAYSTYLE_MATRIX = {
-    "Boston Celtics": {"category": "Pace-and-Space / High 3PT", "pace": "Moderate / Half-Court", "three_pt": "Very High", "defense": "Switchable Length", "focus": "5-Out Spacing, Mismatch Hunting, Drive & Kick"},
-    "Indiana Pacers": {"category": "Pace-and-Space / High 3PT", "pace": "Very Fast", "three_pt": "High", "defense": "Up-Tempo / Risk-Taking", "focus": "7-Seconds-or-Less, Transition Pressure, Secondary Breaks"},
-    "Sacramento Kings": {"category": "Pace-and-Space / High 3PT", "pace": "Fast", "three_pt": "High", "defense": "Standard Half-Court", "focus": "High Elbow DHOs, Backdoor Cutting, Motion Offense"},
-    "Golden State Warriors": {"category": "Pace-and-Space / High 3PT", "pace": "Fast", "three_pt": "Very High", "defense": "Helper-Heavy / Rotational", "focus": "Off-Ball Screening, Split-Cuts, Motion & Perimeter Volume"},
-    "Oklahoma City Thunder": {"category": "Defensive & Physical Length", "pace": "Fast", "three_pt": "Moderate-High", "defense": "Disruptive / Turnover Forcing", "focus": "Positionless Length, Isolation Drives, Drive & Kick"},
-    "Minnesota Timberwolves": {"category": "Defensive & Physical Length", "pace": "Moderate-Slow", "three_pt": "Moderate", "defense": "Twin-Towers Rim Protection", "focus": "Drop Coverage, Aggressive Perimeter Contest, Interior Power"},
-    "Orlando Magic": {"category": "Defensive & Physical Length", "pace": "Moderate", "three_pt": "Low-Moderate", "defense": "Physical Paint Denier", "focus": "Physical Ball-Pressure, Downhill Rim Attacks, Forcing Turnovers"},
-    "Miami Heat": {"category": "Defensive & Physical Length", "pace": "Slow", "three_pt": "Moderate", "defense": "Zone Concepts & Gritty Pressure", "focus": "Tactical Half-Court Execution, Ball-Pressure, 'Heat Culture' Grind"},
-    "Houston Rockets": {"category": "Defensive & Physical Length", "pace": "Fast", "three_pt": "Moderate", "defense": "Aggressive Help & Rebounding", "focus": "High-Energy Trapping, Glass Crashing, Early Transition"},
-    "Denver Nuggets": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Moderate-Slow", "three_pt": "Moderate", "defense": "Positioning / Team Scheme", "focus": "High-Post Jokić Hub, Elbow Hand-Offs, Backdoor Cutting"},
-    "Dallas Mavericks": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Slow", "three_pt": "High", "defense": "Rim Protection & Wing Help", "focus": "Heavy PnR / Iso, Double-Team Manipulation, Corner 3s"},
-    "Cleveland Cavaliers": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Moderate-Fast", "three_pt": "High", "defense": "Twin-Tower Interior Wall", "focus": "Dual-Guard PnR, High-Octane Motion, Perimeter Spacing"},
-    "Atlanta Hawks": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Fast", "three_pt": "High", "defense": "Perimeter Scramble", "focus": "Deep Guard PnR, Lob Threats, Pull-Up 3s & Floaters"},
-    "Milwaukee Bucks": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Moderate-Fast", "three_pt": "High", "defense": "Drop Coverage Rim Protection", "focus": "Spread PnR, Downhill Power Drives, Kick-out Spot-ups"},
-    "Phoenix Suns": {"category": "Heavy Isolation & Mid-Range", "pace": "Moderate-Slow", "three_pt": "Moderate", "defense": "Switch & Scramble", "focus": "Mid-Range Masterclass, Pick-and-Pop, Elbow Isos"},
-    "Los Angeles Lakers": {"category": "Heavy Isolation & Mid-Range", "pace": "Moderate-Fast", "three_pt": "Moderate-Low", "defense": "Interior Rim Wall", "focus": "Inside-Out Paint Pressure, Post-ups, Transition Scoring"},
-    "LA Clippers": {"category": "Heavy Isolation & Mid-Range", "pace": "Slow", "three_pt": "Moderate", "defense": "Wing Switching", "focus": "Methodical Half-Court PnR, Isolation, Pull-Up Jumpers"},
-    "Philadelphia 76ers": {"category": "Heavy Isolation & Mid-Range", "pace": "Slow", "three_pt": "Moderate", "defense": "Anchor Rim Protection", "focus": "Post-Dominant Paint Attack, Drawing Fouls, Secondary PnR"},
-    "Memphis Grizzlies": {"category": "Athletic & Transition-Driven", "pace": "Fast", "three_pt": "Moderate", "defense": "Grit-and-Grind Pressure", "focus": "Downhill Rim Pressure, Offensive Rebounding, Secondary Breaks"},
-    "New Orleans Pelicans": {"category": "Athletic & Transition-Driven", "pace": "Moderate-Fast", "three_pt": "Moderate-Low", "defense": "Long-Wing Deflections", "focus": "Bully-Ball Rim Attack, Glass Crashes, Deflection-to-Break"},
-    "Toronto Raptors": {"category": "Athletic & Transition-Driven", "pace": "Fast", "three_pt": "Moderate", "defense": "Full-Court Aggressive Havoc", "focus": "Turnover Creation, Glass Crashing, Open-Floor Athletics"},
-    "San Antonio Spurs": {"category": "Athletic & Transition-Driven", "pace": "Fast", "three_pt": "Moderate", "defense": "Length-Based Rim Protection", "focus": "High-Passing Motion, Dynamic Interior Size, Versatile Pace"},
-    "Detroit Pistons": {"category": "Developing / Rebuilding System", "pace": "Moderate", "three_pt": "Low-Moderate", "defense": "Physical Interior", "focus": "Drive-Heavy Guard Play, Rim Rolling, Physical Glass"},
-    "Charlotte Hornets": {"category": "Developing / Rebuilding System", "pace": "Fast", "three_pt": "High", "defense": "Perimeter Gambling", "focus": "Transition Threes, Open-Floor Playmaking, High-Volume 3s"},
-    "New York Knicks": {"category": "Developing / Rebuilding System", "pace": "Slow", "three_pt": "Moderate-High", "defense": "Relentless Physical Half-Court", "focus": "Heavy Offensive Glass, Methodical PnR, Physical Defense"},
-    "Utah Jazz": {"category": "Developing / Rebuilding System", "pace": "Fast", "three_pt": "High", "defense": "Length & Rim Size", "focus": "5-Out Motion, Screening Actions, Interior Size"},
-    "Portland Trail Blazers": {"category": "Developing / Rebuilding System", "pace": "Fast", "three_pt": "Moderate", "defense": "Youthful Perimeter Pressure", "focus": "Rapid Guard PnR, Floor Spacing, Development Pace"},
-    "Brooklyn Nets": {"category": "Developing / Rebuilding System", "pace": "Moderate-Fast", "three_pt": "High", "defense": "Perimeter Switching", "focus": "Transition Pushing, Flexible Perimeter Defense, Spacing"},
-    "Washington Wizards": {"category": "Developing / Rebuilding System", "pace": "Very Fast", "three_pt": "Moderate-High", "defense": "Rebuilding Transition", "focus": "Quick Perimeter Touches, High-Pace Open Floor"},
-    "Chicago Bulls": {"category": "Developing / Rebuilding System", "pace": "Moderate", "three_pt": "Low-Moderate", "defense": "Guard Pressure & Help", "focus": "Mid-Range Jumpers, Half-Court PnR Execution"},
+    "Boston Celtics": {"category": "Pace-and-Space / High 3PT", "pace": "Moderate / Half-Court", "three_pt": "Very High", "defense": "Switchable Length", "focus": "5-Out Spacing, Mismatch Hunting, Drive & Kick", "rebound_tier": "Top-Tier / Scheme-Driven", "rebound_focus": "Disciplined Team Box-Outs, Defensive Glass Security"},
+    "Indiana Pacers": {"category": "Pace-and-Space / High 3PT", "pace": "Very Fast", "three_pt": "High", "defense": "Up-Tempo / Risk-Taking", "focus": "7-Seconds-or-Less, Transition Pressure, Secondary Breaks", "rebound_tier": "Low Volume / Transition Focus", "rebound_focus": "Early Floor Run over Offensive Rebounding"},
+    "Sacramento Kings": {"category": "Pace-and-Space / High 3PT", "pace": "Fast", "three_pt": "High", "defense": "Standard Half-Court", "focus": "High Elbow DHOs, Backdoor Cutting, Motion Offense", "rebound_tier": "Moderate / Guard-Assisted", "rebound_focus": "Defensive Board & Go, Perimeter Outlet Passes"},
+    "Golden State Warriors": {"category": "Pace-and-Space / High 3PT", "pace": "Fast", "three_pt": "Very High", "defense": "Helper-Heavy / Rotational", "focus": "Off-Ball Screening, Split-Cuts, Motion & Perimeter Volume", "rebound_tier": "Moderate / Collective Effort", "rebound_focus": "Long-Rebound Chasing, Fast Outlet Triggers"},
+    "Oklahoma City Thunder": {"category": "Defensive & Physical Length", "pace": "Fast", "three_pt": "Moderate-High", "defense": "Disruptive / Turnover Forcing", "focus": "Positionless Length, Isolation Drives, Drive & Kick", "rebound_tier": "Mid-Tier / Guard-Driven", "rebound_focus": "Perimeter Board Hunting into Early Break"},
+    "Minnesota Timberwolves": {"category": "Defensive & Physical Length", "pace": "Moderate-Slow", "three_pt": "Moderate", "defense": "Twin-Towers Rim Protection", "focus": "Drop Coverage, Aggressive Perimeter Contest, Interior Power", "rebound_tier": "Elite Glass-Cleaners", "rebound_focus": "Twin-Towers Paint Dominance, Defensive Glass Lockdown"},
+    "Orlando Magic": {"category": "Defensive & Physical Length", "pace": "Moderate", "three_pt": "Low-Moderate", "defense": "Physical Paint Denier", "focus": "Physical Ball-Pressure, Downhill Rim Attacks, Forcing Turnovers", "rebound_tier": "Top-Tier / Physical", "rebound_focus": "Heavy Offensive Glass Crashing, Denying Paint"},
+    "Miami Heat": {"category": "Defensive & Physical Length", "pace": "Slow", "three_pt": "Moderate", "defense": "Zone Concepts & Gritty Pressure", "focus": "Tactical Half-Court Execution, Ball-Pressure, 'Heat Culture' Grind", "rebound_tier": "Top-Tier / Scheme-Driven", "rebound_focus": "Fundamental Team Box-Outs, Gritty Interior"},
+    "Houston Rockets": {"category": "Defensive & Physical Length", "pace": "Fast", "three_pt": "Moderate", "defense": "Aggressive Help & Rebounding", "focus": "High-Energy Trapping, Glass Crashing, Early Transition", "rebound_tier": "Elite Glass-Cleaners (#1 RPG)", "rebound_focus": "Relentless Offensive Glass Crashing, Extra Possessions"},
+    "Denver Nuggets": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Moderate-Slow", "three_pt": "Moderate", "defense": "Positioning / Team Scheme", "focus": "High-Post Jokić Hub, Elbow Hand-Offs, Backdoor Cutting", "rebound_tier": "Top-Tier / Center-Anchored", "rebound_focus": "Jokić Defensive Board Dominance & Direct Outlets"},
+    "Dallas Mavericks": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Slow", "three_pt": "High", "defense": "Rim Protection & Wing Help", "focus": "Heavy PnR / Iso, Double-Team Manipulation, Corner 3s", "rebound_tier": "Mid-Tier / Big-Man Rim Protection", "rebound_focus": "Verticality Box-Outs, Guard Long Board Recovery"},
+    "Cleveland Cavaliers": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Moderate-Fast", "three_pt": "High", "defense": "Twin-Tower Interior Wall", "focus": "Dual-Guard PnR, High-Octane Motion, Perimeter Spacing", "rebound_tier": "Top-Tier / Scheme-Driven", "rebound_focus": "Twin-Tower Interior Board Security, Quick Outlets"},
+    "Atlanta Hawks": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Fast", "three_pt": "High", "defense": "Perimeter Scramble", "focus": "Deep Guard PnR, Lob Threats, Pull-Up 3s & Floaters", "rebound_tier": "Mid-Tier / Center-Dependent", "rebound_focus": "Rim Runner Board Recovery, Transition Outlet"},
+    "Milwaukee Bucks": {"category": "Playmaker-Centric (Heliocentric)", "pace": "Moderate-Fast", "three_pt": "High", "defense": "Drop Coverage Rim Protection", "focus": "Spread PnR, Downhill Power Drives, Kick-out Spot-ups", "rebound_tier": "Top-Tier / Size-Dominant", "rebound_focus": "Interior Size Wall, Defensive Board Security"},
+    "Phoenix Suns": {"category": "Heavy Isolation & Mid-Range", "pace": "Moderate-Slow", "three_pt": "Moderate", "defense": "Switch & Scramble", "focus": "Mid-Range Masterclass, Pick-and-Pop, Elbow Isos", "rebound_tier": "Mid-Tier", "rebound_focus": "Defensive Board Control into Half-Court Set-Up"},
+    "Los Angeles Lakers": {"category": "Heavy Isolation & Mid-Range", "pace": "Moderate-Fast", "three_pt": "Moderate-Low", "defense": "Interior Rim Wall", "focus": "Inside-Out Paint Pressure, Post-ups, Transition Scoring", "rebound_tier": "Top-Tier / Interior-Heavy", "rebound_focus": "Star Big-Man Board Security, Direct Downhill Push"},
+    "LA Clippers": {"category": "Heavy Isolation & Mid-Range", "pace": "Slow", "three_pt": "Moderate", "defense": "Wing Switching", "focus": "Methodical Half-Court PnR, Isolation, Pull-Up Jumpers", "rebound_tier": "Mid-Tier / Slow Pace", "rebound_focus": "Physical Wing Box-Outs, Half-Court Control"},
+    "Philadelphia 76ers": {"category": "Heavy Isolation & Mid-Range", "pace": "Slow", "three_pt": "Moderate", "defense": "Anchor Rim Protection", "focus": "Post-Dominant Paint Attack, Drawing Fouls, Secondary PnR", "rebound_tier": "Mid-Tier / Anchor-Dependent", "rebound_focus": "Post-Anchor Board Control & Foul Drawing"},
+    "Memphis Grizzlies": {"category": "Athletic & Transition-Driven", "pace": "Fast", "three_pt": "Moderate", "defense": "Grit-and-Grind Pressure", "focus": "Downhill Rim Pressure, Offensive Rebounding, Secondary Breaks", "rebound_tier": "Top-Tier / High-Energy", "rebound_focus": "Offensive Glass Crashing, Grit-and-Grind Putbacks"},
+    "New Orleans Pelicans": {"category": "Athletic & Transition-Driven", "pace": "Moderate-Fast", "three_pt": "Moderate-Low", "defense": "Long-Wing Deflections", "focus": "Bully-Ball Rim Attack, Glass Crashes, Deflection-to-Break", "rebound_tier": "Top-Tier / Physical", "rebound_focus": "Bully-Ball Glass Crashes, Wing Athleticism"},
+    "Toronto Raptors": {"category": "Athletic & Transition-Driven", "pace": "Fast", "three_pt": "Moderate", "defense": "Full-Court Aggressive Havoc", "focus": "Turnover Creation, Glass Crashing, Open-Floor Athletics", "rebound_tier": "High Volume / Offensive Focus", "rebound_focus": "Relentless Offensive Rebound Crashing"},
+    "San Antonio Spurs": {"category": "Athletic & Transition-Driven", "pace": "Fast", "three_pt": "Moderate", "defense": "Length-Based Rim Protection", "focus": "High-Passing Motion, Dynamic Interior Size, Versatile Pace", "rebound_tier": "Elite Glass-Cleaners", "rebound_focus": "Length-Driven Defensive Boarding, Quick Outlet Push"},
+    "Detroit Pistons": {"category": "Developing / Rebuilding System", "pace": "Moderate", "three_pt": "Low-Moderate", "defense": "Physical Interior", "focus": "Drive-Heavy Guard Play, Rim Rolling, Physical Glass", "rebound_tier": "Mid-Tier / Physical", "rebound_focus": "Interior Youth Banging, Physical Glass"},
+    "Charlotte Hornets": {"category": "Developing / Rebuilding System", "pace": "Fast", "three_pt": "High", "defense": "Perimeter Gambling", "focus": "Transition Threes, Open-Floor Playmaking, High-Volume 3s", "rebound_tier": "Low Volume", "rebound_focus": "Pace Pushing over Offensive Rebound Crashing"},
+    "New York Knicks": {"category": "Developing / Rebuilding System", "pace": "Slow", "three_pt": "Moderate-High", "defense": "Relentless Physical Half-Court", "focus": "Heavy Offensive Glass, Methodical PnR, Physical Defense", "rebound_tier": "Elite Glass-Cleaners / Offensive", "rebound_focus": "Relentless Offensive Glass Crashing, Second-Chance Points"},
+    "Utah Jazz": {"category": "Developing / Rebuilding System", "pace": "Fast", "three_pt": "High", "defense": "Length & Rim Size", "focus": "5-Out Motion, Screening Actions, Interior Size", "rebound_tier": "Mid-Tier / Size-Driven", "rebound_focus": "Interior Size Boarding, Perimeter Spacing Outlets"},
+    "Portland Trail Blazers": {"category": "Developing / Rebuilding System", "pace": "Fast", "three_pt": "Moderate", "defense": "Youthful Perimeter Pressure", "focus": "Rapid Guard PnR, Floor Spacing, Development Pace", "rebound_tier": "Low-Mid Tier", "rebound_focus": "Guard Outlets, Development Pace"},
+    "Brooklyn Nets": {"category": "Developing / Rebuilding System", "pace": "Moderate-Fast", "three_pt": "High", "defense": "Perimeter Switching", "focus": "Transition Pushing, Flexible Perimeter Defense, Spacing", "rebound_tier": "Low-Mid Tier", "rebound_focus": "Perimeter Board Chasing, Spacing Transition"},
+    "Washington Wizards": {"category": "Developing / Rebuilding System", "pace": "Very Fast", "three_pt": "Moderate-High", "defense": "Rebuilding Transition", "focus": "Quick Perimeter Touches, High-Pace Open Floor", "rebound_tier": "Low Volume / Fast Tempo", "rebound_focus": "Open-Floor Outlet Transition, High Pace"},
+    "Chicago Bulls": {"category": "Developing / Rebuilding System", "pace": "Moderate", "three_pt": "Low-Moderate", "defense": "Guard Pressure & Help", "focus": "Mid-Range Jumpers, Half-Court PnR Execution", "rebound_tier": "Mid-Tier", "rebound_focus": "Guard-Assisted Defensive Glass, Half-Court Sets"},
 }
 
 # Ordinal rank maps for the matrix's own pace/3PT text tiers -- used only
@@ -513,6 +513,7 @@ def build_playstyle_matchup(home_team, away_team):
         "home_pace": h["pace"], "away_pace": a["pace"],
         "home_3pt": h["three_pt"], "away_3pt": a["three_pt"],
         "home_defense": h["defense"], "away_defense": a["defense"],
+        "home_rebound_tier": h["rebound_tier"], "away_rebound_tier": a["rebound_tier"],
         "note": " ".join(notes),
     }
 
@@ -2036,15 +2037,25 @@ CARD_TEMPLATE = """<div style="background:#1a1310;border-radius:12px;padding:16p
 
 PACE_ROW = """<div style="font-size:11px;color:#998;margin-bottom:8px">{icon} <span style="color:#e8dcd0">{verdict}</span> — {away_team} {away_label} ({away_pct_str}) · {home_team} {home_label} ({home_pct_str})</div>"""
 
-# Playstyle matchup (user-supplied NBA_Playstyle_Matrix.xlsx, 2026-10-29)
-# -- qualitative tactical context, clearly visually separated (its own
-# boxed row) from the numeric Team Total/pace sections above it, since
-# this data is hand-curated and NOT derived from live stats the way
-# everything else on the card is.
+# Playstyle matchup (user-supplied NBA_Playstyle_Matrix.xlsx, 2026-10-29,
+# merged with a later NBA_Playstyle_and_Rebounding_Matrix.xlsx for the
+# Rebounding Tier field) -- qualitative tactical context, clearly
+# visually separated (its own boxed row) from the numeric Team
+# Total/pace sections above it, since this data is hand-curated and NOT
+# derived from live stats the way everything else on the card is.
+#
+# Rebounding Tier is shown as plain text only, same as Defensive
+# Identity -- deliberately NOT turned into a ranked/numeric comparison
+# the way pace and 3PT volume are (see build_playstyle_matchup's pace_gap/
+# three_gap), per user decision 2026-10-29: REB is the one prop stat
+# with no opponent-adjustment at all right now, which makes this tier
+# label genuinely useful CONTEXT for a REB bet -- but turning unvalidated
+# hand-typed tiers into a scale factor that actually moves reb_proj
+# would put real risk on real numbers with no backtesting behind it.
 PLAYSTYLE_ROW = """<div style="background:#0f0a08;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:11px">
   <div style="color:#776;text-transform:uppercase;font-size:9px;margin-bottom:3px">Playstyle Matchup</div>
-  <div style="color:#e8dcd0;margin-bottom:3px"><b>{away_team}</b> — {away_category} · {away_pace} pace · {away_3pt} 3PT · {away_defense}</div>
-  <div style="color:#e8dcd0;margin-bottom:5px"><b>{home_team}</b> — {home_category} · {home_pace} pace · {home_3pt} 3PT · {home_defense}</div>
+  <div style="color:#e8dcd0;margin-bottom:3px"><b>{away_team}</b> — {away_category} · {away_pace} pace · {away_3pt} 3PT · {away_defense} · Reb: {away_rebound_tier}</div>
+  <div style="color:#e8dcd0;margin-bottom:5px"><b>{home_team}</b> — {home_category} · {home_pace} pace · {home_3pt} 3PT · {home_defense} · Reb: {home_rebound_tier}</div>
   <div style="color:#998">{note}</div>
 </div>"""
 
@@ -2168,8 +2179,10 @@ def make_html(predictions):
                 away_team=p['away_team'], home_team=p['home_team'],
                 away_category=p['playstyle']['away_category'], away_pace=p['playstyle']['away_pace'],
                 away_3pt=p['playstyle']['away_3pt'], away_defense=p['playstyle']['away_defense'],
+                away_rebound_tier=p['playstyle']['away_rebound_tier'],
                 home_category=p['playstyle']['home_category'], home_pace=p['playstyle']['home_pace'],
                 home_3pt=p['playstyle']['home_3pt'], home_defense=p['playstyle']['home_defense'],
+                home_rebound_tier=p['playstyle']['home_rebound_tier'],
                 note=p['playstyle']['note'],
             ) if p.get('playstyle') else ""
         ),
