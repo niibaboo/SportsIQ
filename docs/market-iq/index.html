@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market IQ</title>
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#121820; --panel2:#161d27; --border:#233040;
+    --text:#e8edf2; --sub:#8b98a8; --amber:#facc15; --green:#34d399; --red:#f87171;
+  }
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    padding:20px; max-width:640px; margin:0 auto;
+  }
+  h1{ font-size:24px; margin-bottom:4px; }
+  .sub{ color:var(--sub); font-size:13px; margin-bottom:6px; }
+  .notice{
+    background:#1a1410; border:1px solid #3a2e18; border-radius:10px;
+    padding:10px 12px; font-size:11.5px; color:#d8c9a8; line-height:1.5;
+    margin-bottom:20px;
+  }
+  h2.league{
+    font-size:14px; color:var(--amber); text-transform:uppercase;
+    letter-spacing:0.04em; margin:26px 0 10px; border-bottom:1px solid var(--border);
+    padding-bottom:6px;
+  }
+  .card{
+    background:var(--panel); border:1px solid var(--border); border-radius:12px;
+    padding:14px; margin-bottom:10px;
+  }
+  .matchup{ font-size:15px; font-weight:700; margin-bottom:2px; }
+  .kickoff{ color:var(--sub); font-size:11px; margin-bottom:10px; }
+  .probs{ display:flex; gap:8px; margin-bottom:8px; }
+  .prob{
+    flex:1; background:var(--panel2); border-radius:8px; padding:8px 6px;
+    text-align:center;
+  }
+  .prob .label{ color:var(--sub); font-size:10px; text-transform:uppercase; margin-bottom:3px; }
+  .prob .pct{ font-size:16px; font-weight:700; }
+  .prob .fairodds{ color:var(--sub); font-size:10px; margin-top:2px; }
+  .prob.fav .pct{ color:var(--green); }
+  .meta{ color:var(--sub); font-size:10.5px; display:flex; justify-content:space-between; }
+  .empty{ color:var(--sub); font-size:13px; padding:20px 0; }
+  .footer{ color:var(--sub); font-size:11px; text-align:center; margin-top:28px; line-height:1.6; }
+</style>
+</head>
+<body>
+  <h1>📈 Market IQ</h1>
+  <div class="sub">Generated 2026-10-29 22:25 UTC</div>
+  <div class="notice">
+    This one works differently from the rest of the suite: it doesn't
+    blend rolling form into a projection. It takes a bookmaker's own
+    1X2 odds and strips out their built-in margin ("de-vigging") to
+    show the bookmaker's true implied Home/Draw/Away probabilities --
+    a market read, not a stats-driven prediction. Prices shown are
+    each bookmaker's <b>last seen</b> price (falling back to their
+    opening price only if no later price was recorded). Not every
+    upcoming match has odds posted yet -- those are left off rather
+    than guessed at.
+  </div>
+  <h2 class="league">Premier League</h2>
+<div class="card">
+  <div class="matchup">Chelsea vs Manchester United</div>
+  <div class="kickoff">Sat 31 Oct, 12:30 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">51.8%</div>
+      <div class="fairodds">fair 1.93</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">24.4%</div>
+      <div class="fairodds">fair 4.1</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">23.8%</div>
+      <div class="fairodds">fair 4.19</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.3% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Manchester City vs Brighton & Hove Albion</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">58.6%</div>
+      <div class="fairodds">fair 1.71</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">21.4%</div>
+      <div class="fairodds">fair 4.68</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">20.1%</div>
+      <div class="fairodds">fair 4.98</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.2% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Hull City vs Ipswich Town</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">36.5%</div>
+      <div class="fairodds">fair 2.74</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">28.0%</div>
+      <div class="fairodds">fair 3.57</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">35.5%</div>
+      <div class="fairodds">fair 2.82</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>4.8% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Coventry City vs Sunderland</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">30.8%</div>
+      <div class="fairodds">fair 3.25</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">28.2%</div>
+      <div class="fairodds">fair 3.55</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">41.1%</div>
+      <div class="fairodds">fair 2.44</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.3% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Brentford vs Nottingham Forest</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">46.1%</div>
+      <div class="fairodds">fair 2.17</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">26.4%</div>
+      <div class="fairodds">fair 3.79</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">27.6%</div>
+      <div class="fairodds">fair 3.63</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.0% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Bournemouth vs Leeds United</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">44.3%</div>
+      <div class="fairodds">fair 2.26</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">28.0%</div>
+      <div class="fairodds">fair 3.57</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">27.7%</div>
+      <div class="fairodds">fair 3.61</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.3% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Tottenham Hotspur vs Crystal Palace</div>
+  <div class="kickoff">Sat 31 Oct, 17:30 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">61.7%</div>
+      <div class="fairodds">fair 1.62</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">21.0%</div>
+      <div class="fairodds">fair 4.76</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">17.2%</div>
+      <div class="fairodds">fair 5.8</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>4.9% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Aston Villa vs Fulham</div>
+  <div class="kickoff">Sat 31 Oct, 20:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">49.1%</div>
+      <div class="fairodds">fair 2.04</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.5%</div>
+      <div class="fairodds">fair 3.92</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">25.4%</div>
+      <div class="fairodds">fair 3.94</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.3% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Liverpool vs Arsenal</div>
+  <div class="kickoff">Sun 01 Nov, 16:30 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">32.5%</div>
+      <div class="fairodds">fair 3.07</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">27.7%</div>
+      <div class="fairodds">fair 3.61</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">39.8%</div>
+      <div class="fairodds">fair 2.51</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.1% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Newcastle United vs Everton</div>
+  <div class="kickoff">Mon 02 Nov, 20:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">41.3%</div>
+      <div class="fairodds">fair 2.42</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">26.7%</div>
+      <div class="fairodds">fair 3.75</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">32.0%</div>
+      <div class="fairodds">fair 3.13</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.6% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Everton vs Coventry City</div>
+  <div class="kickoff">Fri 06 Nov, 20:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">55.4%</div>
+      <div class="fairodds">fair 1.81</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">23.8%</div>
+      <div class="fairodds">fair 4.2</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">20.8%</div>
+      <div class="fairodds">fair 4.8</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.2% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Leeds United vs Tottenham Hotspur</div>
+  <div class="kickoff">Sat 07 Nov, 12:30 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">36.8%</div>
+      <div class="fairodds">fair 2.72</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">28.0%</div>
+      <div class="fairodds">fair 3.58</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">35.3%</div>
+      <div class="fairodds">fair 2.84</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.6% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Fulham vs Newcastle United</div>
+  <div class="kickoff">Sat 07 Nov, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">42.6%</div>
+      <div class="fairodds">fair 2.35</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">26.1%</div>
+      <div class="fairodds">fair 3.83</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">31.3%</div>
+      <div class="fairodds">fair 3.2</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.2% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Arsenal vs Hull City</div>
+  <div class="kickoff">Sat 07 Nov, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">80.8%</div>
+      <div class="fairodds">fair 1.24</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">13.1%</div>
+      <div class="fairodds">fair 7.65</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">6.2%</div>
+      <div class="fairodds">fair 16.25</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.2% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Nottingham Forest vs Manchester City</div>
+  <div class="kickoff">Sat 07 Nov, 17:30 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">19.5%</div>
+      <div class="fairodds">fair 5.13</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">22.9%</div>
+      <div class="fairodds">fair 4.37</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">57.6%</div>
+      <div class="fairodds">fair 1.74</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.3% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Sunderland vs Chelsea</div>
+  <div class="kickoff">Sun 08 Nov, 14:00 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">28.3%</div>
+      <div class="fairodds">fair 3.53</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">26.8%</div>
+      <div class="fairodds">fair 3.73</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">44.9%</div>
+      <div class="fairodds">fair 2.23</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.4% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Ipswich Town vs Bournemouth</div>
+  <div class="kickoff">Sun 08 Nov, 14:00 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">25.6%</div>
+      <div class="fairodds">fair 3.9</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.8%</div>
+      <div class="fairodds">fair 3.88</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">48.6%</div>
+      <div class="fairodds">fair 2.06</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.1% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Crystal Palace vs Liverpool</div>
+  <div class="kickoff">Sun 08 Nov, 14:00 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">21.9%</div>
+      <div class="fairodds">fair 4.58</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">23.2%</div>
+      <div class="fairodds">fair 4.31</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">54.9%</div>
+      <div class="fairodds">fair 1.82</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.3% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Brighton & Hove Albion vs Brentford</div>
+  <div class="kickoff">Sun 08 Nov, 14:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">49.5%</div>
+      <div class="fairodds">fair 2.02</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">24.8%</div>
+      <div class="fairodds">fair 4.04</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">25.8%</div>
+      <div class="fairodds">fair 3.88</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.0% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Manchester United vs Aston Villa</div>
+  <div class="kickoff">Sun 08 Nov, 16:30 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">42.3%</div>
+      <div class="fairodds">fair 2.36</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.3%</div>
+      <div class="fairodds">fair 3.95</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">32.4%</div>
+      <div class="fairodds">fair 3.09</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.0% overround</span></div>
+</div>
+<h2 class="league">Championship</h2>
+<div class="card">
+  <div class="matchup">Sheffield United vs Wrexham</div>
+  <div class="kickoff">Fri 30 Oct, 20:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">39.0%</div>
+      <div class="fairodds">fair 2.56</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">28.1%</div>
+      <div class="fairodds">fair 3.56</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">32.9%</div>
+      <div class="fairodds">fair 3.04</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.0% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Stoke City vs Preston North End</div>
+  <div class="kickoff">Sat 31 Oct, 12:30 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">54.3%</div>
+      <div class="fairodds">fair 1.84</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.1%</div>
+      <div class="fairodds">fair 3.99</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">20.6%</div>
+      <div class="fairodds">fair 4.85</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.7% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Norwich City vs Watford</div>
+  <div class="kickoff">Sat 31 Oct, 12:30 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">61.1%</div>
+      <div class="fairodds">fair 1.64</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">21.7%</div>
+      <div class="fairodds">fair 4.61</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">17.1%</div>
+      <div class="fairodds">fair 5.83</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.9% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Lincoln City vs Birmingham City</div>
+  <div class="kickoff">Sat 31 Oct, 12:30 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">28.6%</div>
+      <div class="fairodds">fair 3.5</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">27.2%</div>
+      <div class="fairodds">fair 3.67</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">44.2%</div>
+      <div class="fairodds">fair 2.26</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.6% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Wolverhampton vs Cardiff City</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">56.6%</div>
+      <div class="fairodds">fair 1.77</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">22.8%</div>
+      <div class="fairodds">fair 4.39</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">20.6%</div>
+      <div class="fairodds">fair 4.85</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.6% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">West Ham United vs West Bromwich Albion</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">58.2%</div>
+      <div class="fairodds">fair 1.72</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">22.6%</div>
+      <div class="fairodds">fair 4.42</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">19.2%</div>
+      <div class="fairodds">fair 5.21</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.0% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Swansea City vs Blackburn Rovers</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">53.7%</div>
+      <div class="fairodds">fair 1.86</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.5%</div>
+      <div class="fairodds">fair 3.92</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">20.7%</div>
+      <div class="fairodds">fair 4.82</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.6% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Southampton vs Queens Park Rangers</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">53.8%</div>
+      <div class="fairodds">fair 1.86</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">23.8%</div>
+      <div class="fairodds">fair 4.21</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">22.5%</div>
+      <div class="fairodds">fair 4.45</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.5% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Millwall vs Derby County</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">56.4%</div>
+      <div class="fairodds">fair 1.77</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">24.5%</div>
+      <div class="fairodds">fair 4.08</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">19.1%</div>
+      <div class="fairodds">fair 5.23</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.7% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Middlesbrough vs Charlton Athletic</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">75.3%</div>
+      <div class="fairodds">fair 1.33</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">15.3%</div>
+      <div class="fairodds">fair 6.52</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">9.4%</div>
+      <div class="fairodds">fair 10.65</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.2% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Burnley vs Portsmouth</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">44.4%</div>
+      <div class="fairodds">fair 2.25</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">27.7%</div>
+      <div class="fairodds">fair 3.61</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">27.9%</div>
+      <div class="fairodds">fair 3.58</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.7% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Bolton Wanderers vs Bristol City</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">32.9%</div>
+      <div class="fairodds">fair 3.04</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">27.1%</div>
+      <div class="fairodds">fair 3.68</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">39.9%</div>
+      <div class="fairodds">fair 2.5</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.7% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Charlton Athletic vs Bolton Wanderers</div>
+  <div class="kickoff">Tue 03 Nov, 19:45 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">41.7%</div>
+      <div class="fairodds">fair 2.4</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">27.1%</div>
+      <div class="fairodds">fair 3.69</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">31.3%</div>
+      <div class="fairodds">fair 3.2</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Betfair Exchange, Paddy Power</span><span>6.1% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Watford vs Lincoln City</div>
+  <div class="kickoff">Tue 03 Nov, 19:45 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">41.0%</div>
+      <div class="fairodds">fair 2.44</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">27.1%</div>
+      <div class="fairodds">fair 3.69</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">31.9%</div>
+      <div class="fairodds">fair 3.13</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Paddy Power</span><span>8.5% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Queens Park Rangers vs Burnley</div>
+  <div class="kickoff">Tue 03 Nov, 19:45 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">42.3%</div>
+      <div class="fairodds">fair 2.37</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">29.8%</div>
+      <div class="fairodds">fair 3.35</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">27.9%</div>
+      <div class="fairodds">fair 3.59</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Betfair Exchange, Paddy Power</span><span>16.4% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Preston North End vs Sheffield United</div>
+  <div class="kickoff">Tue 03 Nov, 19:45 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">32.9%</div>
+      <div class="fairodds">fair 3.04</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.9%</div>
+      <div class="fairodds">fair 3.86</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">41.2%</div>
+      <div class="fairodds">fair 2.43</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Betfair Exchange, Paddy Power</span><span>6.8% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Portsmouth vs Swansea City</div>
+  <div class="kickoff">Tue 03 Nov, 19:45 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">36.8%</div>
+      <div class="fairodds">fair 2.72</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">27.9%</div>
+      <div class="fairodds">fair 3.58</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">35.3%</div>
+      <div class="fairodds">fair 2.83</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Betfair Exchange, Paddy Power</span><span>7.0% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Derby County vs Norwich City</div>
+  <div class="kickoff">Tue 03 Nov, 19:45 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">29.7%</div>
+      <div class="fairodds">fair 3.37</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.3%</div>
+      <div class="fairodds">fair 3.96</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">45.1%</div>
+      <div class="fairodds">fair 2.22</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Betfair Exchange, Paddy Power</span><span>7.0% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Blackburn Rovers vs Stoke City</div>
+  <div class="kickoff">Tue 03 Nov, 19:45 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">39.1%</div>
+      <div class="fairodds">fair 2.56</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">28.0%</div>
+      <div class="fairodds">fair 3.58</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">32.9%</div>
+      <div class="fairodds">fair 3.04</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Betfair Exchange, Paddy Power</span><span>6.8% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">West Bromwich Albion vs Southampton</div>
+  <div class="kickoff">Tue 03 Nov, 20:00 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">32.4%</div>
+      <div class="fairodds">fair 3.08</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Draw</div>
+      <div class="pct">35.0%</div>
+      <div class="fairodds">fair 2.86</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">32.6%</div>
+      <div class="fairodds">fair 3.07</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Betfair Exchange, Paddy Power</span><span>27.1% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Birmingham City vs Millwall</div>
+  <div class="kickoff">Tue 03 Nov, 20:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">46.5%</div>
+      <div class="fairodds">fair 2.15</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">26.0%</div>
+      <div class="fairodds">fair 3.84</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">27.4%</div>
+      <div class="fairodds">fair 3.65</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Betfair Exchange, Paddy Power</span><span>6.7% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Wrexham vs Middlesbrough</div>
+  <div class="kickoff">Wed 04 Nov, 19:45 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">27.6%</div>
+      <div class="fairodds">fair 3.62</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">22.8%</div>
+      <div class="fairodds">fair 4.38</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">49.6%</div>
+      <div class="fairodds">fair 2.02</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Betfair Exchange, Paddy Power</span><span>21.7% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Cardiff City vs West Ham United</div>
+  <div class="kickoff">Wed 04 Nov, 19:45 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">25.9%</div>
+      <div class="fairodds">fair 3.86</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">22.5%</div>
+      <div class="fairodds">fair 4.45</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">51.6%</div>
+      <div class="fairodds">fair 1.94</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Betfair Exchange, Paddy Power</span><span>7.7% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Bristol City vs Wolverhampton</div>
+  <div class="kickoff">Wed 04 Nov, 20:00 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">30.3%</div>
+      <div class="fairodds">fair 3.3</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.9%</div>
+      <div class="fairodds">fair 3.85</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">43.7%</div>
+      <div class="fairodds">fair 2.29</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Betfair Exchange, Paddy Power</span><span>8.1% overround</span></div>
+</div>
+<h2 class="league">League One</h2>
+<div class="card">
+  <div class="matchup">Leyton Orient vs Cambridge United</div>
+  <div class="kickoff">Sat 31 Oct, 12:30 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">35.2%</div>
+      <div class="fairodds">fair 2.84</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">27.1%</div>
+      <div class="fairodds">fair 3.69</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">37.7%</div>
+      <div class="fairodds">fair 2.65</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.3% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Plymouth Argyle vs Reading</div>
+  <div class="kickoff">Sat 31 Oct, 12:30 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">40.8%</div>
+      <div class="fairodds">fair 2.45</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.4%</div>
+      <div class="fairodds">fair 3.93</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">33.8%</div>
+      <div class="fairodds">fair 2.96</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.4% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Bradford City vs Huddersfield Town</div>
+  <div class="kickoff">Sat 31 Oct, 12:30 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">35.2%</div>
+      <div class="fairodds">fair 2.84</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">27.1%</div>
+      <div class="fairodds">fair 3.69</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">37.7%</div>
+      <div class="fairodds">fair 2.65</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.2% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Wycombe Wanderers vs Burton Albion</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">62.0%</div>
+      <div class="fairodds">fair 1.61</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">21.6%</div>
+      <div class="fairodds">fair 4.62</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">16.3%</div>
+      <div class="fairodds">fair 6.13</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.4% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Wigan Athletic vs Bromley</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">50.3%</div>
+      <div class="fairodds">fair 1.99</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">26.2%</div>
+      <div class="fairodds">fair 3.82</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">23.5%</div>
+      <div class="fairodds">fair 4.26</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.3% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Stockport County vs AFC Wimbledon</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">74.5%</div>
+      <div class="fairodds">fair 1.34</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">15.7%</div>
+      <div class="fairodds">fair 6.37</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">9.8%</div>
+      <div class="fairodds">fair 10.18</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>7.0% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Peterborough United vs Luton Town</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">28.6%</div>
+      <div class="fairodds">fair 3.5</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">23.7%</div>
+      <div class="fairodds">fair 4.23</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">47.7%</div>
+      <div class="fairodds">fair 2.09</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.6% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Barnsley vs Oxford United</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">35.7%</div>
+      <div class="fairodds">fair 2.8</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.2%</div>
+      <div class="fairodds">fair 3.97</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">39.1%</div>
+      <div class="fairodds">fair 2.56</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.2% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Leicester City vs Stevenage</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">55.6%</div>
+      <div class="fairodds">fair 1.8</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">23.6%</div>
+      <div class="fairodds">fair 4.24</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">20.9%</div>
+      <div class="fairodds">fair 4.79</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.6% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Milton Keynes Dons vs Doncaster Rovers</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">45.9%</div>
+      <div class="fairodds">fair 2.18</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.8%</div>
+      <div class="fairodds">fair 3.87</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">28.3%</div>
+      <div class="fairodds">fair 3.54</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.0% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Mansfield Town vs Notts County</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">52.9%</div>
+      <div class="fairodds">fair 1.89</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">24.9%</div>
+      <div class="fairodds">fair 4.01</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">22.1%</div>
+      <div class="fairodds">fair 4.52</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.5% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Sheffield Wednesday vs Blackpool</div>
+  <div class="kickoff">Sun 01 Nov, 14:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">54.5%</div>
+      <div class="fairodds">fair 1.83</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">23.3%</div>
+      <div class="fairodds">fair 4.29</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">22.2%</div>
+      <div class="fairodds">fair 4.51</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.2% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Huddersfield Town vs Luton Town</div>
+  <div class="kickoff">Tue 03 Nov, 19:45 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">46.0%</div>
+      <div class="fairodds">fair 2.17</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">24.7%</div>
+      <div class="fairodds">fair 4.06</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">29.4%</div>
+      <div class="fairodds">fair 3.41</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Paddy Power</span><span>8.2% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Oxford United vs Reading</div>
+  <div class="kickoff">Wed 04 Nov, 19:45 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">34.8%</div>
+      <div class="fairodds">fair 2.88</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">26.2%</div>
+      <div class="fairodds">fair 3.82</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">39.0%</div>
+      <div class="fairodds">fair 2.56</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Paddy Power</span><span>9.1% overround</span></div>
+</div>
+<h2 class="league">League Two</h2>
+<div class="card">
+  <div class="matchup">Newport County vs Chesterfield</div>
+  <div class="kickoff">Fri 30 Oct, 19:45 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">25.8%</div>
+      <div class="fairodds">fair 3.88</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">26.0%</div>
+      <div class="fairodds">fair 3.84</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">48.2%</div>
+      <div class="fairodds">fair 2.08</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>5.7% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Port Vale vs Rochdale</div>
+  <div class="kickoff">Sat 31 Oct, 12:30 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">56.4%</div>
+      <div class="fairodds">fair 1.77</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">24.9%</div>
+      <div class="fairodds">fair 4.02</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">18.7%</div>
+      <div class="fairodds">fair 5.34</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.9% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Grimsby Town vs York City</div>
+  <div class="kickoff">Sat 31 Oct, 12:30 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">40.6%</div>
+      <div class="fairodds">fair 2.46</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.2%</div>
+      <div class="fairodds">fair 3.96</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">34.1%</div>
+      <div class="fairodds">fair 2.93</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.5% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Shrewsbury Town vs Gillingham</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">48.1%</div>
+      <div class="fairodds">fair 2.08</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">27.7%</div>
+      <div class="fairodds">fair 3.61</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">24.2%</div>
+      <div class="fairodds">fair 4.13</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.7% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Tranmere Rovers vs Cheltenham Town</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">50.1%</div>
+      <div class="fairodds">fair 2.0</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.4%</div>
+      <div class="fairodds">fair 3.94</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">24.5%</div>
+      <div class="fairodds">fair 4.08</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.7% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Swindon Town vs Rotherham United</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">40.8%</div>
+      <div class="fairodds">fair 2.45</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">26.4%</div>
+      <div class="fairodds">fair 3.79</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">32.8%</div>
+      <div class="fairodds">fair 3.05</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>7.0% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Salford City vs Exeter City</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">57.8%</div>
+      <div class="fairodds">fair 1.73</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">23.6%</div>
+      <div class="fairodds">fair 4.24</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">18.6%</div>
+      <div class="fairodds">fair 5.36</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>7.5% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Oldham Athletic vs Crawley Town</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">55.9%</div>
+      <div class="fairodds">fair 1.79</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">22.9%</div>
+      <div class="fairodds">fair 4.36</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">21.2%</div>
+      <div class="fairodds">fair 4.71</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.9% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Fleetwood Town vs Bristol Rovers</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">34.4%</div>
+      <div class="fairodds">fair 2.91</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">27.5%</div>
+      <div class="fairodds">fair 3.63</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">38.1%</div>
+      <div class="fairodds">fair 2.63</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.8% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Accrington Stanley vs Northampton Town</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob fav">
+      <div class="label">Home</div>
+      <div class="pct">44.0%</div>
+      <div class="fairodds">fair 2.27</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">28.9%</div>
+      <div class="fairodds">fair 3.46</div>
+    </div>
+    <div class="prob">
+      <div class="label">Away</div>
+      <div class="pct">27.1%</div>
+      <div class="fairodds">fair 3.68</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.9% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Crewe Alexandra vs Barnet</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">31.9%</div>
+      <div class="fairodds">fair 3.13</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">25.5%</div>
+      <div class="fairodds">fair 3.93</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">42.6%</div>
+      <div class="fairodds">fair 2.35</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>6.7% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Colchester United vs Walsall</div>
+  <div class="kickoff">Sat 31 Oct, 15:00 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">35.5%</div>
+      <div class="fairodds">fair 2.82</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">26.9%</div>
+      <div class="fairodds">fair 3.72</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">37.6%</div>
+      <div class="fairodds">fair 2.66</div>
+    </div>
+  </div>
+  <div class="meta"><span>Bet365, BetMGM UK, Betfair Exchange, Paddy Power, Pinnacle</span><span>7.0% overround</span></div>
+</div>
+<div class="card">
+  <div class="matchup">Northampton Town vs Oldham Athletic</div>
+  <div class="kickoff">Tue 03 Nov, 19:45 UTC</div>
+  <div class="probs">
+    <div class="prob">
+      <div class="label">Home</div>
+      <div class="pct">34.2%</div>
+      <div class="fairodds">fair 2.93</div>
+    </div>
+    <div class="prob">
+      <div class="label">Draw</div>
+      <div class="pct">29.9%</div>
+      <div class="fairodds">fair 3.34</div>
+    </div>
+    <div class="prob fav">
+      <div class="label">Away</div>
+      <div class="pct">35.9%</div>
+      <div class="fairodds">fair 2.79</div>
+    </div>
+  </div>
+  <div class="meta"><span>BetMGM UK, Betfair Exchange, Paddy Power</span><span>38.6% overround</span></div>
+</div>
+  <div class="footer">
+    Runs on its own automated schedule via GitHub Actions.<br>
+    De-vigged percentages reflect one bookmaker's priced-in view, not a
+    guarantee of the outcome -- treat as a market snapshot, not a firm pick.
+  </div>
+</body>
+</html>
