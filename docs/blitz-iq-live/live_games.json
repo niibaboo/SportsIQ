@@ -1,38 +1,5 @@
 {
-  "generated": "2026-10-27T02:16:14.286966+00:00",
-  "total_live": 1,
-  "games": [
-    {
-      "game_id": "401873009",
-      "home_id": "21",
-      "away_id": "6",
-      "home_team": "Philadelphia Eagles",
-      "away_team": "Dallas Cowboys",
-      "home_score": 21.0,
-      "away_score": 20.0,
-      "period": 3,
-      "display_clock": "5:44",
-      "status": "5:44 - 3rd",
-      "elapsed_minute": 39.3,
-      "minutes_remaining": 20.7,
-      "next_score": {
-        "home": 51,
-        "away": 49
-      },
-      "game_total_pace": {
-        "prob": 94,
-        "status": "On Pace: Over"
-      },
-      "model_signal": {
-        "label": "Game Total Over",
-        "prob": 94,
-        "qualifies": true
-      },
-      "pregame_projection": {
-        "exp_home": 20.0,
-        "exp_away": 23.0,
-        "exp_total": 43.0
-      }
-    }
-  ]
+  "generated": "2026-10-29T03:24:27.809311+00:00",
+  "total_live": 0,
+  "games": []
 }
