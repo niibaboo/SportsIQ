@@ -90,6 +90,17 @@ LEAGUES = [
 # page focused on matches someone would actually act on soon.
 DAYS_AHEAD = 10
 
+# User request, 2026-10-29: "I use bet365" -- once more than one
+# bookmaker started showing up per match (first confirmed live the
+# same day, after only ever seeing Paddy Power alone during
+# diagnostics), a plain cross-bookmaker average stopped being the
+# right default for someone who actually prices against one specific
+# book. When this bookmaker is present on a match, its own de-vigged
+# probabilities are used alone instead of being blended with the
+# others. Matched case-insensitively against each bookmaker's name
+# (API diagnostics never confirmed a fixed casing/spelling for these).
+PREFERRED_BOOKMAKER = "bet365"
+
 
 # ----------------------------------------------------------------------
 # Simple on-disk cache, same pattern as prop_finder.py/player_stat_model.py
@@ -193,11 +204,16 @@ def devig_match_odds(odds_response: dict) -> dict | None:
     Handles the two confirmed-live edge cases:
       - "opening" can be null while "last_seen" is populated -- prefer
         last_seen, fall back to opening only if last_seen is missing.
-      - Every confirmed example so far has exactly one bookmaker. If
-        more than one ever appears, each bookmaker's OWN de-vigged
-        probabilities are averaged together -- never average raw
-        prices first, which would let one bookmaker's margin bleed
-        into another's true read.
+      - Several bookmakers can appear per match (confirmed live
+        2026-10-29, after only ever seeing Paddy Power alone during
+        diagnostics). When PREFERRED_BOOKMAKER is among them, its own
+        de-vigged probabilities are used alone -- user request,
+        2026-10-29: "I use bet365", so the fair price shown should
+        reflect the book they actually bet on, not a blend. If
+        PREFERRED_BOOKMAKER isn't on this match, each bookmaker's OWN
+        de-vigged probabilities are averaged together instead -- never
+        average raw prices first, which would let one bookmaker's
+        margin bleed into another's true read.
 
     Returns None (with a [DIAG] print) if the response doesn't match
     the confirmed shape, rather than guessing at a different one.
@@ -208,7 +224,6 @@ def devig_match_odds(odds_response: dict) -> dict | None:
         return None
 
     per_bookmaker = []
-    names_used = []
     for bk in bookmakers:
         match_odds = (bk.get("markets") or {}).get("match_odds")
         if not match_odds:
@@ -240,16 +255,28 @@ def devig_match_odds(odds_response: dict) -> dict | None:
         total = sum(raw.values())
         overround = total - 1.0
         fair = {side: v / total for side, v in raw.items()}
-        per_bookmaker.append({**fair, "overround": overround})
-        names_used.append(bk.get("bookmaker", "Unknown"))
+        per_bookmaker.append({"name": bk.get("bookmaker", "Unknown"), **fair, "overround": overround})
 
     if not per_bookmaker:
         return None
 
+    names_used = [p["name"] for p in per_bookmaker]
+    preferred = next((p for p in per_bookmaker if p["name"].strip().lower() == PREFERRED_BOOKMAKER), None)
+
+    if preferred is not None:
+        return {
+            "home_prob": preferred["home"],
+            "draw_prob": preferred["draw"],
+            "away_prob": preferred["away"],
+            "overround": preferred["overround"],
+            "bookmakers": [preferred["name"]],
+            "source": "preferred",
+        }
+
     if len(per_bookmaker) > 1:
-        print(f"  [DIAG] multiple bookmakers on one match ({', '.join(names_used)}) -- "
-              f"never confirmed live before now; averaging each bookmaker's own "
-              f"de-vigged probabilities")
+        print(f"  [DIAG] {PREFERRED_BOOKMAKER!r} not among this match's bookmakers "
+              f"({', '.join(names_used)}) -- averaging each bookmaker's own de-vigged "
+              f"probabilities instead")
 
     n = len(per_bookmaker)
     avg = {side: sum(p[side] for p in per_bookmaker) / n for side in ("home", "draw", "away")}
@@ -261,6 +288,7 @@ def devig_match_odds(odds_response: dict) -> dict | None:
         "away_prob": avg["away"],
         "overround": avg_overround,
         "bookmakers": names_used,
+        "source": "average",
     }
 
 
@@ -386,8 +414,11 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     1X2 odds and strips out their built-in margin ("de-vigging") to
     show the bookmaker's true implied Home/Draw/Away probabilities --
     a market read, not a stats-driven prediction. Prices shown are
-    each bookmaker's <b>last seen</b> price (falling back to their
-    opening price only if no later price was recorded). Not every
+    <b>Bet365's own</b> price where Bet365 has posted odds on that
+    match; where they haven't, it falls back to the average of
+    whichever bookmakers have (labelled "market avg" below). Each
+    bookmaker's <b>last seen</b> price is used, falling back to their
+    opening price only if no later price was recorded. Not every
     upcoming match has odds posted yet -- those are left off rather
     than guessed at.
   </div>
@@ -424,7 +455,7 @@ CARD_TEMPLATE = """<div class="card">
       <div class="fairodds">fair {away_fairodds}</div>
     </div>
   </div>
-  <div class="meta"><span>{bookmakers}</span><span>{overround_pct}% overround</span></div>
+  <div class="meta"><span>{bookmakers_display}</span><span>{overround_pct}% overround</span></div>
 </div>"""
 
 
@@ -444,7 +475,13 @@ def _fav_class(prob: float, home_p: float, draw_p: float, away_p: float) -> str:
 
 def build_card_html(card: dict) -> str:
     home_p, draw_p, away_p = card["home_prob"], card["draw_prob"], card["away_prob"]
-    bookmakers = ", ".join(sorted(set(card.get("bookmakers", [])))) or "Unknown"
+    names = sorted(set(card.get("bookmakers", [])))
+    if card.get("source") == "preferred":
+        bookmakers_display = names[0] if names else "Unknown"
+    elif len(names) > 1:
+        bookmakers_display = f"Market avg ({len(names)} books)"
+    else:
+        bookmakers_display = names[0] if names else "Unknown"
     return CARD_TEMPLATE.format(
         home=card["home"], away=card["away"],
         kickoff_display=_fmt_kickoff(card.get("kickoff", "")),
@@ -455,7 +492,7 @@ def build_card_html(card: dict) -> str:
         home_fav=_fav_class(home_p, home_p, draw_p, away_p),
         draw_fav=_fav_class(draw_p, home_p, draw_p, away_p),
         away_fav=_fav_class(away_p, home_p, draw_p, away_p),
-        bookmakers=bookmakers,
+        bookmakers_display=bookmakers_display,
         overround_pct=round(card.get("overround", 0) * 100, 1),
     )
 
