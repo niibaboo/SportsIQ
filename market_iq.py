@@ -215,6 +215,20 @@ def devig_match_odds(odds_response: dict) -> dict | None:
         average raw prices first, which would let one bookmaker's
         margin bleed into another's true read.
 
+    When PREFERRED_BOOKMAKER's own price is used AND at least one other
+    bookmaker is also on the match, the result also carries a
+    "market_*" comparison -- the average of every bookmaker present
+    (PREFERRED_BOOKMAKER included), so the page can show Bet365's price
+    next to what the wider market thinks (user request, 2026-10-30:
+    "Yes do" -- add that comparison instead of leaving it to eyeball).
+    A de-vigged number read alone carries no edge, since it's just that
+    book's own margin stripped out; the gap between Bet365's price and
+    the market average is the part worth looking at. No market_*
+    fields are added when Bet365 is the only bookmaker on a match (the
+    "average" source is already a one-sided view, or because there is
+    no "rest of market" to compare it to) or when source is "average"
+    (the primary number already IS the market average).
+
     Returns None (with a [DIAG] print) if the response doesn't match
     the confirmed shape, rather than guessing at a different one.
     """
@@ -261,10 +275,14 @@ def devig_match_odds(odds_response: dict) -> dict | None:
         return None
 
     names_used = [p["name"] for p in per_bookmaker]
+    n = len(per_bookmaker)
+    avg = {side: sum(p[side] for p in per_bookmaker) / n for side in ("home", "draw", "away")}
+    avg_overround = sum(p["overround"] for p in per_bookmaker) / n
+
     preferred = next((p for p in per_bookmaker if p["name"].strip().lower() == PREFERRED_BOOKMAKER), None)
 
     if preferred is not None:
-        return {
+        result = {
             "home_prob": preferred["home"],
             "draw_prob": preferred["draw"],
             "away_prob": preferred["away"],
@@ -272,15 +290,20 @@ def devig_match_odds(odds_response: dict) -> dict | None:
             "bookmakers": [preferred["name"]],
             "source": "preferred",
         }
+        if n > 1:
+            result.update({
+                "market_home_prob": avg["home"],
+                "market_draw_prob": avg["draw"],
+                "market_away_prob": avg["away"],
+                "market_overround": avg_overround,
+                "market_bookmaker_count": n,
+            })
+        return result
 
-    if len(per_bookmaker) > 1:
+    if n > 1:
         print(f"  [DIAG] {PREFERRED_BOOKMAKER!r} not among this match's bookmakers "
               f"({', '.join(names_used)}) -- averaging each bookmaker's own de-vigged "
               f"probabilities instead")
-
-    n = len(per_bookmaker)
-    avg = {side: sum(p[side] for p in per_bookmaker) / n for side in ("home", "draw", "away")}
-    avg_overround = sum(p["overround"] for p in per_bookmaker) / n
 
     return {
         "home_prob": avg["home"],
@@ -400,6 +423,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   .prob .pct{{ font-size:16px; font-weight:700; }}
   .prob .fairodds{{ color:var(--sub); font-size:10px; margin-top:2px; }}
   .prob.fav .pct{{ color:var(--green); }}
+  .prob .mkt{{ color:var(--sub); font-size:9.5px; margin-top:4px; border-top:1px solid var(--border); padding-top:3px; }}
+  .prob .mkt.highlight{{ color:var(--green); font-weight:600; }}
   .meta{{ color:var(--sub); font-size:10.5px; display:flex; justify-content:space-between; }}
   .empty{{ color:var(--sub); font-size:13px; padding:20px 0; }}
   .footer{{ color:var(--sub); font-size:11px; text-align:center; margin-top:28px; line-height:1.6; }}
@@ -418,7 +443,13 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     match; where they haven't, it falls back to the average of
     whichever bookmakers have (labelled "market avg" below). Each
     bookmaker's <b>last seen</b> price is used, falling back to their
-    opening price only if no later price was recorded. Not every
+    opening price only if no later price was recorded. Where other
+    bookmakers are also on a match, each tile adds a small "mkt" line
+    comparing Bet365's price to the market average -- a de-vigged
+    number on its own carries no edge, since it's just that book's own
+    margin removed, so a highlighted gap there (Bet365 paying longer
+    odds than the wider market thinks fair) is the part worth a second
+    look, not the percentage itself. Not every
     upcoming match has odds posted yet -- those are left off rather
     than guessed at.
   </div>
@@ -443,20 +474,35 @@ CARD_TEMPLATE = """<div class="card">
       <div class="label">Home</div>
       <div class="pct">{home_pct}%</div>
       <div class="fairodds">fair {home_fairodds}</div>
+      {home_mkt}
     </div>
     <div class="prob{draw_fav}">
       <div class="label">Draw</div>
       <div class="pct">{draw_pct}%</div>
       <div class="fairodds">fair {draw_fairodds}</div>
+      {draw_mkt}
     </div>
     <div class="prob{away_fav}">
       <div class="label">Away</div>
       <div class="pct">{away_pct}%</div>
       <div class="fairodds">fair {away_fairodds}</div>
+      {away_mkt}
     </div>
   </div>
   <div class="meta"><span>{bookmakers_display}</span><span>{overround_pct}% overround</span></div>
 </div>"""
+
+# One tile's "vs market" line, only rendered when a comparison is
+# available (Bet365's own price exists AND at least one other
+# bookmaker is also on the match -- see devig_match_odds' market_*
+# fields). gap = market probability minus Bet365's own probability:
+# positive means the wider market rates that side MORE likely than
+# Bet365 prices it, i.e. Bet365 is paying a longer price than the
+# market thinks is fair -- that gap, not the raw percentage, is what
+# actually points at value. Flagged only past a small threshold so
+# ordinary noise between books isn't highlighted as if it were a signal.
+MKT_LINE = '<div class="mkt{highlight}">mkt {mkt_pct}% ({sign}{gap_pct})</div>'
+MKT_GAP_HIGHLIGHT_PP = 2.0
 
 
 def _fmt_kickoff(raw: str) -> str:
@@ -473,6 +519,20 @@ def _fav_class(prob: float, home_p: float, draw_p: float, away_p: float) -> str:
     return " fav" if prob == max(home_p, draw_p, away_p) else ""
 
 
+def _mkt_line(bet365_p: float, market_p: float | None) -> str:
+    """Build one tile's "vs market" line, or "" when there's nothing to
+    compare against (see MKT_LINE's own comment for what the gap means)."""
+    if market_p is None:
+        return ""
+    gap_pct = round((market_p - bet365_p) * 100, 1)
+    return MKT_LINE.format(
+        mkt_pct=round(market_p * 100, 1),
+        sign="+" if gap_pct >= 0 else "",
+        gap_pct=gap_pct,
+        highlight=" highlight" if gap_pct >= MKT_GAP_HIGHLIGHT_PP else "",
+    )
+
+
 def build_card_html(card: dict) -> str:
     home_p, draw_p, away_p = card["home_prob"], card["draw_prob"], card["away_prob"]
     names = sorted(set(card.get("bookmakers", [])))
@@ -482,6 +542,8 @@ def build_card_html(card: dict) -> str:
         bookmakers_display = f"Market avg ({len(names)} books)"
     else:
         bookmakers_display = names[0] if names else "Unknown"
+
+    has_market = "market_home_prob" in card
     return CARD_TEMPLATE.format(
         home=card["home"], away=card["away"],
         kickoff_display=_fmt_kickoff(card.get("kickoff", "")),
@@ -492,6 +554,9 @@ def build_card_html(card: dict) -> str:
         home_fav=_fav_class(home_p, home_p, draw_p, away_p),
         draw_fav=_fav_class(draw_p, home_p, draw_p, away_p),
         away_fav=_fav_class(away_p, home_p, draw_p, away_p),
+        home_mkt=_mkt_line(home_p, card.get("market_home_prob") if has_market else None),
+        draw_mkt=_mkt_line(draw_p, card.get("market_draw_prob") if has_market else None),
+        away_mkt=_mkt_line(away_p, card.get("market_away_prob") if has_market else None),
         bookmakers_display=bookmakers_display,
         overround_pct=round(card.get("overround", 0) * 100, 1),
     )
