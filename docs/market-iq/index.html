@@ -41,6 +41,8 @@
   .prob .pct{ font-size:16px; font-weight:700; }
   .prob .fairodds{ color:var(--sub); font-size:10px; margin-top:2px; }
   .prob.fav .pct{ color:var(--green); }
+  .prob .mkt{ color:var(--sub); font-size:9.5px; margin-top:4px; border-top:1px solid var(--border); padding-top:3px; }
+  .prob .mkt.highlight{ color:var(--green); font-weight:600; }
   .meta{ color:var(--sub); font-size:10.5px; display:flex; justify-content:space-between; }
   .empty{ color:var(--sub); font-size:13px; padding:20px 0; }
   .footer{ color:var(--sub); font-size:11px; text-align:center; margin-top:28px; line-height:1.6; }
@@ -48,7 +50,7 @@
 </head>
 <body>
   <h1>📈 Market IQ</h1>
-  <div class="sub">Generated 2026-10-30 08:08 UTC</div>
+  <div class="sub">Generated 2026-10-30 09:03 UTC</div>
   <div class="notice">
     This one works differently from the rest of the suite: it doesn't
     blend rolling form into a projection. It takes a bookmaker's own
@@ -59,7 +61,13 @@
     match; where they haven't, it falls back to the average of
     whichever bookmakers have (labelled "market avg" below). Each
     bookmaker's <b>last seen</b> price is used, falling back to their
-    opening price only if no later price was recorded. Not every
+    opening price only if no later price was recorded. Where other
+    bookmakers are also on a match, each tile adds a small "mkt" line
+    comparing Bet365's price to the market average -- a de-vigged
+    number on its own carries no edge, since it's just that book's own
+    margin removed, so a highlighted gap there (Bet365 paying longer
+    odds than the wider market thinks fair) is the part worth a second
+    look, not the percentage itself. Not every
     upcoming match has odds posted yet -- those are left off rather
     than guessed at.
   </div>
@@ -72,16 +80,19 @@
       <div class="label">Home</div>
       <div class="pct">51.8%</div>
       <div class="fairodds">fair 1.93</div>
+      <div class="mkt">mkt 52.2% (+0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">25.0%</div>
       <div class="fairodds">fair 4.0</div>
+      <div class="mkt">mkt 24.3% (-0.7)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">23.2%</div>
       <div class="fairodds">fair 4.32</div>
+      <div class="mkt">mkt 23.5% (+0.3)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>5.3% overround</span></div>
@@ -94,16 +105,19 @@
       <div class="label">Home</div>
       <div class="pct">59.1%</div>
       <div class="fairodds">fair 1.69</div>
+      <div class="mkt">mkt 58.7% (-0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">21.0%</div>
       <div class="fairodds">fair 4.76</div>
+      <div class="mkt">mkt 21.1% (+0.1)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">19.9%</div>
       <div class="fairodds">fair 5.02</div>
+      <div class="mkt">mkt 20.2% (+0.3)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>5.8% overround</span></div>
@@ -116,16 +130,19 @@
       <div class="label">Home</div>
       <div class="pct">36.7%</div>
       <div class="fairodds">fair 2.73</div>
+      <div class="mkt">mkt 36.5% (-0.1)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">28.0%</div>
       <div class="fairodds">fair 3.57</div>
+      <div class="mkt">mkt 28.2% (+0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">35.3%</div>
       <div class="fairodds">fair 2.83</div>
+      <div class="mkt">mkt 35.2% (-0.1)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>4.9% overround</span></div>
@@ -138,16 +155,19 @@
       <div class="label">Home</div>
       <div class="pct">29.7%</div>
       <div class="fairodds">fair 3.36</div>
+      <div class="mkt">mkt 30.3% (+0.5)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">28.0%</div>
       <div class="fairodds">fair 3.57</div>
+      <div class="mkt">mkt 28.4% (+0.4)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">42.3%</div>
       <div class="fairodds">fair 2.36</div>
+      <div class="mkt">mkt 41.3% (-1.0)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>5.1% overround</span></div>
@@ -160,16 +180,19 @@
       <div class="label">Home</div>
       <div class="pct">46.4%</div>
       <div class="fairodds">fair 2.16</div>
+      <div class="mkt">mkt 46.1% (-0.3)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.4%</div>
       <div class="fairodds">fair 3.78</div>
+      <div class="mkt">mkt 26.1% (-0.3)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">27.2%</div>
       <div class="fairodds">fair 3.68</div>
+      <div class="mkt">mkt 27.7% (+0.5)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>5.1% overround</span></div>
@@ -182,16 +205,19 @@
       <div class="label">Home</div>
       <div class="pct">45.1%</div>
       <div class="fairodds">fair 2.22</div>
+      <div class="mkt">mkt 44.4% (-0.7)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">27.9%</div>
       <div class="fairodds">fair 3.59</div>
+      <div class="mkt">mkt 28.1% (+0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">27.1%</div>
       <div class="fairodds">fair 3.7</div>
+      <div class="mkt">mkt 27.5% (+0.5)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>5.6% overround</span></div>
@@ -204,16 +230,19 @@
       <div class="label">Home</div>
       <div class="pct">61.8%</div>
       <div class="fairodds">fair 1.62</div>
+      <div class="mkt">mkt 61.5% (-0.3)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">21.0%</div>
       <div class="fairodds">fair 4.75</div>
+      <div class="mkt">mkt 21.3% (+0.3)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">17.2%</div>
       <div class="fairodds">fair 5.81</div>
+      <div class="mkt">mkt 17.2% (+0.0)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>5.6% overround</span></div>
@@ -226,16 +255,19 @@
       <div class="label">Home</div>
       <div class="pct">49.7%</div>
       <div class="fairodds">fair 2.01</div>
+      <div class="mkt">mkt 49.2% (-0.5)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">25.3%</div>
       <div class="fairodds">fair 3.95</div>
+      <div class="mkt">mkt 25.7% (+0.3)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">25.0%</div>
       <div class="fairodds">fair 4.0</div>
+      <div class="mkt">mkt 25.2% (+0.2)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>5.4% overround</span></div>
@@ -248,16 +280,19 @@
       <div class="label">Home</div>
       <div class="pct">32.7%</div>
       <div class="fairodds">fair 3.06</div>
+      <div class="mkt">mkt 32.5% (-0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">27.9%</div>
       <div class="fairodds">fair 3.59</div>
+      <div class="mkt">mkt 28.0% (+0.1)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">39.5%</div>
       <div class="fairodds">fair 2.53</div>
+      <div class="mkt">mkt 39.5% (+0.0)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>5.6% overround</span></div>
@@ -270,16 +305,19 @@
       <div class="label">Home</div>
       <div class="pct">41.3%</div>
       <div class="fairodds">fair 2.42</div>
+      <div class="mkt">mkt 40.7% (-0.5)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">27.1%</div>
       <div class="fairodds">fair 3.69</div>
+      <div class="mkt">mkt 27.2% (+0.1)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">31.6%</div>
       <div class="fairodds">fair 3.16</div>
+      <div class="mkt">mkt 32.1% (+0.5)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>5.4% overround</span></div>
@@ -292,16 +330,19 @@
       <div class="label">Home</div>
       <div class="pct">54.7%</div>
       <div class="fairodds">fair 1.83</div>
+      <div class="mkt">mkt 55.4% (+0.7)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">23.8%</div>
       <div class="fairodds">fair 4.19</div>
+      <div class="mkt">mkt 23.8% (-0.1)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">21.5%</div>
       <div class="fairodds">fair 4.66</div>
+      <div class="mkt">mkt 20.8% (-0.6)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>7.5% overround</span></div>
@@ -314,16 +355,19 @@
       <div class="label">Home</div>
       <div class="pct">36.3%</div>
       <div class="fairodds">fair 2.76</div>
+      <div class="mkt">mkt 36.8% (+0.5)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">27.8%</div>
       <div class="fairodds">fair 3.6</div>
+      <div class="mkt">mkt 28.0% (+0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">35.9%</div>
       <div class="fairodds">fair 2.78</div>
+      <div class="mkt">mkt 35.3% (-0.7)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.0% overround</span></div>
@@ -336,16 +380,19 @@
       <div class="label">Home</div>
       <div class="pct">42.3%</div>
       <div class="fairodds">fair 2.36</div>
+      <div class="mkt">mkt 42.6% (+0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.6%</div>
       <div class="fairodds">fair 3.76</div>
+      <div class="mkt">mkt 26.1% (-0.5)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">31.0%</div>
       <div class="fairodds">fair 3.22</div>
+      <div class="mkt">mkt 31.3% (+0.2)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>7.4% overround</span></div>
@@ -358,16 +405,19 @@
       <div class="label">Home</div>
       <div class="pct">80.4%</div>
       <div class="fairodds">fair 1.24</div>
+      <div class="mkt">mkt 80.8% (+0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">13.4%</div>
       <div class="fairodds">fair 7.46</div>
+      <div class="mkt">mkt 13.1% (-0.3)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">6.3%</div>
       <div class="fairodds">fair 16.0</div>
+      <div class="mkt">mkt 6.2% (-0.1)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.6% overround</span></div>
@@ -380,16 +430,19 @@
       <div class="label">Home</div>
       <div class="pct">19.5%</div>
       <div class="fairodds">fair 5.13</div>
+      <div class="mkt">mkt 19.5% (+0.0)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">23.2%</div>
       <div class="fairodds">fair 4.32</div>
+      <div class="mkt">mkt 22.9% (-0.3)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">57.3%</div>
       <div class="fairodds">fair 1.74</div>
+      <div class="mkt">mkt 57.6% (+0.3)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>8.0% overround</span></div>
@@ -402,16 +455,19 @@
       <div class="label">Home</div>
       <div class="pct">28.2%</div>
       <div class="fairodds">fair 3.54</div>
+      <div class="mkt">mkt 28.3% (+0.1)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">27.4%</div>
       <div class="fairodds">fair 3.65</div>
+      <div class="mkt">mkt 26.8% (-0.6)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">44.4%</div>
       <div class="fairodds">fair 2.25</div>
+      <div class="mkt">mkt 44.9% (+0.5)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>7.3% overround</span></div>
@@ -424,16 +480,19 @@
       <div class="label">Home</div>
       <div class="pct">24.7%</div>
       <div class="fairodds">fair 4.05</div>
+      <div class="mkt">mkt 25.6% (+0.9)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.5%</div>
       <div class="fairodds">fair 3.78</div>
+      <div class="mkt">mkt 25.8% (-0.7)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">48.8%</div>
       <div class="fairodds">fair 2.05</div>
+      <div class="mkt">mkt 48.6% (-0.2)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>7.9% overround</span></div>
@@ -446,16 +505,19 @@
       <div class="label">Home</div>
       <div class="pct">22.7%</div>
       <div class="fairodds">fair 4.41</div>
+      <div class="mkt">mkt 21.9% (-0.8)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">22.7%</div>
       <div class="fairodds">fair 4.41</div>
+      <div class="mkt">mkt 23.2% (+0.5)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">54.7%</div>
       <div class="fairodds">fair 1.83</div>
+      <div class="mkt">mkt 54.9% (+0.2)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>7.6% overround</span></div>
@@ -468,16 +530,19 @@
       <div class="label">Home</div>
       <div class="pct">50.0%</div>
       <div class="fairodds">fair 2.0</div>
+      <div class="mkt">mkt 49.3% (-0.7)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">25.0%</div>
       <div class="fairodds">fair 4.0</div>
+      <div class="mkt">mkt 24.8% (-0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">25.0%</div>
       <div class="fairodds">fair 4.0</div>
+      <div class="mkt">mkt 25.9% (+0.9)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>8.1% overround</span></div>
@@ -490,16 +555,19 @@
       <div class="label">Home</div>
       <div class="pct">41.5%</div>
       <div class="fairodds">fair 2.41</div>
+      <div class="mkt">mkt 42.3% (+0.8)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.0%</div>
       <div class="fairodds">fair 3.85</div>
+      <div class="mkt">mkt 25.3% (-0.6)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">32.5%</div>
       <div class="fairodds">fair 3.08</div>
+      <div class="mkt">mkt 32.4% (-0.1)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>7.0% overround</span></div>
@@ -511,21 +579,24 @@
   <div class="probs">
     <div class="prob fav">
       <div class="label">Home</div>
-      <div class="pct">40.0%</div>
-      <div class="fairodds">fair 2.5</div>
+      <div class="pct">40.5%</div>
+      <div class="fairodds">fair 2.47</div>
+      <div class="mkt">mkt 40.2% (-0.3)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
-      <div class="pct">27.6%</div>
-      <div class="fairodds">fair 3.62</div>
+      <div class="pct">27.4%</div>
+      <div class="fairodds">fair 3.65</div>
+      <div class="mkt">mkt 28.1% (+0.7)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
-      <div class="pct">32.4%</div>
-      <div class="fairodds">fair 3.09</div>
+      <div class="pct">32.1%</div>
+      <div class="fairodds">fair 3.11</div>
+      <div class="mkt">mkt 31.7% (-0.4)</div>
     </div>
   </div>
-  <div class="meta"><span>Bet365</span><span>6.4% overround</span></div>
+  <div class="meta"><span>Bet365</span><span>7.4% overround</span></div>
 </div>
 <div class="card">
   <div class="matchup">Stoke City vs Preston North End</div>
@@ -535,16 +606,19 @@
       <div class="label">Home</div>
       <div class="pct">54.2%</div>
       <div class="fairodds">fair 1.84</div>
+      <div class="mkt">mkt 53.8% (-0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">25.0%</div>
       <div class="fairodds">fair 4.0</div>
+      <div class="mkt">mkt 25.2% (+0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">20.8%</div>
       <div class="fairodds">fair 4.81</div>
+      <div class="mkt">mkt 21.0% (+0.2)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.8% overround</span></div>
@@ -557,16 +631,19 @@
       <div class="label">Home</div>
       <div class="pct">61.3%</div>
       <div class="fairodds">fair 1.63</div>
+      <div class="mkt">mkt 61.1% (-0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">22.4%</div>
       <div class="fairodds">fair 4.47</div>
+      <div class="mkt">mkt 21.8% (-0.6)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">16.3%</div>
       <div class="fairodds">fair 6.12</div>
+      <div class="mkt">mkt 17.1% (+0.8)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.4% overround</span></div>
@@ -579,16 +656,19 @@
       <div class="label">Home</div>
       <div class="pct">29.4%</div>
       <div class="fairodds">fair 3.4</div>
+      <div class="mkt">mkt 28.7% (-0.7)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.9%</div>
       <div class="fairodds">fair 3.72</div>
+      <div class="mkt">mkt 27.4% (+0.5)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">43.7%</div>
       <div class="fairodds">fair 2.29</div>
+      <div class="mkt">mkt 43.9% (+0.2)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.3% overround</span></div>
@@ -601,16 +681,19 @@
       <div class="label">Home</div>
       <div class="pct">56.2%</div>
       <div class="fairodds">fair 1.78</div>
+      <div class="mkt">mkt 56.7% (+0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">24.0%</div>
       <div class="fairodds">fair 4.16</div>
+      <div class="mkt">mkt 22.8% (-1.3)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">19.7%</div>
       <div class="fairodds">fair 5.07</div>
+      <div class="mkt">mkt 20.6% (+0.8)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.7% overround</span></div>
@@ -623,16 +706,19 @@
       <div class="label">Home</div>
       <div class="pct">58.0%</div>
       <div class="fairodds">fair 1.72</div>
+      <div class="mkt">mkt 58.4% (+0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">22.3%</div>
       <div class="fairodds">fair 4.48</div>
+      <div class="mkt">mkt 22.5% (+0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">19.7%</div>
       <div class="fairodds">fair 5.07</div>
+      <div class="mkt">mkt 19.1% (-0.6)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.8% overround</span></div>
@@ -645,16 +731,19 @@
       <div class="label">Home</div>
       <div class="pct">51.8%</div>
       <div class="fairodds">fair 1.93</div>
+      <div class="mkt">mkt 52.3% (+0.5)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">27.4%</div>
       <div class="fairodds">fair 3.64</div>
+      <div class="mkt">mkt 26.3% (-1.2)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">20.7%</div>
       <div class="fairodds">fair 4.82</div>
+      <div class="mkt">mkt 21.4% (+0.6)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>7.2% overround</span></div>
@@ -667,16 +756,19 @@
       <div class="label">Home</div>
       <div class="pct">52.0%</div>
       <div class="fairodds">fair 1.92</div>
+      <div class="mkt">mkt 51.8% (-0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">24.6%</div>
       <div class="fairodds">fair 4.06</div>
+      <div class="mkt">mkt 24.4% (-0.3)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">23.4%</div>
       <div class="fairodds">fair 4.27</div>
+      <div class="mkt">mkt 23.9% (+0.5)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.9% overround</span></div>
@@ -689,16 +781,19 @@
       <div class="label">Home</div>
       <div class="pct">56.4%</div>
       <div class="fairodds">fair 1.77</div>
+      <div class="mkt">mkt 56.3% (-0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">24.8%</div>
       <div class="fairodds">fair 4.04</div>
+      <div class="mkt">mkt 24.6% (-0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">18.8%</div>
       <div class="fairodds">fair 5.32</div>
+      <div class="mkt">mkt 19.2% (+0.4)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.3% overround</span></div>
@@ -711,16 +806,19 @@
       <div class="label">Home</div>
       <div class="pct">75.0%</div>
       <div class="fairodds">fair 1.33</div>
+      <div class="mkt">mkt 75.4% (+0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">15.6%</div>
       <div class="fairodds">fair 6.4</div>
+      <div class="mkt">mkt 15.2% (-0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">9.4%</div>
       <div class="fairodds">fair 10.67</div>
+      <div class="mkt">mkt 9.3% (-0.1)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.7% overround</span></div>
@@ -733,16 +831,19 @@
       <div class="label">Home</div>
       <div class="pct">44.7%</div>
       <div class="fairodds">fair 2.24</div>
+      <div class="mkt">mkt 44.5% (-0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">27.6%</div>
       <div class="fairodds">fair 3.62</div>
+      <div class="mkt">mkt 27.8% (+0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">27.6%</div>
       <div class="fairodds">fair 3.62</div>
+      <div class="mkt">mkt 27.7% (+0.1)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.4% overround</span></div>
@@ -755,16 +856,19 @@
       <div class="label">Home</div>
       <div class="pct">32.4%</div>
       <div class="fairodds">fair 3.09</div>
+      <div class="mkt">mkt 32.8% (+0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">28.5%</div>
       <div class="fairodds">fair 3.51</div>
+      <div class="mkt">mkt 27.2% (-1.2)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">39.1%</div>
       <div class="fairodds">fair 2.55</div>
+      <div class="mkt">mkt 40.0% (+0.8)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.5% overround</span></div>
@@ -777,16 +881,19 @@
       <div class="label">Home</div>
       <div class="pct">34.8%</div>
       <div class="fairodds">fair 2.87</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">32.0%</div>
       <div class="fairodds">fair 3.12</div>
+      
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">33.2%</div>
       <div class="fairodds">fair 3.01</div>
+      
     </div>
   </div>
   <div class="meta"><span>Market avg (3 books)</span><span>41.0% overround</span></div>
@@ -799,16 +906,19 @@
       <div class="label">Home</div>
       <div class="pct">41.0%</div>
       <div class="fairodds">fair 2.44</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">27.1%</div>
       <div class="fairodds">fair 3.69</div>
+      
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">31.9%</div>
       <div class="fairodds">fair 3.13</div>
+      
     </div>
   </div>
   <div class="meta"><span>Market avg (2 books)</span><span>8.5% overround</span></div>
@@ -821,16 +931,19 @@
       <div class="label">Home</div>
       <div class="pct">41.8%</div>
       <div class="fairodds">fair 2.39</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">29.3%</div>
       <div class="fairodds">fair 3.41</div>
+      
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">28.9%</div>
       <div class="fairodds">fair 3.47</div>
+      
     </div>
   </div>
   <div class="meta"><span>Market avg (3 books)</span><span>18.1% overround</span></div>
@@ -843,16 +956,19 @@
       <div class="label">Home</div>
       <div class="pct">33.0%</div>
       <div class="fairodds">fair 3.03</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">28.7%</div>
       <div class="fairodds">fair 3.49</div>
+      
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">38.4%</div>
       <div class="fairodds">fair 2.61</div>
+      
     </div>
   </div>
   <div class="meta"><span>Market avg (3 books)</span><span>58.1% overround</span></div>
@@ -864,20 +980,23 @@
     <div class="prob">
       <div class="label">Home</div>
       <div class="pct">35.8%</div>
-      <div class="fairodds">fair 2.8</div>
+      <div class="fairodds">fair 2.79</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.3%</div>
-      <div class="fairodds">fair 3.8</div>
+      <div class="fairodds">fair 3.81</div>
+      
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">37.9%</div>
       <div class="fairodds">fair 2.64</div>
+      
     </div>
   </div>
-  <div class="meta"><span>Market avg (3 books)</span><span>8.3% overround</span></div>
+  <div class="meta"><span>Market avg (3 books)</span><span>8.2% overround</span></div>
 </div>
 <div class="card">
   <div class="matchup">Derby County vs Norwich City</div>
@@ -887,16 +1006,19 @@
       <div class="label">Home</div>
       <div class="pct">30.9%</div>
       <div class="fairodds">fair 3.24</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">28.0%</div>
       <div class="fairodds">fair 3.57</div>
+      
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">41.1%</div>
       <div class="fairodds">fair 2.43</div>
+      
     </div>
   </div>
   <div class="meta"><span>Market avg (3 books)</span><span>61.1% overround</span></div>
@@ -909,16 +1031,19 @@
       <div class="label">Home</div>
       <div class="pct">36.9%</div>
       <div class="fairodds">fair 2.71</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">30.4%</div>
       <div class="fairodds">fair 3.29</div>
+      
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">32.7%</div>
       <div class="fairodds">fair 3.06</div>
+      
     </div>
   </div>
   <div class="meta"><span>Market avg (3 books)</span><span>54.0% overround</span></div>
@@ -931,16 +1056,19 @@
       <div class="label">Home</div>
       <div class="pct">35.9%</div>
       <div class="fairodds">fair 2.79</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">28.2%</div>
       <div class="fairodds">fair 3.54</div>
+      
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">35.9%</div>
       <div class="fairodds">fair 2.79</div>
+      
     </div>
   </div>
   <div class="meta"><span>Market avg (3 books)</span><span>61.0% overround</span></div>
@@ -953,16 +1081,19 @@
       <div class="label">Home</div>
       <div class="pct">42.0%</div>
       <div class="fairodds">fair 2.38</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">28.6%</div>
       <div class="fairodds">fair 3.5</div>
+      
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">29.4%</div>
       <div class="fairodds">fair 3.4</div>
+      
     </div>
   </div>
   <div class="meta"><span>Market avg (3 books)</span><span>60.7% overround</span></div>
@@ -975,16 +1106,19 @@
       <div class="label">Home</div>
       <div class="pct">28.6%</div>
       <div class="fairodds">fair 3.5</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">25.2%</div>
       <div class="fairodds">fair 3.96</div>
+      
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">46.2%</div>
       <div class="fairodds">fair 2.16</div>
+      
     </div>
   </div>
   <div class="meta"><span>Market avg (3 books)</span><span>34.0% overround</span></div>
@@ -995,21 +1129,24 @@
   <div class="probs">
     <div class="prob">
       <div class="label">Home</div>
-      <div class="pct">28.3%</div>
-      <div class="fairodds">fair 3.53</div>
+      <div class="pct">25.7%</div>
+      <div class="fairodds">fair 3.89</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
-      <div class="pct">19.6%</div>
-      <div class="fairodds">fair 5.1</div>
+      <div class="pct">22.4%</div>
+      <div class="fairodds">fair 4.46</div>
+      
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
-      <div class="pct">52.1%</div>
-      <div class="fairodds">fair 1.92</div>
+      <div class="pct">51.9%</div>
+      <div class="fairodds">fair 1.93</div>
+      
     </div>
   </div>
-  <div class="meta"><span>Market avg (3 books)</span><span>18.7% overround</span></div>
+  <div class="meta"><span>Market avg (3 books)</span><span>32.6% overround</span></div>
 </div>
 <div class="card">
   <div class="matchup">Bristol City vs Wolverhampton</div>
@@ -1019,16 +1156,19 @@
       <div class="label">Home</div>
       <div class="pct">31.1%</div>
       <div class="fairodds">fair 3.22</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">28.8%</div>
       <div class="fairodds">fair 3.48</div>
+      
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">40.2%</div>
       <div class="fairodds">fair 2.49</div>
+      
     </div>
   </div>
   <div class="meta"><span>Market avg (3 books)</span><span>59.5% overround</span></div>
@@ -1042,16 +1182,19 @@
       <div class="label">Home</div>
       <div class="pct">35.1%</div>
       <div class="fairodds">fair 2.85</div>
+      <div class="mkt">mkt 35.1% (+0.1)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">27.1%</div>
       <div class="fairodds">fair 3.7</div>
+      <div class="mkt">mkt 27.2% (+0.1)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">37.9%</div>
       <div class="fairodds">fair 2.64</div>
+      <div class="mkt">mkt 37.7% (-0.2)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>5.6% overround</span></div>
@@ -1064,16 +1207,19 @@
       <div class="label">Home</div>
       <div class="pct">40.7%</div>
       <div class="fairodds">fair 2.46</div>
+      <div class="mkt">mkt 40.5% (-0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.7%</div>
       <div class="fairodds">fair 3.74</div>
+      <div class="mkt">mkt 25.8% (-0.9)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">32.6%</div>
       <div class="fairodds">fair 3.07</div>
+      <div class="mkt">mkt 33.7% (+1.1)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.8% overround</span></div>
@@ -1086,16 +1232,19 @@
       <div class="label">Home</div>
       <div class="pct">34.8%</div>
       <div class="fairodds">fair 2.87</div>
+      <div class="mkt">mkt 34.8% (+-0.0)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.8%</div>
       <div class="fairodds">fair 3.72</div>
+      <div class="mkt">mkt 27.2% (+0.3)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">38.4%</div>
       <div class="fairodds">fair 2.61</div>
+      <div class="mkt">mkt 38.1% (-0.3)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.4% overround</span></div>
@@ -1108,16 +1257,19 @@
       <div class="label">Home</div>
       <div class="pct">60.8%</div>
       <div class="fairodds">fair 1.64</div>
+      <div class="mkt">mkt 61.9% (+1.1)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">22.2%</div>
       <div class="fairodds">fair 4.5</div>
+      <div class="mkt">mkt 21.6% (-0.6)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">17.0%</div>
       <div class="fairodds">fair 5.9</div>
+      <div class="mkt">mkt 16.5% (-0.5)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>7.2% overround</span></div>
@@ -1130,16 +1282,19 @@
       <div class="label">Home</div>
       <div class="pct">50.8%</div>
       <div class="fairodds">fair 1.97</div>
+      <div class="mkt">mkt 50.1% (-0.6)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.8%</div>
       <div class="fairodds">fair 3.73</div>
+      <div class="mkt">mkt 26.4% (-0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">22.4%</div>
       <div class="fairodds">fair 4.47</div>
+      <div class="mkt">mkt 23.4% (+1.1)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.4% overround</span></div>
@@ -1152,16 +1307,19 @@
       <div class="label">Home</div>
       <div class="pct">75.0%</div>
       <div class="fairodds">fair 1.33</div>
+      <div class="mkt">mkt 75.1% (+0.1)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">15.6%</div>
       <div class="fairodds">fair 6.4</div>
+      <div class="mkt">mkt 15.4% (-0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">9.4%</div>
       <div class="fairodds">fair 10.67</div>
+      <div class="mkt">mkt 9.5% (+0.1)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.7% overround</span></div>
@@ -1174,16 +1332,19 @@
       <div class="label">Home</div>
       <div class="pct">27.5%</div>
       <div class="fairodds">fair 3.64</div>
+      <div class="mkt">mkt 28.5% (+1.0)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">24.6%</div>
       <div class="fairodds">fair 4.07</div>
+      <div class="mkt">mkt 23.8% (-0.8)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">47.9%</div>
       <div class="fairodds">fair 2.09</div>
+      <div class="mkt">mkt 47.7% (-0.2)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>7.0% overround</span></div>
@@ -1196,16 +1357,19 @@
       <div class="label">Home</div>
       <div class="pct">35.7%</div>
       <div class="fairodds">fair 2.8</div>
+      <div class="mkt">mkt 35.9% (+0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.0%</div>
       <div class="fairodds">fair 3.84</div>
+      <div class="mkt">mkt 25.1% (-0.9)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">38.3%</div>
       <div class="fairodds">fair 2.61</div>
+      <div class="mkt">mkt 39.0% (+0.8)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.7% overround</span></div>
@@ -1218,16 +1382,19 @@
       <div class="label">Home</div>
       <div class="pct">56.1%</div>
       <div class="fairodds">fair 1.78</div>
+      <div class="mkt">mkt 55.7% (-0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">23.8%</div>
       <div class="fairodds">fair 4.2</div>
+      <div class="mkt">mkt 23.5% (-0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">20.1%</div>
       <div class="fairodds">fair 4.98</div>
+      <div class="mkt">mkt 20.9% (+0.8)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>4.9% overround</span></div>
@@ -1240,16 +1407,19 @@
       <div class="label">Home</div>
       <div class="pct">45.7%</div>
       <div class="fairodds">fair 2.19</div>
+      <div class="mkt">mkt 46.0% (+0.3)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.8%</div>
       <div class="fairodds">fair 3.74</div>
+      <div class="mkt">mkt 26.1% (-0.6)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">27.5%</div>
       <div class="fairodds">fair 3.63</div>
+      <div class="mkt">mkt 27.9% (+0.3)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.8% overround</span></div>
@@ -1262,16 +1432,19 @@
       <div class="label">Home</div>
       <div class="pct">53.3%</div>
       <div class="fairodds">fair 1.88</div>
+      <div class="mkt">mkt 53.6% (+0.3)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">24.5%</div>
       <div class="fairodds">fair 4.08</div>
+      <div class="mkt">mkt 24.7% (+0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">22.2%</div>
       <div class="fairodds">fair 4.51</div>
+      <div class="mkt">mkt 21.7% (-0.5)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>7.3% overround</span></div>
@@ -1284,16 +1457,19 @@
       <div class="label">Home</div>
       <div class="pct">55.0%</div>
       <div class="fairodds">fair 1.82</div>
+      <div class="mkt">mkt 54.6% (-0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">23.4%</div>
       <div class="fairodds">fair 4.28</div>
+      <div class="mkt">mkt 23.3% (-0.1)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">21.6%</div>
       <div class="fairodds">fair 4.63</div>
+      <div class="mkt">mkt 22.1% (+0.5)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.9% overround</span></div>
@@ -1306,16 +1482,19 @@
       <div class="label">Home</div>
       <div class="pct">46.0%</div>
       <div class="fairodds">fair 2.17</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">24.7%</div>
       <div class="fairodds">fair 4.06</div>
+      
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">29.4%</div>
       <div class="fairodds">fair 3.41</div>
+      
     </div>
   </div>
   <div class="meta"><span>Market avg (2 books)</span><span>8.2% overround</span></div>
@@ -1328,16 +1507,19 @@
       <div class="label">Home</div>
       <div class="pct">34.8%</div>
       <div class="fairodds">fair 2.88</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.2%</div>
       <div class="fairodds">fair 3.82</div>
+      
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">39.0%</div>
       <div class="fairodds">fair 2.56</div>
+      
     </div>
   </div>
   <div class="meta"><span>Market avg (2 books)</span><span>9.1% overround</span></div>
@@ -1349,21 +1531,24 @@
   <div class="probs">
     <div class="prob">
       <div class="label">Home</div>
-      <div class="pct">22.6%</div>
-      <div class="fairodds">fair 4.42</div>
+      <div class="pct">21.4%</div>
+      <div class="fairodds">fair 4.68</div>
+      <div class="mkt">mkt 21.5% (+0.1)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
-      <div class="pct">25.8%</div>
-      <div class="fairodds">fair 3.88</div>
+      <div class="pct">25.7%</div>
+      <div class="fairodds">fair 3.89</div>
+      <div class="mkt">mkt 25.4% (-0.3)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
-      <div class="pct">51.6%</div>
-      <div class="fairodds">fair 1.94</div>
+      <div class="pct">52.9%</div>
+      <div class="fairodds">fair 1.89</div>
+      <div class="mkt">mkt 53.1% (+0.2)</div>
     </div>
   </div>
-  <div class="meta"><span>Bet365</span><span>7.7% overround</span></div>
+  <div class="meta"><span>Bet365</span><span>8.0% overround</span></div>
 </div>
 <div class="card">
   <div class="matchup">Port Vale vs Rochdale</div>
@@ -1373,16 +1558,19 @@
       <div class="label">Home</div>
       <div class="pct">56.7%</div>
       <div class="fairodds">fair 1.76</div>
+      <div class="mkt">mkt 56.4% (-0.3)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">24.6%</div>
       <div class="fairodds">fair 4.06</div>
+      <div class="mkt">mkt 25.0% (+0.3)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">18.7%</div>
       <div class="fairodds">fair 5.35</div>
+      <div class="mkt">mkt 18.7% (+-0.0)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.9% overround</span></div>
@@ -1395,16 +1583,19 @@
       <div class="label">Home</div>
       <div class="pct">40.8%</div>
       <div class="fairodds">fair 2.45</div>
+      <div class="mkt">mkt 40.9% (+0.1)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">25.0%</div>
       <div class="fairodds">fair 3.99</div>
+      <div class="mkt">mkt 25.1% (+0.1)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">34.1%</div>
       <div class="fairodds">fair 2.93</div>
+      <div class="mkt">mkt 34.0% (-0.1)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.5% overround</span></div>
@@ -1417,16 +1608,19 @@
       <div class="label">Home</div>
       <div class="pct">49.1%</div>
       <div class="fairodds">fair 2.04</div>
+      <div class="mkt">mkt 48.4% (-0.6)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">27.5%</div>
       <div class="fairodds">fair 3.63</div>
+      <div class="mkt">mkt 27.7% (+0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">23.4%</div>
       <div class="fairodds">fair 4.27</div>
+      <div class="mkt">mkt 23.9% (+0.4)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.8% overround</span></div>
@@ -1439,16 +1633,19 @@
       <div class="label">Home</div>
       <div class="pct">50.6%</div>
       <div class="fairodds">fair 1.97</div>
+      <div class="mkt">mkt 50.1% (-0.6)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">25.3%</div>
       <div class="fairodds">fair 3.95</div>
+      <div class="mkt">mkt 25.3% (+0.0)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">24.0%</div>
       <div class="fairodds">fair 4.16</div>
+      <div class="mkt">mkt 24.6% (+0.6)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.7% overround</span></div>
@@ -1461,16 +1658,19 @@
       <div class="label">Home</div>
       <div class="pct">41.7%</div>
       <div class="fairodds">fair 2.4</div>
+      <div class="mkt">mkt 41.0% (-0.7)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.0%</div>
       <div class="fairodds">fair 3.84</div>
+      <div class="mkt">mkt 26.4% (+0.4)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">32.3%</div>
       <div class="fairodds">fair 3.09</div>
+      <div class="mkt">mkt 32.6% (+0.3)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.7% overround</span></div>
@@ -1483,16 +1683,19 @@
       <div class="label">Home</div>
       <div class="pct">57.9%</div>
       <div class="fairodds">fair 1.73</div>
+      <div class="mkt">mkt 57.9% (+0.0)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">23.4%</div>
       <div class="fairodds">fair 4.28</div>
+      <div class="mkt">mkt 23.5% (+0.1)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">18.7%</div>
       <div class="fairodds">fair 5.35</div>
+      <div class="mkt">mkt 18.6% (-0.1)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.9% overround</span></div>
@@ -1505,16 +1708,19 @@
       <div class="label">Home</div>
       <div class="pct">56.0%</div>
       <div class="fairodds">fair 1.79</div>
+      <div class="mkt">mkt 56.2% (+0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">23.3%</div>
       <div class="fairodds">fair 4.29</div>
+      <div class="mkt">mkt 22.8% (-0.5)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">20.7%</div>
       <div class="fairodds">fair 4.82</div>
+      <div class="mkt">mkt 21.0% (+0.3)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>7.2% overround</span></div>
@@ -1527,16 +1733,19 @@
       <div class="label">Home</div>
       <div class="pct">34.8%</div>
       <div class="fairodds">fair 2.88</div>
+      <div class="mkt">mkt 34.5% (-0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">28.4%</div>
       <div class="fairodds">fair 3.52</div>
+      <div class="mkt">mkt 27.7% (-0.7)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">36.8%</div>
       <div class="fairodds">fair 2.72</div>
+      <div class="mkt">mkt 37.7% (+0.9)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.6% overround</span></div>
@@ -1549,16 +1758,19 @@
       <div class="label">Home</div>
       <div class="pct">44.5%</div>
       <div class="fairodds">fair 2.25</div>
+      <div class="mkt">mkt 44.4% (-0.2)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">28.8%</div>
       <div class="fairodds">fair 3.48</div>
+      <div class="mkt">mkt 28.7% (-0.1)</div>
     </div>
     <div class="prob">
       <div class="label">Away</div>
       <div class="pct">26.7%</div>
       <div class="fairodds">fair 3.74</div>
+      <div class="mkt">mkt 26.9% (+0.2)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>7.0% overround</span></div>
@@ -1571,16 +1783,19 @@
       <div class="label">Home</div>
       <div class="pct">31.3%</div>
       <div class="fairodds">fair 3.2</div>
+      <div class="mkt">mkt 31.8% (+0.6)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.1%</div>
       <div class="fairodds">fair 3.84</div>
+      <div class="mkt">mkt 25.5% (-0.6)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">42.7%</div>
       <div class="fairodds">fair 2.34</div>
+      <div class="mkt">mkt 42.6% (+-0.0)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.6% overround</span></div>
@@ -1593,16 +1808,19 @@
       <div class="label">Home</div>
       <div class="pct">36.2%</div>
       <div class="fairodds">fair 2.76</div>
+      <div class="mkt">mkt 36.9% (+0.7)</div>
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">26.1%</div>
       <div class="fairodds">fair 3.82</div>
+      <div class="mkt">mkt 26.6% (+0.4)</div>
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">37.7%</div>
       <div class="fairodds">fair 2.66</div>
+      <div class="mkt">mkt 36.5% (-1.1)</div>
     </div>
   </div>
   <div class="meta"><span>Bet365</span><span>6.2% overround</span></div>
@@ -1615,16 +1833,19 @@
       <div class="label">Home</div>
       <div class="pct">27.0%</div>
       <div class="fairodds">fair 3.7</div>
+      
     </div>
     <div class="prob">
       <div class="label">Draw</div>
       <div class="pct">33.7%</div>
       <div class="fairodds">fair 2.97</div>
+      
     </div>
     <div class="prob fav">
       <div class="label">Away</div>
       <div class="pct">39.3%</div>
       <div class="fairodds">fair 2.54</div>
+      
     </div>
   </div>
   <div class="meta"><span>Market avg (3 books)</span><span>35.1% overround</span></div>
