@@ -1,1664 +1,5 @@
 [
   {
-    "date": "2026-10-29T20:00:00",
-    "season": "E2026",
-    "game_code": 81,
-    "match": "FC Bayern Munich @ Crvena Zvezda Meridianbet Belgrade",
-    "home_team": "Crvena Zvezda Meridianbet Belgrade",
-    "away_team": "FC Bayern Munich",
-    "home_tv_code": "CZV",
-    "away_tv_code": "BAY",
-    "home_form": {
-      "avg_scored": 86.6,
-      "avg_allowed": 76.8,
-      "n_games": 5,
-      "scored_list": [
-        77.0,
-        84.0,
-        90.0,
-        82.0,
-        100.0
-      ],
-      "allowed_list": [
-        58.0,
-        82.0,
-        81.0,
-        85.0,
-        78.0
-      ]
-    },
-    "away_form": {
-      "avg_scored": 90.0,
-      "avg_allowed": 95.4,
-      "n_games": 5,
-      "scored_list": [
-        87.0,
-        101.0,
-        87.0,
-        91.0,
-        84.0
-      ],
-      "allowed_list": [
-        94.0,
-        93.0,
-        95.0,
-        107.0,
-        88.0
-      ]
-    },
-    "home_props": [
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 14.4,
-        "n_games": 5,
-        "recent_values": [
-          20.0,
-          17.0,
-          12.0,
-          16.0,
-          18.0
-        ],
-        "stat_key": "points",
-        "name": "NWORA, JORDAN",
-        "player_code": "013363"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 4.3,
-        "n_games": 5,
-        "recent_values": [
-          6.0,
-          3.0,
-          6.0,
-          8.0,
-          1.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "NWORA, JORDAN",
-        "player_code": "013363"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.0,
-        "n_games": 5,
-        "recent_values": [
-          0.0,
-          1.0,
-          1.0,
-          2.0,
-          3.0
-        ],
-        "stat_key": "assistances",
-        "name": "NWORA, JORDAN",
-        "player_code": "013363"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 11.5,
-        "n_games": 5,
-        "recent_values": [
-          11.0,
-          0.0,
-          13.0,
-          6.0,
-          21.0
-        ],
-        "stat_key": "points",
-        "name": "BUTLER, JARED",
-        "player_code": "014163"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.7,
-        "n_games": 5,
-        "recent_values": [
-          1.0,
-          0.0,
-          2.0,
-          3.0,
-          2.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "BUTLER, JARED",
-        "player_code": "014163"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.4,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          3.0,
-          5.0,
-          2.0,
-          1.0
-        ],
-        "stat_key": "assistances",
-        "name": "BUTLER, JARED",
-        "player_code": "014163"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 10.9,
-        "n_games": 5,
-        "recent_values": [
-          9.0,
-          8.0,
-          4.0,
-          22.0,
-          8.0
-        ],
-        "stat_key": "points",
-        "name": "JONES, CHRIS",
-        "player_code": "010568"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.4,
-        "n_games": 5,
-        "recent_values": [
-          4.0,
-          3.0,
-          3.0,
-          4.0,
-          2.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "JONES, CHRIS",
-        "player_code": "010568"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 5.2,
-        "n_games": 5,
-        "recent_values": [
-          4.0,
-          9.0,
-          7.0,
-          4.0,
-          9.0
-        ],
-        "stat_key": "assistances",
-        "name": "JONES, CHRIS",
-        "player_code": "010568"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 9.6,
-        "n_games": 5,
-        "recent_values": [
-          12.0,
-          15.0,
-          11.0,
-          13.0,
-          0.0
-        ],
-        "stat_key": "points",
-        "name": "OJELEYE, SEMI",
-        "player_code": "011982"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.0,
-        "n_games": 5,
-        "recent_values": [
-          7.0,
-          6.0,
-          0.0,
-          3.0,
-          0.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "OJELEYE, SEMI",
-        "player_code": "011982"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.8,
-        "n_games": 5,
-        "recent_values": [
-          1.0,
-          0.0,
-          2.0,
-          1.0,
-          2.0
-        ],
-        "stat_key": "assistances",
-        "name": "OJELEYE, SEMI",
-        "player_code": "011982"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 9.5,
-        "n_games": 5,
-        "recent_values": [
-          5.0,
-          18.0,
-          23.0,
-          2.0,
-          2.0
-        ],
-        "stat_key": "points",
-        "name": "MONEKE, CHIMA",
-        "player_code": "012201"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.6,
-        "n_games": 5,
-        "recent_values": [
-          3.0,
-          4.0,
-          4.0,
-          2.0,
-          4.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "MONEKE, CHIMA",
-        "player_code": "012201"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.8,
-        "n_games": 5,
-        "recent_values": [
-          1.0,
-          1.0,
-          0.0,
-          1.0,
-          3.0
-        ],
-        "stat_key": "assistances",
-        "name": "MONEKE, CHIMA",
-        "player_code": "012201"
-      }
-    ],
-    "away_props": [
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 11.4,
-        "n_games": 5,
-        "recent_values": [
-          18.0,
-          21.0,
-          5.0,
-          17.0,
-          5.0
-        ],
-        "stat_key": "points",
-        "name": "WASHINGTON, DUANE",
-        "player_code": "013370"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.8,
-        "n_games": 5,
-        "recent_values": [
-          0.0,
-          0.0,
-          1.0,
-          1.0,
-          0.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "WASHINGTON, DUANE",
-        "player_code": "013370"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.9,
-        "n_games": 5,
-        "recent_values": [
-          5.0,
-          2.0,
-          3.0,
-          2.0,
-          4.0
-        ],
-        "stat_key": "assistances",
-        "name": "WASHINGTON, DUANE",
-        "player_code": "013370"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 11.1,
-        "n_games": 5,
-        "recent_values": [
-          9.0,
-          20.0,
-          5.0,
-          8.0,
-          14.0
-        ],
-        "stat_key": "points",
-        "name": "OBST, ANDREAS",
-        "player_code": "004508"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.6,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          0.0,
-          2.0,
-          1.0,
-          3.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "OBST, ANDREAS",
-        "player_code": "004508"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.9,
-        "n_games": 5,
-        "recent_values": [
-          1.0,
-          6.0,
-          4.0,
-          2.0,
-          3.0
-        ],
-        "stat_key": "assistances",
-        "name": "OBST, ANDREAS",
-        "player_code": "004508"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 9.9,
-        "n_games": 5,
-        "recent_values": [
-          18.0,
-          4.0,
-          14.0,
-          14.0,
-          2.0
-        ],
-        "stat_key": "points",
-        "name": "DA SILVA, OSCAR",
-        "player_code": "011244"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.1,
-        "n_games": 5,
-        "recent_values": [
-          3.0,
-          0.0,
-          4.0,
-          5.0,
-          1.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "DA SILVA, OSCAR",
-        "player_code": "011244"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.4,
-        "n_games": 5,
-        "recent_values": [
-          0.0,
-          0.0,
-          1.0,
-          1.0,
-          1.0
-        ],
-        "stat_key": "assistances",
-        "name": "DA SILVA, OSCAR",
-        "player_code": "011244"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 11.1,
-        "n_games": 4,
-        "recent_values": [
-          8.0,
-          9.0,
-          7.0,
-          17.0
-        ],
-        "stat_key": "points",
-        "name": "JOKUBAITIS, ROKAS",
-        "player_code": "007519"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.9,
-        "n_games": 4,
-        "recent_values": [
-          1.0,
-          1.0,
-          0.0,
-          0.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "JOKUBAITIS, ROKAS",
-        "player_code": "007519"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.5,
-        "n_games": 4,
-        "recent_values": [
-          1.0,
-          5.0,
-          2.0,
-          7.0
-        ],
-        "stat_key": "assistances",
-        "name": "JOKUBAITIS, ROKAS",
-        "player_code": "007519"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 10.2,
-        "n_games": 3,
-        "recent_values": [
-          9.0,
-          0.0,
-          17.0
-        ],
-        "stat_key": "points",
-        "name": "NORRIS, MILES",
-        "player_code": "014134"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.7,
-        "n_games": 3,
-        "recent_values": [
-          6.0,
-          2.0,
-          3.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "NORRIS, MILES",
-        "player_code": "014134"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.9,
-        "n_games": 3,
-        "recent_values": [
-          2.0,
-          1.0,
-          1.0
-        ],
-        "stat_key": "assistances",
-        "name": "NORRIS, MILES",
-        "player_code": "014134"
-      }
-    ],
-    "exp_home": 93.4,
-    "exp_away": 82.9,
-    "exp_total": 176.3,
-    "total_std": 12.7
-  },
-  {
-    "date": "2026-10-29T20:05:00",
-    "season": "E2026",
-    "game_code": 82,
-    "match": "Paris Basketball @ Maccabi Rapyd Tel Aviv",
-    "home_team": "Maccabi Rapyd Tel Aviv",
-    "away_team": "Paris Basketball",
-    "home_tv_code": "MTA",
-    "away_tv_code": "PBB",
-    "home_form": {
-      "avg_scored": 90.4,
-      "avg_allowed": 94.0,
-      "n_games": 5,
-      "scored_list": [
-        97.0,
-        87.0,
-        91.0,
-        99.0,
-        78.0
-      ],
-      "allowed_list": [
-        79.0,
-        90.0,
-        88.0,
-        113.0,
-        100.0
-      ]
-    },
-    "away_form": {
-      "avg_scored": 92.6,
-      "avg_allowed": 96.2,
-      "n_games": 5,
-      "scored_list": [
-        96.0,
-        94.0,
-        81.0,
-        93.0,
-        99.0
-      ],
-      "allowed_list": [
-        98.0,
-        96.0,
-        90.0,
-        104.0,
-        93.0
-      ]
-    },
-    "home_props": [
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 14.3,
-        "n_games": 5,
-        "recent_values": [
-          9.0,
-          9.0,
-          17.0,
-          20.0,
-          19.0
-        ],
-        "stat_key": "points",
-        "name": "CLARK III, JIMMY",
-        "player_code": "013699"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.5,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          0.0,
-          2.0,
-          4.0,
-          0.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "CLARK III, JIMMY",
-        "player_code": "013699"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.7,
-        "n_games": 5,
-        "recent_values": [
-          4.0,
-          2.0,
-          4.0,
-          3.0,
-          2.0
-        ],
-        "stat_key": "assistances",
-        "name": "CLARK III, JIMMY",
-        "player_code": "013699"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 12.1,
-        "n_games": 5,
-        "recent_values": [
-          17.0,
-          22.0,
-          11.0,
-          14.0,
-          7.0
-        ],
-        "stat_key": "points",
-        "name": "MADAR, YAM",
-        "player_code": "011052"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.1,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          3.0,
-          3.0,
-          4.0,
-          1.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "MADAR, YAM",
-        "player_code": "011052"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.6,
-        "n_games": 5,
-        "recent_values": [
-          4.0,
-          4.0,
-          1.0,
-          5.0,
-          1.0
-        ],
-        "stat_key": "assistances",
-        "name": "MADAR, YAM",
-        "player_code": "011052"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 11.5,
-        "n_games": 5,
-        "recent_values": [
-          13.0,
-          12.0,
-          11.0,
-          19.0,
-          6.0
-        ],
-        "stat_key": "points",
-        "name": "COLSON, BONZIE",
-        "player_code": "009783"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.8,
-        "n_games": 5,
-        "recent_values": [
-          4.0,
-          4.0,
-          5.0,
-          3.0,
-          3.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "COLSON, BONZIE",
-        "player_code": "009783"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.5,
-        "n_games": 5,
-        "recent_values": [
-          0.0,
-          1.0,
-          1.0,
-          0.0,
-          2.0
-        ],
-        "stat_key": "assistances",
-        "name": "COLSON, BONZIE",
-        "player_code": "009783"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 10.3,
-        "n_games": 5,
-        "recent_values": [
-          12.0,
-          2.0,
-          16.0,
-          5.0,
-          13.0
-        ],
-        "stat_key": "points",
-        "name": "SORKIN, ROMAN",
-        "player_code": "011219"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.3,
-        "n_games": 5,
-        "recent_values": [
-          1.0,
-          3.0,
-          1.0,
-          1.0,
-          1.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "SORKIN, ROMAN",
-        "player_code": "011219"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.2,
-        "n_games": 5,
-        "recent_values": [
-          0.0,
-          0.0,
-          2.0,
-          0.0,
-          0.0
-        ],
-        "stat_key": "assistances",
-        "name": "SORKIN, ROMAN",
-        "player_code": "011219"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 9.9,
-        "n_games": 3,
-        "recent_values": [
-          8.0,
-          13.0,
-          6.0
-        ],
-        "stat_key": "points",
-        "name": "LUNDBERG, IFFE",
-        "player_code": "010781"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.0,
-        "n_games": 3,
-        "recent_values": [
-          2.0,
-          1.0,
-          3.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "LUNDBERG, IFFE",
-        "player_code": "010781"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.1,
-        "n_games": 3,
-        "recent_values": [
-          4.0,
-          3.0,
-          4.0
-        ],
-        "stat_key": "assistances",
-        "name": "LUNDBERG, IFFE",
-        "player_code": "010781"
-      }
-    ],
-    "away_props": [
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 16.3,
-        "n_games": 2,
-        "recent_values": [
-          30.0,
-          20.0
-        ],
-        "stat_key": "points",
-        "name": "HIFI, NADIR",
-        "player_code": "012640"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.9,
-        "n_games": 2,
-        "recent_values": [
-          3.0,
-          0.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "HIFI, NADIR",
-        "player_code": "012640"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.3,
-        "n_games": 2,
-        "recent_values": [
-          2.0,
-          2.0
-        ],
-        "stat_key": "assistances",
-        "name": "HIFI, NADIR",
-        "player_code": "012640"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 15.5,
-        "n_games": 4,
-        "recent_values": [
-          27.0,
-          23.0,
-          24.0,
-          9.0
-        ],
-        "stat_key": "points",
-        "name": "ETIENNE, TYSON",
-        "player_code": "015143"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.4,
-        "n_games": 4,
-        "recent_values": [
-          0.0,
-          2.0,
-          3.0,
-          0.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "ETIENNE, TYSON",
-        "player_code": "015143"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.3,
-        "n_games": 4,
-        "recent_values": [
-          1.0,
-          7.0,
-          7.0,
-          1.0
-        ],
-        "stat_key": "assistances",
-        "name": "ETIENNE, TYSON",
-        "player_code": "015143"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 13.8,
-        "n_games": 4,
-        "recent_values": [
-          9.0,
-          9.0,
-          20.0,
-          20.0
-        ],
-        "stat_key": "points",
-        "name": "RHODEN, JARED",
-        "player_code": "014178"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.4,
-        "n_games": 4,
-        "recent_values": [
-          1.0,
-          3.0,
-          4.0,
-          3.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "RHODEN, JARED",
-        "player_code": "014178"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.7,
-        "n_games": 4,
-        "recent_values": [
-          2.0,
-          2.0,
-          4.0,
-          3.0
-        ],
-        "stat_key": "assistances",
-        "name": "RHODEN, JARED",
-        "player_code": "014178"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 12.5,
-        "n_games": 2,
-        "recent_values": [
-          9.0,
-          19.0
-        ],
-        "stat_key": "points",
-        "name": "WARREN, TJ",
-        "player_code": "015168"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.7,
-        "n_games": 2,
-        "recent_values": [
-          2.0,
-          4.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "WARREN, TJ",
-        "player_code": "015168"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.5,
-        "n_games": 2,
-        "recent_values": [
-          3.0,
-          2.0
-        ],
-        "stat_key": "assistances",
-        "name": "WARREN, TJ",
-        "player_code": "015168"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 11.3,
-        "n_games": 5,
-        "recent_values": [
-          6.0,
-          12.0,
-          14.0,
-          11.0,
-          12.0
-        ],
-        "stat_key": "points",
-        "name": "HERRERA, SEBASTIAN",
-        "player_code": "012611"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.8,
-        "n_games": 5,
-        "recent_values": [
-          1.0,
-          3.0,
-          0.0,
-          4.0,
-          2.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "HERRERA, SEBASTIAN",
-        "player_code": "012611"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.3,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          1.0,
-          1.0,
-          3.0,
-          3.0
-        ],
-        "stat_key": "assistances",
-        "name": "HERRERA, SEBASTIAN",
-        "player_code": "012611"
-      }
-    ],
-    "exp_home": 93.9,
-    "exp_away": 97.4,
-    "exp_total": 191.3,
-    "total_std": 12.7
-  },
-  {
-    "date": "2026-10-29T20:45:00",
-    "season": "E2026",
-    "game_code": 83,
-    "match": "Fenerbahce Tarfin Istanbul @ Real Madrid",
-    "home_team": "Real Madrid",
-    "away_team": "Fenerbahce Tarfin Istanbul",
-    "home_tv_code": "RMB",
-    "away_tv_code": "FBT",
-    "home_form": {
-      "avg_scored": 102.4,
-      "avg_allowed": 88.4,
-      "n_games": 5,
-      "scored_list": [
-        86.0,
-        98.0,
-        111.0,
-        113.0,
-        104.0
-      ],
-      "allowed_list": [
-        76.0,
-        89.0,
-        92.0,
-        99.0,
-        86.0
-      ]
-    },
-    "away_form": {
-      "avg_scored": 77.8,
-      "avg_allowed": 76.8,
-      "n_games": 5,
-      "scored_list": [
-        74.0,
-        99.0,
-        74.0,
-        64.0,
-        78.0
-      ],
-      "allowed_list": [
-        92.0,
-        80.0,
-        65.0,
-        61.0,
-        86.0
-      ]
-    },
-    "home_props": [
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 14.2,
-        "n_games": 5,
-        "recent_values": [
-          9.0,
-          15.0,
-          26.0,
-          18.0,
-          12.0
-        ],
-        "stat_key": "points",
-        "name": "FELIZ, ANDRES",
-        "player_code": "011247"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.3,
-        "n_games": 5,
-        "recent_values": [
-          5.0,
-          5.0,
-          4.0,
-          2.0,
-          1.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "FELIZ, ANDRES",
-        "player_code": "011247"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.4,
-        "n_games": 5,
-        "recent_values": [
-          3.0,
-          5.0,
-          5.0,
-          4.0,
-          3.0
-        ],
-        "stat_key": "assistances",
-        "name": "FELIZ, ANDRES",
-        "player_code": "011247"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 13.8,
-        "n_games": 5,
-        "recent_values": [
-          13.0,
-          16.0,
-          16.0,
-          11.0,
-          19.0
-        ],
-        "stat_key": "points",
-        "name": "MALEDON, THEO",
-        "player_code": "007027"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.6,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          3.0,
-          5.0,
-          2.0,
-          4.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "MALEDON, THEO",
-        "player_code": "007027"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 4.4,
-        "n_games": 5,
-        "recent_values": [
-          4.0,
-          4.0,
-          9.0,
-          4.0,
-          6.0
-        ],
-        "stat_key": "assistances",
-        "name": "MALEDON, THEO",
-        "player_code": "007027"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 10.3,
-        "n_games": 5,
-        "recent_values": [
-          12.0,
-          13.0,
-          3.0,
-          21.0,
-          3.0
-        ],
-        "stat_key": "points",
-        "name": "CAMPAZZO, FACUNDO",
-        "player_code": "005928"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.1,
-        "n_games": 5,
-        "recent_values": [
-          0.0,
-          4.0,
-          3.0,
-          3.0,
-          2.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "CAMPAZZO, FACUNDO",
-        "player_code": "005928"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.6,
-        "n_games": 5,
-        "recent_values": [
-          3.0,
-          6.0,
-          5.0,
-          5.0,
-          3.0
-        ],
-        "stat_key": "assistances",
-        "name": "CAMPAZZO, FACUNDO",
-        "player_code": "005928"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 10.3,
-        "n_games": 5,
-        "recent_values": [
-          8.0,
-          10.0,
-          9.0,
-          11.0,
-          10.0
-        ],
-        "stat_key": "points",
-        "name": "TAVARES, WALTER",
-        "player_code": "005791"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 6.6,
-        "n_games": 5,
-        "recent_values": [
-          8.0,
-          6.0,
-          5.0,
-          7.0,
-          12.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "TAVARES, WALTER",
-        "player_code": "005791"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.0,
-        "n_games": 5,
-        "recent_values": [
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "stat_key": "assistances",
-        "name": "TAVARES, WALTER",
-        "player_code": "005791"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 10.3,
-        "n_games": 5,
-        "recent_values": [
-          7.0,
-          3.0,
-          3.0,
-          15.0,
-          14.0
-        ],
-        "stat_key": "points",
-        "name": "LUWAWU-CABARROT, TIMOTHE",
-        "player_code": "012080"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.1,
-        "n_games": 5,
-        "recent_values": [
-          6.0,
-          2.0,
-          0.0,
-          3.0,
-          3.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "LUWAWU-CABARROT, TIMOTHE",
-        "player_code": "012080"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.6,
-        "n_games": 5,
-        "recent_values": [
-          1.0,
-          1.0,
-          0.0,
-          2.0,
-          1.0
-        ],
-        "stat_key": "assistances",
-        "name": "LUWAWU-CABARROT, TIMOTHE",
-        "player_code": "012080"
-      }
-    ],
-    "away_props": [
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 14.2,
-        "n_games": 5,
-        "recent_values": [
-          6.0,
-          17.0,
-          17.0,
-          17.0,
-          18.0
-        ],
-        "stat_key": "points",
-        "name": "SHIELDS, SHAVON",
-        "player_code": "007831"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 5.6,
-        "n_games": 5,
-        "recent_values": [
-          4.0,
-          3.0,
-          8.0,
-          7.0,
-          8.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "SHIELDS, SHAVON",
-        "player_code": "007831"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.1,
-        "n_games": 5,
-        "recent_values": [
-          1.0,
-          1.0,
-          2.0,
-          1.0,
-          3.0
-        ],
-        "stat_key": "assistances",
-        "name": "SHIELDS, SHAVON",
-        "player_code": "007831"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 12.4,
-        "n_games": 5,
-        "recent_values": [
-          9.0,
-          6.0,
-          11.0,
-          14.0,
-          19.0
-        ],
-        "stat_key": "points",
-        "name": "BALDWIN IV, WADE",
-        "player_code": "009863"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.1,
-        "n_games": 5,
-        "recent_values": [
-          3.0,
-          3.0,
-          3.0,
-          1.0,
-          3.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "BALDWIN IV, WADE",
-        "player_code": "009863"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.5,
-        "n_games": 5,
-        "recent_values": [
-          5.0,
-          7.0,
-          2.0,
-          5.0,
-          3.0
-        ],
-        "stat_key": "assistances",
-        "name": "BALDWIN IV, WADE",
-        "player_code": "009863"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 11.0,
-        "n_games": 5,
-        "recent_values": [
-          6.0,
-          14.0,
-          11.0,
-          6.0,
-          15.0
-        ],
-        "stat_key": "points",
-        "name": "CLYBURN, WILL",
-        "player_code": "004888"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.7,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          1.0,
-          2.0,
-          5.0,
-          5.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "CLYBURN, WILL",
-        "player_code": "004888"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.9,
-        "n_games": 5,
-        "recent_values": [
-          3.0,
-          2.0,
-          0.0,
-          1.0,
-          2.0
-        ],
-        "stat_key": "assistances",
-        "name": "CLYBURN, WILL",
-        "player_code": "004888"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 8.6,
-        "n_games": 5,
-        "recent_values": [
-          9.0,
-          7.0,
-          14.0,
-          4.0,
-          5.0
-        ],
-        "stat_key": "points",
-        "name": "HORTON TUCKER, TALEN",
-        "player_code": "014124"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.2,
-        "n_games": 5,
-        "recent_values": [
-          3.0,
-          2.0,
-          6.0,
-          3.0,
-          1.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "HORTON TUCKER, TALEN",
-        "player_code": "014124"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.1,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          3.0,
-          5.0,
-          0.0,
-          1.0
-        ],
-        "stat_key": "assistances",
-        "name": "HORTON TUCKER, TALEN",
-        "player_code": "014124"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 7.8,
-        "n_games": 5,
-        "recent_values": [
-          13.0,
-          15.0,
-          5.0,
-          3.0,
-          2.0
-        ],
-        "stat_key": "points",
-        "name": "KEY, BRAXTON",
-        "player_code": "014168"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.0,
-        "n_games": 5,
-        "recent_values": [
-          7.0,
-          3.0,
-          2.0,
-          2.0,
-          1.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "KEY, BRAXTON",
-        "player_code": "014168"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.5,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          1.0,
-          0.0,
-          2.0,
-          0.0
-        ],
-        "stat_key": "assistances",
-        "name": "KEY, BRAXTON",
-        "player_code": "014168"
-      }
-    ],
-    "exp_home": 90.1,
-    "exp_away": 81.8,
-    "exp_total": 171.9,
-    "total_std": 12.7
-  },
-  {
     "date": "2026-10-30T17:00:00",
     "season": "E2026",
     "game_code": 84,
@@ -2216,9 +557,9 @@
         "player_code": "012788"
       }
     ],
-    "exp_home": 89.8,
-    "exp_away": 97.8,
-    "exp_total": 187.6,
+    "exp_home": 89.6,
+    "exp_away": 97.5,
+    "exp_total": 187.0,
     "total_std": 12.7
   },
   {
@@ -2250,21 +591,19 @@
       ]
     },
     "away_form": {
-      "avg_scored": 82.0,
-      "avg_allowed": 74.8,
-      "n_games": 5,
+      "avg_scored": 81.2,
+      "avg_allowed": 73.8,
+      "n_games": 4,
       "scored_list": [
         92.0,
         72.0,
         81.0,
-        85.0,
         80.0
       ],
       "allowed_list": [
         74.0,
         55.0,
         91.0,
-        79.0,
         75.0
       ]
     },
@@ -2530,106 +869,60 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 13.0,
-        "n_games": 2,
+        "projected": 11.9,
+        "n_games": 4,
         "recent_values": [
-          11.0,
-          20.0
-        ],
-        "stat_key": "points",
-        "name": "NUNN, KENDRICK",
-        "player_code": "012774"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.0,
-        "n_games": 2,
-        "recent_values": [
-          1.0,
-          2.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "NUNN, KENDRICK",
-        "player_code": "012774"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.7,
-        "n_games": 2,
-        "recent_values": [
-          5.0,
+          17.0,
+          8.0,
+          22.0,
           6.0
         ],
-        "stat_key": "assistances",
-        "name": "NUNN, KENDRICK",
-        "player_code": "012774"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 12.7,
-        "n_games": 5,
-        "recent_values": [
-          19.0,
-          4.0,
-          11.0,
-          20.0,
-          13.0
-        ],
         "stat_key": "points",
-        "name": "LESSORT, MATHIAS",
-        "player_code": "003842"
+        "name": "FRANCISCO, SYLVAIN",
+        "player_code": "007975"
       },
       {
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 6.2,
-        "n_games": 5,
+        "projected": 2.9,
+        "n_games": 4,
         "recent_values": [
-          8.0,
-          9.0,
-          2.0,
-          6.0,
-          11.0
+          3.0,
+          1.0,
+          4.0,
+          1.0
         ],
         "stat_key": "totalRebounds",
-        "name": "LESSORT, MATHIAS",
-        "player_code": "003842"
+        "name": "FRANCISCO, SYLVAIN",
+        "player_code": "007975"
       },
       {
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 1.8,
-        "n_games": 5,
+        "projected": 3.3,
+        "n_games": 4,
         "recent_values": [
-          1.0,
+          7.0,
+          5.0,
           4.0,
-          1.0,
-          1.0,
-          1.0
+          2.0
         ],
         "stat_key": "assistances",
-        "name": "LESSORT, MATHIAS",
-        "player_code": "003842"
+        "name": "FRANCISCO, SYLVAIN",
+        "player_code": "007975"
       },
       {
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 11.7,
-        "n_games": 5,
+        "projected": 10.8,
+        "n_games": 4,
         "recent_values": [
           19.0,
           14.0,
           8.0,
-          18.0,
           7.0
         ],
         "stat_key": "points",
@@ -2640,13 +933,12 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 3.5,
-        "n_games": 5,
+        "projected": 2.9,
+        "n_games": 4,
         "recent_values": [
           4.0,
           2.0,
           1.0,
-          7.0,
           2.0
         ],
         "stat_key": "totalRebounds",
@@ -2657,10 +949,9 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 1.1,
-        "n_games": 5,
+        "projected": 1.3,
+        "n_games": 4,
         "recent_values": [
-          0.0,
           0.0,
           0.0,
           0.0,
@@ -2675,63 +966,104 @@
         "dist": "normal",
         "std": 6.0,
         "projected": 11.3,
-        "n_games": 5,
+        "n_games": 4,
         "recent_values": [
-          17.0,
-          8.0,
-          22.0,
-          10.0,
-          6.0
+          19.0,
+          4.0,
+          11.0,
+          13.0
         ],
         "stat_key": "points",
-        "name": "FRANCISCO, SYLVAIN",
-        "player_code": "007975"
+        "name": "LESSORT, MATHIAS",
+        "player_code": "003842"
       },
       {
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 2.5,
-        "n_games": 5,
+        "projected": 6.1,
+        "n_games": 4,
         "recent_values": [
-          3.0,
-          1.0,
-          4.0,
-          0.0,
-          1.0
+          8.0,
+          9.0,
+          2.0,
+          11.0
         ],
         "stat_key": "totalRebounds",
-        "name": "FRANCISCO, SYLVAIN",
-        "player_code": "007975"
+        "name": "LESSORT, MATHIAS",
+        "player_code": "003842"
       },
       {
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 4.4,
-        "n_games": 5,
+        "projected": 2.0,
+        "n_games": 4,
         "recent_values": [
-          7.0,
-          5.0,
+          1.0,
           4.0,
-          11.0,
-          2.0
+          1.0,
+          1.0
         ],
         "stat_key": "assistances",
-        "name": "FRANCISCO, SYLVAIN",
-        "player_code": "007975"
+        "name": "LESSORT, MATHIAS",
+        "player_code": "003842"
       },
       {
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 9.3,
-        "n_games": 5,
+        "projected": 9.7,
+        "n_games": 3,
+        "recent_values": [
+          10.0,
+          4.0,
+          11.0
+        ],
+        "stat_key": "points",
+        "name": "HERNANGOMEZ, JUANCHO",
+        "player_code": "012712"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.7,
+        "n_games": 3,
+        "recent_values": [
+          4.0,
+          5.0,
+          2.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "HERNANGOMEZ, JUANCHO",
+        "player_code": "012712"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 1.6,
+        "n_games": 3,
+        "recent_values": [
+          0.0,
+          2.0,
+          0.0
+        ],
+        "stat_key": "assistances",
+        "name": "HERNANGOMEZ, JUANCHO",
+        "player_code": "012712"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 9.2,
+        "n_games": 4,
         "recent_values": [
           8.0,
           7.0,
           7.0,
-          9.0,
           9.0
         ],
         "stat_key": "points",
@@ -2742,12 +1074,11 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 4.7,
-        "n_games": 5,
+        "projected": 4.8,
+        "n_games": 4,
         "recent_values": [
           7.0,
           5.0,
-          4.0,
           4.0,
           6.0
         ],
@@ -2759,13 +1090,12 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 1.6,
-        "n_games": 5,
+        "projected": 1.5,
+        "n_games": 4,
         "recent_values": [
           1.0,
           3.0,
           0.0,
-          2.0,
           0.0
         ],
         "stat_key": "assistances",
@@ -2773,9 +1103,9 @@
         "player_code": "010357"
       }
     ],
-    "exp_home": 79.5,
-    "exp_away": 87.8,
-    "exp_total": 167.3,
+    "exp_home": 79.3,
+    "exp_away": 87.3,
+    "exp_total": 166.6,
     "total_std": 12.7
   },
   {
@@ -3330,9 +1660,9 @@
         "player_code": "009733"
       }
     ],
-    "exp_home": 83.2,
-    "exp_away": 75.9,
-    "exp_total": 159.1,
+    "exp_home": 83.0,
+    "exp_away": 75.7,
+    "exp_total": 158.6,
     "total_std": 12.7
   },
   {
@@ -3364,21 +1694,19 @@
       ]
     },
     "away_form": {
-      "avg_scored": 81.2,
-      "avg_allowed": 92.0,
-      "n_games": 5,
+      "avg_scored": 81.8,
+      "avg_allowed": 93.8,
+      "n_games": 4,
       "scored_list": [
         84.0,
         79.0,
         78.0,
-        79.0,
         86.0
       ],
       "allowed_list": [
         92.0,
         93.0,
         86.0,
-        85.0,
         104.0
       ]
     },
@@ -3635,6 +1963,54 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
+        "projected": 12.6,
+        "n_games": 4,
+        "recent_values": [
+          10.0,
+          12.0,
+          13.0,
+          17.0
+        ],
+        "stat_key": "points",
+        "name": "LAWSON, A.J.",
+        "player_code": "014734"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.8,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          2.0,
+          4.0,
+          6.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "LAWSON, A.J.",
+        "player_code": "014734"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.0,
+        "n_games": 4,
+        "recent_values": [
+          2.0,
+          2.0,
+          2.0,
+          1.0
+        ],
+        "stat_key": "assistances",
+        "name": "LAWSON, A.J.",
+        "player_code": "014734"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
         "projected": 10.6,
         "n_games": 3,
         "recent_values": [
@@ -3680,64 +2056,60 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 12.0,
-        "n_games": 5,
+        "projected": 10.4,
+        "n_games": 4,
         "recent_values": [
-          10.0,
+          7.0,
+          4.0,
           12.0,
-          13.0,
-          8.0,
-          17.0
+          13.0
         ],
         "stat_key": "points",
-        "name": "LAWSON, A.J.",
-        "player_code": "014734"
+        "name": "STEWART, DJ",
+        "player_code": "012700"
       },
       {
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 3.6,
-        "n_games": 5,
+        "projected": 2.7,
+        "n_games": 4,
         "recent_values": [
+          2.0,
           0.0,
-          2.0,
-          4.0,
-          2.0,
-          6.0
+          1.0,
+          3.0
         ],
         "stat_key": "totalRebounds",
-        "name": "LAWSON, A.J.",
-        "player_code": "014734"
+        "name": "STEWART, DJ",
+        "player_code": "012700"
       },
       {
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 2.0,
-        "n_games": 5,
+        "projected": 1.8,
+        "n_games": 4,
         "recent_values": [
-          2.0,
-          2.0,
-          2.0,
-          2.0,
-          1.0
+          1.0,
+          1.0,
+          1.0,
+          2.0
         ],
         "stat_key": "assistances",
-        "name": "LAWSON, A.J.",
-        "player_code": "014734"
+        "name": "STEWART, DJ",
+        "player_code": "012700"
       },
       {
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
         "projected": 10.2,
-        "n_games": 4,
+        "n_games": 3,
         "recent_values": [
           2.0,
           13.0,
-          11.0,
-          10.0
+          11.0
         ],
         "stat_key": "points",
         "name": "SEDEKERSKIS, TADAS",
@@ -3747,13 +2119,12 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 5.0,
-        "n_games": 4,
+        "projected": 5.1,
+        "n_games": 3,
         "recent_values": [
           3.0,
           4.0,
-          10.0,
-          5.0
+          10.0
         ],
         "stat_key": "totalRebounds",
         "name": "SEDEKERSKIS, TADAS",
@@ -3764,12 +2135,11 @@
         "dist": "poisson",
         "std": null,
         "projected": 1.4,
-        "n_games": 4,
+        "n_games": 3,
         "recent_values": [
           0.0,
           1.0,
-          0.0,
-          1.0
+          0.0
         ],
         "stat_key": "assistances",
         "name": "SEDEKERSKIS, TADAS",
@@ -3779,60 +2149,11 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 10.1,
+        "projected": 9.7,
         "n_games": 4,
-        "recent_values": [
-          8.0,
-          7.0,
-          2.0,
-          17.0
-        ],
-        "stat_key": "points",
-        "name": "SIMMONS, KOBI",
-        "player_code": "014152"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.3,
-        "n_games": 4,
-        "recent_values": [
-          1.0,
-          3.0,
-          1.0,
-          5.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "SIMMONS, KOBI",
-        "player_code": "014152"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.9,
-        "n_games": 4,
-        "recent_values": [
-          5.0,
-          2.0,
-          1.0,
-          0.0
-        ],
-        "stat_key": "assistances",
-        "name": "SIMMONS, KOBI",
-        "player_code": "014152"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 9.5,
-        "n_games": 5,
         "recent_values": [
           9.0,
           7.0,
-          8.0,
           8.0,
           10.0
         ],
@@ -3844,12 +2165,11 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 2.7,
-        "n_games": 5,
+        "projected": 2.9,
+        "n_games": 4,
         "recent_values": [
           3.0,
           3.0,
-          2.0,
           2.0,
           1.0
         ],
@@ -3861,13 +2181,12 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 5.0,
-        "n_games": 5,
+        "projected": 4.6,
+        "n_games": 4,
         "recent_values": [
           4.0,
           2.0,
           8.0,
-          7.0,
           8.0
         ],
         "stat_key": "assistances",
@@ -3875,9 +2194,9 @@
         "player_code": "014736"
       }
     ],
-    "exp_home": 90.3,
-    "exp_away": 86.9,
-    "exp_total": 177.3,
+    "exp_home": 90.8,
+    "exp_away": 87.2,
+    "exp_total": 178.0,
     "total_std": 12.7
   },
   {
@@ -4426,9 +2745,9 @@
         "player_code": "008829"
       }
     ],
-    "exp_home": 87.6,
-    "exp_away": 79.3,
-    "exp_total": 166.9,
+    "exp_home": 87.3,
+    "exp_away": 79.1,
+    "exp_total": 166.4,
     "total_std": 12.7
   },
   {
@@ -4992,9 +3311,9 @@
         "player_code": "004554"
       }
     ],
-    "exp_home": 84.7,
-    "exp_away": 84.7,
-    "exp_total": 169.5,
+    "exp_home": 84.5,
+    "exp_away": 84.5,
+    "exp_total": 169.0,
     "total_std": 12.7
   },
   {
@@ -5552,9 +3871,9 @@
         "player_code": "012738"
       }
     ],
-    "exp_home": 89.4,
-    "exp_away": 91.4,
-    "exp_total": 180.9,
+    "exp_home": 89.2,
+    "exp_away": 91.2,
+    "exp_total": 180.4,
     "total_std": 12.7
   },
   {
@@ -5567,40 +3886,38 @@
     "home_tv_code": "RMB",
     "away_tv_code": "PAO",
     "home_form": {
-      "avg_scored": 102.4,
+      "avg_scored": 104.2,
       "avg_allowed": 88.4,
       "n_games": 5,
       "scored_list": [
-        86.0,
         98.0,
         111.0,
         113.0,
-        104.0
+        104.0,
+        95.0
       ],
       "allowed_list": [
-        76.0,
         89.0,
         92.0,
         99.0,
-        86.0
+        86.0,
+        76.0
       ]
     },
     "away_form": {
-      "avg_scored": 82.0,
-      "avg_allowed": 74.8,
-      "n_games": 5,
+      "avg_scored": 81.2,
+      "avg_allowed": 73.8,
+      "n_games": 4,
       "scored_list": [
         92.0,
         72.0,
         81.0,
-        85.0,
         80.0
       ],
       "allowed_list": [
         74.0,
         55.0,
         91.0,
-        79.0,
         75.0
       ]
     },
@@ -5609,65 +3926,14 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 14.2,
+        "projected": 16.0,
         "n_games": 5,
         "recent_values": [
-          9.0,
-          15.0,
-          26.0,
-          18.0,
-          12.0
-        ],
-        "stat_key": "points",
-        "name": "FELIZ, ANDRES",
-        "player_code": "011247"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.3,
-        "n_games": 5,
-        "recent_values": [
-          5.0,
-          5.0,
-          4.0,
-          2.0,
-          1.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "FELIZ, ANDRES",
-        "player_code": "011247"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.4,
-        "n_games": 5,
-        "recent_values": [
-          3.0,
-          5.0,
-          5.0,
-          4.0,
-          3.0
-        ],
-        "stat_key": "assistances",
-        "name": "FELIZ, ANDRES",
-        "player_code": "011247"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 13.8,
-        "n_games": 5,
-        "recent_values": [
-          13.0,
           16.0,
           16.0,
           11.0,
-          19.0
+          19.0,
+          26.0
         ],
         "stat_key": "points",
         "name": "MALEDON, THEO",
@@ -5675,33 +3941,33 @@
       },
       {
         "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.6,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          3.0,
-          5.0,
-          2.0,
-          4.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "MALEDON, THEO",
-        "player_code": "007027"
-      },
-      {
-        "label": "Assists",
         "dist": "poisson",
         "std": null,
         "projected": 4.4,
         "n_games": 5,
         "recent_values": [
+          3.0,
+          5.0,
+          2.0,
           4.0,
+          7.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "MALEDON, THEO",
+        "player_code": "007027"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.8,
+        "n_games": 5,
+        "recent_values": [
           4.0,
           9.0,
           4.0,
-          6.0
+          6.0,
+          2.0
         ],
         "stat_key": "assistances",
         "name": "MALEDON, THEO",
@@ -5711,65 +3977,65 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 10.3,
+        "projected": 13.0,
         "n_games": 5,
         "recent_values": [
+          15.0,
+          26.0,
+          18.0,
           12.0,
-          13.0,
-          3.0,
-          21.0,
-          3.0
+          8.0
         ],
         "stat_key": "points",
-        "name": "CAMPAZZO, FACUNDO",
-        "player_code": "005928"
+        "name": "FELIZ, ANDRES",
+        "player_code": "011247"
       },
       {
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 3.1,
+        "projected": 3.0,
         "n_games": 5,
         "recent_values": [
-          0.0,
+          5.0,
           4.0,
-          3.0,
-          3.0,
+          2.0,
+          1.0,
           2.0
         ],
         "stat_key": "totalRebounds",
-        "name": "CAMPAZZO, FACUNDO",
-        "player_code": "005928"
+        "name": "FELIZ, ANDRES",
+        "player_code": "011247"
       },
       {
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 3.6,
+        "projected": 2.9,
         "n_games": 5,
         "recent_values": [
+          5.0,
+          5.0,
+          4.0,
           3.0,
-          6.0,
-          5.0,
-          5.0,
-          3.0
+          1.0
         ],
         "stat_key": "assistances",
-        "name": "CAMPAZZO, FACUNDO",
-        "player_code": "005928"
+        "name": "FELIZ, ANDRES",
+        "player_code": "011247"
       },
       {
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 10.3,
+        "projected": 11.2,
         "n_games": 5,
         "recent_values": [
-          8.0,
           10.0,
           9.0,
           11.0,
-          10.0
+          10.0,
+          14.0
         ],
         "stat_key": "points",
         "name": "TAVARES, WALTER",
@@ -5779,14 +4045,14 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 6.6,
+        "projected": 6.0,
         "n_games": 5,
         "recent_values": [
-          8.0,
           6.0,
           5.0,
           7.0,
-          12.0
+          12.0,
+          5.0
         ],
         "stat_key": "totalRebounds",
         "name": "TAVARES, WALTER",
@@ -5796,10 +4062,10 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 1.0,
+        "projected": 0.9,
         "n_games": 5,
         "recent_values": [
-          1.0,
+          0.0,
           0.0,
           0.0,
           0.0,
@@ -5813,18 +4079,18 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 10.3,
+        "projected": 10.2,
         "n_games": 5,
         "recent_values": [
-          7.0,
+          13.0,
           3.0,
+          21.0,
           3.0,
-          15.0,
-          14.0
+          10.0
         ],
         "stat_key": "points",
-        "name": "LUWAWU-CABARROT, TIMOTHE",
-        "player_code": "012080"
+        "name": "CAMPAZZO, FACUNDO",
+        "player_code": "005928"
       },
       {
         "label": "Rebounds",
@@ -5833,32 +4099,83 @@
         "projected": 3.1,
         "n_games": 5,
         "recent_values": [
-          6.0,
-          2.0,
-          0.0,
+          4.0,
           3.0,
-          3.0
+          3.0,
+          2.0,
+          2.0
         ],
         "stat_key": "totalRebounds",
-        "name": "LUWAWU-CABARROT, TIMOTHE",
-        "player_code": "012080"
+        "name": "CAMPAZZO, FACUNDO",
+        "player_code": "005928"
       },
       {
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 1.6,
+        "projected": 4.8,
         "n_games": 5,
         "recent_values": [
-          1.0,
-          1.0,
+          6.0,
+          5.0,
+          5.0,
+          3.0,
+          10.0
+        ],
+        "stat_key": "assistances",
+        "name": "CAMPAZZO, FACUNDO",
+        "player_code": "005928"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 9.6,
+        "n_games": 5,
+        "recent_values": [
+          6.0,
+          6.0,
+          15.0,
+          8.0,
+          8.0
+        ],
+        "stat_key": "points",
+        "name": "ABALDE, ALBERTO",
+        "player_code": "003733"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.9,
+        "n_games": 5,
+        "recent_values": [
+          0.0,
+          4.0,
+          3.0,
+          2.0,
+          2.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "ABALDE, ALBERTO",
+        "player_code": "003733"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.2,
+        "n_games": 5,
+        "recent_values": [
           0.0,
           2.0,
+          1.0,
+          5.0,
           1.0
         ],
         "stat_key": "assistances",
-        "name": "LUWAWU-CABARROT, TIMOTHE",
-        "player_code": "012080"
+        "name": "ABALDE, ALBERTO",
+        "player_code": "003733"
       }
     ],
     "away_props": [
@@ -5866,106 +4183,60 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 13.0,
-        "n_games": 2,
+        "projected": 11.9,
+        "n_games": 4,
         "recent_values": [
-          11.0,
-          20.0
-        ],
-        "stat_key": "points",
-        "name": "NUNN, KENDRICK",
-        "player_code": "012774"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.0,
-        "n_games": 2,
-        "recent_values": [
-          1.0,
-          2.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "NUNN, KENDRICK",
-        "player_code": "012774"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.7,
-        "n_games": 2,
-        "recent_values": [
-          5.0,
+          17.0,
+          8.0,
+          22.0,
           6.0
         ],
-        "stat_key": "assistances",
-        "name": "NUNN, KENDRICK",
-        "player_code": "012774"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 12.7,
-        "n_games": 5,
-        "recent_values": [
-          19.0,
-          4.0,
-          11.0,
-          20.0,
-          13.0
-        ],
         "stat_key": "points",
-        "name": "LESSORT, MATHIAS",
-        "player_code": "003842"
+        "name": "FRANCISCO, SYLVAIN",
+        "player_code": "007975"
       },
       {
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 6.2,
-        "n_games": 5,
+        "projected": 2.9,
+        "n_games": 4,
         "recent_values": [
-          8.0,
-          9.0,
-          2.0,
-          6.0,
-          11.0
+          3.0,
+          1.0,
+          4.0,
+          1.0
         ],
         "stat_key": "totalRebounds",
-        "name": "LESSORT, MATHIAS",
-        "player_code": "003842"
+        "name": "FRANCISCO, SYLVAIN",
+        "player_code": "007975"
       },
       {
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 1.8,
-        "n_games": 5,
+        "projected": 3.3,
+        "n_games": 4,
         "recent_values": [
-          1.0,
+          7.0,
+          5.0,
           4.0,
-          1.0,
-          1.0,
-          1.0
+          2.0
         ],
         "stat_key": "assistances",
-        "name": "LESSORT, MATHIAS",
-        "player_code": "003842"
+        "name": "FRANCISCO, SYLVAIN",
+        "player_code": "007975"
       },
       {
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 11.7,
-        "n_games": 5,
+        "projected": 10.8,
+        "n_games": 4,
         "recent_values": [
           19.0,
           14.0,
           8.0,
-          18.0,
           7.0
         ],
         "stat_key": "points",
@@ -5976,13 +4247,12 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 3.5,
-        "n_games": 5,
+        "projected": 2.9,
+        "n_games": 4,
         "recent_values": [
           4.0,
           2.0,
           1.0,
-          7.0,
           2.0
         ],
         "stat_key": "totalRebounds",
@@ -5993,10 +4263,9 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 1.1,
-        "n_games": 5,
+        "projected": 1.3,
+        "n_games": 4,
         "recent_values": [
-          0.0,
           0.0,
           0.0,
           0.0,
@@ -6011,63 +4280,104 @@
         "dist": "normal",
         "std": 6.0,
         "projected": 11.3,
-        "n_games": 5,
+        "n_games": 4,
         "recent_values": [
-          17.0,
-          8.0,
-          22.0,
-          10.0,
-          6.0
+          19.0,
+          4.0,
+          11.0,
+          13.0
         ],
         "stat_key": "points",
-        "name": "FRANCISCO, SYLVAIN",
-        "player_code": "007975"
+        "name": "LESSORT, MATHIAS",
+        "player_code": "003842"
       },
       {
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 2.5,
-        "n_games": 5,
+        "projected": 6.1,
+        "n_games": 4,
         "recent_values": [
-          3.0,
-          1.0,
-          4.0,
-          0.0,
-          1.0
+          8.0,
+          9.0,
+          2.0,
+          11.0
         ],
         "stat_key": "totalRebounds",
-        "name": "FRANCISCO, SYLVAIN",
-        "player_code": "007975"
+        "name": "LESSORT, MATHIAS",
+        "player_code": "003842"
       },
       {
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 4.4,
-        "n_games": 5,
+        "projected": 2.0,
+        "n_games": 4,
         "recent_values": [
-          7.0,
-          5.0,
+          1.0,
           4.0,
-          11.0,
-          2.0
+          1.0,
+          1.0
         ],
         "stat_key": "assistances",
-        "name": "FRANCISCO, SYLVAIN",
-        "player_code": "007975"
+        "name": "LESSORT, MATHIAS",
+        "player_code": "003842"
       },
       {
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 9.3,
-        "n_games": 5,
+        "projected": 9.7,
+        "n_games": 3,
+        "recent_values": [
+          10.0,
+          4.0,
+          11.0
+        ],
+        "stat_key": "points",
+        "name": "HERNANGOMEZ, JUANCHO",
+        "player_code": "012712"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.7,
+        "n_games": 3,
+        "recent_values": [
+          4.0,
+          5.0,
+          2.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "HERNANGOMEZ, JUANCHO",
+        "player_code": "012712"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 1.6,
+        "n_games": 3,
+        "recent_values": [
+          0.0,
+          2.0,
+          0.0
+        ],
+        "stat_key": "assistances",
+        "name": "HERNANGOMEZ, JUANCHO",
+        "player_code": "012712"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 9.2,
+        "n_games": 4,
         "recent_values": [
           8.0,
           7.0,
           7.0,
-          9.0,
           9.0
         ],
         "stat_key": "points",
@@ -6078,12 +4388,11 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 4.7,
-        "n_games": 5,
+        "projected": 4.8,
+        "n_games": 4,
         "recent_values": [
           7.0,
           5.0,
-          4.0,
           4.0,
           6.0
         ],
@@ -6095,13 +4404,12 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 1.6,
-        "n_games": 5,
+        "projected": 1.5,
+        "n_games": 4,
         "recent_values": [
           1.0,
           3.0,
           0.0,
-          2.0,
           0.0
         ],
         "stat_key": "assistances",
@@ -6109,9 +4417,9 @@
         "player_code": "010357"
       }
     ],
-    "exp_home": 90.2,
-    "exp_away": 85.1,
-    "exp_total": 175.3,
+    "exp_home": 89.2,
+    "exp_away": 82.7,
+    "exp_total": 171.9,
     "total_std": 12.7
   },
   {
@@ -6143,22 +4451,22 @@
       ]
     },
     "away_form": {
-      "avg_scored": 92.6,
-      "avg_allowed": 96.2,
+      "avg_scored": 93.2,
+      "avg_allowed": 95.4,
       "n_games": 5,
       "scored_list": [
-        96.0,
         94.0,
         81.0,
         93.0,
+        99.0,
         99.0
       ],
       "allowed_list": [
-        98.0,
         96.0,
         90.0,
         104.0,
-        93.0
+        93.0,
+        94.0
       ]
     },
     "home_props": [
@@ -6423,11 +4731,11 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 16.3,
+        "projected": 16.0,
         "n_games": 2,
         "recent_values": [
-          30.0,
-          20.0
+          20.0,
+          26.0
         ],
         "stat_key": "points",
         "name": "HIFI, NADIR",
@@ -6437,10 +4745,10 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 2.9,
+        "projected": 2.4,
         "n_games": 2,
         "recent_values": [
-          3.0,
+          0.0,
           0.0
         ],
         "stat_key": "totalRebounds",
@@ -6451,11 +4759,11 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 2.3,
+        "projected": 2.8,
         "n_games": 2,
         "recent_values": [
           2.0,
-          2.0
+          4.0
         ],
         "stat_key": "assistances",
         "name": "HIFI, NADIR",
@@ -6465,13 +4773,13 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 15.5,
+        "projected": 13.8,
         "n_games": 4,
         "recent_values": [
-          27.0,
           23.0,
           24.0,
-          9.0
+          9.0,
+          13.0
         ],
         "stat_key": "points",
         "name": "ETIENNE, TYSON",
@@ -6481,13 +4789,13 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 2.4,
+        "projected": 2.5,
         "n_games": 4,
         "recent_values": [
-          0.0,
           2.0,
           3.0,
-          0.0
+          0.0,
+          1.0
         ],
         "stat_key": "totalRebounds",
         "name": "ETIENNE, TYSON",
@@ -6497,12 +4805,12 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 3.3,
+        "projected": 2.9,
         "n_games": 4,
         "recent_values": [
+          7.0,
+          7.0,
           1.0,
-          7.0,
-          7.0,
           1.0
         ],
         "stat_key": "assistances",
@@ -6561,55 +4869,13 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 12.5,
-        "n_games": 2,
-        "recent_values": [
-          9.0,
-          19.0
-        ],
-        "stat_key": "points",
-        "name": "WARREN, TJ",
-        "player_code": "015168"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.7,
-        "n_games": 2,
-        "recent_values": [
-          2.0,
-          4.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "WARREN, TJ",
-        "player_code": "015168"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.5,
-        "n_games": 2,
-        "recent_values": [
-          3.0,
-          2.0
-        ],
-        "stat_key": "assistances",
-        "name": "WARREN, TJ",
-        "player_code": "015168"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 11.3,
+        "projected": 11.7,
         "n_games": 5,
         "recent_values": [
-          6.0,
           12.0,
           14.0,
           11.0,
+          12.0,
           12.0
         ],
         "stat_key": "points",
@@ -6620,13 +4886,13 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 2.8,
+        "projected": 2.9,
         "n_games": 5,
         "recent_values": [
-          1.0,
           3.0,
           0.0,
           4.0,
+          2.0,
           2.0
         ],
         "stat_key": "totalRebounds",
@@ -6637,27 +4903,621 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 2.3,
+        "projected": 2.5,
         "n_games": 5,
         "recent_values": [
-          2.0,
           1.0,
           1.0,
+          3.0,
           3.0,
           3.0
         ],
         "stat_key": "assistances",
         "name": "HERRERA, SEBASTIAN",
         "player_code": "012611"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 9.7,
+        "n_games": 5,
+        "recent_values": [
+          6.0,
+          5.0,
+          12.0,
+          9.0,
+          10.0
+        ],
+        "stat_key": "points",
+        "name": "DOKOSSI, ALLAN",
+        "player_code": "014010"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.7,
+        "n_games": 5,
+        "recent_values": [
+          4.0,
+          6.0,
+          7.0,
+          4.0,
+          5.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "DOKOSSI, ALLAN",
+        "player_code": "014010"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.0,
+        "n_games": 5,
+        "recent_values": [
+          1.0,
+          2.0,
+          2.0,
+          1.0,
+          2.0
+        ],
+        "stat_key": "assistances",
+        "name": "DOKOSSI, ALLAN",
+        "player_code": "014010"
       }
     ],
-    "exp_home": 91.9,
-    "exp_away": 95.4,
-    "exp_total": 187.3,
+    "exp_home": 91.2,
+    "exp_away": 96.2,
+    "exp_total": 187.4,
     "total_std": 12.7
   },
   {
     "date": "2026-11-05T19:00:00",
+    "season": "E2026",
+    "game_code": 92,
+    "match": "Kosner Baskonia Vitoria-Gasteiz @ Fenerbahce Tarfin Istanbul",
+    "home_team": "Fenerbahce Tarfin Istanbul",
+    "away_team": "Kosner Baskonia Vitoria-Gasteiz",
+    "home_tv_code": "FBT",
+    "away_tv_code": "KBA",
+    "home_form": {
+      "avg_scored": 78.2,
+      "avg_allowed": 77.4,
+      "n_games": 5,
+      "scored_list": [
+        99.0,
+        74.0,
+        64.0,
+        78.0,
+        76.0
+      ],
+      "allowed_list": [
+        80.0,
+        65.0,
+        61.0,
+        86.0,
+        95.0
+      ]
+    },
+    "away_form": {
+      "avg_scored": 81.8,
+      "avg_allowed": 93.8,
+      "n_games": 4,
+      "scored_list": [
+        84.0,
+        79.0,
+        78.0,
+        86.0
+      ],
+      "allowed_list": [
+        92.0,
+        93.0,
+        86.0,
+        104.0
+      ]
+    },
+    "home_props": [
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 13.1,
+        "n_games": 5,
+        "recent_values": [
+          17.0,
+          17.0,
+          17.0,
+          18.0,
+          8.0
+        ],
+        "stat_key": "points",
+        "name": "SHIELDS, SHAVON",
+        "player_code": "007831"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 6.2,
+        "n_games": 5,
+        "recent_values": [
+          3.0,
+          8.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "SHIELDS, SHAVON",
+        "player_code": "007831"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.2,
+        "n_games": 5,
+        "recent_values": [
+          1.0,
+          2.0,
+          1.0,
+          3.0,
+          2.0
+        ],
+        "stat_key": "assistances",
+        "name": "SHIELDS, SHAVON",
+        "player_code": "007831"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 13.2,
+        "n_games": 5,
+        "recent_values": [
+          14.0,
+          11.0,
+          6.0,
+          15.0,
+          21.0
+        ],
+        "stat_key": "points",
+        "name": "CLYBURN, WILL",
+        "player_code": "004888"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.9,
+        "n_games": 5,
+        "recent_values": [
+          1.0,
+          2.0,
+          5.0,
+          5.0,
+          4.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "CLYBURN, WILL",
+        "player_code": "004888"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 1.7,
+        "n_games": 5,
+        "recent_values": [
+          2.0,
+          0.0,
+          1.0,
+          2.0,
+          1.0
+        ],
+        "stat_key": "assistances",
+        "name": "CLYBURN, WILL",
+        "player_code": "004888"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 11.4,
+        "n_games": 5,
+        "recent_values": [
+          6.0,
+          11.0,
+          14.0,
+          19.0,
+          7.0
+        ],
+        "stat_key": "points",
+        "name": "BALDWIN IV, WADE",
+        "player_code": "009863"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.3,
+        "n_games": 5,
+        "recent_values": [
+          3.0,
+          3.0,
+          1.0,
+          3.0,
+          4.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "BALDWIN IV, WADE",
+        "player_code": "009863"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.2,
+        "n_games": 5,
+        "recent_values": [
+          7.0,
+          2.0,
+          5.0,
+          3.0,
+          3.0
+        ],
+        "stat_key": "assistances",
+        "name": "BALDWIN IV, WADE",
+        "player_code": "009863"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 10.3,
+        "n_games": 5,
+        "recent_values": [
+          7.0,
+          14.0,
+          4.0,
+          5.0,
+          16.0
+        ],
+        "stat_key": "points",
+        "name": "HORTON TUCKER, TALEN",
+        "player_code": "014124"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.7,
+        "n_games": 5,
+        "recent_values": [
+          2.0,
+          6.0,
+          3.0,
+          1.0,
+          5.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "HORTON TUCKER, TALEN",
+        "player_code": "014124"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.1,
+        "n_games": 5,
+        "recent_values": [
+          3.0,
+          5.0,
+          0.0,
+          1.0,
+          2.0
+        ],
+        "stat_key": "assistances",
+        "name": "HORTON TUCKER, TALEN",
+        "player_code": "014124"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 8.2,
+        "n_games": 5,
+        "recent_values": [
+          5.0,
+          3.0,
+          13.0,
+          4.0,
+          7.0
+        ],
+        "stat_key": "points",
+        "name": "LARKIN, SHANE",
+        "player_code": "007200"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 1.9,
+        "n_games": 5,
+        "recent_values": [
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "LARKIN, SHANE",
+        "player_code": "007200"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.3,
+        "n_games": 5,
+        "recent_values": [
+          3.0,
+          3.0,
+          5.0,
+          2.0,
+          0.0
+        ],
+        "stat_key": "assistances",
+        "name": "LARKIN, SHANE",
+        "player_code": "007200"
+      }
+    ],
+    "away_props": [
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 12.6,
+        "n_games": 4,
+        "recent_values": [
+          10.0,
+          12.0,
+          13.0,
+          17.0
+        ],
+        "stat_key": "points",
+        "name": "LAWSON, A.J.",
+        "player_code": "014734"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 3.8,
+        "n_games": 4,
+        "recent_values": [
+          0.0,
+          2.0,
+          4.0,
+          6.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "LAWSON, A.J.",
+        "player_code": "014734"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.0,
+        "n_games": 4,
+        "recent_values": [
+          2.0,
+          2.0,
+          2.0,
+          1.0
+        ],
+        "stat_key": "assistances",
+        "name": "LAWSON, A.J.",
+        "player_code": "014734"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 10.6,
+        "n_games": 3,
+        "recent_values": [
+          23.0,
+          11.0,
+          2.0
+        ],
+        "stat_key": "points",
+        "name": "DUARTE, CHRIS",
+        "player_code": "014735"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.2,
+        "n_games": 3,
+        "recent_values": [
+          5.0,
+          7.0,
+          2.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "DUARTE, CHRIS",
+        "player_code": "014735"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.2,
+        "n_games": 3,
+        "recent_values": [
+          1.0,
+          4.0,
+          1.0
+        ],
+        "stat_key": "assistances",
+        "name": "DUARTE, CHRIS",
+        "player_code": "014735"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 10.4,
+        "n_games": 4,
+        "recent_values": [
+          7.0,
+          4.0,
+          12.0,
+          13.0
+        ],
+        "stat_key": "points",
+        "name": "STEWART, DJ",
+        "player_code": "012700"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.7,
+        "n_games": 4,
+        "recent_values": [
+          2.0,
+          0.0,
+          1.0,
+          3.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "STEWART, DJ",
+        "player_code": "012700"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 1.8,
+        "n_games": 4,
+        "recent_values": [
+          1.0,
+          1.0,
+          1.0,
+          2.0
+        ],
+        "stat_key": "assistances",
+        "name": "STEWART, DJ",
+        "player_code": "012700"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 10.2,
+        "n_games": 3,
+        "recent_values": [
+          2.0,
+          13.0,
+          11.0
+        ],
+        "stat_key": "points",
+        "name": "SEDEKERSKIS, TADAS",
+        "player_code": "007230"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 5.1,
+        "n_games": 3,
+        "recent_values": [
+          3.0,
+          4.0,
+          10.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "SEDEKERSKIS, TADAS",
+        "player_code": "007230"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 1.4,
+        "n_games": 3,
+        "recent_values": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "stat_key": "assistances",
+        "name": "SEDEKERSKIS, TADAS",
+        "player_code": "007230"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 9.7,
+        "n_games": 4,
+        "recent_values": [
+          9.0,
+          7.0,
+          8.0,
+          10.0
+        ],
+        "stat_key": "points",
+        "name": "BAUGH, DAMION",
+        "player_code": "014736"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.9,
+        "n_games": 4,
+        "recent_values": [
+          3.0,
+          3.0,
+          2.0,
+          1.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "BAUGH, DAMION",
+        "player_code": "014736"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.6,
+        "n_games": 4,
+        "recent_values": [
+          4.0,
+          2.0,
+          8.0,
+          8.0
+        ],
+        "stat_key": "assistances",
+        "name": "BAUGH, DAMION",
+        "player_code": "014736"
+      }
+    ],
+    "exp_home": 84.3,
+    "exp_away": 79.9,
+    "exp_total": 164.2,
+    "total_std": 12.7
+  },
+  {
+    "date": "2026-11-05T19:45:00",
     "season": "E2026",
     "game_code": 93,
     "match": "FC Barcelona @ Hapoel IBI Tel Aviv",
@@ -7211,563 +6071,9 @@
         "player_code": "007464"
       }
     ],
-    "exp_home": 95.5,
-    "exp_away": 87.3,
-    "exp_total": 182.8,
-    "total_std": 12.7
-  },
-  {
-    "date": "2026-11-05T19:00:00",
-    "season": "E2026",
-    "game_code": 92,
-    "match": "Kosner Baskonia Vitoria-Gasteiz @ Fenerbahce Tarfin Istanbul",
-    "home_team": "Fenerbahce Tarfin Istanbul",
-    "away_team": "Kosner Baskonia Vitoria-Gasteiz",
-    "home_tv_code": "FBT",
-    "away_tv_code": "KBA",
-    "home_form": {
-      "avg_scored": 77.8,
-      "avg_allowed": 76.8,
-      "n_games": 5,
-      "scored_list": [
-        74.0,
-        99.0,
-        74.0,
-        64.0,
-        78.0
-      ],
-      "allowed_list": [
-        92.0,
-        80.0,
-        65.0,
-        61.0,
-        86.0
-      ]
-    },
-    "away_form": {
-      "avg_scored": 81.2,
-      "avg_allowed": 92.0,
-      "n_games": 5,
-      "scored_list": [
-        84.0,
-        79.0,
-        78.0,
-        79.0,
-        86.0
-      ],
-      "allowed_list": [
-        92.0,
-        93.0,
-        86.0,
-        85.0,
-        104.0
-      ]
-    },
-    "home_props": [
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 14.2,
-        "n_games": 5,
-        "recent_values": [
-          6.0,
-          17.0,
-          17.0,
-          17.0,
-          18.0
-        ],
-        "stat_key": "points",
-        "name": "SHIELDS, SHAVON",
-        "player_code": "007831"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 5.6,
-        "n_games": 5,
-        "recent_values": [
-          4.0,
-          3.0,
-          8.0,
-          7.0,
-          8.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "SHIELDS, SHAVON",
-        "player_code": "007831"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.1,
-        "n_games": 5,
-        "recent_values": [
-          1.0,
-          1.0,
-          2.0,
-          1.0,
-          3.0
-        ],
-        "stat_key": "assistances",
-        "name": "SHIELDS, SHAVON",
-        "player_code": "007831"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 12.4,
-        "n_games": 5,
-        "recent_values": [
-          9.0,
-          6.0,
-          11.0,
-          14.0,
-          19.0
-        ],
-        "stat_key": "points",
-        "name": "BALDWIN IV, WADE",
-        "player_code": "009863"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.1,
-        "n_games": 5,
-        "recent_values": [
-          3.0,
-          3.0,
-          3.0,
-          1.0,
-          3.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "BALDWIN IV, WADE",
-        "player_code": "009863"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.5,
-        "n_games": 5,
-        "recent_values": [
-          5.0,
-          7.0,
-          2.0,
-          5.0,
-          3.0
-        ],
-        "stat_key": "assistances",
-        "name": "BALDWIN IV, WADE",
-        "player_code": "009863"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 11.0,
-        "n_games": 5,
-        "recent_values": [
-          6.0,
-          14.0,
-          11.0,
-          6.0,
-          15.0
-        ],
-        "stat_key": "points",
-        "name": "CLYBURN, WILL",
-        "player_code": "004888"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.7,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          1.0,
-          2.0,
-          5.0,
-          5.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "CLYBURN, WILL",
-        "player_code": "004888"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.9,
-        "n_games": 5,
-        "recent_values": [
-          3.0,
-          2.0,
-          0.0,
-          1.0,
-          2.0
-        ],
-        "stat_key": "assistances",
-        "name": "CLYBURN, WILL",
-        "player_code": "004888"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 8.6,
-        "n_games": 5,
-        "recent_values": [
-          9.0,
-          7.0,
-          14.0,
-          4.0,
-          5.0
-        ],
-        "stat_key": "points",
-        "name": "HORTON TUCKER, TALEN",
-        "player_code": "014124"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.2,
-        "n_games": 5,
-        "recent_values": [
-          3.0,
-          2.0,
-          6.0,
-          3.0,
-          1.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "HORTON TUCKER, TALEN",
-        "player_code": "014124"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.1,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          3.0,
-          5.0,
-          0.0,
-          1.0
-        ],
-        "stat_key": "assistances",
-        "name": "HORTON TUCKER, TALEN",
-        "player_code": "014124"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 7.8,
-        "n_games": 5,
-        "recent_values": [
-          13.0,
-          15.0,
-          5.0,
-          3.0,
-          2.0
-        ],
-        "stat_key": "points",
-        "name": "KEY, BRAXTON",
-        "player_code": "014168"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.0,
-        "n_games": 5,
-        "recent_values": [
-          7.0,
-          3.0,
-          2.0,
-          2.0,
-          1.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "KEY, BRAXTON",
-        "player_code": "014168"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.5,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          1.0,
-          0.0,
-          2.0,
-          0.0
-        ],
-        "stat_key": "assistances",
-        "name": "KEY, BRAXTON",
-        "player_code": "014168"
-      }
-    ],
-    "away_props": [
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 10.6,
-        "n_games": 3,
-        "recent_values": [
-          23.0,
-          11.0,
-          2.0
-        ],
-        "stat_key": "points",
-        "name": "DUARTE, CHRIS",
-        "player_code": "014735"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 4.2,
-        "n_games": 3,
-        "recent_values": [
-          5.0,
-          7.0,
-          2.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "DUARTE, CHRIS",
-        "player_code": "014735"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.2,
-        "n_games": 3,
-        "recent_values": [
-          1.0,
-          4.0,
-          1.0
-        ],
-        "stat_key": "assistances",
-        "name": "DUARTE, CHRIS",
-        "player_code": "014735"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 12.0,
-        "n_games": 5,
-        "recent_values": [
-          10.0,
-          12.0,
-          13.0,
-          8.0,
-          17.0
-        ],
-        "stat_key": "points",
-        "name": "LAWSON, A.J.",
-        "player_code": "014734"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.6,
-        "n_games": 5,
-        "recent_values": [
-          0.0,
-          2.0,
-          4.0,
-          2.0,
-          6.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "LAWSON, A.J.",
-        "player_code": "014734"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.0,
-        "n_games": 5,
-        "recent_values": [
-          2.0,
-          2.0,
-          2.0,
-          2.0,
-          1.0
-        ],
-        "stat_key": "assistances",
-        "name": "LAWSON, A.J.",
-        "player_code": "014734"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 10.2,
-        "n_games": 4,
-        "recent_values": [
-          2.0,
-          13.0,
-          11.0,
-          10.0
-        ],
-        "stat_key": "points",
-        "name": "SEDEKERSKIS, TADAS",
-        "player_code": "007230"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 5.0,
-        "n_games": 4,
-        "recent_values": [
-          3.0,
-          4.0,
-          10.0,
-          5.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "SEDEKERSKIS, TADAS",
-        "player_code": "007230"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.4,
-        "n_games": 4,
-        "recent_values": [
-          0.0,
-          1.0,
-          0.0,
-          1.0
-        ],
-        "stat_key": "assistances",
-        "name": "SEDEKERSKIS, TADAS",
-        "player_code": "007230"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 10.1,
-        "n_games": 4,
-        "recent_values": [
-          8.0,
-          7.0,
-          2.0,
-          17.0
-        ],
-        "stat_key": "points",
-        "name": "SIMMONS, KOBI",
-        "player_code": "014152"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.3,
-        "n_games": 4,
-        "recent_values": [
-          1.0,
-          3.0,
-          1.0,
-          5.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "SIMMONS, KOBI",
-        "player_code": "014152"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.9,
-        "n_games": 4,
-        "recent_values": [
-          5.0,
-          2.0,
-          1.0,
-          0.0
-        ],
-        "stat_key": "assistances",
-        "name": "SIMMONS, KOBI",
-        "player_code": "014152"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 9.5,
-        "n_games": 5,
-        "recent_values": [
-          9.0,
-          7.0,
-          8.0,
-          8.0,
-          10.0
-        ],
-        "stat_key": "points",
-        "name": "BAUGH, DAMION",
-        "player_code": "014736"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 2.7,
-        "n_games": 5,
-        "recent_values": [
-          3.0,
-          3.0,
-          2.0,
-          2.0,
-          1.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "BAUGH, DAMION",
-        "player_code": "014736"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 5.0,
-        "n_games": 5,
-        "recent_values": [
-          4.0,
-          2.0,
-          8.0,
-          7.0,
-          8.0
-        ],
-        "stat_key": "assistances",
-        "name": "BAUGH, DAMION",
-        "player_code": "014736"
-      }
-    ],
-    "exp_home": 83.9,
-    "exp_away": 76.8,
-    "exp_total": 160.7,
+    "exp_home": 95.3,
+    "exp_away": 87.1,
+    "exp_total": 182.3,
     "total_std": 12.7
   },
   {
@@ -7799,22 +6105,22 @@
       ]
     },
     "away_form": {
-      "avg_scored": 90.0,
-      "avg_allowed": 95.4,
+      "avg_scored": 87.2,
+      "avg_allowed": 97.2,
       "n_games": 5,
       "scored_list": [
-        87.0,
         101.0,
         87.0,
         91.0,
-        84.0
+        84.0,
+        73.0
       ],
       "allowed_list": [
-        94.0,
         93.0,
         95.0,
         107.0,
-        88.0
+        88.0,
+        103.0
       ]
     },
     "home_props": [
@@ -8070,14 +6376,14 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 11.4,
+        "projected": 11.9,
         "n_games": 5,
         "recent_values": [
-          18.0,
           21.0,
           5.0,
           17.0,
-          5.0
+          5.0,
+          16.0
         ],
         "stat_key": "points",
         "name": "WASHINGTON, DUANE",
@@ -8087,14 +6393,14 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 1.8,
+        "projected": 2.1,
         "n_games": 5,
         "recent_values": [
           0.0,
+          1.0,
+          1.0,
           0.0,
-          1.0,
-          1.0,
-          0.0
+          2.0
         ],
         "stat_key": "totalRebounds",
         "name": "WASHINGTON, DUANE",
@@ -8104,14 +6410,14 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 2.9,
+        "projected": 2.4,
         "n_games": 5,
         "recent_values": [
-          5.0,
           2.0,
           3.0,
           2.0,
-          4.0
+          4.0,
+          1.0
         ],
         "stat_key": "assistances",
         "name": "WASHINGTON, DUANE",
@@ -8121,14 +6427,62 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 11.1,
-        "n_games": 5,
+        "projected": 11.0,
+        "n_games": 4,
         "recent_values": [
           9.0,
+          0.0,
+          17.0,
+          14.0
+        ],
+        "stat_key": "points",
+        "name": "NORRIS, MILES",
+        "player_code": "014134"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.2,
+        "n_games": 4,
+        "recent_values": [
+          6.0,
+          2.0,
+          3.0,
+          6.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "NORRIS, MILES",
+        "player_code": "014134"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 1.9,
+        "n_games": 4,
+        "recent_values": [
+          2.0,
+          1.0,
+          1.0,
+          2.0
+        ],
+        "stat_key": "assistances",
+        "name": "NORRIS, MILES",
+        "player_code": "014134"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 9.6,
+        "n_games": 5,
+        "recent_values": [
           20.0,
           5.0,
           8.0,
-          14.0
+          14.0,
+          3.0
         ],
         "stat_key": "points",
         "name": "OBST, ANDREAS",
@@ -8141,11 +6495,11 @@
         "projected": 2.6,
         "n_games": 5,
         "recent_values": [
-          2.0,
           0.0,
           2.0,
           1.0,
-          3.0
+          3.0,
+          2.0
         ],
         "stat_key": "totalRebounds",
         "name": "OBST, ANDREAS",
@@ -8155,14 +6509,14 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 2.9,
+        "projected": 2.8,
         "n_games": 5,
         "recent_values": [
-          1.0,
           6.0,
           4.0,
           2.0,
-          3.0
+          3.0,
+          2.0
         ],
         "stat_key": "assistances",
         "name": "OBST, ANDREAS",
@@ -8172,150 +6526,105 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 9.9,
+        "projected": 9.3,
         "n_games": 5,
         "recent_values": [
-          18.0,
-          4.0,
-          14.0,
-          14.0,
-          2.0
+          6.0,
+          17.0,
+          7.0,
+          0.0,
+          12.0
         ],
         "stat_key": "points",
-        "name": "DA SILVA, OSCAR",
-        "player_code": "011244"
+        "name": "LUCIC, VLADIMIR",
+        "player_code": "001288"
       },
       {
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 3.1,
+        "projected": 3.4,
         "n_games": 5,
         "recent_values": [
+          2.0,
+          7.0,
           3.0,
           0.0,
-          4.0,
-          5.0,
-          1.0
+          4.0
         ],
         "stat_key": "totalRebounds",
-        "name": "DA SILVA, OSCAR",
-        "player_code": "011244"
+        "name": "LUCIC, VLADIMIR",
+        "player_code": "001288"
       },
       {
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 1.4,
+        "projected": 1.6,
         "n_games": 5,
         "recent_values": [
-          0.0,
-          0.0,
           1.0,
           1.0,
-          1.0
-        ],
-        "stat_key": "assistances",
-        "name": "DA SILVA, OSCAR",
-        "player_code": "011244"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 11.1,
-        "n_games": 4,
-        "recent_values": [
-          8.0,
-          9.0,
-          7.0,
-          17.0
-        ],
-        "stat_key": "points",
-        "name": "JOKUBAITIS, ROKAS",
-        "player_code": "007519"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.9,
-        "n_games": 4,
-        "recent_values": [
-          1.0,
-          1.0,
+          4.0,
           0.0,
           0.0
         ],
-        "stat_key": "totalRebounds",
-        "name": "JOKUBAITIS, ROKAS",
-        "player_code": "007519"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.5,
-        "n_games": 4,
-        "recent_values": [
-          1.0,
-          5.0,
-          2.0,
-          7.0
-        ],
         "stat_key": "assistances",
-        "name": "JOKUBAITIS, ROKAS",
-        "player_code": "007519"
+        "name": "LUCIC, VLADIMIR",
+        "player_code": "001288"
       },
       {
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 10.2,
-        "n_games": 3,
+        "projected": 9.0,
+        "n_games": 4,
         "recent_values": [
           9.0,
-          0.0,
-          17.0
+          7.0,
+          17.0,
+          0.0
         ],
         "stat_key": "points",
-        "name": "NORRIS, MILES",
-        "player_code": "014134"
+        "name": "JOKUBAITIS, ROKAS",
+        "player_code": "007519"
       },
       {
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 3.7,
-        "n_games": 3,
+        "projected": 2.2,
+        "n_games": 4,
         "recent_values": [
-          6.0,
-          2.0,
-          3.0
+          1.0,
+          0.0,
+          0.0,
+          2.0
         ],
         "stat_key": "totalRebounds",
-        "name": "NORRIS, MILES",
-        "player_code": "014134"
+        "name": "JOKUBAITIS, ROKAS",
+        "player_code": "007519"
       },
       {
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 1.9,
-        "n_games": 3,
+        "projected": 3.7,
+        "n_games": 4,
         "recent_values": [
+          5.0,
           2.0,
-          1.0,
-          1.0
+          7.0,
+          4.0
         ],
         "stat_key": "assistances",
-        "name": "NORRIS, MILES",
-        "player_code": "014134"
+        "name": "JOKUBAITIS, ROKAS",
+        "player_code": "007519"
       }
     ],
-    "exp_home": 91.7,
-    "exp_away": 91.8,
-    "exp_total": 183.5,
+    "exp_home": 93.0,
+    "exp_away": 88.3,
+    "exp_total": 181.3,
     "total_std": 12.7
   },
   {
@@ -8873,9 +7182,9 @@
         "player_code": "012738"
       }
     ],
-    "exp_home": 85.0,
-    "exp_away": 93.1,
-    "exp_total": 178.1,
+    "exp_home": 84.8,
+    "exp_away": 92.8,
+    "exp_total": 177.6,
     "total_std": 12.7
   },
   {
@@ -9439,9 +7748,9 @@
         "player_code": "002328"
       }
     ],
-    "exp_home": 81.6,
-    "exp_away": 88.0,
-    "exp_total": 169.6,
+    "exp_home": 81.4,
+    "exp_away": 87.7,
+    "exp_total": 169.1,
     "total_std": 12.7
   },
   {
@@ -9473,22 +7782,22 @@
       ]
     },
     "away_form": {
-      "avg_scored": 86.6,
-      "avg_allowed": 76.8,
+      "avg_scored": 91.8,
+      "avg_allowed": 79.8,
       "n_games": 5,
       "scored_list": [
-        77.0,
         84.0,
         90.0,
         82.0,
-        100.0
+        100.0,
+        103.0
       ],
       "allowed_list": [
-        58.0,
         82.0,
         81.0,
         85.0,
-        78.0
+        78.0,
+        73.0
       ]
     },
     "home_props": [
@@ -9741,14 +8050,14 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 14.4,
+        "projected": 13.7,
         "n_games": 5,
         "recent_values": [
-          20.0,
           17.0,
           12.0,
           16.0,
-          18.0
+          18.0,
+          14.0
         ],
         "stat_key": "points",
         "name": "NWORA, JORDAN",
@@ -9758,14 +8067,14 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 4.3,
+        "projected": 3.9,
         "n_games": 5,
         "recent_values": [
-          6.0,
           3.0,
           6.0,
           8.0,
-          1.0
+          1.0,
+          3.0
         ],
         "stat_key": "totalRebounds",
         "name": "NWORA, JORDAN",
@@ -9775,14 +8084,14 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 2.0,
+        "projected": 2.2,
         "n_games": 5,
         "recent_values": [
-          0.0,
           1.0,
           1.0,
           2.0,
-          3.0
+          3.0,
+          2.0
         ],
         "stat_key": "assistances",
         "name": "NWORA, JORDAN",
@@ -9792,14 +8101,116 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 11.5,
+        "projected": 10.9,
         "n_games": 5,
         "recent_values": [
+          18.0,
+          23.0,
+          2.0,
+          2.0,
+          15.0
+        ],
+        "stat_key": "points",
+        "name": "MONEKE, CHIMA",
+        "player_code": "012201"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 4.0,
+        "n_games": 5,
+        "recent_values": [
+          4.0,
+          4.0,
+          2.0,
+          4.0,
+          5.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "MONEKE, CHIMA",
+        "player_code": "012201"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.6,
+        "n_games": 5,
+        "recent_values": [
+          1.0,
+          0.0,
+          1.0,
+          3.0,
+          5.0
+        ],
+        "stat_key": "assistances",
+        "name": "MONEKE, CHIMA",
+        "player_code": "012201"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 10.0,
+        "n_games": 5,
+        "recent_values": [
+          15.0,
           11.0,
+          13.0,
+          0.0,
+          12.0
+        ],
+        "stat_key": "points",
+        "name": "OJELEYE, SEMI",
+        "player_code": "011982"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.7,
+        "n_games": 5,
+        "recent_values": [
+          6.0,
+          0.0,
+          3.0,
+          0.0,
+          2.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "OJELEYE, SEMI",
+        "player_code": "011982"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 1.7,
+        "n_games": 5,
+        "recent_values": [
+          0.0,
+          2.0,
+          1.0,
+          2.0,
+          1.0
+        ],
+        "stat_key": "assistances",
+        "name": "OJELEYE, SEMI",
+        "player_code": "011982"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 11.0,
+        "n_games": 5,
+        "recent_values": [
           0.0,
           13.0,
           6.0,
-          21.0
+          21.0,
+          9.0
         ],
         "stat_key": "points",
         "name": "BUTLER, JARED",
@@ -9812,10 +8223,10 @@
         "projected": 2.7,
         "n_games": 5,
         "recent_values": [
-          1.0,
           0.0,
           2.0,
           3.0,
+          2.0,
           2.0
         ],
         "stat_key": "totalRebounds",
@@ -9829,11 +8240,11 @@
         "projected": 2.4,
         "n_games": 5,
         "recent_values": [
-          2.0,
           3.0,
           5.0,
           2.0,
-          1.0
+          1.0,
+          2.0
         ],
         "stat_key": "assistances",
         "name": "BUTLER, JARED",
@@ -9843,159 +8254,57 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 10.9,
+        "projected": 11.6,
         "n_games": 5,
         "recent_values": [
-          9.0,
-          8.0,
-          4.0,
-          22.0,
-          8.0
-        ],
-        "stat_key": "points",
-        "name": "JONES, CHRIS",
-        "player_code": "010568"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.4,
-        "n_games": 5,
-        "recent_values": [
-          4.0,
+          2.0,
           3.0,
-          3.0,
-          4.0,
-          2.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "JONES, CHRIS",
-        "player_code": "010568"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 5.2,
-        "n_games": 5,
-        "recent_values": [
-          4.0,
-          9.0,
-          7.0,
-          4.0,
-          9.0
-        ],
-        "stat_key": "assistances",
-        "name": "JONES, CHRIS",
-        "player_code": "010568"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 9.6,
-        "n_games": 5,
-        "recent_values": [
-          12.0,
-          15.0,
-          11.0,
-          13.0,
-          0.0
-        ],
-        "stat_key": "points",
-        "name": "OJELEYE, SEMI",
-        "player_code": "011982"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.0,
-        "n_games": 5,
-        "recent_values": [
-          7.0,
           6.0,
-          0.0,
-          3.0,
-          0.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "OJELEYE, SEMI",
-        "player_code": "011982"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 1.8,
-        "n_games": 5,
-        "recent_values": [
-          1.0,
-          0.0,
-          2.0,
-          1.0,
-          2.0
-        ],
-        "stat_key": "assistances",
-        "name": "OJELEYE, SEMI",
-        "player_code": "011982"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 9.5,
-        "n_games": 5,
-        "recent_values": [
-          5.0,
-          18.0,
-          23.0,
-          2.0,
-          2.0
+          24.0,
+          14.0
         ],
         "stat_key": "points",
-        "name": "MONEKE, CHIMA",
-        "player_code": "012201"
+        "name": "CARTER, TYSON",
+        "player_code": "011305"
       },
       {
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 3.6,
+        "projected": 3.1,
         "n_games": 5,
         "recent_values": [
+          1.0,
           3.0,
-          4.0,
-          4.0,
-          2.0,
-          4.0
+          1.0,
+          5.0,
+          2.0
         ],
         "stat_key": "totalRebounds",
-        "name": "MONEKE, CHIMA",
-        "player_code": "012201"
+        "name": "CARTER, TYSON",
+        "player_code": "011305"
       },
       {
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 1.8,
+        "projected": 2.0,
         "n_games": 5,
         "recent_values": [
-          1.0,
-          1.0,
+          4.0,
+          2.0,
           0.0,
-          1.0,
-          3.0
+          3.0,
+          1.0
         ],
         "stat_key": "assistances",
-        "name": "MONEKE, CHIMA",
-        "player_code": "012201"
+        "name": "CARTER, TYSON",
+        "player_code": "011305"
       }
     ],
-    "exp_home": 80.3,
-    "exp_away": 82.8,
-    "exp_total": 163.0,
+    "exp_home": 80.0,
+    "exp_away": 85.7,
+    "exp_total": 165.8,
     "total_std": 12.7
   },
   {
@@ -10559,9 +8868,9 @@
         "player_code": "011194"
       }
     ],
-    "exp_home": 87.3,
-    "exp_away": 92.2,
-    "exp_total": 179.5,
+    "exp_home": 87.0,
+    "exp_away": 91.9,
+    "exp_total": 179.0,
     "total_std": 12.7
   },
   {
@@ -10593,22 +8902,22 @@
       ]
     },
     "away_form": {
-      "avg_scored": 90.4,
-      "avg_allowed": 94.0,
+      "avg_scored": 89.8,
+      "avg_allowed": 98.0,
       "n_games": 5,
       "scored_list": [
-        97.0,
         87.0,
         91.0,
         99.0,
-        78.0
+        78.0,
+        94.0
       ],
       "allowed_list": [
-        79.0,
         90.0,
         88.0,
         113.0,
-        100.0
+        100.0,
+        99.0
       ]
     },
     "home_props": [
@@ -10864,14 +9173,14 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 14.3,
+        "projected": 15.6,
         "n_games": 5,
         "recent_values": [
           9.0,
-          9.0,
           17.0,
           20.0,
-          19.0
+          19.0,
+          21.0
         ],
         "stat_key": "points",
         "name": "CLARK III, JIMMY",
@@ -10884,11 +9193,11 @@
         "projected": 2.5,
         "n_games": 5,
         "recent_values": [
-          2.0,
           0.0,
           2.0,
           4.0,
-          0.0
+          0.0,
+          2.0
         ],
         "stat_key": "totalRebounds",
         "name": "CLARK III, JIMMY",
@@ -10898,13 +9207,13 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 2.7,
+        "projected": 2.5,
         "n_games": 5,
         "recent_values": [
-          4.0,
           2.0,
           4.0,
           3.0,
+          2.0,
           2.0
         ],
         "stat_key": "assistances",
@@ -10915,14 +9224,14 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 12.1,
+        "projected": 11.9,
         "n_games": 5,
         "recent_values": [
-          17.0,
           22.0,
           11.0,
           14.0,
-          7.0
+          7.0,
+          13.0
         ],
         "stat_key": "points",
         "name": "MADAR, YAM",
@@ -10932,14 +9241,14 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 3.1,
+        "projected": 3.0,
         "n_games": 5,
         "recent_values": [
-          2.0,
           3.0,
           3.0,
           4.0,
-          1.0
+          1.0,
+          2.0
         ],
         "stat_key": "totalRebounds",
         "name": "MADAR, YAM",
@@ -10949,14 +9258,14 @@
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 2.6,
+        "projected": 3.8,
         "n_games": 5,
         "recent_values": [
           4.0,
-          4.0,
           1.0,
           5.0,
-          1.0
+          1.0,
+          9.0
         ],
         "stat_key": "assistances",
         "name": "MADAR, YAM",
@@ -10966,14 +9275,14 @@
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 11.5,
+        "projected": 12.2,
         "n_games": 5,
         "recent_values": [
-          13.0,
           12.0,
           11.0,
           19.0,
-          6.0
+          6.0,
+          16.0
         ],
         "stat_key": "points",
         "name": "COLSON, BONZIE",
@@ -10983,18 +9292,69 @@
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 3.8,
+        "projected": 3.0,
         "n_games": 5,
         "recent_values": [
           4.0,
-          4.0,
           5.0,
           3.0,
-          3.0
+          3.0,
+          0.0
         ],
         "stat_key": "totalRebounds",
         "name": "COLSON, BONZIE",
         "player_code": "009783"
+      },
+      {
+        "label": "Assists",
+        "dist": "poisson",
+        "std": null,
+        "projected": 1.6,
+        "n_games": 5,
+        "recent_values": [
+          1.0,
+          1.0,
+          0.0,
+          2.0,
+          1.0
+        ],
+        "stat_key": "assistances",
+        "name": "COLSON, BONZIE",
+        "player_code": "009783"
+      },
+      {
+        "label": "Points",
+        "dist": "normal",
+        "std": 6.0,
+        "projected": 11.4,
+        "n_games": 5,
+        "recent_values": [
+          2.0,
+          16.0,
+          5.0,
+          13.0,
+          16.0
+        ],
+        "stat_key": "points",
+        "name": "SORKIN, ROMAN",
+        "player_code": "011219"
+      },
+      {
+        "label": "Rebounds",
+        "dist": "poisson",
+        "std": null,
+        "projected": 2.1,
+        "n_games": 5,
+        "recent_values": [
+          3.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "stat_key": "totalRebounds",
+        "name": "SORKIN, ROMAN",
+        "player_code": "011219"
       },
       {
         "label": "Assists",
@@ -11004,115 +9364,70 @@
         "n_games": 5,
         "recent_values": [
           0.0,
-          1.0,
-          1.0,
+          2.0,
+          0.0,
           0.0,
           2.0
         ],
         "stat_key": "assistances",
-        "name": "COLSON, BONZIE",
-        "player_code": "009783"
+        "name": "SORKIN, ROMAN",
+        "player_code": "011219"
       },
       {
         "label": "Points",
         "dist": "normal",
         "std": 6.0,
-        "projected": 10.3,
+        "projected": 10.1,
         "n_games": 5,
         "recent_values": [
-          12.0,
-          2.0,
-          16.0,
-          5.0,
-          13.0
+          7.0,
+          14.0,
+          10.0,
+          6.0,
+          11.0
         ],
         "stat_key": "points",
-        "name": "SORKIN, ROMAN",
-        "player_code": "011219"
+        "name": "BRISSETT, O'SHAE J",
+        "player_code": "014127"
       },
       {
         "label": "Rebounds",
         "dist": "poisson",
         "std": null,
-        "projected": 2.3,
+        "projected": 4.3,
         "n_games": 5,
         "recent_values": [
-          1.0,
-          3.0,
-          1.0,
-          1.0,
-          1.0
+          4.0,
+          5.0,
+          2.0,
+          7.0,
+          4.0
         ],
         "stat_key": "totalRebounds",
-        "name": "SORKIN, ROMAN",
-        "player_code": "011219"
+        "name": "BRISSETT, O'SHAE J",
+        "player_code": "014127"
       },
       {
         "label": "Assists",
         "dist": "poisson",
         "std": null,
-        "projected": 1.2,
+        "projected": 1.6,
         "n_games": 5,
         "recent_values": [
           0.0,
-          0.0,
+          3.0,
+          1.0,
           2.0,
-          0.0,
           0.0
         ],
         "stat_key": "assistances",
-        "name": "SORKIN, ROMAN",
-        "player_code": "011219"
-      },
-      {
-        "label": "Points",
-        "dist": "normal",
-        "std": 6.0,
-        "projected": 9.9,
-        "n_games": 3,
-        "recent_values": [
-          8.0,
-          13.0,
-          6.0
-        ],
-        "stat_key": "points",
-        "name": "LUNDBERG, IFFE",
-        "player_code": "010781"
-      },
-      {
-        "label": "Rebounds",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.0,
-        "n_games": 3,
-        "recent_values": [
-          2.0,
-          1.0,
-          3.0
-        ],
-        "stat_key": "totalRebounds",
-        "name": "LUNDBERG, IFFE",
-        "player_code": "010781"
-      },
-      {
-        "label": "Assists",
-        "dist": "poisson",
-        "std": null,
-        "projected": 3.1,
-        "n_games": 3,
-        "recent_values": [
-          4.0,
-          3.0,
-          4.0
-        ],
-        "stat_key": "assistances",
-        "name": "LUNDBERG, IFFE",
-        "player_code": "010781"
+        "name": "BRISSETT, O'SHAE J",
+        "player_code": "014127"
       }
     ],
-    "exp_home": 83.8,
-    "exp_away": 83.4,
-    "exp_total": 167.2,
+    "exp_home": 84.7,
+    "exp_away": 83.7,
+    "exp_total": 168.4,
     "total_std": 12.7
   }
 ]
