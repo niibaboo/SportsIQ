@@ -132,12 +132,15 @@ def hit_rate(values, line):
 # "streak" implies and what an average measures. This walks backward
 # from the most recent game and stops at the first one that breaks the
 # per-game threshold, same concept applied to Match IQ.
-REAL_STREAK_THRESHOLD = 4   # per-game goals needed to extend the streak --
-                             # comparison below is >=, so 4 means "more
-                             # than 3 goals", raised from 2 (user feedback:
-                             # the old bar let modest-scoring teams qualify,
-                             # this now surfaces genuinely elite scoring
-                             # nights only).
+REAL_STREAK_THRESHOLD = 3   # per-game goals needed to extend the streak --
+                             # comparison below is >=, so 3 means "3 or more
+                             # goals". History: 2 -> 4 (user feedback: the
+                             # old bar let modest-scoring teams qualify),
+                             # then eased 4 -> 3 (user request, 2026-10-30:
+                             # "reduce the euro ice streak a bit" -- 4+ was
+                             # too strict to surface many streaks). Only
+                             # Real Streak changed; Hot Form's
+                             # GOAL_STREAK_MIN is untouched.
 REAL_STREAK_MIN_LENGTH = 3  # shortest run that counts as "a streak"
 
 
