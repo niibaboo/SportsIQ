@@ -269,7 +269,8 @@ def devig_match_odds(odds_response: dict) -> dict | None:
         total = sum(raw.values())
         overround = total - 1.0
         fair = {side: v / total for side, v in raw.items()}
-        per_bookmaker.append({"name": bk.get("bookmaker", "Unknown"), **fair, "overround": overround})
+        per_bookmaker.append({"name": bk.get("bookmaker", "Unknown"), **fair,
+                              "overround": overround, "prices": prices})
 
     if not per_bookmaker:
         return None
@@ -289,6 +290,10 @@ def devig_match_odds(odds_response: dict) -> dict | None:
             "overround": preferred["overround"],
             "bookmakers": [preferred["name"]],
             "source": "preferred",
+            # Raw decimal odds actually on offer at the preferred book --
+            # the results tracker needs these to grade flagged bets at
+            # the price that could really have been taken.
+            "bet365_odds": dict(preferred["prices"]),
         }
         if n > 1:
             result.update({
@@ -313,6 +318,19 @@ def devig_match_odds(odds_response: dict) -> dict | None:
         "bookmakers": names_used,
         "source": "average",
     }
+
+
+def flagged_sides(fair: dict) -> list[str]:
+    """Sides where the market average rates the outcome at least
+    MKT_GAP_HIGHLIGHT_PP more likely than Bet365 prices it -- the same
+    rounded-gap rule the page uses to highlight a tile green, so the
+    tracker logs exactly what the user sees flagged. Empty when there's
+    no market comparison on the match."""
+    if "market_home_prob" not in fair:
+        return []
+    return [side for side in ("home", "draw", "away")
+            if round((fair[f"market_{side}_prob"] - fair[f"{side}_prob"]) * 100, 1)
+            >= MKT_GAP_HIGHLIGHT_PP]
 
 
 # ----------------------------------------------------------------------
@@ -355,10 +373,12 @@ def scan_league(league_name: str) -> list[dict]:
             continue
 
         cards.append({
+            "match_id": match_id,
             "league": comp.get("name", league_name),
             "home": home,
             "away": away,
             "kickoff": kickoff,
+            "flagged": flagged_sides(fair),
             **fair,
         })
 
@@ -455,6 +475,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   </div>
   {sections_html}
   <div class="footer">
+    <a href="results/index.html" style="color:#7ec8ff">📋 Results tracker — do the flagged gaps actually pay?</a><br><br>
     Runs on its own automated schedule via GitHub Actions.<br>
     De-vigged percentages reflect one bookmaker's priced-in view, not a
     guarantee of the outcome -- treat as a market snapshot, not a firm pick.
@@ -596,6 +617,15 @@ def main():
     html = make_html(cards)
     OUTPUT_HTML.write_text(html)
     print(f"\nWrote {len(cards)} match(es) with odds across {len(LEAGUES)} league(s) -> {OUTPUT_HTML}")
+
+    # Results tracker: logs flagged sides pre-kickoff, grades them later.
+    # Wrapped so a tracker problem can never stop the page above from
+    # being published.
+    try:
+        import market_iq_results_tracker
+        market_iq_results_tracker.run_results_tracker(cards, API_KEY)
+    except Exception as exc:
+        print(f"[!] results tracker failed (page was still written): {exc}")
 
 
 if __name__ == "__main__":
