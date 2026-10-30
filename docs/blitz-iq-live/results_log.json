@@ -883,5 +883,22 @@
     "status": "hit",
     "final_home_score": 21.0,
     "final_away_score": 38.0
+  },
+  "401873023_Game_Total_Over": {
+    "id": "401873023_Game_Total_Over",
+    "game_id": "401873023",
+    "home_id": "9",
+    "away_id": "29",
+    "home_team": "Green Bay Packers",
+    "away_team": "Carolina Panthers",
+    "label": "Game Total Over",
+    "prob": 73,
+    "logged_at": "2026-10-30T01:17:13.984653+00:00",
+    "logged_period": 2,
+    "logged_clock": "6:33",
+    "logged_home_score": 13.0,
+    "logged_away_score": 10.0,
+    "pregame_total": 41.5,
+    "status": "pending"
   }
 }

@@ -1,5 +1,38 @@
 {
-  "generated": "2026-10-29T21:30:21.328557+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-10-30T01:17:13.981372+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_id": "401873023",
+      "home_id": "9",
+      "away_id": "29",
+      "home_team": "Green Bay Packers",
+      "away_team": "Carolina Panthers",
+      "home_score": 13.0,
+      "away_score": 10.0,
+      "period": 2,
+      "display_clock": "6:33",
+      "status": "6:33 - 2nd",
+      "elapsed_minute": 23.4,
+      "minutes_remaining": 36.5,
+      "next_score": {
+        "home": 57,
+        "away": 43
+      },
+      "game_total_pace": {
+        "prob": 73,
+        "status": "On Pace: Over"
+      },
+      "model_signal": {
+        "label": "Game Total Over",
+        "prob": 73,
+        "qualifies": true
+      },
+      "pregame_projection": {
+        "exp_home": 22.8,
+        "exp_away": 18.7,
+        "exp_total": 41.5
+      }
+    }
+  ]
 }
