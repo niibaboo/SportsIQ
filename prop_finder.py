@@ -370,6 +370,17 @@ def main():
     OUTPUT_JSON.write_text(json.dumps(output, indent=2))
     print(f"\nWrote {len(players)} players across {len(LEAGUES)} league(s) -> {OUTPUT_JSON}")
 
+    # Results tracker: logs today's 100% / Real Streak picks and grades
+    # earlier ones from this run's newer games (no extra API calls).
+    # Wrapped so a tracker problem can never stop the data file above
+    # from being published.
+    try:
+        import prop_finder_results_tracker
+        prop_finder_results_tracker.run_results_tracker(
+            players, {key: label for key, (label, _) in STAT_FIELDS.items()})
+    except Exception as exc:
+        print(f"[!] results tracker failed (data was still written): {exc}")
+
 
 if __name__ == "__main__":
     main()
