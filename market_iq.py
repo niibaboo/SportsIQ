@@ -498,10 +498,11 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 # every leg also has a market-average view, that is shown too.
 SLIP_HTML = """<style>
   body{padding-bottom:90px}
-  .prob[data-pick]{cursor:pointer;border:1px solid transparent}
-  .prob[data-pick].picked{border-color:var(--amber);background:#1d2430}
+  .prob[data-pick]{cursor:pointer;border:1px dashed #34414f;touch-action:manipulation;
+    -webkit-tap-highlight-color:rgba(250,204,21,.25);user-select:none;-webkit-user-select:none}
+  .prob[data-pick].picked{border:1px solid var(--amber);background:#1d2430}
   #slip{position:fixed;left:0;right:0;bottom:0;background:#0f151d;border-top:1px solid var(--border);
-    padding:8px 16px 10px;display:none;z-index:10}
+    padding:8px 16px 10px;z-index:10}
   #slip .inner{max-width:640px;margin:0 auto}
   #slip summary{cursor:pointer;font-size:13px;list-style:none}
   #slip summary b{color:var(--amber)}
@@ -516,7 +517,8 @@ SLIP_HTML = """<style>
     font-size:11px;padding:3px 8px;cursor:pointer;margin-top:6px}
 </style>
 <div id="slip"><div class="inner"><details>
-  <summary id="slipSummary"></summary>
+  <summary id="slipSummary"><b>Slip calculator</b> · tap a Home / Draw / Away tile to add a leg</summary>
+  <div id="slipBody" style="display:none">
   <div class="legs" id="slipLegs"></div>
   <div class="row"><span>Stake £ <input id="slipStake" type="number" min="0" step="1" value="10"></span><span id="slipReturn"></span></div>
   <div class="row"><span>Fair odds (Bet365's de-vigged view)</span><span id="slipFair"></span></div>
@@ -524,6 +526,7 @@ SLIP_HTML = """<style>
   <div class="row" id="slipMktRow" style="display:none"><span>Market-average view: chance / expected return</span><span id="slipMkt"></span></div>
   <div class="note">Assumes legs are independent (one pick per match). A snapshot of prices, not a prediction -- every extra leg multiplies bet365's margin as well as the payout.</div>
   <button class="clear" id="slipClear">Clear slip</button>
+  </div>
 </details></div></div>
 <script>
 (function(){
@@ -533,8 +536,15 @@ SLIP_HTML = """<style>
   function oneIn(p){ var n = 1/p; return n >= 10 ? Math.round(n) : n.toFixed(1); }
   function render(){
     var ids = Object.keys(picks), n = ids.length;
-    if(!n){ slip.style.display = 'none'; return; }
-    slip.style.display = 'block';
+    var details = document.querySelector('#slip details'), body = document.getElementById('slipBody');
+    if(!n){
+      document.getElementById('slipSummary').innerHTML =
+        '<b>Slip calculator</b> · tap a Home / Draw / Away tile to add a leg';
+      body.style.display = 'none';
+      details.open = false;
+      return;
+    }
+    body.style.display = 'block';
     var odds = 1, prob = 1, mprob = 1, haveM = true;
     ids.forEach(function(id){
       var k = picks[id]; odds *= k.odds; prob *= k.prob;
@@ -649,7 +659,9 @@ def _mkt_line(bet365_p: float, market_p: float | None) -> str:
     compare against (see MKT_LINE's own comment for what the gap means)."""
     if market_p is None:
         return ""
-    gap_pct = round((market_p - bet365_p) * 100, 1)
+    # "+ 0.0" normalises a negative zero (a tiny negative gap rounds to
+    # -0.0, which would otherwise print as "+-0.0").
+    gap_pct = round((market_p - bet365_p) * 100, 1) + 0.0
     return MKT_LINE.format(
         mkt_pct=round(market_p * 100, 1),
         sign="+" if gap_pct >= 0 else "",
