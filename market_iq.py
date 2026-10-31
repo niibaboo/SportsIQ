@@ -57,6 +57,7 @@ import sys
 import json
 import time
 import hashlib
+import html as html_lib
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
@@ -469,7 +470,9 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     number on its own carries no edge, since it's just that book's own
     margin removed, so a highlighted gap there (Bet365 paying longer
     odds than the wider market thinks fair) is the part worth a second
-    look, not the percentage itself. Not every
+    look, not the percentage itself. Tap a Home/Draw/Away tile
+    on any Bet365-priced match to add it to the slip calculator at the bottom
+    of the page. Not every
     upcoming match has odds posted yet -- those are left off rather
     than guessed at.
   </div>
@@ -480,9 +483,110 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     De-vigged percentages reflect one bookmaker's priced-in view, not a
     guarantee of the outcome -- treat as a market snapshot, not a firm pick.
   </div>
+  {slip_html}
 </body>
 </html>
 """
+
+# Slip calculator (user request, 2026-10-31, after a 10-leg accumulator lost
+# with 8 legs landing): tap tiles to build a slip and see the REAL combined
+# chance of every leg landing next to the combined odds. Plain string, not a
+# format template -- it is injected as-is, so CSS/JS braces stay single.
+# One selection per match (picking another side replaces the first), so legs
+# are separate matches and the independence assumption is a fair first
+# approximation. "Chance" uses Bet365's own de-vigged probabilities; when
+# every leg also has a market-average view, that is shown too.
+SLIP_HTML = """<style>
+  body{padding-bottom:90px}
+  .prob[data-pick]{cursor:pointer;border:1px solid transparent}
+  .prob[data-pick].picked{border-color:var(--amber);background:#1d2430}
+  #slip{position:fixed;left:0;right:0;bottom:0;background:#0f151d;border-top:1px solid var(--border);
+    padding:8px 16px 10px;display:none;z-index:10}
+  #slip .inner{max-width:640px;margin:0 auto}
+  #slip summary{cursor:pointer;font-size:13px;list-style:none}
+  #slip summary b{color:var(--amber)}
+  #slip .legs{font-size:11px;color:var(--sub);margin:8px 0}
+  #slip .legs div{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border)}
+  #slip .legs button{background:none;border:0;color:var(--red);font-size:12px;cursor:pointer}
+  #slip .row{display:flex;justify-content:space-between;font-size:12px;padding:3px 0}
+  #slip .note{font-size:10px;color:var(--sub);line-height:1.5;margin-top:6px}
+  #slip input{width:64px;background:var(--panel2);border:1px solid var(--border);color:var(--text);
+    border-radius:6px;padding:3px 6px;font-size:12px}
+  #slip .clear{background:none;border:1px solid var(--border);color:var(--sub);border-radius:6px;
+    font-size:11px;padding:3px 8px;cursor:pointer;margin-top:6px}
+</style>
+<div id="slip"><div class="inner"><details>
+  <summary id="slipSummary"></summary>
+  <div class="legs" id="slipLegs"></div>
+  <div class="row"><span>Stake £ <input id="slipStake" type="number" min="0" step="1" value="10"></span><span id="slipReturn"></span></div>
+  <div class="row"><span>Fair odds (Bet365's de-vigged view)</span><span id="slipFair"></span></div>
+  <div class="row"><span>Expected return per £1 staked</span><span id="slipEV"></span></div>
+  <div class="row" id="slipMktRow" style="display:none"><span>Market-average view: chance / expected return</span><span id="slipMkt"></span></div>
+  <div class="note">Assumes legs are independent (one pick per match). A snapshot of prices, not a prediction -- every extra leg multiplies bet365's margin as well as the payout.</div>
+  <button class="clear" id="slipClear">Clear slip</button>
+</details></div></div>
+<script>
+(function(){
+  var picks = {}; // match id -> {side,label,odds,prob,mprob,el}
+  var slip = document.getElementById('slip');
+  function fmtPct(x){ return (x*100).toFixed(x < 0.1 ? 2 : 1) + '%'; }
+  function oneIn(p){ var n = 1/p; return n >= 10 ? Math.round(n) : n.toFixed(1); }
+  function render(){
+    var ids = Object.keys(picks), n = ids.length;
+    if(!n){ slip.style.display = 'none'; return; }
+    slip.style.display = 'block';
+    var odds = 1, prob = 1, mprob = 1, haveM = true;
+    ids.forEach(function(id){
+      var k = picks[id]; odds *= k.odds; prob *= k.prob;
+      if(k.mprob == null) haveM = false; else mprob *= k.mprob;
+    });
+    var stake = parseFloat(document.getElementById('slipStake').value) || 0;
+    document.getElementById('slipSummary').innerHTML =
+      '<b>' + n + ' leg' + (n>1?'s':'') + '</b> · odds <b>' + odds.toFixed(2) + '</b> · chance all land <b>' +
+      fmtPct(prob) + '</b> (1 in ' + oneIn(prob) + ')  ▲';
+    document.getElementById('slipReturn').textContent = 'returns £' + (stake*odds).toFixed(2);
+    document.getElementById('slipFair').textContent = (1/prob).toFixed(2) + ' vs ' + odds.toFixed(2) + ' offered';
+    document.getElementById('slipEV').textContent = '£' + (prob*odds).toFixed(2);
+    var mrow = document.getElementById('slipMktRow');
+    if(haveM){
+      mrow.style.display = 'flex';
+      document.getElementById('slipMkt').textContent = fmtPct(mprob) + ' / £' + (mprob*odds).toFixed(2);
+    } else { mrow.style.display = 'none'; }
+    var legs = document.getElementById('slipLegs'); legs.innerHTML = '';
+    ids.forEach(function(id){
+      var k = picks[id], row = document.createElement('div'), t = document.createElement('span'),
+          b = document.createElement('button');
+      t.textContent = k.label + ' @ ' + k.odds.toFixed(2);
+      b.textContent = 'remove'; b.setAttribute('data-remove', id);
+      row.appendChild(t); row.appendChild(b); legs.appendChild(row);
+    });
+  }
+  function unpick(id){
+    if(picks[id]){ picks[id].el.classList.remove('picked'); delete picks[id]; }
+  }
+  document.addEventListener('click', function(e){
+    var rm = e.target.closest && e.target.closest('[data-remove]');
+    if(rm){ unpick(rm.getAttribute('data-remove')); render(); return; }
+    var tile = e.target.closest && e.target.closest('.prob[data-pick]');
+    if(!tile) return;
+    var id = tile.getAttribute('data-match'), side = tile.getAttribute('data-side');
+    var same = picks[id] && picks[id].side === side;
+    unpick(id);
+    if(!same){
+      var m = tile.getAttribute('data-mprob');
+      picks[id] = {side: side, label: tile.getAttribute('data-label'),
+        odds: parseFloat(tile.getAttribute('data-odds')), prob: parseFloat(tile.getAttribute('data-prob')),
+        mprob: m === null || m === '' ? null : parseFloat(m), el: tile};
+      tile.classList.add('picked');
+    }
+    render();
+  });
+  document.getElementById('slipStake').addEventListener('input', render);
+  document.getElementById('slipClear').addEventListener('click', function(){
+    Object.keys(picks).forEach(unpick); render();
+  });
+})();
+</script>"""
 
 LEAGUE_SECTION_TEMPLATE = """<h2 class="league">{league}</h2>
 {cards_html}"""
@@ -491,19 +595,19 @@ CARD_TEMPLATE = """<div class="card">
   <div class="matchup">{home} vs {away}</div>
   <div class="kickoff">{kickoff_display}</div>
   <div class="probs">
-    <div class="prob{home_fav}">
+    <div class="prob{home_fav}"{home_attrs}>
       <div class="label">Home</div>
       <div class="pct">{home_pct}%</div>
       <div class="fairodds">fair {home_fairodds}</div>
       {home_mkt}
     </div>
-    <div class="prob{draw_fav}">
+    <div class="prob{draw_fav}"{draw_attrs}>
       <div class="label">Draw</div>
       <div class="pct">{draw_pct}%</div>
       <div class="fairodds">fair {draw_fairodds}</div>
       {draw_mkt}
     </div>
-    <div class="prob{away_fav}">
+    <div class="prob{away_fav}"{away_attrs}>
       <div class="label">Away</div>
       <div class="pct">{away_pct}%</div>
       <div class="fairodds">fair {away_fairodds}</div>
@@ -565,6 +669,21 @@ def build_card_html(card: dict) -> str:
         bookmakers_display = names[0] if names else "Unknown"
 
     has_market = "market_home_prob" in card
+
+    def attrs(side: str, prob: float) -> str:
+        """data-* attributes that make a tile tappable for the slip
+        calculator -- only when Bet365's own decimal odds and a match id
+        exist (an 'average'-source card has no Bet365 price to bet at)."""
+        odds = (card.get("bet365_odds") or {}).get(side)
+        if not odds or not card.get("match_id"):
+            return ""
+        label = f"{card['home']} vs {card['away']} - {side.capitalize()}"
+        mprob = card.get(f"market_{side}_prob") if has_market else None
+        return (f' data-pick="1" data-match="{html_lib.escape(str(card["match_id"]), quote=True)}"'
+                f' data-side="{side}" data-label="{html_lib.escape(label, quote=True)}"'
+                f' data-odds="{odds}" data-prob="{prob}"'
+                f' data-mprob="{"" if mprob is None else mprob}"')
+
     return CARD_TEMPLATE.format(
         home=card["home"], away=card["away"],
         kickoff_display=_fmt_kickoff(card.get("kickoff", "")),
@@ -575,6 +694,7 @@ def build_card_html(card: dict) -> str:
         home_fav=_fav_class(home_p, home_p, draw_p, away_p),
         draw_fav=_fav_class(draw_p, home_p, draw_p, away_p),
         away_fav=_fav_class(away_p, home_p, draw_p, away_p),
+        home_attrs=attrs("home", home_p), draw_attrs=attrs("draw", draw_p), away_attrs=attrs("away", away_p),
         home_mkt=_mkt_line(home_p, card.get("market_home_prob") if has_market else None),
         draw_mkt=_mkt_line(draw_p, card.get("market_draw_prob") if has_market else None),
         away_mkt=_mkt_line(away_p, card.get("market_away_prob") if has_market else None),
@@ -601,6 +721,7 @@ def make_html(cards: list[dict]) -> str:
     return PAGE_TEMPLATE.format(
         generated_at=datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
         sections_html="\n".join(sections),
+        slip_html=SLIP_HTML,
     )
 
 
