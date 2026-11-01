@@ -23,11 +23,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "2-0",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_644011830",
@@ -53,11 +54,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "draw",
+    "score": "2-2",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_466255971",
@@ -83,11 +85,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "3-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_511977622",
@@ -113,11 +116,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "2-0",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_988366018",
@@ -143,11 +147,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "2-0",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_155833469",
@@ -173,11 +178,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "2-0",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T15:59:24.683254+00:00"
+    "updated_at": "2026-10-31T15:59:24.683254+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_200199365",
@@ -203,11 +209,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "draw",
+    "score": "1-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T19:15:52.915795+00:00"
+    "updated_at": "2026-10-31T19:15:52.915795+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_377400583",
@@ -247,19 +254,19 @@
     "kickoff": "2026-11-02T20:00:00.000Z",
     "date_key": "2026-11-02",
     "odds": {
-      "home": 2.35,
+      "home": 2.3,
       "draw": 3.5,
-      "away": 2.9
+      "away": 3.0
     },
     "bet365_prob": {
-      "home": 0.40293767368003175,
-      "draw": 0.2705438666137356,
-      "away": 0.3265184597062326
+      "home": 0.41257367387033406,
+      "draw": 0.27111984282907664,
+      "away": 0.3163064833005894
     },
     "market_prob": {
-      "home": 0.40118838750515706,
-      "draw": 0.269712307644351,
-      "away": 0.3290993048504919
+      "home": 0.41487464935163115,
+      "draw": 0.27180290251634465,
+      "away": 0.31332244813202415
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -267,7 +274,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_022588739",
@@ -287,9 +294,9 @@
       "away": 0.21459922058080969
     },
     "market_prob": {
-      "home": 0.5528019452019963,
-      "draw": 0.23961546271743422,
-      "away": 0.20758259208056945
+      "home": 0.5519289196272389,
+      "draw": 0.24081349852480738,
+      "away": 0.20725758184795376
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -297,7 +304,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_377400525",
@@ -317,9 +324,9 @@
       "away": 0.34090909090909083
     },
     "market_prob": {
-      "home": 0.3773981262254972,
-      "draw": 0.28173206635596565,
-      "away": 0.3408698074185371
+      "home": 0.3747127567384916,
+      "draw": 0.28232757178165485,
+      "away": 0.34295967147985357
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -327,7 +334,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_466255982",
@@ -337,19 +344,19 @@
     "kickoff": "2026-11-07T15:00:00.000Z",
     "date_key": "2026-11-07",
     "odds": {
-      "home": 2.2,
+      "home": 2.1,
       "draw": 3.5,
-      "away": 3.0
+      "away": 3.1
     },
     "bet365_prob": {
-      "home": 0.4233870967741936,
-      "draw": 0.26612903225806456,
-      "away": 0.31048387096774194
+      "home": 0.4390934844192635,
+      "draw": 0.26345609065155806,
+      "away": 0.2974504249291785
     },
     "market_prob": {
-      "home": 0.4240543352702595,
-      "draw": 0.2650451700912964,
-      "away": 0.31090049463844416
+      "home": 0.44511565112995805,
+      "draw": 0.2630618718473869,
+      "away": 0.29182247702265507
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -357,7 +364,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_200199370",
@@ -367,19 +374,19 @@
     "kickoff": "2026-11-07T15:00:00.000Z",
     "date_key": "2026-11-07",
     "odds": {
-      "home": 1.167,
+      "home": 1.143,
       "draw": 7.0,
-      "away": 15.0
+      "away": 19.0
     },
     "bet365_prob": {
-      "home": 0.8035263327058176,
-      "draw": 0.13395931860966986,
-      "away": 0.06251434868451261
+      "home": 0.8173650118610112,
+      "draw": 0.13346402979387653,
+      "away": 0.049170958345112405
     },
     "market_prob": {
-      "home": 0.8105518020374044,
-      "draw": 0.12793635345646046,
-      "away": 0.061511844506135095
+      "home": 0.8218026848072764,
+      "draw": 0.12335861945313935,
+      "away": 0.05483869573958442
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -387,7 +394,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_733622104",
@@ -397,19 +404,19 @@
     "kickoff": "2026-11-07T17:30:00.000Z",
     "date_key": "2026-11-07",
     "odds": {
-      "home": 4.333,
+      "home": 4.5,
       "draw": 3.9,
-      "away": 1.7
+      "away": 1.667
     },
     "bet365_prob": {
-      "home": 0.21459922058080969,
-      "draw": 0.23842523660939707,
-      "away": 0.5469755428097932
+      "home": 0.20604510534722748,
+      "draw": 0.23774435232372407,
+      "away": 0.5562105423290484
     },
     "market_prob": {
-      "home": 0.21044703905781764,
-      "draw": 0.2399458939536717,
-      "away": 0.5496070669885107
+      "home": 0.20723437423553565,
+      "draw": 0.23677001860918562,
+      "away": 0.5559956071552788
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -417,7 +424,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_155833475",
@@ -427,19 +434,19 @@
     "kickoff": "2026-11-08T14:00:00.000Z",
     "date_key": "2026-11-08",
     "odds": {
-      "home": 3.3,
-      "draw": 3.4,
-      "away": 2.1
+      "home": 3.6,
+      "draw": 3.5,
+      "away": 1.95
     },
     "bet365_prob": {
-      "home": 0.2823250296559905,
-      "draw": 0.27402135231316727,
-      "away": 0.4436536180308422
+      "home": 0.25808281338627337,
+      "draw": 0.2654566080544526,
+      "away": 0.47646057855927393
     },
     "market_prob": {
-      "home": 0.28199069867286897,
-      "draw": 0.26719373881384256,
-      "away": 0.45081556251328836
+      "home": 0.2648316068659941,
+      "draw": 0.26183822555987346,
+      "away": 0.4733301675741325
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -447,7 +454,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_644011896",
@@ -457,19 +464,19 @@
     "kickoff": "2026-11-08T14:00:00.000Z",
     "date_key": "2026-11-08",
     "odds": {
-      "home": 3.75,
+      "home": 3.9,
       "draw": 3.5,
-      "away": 1.9
+      "away": 1.833
     },
     "bet365_prob": {
-      "home": 0.24721189591078063,
-      "draw": 0.26486988847583637,
-      "away": 0.48791821561338283
+      "home": 0.2357408999713385,
+      "draw": 0.26268271711092,
+      "away": 0.5015763829177414
     },
     "market_prob": {
-      "home": 0.2556567634585696,
-      "draw": 0.2575895870635283,
-      "away": 0.48675364947790206
+      "home": 0.2530540522498626,
+      "draw": 0.25737558011799944,
+      "away": 0.48957036763213796
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -477,7 +484,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_511977644",
@@ -487,19 +494,19 @@
     "kickoff": "2026-11-08T14:00:00.000Z",
     "date_key": "2026-11-08",
     "odds": {
-      "home": 4.1,
-      "draw": 4.1,
-      "away": 1.7
+      "home": 4.333,
+      "draw": 4.2,
+      "away": 1.65
     },
     "bet365_prob": {
-      "home": 0.22666666666666666,
-      "draw": 0.22666666666666666,
-      "away": 0.5466666666666666
+      "home": 0.2146969844832634,
+      "draw": 0.22149572232523343,
+      "away": 0.5638072931915032
     },
     "market_prob": {
-      "home": 0.21840295079914512,
-      "draw": 0.23210998307208702,
-      "away": 0.549487066128768
+      "home": 0.19473031589227952,
+      "draw": 0.22266177011974472,
+      "away": 0.5826079139879756
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -507,7 +514,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_988366021",
@@ -527,9 +534,9 @@
       "away": 0.25
     },
     "market_prob": {
-      "home": 0.4939404998844344,
-      "draw": 0.24737823061809458,
-      "away": 0.25868126949747106
+      "home": 0.49440248281117344,
+      "draw": 0.24781918679885723,
+      "away": 0.25777833038996933
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -537,7 +544,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_899744264",
@@ -547,19 +554,19 @@
     "kickoff": "2026-11-08T16:30:00.000Z",
     "date_key": "2026-11-08",
     "odds": {
-      "home": 2.25,
+      "home": 2.15,
       "draw": 3.6,
-      "away": 2.875
+      "away": 3.0
     },
     "bet365_prob": {
-      "home": 0.4153498871331829,
-      "draw": 0.2595936794582393,
-      "away": 0.3250564334085779
+      "home": 0.43217286914765907,
+      "draw": 0.2581032412965186,
+      "away": 0.3097238895558223
     },
     "market_prob": {
-      "home": 0.418873511378915,
-      "draw": 0.2554484317482211,
-      "away": 0.32567805687286394
+      "home": 0.4218685378501905,
+      "draw": 0.25587926900969904,
+      "away": 0.32225219314011044
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -567,7 +574,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_899709230",
@@ -623,11 +630,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "2-0",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_377417568",
@@ -653,11 +661,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "3-2",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_022532718",
@@ -683,11 +692,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "away",
+    "score": "1-3",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_511941617",
@@ -713,11 +723,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "3-0",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_988328080",
@@ -743,11 +754,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "away",
+    "score": "1-3",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_200170352",
@@ -773,11 +785,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "4-0",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_733653140",
@@ -803,11 +816,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "4-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_644094824",
@@ -833,11 +847,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "4-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_466286900",
@@ -863,11 +878,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "3-0",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_511941686",
@@ -893,11 +909,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "draw",
+    "score": "0-0",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_988328069",
@@ -923,11 +940,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "away",
+    "score": "2-3",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_155861516",
@@ -953,11 +971,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "3-0",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_466284649",
@@ -983,11 +1002,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "draw",
+    "score": "0-0",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_899708973",
@@ -1013,11 +1033,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "away",
+    "score": "0-3",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_511945155",
@@ -1043,11 +1064,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "2-0",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_200172028",
@@ -1073,11 +1095,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "3-2",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_733657379",
@@ -1103,11 +1126,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "2-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_899708989",
@@ -1133,11 +1157,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "away",
+    "score": "0-2",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_511945199",
@@ -1163,11 +1188,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "draw",
+    "score": "1-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_988329834",
@@ -1193,11 +1219,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "draw",
+    "score": "2-2",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_200172017",
@@ -1223,11 +1250,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "6-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_733657363",
@@ -1253,11 +1281,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "away",
+    "score": "0-2",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_466284795",
@@ -1343,11 +1372,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "4-2",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_022597819",
@@ -1373,11 +1403,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "5-2",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_377425080",
@@ -1403,11 +1434,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "away",
+    "score": "1-2",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_022597825",
@@ -1433,11 +1465,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "3-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_511936713",
@@ -1463,11 +1496,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "2-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_988340682",
@@ -1493,11 +1527,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "2-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_899762494",
@@ -1523,11 +1558,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "away",
+    "score": "0-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_466219502",
@@ -1553,11 +1589,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "home",
+    "score": "3-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_511936784",
@@ -1583,11 +1620,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "draw",
+    "score": "1-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_155874399",
@@ -1613,11 +1651,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "draw",
+    "score": "1-1",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_733601242",
@@ -1643,11 +1682,12 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
+    "status": "verified",
+    "result": "away",
+    "score": "1-3",
     "logged_at": "2026-10-30T19:07:17.008197+00:00",
-    "updated_at": "2026-10-31T08:28:31.074862+00:00"
+    "updated_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_899744202",
@@ -1673,10 +1713,11 @@
     },
     "market_bookmaker_count": 5,
     "flagged": [],
-    "status": "pending",
-    "result": null,
-    "score": null,
-    "logged_at": "2026-10-31T08:28:31.074862+00:00"
+    "status": "verified",
+    "result": "away",
+    "score": "0-1",
+    "logged_at": "2026-10-31T08:28:31.074862+00:00",
+    "verified_at": "2026-11-01T17:02:54.501343+00:00"
   },
   {
     "match_id": "mt_022532742",
@@ -1688,17 +1729,17 @@
     "odds": {
       "home": 2.25,
       "draw": 3.4,
-      "away": 2.875
+      "away": 3.1
     },
     "bet365_prob": {
-      "home": 0.40910279884907136,
-      "draw": 0.27072979335600317,
-      "away": 0.3201674077949254
+      "home": 0.41883568448241604,
+      "draw": 0.27717067355454006,
+      "away": 0.3039936419630439
     },
     "market_prob": {
-      "home": 0.4217147401512561,
-      "draw": 0.2658287846728509,
-      "away": 0.31245647517589303
+      "home": 0.418593719022647,
+      "draw": 0.2683968235055077,
+      "away": 0.3130094574718454
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -1706,7 +1747,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_155865451",
@@ -1716,27 +1757,27 @@
     "kickoff": "2026-11-03T19:45:00.000Z",
     "date_key": "2026-11-03",
     "odds": {
-      "home": 2.35,
-      "draw": 3.4,
+      "home": 2.45,
+      "draw": 3.25,
       "away": 2.8
     },
     "bet365_prob": {
-      "home": 0.3951847239518472,
-      "draw": 0.2731423827314238,
-      "away": 0.3316728933167289
+      "home": 0.38039502560351124,
+      "draw": 0.2867593269934162,
+      "away": 0.3328456474030724
     },
     "market_prob": {
-      "home": 0.4067182765896658,
-      "draw": 0.2752992214147891,
-      "away": 0.3179825019955452
+      "home": 0.3878801241541982,
+      "draw": 0.27753987530186197,
+      "away": 0.3345800005439398
     },
-    "market_bookmaker_count": 4,
+    "market_bookmaker_count": 5,
     "flagged": [],
     "status": "pending",
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_733653136",
@@ -1746,29 +1787,27 @@
     "kickoff": "2026-11-03T19:45:00.000Z",
     "date_key": "2026-11-03",
     "odds": {
-      "home": 2.05,
+      "home": 2.1,
       "draw": 3.5,
-      "away": 3.2
+      "away": 3.3
     },
     "bet365_prob": {
-      "home": 0.4491678363745739,
-      "draw": 0.2630840184479647,
-      "away": 0.2877481451774614
+      "home": 0.44715447154471544,
+      "draw": 0.2682926829268293,
+      "away": 0.28455284552845533
     },
     "market_prob": {
-      "home": 0.48472070966120084,
-      "draw": 0.24924145855600116,
-      "away": 0.26603783178279805
+      "home": 0.4652426189126483,
+      "draw": 0.25825315218921174,
+      "away": 0.2765042288981399
     },
     "market_bookmaker_count": 5,
-    "flagged": [
-      "home"
-    ],
+    "flagged": [],
     "status": "pending",
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_899709296",
@@ -1778,19 +1817,19 @@
     "kickoff": "2026-11-03T19:45:00.000Z",
     "date_key": "2026-11-03",
     "odds": {
-      "home": 3.3,
+      "home": 3.4,
       "draw": 3.4,
-      "away": 2.05
+      "away": 2.1
     },
     "bet365_prob": {
-      "home": 0.27930274494089363,
-      "draw": 0.271087958324985,
-      "away": 0.4496092967341215
+      "home": 0.27631578947368424,
+      "draw": 0.27631578947368424,
+      "away": 0.4473684210526316
     },
     "market_prob": {
-      "home": 0.29336418702266087,
-      "draw": 0.2583751945029764,
-      "away": 0.4482606184743628
+      "home": 0.29281936624128474,
+      "draw": 0.26312402236587673,
+      "away": 0.4440566113928385
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -1798,7 +1837,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_377417571",
@@ -1808,29 +1847,27 @@
     "kickoff": "2026-11-03T19:45:00.000Z",
     "date_key": "2026-11-03",
     "odds": {
-      "home": 2.7,
-      "draw": 3.25,
-      "away": 2.5
+      "home": 2.625,
+      "draw": 3.3,
+      "away": 2.6
     },
     "bet365_prob": {
-      "home": 0.3435517970401691,
-      "draw": 0.2854122621564482,
-      "away": 0.3710359408033827
+      "home": 0.35649735119975073,
+      "draw": 0.2835774384543472,
+      "away": 0.35992521034590214
     },
     "market_prob": {
-      "home": 0.37031898457383183,
-      "draw": 0.28365354929437187,
-      "away": 0.3460274661317963
+      "home": 0.35087930780725063,
+      "draw": 0.28475068440554424,
+      "away": 0.3643700077872051
     },
     "market_bookmaker_count": 5,
-    "flagged": [
-      "home"
-    ],
+    "flagged": [],
     "status": "pending",
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_644094843",
@@ -1840,29 +1877,27 @@
     "kickoff": "2026-11-03T19:45:00.000Z",
     "date_key": "2026-11-03",
     "odds": {
-      "home": 3.6,
-      "draw": 3.7,
-      "away": 1.9
+      "home": 3.3,
+      "draw": 3.6,
+      "away": 2.1
     },
     "bet365_prob": {
-      "home": 0.2585509378447959,
-      "draw": 0.2515630746598013,
-      "away": 0.48988598749540263
+      "home": 0.28668941979522183,
+      "draw": 0.26279863481228666,
+      "away": 0.4505119453924914
     },
     "market_prob": {
-      "home": 0.2804304550914485,
-      "draw": 0.25350387986802536,
-      "away": 0.46606566504052604
+      "home": 0.2878518368112573,
+      "draw": 0.2585479698163515,
+      "away": 0.4536001933723913
     },
     "market_bookmaker_count": 5,
-    "flagged": [
-      "home"
-    ],
+    "flagged": [],
     "status": "pending",
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_466286966",
@@ -1873,18 +1908,18 @@
     "date_key": "2026-11-03",
     "odds": {
       "home": 2.625,
-      "draw": 3.2,
-      "away": 2.55
+      "draw": 3.25,
+      "away": 2.625
     },
     "bet365_prob": {
-      "home": 0.35091114336397355,
-      "draw": 0.2878567972907596,
-      "away": 0.361232059345267
+      "home": 0.3561643835616438,
+      "draw": 0.28767123287671237,
+      "away": 0.3561643835616438
     },
     "market_prob": {
-      "home": 0.35605160032639266,
-      "draw": 0.2853889110342073,
-      "away": 0.3585594886394
+      "home": 0.35651757171029297,
+      "draw": 0.28742202273154976,
+      "away": 0.3560604055581574
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -1892,7 +1927,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_200170363",
@@ -1902,19 +1937,19 @@
     "kickoff": "2026-11-03T20:00:00.000Z",
     "date_key": "2026-11-03",
     "odds": {
-      "home": 2.5,
-      "draw": 3.5,
-      "away": 2.5
+      "home": 2.6,
+      "draw": 3.4,
+      "away": 2.6
     },
     "bet365_prob": {
-      "home": 0.3684210526315789,
-      "draw": 0.26315789473684204,
-      "away": 0.3684210526315789
+      "home": 0.36170212765957444,
+      "draw": 0.2765957446808511,
+      "away": 0.36170212765957444
     },
     "market_prob": {
-      "home": 0.37761833115482757,
-      "draw": 0.26434601690497744,
-      "away": 0.35803565194019493
+      "home": 0.38096190376819916,
+      "draw": 0.26631183505345274,
+      "away": 0.35272626117834815
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -1922,7 +1957,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_022532721",
@@ -1932,19 +1967,19 @@
     "kickoff": "2026-11-03T20:00:00.000Z",
     "date_key": "2026-11-03",
     "odds": {
-      "home": 1.85,
-      "draw": 3.5,
+      "home": 1.909,
+      "draw": 3.6,
       "away": 3.75
     },
     "bet365_prob": {
-      "home": 0.4945831370701837,
-      "draw": 0.26142251530852567,
-      "away": 0.24399434762129066
+      "home": 0.49035365395197805,
+      "draw": 0.26002364594286836,
+      "away": 0.24962270010515364
     },
     "market_prob": {
-      "home": 0.48555869815145514,
-      "draw": 0.25775094758530603,
-      "away": 0.25669035426323883
+      "home": 0.4825655903960526,
+      "draw": 0.26165560309745517,
+      "away": 0.25577880650649226
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -1952,7 +1987,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_466286977",
@@ -1962,19 +1997,19 @@
     "kickoff": "2026-11-04T19:45:00.000Z",
     "date_key": "2026-11-04",
     "odds": {
-      "home": 3.5,
-      "draw": 3.75,
-      "away": 1.85
+      "home": 4.333,
+      "draw": 4.0,
+      "away": 1.75
     },
     "bet365_prob": {
-      "home": 0.2614225153085256,
-      "draw": 0.2439943476212906,
-      "away": 0.4945831370701836
+      "home": 0.21933432033777486,
+      "draw": 0.23759390250589463,
+      "away": 0.5430717771563306
     },
     "market_prob": {
-      "home": 0.24754840705317943,
-      "draw": 0.24231394398222128,
-      "away": 0.5101376489645993
+      "home": 0.22317396001032383,
+      "draw": 0.2386670169527859,
+      "away": 0.5381590230368903
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -1982,7 +2017,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_511941628",
@@ -1992,29 +2027,27 @@
     "kickoff": "2026-11-04T19:45:00.000Z",
     "date_key": "2026-11-04",
     "odds": {
-      "home": 3.9,
-      "draw": 4.1,
-      "away": 1.7
+      "home": 3.6,
+      "draw": 4.0,
+      "away": 1.85
     },
     "bet365_prob": {
-      "home": 0.23555255153768165,
-      "draw": 0.22406218316998985,
-      "away": 0.5403852652923284
+      "home": 0.26001405481377377,
+      "draw": 0.23401264933239635,
+      "away": 0.5059732958538299
     },
     "market_prob": {
-      "home": 0.2576509431240454,
-      "draw": 0.22274686017046333,
-      "away": 0.5196021967054912
+      "home": 0.2779816123538122,
+      "draw": 0.2310263794246271,
+      "away": 0.4909920082215608
     },
     "market_bookmaker_count": 5,
-    "flagged": [
-      "home"
-    ],
+    "flagged": [],
     "status": "pending",
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_988328016",
@@ -2024,19 +2057,19 @@
     "kickoff": "2026-11-04T20:00:00.000Z",
     "date_key": "2026-11-04",
     "odds": {
-      "home": 3.25,
-      "draw": 3.4,
-      "away": 2.1
+      "home": 3.4,
+      "draw": 3.5,
+      "away": 2.05
     },
     "bet365_prob": {
-      "home": 0.2854287427543474,
-      "draw": 0.2728362982210673,
-      "away": 0.44173495902458515
+      "home": 0.27548473795354195,
+      "draw": 0.2676137454405836,
+      "away": 0.4569015166058745
     },
     "market_prob": {
-      "home": 0.27928156836166507,
-      "draw": 0.26919370662973585,
-      "away": 0.45152472500859897
+      "home": 0.27618310253482714,
+      "draw": 0.26859917479881856,
+      "away": 0.45521772266635424
     },
     "market_bookmaker_count": 5,
     "flagged": [],
@@ -2044,7 +2077,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_200170379",
@@ -2074,7 +2107,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_377417514",
@@ -2094,9 +2127,9 @@
       "away": 0.41568296795952775
     },
     "market_prob": {
-      "home": 0.3165473675280155,
-      "draw": 0.2637886217235913,
-      "away": 0.4196640107483932
+      "home": 0.3174709810492292,
+      "draw": 0.2634321393118947,
+      "away": 0.419096879638876
     },
     "market_bookmaker_count": 4,
     "flagged": [],
@@ -2104,7 +2137,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_988328027",
@@ -2134,7 +2167,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_899709257",
@@ -2164,7 +2197,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_644094895",
@@ -2194,7 +2227,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_466286988",
@@ -2214,9 +2247,9 @@
       "away": 0.6076085548143407
     },
     "market_prob": {
-      "home": 0.18193782556349622,
-      "draw": 0.20948871555793513,
-      "away": 0.6085734588785686
+      "home": 0.17305302590564142,
+      "draw": 0.20034501249664755,
+      "away": 0.6266019615977111
     },
     "market_bookmaker_count": 4,
     "flagged": [],
@@ -2224,7 +2257,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_022532734",
@@ -2244,9 +2277,9 @@
       "away": 0.22641509433962262
     },
     "market_prob": {
-      "home": 0.5207680847561832,
-      "draw": 0.25080727377277756,
-      "away": 0.22842464147103925
+      "home": 0.5246300101927909,
+      "draw": 0.24881558895641384,
+      "away": 0.2265544008507953
     },
     "market_bookmaker_count": 4,
     "flagged": [],
@@ -2254,7 +2287,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_511941641",
@@ -2274,9 +2307,9 @@
       "away": 0.6008583690987125
     },
     "market_prob": {
-      "home": 0.1808391427124046,
-      "draw": 0.21605404648123197,
-      "away": 0.6031068108063634
+      "home": 0.18073593104366795,
+      "draw": 0.21480869896690008,
+      "away": 0.604455369989432
     },
     "market_bookmaker_count": 4,
     "flagged": [],
@@ -2284,7 +2317,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_155865464",
@@ -2314,7 +2347,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_733653197",
@@ -2344,7 +2377,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_377417582",
@@ -2364,17 +2397,19 @@
       "away": 0.5813953488372093
     },
     "market_prob": {
-      "home": 0.18993959841201113,
-      "draw": 0.22696170443413788,
-      "away": 0.583098697153851
+      "home": 0.23161208133799988,
+      "draw": 0.21531315716323662,
+      "away": 0.5530747614987634
     },
     "market_bookmaker_count": 4,
-    "flagged": [],
+    "flagged": [
+      "home"
+    ],
     "status": "pending",
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_644094839",
@@ -2404,7 +2439,7 @@
     "result": null,
     "score": null,
     "logged_at": "2026-10-31T19:15:52.915795+00:00",
-    "updated_at": "2026-10-31T20:09:57.358237+00:00"
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_514394813",
@@ -2414,26 +2449,27 @@
     "kickoff": "2026-11-03T19:45:00.000Z",
     "date_key": "2026-11-03",
     "odds": {
-      "home": 2.9,
-      "draw": 3.5,
-      "away": 2.15
+      "home": 3.1,
+      "draw": 3.4,
+      "away": 2.2
     },
     "bet365_prob": {
-      "home": 0.31472187369301546,
-      "draw": 0.26076955248849853,
-      "away": 0.42450857381848595
+      "home": 0.30112721417069244,
+      "draw": 0.2745571658615137,
+      "away": 0.4243156199677939
     },
     "market_prob": {
-      "home": 0.302949472096818,
-      "draw": 0.26540366611097166,
-      "away": 0.4316468617922103
+      "home": 0.2984179189227103,
+      "draw": 0.26999953723531006,
+      "away": 0.4315825438419796
     },
     "market_bookmaker_count": 3,
     "flagged": [],
     "status": "pending",
     "result": null,
     "score": null,
-    "logged_at": "2026-10-31T20:09:57.358237+00:00"
+    "logged_at": "2026-10-31T20:09:57.358237+00:00",
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_468098747",
@@ -2443,26 +2479,27 @@
     "kickoff": "2026-11-03T19:45:00.000Z",
     "date_key": "2026-11-03",
     "odds": {
-      "home": 2.0,
+      "home": 2.05,
       "draw": 3.6,
-      "away": 3.1
+      "away": 3.25
     },
     "bet365_prob": {
-      "home": 0.4543973941368078,
-      "draw": 0.252442996742671,
-      "away": 0.29315960912052114
+      "home": 0.4545013110614742,
+      "draw": 0.2588132465766728,
+      "away": 0.28668544236185295
     },
     "market_prob": {
-      "home": 0.47123951049670926,
-      "draw": 0.2490837375695028,
-      "away": 0.279676751933788
+      "home": 0.46658861385988154,
+      "draw": 0.2509795443146546,
+      "away": 0.2824318418254639
     },
     "market_bookmaker_count": 5,
     "flagged": [],
     "status": "pending",
     "result": null,
     "score": null,
-    "logged_at": "2026-10-31T20:09:57.358237+00:00"
+    "logged_at": "2026-10-31T20:09:57.358237+00:00",
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_890220387",
@@ -2472,26 +2509,27 @@
     "kickoff": "2026-11-04T19:45:00.000Z",
     "date_key": "2026-11-04",
     "odds": {
-      "home": 2.75,
+      "home": 2.625,
       "draw": 3.4,
-      "away": 2.25
+      "away": 2.45
     },
     "bet365_prob": {
-      "home": 0.3299191374663073,
-      "draw": 0.26684636118598387,
-      "away": 0.4032345013477089
+      "home": 0.3516808274842999,
+      "draw": 0.27151828592537863,
+      "away": 0.37680088659032135
     },
     "market_prob": {
-      "home": 0.3471510661039764,
-      "draw": 0.26121542319180585,
-      "away": 0.3916335107042178
+      "home": 0.35481379644735156,
+      "draw": 0.2625430651214157,
+      "away": 0.38264313843123277
     },
     "market_bookmaker_count": 5,
     "flagged": [],
     "status": "pending",
     "result": null,
     "score": null,
-    "logged_at": "2026-10-31T20:09:57.358237+00:00"
+    "logged_at": "2026-10-31T20:09:57.358237+00:00",
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   },
   {
     "match_id": "mt_207707607",
@@ -2501,27 +2539,26 @@
     "kickoff": "2026-11-03T19:45:00.000Z",
     "date_key": "2026-11-03",
     "odds": {
-      "home": 2.5,
-      "draw": 3.4,
-      "away": 2.5
+      "home": 2.35,
+      "draw": 3.3,
+      "away": 3.0
     },
     "bet365_prob": {
-      "home": 0.3655913978494624,
-      "draw": 0.26881720430107525,
-      "away": 0.3655913978494624
+      "home": 0.4007285974499089,
+      "draw": 0.2853673345476624,
+      "away": 0.31390406800242865
     },
     "market_prob": {
-      "home": 0.3877884942113339,
-      "draw": 0.2814736785416492,
-      "away": 0.33073782724701684
+      "home": 0.39631246969452977,
+      "draw": 0.28943523616421385,
+      "away": 0.3142522941412563
     },
     "market_bookmaker_count": 5,
-    "flagged": [
-      "home"
-    ],
+    "flagged": [],
     "status": "pending",
     "result": null,
     "score": null,
-    "logged_at": "2026-10-31T20:09:57.358237+00:00"
+    "logged_at": "2026-10-31T20:09:57.358237+00:00",
+    "updated_at": "2026-11-01T17:02:54.501201+00:00"
   }
 ]
