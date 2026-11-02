@@ -55,6 +55,7 @@ plain list of upcoming matches with their de-vigged prices).
 import os
 import sys
 import json
+import math
 import time
 import hashlib
 import html as html_lib
@@ -378,8 +379,15 @@ def parse_table_rows(rows: list, league_name: str = "") -> dict:
         if pts is None and row.get("wins") is not None and row.get("draws") is not None:
             pts = 3 * row["wins"] + row["draws"]
         pos = row.get("position", row.get("rank"))
+        gd = row.get("goal_difference")
+        if gd is None and row.get("goals_for") is not None and row.get("goals_against") is not None:
+            gd = row["goals_for"] - row["goals_against"]
         table[tid] = {
             "position": pos, "points": pts, "played": row.get("matches_played"),
+            # wins/draws/losses/goal_difference confirmed live (standings row
+            # keys logged by the 2026-11-02 run).
+            "wins": row.get("wins"), "draws": row.get("draws"), "losses": row.get("losses"),
+            "gd": gd, "gf": row.get("goals_for"), "ga": row.get("goals_against"),
             "_sort": (-(pts if pts is not None else -1),
                       -((row.get("goals_for") or 0) - (row.get("goals_against") or 0)),
                       -(row.get("goals_for") or 0)),
@@ -397,6 +405,115 @@ def parse_table_rows(rows: list, league_name: str = "") -> dict:
     for v in table.values():
         v.pop("_sort", None)
     return table
+
+
+# ----------------------------------------------------------------------
+# Table-based 1X2 model (user request, 2026-11-02: "can the model predict
+# 1x2" -> "Yes"). Same independent-Poisson scoreline method Match IQ's
+# predict_1x2() uses, fed by SEASON goals for/against from the standings
+# rows this page already fetches (no extra API calls, works in all four
+# leagues). It is deliberately simple and is shown NEXT TO Bet365's price,
+# never instead of it: the results tracker grades it against the market,
+# because bookmaker prices usually beat a table-only model.
+# ----------------------------------------------------------------------
+
+# How hard a team's own season goals per game is pulled toward the league
+# average, expressed as "extra average games". Match IQ uses 3, but that is
+# for a 7-game form window and a flat 3 is far too weak for ~9 games of
+# season totals. Rule of thumb: regression games ~ (variance of one game's
+# goals ~1.4) / (variance of true team strength ~0.3^2 = 0.09) ~ 15. 12 is
+# a deliberate, slightly lighter choice. This is a judgement call, not a
+# fitted value -- the results tracker's model-vs-market comparison is what
+# should eventually tune it.
+MODEL_PRIOR_GAMES = 12
+
+# Standings give season-wide goals per game with NO home/away split, so
+# home advantage is applied as a fixed assumption: roughly 25% more goals
+# at home than away in English football, split evenly around the average
+# (1.12 / 0.89, whose ratio is ~1.26). An assumption, not fitted.
+HOME_GOALS_FACTOR = 1.12
+AWAY_GOALS_FACTOR = 0.89
+
+# A model gap this big vs Bet365's de-vigged probability is highlighted.
+# Deliberately larger than the market-gap threshold: a table-only model is
+# noisier than a cross-bookmaker average.
+MODEL_GAP_HIGHLIGHT_PP = 5.0
+
+
+def league_goal_rates(table: dict) -> tuple[float, float] | None:
+    """(avg goals scored per team per game, avg conceded) across the
+    league, or None without usable goals data. By symmetry the two are
+    nearly equal; both are kept to mirror Match IQ's lg_scored/lg_conceded."""
+    scored, conceded = [], []
+    for t in table.values():
+        if t.get("played") and t.get("gf") is not None and t.get("ga") is not None:
+            scored.append(t["gf"] / t["played"])
+            conceded.append(t["ga"] / t["played"])
+    if not scored:
+        return None
+    return sum(scored) / len(scored), sum(conceded) / len(conceded)
+
+
+def _shrunk_rate(total, played, league_avg):
+    return (total + MODEL_PRIOR_GAMES * league_avg) / (played + MODEL_PRIOR_GAMES)
+
+
+def poisson_1x2(exp_home: float, exp_away: float, max_goals: int = 10) -> dict:
+    """Home/Draw/Away probabilities from independent Poisson goals (unrounded
+    -- Match IQ's version rounds to whole percents). Ignores the small real-
+    world correlation between the two teams' scoring and the Dixon-Coles
+    low-score correction, so draws are, if anything, slightly under-priced."""
+    pmf_h, pmf_a = [], []
+    for k in range(max_goals + 1):
+        pmf_h.append(math.exp(-exp_home) * exp_home ** k / math.factorial(k))
+        pmf_a.append(math.exp(-exp_away) * exp_away ** k / math.factorial(k))
+    home = draw = away = 0.0
+    for h in range(max_goals + 1):
+        for a in range(max_goals + 1):
+            p = pmf_h[h] * pmf_a[a]
+            if h > a:
+                home += p
+            elif h == a:
+                draw += p
+            else:
+                away += p
+    total = home + draw + away          # renormalise the (tiny) truncated tail
+    return {"home_prob": home / total, "draw_prob": draw / total, "away_prob": away / total}
+
+
+def model_1x2(home_row: dict | None, away_row: dict | None, rates) -> dict | None:
+    """Opponent-adjusted expected goals, then Poisson -> 1X2. Same shape as
+    Match IQ's predict_goals(): exp_home = home attack x (away defence /
+    league avg), exp_away likewise, with a fixed home-advantage factor.
+    Returns None when either team or the league has no goals data."""
+    if not rates or not home_row or not away_row:
+        return None
+    for r in (home_row, away_row):
+        if not r.get("played") or r.get("gf") is None or r.get("ga") is None:
+            return None
+    lg_scored, lg_conceded = rates
+    if lg_scored <= 0 or lg_conceded <= 0:
+        return None
+    h_att = _shrunk_rate(home_row["gf"], home_row["played"], lg_scored)
+    h_def = _shrunk_rate(home_row["ga"], home_row["played"], lg_conceded)
+    a_att = _shrunk_rate(away_row["gf"], away_row["played"], lg_scored)
+    a_def = _shrunk_rate(away_row["ga"], away_row["played"], lg_conceded)
+    exp_home = HOME_GOALS_FACTOR * h_att * (a_def / lg_conceded)
+    exp_away = AWAY_GOALS_FACTOR * a_att * (h_def / lg_conceded)
+    out = poisson_1x2(exp_home, exp_away)
+    out.update(exp_home=exp_home, exp_away=exp_away)
+    return out
+
+
+def model_flagged_sides(card: dict) -> list[str]:
+    """Sides where the table model rates the outcome at least
+    MODEL_GAP_HIGHLIGHT_PP more likely than Bet365 (or the average) prices
+    it. Same rounded-gap convention as flagged_sides()."""
+    m = card.get("model")
+    if not m:
+        return []
+    return [side for side in ("home", "draw", "away")
+            if round((m[f"{side}_prob"] - card[f"{side}_prob"]) * 100, 1) >= MODEL_GAP_HIGHLIGHT_PP]
 
 
 def ordinal(n: int) -> str:
@@ -422,6 +539,7 @@ def scan_league(league_name: str) -> list[dict]:
     matches = get_upcoming_matches(comp["id"])
     print(f"{comp.get('name', league_name)}: {len(matches)} upcoming match(es) in the next {DAYS_AHEAD} days")
     table = get_league_table(comp["id"], comp.get("name", league_name))
+    rates = league_goal_rates(table)
 
     cards = []
     for m in matches:
@@ -445,7 +563,11 @@ def scan_league(league_name: str) -> list[dict]:
             print(f"  [DIAG] couldn't de-vig {home} vs {away} -- odds shape didn't match, skipping")
             continue
 
-        cards.append({
+        h_id = (m.get("home_team") or {}).get("id") if isinstance(m.get("home_team"), dict) else None
+        a_id = (m.get("away_team") or {}).get("id") if isinstance(m.get("away_team"), dict) else None
+        model = model_1x2(table.get(h_id), table.get(a_id), rates)
+
+        card = {
             "match_id": match_id,
             "league": comp.get("name", league_name),
             "home": home,
@@ -454,8 +576,11 @@ def scan_league(league_name: str) -> list[dict]:
             "flagged": flagged_sides(fair),
             "home_table": table.get((m.get("home_team") or {}).get("id")) if isinstance(m.get("home_team"), dict) else None,
             "away_table": table.get((m.get("away_team") or {}).get("id")) if isinstance(m.get("away_team"), dict) else None,
+            "model": model,
             **fair,
-        })
+        }
+        card["model_flagged"] = model_flagged_sides(card)
+        cards.append(card)
 
     return cards
 
@@ -526,6 +651,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   .prob.fav .pct{{ color:var(--green); }}
   .prob .mkt{{ color:var(--sub); font-size:9.5px; margin-top:4px; border-top:1px solid var(--border); padding-top:3px; }}
   .prob .mkt.highlight{{ color:var(--green); font-weight:600; }}
+  .prob .mdl{{ color:var(--sub); font-size:9.5px; margin-top:2px; }}
+  .prob .mdl.highlight{{ color:#7ec8ff; font-weight:600; }}
   .meta{{ color:var(--sub); font-size:10.5px; display:flex; justify-content:space-between; }}
   .empty{{ color:var(--sub); font-size:13px; padding:20px 0; }}
   .footer{{ color:var(--sub); font-size:11px; text-align:center; margin-top:28px; line-height:1.6; }}
@@ -550,7 +677,12 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     number on its own carries no edge, since it's just that book's own
     margin removed, so a highlighted gap there (Bet365 paying longer
     odds than the wider market thinks fair) is the part worth a second
-    look, not the percentage itself. Tap a Home/Draw/Away tile
+    look, not the percentage itself. Each tile also shows an "mdl" line (the table model): a simple table-based
+    estimate (season goals for and against, plus a fixed home-advantage
+    assumption) turned into Home/Draw/Away odds the same way Match IQ does
+    it. It is NOT a bookmaker price and is usually less sharp than one, so
+    a highlighted blue gap is only a prompt to look closer -- the Results
+    page tracks whether the model actually beats the market. Tap a Home/Draw/Away tile
     on any Bet365-priced match to add it to the slip calculator at the bottom
     of the page. Not every
     upcoming match has odds posted yet -- those are left off rather
@@ -691,18 +823,21 @@ CARD_TEMPLATE = """<div class="card">
       <div class="pct">{home_pct}%</div>
       <div class="fairodds">fair {home_fairodds}</div>
       {home_mkt}
+      {home_mdl}
     </div>
     <div class="prob{draw_fav}"{draw_attrs}>
       <div class="label">Draw</div>
       <div class="pct">{draw_pct}%</div>
       <div class="fairodds">fair {draw_fairodds}</div>
       {draw_mkt}
+      {draw_mdl}
     </div>
     <div class="prob{away_fav}"{away_attrs}>
       <div class="label">Away</div>
       <div class="pct">{away_pct}%</div>
       <div class="fairodds">fair {away_fairodds}</div>
       {away_mkt}
+      {away_mdl}
     </div>
   </div>
   <div class="meta"><span>{bookmakers_display}</span><span>{overround_pct}% overround</span></div>
@@ -718,6 +853,7 @@ CARD_TEMPLATE = """<div class="card">
 # actually points at value. Flagged only past a small threshold so
 # ordinary noise between books isn't highlighted as if it were a signal.
 MKT_LINE = '<div class="mkt{highlight}">mkt {mkt_pct}% ({sign}{gap_pct})</div>'
+MDL_LINE = '<div class="mdl{highlight}">mdl {mdl_pct}% ({sign}{gap_pct})</div>'
 MKT_GAP_HIGHLIGHT_PP = 2.0
 
 
@@ -733,6 +869,20 @@ def _fmt_kickoff(raw: str) -> str:
 
 def _fav_class(prob: float, home_p: float, draw_p: float, away_p: float) -> str:
     return " fav" if prob == max(home_p, draw_p, away_p) else ""
+
+
+def _mdl_line(bet365_p: float, model_p: float | None) -> str:
+    """One tile's "model" line: the table model's probability and its gap
+    to Bet365's de-vigged figure (highlighted past MODEL_GAP_HIGHLIGHT_PP)."""
+    if model_p is None:
+        return ""
+    gap_pct = round((model_p - bet365_p) * 100, 1) + 0.0
+    return MDL_LINE.format(
+        mdl_pct=round(model_p * 100, 1),
+        sign="+" if gap_pct >= 0 else "",
+        gap_pct=gap_pct,
+        highlight=" highlight" if gap_pct >= MODEL_GAP_HIGHLIGHT_PP else "",
+    )
 
 
 def _mkt_line(bet365_p: float, market_p: float | None) -> str:
@@ -753,7 +903,8 @@ def _mkt_line(bet365_p: float, market_p: float | None) -> str:
 
 def _table_line(card: dict) -> str:
     """Two stacked rows (home, then away): team name on the left, league
-    position / points / games played on the right. A team with no table
+    position / points / W-D-L / goal difference on the right (games played
+    only as a fallback when W-D-L is missing). A team with no table
     data is simply omitted; both missing -> no block at all."""
     def row(team: str, t: dict | None) -> str:
         if not t or t.get("position") is None:
@@ -761,8 +912,12 @@ def _table_line(card: dict) -> str:
         bits = [f"<b>{ordinal(t['position'])}</b>"]
         if t.get("points") is not None:
             bits.append(f"{t['points']} pts")
-        if t.get("played") is not None:
+        if None not in (t.get("wins"), t.get("draws"), t.get("losses")):
+            bits.append(f"{t['wins']}-{t['draws']}-{t['losses']}")   # W-D-L (sums to games played)
+        elif t.get("played") is not None:
             bits.append(f"P{t['played']}")
+        if t.get("gd") is not None:
+            bits.append(f"{t['gd']:+d} GD")
         return (f'<div class="r"><span class="n">{html_lib.escape(team)}</span>'
                 f'<span>{" · ".join(bits)}</span></div>')
 
@@ -808,6 +963,9 @@ def build_card_html(card: dict) -> str:
         draw_fav=_fav_class(draw_p, home_p, draw_p, away_p),
         away_fav=_fav_class(away_p, home_p, draw_p, away_p),
         home_attrs=attrs("home", home_p), draw_attrs=attrs("draw", draw_p), away_attrs=attrs("away", away_p),
+        home_mdl=_mdl_line(home_p, (card.get("model") or {}).get("home_prob")),
+        draw_mdl=_mdl_line(draw_p, (card.get("model") or {}).get("draw_prob")),
+        away_mdl=_mdl_line(away_p, (card.get("model") or {}).get("away_prob")),
         home_mkt=_mkt_line(home_p, card.get("market_home_prob") if has_market else None),
         draw_mkt=_mkt_line(draw_p, card.get("market_draw_prob") if has_market else None),
         away_mkt=_mkt_line(away_p, card.get("market_away_prob") if has_market else None),
