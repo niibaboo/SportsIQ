@@ -138,6 +138,10 @@ def log_todays_signals(cards, log, now=None):
             "market_prob": ({s: c[f"market_{s}_prob"] for s in SIDES} if has_market else None),
             "market_bookmaker_count": c.get("market_bookmaker_count"),
             "flagged": list(c.get("flagged", [])) if has_market else [],
+            # Table-based 1X2 model (added 2026-11-02). None on entries logged
+            # before it existed, so older rows are simply skipped for it.
+            "model_prob": ({s: c["model"][f"{s}_prob"] for s in SIDES} if c.get("model") else None),
+            "model_flagged": list(c.get("model_flagged", [])) if c.get("model") else [],
         }
 
         existing = by_id.get(mid)
@@ -206,38 +210,102 @@ def verify_pending_results(log, key, now=None, max_checks=MAX_CHECKS_PER_RUN):
     return log
 
 
-def summarize(log):
-    """Pure stats, kept separate from HTML so it can be tested directly."""
-    verified = [e for e in log if e["status"] == "verified"]
+def _signal_stats(verified, prob_key, flag_key):
+    """Flat 1-unit bets on every flagged side of one signal ("market" gap or
+    "model" gap) at Bet365's odds, plus calibration inputs."""
     bets = []
     for e in verified:
-        if not e.get("market_prob"):
+        if not e.get(prob_key):
             continue
-        for side in e.get("flagged", []):
+        for side in e.get(flag_key) or []:
             won = e["result"] == side
             odds = e["odds"][side]
             bets.append({
                 "entry": e, "side": side, "odds": odds, "won": won,
                 "profit": (odds - 1.0) if won else -1.0,
-                "bet365_prob": e["bet365_prob"][side], "market_prob": e["market_prob"][side],
+                "bet365_prob": e["bet365_prob"][side], "signal_prob": e[prob_key][side],
             })
+            bets[-1]["market_prob"] = bets[-1]["signal_prob"]      # name the dashboard rows already use
     n = len(bets)
-    out = {"n": n, "pending": sum(1 for e in log if e["status"] == "pending"),
-           "verified_matches": len(verified), "bets": bets}
+    out = {"n": n, "bets": bets}
     if n:
         wins = sum(1 for b in bets if b["won"])
         out.update(
             wins=wins, hit_rate=wins / n,
             exp_bet365=sum(b["bet365_prob"] for b in bets) / n,
-            exp_market=sum(b["market_prob"] for b in bets) / n,
+            exp_market=sum(b["signal_prob"] for b in bets) / n,
             avg_odds=sum(b["odds"] for b in bets) / n,
             profit=sum(b["profit"] for b in bets), roi=sum(b["profit"] for b in bets) / n,
         )
     return out
 
 
+def accuracy(verified):
+    """Brier score (sum over the three outcomes of (probability - what
+    happened)^2; LOWER is better) for the table model against Bet365's own
+    de-vigged probabilities, over every graded match that has both. This is
+    the fast, low-noise test of whether the model is any good -- ROI on a
+    handful of flagged bets is far noisier. Always-pick-the-draw style
+    baselines are not needed: Bet365's score is the bar to beat."""
+    rows = [e for e in verified if e.get("model_prob")]
+    if not rows:
+        return None
+    def brier(probs, result):
+        return sum((probs[s] - (1.0 if s == result else 0.0)) ** 2 for s in SIDES)
+    model = [brier(e["model_prob"], e["result"]) for e in rows]
+    book = [brier(e["bet365_prob"], e["result"]) for e in rows]
+    return {"n": len(rows), "model": sum(model) / len(rows), "bet365": sum(book) / len(rows)}
+
+
+def summarize(log):
+    """Pure stats (kept apart from HTML so it can be tested). Top-level n /
+    bets / roi etc. describe the MARKET-gap signal (the original tracker);
+    "model" holds the same stats for the table-model signal."""
+    verified = [e for e in log if e["status"] == "verified"]
+    out = {"pending": sum(1 for e in log if e["status"] == "pending"),
+           "verified_matches": len(verified)}
+    out.update(_signal_stats(verified, "market_prob", "flagged"))
+    out["model"] = _signal_stats(verified, "model_prob", "model_flagged")
+    out["accuracy"] = accuracy(verified)
+    return out
+
+
 def _pct(x):
     return f"{x * 100:.1f}%"
+
+
+def _model_section(s):
+    """Dashboard block for the table-based 1X2 model: (1) Brier score vs
+    Bet365 over every graded match -- the main test, since it uses all
+    matches, not just the few that get flagged -- and (2) the model's own
+    flagged bets at Bet365 odds."""
+    acc, m = s["accuracy"], s["model"]
+    if not acc:
+        return """<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #2a3038">
+  <div style="font-weight:bold;margin-bottom:4px">Table model vs Bet365</div>
+  <div style="font-size:12px;color:#8b98a8">No graded matches carry a model prediction yet -- the model was added after the first matches were logged, so only newly logged matches count.</div>
+</div>"""
+    diff = acc["model"] - acc["bet365"]
+    better = diff < 0
+    few = acc["n"] < 100
+    verdict = ("Too few matches to say anything -- differences this small are noise until there are well over 100."
+               if few else
+               ("The model is scoring better than Bet365's own prices -- unusual; keep watching before trusting it."
+                if better else "Bet365's prices are scoring better than the model, which is the normal result."))
+    html = f"""<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #2a3038">
+  <div style="font-weight:bold;margin-bottom:2px">Table model vs Bet365</div>
+  <div style="font-size:11px;color:#8b98a8;margin-bottom:8px">Brier score over {acc['n']} graded match(es) -- LOWER is better.</div>
+  <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #233040"><span>Table model</span><b>{acc['model']:.3f}</b></div>
+  <div style="display:flex;justify-content:space-between;padding:6px 0"><span>Bet365 (de-vigged)</span><b>{acc['bet365']:.3f}</b></div>
+  <div style="font-size:11px;color:#8b98a8;margin-top:8px;line-height:1.5">{verdict}</div>"""
+    if m["n"]:
+        sign = "+" if m["profit"] >= 0 else ""
+        html += f"""
+  <div style="border-top:1px solid #233040;margin-top:10px;padding-top:10px;font-size:12px">
+    <b>Model-flagged sides</b> (model 5pp+ above Bet365), 1 unit at Bet365 odds:
+    {m['wins']}/{m['n']} won ({_pct(m['hit_rate'])}) vs {_pct(m['exp_bet365'])} Bet365-implied and {_pct(m['exp_market'])} model-implied · {sign}{m['profit']:.2f} units ({sign}{m['roi'] * 100:.1f}% ROI).
+  </div>"""
+    return html + "\n</div>"
 
 
 def build_results_dashboard(log):
@@ -286,6 +354,7 @@ def build_results_dashboard(log):
 <h2 style="text-align:center;margin-bottom:2px">📋 Market IQ Results</h2>
 <p style="text-align:center;color:#888;font-size:11px;margin-top:0">{datetime.now().strftime("%d %b %H:%M")} · {s['verified_matches']} match(es) graded · {s['pending']} pending</p>
 {summary}
+{_model_section(s)}
 <div style="background:#1a1f26;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #2a3038">
   <div style="font-weight:bold;margin-bottom:8px">Recent Flagged Bets</div>
   {rows or '<p style="color:#888;font-size:12px">Nothing graded yet — check back after flagged matches have been played.</p>'}
