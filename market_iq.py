@@ -1,7 +1,7 @@
 """
 Market IQ
 ---------
-1X2 (home/draw/away) match-result model for English football, built
+1X2 (home/draw/away) match-result model for English, Italian and Spanish football, built
 from BOOKMAKER ODDS rather than this suite's usual stats-driven
 approach (user request, 2026-10-29: "Can we use the bookmaker odds to
 predict 1 x 2" -> "Only English leagues" -> "Let's run it via GitHub"
@@ -78,14 +78,29 @@ OUTPUT_HTML = Path(__file__).parent / "market_iq.html"
 
 HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 
-# Only English leagues (explicit user request, 2026-10-29), in the
-# order they're displayed on the page.
+# English leagues first (user request, 2026-10-29), then Italy and Spain
+# (user request, 2026-11-02), in the order displayed on the page.
+# "LaLiga" is TheStatsAPI's exact name (confirmed earlier via
+# check_iberian_leagues.py, id comp_8814, country Spain) -- "La Liga" with
+# a space does not match. "Serie A" is unverified against the live API:
+# watch the first run's [DIAG]/[!] lines for it.
 LEAGUES = [
     "Premier League",
     "Championship",
     "League One",
     "League Two",
+    "Serie A",
+    "LaLiga",
 ]
+
+# Country hint used to pick the right competition when several share an
+# exact name (there is more than one "Serie A" in the world). Compared
+# case-insensitively against the competition's "country" field; if the
+# field is missing the hint is ignored.
+LEAGUE_COUNTRIES = {
+    "serie a": "italy",
+    "laliga": "spain",
+}
 
 # How far ahead to look for scheduled matches. Kept modest -- odds
 # tend to firm up closer to kickoff, and a shorter window keeps the
@@ -173,9 +188,18 @@ def find_competition(name: str) -> dict | None:
     if not results:
         print(f"  [!] no competition found for '{name}'")
         return None
-    for comp in results:
-        if comp.get("name", "").lower() == name.lower():
-            return comp
+    exact = [c for c in results if c.get("name", "").lower() == name.lower()]
+    want = LEAGUE_COUNTRIES.get(name.lower())
+    if want and exact:
+        for comp in exact:
+            ctry = comp.get("country")
+            ctry = (ctry.get("name") if isinstance(ctry, dict) else ctry) or ""
+            if str(ctry).lower() == want:
+                return comp
+        print(f"  [DIAG] '{name}': {len(exact)} exact-name result(s) but none with country "
+              f"'{want}' (countries seen: {[c.get('country') for c in exact]}) -- using first")
+    if exact:
+        return exact[0]
     print(f"  [DIAG] no exact match for '{name}' among {len(results)} results -- "
           f"using first: {results[0].get('name')}")
     return results[0]
@@ -708,6 +732,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     upcoming match has odds posted yet -- those are left off rather
     than guessed at.
   </div>
+  {filter_html}
   {sections_html}
   <div class="footer">
     <a href="results/index.html" style="color:#7ec8ff">📋 Results tracker — do the flagged gaps actually pay?</a><br><br>
@@ -830,10 +855,82 @@ SLIP_HTML = """<style>
 })();
 </script>"""
 
-LEAGUE_SECTION_TEMPLATE = """<h2 class="league">{league}</h2>
-{cards_html}"""
+LEAGUE_SECTION_TEMPLATE = """<section class="lsec" data-league="{league_key}"><h2 class="league">{league}</h2>
+{cards_html}</section>"""
 
-CARD_TEMPLATE = """<div class="card">
+# League + date filter (user request, 2026-11-02). Plain string, not a
+# .format() template, so CSS/JS braces are written normally. Chips are
+# built by make_html(); this JS only shows/hides cards and sections.
+FILTER_STYLE = """<style>
+  #filters{margin:14px 0 6px;}
+  #filters .row{display:flex; gap:6px; overflow-x:auto; padding:2px 0 8px; -webkit-overflow-scrolling:touch;}
+  #filters .chip{flex:0 0 auto; padding:6px 12px; border-radius:999px; font-size:12.5px; cursor:pointer;
+    color:var(--sub); background:var(--panel2); border:1px solid var(--border);
+    font-family:inherit; touch-action:manipulation; -webkit-tap-highlight-color:transparent;}
+  #filters .chip.on{color:#0b0f14; background:#7ec8ff; border-color:#7ec8ff; font-weight:700;}
+  #filters .lbl{font-size:11px; color:var(--sub); margin:2px 0 2px; text-transform:uppercase; letter-spacing:.06em;}
+  #noMatch{display:none; text-align:center; color:var(--sub); padding:24px 0; font-size:14px;}
+</style>"""
+
+FILTER_SCRIPT = """<script>
+(function(){
+  var sel = {league:'all', date:'all'};
+  function apply(){
+    var shown = 0;
+    document.querySelectorAll('.lsec').forEach(function(sec){
+      var leagueOk = sel.league==='all' || sec.getAttribute('data-league')===sel.league;
+      var n = 0;
+      sec.querySelectorAll('.card').forEach(function(c){
+        var ok = leagueOk && (sel.date==='all' || c.getAttribute('data-date')===sel.date);
+        c.style.display = ok ? '' : 'none';
+        if (ok) n++;
+      });
+      var empty = sec.querySelector('.empty');
+      if (empty) { empty.style.display = (leagueOk && sel.date==='all') ? '' : 'none'; if (leagueOk && sel.date==='all') n++; }
+      sec.style.display = n ? '' : 'none';
+      shown += n;
+    });
+    document.getElementById('noMatch').style.display = shown ? 'none' : 'block';
+  }
+  document.getElementById('filters').addEventListener('click', function(e){
+    var b = e.target.closest('.chip'); if (!b) return;
+    var kind = b.getAttribute('data-kind');
+    sel[kind] = b.getAttribute('data-val');
+    document.querySelectorAll('#filters .chip[data-kind="'+kind+'"]').forEach(function(x){
+      x.classList.toggle('on', x===b);
+    });
+    apply();
+  });
+})();
+</script>"""
+
+
+def _chip(kind: str, val: str, label: str, on: bool = False) -> str:
+    return (f'<button type="button" class="chip{" on" if on else ""}" data-kind="{kind}" '
+            f'data-val="{html_lib.escape(val, quote=True)}">{html_lib.escape(label)}</button>')
+
+
+def _card_date(card: dict) -> str:
+    return (card.get("kickoff") or "")[:10]
+
+
+def build_filter_html(cards: list[dict]) -> str:
+    league_chips = [_chip("league", "all", "All leagues", True)] + [
+        _chip("league", lg.lower(), lg) for lg in LEAGUES]
+    dates = sorted({d for d in (_card_date(c) for c in cards) if d})
+    date_chips = [_chip("date", "all", "All dates", True)]
+    for d in dates:
+        try:
+            label = datetime.strptime(d, "%Y-%m-%d").strftime("%a %d %b")
+        except ValueError:
+            label = d
+        date_chips.append(_chip("date", d, label))
+    return (FILTER_STYLE + '<div id="filters"><div class="lbl">League</div><div class="row">'
+            + "".join(league_chips) + '</div><div class="lbl">Date</div><div class="row">'
+            + "".join(date_chips) + '</div></div>'
+            '<div id="noMatch">No matches for that league and date.</div>')
+
+CARD_TEMPLATE = """<div class="card"{card_attrs}>
   <div class="matchup">{home} vs {away}</div>
   <div class="kickoff">{kickoff_display}</div>
   {table_line}
@@ -975,6 +1072,7 @@ def build_card_html(card: dict) -> str:
     return CARD_TEMPLATE.format(
         home=card["home"], away=card["away"],
         kickoff_display=_fmt_kickoff(card.get("kickoff", "")),
+        card_attrs=f' data-date="{_card_date(card)}"',
         table_line=_table_line(card),
         skip_badge=('<div class="skip">SKIP &middot; model far from Bet365 &ndash; ignore the mdl lines</div>'
                     if model_skip(card) else ""),
@@ -1010,12 +1108,13 @@ def make_html(cards: list[dict]) -> str:
             cards_html = '<div class="empty">No upcoming matches with posted odds right now.</div>'
         else:
             cards_html = "\n".join(build_card_html(c) for c in league_cards)
-        sections.append(LEAGUE_SECTION_TEMPLATE.format(league=league_name, cards_html=cards_html))
+        sections.append(LEAGUE_SECTION_TEMPLATE.format(league=league_name, league_key=league_name.lower(), cards_html=cards_html))
 
     return PAGE_TEMPLATE.format(
         generated_at=datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
+        filter_html=build_filter_html(cards),
         sections_html="\n".join(sections),
-        slip_html=SLIP_HTML,
+        slip_html=SLIP_HTML + FILTER_SCRIPT,
     )
 
 
