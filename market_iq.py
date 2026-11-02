@@ -335,6 +335,77 @@ def flagged_sides(fair: dict) -> list[str]:
 
 
 # ----------------------------------------------------------------------
+# League table (user request, 2026-11-02: "add the league table standings
+# to each fixture")
+# ----------------------------------------------------------------------
+
+def get_league_table(competition_id: str, league_name: str) -> dict:
+    """{team_id: {"position", "points", "played"}} for the competition's
+    current season, from /competitions/{id}/seasons/{season}/standings --
+    same endpoint match_iq.py and prop_finder.py already use.
+
+    Only team.id, goals_for, goals_against and matches_played are CONFIRMED
+    row fields in this suite. position/points are read defensively
+    (position, then rank; points, then 3*wins+draws) and, when position
+    is missing, derived by sorting on points then goal difference. The
+    actual row keys are printed once per league so the first live run
+    confirms the real shape. Returns {} on any failure -- the odds page
+    must never depend on this."""
+    try:
+        comp = cached_get(f"/competitions/{competition_id}", ttl_hours=24)
+        season_id = comp.get("data", {}).get("current_season_id")
+        if not season_id:
+            print(f"  [DIAG] no current_season_id for {league_name} -- no table shown")
+            return {}
+        rows = cached_get(f"/competitions/{competition_id}/seasons/{season_id}/standings",
+                          ttl_hours=6).get("data", [])
+    except Exception as exc:
+        print(f"  [DIAG] couldn't load {league_name} standings ({exc}) -- no table shown")
+        return {}
+    if rows:
+        print(f"  [DIAG] {league_name} standings row keys: {sorted(rows[0].keys())}")
+    return parse_table_rows(rows, league_name)
+
+
+def parse_table_rows(rows: list, league_name: str = "") -> dict:
+    table = {}
+    for row in rows:
+        team = row.get("team") or {}
+        tid = team.get("id")
+        if not tid:
+            continue
+        pts = row.get("points")
+        if pts is None and row.get("wins") is not None and row.get("draws") is not None:
+            pts = 3 * row["wins"] + row["draws"]
+        pos = row.get("position", row.get("rank"))
+        table[tid] = {
+            "position": pos, "points": pts, "played": row.get("matches_played"),
+            "_sort": (-(pts if pts is not None else -1),
+                      -((row.get("goals_for") or 0) - (row.get("goals_against") or 0)),
+                      -(row.get("goals_for") or 0)),
+        }
+
+    if table and all(v["position"] is None for v in table.values()):
+        if all(v["points"] is not None for v in table.values()):
+            for i, tid in enumerate(sorted(table, key=lambda t: table[t]["_sort"]), start=1):
+                table[tid]["position"] = i
+            print(f"  [DIAG] {league_name}: no position field in standings rows -- derived from "
+                  f"points then goal difference (head-to-head tiebreaks not applied)")
+        else:
+            print(f"  [DIAG] {league_name}: standings rows have neither position nor points -- no table shown")
+            return {}
+    for v in table.values():
+        v.pop("_sort", None)
+    return table
+
+
+def ordinal(n: int) -> str:
+    n = int(n)
+    suffix = "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
+
+
+# ----------------------------------------------------------------------
 # Scan
 # ----------------------------------------------------------------------
 
@@ -350,6 +421,7 @@ def scan_league(league_name: str) -> list[dict]:
         return []
     matches = get_upcoming_matches(comp["id"])
     print(f"{comp.get('name', league_name)}: {len(matches)} upcoming match(es) in the next {DAYS_AHEAD} days")
+    table = get_league_table(comp["id"], comp.get("name", league_name))
 
     cards = []
     for m in matches:
@@ -380,6 +452,8 @@ def scan_league(league_name: str) -> list[dict]:
             "away": away,
             "kickoff": kickoff,
             "flagged": flagged_sides(fair),
+            "home_table": table.get((m.get("home_team") or {}).get("id")) if isinstance(m.get("home_team"), dict) else None,
+            "away_table": table.get((m.get("away_team") or {}).get("id")) if isinstance(m.get("away_team"), dict) else None,
             **fair,
         })
 
@@ -435,6 +509,12 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   }}
   .matchup{{ font-size:15px; font-weight:700; margin-bottom:2px; }}
   .kickoff{{ color:var(--sub); font-size:11px; margin-bottom:10px; }}
+  .tbl{{ font-size:11px; color:var(--sub); background:var(--panel2); border-radius:8px;
+    padding:6px 10px; margin:-2px 0 10px; }}
+  .tbl .r{{ display:flex; justify-content:space-between; gap:10px; padding:1px 0; }}
+  .tbl .n{{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }}
+  .tbl .r span:last-child{{ white-space:nowrap; flex-shrink:0; }}
+  .tbl b{{ color:var(--text); font-weight:600; }}
   .probs{{ display:flex; gap:8px; margin-bottom:8px; }}
   .prob{{
     flex:1; background:var(--panel2); border-radius:8px; padding:8px 6px;
@@ -604,6 +684,7 @@ LEAGUE_SECTION_TEMPLATE = """<h2 class="league">{league}</h2>
 CARD_TEMPLATE = """<div class="card">
   <div class="matchup">{home} vs {away}</div>
   <div class="kickoff">{kickoff_display}</div>
+  {table_line}
   <div class="probs">
     <div class="prob{home_fav}"{home_attrs}>
       <div class="label">Home</div>
@@ -670,6 +751,25 @@ def _mkt_line(bet365_p: float, market_p: float | None) -> str:
     )
 
 
+def _table_line(card: dict) -> str:
+    """Two stacked rows (home, then away): team name on the left, league
+    position / points / games played on the right. A team with no table
+    data is simply omitted; both missing -> no block at all."""
+    def row(team: str, t: dict | None) -> str:
+        if not t or t.get("position") is None:
+            return ""
+        bits = [f"<b>{ordinal(t['position'])}</b>"]
+        if t.get("points") is not None:
+            bits.append(f"{t['points']} pts")
+        if t.get("played") is not None:
+            bits.append(f"P{t['played']}")
+        return (f'<div class="r"><span class="n">{html_lib.escape(team)}</span>'
+                f'<span>{" · ".join(bits)}</span></div>')
+
+    rows = row(card["home"], card.get("home_table")) + row(card["away"], card.get("away_table"))
+    return f'<div class="tbl">{rows}</div>' if rows else ""
+
+
 def build_card_html(card: dict) -> str:
     home_p, draw_p, away_p = card["home_prob"], card["draw_prob"], card["away_prob"]
     names = sorted(set(card.get("bookmakers", [])))
@@ -699,6 +799,7 @@ def build_card_html(card: dict) -> str:
     return CARD_TEMPLATE.format(
         home=card["home"], away=card["away"],
         kickoff_display=_fmt_kickoff(card.get("kickoff", "")),
+        table_line=_table_line(card),
         home_pct=round(home_p * 100, 1), draw_pct=round(draw_p * 100, 1), away_pct=round(away_p * 100, 1),
         home_fairodds=round(1 / home_p, 2) if home_p > 0 else "-",
         draw_fairodds=round(1 / draw_p, 2) if draw_p > 0 else "-",
