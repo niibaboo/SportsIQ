@@ -24242,9 +24242,10 @@
     "player_code": "012608",
     "stat_key": "assistances",
     "logged_at": "2026-10-22T06:17:30.057578+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5.0,
+    "verified_at": "2026-11-02T16:55:44.173450+00:00"
   },
   {
     "id": "be1db9755af998ff",
@@ -24264,9 +24265,10 @@
     "player_code": "013384",
     "stat_key": "points",
     "logged_at": "2026-10-22T06:17:30.057580+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 26.0,
+    "verified_at": "2026-11-02T16:55:44.173466+00:00"
   },
   {
     "id": "bc4aa183515d4233",
@@ -24286,9 +24288,10 @@
     "player_code": "013384",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-22T06:17:30.057583+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1.0,
+    "verified_at": "2026-11-02T16:55:44.173474+00:00"
   },
   {
     "id": "b2da4f9db2e47aa9",
@@ -24308,9 +24311,10 @@
     "player_code": "013384",
     "stat_key": "assistances",
     "logged_at": "2026-10-22T06:17:30.057585+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.173480+00:00"
   },
   {
     "id": "12cefe14f16e66cc",
@@ -24330,9 +24334,10 @@
     "player_code": "011217",
     "stat_key": "points",
     "logged_at": "2026-10-22T06:17:30.057587+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 10.0,
+    "verified_at": "2026-11-02T16:55:44.173487+00:00"
   },
   {
     "id": "d79f0b411d38fdf1",
@@ -24352,9 +24357,10 @@
     "player_code": "011217",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-22T06:17:30.057589+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 3.0,
+    "verified_at": "2026-11-02T16:55:44.173494+00:00"
   },
   {
     "id": "d36fe2281c7c1244",
@@ -24374,9 +24380,10 @@
     "player_code": "011217",
     "stat_key": "assistances",
     "logged_at": "2026-10-22T06:17:30.057591+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3.0,
+    "verified_at": "2026-11-02T16:55:44.173501+00:00"
   },
   {
     "id": "97bf5acdc164a0ed",
@@ -24396,9 +24403,10 @@
     "player_code": "006643",
     "stat_key": "points",
     "logged_at": "2026-10-22T06:17:30.057594+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.173507+00:00"
   },
   {
     "id": "3bbd60d69617f6cf",
@@ -24418,9 +24426,10 @@
     "player_code": "006643",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-22T06:17:30.057599+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.173514+00:00"
   },
   {
     "id": "c939080014cbee7a",
@@ -24440,9 +24449,10 @@
     "player_code": "006643",
     "stat_key": "assistances",
     "logged_at": "2026-10-22T06:17:30.057601+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.173520+00:00"
   },
   {
     "id": "fe56efc85b71504d",
@@ -24462,9 +24472,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-22T06:17:30.057614+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 94.0,
+    "verified_at": "2026-11-02T16:55:44.173531+00:00"
   },
   {
     "id": "9b73aa02ece0f223",
@@ -24484,9 +24495,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-22T06:17:30.057622+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 84.0,
+    "verified_at": "2026-11-02T16:55:44.173535+00:00"
   },
   {
     "id": "6b0893a70513b725",
@@ -24512,9 +24524,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-22T06:17:30.057636+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 84.0,
+    "verified_at": "2026-11-02T16:55:44.173539+00:00"
   },
   {
     "id": "cca56f293e808e2d",
@@ -24540,9 +24553,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-22T06:17:30.057639+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 94.0,
+    "verified_at": "2026-11-02T16:55:44.173543+00:00"
   },
   {
     "id": "b04c0f0f561b1bac",
@@ -24566,9 +24580,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-22T06:17:30.057643+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 118.0,
+    "verified_at": "2026-11-02T16:55:44.173548+00:00"
   },
   {
     "id": "f82b2270dc07ba19",
@@ -24592,9 +24607,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-22T06:17:30.057646+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 83.0,
+    "verified_at": "2026-11-02T16:55:44.279302+00:00"
   },
   {
     "id": "a46a08402d521344",
@@ -24614,9 +24630,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-23T12:30:07.982962+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 93.0,
+    "verified_at": "2026-11-02T16:55:44.279316+00:00"
   },
   {
     "id": "fd0a27cc48400ec6",
@@ -24636,9 +24653,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-23T12:30:07.982974+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 99.0,
+    "verified_at": "2026-11-02T16:55:44.279321+00:00"
   },
   {
     "id": "866c5aaab58dda0f",
@@ -24658,9 +24676,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-23T12:30:07.982979+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 192.0,
+    "verified_at": "2026-11-02T16:55:44.279325+00:00"
   },
   {
     "id": "6297c27b2e79fa27",
@@ -24680,9 +24699,10 @@
     "player_code": "012796",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.982985+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 22.0,
+    "verified_at": "2026-11-02T16:55:44.279338+00:00"
   },
   {
     "id": "9d12610143e13520",
@@ -24702,9 +24722,10 @@
     "player_code": "011212",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.982990+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 5.0,
+    "verified_at": "2026-11-02T16:55:44.279346+00:00"
   },
   {
     "id": "49f840e639ac6c51",
@@ -24724,9 +24745,10 @@
     "player_code": "011212",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.982997+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.279351+00:00"
   },
   {
     "id": "644ff276e553fa22",
@@ -24746,9 +24768,10 @@
     "player_code": "011212",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983000+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 3.0,
+    "verified_at": "2026-11-02T16:55:44.279355+00:00"
   },
   {
     "id": "dd904e9a391ade4e",
@@ -24768,9 +24791,10 @@
     "player_code": "012606",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983003+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 12.0,
+    "verified_at": "2026-11-02T16:55:44.279362+00:00"
   },
   {
     "id": "c55cecc1848fb57a",
@@ -24790,9 +24814,10 @@
     "player_code": "011231",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983007+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1.0,
+    "verified_at": "2026-11-02T16:55:44.279366+00:00"
   },
   {
     "id": "c5ae4a3c1272d23b",
@@ -24812,9 +24837,10 @@
     "player_code": "011231",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983010+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3.0,
+    "verified_at": "2026-11-02T16:55:44.279370+00:00"
   },
   {
     "id": "60aaa7b31958d02b",
@@ -24834,9 +24860,10 @@
     "player_code": "011231",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983013+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.279373+00:00"
   },
   {
     "id": "5c8529bd5c8269ee",
@@ -24856,9 +24883,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-23T12:30:07.983031+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 84.0,
+    "verified_at": "2026-11-02T16:55:44.279379+00:00"
   },
   {
     "id": "9153d0f97064d545",
@@ -24878,9 +24906,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-23T12:30:07.983034+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 88.0,
+    "verified_at": "2026-11-02T16:55:44.279382+00:00"
   },
   {
     "id": "e164cbed6ccea209",
@@ -24900,9 +24929,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-23T12:30:07.983037+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 172.0,
+    "verified_at": "2026-11-02T16:55:44.279385+00:00"
   },
   {
     "id": "b6b91a7c3aa65e3e",
@@ -24922,9 +24952,10 @@
     "player_code": "013370",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983041+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.279396+00:00"
   },
   {
     "id": "645da6bee39c73fb",
@@ -24944,9 +24975,10 @@
     "player_code": "011244",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983046+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.279400+00:00"
   },
   {
     "id": "de0031de56518d7e",
@@ -24966,9 +24998,10 @@
     "player_code": "011244",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983049+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1.0,
+    "verified_at": "2026-11-02T16:55:44.279404+00:00"
   },
   {
     "id": "2ad56eac6168379d",
@@ -24988,9 +25021,10 @@
     "player_code": "004508",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983053+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 14.0,
+    "verified_at": "2026-11-02T16:55:44.279409+00:00"
   },
   {
     "id": "8013d3de03a39fad",
@@ -25010,9 +25044,10 @@
     "player_code": "003958",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983058+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 6.0,
+    "verified_at": "2026-11-02T16:55:44.279413+00:00"
   },
   {
     "id": "c4abf1d26efcb886",
@@ -25032,9 +25067,10 @@
     "player_code": "003958",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983060+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.279417+00:00"
   },
   {
     "id": "076a254367946583",
@@ -25054,9 +25090,10 @@
     "player_code": "003958",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983063+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1.0,
+    "verified_at": "2026-11-02T16:55:44.279421+00:00"
   },
   {
     "id": "2236e2be154d1498",
@@ -25076,9 +25113,10 @@
     "player_code": "001288",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983066+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.279425+00:00"
   },
   {
     "id": "e2a7d1de5b20b3de",
@@ -25098,9 +25136,10 @@
     "player_code": "001288",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983068+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.279429+00:00"
   },
   {
     "id": "e968de270f20711c",
@@ -25120,9 +25159,10 @@
     "player_code": "001288",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983071+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.279432+00:00"
   },
   {
     "id": "ab86fa58374c5849",
@@ -25142,9 +25182,10 @@
     "player_code": "014008",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983074+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 11.0,
+    "verified_at": "2026-11-02T16:55:44.279444+00:00"
   },
   {
     "id": "714dc77303dddf74",
@@ -25164,9 +25205,10 @@
     "player_code": "014008",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983078+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1.0,
+    "verified_at": "2026-11-02T16:55:44.279451+00:00"
   },
   {
     "id": "00455fa8c3324692",
@@ -25186,9 +25228,10 @@
     "player_code": "014008",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983081+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5.0,
+    "verified_at": "2026-11-02T16:55:44.279457+00:00"
   },
   {
     "id": "8f2123048d7aceca",
@@ -25208,9 +25251,10 @@
     "player_code": "009862",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983085+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.279463+00:00"
   },
   {
     "id": "1656241b3df0ba9e",
@@ -25230,9 +25274,10 @@
     "player_code": "013855",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983089+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 7.0,
+    "verified_at": "2026-11-02T16:55:44.279468+00:00"
   },
   {
     "id": "0a4dca9225977c3e",
@@ -25252,9 +25297,10 @@
     "player_code": "013855",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983093+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.279473+00:00"
   },
   {
     "id": "b15919ec2bba7a07",
@@ -25274,9 +25320,10 @@
     "player_code": "013855",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983096+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.279479+00:00"
   },
   {
     "id": "e8377edd5106a44b",
@@ -25296,9 +25343,10 @@
     "player_code": "015138",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983100+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 12.0,
+    "verified_at": "2026-11-02T16:55:44.279484+00:00"
   },
   {
     "id": "0e910b3b43237c82",
@@ -25318,9 +25366,10 @@
     "player_code": "015138",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983104+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1.0,
+    "verified_at": "2026-11-02T16:55:44.279490+00:00"
   },
   {
     "id": "b33233e0aa26edc7",
@@ -25384,9 +25433,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-23T12:30:07.983115+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 100.0,
+    "verified_at": "2026-11-02T16:55:44.279506+00:00"
   },
   {
     "id": "dcb518909d2fc0d0",
@@ -25406,9 +25456,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-23T12:30:07.983118+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 78.0,
+    "verified_at": "2026-11-02T16:55:44.279511+00:00"
   },
   {
     "id": "4816fe6cda4b10d1",
@@ -25428,9 +25479,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-23T12:30:07.983121+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 178.0,
+    "verified_at": "2026-11-02T16:55:44.279515+00:00"
   },
   {
     "id": "465bd3068f946a3d",
@@ -25450,9 +25502,10 @@
     "player_code": "013363",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983124+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1.0,
+    "verified_at": "2026-11-02T16:55:44.279525+00:00"
   },
   {
     "id": "8ef810afaf07abbc",
@@ -25472,9 +25525,10 @@
     "player_code": "012201",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983128+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.279530+00:00"
   },
   {
     "id": "63bc770dd45a5763",
@@ -25494,9 +25548,10 @@
     "player_code": "012201",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983131+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4.0,
+    "verified_at": "2026-11-02T16:55:44.279534+00:00"
   },
   {
     "id": "f77ba0b95fae701b",
@@ -25516,9 +25571,10 @@
     "player_code": "011982",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983134+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.279539+00:00"
   },
   {
     "id": "76d714081d309a7e",
@@ -25538,9 +25594,10 @@
     "player_code": "011982",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983137+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.279543+00:00"
   },
   {
     "id": "7b4674601026574f",
@@ -25560,9 +25617,10 @@
     "player_code": "010568",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983142+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 8.0,
+    "verified_at": "2026-11-02T16:55:44.279547+00:00"
   },
   {
     "id": "9a888f07fbd96073",
@@ -25582,9 +25640,10 @@
     "player_code": "010568",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983144+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.279551+00:00"
   },
   {
     "id": "9cbbb3837d906c15",
@@ -25604,9 +25663,10 @@
     "player_code": "010568",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983149+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 9.0,
+    "verified_at": "2026-11-02T16:55:44.279555+00:00"
   },
   {
     "id": "c8d3b18c20cf4ae9",
@@ -25626,9 +25686,10 @@
     "player_code": "014163",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983152+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 21.0,
+    "verified_at": "2026-11-02T16:55:44.279558+00:00"
   },
   {
     "id": "512df54135f4dc7a",
@@ -25648,9 +25709,10 @@
     "player_code": "011052",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983157+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 7.0,
+    "verified_at": "2026-11-02T16:55:44.279567+00:00"
   },
   {
     "id": "8e30058c3971e42c",
@@ -25670,9 +25732,10 @@
     "player_code": "013699",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983163+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 19.0,
+    "verified_at": "2026-11-02T16:55:44.279572+00:00"
   },
   {
     "id": "e6e2685480236f5b",
@@ -25692,9 +25755,10 @@
     "player_code": "013699",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983166+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.279577+00:00"
   },
   {
     "id": "78c476f7f2256f1c",
@@ -25714,9 +25778,10 @@
     "player_code": "009783",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983170+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 6.0,
+    "verified_at": "2026-11-02T16:55:44.279582+00:00"
   },
   {
     "id": "c36f25486dd7b5d7",
@@ -25736,9 +25801,10 @@
     "player_code": "009783",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983173+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.279587+00:00"
   },
   {
     "id": "54e31333d79b9836",
@@ -25758,9 +25824,10 @@
     "player_code": "011219",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983176+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 13.0,
+    "verified_at": "2026-11-02T16:55:44.279595+00:00"
   },
   {
     "id": "2a029a3c83a6a700",
@@ -25780,9 +25847,10 @@
     "player_code": "011219",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983179+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1.0,
+    "verified_at": "2026-11-02T16:55:44.279600+00:00"
   },
   {
     "id": "7b272743f55e530d",
@@ -25802,9 +25870,10 @@
     "player_code": "014127",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983183+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 7.0,
+    "verified_at": "2026-11-02T16:55:44.279606+00:00"
   },
   {
     "id": "3a8700a3d9981a5d",
@@ -25824,9 +25893,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-23T12:30:07.983189+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 80.0,
+    "verified_at": "2026-11-02T16:55:44.818857+00:00"
   },
   {
     "id": "61670a4609ac272c",
@@ -25846,9 +25916,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-23T12:30:07.983192+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 75.0,
+    "verified_at": "2026-11-02T16:55:44.818875+00:00"
   },
   {
     "id": "e00da1065957fcf1",
@@ -25868,9 +25939,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-23T12:30:07.983195+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 155.0,
+    "verified_at": "2026-11-02T16:55:44.818880+00:00"
   },
   {
     "id": "64f06517fa26a94f",
@@ -25890,9 +25962,10 @@
     "player_code": "008962",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983197+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 7.0,
+    "verified_at": "2026-11-02T16:55:44.818888+00:00"
   },
   {
     "id": "ca12d2417dfa0493",
@@ -25912,9 +25985,10 @@
     "player_code": "008962",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983200+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.818892+00:00"
   },
   {
     "id": "9e20de4a316d4bba",
@@ -25934,9 +26008,10 @@
     "player_code": "008962",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983203+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 1.0,
+    "verified_at": "2026-11-02T16:55:44.818897+00:00"
   },
   {
     "id": "2f4c7055022e24e1",
@@ -25956,9 +26031,10 @@
     "player_code": "007975",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983206+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 6.0,
+    "verified_at": "2026-11-02T16:55:44.818901+00:00"
   },
   {
     "id": "3f734e5a650c4389",
@@ -25978,9 +26054,10 @@
     "player_code": "007975",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983209+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.818905+00:00"
   },
   {
     "id": "f429b7efe9554902",
@@ -26000,9 +26077,10 @@
     "player_code": "003842",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983214+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 13.0,
+    "verified_at": "2026-11-02T16:55:44.818909+00:00"
   },
   {
     "id": "f8cdde183538b115",
@@ -26022,9 +26100,10 @@
     "player_code": "003842",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983217+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1.0,
+    "verified_at": "2026-11-02T16:55:44.818913+00:00"
   },
   {
     "id": "ba3924dd4819d08b",
@@ -26044,9 +26123,10 @@
     "player_code": "007527",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983225+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1.0,
+    "verified_at": "2026-11-02T16:55:44.818916+00:00"
   },
   {
     "id": "8f48a23fe47e2628",
@@ -26066,9 +26146,10 @@
     "player_code": "007527",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983227+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.818920+00:00"
   },
   {
     "id": "464684019a76d680",
@@ -26088,9 +26169,10 @@
     "player_code": "007527",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983230+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.818923+00:00"
   },
   {
     "id": "0a3e9fc23edff554",
@@ -26110,9 +26192,10 @@
     "player_code": "012878",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983233+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 9.0,
+    "verified_at": "2026-11-02T16:55:44.818930+00:00"
   },
   {
     "id": "b30714e253b80398",
@@ -26132,9 +26215,10 @@
     "player_code": "008985",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983238+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 10.0,
+    "verified_at": "2026-11-02T16:55:44.818934+00:00"
   },
   {
     "id": "f05d11d3a4b238a4",
@@ -26154,9 +26238,10 @@
     "player_code": "014783",
     "stat_key": "points",
     "logged_at": "2026-10-23T12:30:07.983242+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-11-02T16:55:44.818940+00:00"
   },
   {
     "id": "0b9e127473d8783f",
@@ -26176,9 +26261,10 @@
     "player_code": "014783",
     "stat_key": "totalRebounds",
     "logged_at": "2026-10-23T12:30:07.983245+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.818946+00:00"
   },
   {
     "id": "d307ad4a48582db3",
@@ -26198,9 +26284,10 @@
     "player_code": "014783",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983248+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-02T16:55:44.818951+00:00"
   },
   {
     "id": "667d06f8a71ec590",
@@ -26286,9 +26373,10 @@
     "player_code": "013929",
     "stat_key": "assistances",
     "logged_at": "2026-10-23T12:30:07.983265+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4.0,
+    "verified_at": "2026-11-02T16:55:44.818997+00:00"
   },
   {
     "id": "e8baf94a2c1b941b",
@@ -26308,9 +26396,10 @@
     "player_code": null,
     "stat_key": null,
     "logged_at": "2026-10-23T12:30:07.983301+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 86.0,
+    "verified_at": "2026-11-02T16:55:44.819003+00:00"
   },
   {
     "id": "a6d35d49eb852678",
