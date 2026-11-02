@@ -918,7 +918,10 @@
     "logged_home_score": 29.0,
     "logged_away_score": 10.0,
     "pregame_total": 53.7,
-    "status": "pending"
+    "status": "hit",
+    "scorer_team_id": "2",
+    "final_home_score": 36.0,
+    "final_away_score": 10.0
   },
   "401873031_Game_Total_Over": {
     "id": "401873031_Game_Total_Over",
@@ -935,7 +938,9 @@
     "logged_home_score": 23.0,
     "logged_away_score": 28.0,
     "pregame_total": 43.5,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 43.0,
+    "final_away_score": 36.0
   },
   "401873024_Game_Total_Under": {
     "id": "401873024_Game_Total_Under",
@@ -952,7 +957,9 @@
     "logged_home_score": 27.0,
     "logged_away_score": 17.0,
     "pregame_total": 52.5,
-    "status": "pending"
+    "status": "miss",
+    "final_home_score": 30.0,
+    "final_away_score": 33.0
   },
   "401873029_Game_Total_Over": {
     "id": "401873029_Game_Total_Over",
@@ -969,7 +976,9 @@
     "logged_home_score": 33.0,
     "logged_away_score": 35.0,
     "pregame_total": 52.6,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 33.0,
+    "final_away_score": 38.0
   },
   "401873027_Game_Total_Under": {
     "id": "401873027_Game_Total_Under",
@@ -986,7 +995,9 @@
     "logged_home_score": 27.0,
     "logged_away_score": 6.0,
     "pregame_total": 39.7,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 27.0,
+    "final_away_score": 6.0
   },
   "401873028_Game_Total_Over": {
     "id": "401873028_Game_Total_Over",
@@ -1003,6 +1014,42 @@
     "logged_home_score": 42.0,
     "logged_away_score": 7.0,
     "pregame_total": 42.2,
+    "status": "hit",
+    "final_home_score": 42.0,
+    "final_away_score": 7.0
+  },
+  "401873033_Game_Total_Over": {
+    "id": "401873033_Game_Total_Over",
+    "game_id": "401873033",
+    "home_id": "7",
+    "away_id": "12",
+    "home_team": "Denver Broncos",
+    "away_team": "Kansas City Chiefs",
+    "label": "Game Total Over",
+    "prob": 88,
+    "logged_at": "2026-11-02T00:02:39.344043+00:00",
+    "logged_period": 4,
+    "logged_clock": "13:13",
+    "logged_home_score": 13.0,
+    "logged_away_score": 24.0,
+    "pregame_total": 37.3,
+    "status": "pending"
+  },
+  "401873034_Game_Total_Under": {
+    "id": "401873034_Game_Total_Under",
+    "game_id": "401873034",
+    "home_id": "15",
+    "away_id": "17",
+    "home_team": "Miami Dolphins",
+    "away_team": "New England Patriots",
+    "label": "Game Total Under",
+    "prob": 78,
+    "logged_at": "2026-11-02T00:02:39.344052+00:00",
+    "logged_period": 4,
+    "logged_clock": "9:15",
+    "logged_home_score": 13.0,
+    "logged_away_score": 24.0,
+    "pregame_total": 48.9,
     "status": "pending"
   }
 }
