@@ -516,6 +516,23 @@ def model_flagged_sides(card: dict) -> list[str]:
             if round((m[f"{side}_prob"] - card[f"{side}_prob"]) * 100, 1) >= MODEL_GAP_HIGHLIGHT_PP]
 
 
+MODEL_SKIP_GAP_PP = 15.0   # model this far from Bet365 on any side => "skip"
+
+
+def model_skip(card: dict) -> bool:
+    """True when the table model is so far from Bet365 that the blue lines
+    are almost certainly the model missing something (squad quality,
+    injuries), not an edge: any side off by >= MODEL_SKIP_GAP_PP, or the
+    model and Bet365 disagreeing on the favourite."""
+    m = card.get("model")
+    if not m:
+        return False
+    sides = ("home", "draw", "away")
+    if any(abs(m[f"{x}_prob"] - card[f"{x}_prob"]) * 100 >= MODEL_SKIP_GAP_PP for x in sides):
+        return True
+    return max(sides, key=lambda x: m[f"{x}_prob"]) != max(sides, key=lambda x: card[f"{x}_prob"])
+
+
 def ordinal(n: int) -> str:
     n = int(n)
     suffix = "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
@@ -651,6 +668,9 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   .prob.fav .pct{{ color:var(--green); }}
   .prob .mkt{{ color:var(--sub); font-size:9.5px; margin-top:4px; border-top:1px solid var(--border); padding-top:3px; }}
   .prob .mkt.highlight{{ color:var(--green); font-weight:600; }}
+  .skip{{ display:inline-block; margin:2px 0 8px; padding:2px 8px; border-radius:999px;
+         font-size:11px; font-weight:700; color:#ffb4a8; background:rgba(255,120,100,.14);
+         border:1px solid rgba(255,120,100,.4); }}
   .prob .mdl{{ color:var(--sub); font-size:9.5px; margin-top:2px; }}
   .prob .mdl.highlight{{ color:#7ec8ff; font-weight:600; }}
   .meta{{ color:var(--sub); font-size:10.5px; display:flex; justify-content:space-between; }}
@@ -817,6 +837,7 @@ CARD_TEMPLATE = """<div class="card">
   <div class="matchup">{home} vs {away}</div>
   <div class="kickoff">{kickoff_display}</div>
   {table_line}
+  {skip_badge}
   <div class="probs">
     <div class="prob{home_fav}"{home_attrs}>
       <div class="label">Home</div>
@@ -955,6 +976,8 @@ def build_card_html(card: dict) -> str:
         home=card["home"], away=card["away"],
         kickoff_display=_fmt_kickoff(card.get("kickoff", "")),
         table_line=_table_line(card),
+        skip_badge=('<div class="skip">SKIP &middot; model far from Bet365 &ndash; ignore the mdl lines</div>'
+                    if model_skip(card) else ""),
         home_pct=round(home_p * 100, 1), draw_pct=round(draw_p * 100, 1), away_pct=round(away_p * 100, 1),
         home_fairodds=round(1 / home_p, 2) if home_p > 0 else "-",
         draw_fairodds=round(1 / draw_p, 2) if draw_p > 0 else "-",
