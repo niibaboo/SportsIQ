@@ -1,5 +1,38 @@
 {
-  "generated": "2026-11-02T22:45:50.944732+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-11-03T03:44:07.824962+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_id": "401873036",
+      "home_id": "26",
+      "away_id": "3",
+      "home_team": "Seattle Seahawks",
+      "away_team": "Chicago Bears",
+      "home_score": 17.0,
+      "away_score": 20.0,
+      "period": 4,
+      "display_clock": "11:46",
+      "status": "11:46 - 4th",
+      "elapsed_minute": 48.2,
+      "minutes_remaining": 11.8,
+      "next_score": {
+        "home": 46,
+        "away": 54
+      },
+      "game_total_pace": {
+        "prob": 65,
+        "status": "On Pace: Over"
+      },
+      "model_signal": {
+        "label": "Game Total Over",
+        "prob": 65,
+        "qualifies": false
+      },
+      "pregame_projection": {
+        "exp_home": 22.1,
+        "exp_away": 20.9,
+        "exp_total": 43.0
+      }
+    }
+  ]
 }
