@@ -38,6 +38,7 @@ import time
 import math
 import csv
 import json
+import html as html_lib
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 import requests
@@ -2027,7 +2028,7 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 {cards}
 </body></html>"""
 
-CARD_TEMPLATE = """<div class="gamecard" data-volume="{volume_level}" style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
+CARD_TEMPLATE = """<div class="gamecard" data-volume="{volume_level}" data-home="{home_attr}" data-away="{away_attr}" style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
   <div style="font-size:11px;color:#998;margin-bottom:4px">{date} · <span style="color:#ff9a2e">{league}</span></div>{volume_badge}
   <div style="font-size:17px;font-weight:bold;margin-bottom:10px">{match}</div>
   {team_total_html}
@@ -2152,7 +2153,9 @@ def build_volume_teams(predictions):
             sd = (sum((x - mean) ** 2 for x in vals) / len(vals)) ** 0.5 or 1.0
             for r in rows:
                 r['z_' + key] = (r[key] - mean) / sd
+        mean_env = sum(r['env'] for r in rows) / len(rows)
         for r in rows:
+            r['env_pct'] = (r['env'] / mean_env - 1) * 100 if mean_env else 0.0   # scoring environment vs slate average
             r['score'] = sum(r['z_' + k] for k in ('pts', 'reb', 'ast', 'env')) / 4
         rows.sort(key=lambda r: r['score'], reverse=True)
         k = min(8, max(2, round(len(rows) * VOLUME_TOP_SHARE)))
@@ -2174,33 +2177,85 @@ def build_volume_teams(predictions):
     return ranked, tags
 
 
-VOLUME_PANEL_TEMPLATE = """<div style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
+VOLUME_PANEL_TEMPLATE = """<div id="volPanel" data-k='{k_json}' style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
   <div style="font-weight:bold;color:#ff9a2e;margin-bottom:2px">📈 Volume teams</div>
-  <div style="font-size:11px;color:#998;margin-bottom:10px">Ranked among the teams playing today &amp; tomorrow, by projected PTS, REB and AST (top {players} players each) plus scoring environment. Highlighted teams are the top {share}%.</div>
-  {rows}
+  <div style="font-size:11px;color:#998;margin-bottom:8px">Teams playing today &amp; tomorrow, ranked among themselves. Pick what to rank by; the 🔥 marks the top {share}% on that measure. PTS / REB / AST are the projected totals for each team's top {players} players; pace is the scoring environment vs the slate average.</div>
+  <div style="font-size:11px;color:#998;margin-bottom:4px">Rank by:</div>
+  <div id="volSort" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+    <button type="button" class="vs" data-key="score">Overall</button>
+    <button type="button" class="vs" data-key="pts">Points</button>
+    <button type="button" class="vs" data-key="reb">Rebounds</button>
+    <button type="button" class="vs" data-key="ast">Assists</button>
+    <button type="button" class="vs" data-key="pace">Pace</button>
+  </div>
+  <div id="volRows">{rows}</div>
   <div style="font-size:11px;color:#998;margin:10px 0 6px">Show games:</div>
   <div id="volFilter" style="display:flex;gap:6px;flex-wrap:wrap">
-    <button type="button" class="vf" data-min="0" style="background:#ff9a2e;color:#0f0a08;border:0;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:bold">All</button>
-    <button type="button" class="vf" data-min="1" style="background:#2a201a;color:#e8dcd0;border:1px solid #443;border-radius:999px;padding:6px 12px;font-size:12px">Any volume team</button>
-    <button type="button" class="vf" data-min="2" style="background:#2a201a;color:#e8dcd0;border:1px solid #443;border-radius:999px;padding:6px 12px;font-size:12px">Both volume teams</button>
+    <button type="button" class="vf" data-min="0">All</button>
+    <button type="button" class="vf" data-min="1">Any volume team</button>
+    <button type="button" class="vf" data-min="2">Both volume teams</button>
   </div>
-  <div style="font-size:10px;color:#776;margin-top:8px;line-height:1.5">Bookmakers already raise lines in high-volume games, so this narrows where to look; it does not on its own find value. Only the game cards below are filtered.</div>
+  <div style="font-size:10px;color:#776;margin-top:8px;line-height:1.5">Bookmakers already raise lines in high-volume games, so this narrows where to look; it does not on its own find value. Only the game cards below are filtered. Game badges follow the measure you rank by.</div>
 </div>
 <script>
 (function(){
-  var bar = document.getElementById('volFilter'); if (!bar) return;
-  bar.addEventListener('click', function(e){
-    var b = e.target.closest('.vf'); if (!b) return;
-    var min = parseInt(b.getAttribute('data-min'), 10);
-    bar.querySelectorAll('.vf').forEach(function(x){
-      var on = x === b;
-      x.style.background = on ? '#ff9a2e' : '#2a201a'; x.style.color = on ? '#0f0a08' : '#e8dcd0';
-      x.style.fontWeight = on ? 'bold' : 'normal'; x.style.border = on ? '0' : '1px solid #443';
+  var panel = document.getElementById('volPanel'); if (!panel) return;
+  var K = JSON.parse(panel.getAttribute('data-k'));
+  var sortKey = 'score', minLevel = 0;
+  var rowsBox = document.getElementById('volRows');
+  function pill(b, on){
+    b.style.background = on ? '#ff9a2e' : '#2a201a'; b.style.color = on ? '#0f0a08' : '#e8dcd0';
+    b.style.fontWeight = on ? 'bold' : 'normal'; b.style.border = on ? '0' : '1px solid #443';
+    b.style.borderRadius = '999px'; b.style.padding = '6px 12px'; b.style.fontSize = '12px';
+  }
+  var STATKEY = {score:null, pts:'pts', reb:'reb', ast:'ast', pace:'pace'};
+  function render(){
+    var rows = Array.prototype.slice.call(rowsBox.querySelectorAll('.vrow'));
+    var leagues = {};
+    rows.forEach(function(r){ (leagues[r.getAttribute('data-league')] = leagues[r.getAttribute('data-league')] || []).push(r); });
+    var top = {}, ordered = [];
+    Object.keys(leagues).forEach(function(lg){
+      var g = leagues[lg].sort(function(a, b){ return parseFloat(b.getAttribute('data-' + sortKey)) - parseFloat(a.getAttribute('data-' + sortKey)); });
+      g.forEach(function(r, i){
+        var isTop = i < (K[lg] || 0);
+        r.querySelector('.vrank').textContent = (i + 1) + '.';
+        r.querySelector('.vflame').style.display = isTop ? '' : 'none';
+        r.style.background = isTop ? '#2a1c10' : 'transparent'; r.style.color = isTop ? '#e8dcd0' : '#998';
+        if (isTop) top[r.getAttribute('data-team')] = true;
+        r.querySelectorAll('.vstat').forEach(function(sp){
+          sp.style.color = (STATKEY[sortKey] === sp.getAttribute('data-k')) ? '#ff9a2e' : ''; });
+        ordered.push(r);
+      });
     });
+    ordered.forEach(function(r){ rowsBox.appendChild(r); });
     document.querySelectorAll('.gamecard').forEach(function(c){
-      c.style.display = parseInt(c.getAttribute('data-volume') || '0', 10) >= min ? '' : 'none';
+      var h = c.getAttribute('data-home'), a = c.getAttribute('data-away');
+      var level = (top[h] ? 1 : 0) + (top[a] ? 1 : 0);
+      c.setAttribute('data-volume', level);
+      var badge = c.querySelector('.vbadge');
+      if (badge) {
+        badge.style.display = level ? 'inline-block' : 'none';
+        badge.textContent = level === 2 ? '🔥 Volume game · both teams top-volume'
+          : level === 1 ? '🔥 Volume side · ' + (top[h] ? h : a) : '';
+      }
+      c.style.display = level >= minLevel ? '' : 'none';
     });
+  }
+  document.getElementById('volSort').addEventListener('click', function(e){
+    var b = e.target.closest('.vs'); if (!b) return;
+    sortKey = b.getAttribute('data-key');
+    document.querySelectorAll('#volSort .vs').forEach(function(x){ pill(x, x === b); });
+    render();
   });
+  document.getElementById('volFilter').addEventListener('click', function(e){
+    var b = e.target.closest('.vf'); if (!b) return;
+    minLevel = parseInt(b.getAttribute('data-min'), 10);
+    document.querySelectorAll('#volFilter .vf').forEach(function(x){ pill(x, x === b); });
+    render();
+  });
+  document.querySelectorAll('#volSort .vs').forEach(function(x){ pill(x, x.getAttribute('data-key') === 'score'); });
+  document.querySelectorAll('#volFilter .vf').forEach(function(x){ pill(x, x.getAttribute('data-min') === '0'); });
+  render();
 })();
 </script>"""
 
@@ -2208,22 +2263,30 @@ VOLUME_PANEL_TEMPLATE = """<div style="background:#1a1310;border-radius:12px;pad
 def render_volume_panel(ranked):
     if not ranked:
         return ""
-    rows = ""
     multi = len({x['league'] for x in ranked}) > 1
-
-    def league_tag(r):
-        return ' <span style="color:#776">' + r['league'] + '</span>' if multi else ''
-
+    k_by_league = {}
+    for r in ranked:
+        k_by_league[r['league']] = k_by_league.get(r['league'], 0) + (1 if r['top'] else 0)
+    rows = ""
     for r in ranked:
         hi = r['top']
-        rows += (f'<div style="display:flex;justify-content:space-between;gap:8px;padding:5px 8px;margin:2px 0;border-radius:6px;font-size:12px;'
+        flame_style = '' if hi else ' style="display:none"'
+        lg = ' <span style="color:#776">' + html_lib.escape(r['league']) + '</span>' if multi else ''
+        rows += (f'<div class="vrow" data-team="{html_lib.escape(r["team"], quote=True)}" data-league="{html_lib.escape(r["league"], quote=True)}" '
+                 f'data-score="{r["score"]:.4f}" data-pts="{r["pts"]:.2f}" data-reb="{r["reb"]:.2f}" '
+                 f'data-ast="{r["ast"]:.2f}" data-pace="{r["env_pct"]:.2f}" '
+                 f'style="display:flex;justify-content:space-between;gap:8px;padding:5px 8px;margin:2px 0;border-radius:6px;font-size:12px;'
                  f'background:{"#2a1c10" if hi else "transparent"};color:{"#e8dcd0" if hi else "#998"}">'
-                 f'<span><b>{r["rank"]}.</b> {r["team"]}{" 🔥" if hi else ""}'
-                 f'{league_tag(r)}</span>'
-                 f'<span style="white-space:nowrap">{r["pts"]:.0f} pts · {r["reb"]:.0f} reb · {r["ast"]:.0f} ast</span></div>')
+                 f'<span><b class="vrank">{r["rank"]}.</b> {html_lib.escape(r["team"])}<span class="vflame"{flame_style}> 🔥</span>{lg}</span>'
+                 f'<span style="white-space:nowrap"><span class="vstat" data-k="pts">{r["pts"]:.0f} pts</span> · '
+                 f'<span class="vstat" data-k="reb">{r["reb"]:.0f} reb</span> · '
+                 f'<span class="vstat" data-k="ast">{r["ast"]:.0f} ast</span> · '
+                 f'<span class="vstat" data-k="pace">{r["env_pct"]:+.1f}% pace</span></span></div>')
     # str.replace, not .format: the template carries JS braces.
     return (VOLUME_PANEL_TEMPLATE.replace("{players}", str(VOLUME_TOP_PLAYERS))
-            .replace("{share}", str(round(VOLUME_TOP_SHARE * 100))).replace("{rows}", rows))
+            .replace("{share}", str(round(VOLUME_TOP_SHARE * 100)))
+            .replace("{k_json}", html_lib.escape(json.dumps(k_by_league), quote=True).replace("&quot;", '"'))
+            .replace("{rows}", rows))
 
 
 def top_n(props, key, n=3):
@@ -2289,12 +2352,14 @@ def make_html(predictions):
 
     def _vol(p):
         level, text = volume_tags.get(p.get('game_id'), (0, ''))
-        badge = (f'<div style="display:inline-block;font-size:11px;color:#ff9a2e;background:#2a1c10;border:1px solid #5a3a18;'
-                 f'border-radius:999px;padding:2px 8px;margin-bottom:6px">🔥 {text}</div>') if level else ''
+        badge = (f'<div class="vbadge" style="display:{"inline-block" if level else "none"};font-size:11px;color:#ff9a2e;'
+                 f'background:#2a1c10;border:1px solid #5a3a18;border-radius:999px;padding:2px 8px;margin-bottom:6px">'
+                 f'{"🔥 " + text if level else ""}</div>')
         return level, badge
 
     cards = "".join(CARD_TEMPLATE.format(
         volume_level=_vol(p)[0], volume_badge=_vol(p)[1],
+        home_attr=html_lib.escape(p['home_team'], quote=True), away_attr=html_lib.escape(p['away_team'], quote=True),
         date=p['date'][:16].replace('T', ' '), match=p['match'], league=p.get('league', ''),
         team_total_html=(
             TEAM_TOTAL_ROW.format(
