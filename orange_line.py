@@ -60,7 +60,28 @@ EASTERN = ZoneInfo("America/New_York")
 LEAGUES = [
     {"key": "nba", "name": "NBA"},
     {"key": "wnba", "name": "WNBA"},
+    # College basketball (user request, 2026-11-05). ESPN league keys are
+    # the usual site.api.espn.com slugs but are UNCONFIRMED against a live
+    # response in this build -- watch the Actions log for [DIAG]/[!] lines
+    # on the first run. "college": True switches on the limits below
+    # (ranked/featured games only, lazy team form, smaller roster cap,
+    # college-scale priors) because ~360 teams and 50+ daily games would
+    # otherwise make the run take hours.
+    {"key": "mens-college-basketball", "name": "NCAAB", "college": True},
+    {"key": "womens-college-basketball", "name": "WNCAAB", "college": True},
 ]
+COLLEGE_KEYS = {"mens-college-basketball", "womens-college-basketball"}
+COLLEGE_MAX_GAMES = 6        # per league, across today + tomorrow
+COLLEGE_RANK_CUTOFF = 25     # "top games" = at least one team ranked this high
+COLLEGE_ROSTER_CAP = 12      # a college rotation is ~9 deep; roster order is not confirmed starters-first
+# Rough NCAA D1 scoring averages and player priors -- NOT calibrated against
+# live data in this build; they only matter as shrinkage anchors early in a
+# season. The NBA-scale priors would badly overrate college role players.
+COLLEGE_PRIORS = {'REB': 4.0, 'AST': 2.0, 'PTS': 8.0, '3PM': 1.0}
+
+
+def _prior(league_key, stat):
+    return COLLEGE_PRIORS[stat] if league_key in COLLEGE_KEYS else PROP_CONFIG[stat]['prior']
 BASE_FMT = "https://site.api.espn.com/apis/site/v2/sports/basketball/{league}"
 GAMELOG_BASE_FMT = "https://site.web.api.espn.com/apis/common/v3/sports/basketball/{league}/athletes/{athlete_id}/gamelog"
 REQUEST_DELAY = 1.2  # same conservative pacing as Blitz IQ -- no official rate limit published
@@ -90,7 +111,7 @@ def _current_season_year(league_key):
     match their actual recent games -- real numbers, just pulled from
     the wrong (just-finished) season rather than the current one."""
     now = datetime.now()
-    if league_key == "nba" and now.month >= 10:
+    if (league_key == "nba" or league_key in COLLEGE_KEYS) and now.month >= 10:
         return now.year + 1
     return now.year
 RECENT_GAMES = 7  # matches this project's existing "last 7 games" framing
@@ -634,7 +655,7 @@ def get_roster(league_key, team_id):
     if players:
         print(f"    [DIAG] team {team_id}: raw roster has {len(players)} players before ROSTER_CAP={ROSTER_CAP}: "
               f"{[p['name'] for p in players]}")
-    players = players[:ROSTER_CAP]
+    players = players[:COLLEGE_ROSTER_CAP if league_key in COLLEGE_KEYS else ROSTER_CAP]
     roster_cache[cache_key] = players
     return players
 
@@ -1043,9 +1064,9 @@ def project_player_props(league_key, team_id, pts_scale=1.0):
                         # the separate stat pulls -- skip rather than pair
                         # up games that may not actually correspond
         n = len(rebs)
-        reb_proj = shrink(recency_weighted(rebs), n, PROP_CONFIG['REB']['prior'])
-        ast_proj = shrink(recency_weighted(asts), n, PROP_CONFIG['AST']['prior'])
-        pts_proj_raw = shrink(recency_weighted(pts), n, PROP_CONFIG['PTS']['prior'])
+        reb_proj = shrink(recency_weighted(rebs), n, _prior(league_key, 'REB'))
+        ast_proj = shrink(recency_weighted(asts), n, _prior(league_key, 'AST'))
+        pts_proj_raw = shrink(recency_weighted(pts), n, _prior(league_key, 'PTS'))
         pts_proj = pts_proj_raw * pts_scale
         ra_values = [r + a for r, a in zip(rebs, asts)]
         ra_proj = reb_proj + ast_proj
@@ -1065,7 +1086,7 @@ def project_player_props(league_key, team_id, pts_scale=1.0):
         tpm_proj, tpm_n_games = None, 0
         if len(tpm) >= 3:
             tpm_n_games = len(tpm)
-            tpm_proj = round(shrink(recency_weighted(tpm), tpm_n_games, PROP_CONFIG['3PM']['prior']), 1)
+            tpm_proj = round(shrink(recency_weighted(tpm), tpm_n_games, _prior(league_key, '3PM')), 1)
 
         # Minutes/rest risk (user request, same turn) -- same gamelog
         # endpoint already hit for REB/AST/PTS, 'MIN' is one of the same
@@ -1112,27 +1133,74 @@ def hit_rate(values, line):
     return {"hits": hits, "total": len(values)}
 
 
-LEAGUE_FALLBACK_AVG = {"nba": 113.0, "wnba": 82.0}  # only used if literally no team
+LEAGUE_FALLBACK_AVG = {"nba": 113.0, "wnba": 82.0,
+                       "mens-college-basketball": 72.0, "womens-college-basketball": 66.0}  # only used if literally no team
                                                         # in a league has any form data yet
+
+
+def _college_best_rank(event):
+    """Best (lowest) AP/curated rank among the two teams, or None. The
+    'curatedRank': {'current': N} field on scoreboard competitors is the
+    usual ESPN shape but unconfirmed for this endpoint -- see the [DIAG]
+    in select_college_games."""
+    best = None
+    for c in (event.get('competitions') or [{}])[0].get('competitors', []):
+        r = (c.get('curatedRank') or {}).get('current')
+        try:
+            r = int(r)
+        except (TypeError, ValueError):
+            continue
+        if 1 <= r <= COLLEGE_RANK_CUTOFF and (best is None or r < best):
+            best = r
+    return best
+
+
+def select_college_games(events, league_name):
+    """"Top games only": unfinished games with at least one team ranked
+    COLLEGE_RANK_CUTOFF or better, best-ranked first, capped at
+    COLLEGE_MAX_GAMES. If NO game carries a rank (early season, or the rank
+    field isn't where this expects it), falls back to the first
+    COLLEGE_MAX_GAMES unfinished games ESPN lists and says so."""
+    open_events = [e for e in events
+                   if not ((e.get('competitions') or [{}])[0].get('status', {}).get('type', {}).get('completed'))]
+    ranked = [(r, e) for e in open_events for r in [_college_best_rank(e)] if r is not None]
+    print(f"  [DIAG] {league_name}: {len(open_events)} unfinished game(s) on the scoreboard, "
+          f"{len(ranked)} with a team ranked in the top {COLLEGE_RANK_CUTOFF}")
+    if ranked:
+        ranked.sort(key=lambda x: (x[0], x[1].get('date', '')))
+        return [e for _, e in ranked[:COLLEGE_MAX_GAMES]]
+    if open_events:
+        print(f"  [DIAG] {league_name}: no ranked-team field found -- using the first "
+              f"{COLLEGE_MAX_GAMES} games ESPN lists instead")
+    return open_events[:COLLEGE_MAX_GAMES]
 
 
 def build_predictions():
     predictions = []
     for league in LEAGUES:
         league_key, league_name = league["key"], league["name"]
-        print(f"\nFetching {league_name} teams…")
-        teams = get_teams(league_key)
-        if not teams:
-            print(f"No {league_name} teams returned — skipping this league for now, "
-                  f"still trying the others.")
-            continue
-
-        print(f"Fetching {league_name} team form for {len(teams)} teams…")
+        is_college = bool(league.get("college"))
         all_forms = {}
-        for t in teams:
-            tid = t['team']['id']
-            all_forms[tid] = get_team_form(league_key, tid)
-        lg_scored, lg_allowed = league_averages(all_forms.values(), LEAGUE_FALLBACK_AVG.get(league_key, 100.0))
+        if is_college:
+            # ~360 teams: fetching every team's form up front would be ~360
+            # requests per league. Form is fetched lazily for just the teams
+            # in the selected games (get_team_form is cached), and the league
+            # averages are the fixed fallbacks above.
+            print(f"\n{league_name}: college league -- team form fetched only for selected games")
+            lg_scored, lg_allowed = league_averages([], LEAGUE_FALLBACK_AVG.get(league_key, 70.0))
+        else:
+            print(f"\nFetching {league_name} teams…")
+            teams = get_teams(league_key)
+            if not teams:
+                print(f"No {league_name} teams returned — skipping this league for now, "
+                      f"still trying the others.")
+                continue
+
+            print(f"Fetching {league_name} team form for {len(teams)} teams…")
+            for t in teams:
+                tid = t['team']['id']
+                all_forms[tid] = get_team_form(league_key, tid)
+            lg_scored, lg_allowed = league_averages(all_forms.values(), LEAGUE_FALLBACK_AVG.get(league_key, 100.0))
         print(f"  {league_name} averages: {lg_scored:.1f} scored/game, {lg_allowed:.1f} allowed/game")
 
         print(f"Fetching {league_name}'s scoreboard for today and tomorrow…")
@@ -1150,6 +1218,8 @@ def build_predictions():
             if eid:
                 seen_ids.add(eid)
             events.append(ev)
+        if is_college:
+            events = select_college_games(events, league_name)
         print(f"{len(events)} {league_name} games today & tomorrow "
               f"({len(events_today)} today, {len(events_tomorrow)} tomorrow)")
 
