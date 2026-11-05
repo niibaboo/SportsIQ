@@ -2023,11 +2023,12 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 {streak_panel}
 {season_panel}
 {team_total_panel}
+{volume_panel}
 {cards}
 </body></html>"""
 
-CARD_TEMPLATE = """<div style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
-  <div style="font-size:11px;color:#998;margin-bottom:4px">{date} · <span style="color:#ff9a2e">{league}</span></div>
+CARD_TEMPLATE = """<div class="gamecard" data-volume="{volume_level}" style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
+  <div style="font-size:11px;color:#998;margin-bottom:4px">{date} · <span style="color:#ff9a2e">{league}</span></div>{volume_badge}
   <div style="font-size:17px;font-weight:bold;margin-bottom:10px">{match}</div>
   {team_total_html}
   {pace_html}
@@ -2097,6 +2098,134 @@ TOP_PLAYER_ROW = """<div style="display:flex;justify-content:space-between;font-
 TOP_PLAYERS_SECTION = """<div style="display:flex;gap:14px;background:#0f0a08;border-radius:8px;padding:8px 10px;margin-top:4px">{away_block}{home_block}</div>"""
 
 
+# --- Volume teams (user request, 2026-11-05) -----------------------------
+# "Pick just a few teams with more points, rebounds and assists volume per
+# game so I concentrate on their games only." Built ONLY from data this
+# script already fetches (no extra API calls): each team's projected
+# PTS/REB/AST are the sum of its top VOLUME_TOP_PLAYERS players' own
+# projections (same recency-weighted, shrunk numbers the cards use), and
+# the scoring environment is the same scored+allowed proxy the pace label
+# uses (ESPN gives no real possessions count here). Teams are ranked only
+# against the other teams on TODAY'S/TOMORROW'S slate, per league, by the
+# average z-score of the four measures -- so it answers "who has the most
+# volume among tonight's teams", not an all-season league ranking.
+#
+# Honest limit: bookmakers already raise lines in high-volume games, so
+# this narrows where to look, it does not by itself find value. Display
+# only -- no projection is changed by it.
+VOLUME_TOP_PLAYERS = 8
+VOLUME_MIN_TEAMS = 4      # fewer teams on a slate than this -> no ranking
+VOLUME_TOP_SHARE = 0.4    # top 40% of the slate's teams, min 2, max 8
+
+
+def _team_volume(props, form):
+    top = sorted(props or [], key=lambda p: p['pts_proj'] + p['reb_proj'] + p['ast_proj'], reverse=True)[:VOLUME_TOP_PLAYERS]
+    if len(top) < 5 or not form:
+        return None
+    return {
+        'pts': sum(p['pts_proj'] for p in top), 'reb': sum(p['reb_proj'] for p in top),
+        'ast': sum(p['ast_proj'] for p in top),
+        'env': form['avg_scored'] + form['avg_allowed'],
+    }
+
+
+def build_volume_teams(predictions):
+    """Returns (ranked_teams, game_tags). ranked_teams: list of dicts sorted
+    best-first with 'top' flags; game_tags: {game_id: (level, text)} where
+    level is 2 when both teams are top-volume, 1 when one is, else 0."""
+    by_league = {}
+    for p in predictions:
+        for side, props_key, form_key in (('home_team', 'home_props', 'home_form'),
+                                          ('away_team', 'away_props', 'away_form')):
+            v = _team_volume(p.get(props_key), p.get(form_key))
+            if v:
+                v.update(team=p[side], league=p.get('league', ''), game_id=p.get('game_id'))
+                by_league.setdefault(p.get('league', ''), {})[p[side]] = v
+    ranked = []
+    for league, teams in by_league.items():
+        rows = list(teams.values())
+        if len(rows) < VOLUME_MIN_TEAMS:
+            continue
+        for key in ('pts', 'reb', 'ast', 'env'):
+            vals = [r[key] for r in rows]
+            mean = sum(vals) / len(vals)
+            sd = (sum((x - mean) ** 2 for x in vals) / len(vals)) ** 0.5 or 1.0
+            for r in rows:
+                r['z_' + key] = (r[key] - mean) / sd
+        for r in rows:
+            r['score'] = sum(r['z_' + k] for k in ('pts', 'reb', 'ast', 'env')) / 4
+        rows.sort(key=lambda r: r['score'], reverse=True)
+        k = min(8, max(2, round(len(rows) * VOLUME_TOP_SHARE)))
+        for i, r in enumerate(rows):
+            r['rank'] = i + 1
+            r['top'] = i < k
+        ranked.extend(rows)
+    top_names = {r['team'] for r in ranked if r['top']}
+    known = {r['team'] for r in ranked}
+    tags = {}
+    for p in predictions:
+        if p['home_team'] not in known and p['away_team'] not in known:
+            continue
+        hot = [t for t in (p['home_team'], p['away_team']) if t in top_names]
+        if len(hot) == 2:
+            tags[p.get('game_id')] = (2, "Volume game · both teams top-volume")
+        elif len(hot) == 1:
+            tags[p.get('game_id')] = (1, f"Volume side · {hot[0]}")
+    return ranked, tags
+
+
+VOLUME_PANEL_TEMPLATE = """<div style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
+  <div style="font-weight:bold;color:#ff9a2e;margin-bottom:2px">📈 Volume teams</div>
+  <div style="font-size:11px;color:#998;margin-bottom:10px">Ranked among the teams playing today &amp; tomorrow, by projected PTS, REB and AST (top {players} players each) plus scoring environment. Highlighted teams are the top {share}%.</div>
+  {rows}
+  <div style="font-size:11px;color:#998;margin:10px 0 6px">Show games:</div>
+  <div id="volFilter" style="display:flex;gap:6px;flex-wrap:wrap">
+    <button type="button" class="vf" data-min="0" style="background:#ff9a2e;color:#0f0a08;border:0;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:bold">All</button>
+    <button type="button" class="vf" data-min="1" style="background:#2a201a;color:#e8dcd0;border:1px solid #443;border-radius:999px;padding:6px 12px;font-size:12px">Any volume team</button>
+    <button type="button" class="vf" data-min="2" style="background:#2a201a;color:#e8dcd0;border:1px solid #443;border-radius:999px;padding:6px 12px;font-size:12px">Both volume teams</button>
+  </div>
+  <div style="font-size:10px;color:#776;margin-top:8px;line-height:1.5">Bookmakers already raise lines in high-volume games, so this narrows where to look; it does not on its own find value. Only the game cards below are filtered.</div>
+</div>
+<script>
+(function(){
+  var bar = document.getElementById('volFilter'); if (!bar) return;
+  bar.addEventListener('click', function(e){
+    var b = e.target.closest('.vf'); if (!b) return;
+    var min = parseInt(b.getAttribute('data-min'), 10);
+    bar.querySelectorAll('.vf').forEach(function(x){
+      var on = x === b;
+      x.style.background = on ? '#ff9a2e' : '#2a201a'; x.style.color = on ? '#0f0a08' : '#e8dcd0';
+      x.style.fontWeight = on ? 'bold' : 'normal'; x.style.border = on ? '0' : '1px solid #443';
+    });
+    document.querySelectorAll('.gamecard').forEach(function(c){
+      c.style.display = parseInt(c.getAttribute('data-volume') || '0', 10) >= min ? '' : 'none';
+    });
+  });
+})();
+</script>"""
+
+
+def render_volume_panel(ranked):
+    if not ranked:
+        return ""
+    rows = ""
+    multi = len({x['league'] for x in ranked}) > 1
+
+    def league_tag(r):
+        return ' <span style="color:#776">' + r['league'] + '</span>' if multi else ''
+
+    for r in ranked:
+        hi = r['top']
+        rows += (f'<div style="display:flex;justify-content:space-between;gap:8px;padding:5px 8px;margin:2px 0;border-radius:6px;font-size:12px;'
+                 f'background:{"#2a1c10" if hi else "transparent"};color:{"#e8dcd0" if hi else "#998"}">'
+                 f'<span><b>{r["rank"]}.</b> {r["team"]}{" 🔥" if hi else ""}'
+                 f'{league_tag(r)}</span>'
+                 f'<span style="white-space:nowrap">{r["pts"]:.0f} pts · {r["reb"]:.0f} reb · {r["ast"]:.0f} ast</span></div>')
+    # str.replace, not .format: the template carries JS braces.
+    return (VOLUME_PANEL_TEMPLATE.replace("{players}", str(VOLUME_TOP_PLAYERS))
+            .replace("{share}", str(round(VOLUME_TOP_SHARE * 100))).replace("{rows}", rows))
+
+
 def top_n(props, key, n=3):
     return sorted((p for p in props if p.get(key) is not None), key=lambda p: p[key], reverse=True)[:n]
 
@@ -2156,7 +2285,16 @@ def make_html(predictions):
     # to the full listing. Props are still computed once and feed the
     # Safest Bet Builder legs, the Hot Form & Real Streak panel, and now
     # this block too -- no extra API calls.
+    volume_ranked, volume_tags = build_volume_teams(predictions)
+
+    def _vol(p):
+        level, text = volume_tags.get(p.get('game_id'), (0, ''))
+        badge = (f'<div style="display:inline-block;font-size:11px;color:#ff9a2e;background:#2a1c10;border:1px solid #5a3a18;'
+                 f'border-radius:999px;padding:2px 8px;margin-bottom:6px">🔥 {text}</div>') if level else ''
+        return level, badge
+
     cards = "".join(CARD_TEMPLATE.format(
+        volume_level=_vol(p)[0], volume_badge=_vol(p)[1],
         date=p['date'][:16].replace('T', ' '), match=p['match'], league=p.get('league', ''),
         team_total_html=(
             TEAM_TOTAL_ROW.format(
@@ -2208,7 +2346,7 @@ def make_html(predictions):
     return HTML_TEMPLATE.format(
         recent=RECENT_GAMES, generated=datetime.now().strftime('%d %b %H:%M'),
         builder=builder, streak_panel=streak_panel, season_panel=season_panel,
-        team_total_panel=team_total_panel, cards=cards,
+        team_total_panel=team_total_panel, volume_panel=render_volume_panel(volume_ranked), cards=cards,
     )
 
 
