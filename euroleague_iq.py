@@ -71,6 +71,7 @@ beating league average, length >= REAL_STREAK_MIN_LENGTH.
 import os
 import csv
 import json
+import html as html_lib
 import math
 import time
 import requests
@@ -841,12 +842,13 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 </p>
 {builder}
 {streak_panel}
+{volume_panel}
 {cards}
 <p style="text-align:center;color:#666;font-size:10px;margin-top:20px">Enter your book's Over/Under line and odds to compute an edge the same way as the other tools in this suite — this page shows the model's own projection only. Player props are built from whichever players actually featured in each team's last {recent_games} games (no fixed "starters" list), so a new or returning player may take a run or two to show up.</p>
 </body></html>"""
 
-CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
-  <div style="font-size:11px;color:#999;margin-bottom:4px">{date}</div>
+CARD_TEMPLATE = """<div class="gamecard" data-volume="{volume_level}" data-home="{home_attr}" data-away="{away_attr}" style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999;margin-bottom:4px">{date}</div>{volume_badge}
   <div style="font-size:17px;font-weight:bold;margin-bottom:10px">{match}</div>
   <div style="display:flex;justify-content:space-between;text-align:center">
     <div><div style="color:#aaa;font-size:11px">{away_team}</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">{exp_away}</div></div>
@@ -868,6 +870,201 @@ PLAYER_PROP_ROW = """<div style="display:flex;justify-content:space-between;font
 </div>"""
 
 
+# --- Volume teams (user request, 2026-11-05; same idea as Orange Line) -----
+# "Pick just a few teams with more points, rebounds and assists volume per
+# game so I concentrate on their games only." Built ONLY from data this
+# script already fetches (no extra API calls): a team's PTS/REB/AST are the
+# sums of its featured players' projections (the same top-PLAYER_POOL_SIZE
+# scorers the cards show, so REB/AST are those scorers' numbers, not a full
+# roster), and pace is the scoring environment (avg scored + allowed) vs
+# the average of the teams in the listed games -- there is no true
+# possessions count here. Display only: no projection is changed by it.
+VOLUME_TOP_PLAYERS = PLAYER_POOL_SIZE
+VOLUME_MIN_TEAMS = 4
+VOLUME_TOP_SHARE = 0.4    # top 40% of the listed teams, min 2, max 8
+
+
+def _team_volume(props, form):
+    by_stat = {'points': {}, 'totalRebounds': {}, 'assistances': {}}
+    for p in props or []:
+        if p.get('stat_key') in by_stat:
+            by_stat[p['stat_key']][p.get('player_code') or p.get('name')] = p['projected']
+    common = set(by_stat['points']) & set(by_stat['totalRebounds']) & set(by_stat['assistances'])
+    if len(common) < 3 or not form:
+        return None
+    return {
+        'pts': sum(by_stat['points'][c] for c in common),
+        'reb': sum(by_stat['totalRebounds'][c] for c in common),
+        'ast': sum(by_stat['assistances'][c] for c in common),
+        'env': form['avg_scored'] + form['avg_allowed'],
+    }
+
+
+def build_volume_teams(predictions):
+    """Returns (ranked_teams, game_tags) -- see Orange Line's version.
+    game_tags: {game_code: (level, text)}, level 2 = both teams top-volume,
+    1 = one team."""
+    teams = {}
+    for p in predictions:
+        for side, props_key, form_key in (('home_team', 'home_props', 'home_form'),
+                                          ('away_team', 'away_props', 'away_form')):
+            v = _team_volume(p.get(props_key), p.get(form_key))
+            if v:
+                v.update(team=p[side], league='EuroLeague')
+                teams[p[side]] = v
+    rows = list(teams.values())
+    ranked = []
+    if len(rows) >= VOLUME_MIN_TEAMS:
+        for key in ('pts', 'reb', 'ast', 'env'):
+            vals = [r[key] for r in rows]
+            mean = sum(vals) / len(vals)
+            sd = (sum((x - mean) ** 2 for x in vals) / len(vals)) ** 0.5 or 1.0
+            for r in rows:
+                r['z_' + key] = (r[key] - mean) / sd
+        mean_env = sum(r['env'] for r in rows) / len(rows)
+        for r in rows:
+            r['env_pct'] = (r['env'] / mean_env - 1) * 100 if mean_env else 0.0
+            r['score'] = sum(r['z_' + k] for k in ('pts', 'reb', 'ast', 'env')) / 4
+        rows.sort(key=lambda r: r['score'], reverse=True)
+        k = min(8, max(2, round(len(rows) * VOLUME_TOP_SHARE)))
+        for i, r in enumerate(rows):
+            r['rank'] = i + 1
+            r['top'] = i < k
+        ranked = rows
+    top_names = {r['team'] for r in ranked if r['top']}
+    known = {r['team'] for r in ranked}
+    tags = {}
+    for p in predictions:
+        if p['home_team'] not in known and p['away_team'] not in known:
+            continue
+        hot = [t for t in (p['home_team'], p['away_team']) if t in top_names]
+        if len(hot) == 2:
+            tags[p.get('game_code')] = (2, "Volume game · both teams top-volume")
+        elif len(hot) == 1:
+            tags[p.get('game_code')] = (1, f"Volume side · {hot[0]}")
+    return ranked, tags
+
+
+VOLUME_PANEL_TEMPLATE = """<div id="volPanel" data-k='{k_json}' style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-weight:bold;color:#7ec8ff;margin-bottom:2px">📈 Volume teams</div>
+  <div style="font-size:11px;color:#998;margin-bottom:8px">Teams in the games listed below, ranked among themselves. Pick what to rank by; the 🔥 marks the top {share}% on that measure. PTS / REB / AST are the projected totals for each team's top {players} scorers; pace is the scoring environment vs the slate average.</div>
+  <div style="font-size:11px;color:#998;margin-bottom:4px">Rank by:</div>
+  <div id="volSort" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+    <button type="button" class="vs" data-key="score">Overall</button>
+    <button type="button" class="vs" data-key="pts">Points</button>
+    <button type="button" class="vs" data-key="reb">Rebounds</button>
+    <button type="button" class="vs" data-key="ast">Assists</button>
+    <button type="button" class="vs" data-key="pace">Pace</button>
+  </div>
+  <div id="volRows">{rows}</div>
+  <div style="font-size:11px;color:#998;margin:10px 0 6px">Show games:</div>
+  <div id="volFilter" style="display:flex;gap:6px;flex-wrap:wrap">
+    <button type="button" class="vf" data-min="0">All</button>
+    <button type="button" class="vf" data-min="1">Any volume team</button>
+    <button type="button" class="vf" data-min="2">Both volume teams</button>
+  </div>
+  <div style="font-size:10px;color:#776;margin-top:8px;line-height:1.5">Bookmakers already raise lines in high-volume games, so this narrows where to look; it does not on its own find value. Only the game cards below are filtered. Game badges follow the measure you rank by.</div>
+</div>
+<script>
+(function(){
+  var panel = document.getElementById('volPanel'); if (!panel) return;
+  var K = JSON.parse(panel.getAttribute('data-k'));
+  var sortKey = 'score', minLevel = 0;
+  var rowsBox = document.getElementById('volRows');
+  function pill(b, on){
+    b.style.background = on ? '#7ec8ff' : '#222'; b.style.color = on ? '#0b0f14' : '#e6eaf0';
+    b.style.fontWeight = on ? 'bold' : 'normal'; b.style.border = on ? '0' : '1px solid #444';
+    b.style.borderRadius = '999px'; b.style.padding = '6px 12px'; b.style.fontSize = '12px';
+  }
+  var STATKEY = {score:null, pts:'pts', reb:'reb', ast:'ast', pace:'pace'};
+  function render(){
+    var rows = Array.prototype.slice.call(rowsBox.querySelectorAll('.vrow'));
+    var leagues = {};
+    rows.forEach(function(r){ (leagues[r.getAttribute('data-league')] = leagues[r.getAttribute('data-league')] || []).push(r); });
+    var top = {}, ordered = [];
+    Object.keys(leagues).forEach(function(lg){
+      var g = leagues[lg].sort(function(a, b){ return parseFloat(b.getAttribute('data-' + sortKey)) - parseFloat(a.getAttribute('data-' + sortKey)); });
+      g.forEach(function(r, i){
+        var isTop = i < (K[lg] || 0);
+        r.querySelector('.vrank').textContent = (i + 1) + '.';
+        r.querySelector('.vflame').style.display = isTop ? '' : 'none';
+        r.style.background = isTop ? '#1f2a38' : 'transparent'; r.style.color = isTop ? '#e6eaf0' : '#998';
+        if (isTop) top[r.getAttribute('data-team')] = true;
+        r.querySelectorAll('.vstat').forEach(function(sp){
+          sp.style.color = (STATKEY[sortKey] === sp.getAttribute('data-k')) ? '#7ec8ff' : ''; });
+        ordered.push(r);
+      });
+    });
+    ordered.forEach(function(r){ rowsBox.appendChild(r); });
+    document.querySelectorAll('.gamecard').forEach(function(c){
+      var h = c.getAttribute('data-home'), a = c.getAttribute('data-away');
+      var level = (top[h] ? 1 : 0) + (top[a] ? 1 : 0);
+      c.setAttribute('data-volume', level);
+      var badge = c.querySelector('.vbadge');
+      if (badge) {
+        badge.style.display = level ? 'inline-block' : 'none';
+        badge.textContent = level === 2 ? '🔥 Volume game · both teams top-volume'
+          : level === 1 ? '🔥 Volume side · ' + (top[h] ? h : a) : '';
+      }
+      c.style.display = level >= minLevel ? '' : 'none';
+    });
+    // hide a date header when none of its games are showing
+    var hdr = null, any = false;
+    function flush(){ if (hdr) hdr.style.display = any ? '' : 'none'; }
+    Array.prototype.slice.call(document.querySelectorAll('.vdate, .gamecard')).forEach(function(el){
+      if (el.classList.contains('vdate')) { flush(); hdr = el; any = false; }
+      else if (el.style.display !== 'none') any = true;
+    });
+    flush();
+  }
+  document.getElementById('volSort').addEventListener('click', function(e){
+    var b = e.target.closest('.vs'); if (!b) return;
+    sortKey = b.getAttribute('data-key');
+    document.querySelectorAll('#volSort .vs').forEach(function(x){ pill(x, x === b); });
+    render();
+  });
+  document.getElementById('volFilter').addEventListener('click', function(e){
+    var b = e.target.closest('.vf'); if (!b) return;
+    minLevel = parseInt(b.getAttribute('data-min'), 10);
+    document.querySelectorAll('#volFilter .vf').forEach(function(x){ pill(x, x === b); });
+    render();
+  });
+  document.querySelectorAll('#volSort .vs').forEach(function(x){ pill(x, x.getAttribute('data-key') === 'score'); });
+  document.querySelectorAll('#volFilter .vf').forEach(function(x){ pill(x, x.getAttribute('data-min') === '0'); });
+  render();
+})();
+</script>"""
+
+
+def render_volume_panel(ranked):
+    if not ranked:
+        return ""
+    multi = len({x['league'] for x in ranked}) > 1
+    k_by_league = {}
+    for r in ranked:
+        k_by_league[r['league']] = k_by_league.get(r['league'], 0) + (1 if r['top'] else 0)
+    rows = ""
+    for r in ranked:
+        hi = r['top']
+        flame_style = '' if hi else ' style="display:none"'
+        lg = ' <span style="color:#776">' + html_lib.escape(r['league']) + '</span>' if multi else ''
+        rows += (f'<div class="vrow" data-team="{html_lib.escape(r["team"], quote=True)}" data-league="{html_lib.escape(r["league"], quote=True)}" '
+                 f'data-score="{r["score"]:.4f}" data-pts="{r["pts"]:.2f}" data-reb="{r["reb"]:.2f}" '
+                 f'data-ast="{r["ast"]:.2f}" data-pace="{r["env_pct"]:.2f}" '
+                 f'style="display:flex;justify-content:space-between;gap:8px;padding:5px 8px;margin:2px 0;border-radius:6px;font-size:12px;'
+                 f'background:{"#1f2a38" if hi else "transparent"};color:{"#e6eaf0" if hi else "#998"}">'
+                 f'<span><b class="vrank">{r["rank"]}.</b> {html_lib.escape(r["team"])}<span class="vflame"{flame_style}> 🔥</span>{lg}</span>'
+                 f'<span style="white-space:nowrap"><span class="vstat" data-k="pts">{r["pts"]:.0f} pts</span> · '
+                 f'<span class="vstat" data-k="reb">{r["reb"]:.0f} reb</span> · '
+                 f'<span class="vstat" data-k="ast">{r["ast"]:.0f} ast</span> · '
+                 f'<span class="vstat" data-k="pace">{r["env_pct"]:+.1f}% pace</span></span></div>')
+    # str.replace, not .format: the template carries JS braces.
+    return (VOLUME_PANEL_TEMPLATE.replace("{players}", str(VOLUME_TOP_PLAYERS))
+            .replace("{share}", str(round(VOLUME_TOP_SHARE * 100)))
+            .replace("{k_json}", html_lib.escape(json.dumps(k_by_league), quote=True).replace("&quot;", '"'))
+            .replace("{rows}", rows))
+
+
 def player_props_section(team_label, props):
     if not props:
         return ""
@@ -882,6 +1079,15 @@ def make_html(predictions, streak_entries=None, real_streak_entries=None, lg_sco
     # page even if it's ever called with an unsorted list.
     predictions = sorted(predictions, key=lambda x: x.get('date') or '')
 
+    volume_ranked, volume_tags = build_volume_teams(predictions)
+
+    def _vol(p):
+        level, text = volume_tags.get(p.get('game_code'), (0, ''))
+        badge = (f'<div class="vbadge" style="display:{"inline-block" if level else "none"};font-size:11px;color:#7ec8ff;'
+                 f'background:#1f2a38;border:1px solid #36506e;border-radius:999px;padding:2px 8px;margin-bottom:6px">'
+                 f'{"🔥 " + text if level else ""}</div>')
+        return level, badge
+
     cards = ""
     last_date_key = None
     for p in predictions:
@@ -891,9 +1097,11 @@ def make_html(predictions, streak_entries=None, real_streak_entries=None, lg_sco
                 label = datetime.fromisoformat(date_key).strftime('%a %d %b') if date_key else "Date TBC"
             except ValueError:
                 label = date_key or "Date TBC"
-            cards += f'<div style="color:#7ec8ff;font-size:12px;font-weight:bold;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px solid #2a3038">{label}</div>'
+            cards += f'<div class="vdate" style="color:#7ec8ff;font-size:12px;font-weight:bold;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px solid #2a3038">{label}</div>'
             last_date_key = date_key
         cards += CARD_TEMPLATE.format(
+            volume_level=_vol(p)[0], volume_badge=_vol(p)[1],
+            home_attr=html_lib.escape(p['home_team'], quote=True), away_attr=html_lib.escape(p['away_team'], quote=True),
             date=p['date'][:16].replace('T', ' '), match=p['match'],
             away_team=p['away_team'], home_team=p['home_team'],
             exp_away=p['exp_away'], exp_home=p['exp_home'], exp_total=p['exp_total'],
@@ -919,7 +1127,8 @@ def make_html(predictions, streak_entries=None, real_streak_entries=None, lg_sco
 
     return HTML_TEMPLATE.format(
         generated=datetime.now().strftime("%d %b %H:%M"),
-        builder=builder, streak_panel=streak_panel, cards=cards, recent_games=RECENT_GAMES,
+        builder=builder, streak_panel=streak_panel, volume_panel=render_volume_panel(volume_ranked),
+        cards=cards, recent_games=RECENT_GAMES,
     )
 
 
