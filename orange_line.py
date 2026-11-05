@@ -846,6 +846,25 @@ def _parse_makes_attempts(raw):
         return None
 
 
+gamelog_response_cache = {}  # (league_key, athlete_id, season) -> requests.Response
+
+
+def _get_gamelog_response(league_key, athlete_id, season):
+    """ONE HTTP request per (athlete, season), shared by every stat. REB, AST,
+    PTS, 3PT and MIN all read the SAME ESPN gamelog response (only which label
+    they pick out of it differs), but each used to trigger its own identical
+    request -- 5x the calls, each followed by REQUEST_DELAY, which is what made
+    the workflow take about an hour (user report, 2026-11-05). Failed requests
+    (None) are not cached, so a transient failure is still retried."""
+    key = (league_key, athlete_id, season)
+    if key in gamelog_response_cache:
+        return gamelog_response_cache[key]
+    r = _get(GAMELOG_BASE_FMT.format(league=league_key, athlete_id=athlete_id), params={"season": season})
+    if r is not None:
+        gamelog_response_cache[key] = r
+    return r
+
+
 def _fetch_gamelog_values(league_key, athlete_id, stat_key, season, value_parser=_parse_plain_stat):
     """Same defensive parsing as Blitz IQ's _fetch_gamelog_values --
     identical API family, identical uncertainty about exact label names,
@@ -870,8 +889,7 @@ def _fetch_gamelog_values(league_key, athlete_id, stat_key, season, value_parser
     instead, since ESPN's shooting splits are commonly rendered as a
     combined "makes-attempts" string rather than a made-only column."""
     global _OPPONENT_SHAPE_LOGGED
-    r = _get(GAMELOG_BASE_FMT.format(league=league_key, athlete_id=athlete_id),
-             params={"season": season})
+    r = _get_gamelog_response(league_key, athlete_id, season)
     dated_values = []  # (date_str_or_None, value, opponent_dict_or_None)
     if r is None:
         print(f"    [!] gamelog fetch failed for athlete {athlete_id}, season {season} (no response)")
@@ -1467,6 +1485,14 @@ def _current_stat_streak(values, threshold):
         else:
             break
     return streak
+
+
+# Hot Form / Real Streak panel switch (user request, 2026-11-05: "I just want
+# to rely on the 100% this season"). False hides the panel from the page and
+# stops logging those picks to the Results tracker; the code is untouched, so
+# setting this back to True restores both. The "100% This Season" and Team
+# Total panels are separate and unaffected.
+SHOW_STREAK_PANEL = False
 
 
 def build_hot_form_entries(predictions):
@@ -2102,10 +2128,77 @@ CARD_TEMPLATE = """<div class="gamecard" data-volume="{volume_level}" data-home=
   <div style="font-size:11px;color:#998;margin-bottom:4px">{date} · <span style="color:#ff9a2e">{league}</span></div>{volume_badge}
   <div style="font-size:17px;font-weight:bold;margin-bottom:10px">{match}</div>
   {team_total_html}
+  {recent_html}
   {pace_html}
   {playstyle_html}
   {top_players_html}
 </div>"""
+
+# Recent team points / game totals + streak (user request, 2026-11-05 --
+# "team last 5-7 game total and streak"). Uses the scored_list/allowed_list
+# every team form already carries (last RECENT_GAMES completed games,
+# oldest first), so no extra API calls. Lines are tonight's own projection
+# rounded to the nearest half point, so a green chip means "beat tonight's
+# projection". Because the projection is built from these same games,
+# roughly half will land each side by construction -- the useful part is
+# the run (streak) and how far the numbers sit from the line.
+def _half(x):
+    return round(x * 2) / 2
+
+
+def _fmt_num(v):
+    return str(int(v)) if float(v).is_integer() else f"{v:.1f}"
+
+
+def _over_under_run(values, line):
+    """Current run at the END of an oldest-first list: ('over'|'under'|None, length).
+    A value exactly on the line is a push and ends the run."""
+    kind, n = None, 0
+    for v in reversed(values):
+        k = 'over' if v > line else ('under' if v < line else None)
+        if k is None or (kind is not None and k != kind):
+            break
+        kind, n = k, n + 1
+    return kind, n
+
+
+def _chips_row(label, values, line):
+    if not values:
+        return ""
+    chips = ""
+    for v in values:
+        bg, fg = ("#1f3a24", "#7ee09a") if v > line else (("#3a1f1f", "#f08a8a") if v < line else ("#2a2a2a", "#aaa"))
+        chips += (f'<span style="display:inline-block;min-width:24px;text-align:center;padding:1px 4px;margin:1px;'
+                  f'border-radius:4px;background:{bg};color:{fg}">{_fmt_num(v)}</span>')
+    overs = sum(1 for v in values if v > line)
+    kind, n = _over_under_run(values, line)
+    run = f" · <b style=\"color:{'#7ee09a' if kind == 'over' else '#f08a8a'}\">{n} straight {kind}</b>" if kind and n >= 2 else ""
+    return (f'<div style="margin-bottom:6px"><div style="color:#e8dcd0">{label} <span style="color:#776">vs {_fmt_num(line)}</span></div>'
+            f'<div>{chips}</div>'
+            f'<div style="color:#998">avg {sum(values) / len(values):.1f} · over {overs}/{len(values)}{run}</div></div>')
+
+
+def recent_totals_html(p):
+    hf, af = p.get('home_form'), p.get('away_form')
+    if not hf or not af or p.get('exp_total') is None:
+        return ""
+    team_line = {'away': _half(p['exp_away']), 'home': _half(p['exp_home'])}
+    game_line = _half(p['exp_total'])
+    def game_totals(form):
+        return [a + b for a, b in zip(form.get('scored_list') or [], form.get('allowed_list') or [])]
+    n = max(len(hf.get('scored_list') or []), len(af.get('scored_list') or []))
+    rows = (
+        _chips_row(f"{p['away_team']} points", af.get('scored_list'), team_line['away'])
+        + _chips_row(f"{p['home_team']} points", hf.get('scored_list'), team_line['home'])
+        + _chips_row(f"{p['away_team']} game totals", game_totals(af), game_line)
+        + _chips_row(f"{p['home_team']} game totals", game_totals(hf), game_line)
+    )
+    if not rows:
+        return ""
+    return (f'<div style="background:#0f0a08;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:11px">'
+            f'<div style="color:#776;text-transform:uppercase;font-size:9px;margin-bottom:5px">Last {n} games · oldest → latest · green = over tonight\'s projection</div>'
+            f'{rows}</div>')
+
 
 PACE_ROW = """<div style="font-size:11px;color:#998;margin-bottom:8px">{icon} <span style="color:#e8dcd0">{verdict}</span> — {away_team} {away_label} ({away_pct_str}) · {home_team} {home_label} ({home_pct_str})</div>"""
 
@@ -2428,7 +2521,7 @@ def make_html(predictions):
         return level, badge
 
     cards = "".join(CARD_TEMPLATE.format(
-        volume_level=_vol(p)[0], volume_badge=_vol(p)[1],
+        volume_level=_vol(p)[0], volume_badge=_vol(p)[1], recent_html=recent_totals_html(p),
         home_attr=html_lib.escape(p['home_team'], quote=True), away_attr=html_lib.escape(p['away_team'], quote=True),
         date=p['date'][:16].replace('T', ' '), match=p['match'], league=p.get('league', ''),
         team_total_html=(
@@ -2472,9 +2565,9 @@ def make_html(predictions):
     legs = build_legs(predictions)
     builder = BUILDER_TEMPLATE.format(legs_json=json.dumps(legs)) if legs else ""
 
-    hot_form_entries = build_hot_form_entries(predictions)
-    real_streak_entries = build_real_streak_entries(predictions)
-    streak_panel = render_streak_panel(hot_form_entries, real_streak_entries)
+    streak_panel = ""
+    if SHOW_STREAK_PANEL:
+        streak_panel = render_streak_panel(build_hot_form_entries(predictions), build_real_streak_entries(predictions))
     season_panel = render_season_perfect_panel(build_season_perfect_entries(predictions))
     team_total_panel = render_season_team_total_panel(build_season_team_total_entries(predictions))
 
@@ -2517,8 +2610,10 @@ if __name__ == "__main__":
     try:
         import orange_line_results_tracker
         legs = build_legs(predictions)
-        hot_form = build_hot_form_entries(predictions)
-        real_streak = build_real_streak_entries(predictions)
+        # Hidden panels are not logged either -- tracking picks nobody can see
+        # on the page would be misleading.
+        hot_form = build_hot_form_entries(predictions) if SHOW_STREAK_PANEL else []
+        real_streak = build_real_streak_entries(predictions) if SHOW_STREAK_PANEL else []
         orange_line_results_tracker.run_results_tracker(legs, hot_form, real_streak)
     except Exception as e:
         print(f"[!] Results tracker failed, but the rest of this run succeeded: {e}")
