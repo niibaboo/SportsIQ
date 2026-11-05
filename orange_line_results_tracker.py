@@ -51,7 +51,8 @@ BASE_FMT = "https://site.api.espn.com/apis/site/v2/sports/basketball/{league}/su
 LOG_PATH = "docs/orange-line/results/log.json"
 DASHBOARD_PATH = "docs/orange-line/results/index.html"
 
-LEAGUE_NAME_TO_KEY = {"NBA": "nba", "WNBA": "wnba"}
+LEAGUE_NAME_TO_KEY = {"NBA": "nba", "WNBA": "wnba",
+                      "NCAAB": "mens-college-basketball", "WNCAAB": "womens-college-basketball"}
 
 SUMMARY_CACHE = {}  # (league_key, game_id) -> summary, several legs share a game
 
