@@ -1055,5 +1055,22 @@
     "status": "hit",
     "final_home_score": 19.0,
     "final_away_score": 24.0
+  },
+  "401873038_Game_Total_Over": {
+    "id": "401873038_Game_Total_Over",
+    "game_id": "401873038",
+    "home_id": "1",
+    "away_id": "4",
+    "home_team": "Atlanta Falcons",
+    "away_team": "Cincinnati Bengals",
+    "label": "Game Total Over",
+    "prob": 93,
+    "logged_at": "2026-11-08T16:45:22.783188+00:00",
+    "logged_period": 3,
+    "logged_clock": "2:05",
+    "logged_home_score": 17.0,
+    "logged_away_score": 31.0,
+    "pregame_total": 51.4,
+    "status": "pending"
   }
 }

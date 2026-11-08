@@ -1,5 +1,38 @@
 {
-  "generated": "2026-11-08T10:25:58.341961+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-11-08T16:45:22.780875+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_id": "401873038",
+      "home_id": "1",
+      "away_id": "4",
+      "home_team": "Atlanta Falcons",
+      "away_team": "Cincinnati Bengals",
+      "home_score": 17.0,
+      "away_score": 31.0,
+      "period": 3,
+      "display_clock": "2:05",
+      "status": "2:05 - 3rd",
+      "elapsed_minute": 42.9,
+      "minutes_remaining": 17.1,
+      "next_score": {
+        "home": 35,
+        "away": 65
+      },
+      "game_total_pace": {
+        "prob": 93,
+        "status": "On Pace: Over"
+      },
+      "model_signal": {
+        "label": "Game Total Over",
+        "prob": 93,
+        "qualifies": true
+      },
+      "pregame_projection": {
+        "exp_home": 22.3,
+        "exp_away": 29.1,
+        "exp_total": 51.4
+      }
+    }
+  ]
 }
