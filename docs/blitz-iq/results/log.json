@@ -16741,9 +16741,10 @@
     "athlete_id": "4241389",
     "stat_key": "REC",
     "logged_at": "2026-10-15T13:08:55.290716+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 9.0,
+    "verified_at": "2026-11-09T18:15:29.234988+00:00"
   },
   {
     "id": "64f561179a1f9b7e",
@@ -16760,9 +16761,10 @@
     "athlete_id": "4241389",
     "stat_key": "TD",
     "logged_at": "2026-10-15T13:08:55.290719+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-09T18:15:29.235016+00:00"
   },
   {
     "id": "3f625575f9f11b65",
@@ -16779,9 +16781,10 @@
     "athlete_id": "2577417",
     "stat_key": "YDS",
     "logged_at": "2026-10-15T13:08:55.290721+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 258.0,
+    "verified_at": "2026-11-09T18:15:29.235021+00:00"
   },
   {
     "id": "9e8f4da033eac0b8",
@@ -16798,9 +16801,10 @@
     "athlete_id": "4242355",
     "stat_key": "REC",
     "logged_at": "2026-10-15T13:08:55.290724+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2.0,
+    "verified_at": "2026-11-09T18:15:29.235026+00:00"
   },
   {
     "id": "251c677489a63eef",
@@ -16817,9 +16821,10 @@
     "athlete_id": "4242355",
     "stat_key": "TD",
     "logged_at": "2026-10-15T13:08:55.290726+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-09T18:15:29.235037+00:00"
   },
   {
     "id": "4485f6c8f8681486",
@@ -16836,9 +16841,10 @@
     "athlete_id": "4361579",
     "stat_key": "YDS",
     "logged_at": "2026-10-15T13:08:55.290729+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 41.0,
+    "verified_at": "2026-11-09T18:15:29.235040+00:00"
   },
   {
     "id": "d13ece256fefd9b1",
@@ -16855,9 +16861,10 @@
     "athlete_id": "4361579",
     "stat_key": "TD",
     "logged_at": "2026-10-15T13:08:55.290731+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 1.0,
+    "verified_at": "2026-11-09T18:15:29.235051+00:00"
   },
   {
     "id": "41338f15a75ab853",
@@ -16874,9 +16881,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-10-15T13:08:55.290734+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 17.0,
+    "verified_at": "2026-11-09T18:15:29.339192+00:00"
   },
   {
     "id": "eb0589b8b378ea36",
@@ -16893,9 +16901,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-10-15T13:08:55.290736+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 14.0,
+    "verified_at": "2026-11-09T18:15:29.339204+00:00"
   },
   {
     "id": "eb94e3b78caf5443",
@@ -16912,9 +16921,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-10-15T13:08:55.290739+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 31.0,
+    "verified_at": "2026-11-09T18:15:29.339210+00:00"
   },
   {
     "id": "c1b08b3765516be5",
@@ -16931,9 +16941,10 @@
     "athlete_id": "4372016",
     "stat_key": "REC",
     "logged_at": "2026-10-15T13:08:55.290742+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4.0,
+    "verified_at": "2026-11-09T18:15:29.339220+00:00"
   },
   {
     "id": "e80b00513ac97772",
@@ -16950,9 +16961,10 @@
     "athlete_id": "4372016",
     "stat_key": "TD",
     "logged_at": "2026-10-15T13:08:55.290744+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-09T18:15:29.339236+00:00"
   },
   {
     "id": "7d7ce954aa62b2b2",
@@ -16969,9 +16981,10 @@
     "athlete_id": "4426338",
     "stat_key": "YDS",
     "logged_at": "2026-10-15T13:08:55.290747+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 107.0,
+    "verified_at": "2026-11-09T18:15:29.339244+00:00"
   },
   {
     "id": "73cdd7f18e113dbd",
@@ -16988,9 +17001,10 @@
     "athlete_id": "3051876",
     "stat_key": "REC",
     "logged_at": "2026-10-15T13:08:55.290749+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2.0,
+    "verified_at": "2026-11-09T18:15:29.339250+00:00"
   },
   {
     "id": "404b1e5d582f526a",
@@ -17007,9 +17021,10 @@
     "athlete_id": "3051876",
     "stat_key": "TD",
     "logged_at": "2026-10-15T13:08:55.290752+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-09T18:15:29.339262+00:00"
   },
   {
     "id": "2500b9d19c20b8a4",
@@ -17026,9 +17041,10 @@
     "athlete_id": "4241985",
     "stat_key": "YDS",
     "logged_at": "2026-10-15T13:08:55.290755+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 41.0,
+    "verified_at": "2026-11-09T18:15:29.339269+00:00"
   },
   {
     "id": "635ab8bad09ef7f5",
@@ -43821,5 +43837,105 @@
       7.0,
       7.0
     ]
+  },
+  {
+    "id": "cb7a08c253a60bc9",
+    "scanner": "team_total",
+    "match": "Buffalo Bills @ Minnesota Vikings",
+    "market": "Minnesota Vikings Over 19.0 Points",
+    "value": 52,
+    "detail": "proj 19.4 pts (5gm)",
+    "line": 19.0,
+    "direction": "over",
+    "game_id": "401873051",
+    "game_date": "2026-11-10",
+    "date_key": "2026-11-10",
+    "is_home": true,
+    "athlete_id": null,
+    "stat_key": null,
+    "logged_at": "2026-11-09T18:15:25.173085+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "2d811ab55b81c06e",
+    "scanner": "team_total",
+    "match": "Buffalo Bills @ Minnesota Vikings",
+    "market": "Minnesota Vikings Under 19.0 Points",
+    "value": 48,
+    "detail": "proj 19.4 pts (5gm)",
+    "line": 19.0,
+    "direction": "under",
+    "game_id": "401873051",
+    "game_date": "2026-11-10",
+    "date_key": "2026-11-10",
+    "is_home": true,
+    "athlete_id": null,
+    "stat_key": null,
+    "logged_at": "2026-11-09T18:15:25.173101+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "2a8dc5ba7228cd85",
+    "scanner": "team_total",
+    "match": "Buffalo Bills @ Minnesota Vikings",
+    "market": "Buffalo Bills Over 21.5 Points",
+    "value": 52,
+    "detail": "proj 21.9 pts (5gm)",
+    "line": 21.5,
+    "direction": "over",
+    "game_id": "401873051",
+    "game_date": "2026-11-10",
+    "date_key": "2026-11-10",
+    "is_home": false,
+    "athlete_id": null,
+    "stat_key": null,
+    "logged_at": "2026-11-09T18:15:25.173105+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "f4d685fc4b550dbd",
+    "scanner": "team_total",
+    "match": "Buffalo Bills @ Minnesota Vikings",
+    "market": "Buffalo Bills Under 21.5 Points",
+    "value": 48,
+    "detail": "proj 21.9 pts (5gm)",
+    "line": 21.5,
+    "direction": "under",
+    "game_id": "401873051",
+    "game_date": "2026-11-10",
+    "date_key": "2026-11-10",
+    "is_home": false,
+    "athlete_id": null,
+    "stat_key": null,
+    "logged_at": "2026-11-09T18:15:25.173110+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "b4f1573f23e23b2a",
+    "scanner": "game_total",
+    "match": "Buffalo Bills @ Minnesota Vikings",
+    "market": "Game Over 41.0 Total Points",
+    "value": 51,
+    "detail": "proj 41.4 pts (5v5gm)",
+    "line": 41.0,
+    "direction": "over",
+    "game_id": "401873051",
+    "game_date": "2026-11-10",
+    "date_key": "2026-11-10",
+    "is_home": null,
+    "athlete_id": null,
+    "stat_key": null,
+    "logged_at": "2026-11-09T18:15:25.173113+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
   }
 ]
