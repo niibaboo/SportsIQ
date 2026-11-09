@@ -1090,7 +1090,10 @@
     "logged_home_score": 28.0,
     "logged_away_score": 12.0,
     "pregame_total": 44.9,
-    "status": "pending"
+    "status": "hit",
+    "scorer_team_id": "12",
+    "final_home_score": 35.0,
+    "final_away_score": 12.0
   },
   "401873042_Game_Total_Under": {
     "id": "401873042_Game_Total_Under",
@@ -1107,7 +1110,9 @@
     "logged_home_score": 9.0,
     "logged_away_score": 19.0,
     "pregame_total": 45.2,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 9.0,
+    "final_away_score": 19.0
   },
   "401873039_Game_Total_Under": {
     "id": "401873039_Game_Total_Under",
@@ -1124,7 +1129,9 @@
     "logged_home_score": 9.0,
     "logged_away_score": 13.0,
     "pregame_total": 40.2,
-    "status": "pending"
+    "status": "miss",
+    "final_home_score": 23.0,
+    "final_away_score": 22.0
   },
   "401873044_Game_Total_Under": {
     "id": "401873044_Game_Total_Under",
@@ -1141,7 +1148,9 @@
     "logged_home_score": 8.0,
     "logged_away_score": 16.0,
     "pregame_total": 47.4,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 11.0,
+    "final_away_score": 19.0
   },
   "401873043_Game_Total_Under": {
     "id": "401873043_Game_Total_Under",
@@ -1158,6 +1167,59 @@
     "logged_home_score": 13.0,
     "logged_away_score": 20.0,
     "pregame_total": 44.7,
+    "status": "hit",
+    "final_home_score": 13.0,
+    "final_away_score": 20.0
+  },
+  "401873046_Game_Total_Over": {
+    "id": "401873046_Game_Total_Over",
+    "game_id": "401873046",
+    "home_id": "24",
+    "away_id": "34",
+    "home_team": "Los Angeles Chargers",
+    "away_team": "Houston Texans",
+    "label": "Game Total Over",
+    "prob": 100,
+    "logged_at": "2026-11-09T00:06:14.319812+00:00",
+    "logged_period": 4,
+    "logged_clock": "6:02",
+    "logged_home_score": 15.0,
+    "logged_away_score": 41.0,
+    "pregame_total": 42.3,
+    "status": "pending"
+  },
+  "401873049_Game_Total_Over": {
+    "id": "401873049_Game_Total_Over",
+    "game_id": "401873049",
+    "home_id": "17",
+    "away_id": "9",
+    "home_team": "New England Patriots",
+    "away_team": "Green Bay Packers",
+    "label": "Game Total Over",
+    "prob": 100,
+    "logged_at": "2026-11-09T00:06:14.319819+00:00",
+    "logged_period": 4,
+    "logged_clock": "15:00",
+    "logged_home_score": 21.0,
+    "logged_away_score": 42.0,
+    "pregame_total": 43.6,
+    "status": "pending"
+  },
+  "401873048_Game_Total_Under": {
+    "id": "401873048_Game_Total_Under",
+    "game_id": "401873048",
+    "home_id": "26",
+    "away_id": "22",
+    "home_team": "Seattle Seahawks",
+    "away_team": "Arizona Cardinals",
+    "label": "Game Total Under",
+    "prob": 100,
+    "logged_at": "2026-11-09T00:06:14.319822+00:00",
+    "logged_period": 4,
+    "logged_clock": "4:35",
+    "logged_home_score": 17.0,
+    "logged_away_score": 3.0,
+    "pregame_total": 47.9,
     "status": "pending"
   }
 }
