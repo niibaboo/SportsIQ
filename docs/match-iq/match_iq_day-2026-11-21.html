@@ -1,0 +1,426 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Match IQ</title></head>
+<body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
+<h2 style="text-align:center">⚽ MATCH IQ — Full Stats</h2>
+<p style="text-align:center;color:#888;font-size:11px">Powered by TheStatsAPI · 11 Nov 13:44</p>
+<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Safe Corners</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a>·<a href="scanners/away_to_score/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Away to Score</a>·<a href="scanners/home_over15/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Home O1.5</a>·<a href="scanners/goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Hot Form/Streak</a></p>
+<p style="text-align:center;margin:4px 0 0;font-size:12px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none">📊 Results Tracker</a></p>
+
+<div style="display:flex;align-items:center;justify-content:center;gap:20px;margin:10px 0 4px">
+  <a href="match_iq_day-2026-11-20.html" style="color:#7ec8ff;text-decoration:none;font-size:20px">◀</a>
+  <span style="font-size:15px;font-weight:bold">Sat 21 Nov</span>
+  <span style="color:#444;font-size:20px">▶</span>
+</div>
+<p style="text-align:center;margin-bottom:16px"><a href="match_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
+
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:10px">🎯 Safest Bet Builder</div>
+  <div id="categoryToggles" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;font-size:12px"></div>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+    <label style="font-size:12px;color:#aaa">Target odds:</label>
+    <input id="targetOdds" type="number" step="0.1" min="1.1" value="5.0"
+      style="width:70px;background:#0f1318;border:1px solid #333;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
+    <label style="font-size:12px;color:#aaa">Max legs:</label>
+    <input id="maxLegs" type="number" step="1" min="2" value="8"
+      style="width:55px;background:#0f1318;border:1px solid #333;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
+    <button onclick="buildSafest()"
+      style="background:#3a7d7a;border:none;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
+      Build
+    </button>
+    <button onclick="buildSafest()"
+      style="background:#2a3038;border:1px solid #444;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
+      🔀 Shuffle
+    </button>
+  </div>
+  <div id="builderResult" style="font-size:12px;color:#888">
+    Untick any market type you don't want considered (Corners starts unticked —
+    lower counts mean more relative variance than shots/SoT), set a target odds
+    and leg cap, then tap Build. It rotates through whichever categories are
+    ticked, groups near-tied legs and shuffles within each group so it draws
+    from more of the day's matches rather than always the exact same few, and
+    caps at 2 legs per match to avoid stacking correlated legs from one game.
+    Tap Shuffle for a fresh pick among equally-safe options without changing
+    your settings.
+  </div>
+</div>
+<script>
+const LEGS = [{"match": "Young Boys v FC Thun", "market": "Over 2.5 Goals", "prob": 91, "category": "Goals", "detail": "5.49 exp goals (7v7gm)", "history": "H 3/2/3/2/2/3/3 \u00b7 A 0/2/2/2/2/5/3"}, {"match": "Young Boys v FC Thun", "market": "BTTS", "prob": 86, "category": "BTTS", "detail": "5.49 exp goals (7v7gm)", "history": "H 3/2/3/2/2/3/3 \u00b7 A 0/2/2/2/2/5/3"}, {"match": "Young Boys v FC Thun", "market": "FC Thun to Score (Over 0.5)", "prob": 90, "category": "Team to Score", "detail": "2.26 exp goals vs 7v7gm sample", "history": "0/2/2/2/2/5/3"}, {"match": "Young Boys v FC Thun", "market": "Young Boys Over 1.5 Goals", "prob": 83, "category": "Team Goals", "detail": "3.23 exp goals (7v7gm)", "history": "3/2/3/2/2/3/3"}, {"match": "Young Boys v FC Thun", "market": "FH Corners Over 3.5", "prob": 78, "category": "FH Corners", "detail": "5.38 exp FH corners (7v7gm)", "history": "H 2/3/5/2/4/5/3 \u00b7 A 4/1/3/5/2/1/3"}, {"match": "Young Boys v FC Thun", "market": "Young Boys Over 13.5 Shots", "prob": 92, "category": "Shots", "detail": "avg 19.4 (7gm)", "history": "28/14/23/21/18/16/16"}, {"match": "Young Boys v FC Thun", "market": "Young Boys Over 4.5 Shots on Target", "prob": 76, "category": "Shots on Target", "detail": "avg 6.4 (7gm)", "history": "10/5/5/6/4/7/8"}, {"match": "Young Boys v FC Thun", "market": "Young Boys Over 4.5 Corners", "prob": 80, "category": "Corners", "detail": "avg 6.7 (7gm)", "history": "8/4/10/5/8/8/4"}, {"match": "Young Boys v FC Thun", "market": "Young Boys Over 0.5 Cards", "prob": 93, "category": "Cards", "detail": "avg 2.6 (7gm)", "history": "4/2/1/4/2/2/3"}, {"match": "Young Boys v FC Thun", "market": "FC Thun Over 11.5 Shots", "prob": 89, "category": "Shots", "detail": "avg 16.4 (7gm)", "history": "20/17/15/13/17/18/15"}, {"match": "Young Boys v FC Thun", "market": "FC Thun Over 3.0 Shots on Target", "prob": 69, "category": "Shots on Target", "detail": "avg 4.7 (7gm)", "history": "1/2/5/5/9/8/3"}, {"match": "Young Boys v FC Thun", "market": "FC Thun Over 4.5 Corners", "prob": 75, "category": "Corners", "detail": "avg 6.3 (7gm)", "history": "10/7/7/6/6/4/4"}, {"match": "Young Boys v FC Thun", "market": "FC Thun Over 0.5 Cards", "prob": 91, "category": "Cards", "detail": "avg 2.4 (7gm)", "history": "4/2/4/3/2/1/1"}, {"match": "Norwich City v Cardiff City", "market": "Over 2.5 Goals", "prob": 81, "category": "Goals", "detail": "4.34 exp goals (7v7gm)", "history": "H 1/0/0/3/3/4/5 \u00b7 A 1/5/2/1/0/3/5"}, {"match": "Norwich City v Cardiff City", "market": "BTTS", "prob": 75, "category": "BTTS", "detail": "4.34 exp goals (7v7gm)", "history": "H 1/0/0/3/3/4/5 \u00b7 A 1/5/2/1/0/3/5"}, {"match": "Norwich City v Cardiff City", "market": "Cardiff City to Score (Over 0.5)", "prob": 81, "category": "Team to Score", "detail": "1.65 exp goals vs 7v7gm sample", "history": "1/5/2/1/0/3/5"}, {"match": "Norwich City v Cardiff City", "market": "Norwich City Over 1.5 Goals", "prob": 75, "category": "Team Goals", "detail": "2.69 exp goals (7v7gm)", "history": "1/0/0/3/3/4/5"}, {"match": "Norwich City v Cardiff City", "market": "FH Corners Over 3.5", "prob": 44, "category": "FH Corners", "detail": "3.37 exp FH corners (7v7gm)", "history": "H 1/0/1/2/5/4/0 \u00b7 A 1/4/2/1/2/3/5"}, {"match": "Norwich City v Cardiff City", "market": "Norwich City Over 10.0 Shots", "prob": 84, "category": "Shots", "detail": "avg 14.3 (7gm)", "history": "12/12/9/16/15/19/17"}, {"match": "Norwich City v Cardiff City", "market": "Norwich City Over 3.5 Shots on Target", "prob": 75, "category": "Shots on Target", "detail": "avg 5.1 (7gm)", "history": "5/4/2/5/5/8/7"}, {"match": "Norwich City v Cardiff City", "market": "Norwich City Over 3.0 Corners", "prob": 67, "category": "Corners", "detail": "avg 4.6 (7gm)", "history": "2/5/1/7/9/5/3"}, {"match": "Norwich City v Cardiff City", "market": "Norwich City Over 0.5 Cards", "prob": 73, "category": "Cards", "detail": "avg 1.3 (7gm)", "history": "1/2/3/2/1/0/0"}, {"match": "Norwich City v Cardiff City", "market": "Cardiff City Over 10.0 Shots", "prob": 84, "category": "Shots", "detail": "avg 14.3 (7gm)", "history": "10/22/7/16/13/7/25"}, {"match": "Norwich City v Cardiff City", "market": "Cardiff City Over 4.0 Shots on Target", "prob": 71, "category": "Shots on Target", "detail": "avg 6.0 (7gm)", "history": "1/10/3/4/9/4/11"}, {"match": "Norwich City v Cardiff City", "market": "Cardiff City Over 3.0 Corners", "prob": 69, "category": "Corners", "detail": "avg 4.7 (7gm)", "history": "6/6/4/3/5/4/5"}, {"match": "Norwich City v Cardiff City", "market": "Cardiff City Over 0.5 Cards", "prob": 80, "category": "Cards", "detail": "avg 1.6 (7gm)", "history": "0/1/3/1/2/0/4"}, {"match": "FC Utrecht v SC Cambuur", "market": "Over 2.5 Goals", "prob": 78, "category": "Goals", "detail": "4.16 exp goals (7v7gm)", "history": "H 2/0/3/2/1/2/2 \u00b7 A 3/1/1/2/6/4/2"}, {"match": "FC Utrecht v SC Cambuur", "market": "BTTS", "prob": 70, "category": "BTTS", "detail": "4.16 exp goals (7v7gm)", "history": "H 2/0/3/2/1/2/2 \u00b7 A 3/1/1/2/6/4/2"}, {"match": "FC Utrecht v SC Cambuur", "market": "SC Cambuur to Score (Over 0.5)", "prob": 94, "category": "Team to Score", "detail": "2.79 exp goals vs 7v7gm sample", "history": "3/1/1/2/6/4/2"}, {"match": "FC Utrecht v SC Cambuur", "market": "FC Utrecht Over 1.5 Goals", "prob": 40, "category": "Team Goals", "detail": "1.36 exp goals (7v7gm)", "history": "2/0/3/2/1/2/2"}, {"match": "FC Utrecht v SC Cambuur", "market": "FH Corners Over 3.5", "prob": 62, "category": "FH Corners", "detail": "4.29 exp FH corners (7v7gm)", "history": "H 1/0/5/2/5/4/0 \u00b7 A 1/3/2/1/3/4/0"}, {"match": "FC Utrecht v SC Cambuur", "market": "FC Utrecht Over 11.0 Shots", "prob": 87, "category": "Shots", "detail": "avg 15.9 (7gm)", "history": "12/5/24/16/23/15/16"}, {"match": "FC Utrecht v SC Cambuur", "market": "FC Utrecht Over 3.5 Shots on Target", "prob": 72, "category": "Shots on Target", "detail": "avg 4.9 (7gm)", "history": "6/2/6/5/5/5/5"}, {"match": "FC Utrecht v SC Cambuur", "market": "FC Utrecht Over 3.5 Corners", "prob": 73, "category": "Corners", "detail": "avg 5.0 (7gm)", "history": "2/3/7/4/7/9/3"}, {"match": "FC Utrecht v SC Cambuur", "market": "FC Utrecht Over 0.5 Cards", "prob": 82, "category": "Cards", "detail": "avg 1.7 (7gm)", "history": "0/2/2/2/2/2/2"}, {"match": "FC Utrecht v SC Cambuur", "market": "SC Cambuur Over 9.0 Shots", "prob": 84, "category": "Shots", "detail": "avg 13.1 (7gm)", "history": "16/8/13/11/19/15/10"}, {"match": "FC Utrecht v SC Cambuur", "market": "SC Cambuur Over 4.0 Shots on Target", "prob": 70, "category": "Shots on Target", "detail": "avg 5.9 (7gm)", "history": "7/3/4/6/11/7/3"}, {"match": "FC Utrecht v SC Cambuur", "market": "SC Cambuur Over 2.5 Corners", "prob": 75, "category": "Corners", "detail": "avg 3.9 (7gm)", "history": "4/3/5/3/4/7/1"}, {"match": "FC Utrecht v SC Cambuur", "market": "SC Cambuur Over 0.5 Cards", "prob": 90, "category": "Cards", "detail": "avg 2.3 (7gm)", "history": "2/2/3/4/0/2/3"}, {"match": "FC Groningen v SC Heerenveen", "market": "Over 2.5 Goals", "prob": 78, "category": "Goals", "detail": "4.13 exp goals (7v7gm)", "history": "H 1/3/5/2/2/2/3 \u00b7 A 0/4/0/4/3/1/5"}, {"match": "FC Groningen v SC Heerenveen", "market": "BTTS", "prob": 73, "category": "BTTS", "detail": "4.13 exp goals (7v7gm)", "history": "H 1/3/5/2/2/2/3 \u00b7 A 0/4/0/4/3/1/5"}, {"match": "FC Groningen v SC Heerenveen", "market": "SC Heerenveen to Score (Over 0.5)", "prob": 92, "category": "Team to Score", "detail": "2.57 exp goals vs 7v7gm sample", "history": "0/4/0/4/3/1/5"}, {"match": "FC Groningen v SC Heerenveen", "market": "FC Groningen Over 1.5 Goals", "prob": 46, "category": "Team Goals", "detail": "1.57 exp goals (7v7gm)", "history": "1/3/5/2/2/2/3"}, {"match": "FC Groningen v SC Heerenveen", "market": "FH Corners Over 3.5", "prob": 77, "category": "FH Corners", "detail": "5.3 exp FH corners (7v7gm)", "history": "H 0/2/5/4/2/1/0 \u00b7 A 2/6/4/1/1/3/3"}, {"match": "FC Groningen v SC Heerenveen", "market": "FC Groningen Over 9.0 Shots", "prob": 81, "category": "Shots", "detail": "avg 12.7 (7gm)", "history": "4/17/14/16/9/20/9"}, {"match": "FC Groningen v SC Heerenveen", "market": "FC Groningen Over 4.0 Shots on Target", "prob": 70, "category": "Shots on Target", "detail": "avg 5.9 (7gm)", "history": "2/7/9/5/3/10/5"}, {"match": "FC Groningen v SC Heerenveen", "market": "FC Groningen Over 2.0 Corners", "prob": 60, "category": "Corners", "detail": "avg 3.1 (7gm)", "history": "0/5/6/7/2/2/0"}, {"match": "FC Groningen v SC Heerenveen", "market": "FC Groningen Over 0.5 Cards", "prob": 85, "category": "Cards", "detail": "avg 1.9 (7gm)", "history": "0/0/2/1/3/1/6"}, {"match": "FC Groningen v SC Heerenveen", "market": "SC Heerenveen Over 11.5 Shots", "prob": 88, "category": "Shots", "detail": "avg 16.1 (7gm)", "history": "23/23/12/14/15/8/18"}, {"match": "FC Groningen v SC Heerenveen", "market": "SC Heerenveen Over 4.0 Shots on Target", "prob": 73, "category": "Shots on Target", "detail": "avg 6.1 (7gm)", "history": "6/9/5/7/5/2/9"}, {"match": "FC Groningen v SC Heerenveen", "market": "SC Heerenveen Over 3.5 Corners", "prob": 73, "category": "Corners", "detail": "avg 5.0 (7gm)", "history": "8/6/6/4/2/5/4"}, {"match": "FC Groningen v SC Heerenveen", "market": "SC Heerenveen Over 0.5 Cards", "prob": 67, "category": "Cards", "detail": "avg 1.1 (7gm)", "history": "2/0/2/0/0/3/1"}, {"match": "FC Lugano v Grasshopper Club Z\u00fcrich", "market": "Over 2.5 Goals", "prob": 73, "category": "Goals", "detail": "3.81 exp goals (7v7gm)", "history": "H 2/4/4/4/3/2/0 \u00b7 A 1/2/1/0/0/2/1"}, {"match": "FC Lugano v Grasshopper Club Z\u00fcrich", "market": "BTTS", "prob": 63, "category": "BTTS", "detail": "3.81 exp goals (7v7gm)", "history": "H 2/4/4/4/3/2/0 \u00b7 A 1/2/1/0/0/2/1"}, {"match": "FC Lugano v Grasshopper Club Z\u00fcrich", "market": "Grasshopper Club Z\u00fcrich to Score (Over 0.5)", "prob": 67, "category": "Team to Score", "detail": "1.11 exp goals vs 7v7gm sample", "history": "1/2/1/0/0/2/1"}, {"match": "FC Lugano v Grasshopper Club Z\u00fcrich", "market": "FC Lugano Over 1.5 Goals", "prob": 75, "category": "Team Goals", "detail": "2.7 exp goals (7v7gm)", "history": "2/4/4/4/3/2/0"}, {"match": "FC Lugano v Grasshopper Club Z\u00fcrich", "market": "FH Corners Over 3.5", "prob": 75, "category": "FH Corners", "detail": "5.12 exp FH corners (7v7gm)", "history": "H 3/2/3/5/0/3/1 \u00b7 A 3/0/1/1/2/6/2"}, {"match": "FC Lugano v Grasshopper Club Z\u00fcrich", "market": "FC Lugano Over 11.5 Shots", "prob": 89, "category": "Shots", "detail": "avg 16.4 (7gm)", "history": "18/12/21/19/19/12/14"}, {"match": "FC Lugano v Grasshopper Club Z\u00fcrich", "market": "FC Lugano Over 4.5 Shots on Target", "prob": 75, "category": "Shots on Target", "detail": "avg 6.3 (7gm)", "history": "7/8/5/7/6/7/4"}, {"match": "FC Lugano v Grasshopper Club Z\u00fcrich", "market": "FC Lugano Over 3.0 Corners", "prob": 64, "category": "Corners", "detail": "avg 4.4 (7gm)", "history": "4/2/6/8/2/6/3"}, {"match": "FC Lugano v Grasshopper Club Z\u00fcrich", "market": "FC Lugano Over 0.5 Cards", "prob": 95, "category": "Cards", "detail": "avg 3.1 (7gm)", "history": "3/4/3/3/2/3/4"}, {"match": "FC Lugano v Grasshopper Club Z\u00fcrich", "market": "Grasshopper Club Z\u00fcrich Over 10.0 Shots", "prob": 82, "category": "Shots", "detail": "avg 13.9 (7gm)", "history": "17/8/21/8/13/20/10"}, {"match": "FC Lugano v Grasshopper Club Z\u00fcrich", "market": "Grasshopper Club Z\u00fcrich Over 3.0 Shots on Target", "prob": 64, "category": "Shots on Target", "detail": "avg 4.4 (7gm)", "history": "5/3/6/2/4/7/4"}, {"match": "FC Lugano v Grasshopper Club Z\u00fcrich", "market": "Grasshopper Club Z\u00fcrich Over 3.0 Corners", "prob": 64, "category": "Corners", "detail": "avg 4.4 (7gm)", "history": "5/1/8/3/4/8/2"}, {"match": "FC Lugano v Grasshopper Club Z\u00fcrich", "market": "Grasshopper Club Z\u00fcrich Over 0.5 Cards", "prob": 86, "category": "Cards", "detail": "avg 2.0 (7gm)", "history": "3/3/2/1/1/3/1"}, {"match": "NEC Nijmegen v PSV Eindhoven", "market": "Over 2.5 Goals", "prob": 71, "category": "Goals", "detail": "3.69 exp goals (7v7gm)", "history": "H 0/1/1/2/2/0/3 \u00b7 A 4/2/2/1/1/7/5"}, {"match": "NEC Nijmegen v PSV Eindhoven", "market": "BTTS", "prob": 63, "category": "BTTS", "detail": "3.69 exp goals (7v7gm)", "history": "H 0/1/1/2/2/0/3 \u00b7 A 4/2/2/1/1/7/5"}, {"match": "NEC Nijmegen v PSV Eindhoven", "market": "PSV Eindhoven to Score (Over 0.5)", "prob": 92, "category": "Team to Score", "detail": "2.54 exp goals vs 7v7gm sample", "history": "4/2/2/1/1/7/5"}, {"match": "NEC Nijmegen v PSV Eindhoven", "market": "NEC Nijmegen Over 1.5 Goals", "prob": 32, "category": "Team Goals", "detail": "1.14 exp goals (7v7gm)", "history": "0/1/1/2/2/0/3"}, {"match": "NEC Nijmegen v PSV Eindhoven", "market": "FH Corners Over 3.5", "prob": 61, "category": "FH Corners", "detail": "4.24 exp FH corners (7v7gm)", "history": "H 2/1/0/4/4/4/5 \u00b7 A 5/3/2/0/3/5/0"}, {"match": "NEC Nijmegen v PSV Eindhoven", "market": "NEC Nijmegen Over 12.0 Shots", "prob": 86, "category": "Shots", "detail": "avg 16.9 (7gm)", "history": "10/17/8/24/22/21/16"}, {"match": "NEC Nijmegen v PSV Eindhoven", "market": "NEC Nijmegen Over 3.0 Shots on Target", "prob": 69, "category": "Shots on Target", "detail": "avg 4.7 (7gm)", "history": "1/5/2/7/9/2/7"}, {"match": "NEC Nijmegen v PSV Eindhoven", "market": "NEC Nijmegen Over 5.0 Corners", "prob": 77, "category": "Corners", "detail": "avg 7.6 (7gm)", "history": "5/5/4/13/11/7/8"}, {"match": "NEC Nijmegen v PSV Eindhoven", "market": "NEC Nijmegen Over 0.5 Cards", "prob": 82, "category": "Cards", "detail": "avg 1.7 (7gm)", "history": "4/0/2/0/0/3/3"}, {"match": "NEC Nijmegen v PSV Eindhoven", "market": "PSV Eindhoven Over 12.5 Shots", "prob": 90, "category": "Shots", "detail": "avg 17.9 (7gm)", "history": "28/11/16/15/19/20/16"}, {"match": "NEC Nijmegen v PSV Eindhoven", "market": "PSV Eindhoven Over 4.0 Shots on Target", "prob": 71, "category": "Shots on Target", "detail": "avg 6.0 (7gm)", "history": "10/4/2/4/6/9/7"}, {"match": "NEC Nijmegen v PSV Eindhoven", "market": "PSV Eindhoven Over 3.5 Corners", "prob": 79, "category": "Corners", "detail": "avg 5.4 (7gm)", "history": "9/5/4/2/6/11/1"}, {"match": "NEC Nijmegen v PSV Eindhoven", "market": "PSV Eindhoven Over 0.5 Cards", "prob": 86, "category": "Cards", "detail": "avg 2.0 (7gm)", "history": "1/3/1/3/4/0/2"}, {"match": "West Ham United v Preston North End", "market": "Over 2.5 Goals", "prob": 70, "category": "Goals", "detail": "3.59 exp goals (7v7gm)", "history": "H 1/6/1/2/1/3/1 \u00b7 A 0/0/1/1/0/2/1"}, {"match": "West Ham United v Preston North End", "market": "BTTS", "prob": 60, "category": "BTTS", "detail": "3.59 exp goals (7v7gm)", "history": "H 1/6/1/2/1/3/1 \u00b7 A 0/0/1/1/0/2/1"}, {"match": "West Ham United v Preston North End", "market": "Preston North End to Score (Over 0.5)", "prob": 65, "category": "Team to Score", "detail": "1.04 exp goals vs 7v7gm sample", "history": "0/0/1/1/0/2/1"}, {"match": "West Ham United v Preston North End", "market": "West Ham United Over 1.5 Goals", "prob": 72, "category": "Team Goals", "detail": "2.55 exp goals (7v7gm)", "history": "1/6/1/2/1/3/1"}, {"match": "West Ham United v Preston North End", "market": "FH Corners Over 3.5", "prob": 75, "category": "FH Corners", "detail": "5.12 exp FH corners (7v7gm)", "history": "H 1/6/0/7/3/1/6 \u00b7 A 1/3/2/1/3/1/1"}, {"match": "West Ham United v Preston North End", "market": "West Ham United Over 13.5 Shots", "prob": 91, "category": "Shots", "detail": "avg 19.1 (7gm)", "history": "12/32/9/28/14/18/21"}, {"match": "West Ham United v Preston North End", "market": "West Ham United Over 5.0 Shots on Target", "prob": 75, "category": "Shots on Target", "detail": "avg 7.4 (7gm)", "history": "5/12/4/11/5/10/5"}, {"match": "West Ham United v Preston North End", "market": "West Ham United Over 5.0 Corners", "prob": 75, "category": "Corners", "detail": "avg 7.4 (7gm)", "history": "4/11/1/13/8/6/9"}, {"match": "West Ham United v Preston North End", "market": "West Ham United Over 0.5 Cards", "prob": 88, "category": "Cards", "detail": "avg 2.1 (7gm)", "history": "2/2/2/1/3/3/2"}, {"match": "West Ham United v Preston North End", "market": "Preston North End Over 7.0 Shots", "prob": 81, "category": "Shots", "detail": "avg 10.3 (7gm)", "history": "12/6/11/19/3/6/15"}, {"match": "West Ham United v Preston North End", "market": "Preston North End Over 1.0 Shots on Target", "prob": 48, "category": "Shots on Target", "detail": "avg 1.6 (7gm)", "history": "1/1/1/4/0/2/2"}, {"match": "West Ham United v Preston North End", "market": "Preston North End Over 2.5 Corners", "prob": 76, "category": "Corners", "detail": "avg 4.0 (7gm)", "history": "4/3/2/6/7/3/3"}, {"match": "West Ham United v Preston North End", "market": "Preston North End Over 0.5 Cards", "prob": 91, "category": "Cards", "detail": "avg 2.4 (7gm)", "history": "1/3/4/1/2/1/5"}, {"match": "Aston Villa v Sunderland", "market": "Over 2.5 Goals", "prob": 67, "category": "Goals", "detail": "3.47 exp goals (7v7gm)", "history": "H 1/3/2/1/2/1/4 \u00b7 A 0/3/0/0/0/1/1"}, {"match": "Aston Villa v Sunderland", "market": "BTTS", "prob": 60, "category": "BTTS", "detail": "3.47 exp goals (7v7gm)", "history": "H 1/3/2/1/2/1/4 \u00b7 A 0/3/0/0/0/1/1"}, {"match": "Aston Villa v Sunderland", "market": "Sunderland to Score (Over 0.5)", "prob": 66, "category": "Team to Score", "detail": "1.07 exp goals vs 7v7gm sample", "history": "0/3/0/0/0/1/1"}, {"match": "Aston Villa v Sunderland", "market": "Aston Villa Over 1.5 Goals", "prob": 69, "category": "Team Goals", "detail": "2.4 exp goals (7v7gm)", "history": "1/3/2/1/2/1/4"}, {"match": "Aston Villa v Sunderland", "market": "FH Corners Over 3.5", "prob": 69, "category": "FH Corners", "detail": "4.72 exp FH corners (7v7gm)", "history": "H 5/1/0/3/3/5/1 \u00b7 A 2/3/3/1/1/1/0"}, {"match": "Aston Villa v Sunderland", "market": "Aston Villa Over 9.5 Shots", "prob": 85, "category": "Shots", "detail": "avg 13.3 (7gm)", "history": "7/15/20/15/8/16/12"}, {"match": "Aston Villa v Sunderland", "market": "Aston Villa Over 3.0 Shots on Target", "prob": 67, "category": "Shots on Target", "detail": "avg 4.6 (7gm)", "history": "5/6/7/3/2/3/6"}, {"match": "Aston Villa v Sunderland", "market": "Aston Villa Over 2.5 Corners", "prob": 71, "category": "Corners", "detail": "avg 3.7 (7gm)", "history": "6/1/2/5/4/7/1"}, {"match": "Aston Villa v Sunderland", "market": "Aston Villa Over 0.5 Cards", "prob": 86, "category": "Cards", "detail": "avg 2.0 (7gm)", "history": "2/2/2/2/4/1/1"}, {"match": "Aston Villa v Sunderland", "market": "Sunderland Over 8.5 Shots", "prob": 85, "category": "Shots", "detail": "avg 12.1 (7gm)", "history": "12/17/12/3/15/17/9"}, {"match": "Aston Villa v Sunderland", "market": "Sunderland Over 2.0 Shots on Target", "prob": 64, "category": "Shots on Target", "detail": "avg 3.3 (7gm)", "history": "3/9/3/0/4/2/2"}, {"match": "Aston Villa v Sunderland", "market": "Sunderland Over 2.5 Corners", "prob": 78, "category": "Corners", "detail": "avg 4.1 (7gm)", "history": "4/5/7/3/4/4/2"}, {"match": "Aston Villa v Sunderland", "market": "Sunderland Over 0.5 Cards", "prob": 94, "category": "Cards", "detail": "avg 2.9 (7gm)", "history": "7/1/0/3/1/3/5"}, {"match": "Coventry City v Crystal Palace", "market": "Over 2.5 Goals", "prob": 66, "category": "Goals", "detail": "3.42 exp goals (7v7gm)", "history": "H 0/1/4/1/0/3/1 \u00b7 A 2/0/3/0/0/0/1"}, {"match": "Coventry City v Crystal Palace", "market": "BTTS", "prob": 65, "category": "BTTS", "detail": "3.42 exp goals (7v7gm)", "history": "H 0/1/4/1/0/3/1 \u00b7 A 2/0/3/0/0/0/1"}, {"match": "Coventry City v Crystal Palace", "market": "Crystal Palace to Score (Over 0.5)", "prob": 74, "category": "Team to Score", "detail": "1.34 exp goals vs 7v7gm sample", "history": "2/0/3/0/0/0/1"}, {"match": "Coventry City v Crystal Palace", "market": "Coventry City Over 1.5 Goals", "prob": 61, "category": "Team Goals", "detail": "2.08 exp goals (7v7gm)", "history": "0/1/4/1/0/3/1"}, {"match": "Coventry City v Crystal Palace", "market": "FH Corners Over 3.5", "prob": 56, "category": "FH Corners", "detail": "3.95 exp FH corners (7v7gm)", "history": "H 4/1/0/3/1/3/1 \u00b7 A 5/1/2/1/1/0/2"}, {"match": "Coventry City v Crystal Palace", "market": "Coventry City Over 8.5 Shots", "prob": 85, "category": "Shots", "detail": "avg 12.1 (7gm)", "history": "14/10/9/12/13/12/15"}, {"match": "Coventry City v Crystal Palace", "market": "Coventry City Over 2.5 Shots on Target", "prob": 71, "category": "Shots on Target", "detail": "avg 3.7 (7gm)", "history": "6/3/6/1/2/4/4"}, {"match": "Coventry City v Crystal Palace", "market": "Coventry City Over 2.0 Corners", "prob": 64, "category": "Corners", "detail": "avg 3.3 (7gm)", "history": "5/2/2/4/4/4/2"}, {"match": "Coventry City v Crystal Palace", "market": "Coventry City Over 0.5 Cards", "prob": 67, "category": "Cards", "detail": "avg 1.1 (7gm)", "history": "1/0/1/3/0/2/1"}, {"match": "Coventry City v Crystal Palace", "market": "Crystal Palace Over 8.0 Shots", "prob": 79, "category": "Shots", "detail": "avg 11.3 (7gm)", "history": "11/12/13/5/17/2/19"}, {"match": "Coventry City v Crystal Palace", "market": "Crystal Palace Over 2.5 Shots on Target", "prob": 76, "category": "Shots on Target", "detail": "avg 4.0 (7gm)", "history": "4/4/7/1/4/1/7"}, {"match": "Coventry City v Crystal Palace", "market": "Crystal Palace Over 3.0 Corners", "prob": 62, "category": "Corners", "detail": "avg 4.3 (7gm)", "history": "6/3/5/5/7/0/4"}, {"match": "Coventry City v Crystal Palace", "market": "Crystal Palace Over 0.5 Cards", "prob": 88, "category": "Cards", "detail": "avg 2.1 (7gm)", "history": "2/3/2/1/3/2/2"}, {"match": "Parma v Roma", "market": "Over 2.5 Goals", "prob": 66, "category": "Goals", "detail": "3.41 exp goals (7v7gm)", "history": "H 2/0/0/1/0/3/1 \u00b7 A 2/0/2/3/4/5/3"}, {"match": "Parma v Roma", "market": "BTTS", "prob": 58, "category": "BTTS", "detail": "3.41 exp goals (7v7gm)", "history": "H 2/0/0/1/0/3/1 \u00b7 A 2/0/2/3/4/5/3"}, {"match": "Parma v Roma", "market": "Roma to Score (Over 0.5)", "prob": 91, "category": "Team to Score", "detail": "2.38 exp goals vs 7v7gm sample", "history": "2/0/2/3/4/5/3"}, {"match": "Parma v Roma", "market": "Parma Over 1.5 Goals", "prob": 28, "category": "Team Goals", "detail": "1.03 exp goals (7v7gm)", "history": "2/0/0/1/0/3/1"}, {"match": "Parma v Roma", "market": "FH Corners Over 3.5", "prob": 85, "category": "FH Corners", "detail": "5.99 exp FH corners (7v7gm)", "history": "H 1/1/1/2/2/3/0 \u00b7 A 2/2/2/3/6/2/7"}, {"match": "Parma v Roma", "market": "Parma Over 7.5 Shots", "prob": 83, "category": "Shots", "detail": "avg 10.6 (7gm)", "history": "5/9/25/10/8/6/11"}, {"match": "Parma v Roma", "market": "Parma Over 2.0 Shots on Target", "prob": 64, "category": "Shots on Target", "detail": "avg 3.3 (7gm)", "history": "2/2/8/4/2/3/2"}, {"match": "Parma v Roma", "market": "Parma Over 2.0 Corners", "prob": 55, "category": "Corners", "detail": "avg 2.9 (7gm)", "history": "2/1/6/3/3/4/1"}, {"match": "Parma v Roma", "market": "Parma Over 0.5 Cards", "prob": 82, "category": "Cards", "detail": "avg 1.7 (7gm)", "history": "3/0/3/1/1/0/4"}, {"match": "Parma v Roma", "market": "Roma Over 13.0 Shots", "prob": 87, "category": "Shots", "detail": "avg 18.3 (7gm)", "history": "18/9/15/24/20/14/28"}, {"match": "Parma v Roma", "market": "Roma Over 4.0 Shots on Target", "prob": 70, "category": "Shots on Target", "detail": "avg 5.9 (7gm)", "history": "4/2/5/4/8/9/9"}, {"match": "Parma v Roma", "market": "Roma Over 4.5 Corners", "prob": 76, "category": "Corners", "detail": "avg 6.4 (7gm)", "history": "4/2/5/11/7/4/12"}, {"match": "Parma v Roma", "market": "Roma Over 0.5 Cards", "prob": 86, "category": "Cards", "detail": "avg 2.0 (7gm)", "history": "3/4/2/4/0/1/0"}];
+
+function initCategoryToggles() {
+  const container = document.getElementById('categoryToggles');
+  const cats = [...new Set(LEGS.map(l => l.category))];
+  container.innerHTML = cats.map(c => `
+    <label style="display:flex;align-items:center;gap:4px;color:#ccc;cursor:pointer">
+      <input type="checkbox" class="catToggle" value="${c}" ${c === 'Corners' ? '' : 'checked'}>
+      ${c}
+    </label>
+  `).join('');
+}
+initCategoryToggles();
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Sorts safest-first at a coarse level (5-point probability bands) but
+// shuffles legs WITHIN each band, so e.g. five different legs all sitting
+// at 84-88% get picked in a different order each time instead of always
+// the same one — this is what actually lets the builder draw from the
+// full pool of matches instead of fixating on whichever leg happens to
+// be a fraction of a percent ahead.
+function tieredShuffle(legs, bandSize) {
+  const bands = {};
+  legs.forEach(l => {
+    const band = Math.floor(l.prob / bandSize);
+    (bands[band] = bands[band] || []).push(l);
+  });
+  const bandKeys = Object.keys(bands).map(Number).sort((a, b) => b - a);
+  let result = [];
+  bandKeys.forEach(b => { result = result.concat(shuffle(bands[b])); });
+  return result;
+}
+
+function buildSafest() {
+  const target = parseFloat(document.getElementById('targetOdds').value) || 5.0;
+  const maxLegs = parseInt(document.getElementById('maxLegs').value) || 8;
+  const activeCats = [...document.querySelectorAll('.catToggle:checked')].map(el => el.value);
+
+  // Group legs by category, tiered-shuffled within each, so the builder can
+  // round-robin across market types instead of exhausting one category
+  // (usually Shots, since it tends to have the highest raw probabilities)
+  // before touching any other — and so it doesn't fixate on the same
+  // handful of matches every time when many legs are near-equally safe.
+  const byCategory = {};
+  LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category)).forEach(l => {
+    (byCategory[l.category] = byCategory[l.category] || []).push(l);
+  });
+  const categories = Object.keys(byCategory);
+  categories.forEach(c => { byCategory[c] = tieredShuffle(byCategory[c], 5); });
+  const cursor = {};
+  categories.forEach(c => cursor[c] = 0);
+
+  const chosen = [];
+  const matchCount = {};
+  let combinedOdds = 1;
+  let addedThisPass = true;
+
+  while (addedThisPass && combinedOdds < target && chosen.length < maxLegs) {
+    addedThisPass = false;
+    for (const cat of categories) {
+      if (combinedOdds >= target || chosen.length >= maxLegs) break;
+      const arr = byCategory[cat];
+      while (cursor[cat] < arr.length) {
+        const leg = arr[cursor[cat]];
+        cursor[cat]++;
+        const count = matchCount[leg.match] || 0;
+        if (count >= 2) continue;  // cap legs per match to limit correlation risk
+        chosen.push(leg);
+        combinedOdds *= 100 / leg.prob;
+        matchCount[leg.match] = count + 1;
+        addedThisPass = true;
+        break;
+      }
+    }
+  }
+
+  const el = document.getElementById('builderResult');
+  if (!chosen.length) {
+    el.innerHTML = 'No legs available to build from.';
+    return;
+  }
+
+  const rows = chosen.map(l =>
+    `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #2a3038">
+       <span>${l.match}<br><span style="color:#7ec8ff">${l.market}</span> <span style="color:#555">· ${l.category}</span>
+       ${l.detail ? `<br><span style="color:#666;font-size:10px">${l.detail}</span>` : ''}
+       ${l.history ? `<br><span style="color:#555;font-size:10px">last games: ${l.history}</span>` : ''}</span>
+       <span style="color:#ffeb3b;font-weight:bold">${l.prob}%</span>
+     </div>`
+  ).join('');
+
+  const capNote = chosen.length >= maxLegs && combinedOdds < target
+    ? ' (hit the leg cap before reaching target — raise Max legs or lower Target odds)'
+    : (combinedOdds < target ? ' (ran out of legs before reaching target)' : '');
+
+  el.innerHTML = `
+    <div style="color:white;font-size:13px;margin-bottom:6px">
+      ${chosen.length} legs · est. combined odds ~<b>${combinedOdds.toFixed(2)}</b>${capNote}
+    </div>
+    ${rows}
+    <div style="color:#666;font-size:10px;margin-top:8px;line-height:1.4">
+      Estimate multiplies each leg's fair odds (100/probability) — real bookmaker
+      odds include their margin and legs within the same match aren't fully
+      independent, so treat this as a ranking tool, not a firm price. Shots/SoT/
+      corners lines are set automatically below each team's recent-form average
+      for a safety margin; goals/BTTS/FH-corners use the model's own probabilities.
+    </div>
+  `;
+}
+</script>
+
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Swiss Super League · 2026-11-21 17:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Young Boys vs FC Thun</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">5.49</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">91%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">86%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">57%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">16%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">26%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">5.38</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">78%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">62%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Young Boys: 2.57 goals/gm · shots 19.4 · SoT 6.4 · corners 6.7 (FH 3.4) · tackles 16.6 · saves 3.4 · cards 2.6 (7gm)</div>
+    <div style="margin-top:4px">FC Thun: 2.29 goals/gm · shots 16.4 · SoT 4.7 · corners 6.3 (FH 2.7) · tackles 21.1 · saves 2.7 · cards 2.4 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Young Boys last games</span> — goals 3/2/3/2/2/3/3 · shots 28/14/23/21/18/16/16 · SoT 10/5/5/6/4/7/8 · corners 8/4/10/5/8/8/4 · cards 4/2/1/4/2/2/3</div>
+    <div style="margin-top:3px"><span style="color:#aaa">FC Thun last games</span> — goals 0/2/2/2/2/5/3 · shots 20/17/15/13/17/18/15 · SoT 1/2/5/5/9/8/3 · corners 10/7/7/6/6/4/4 · cards 4/2/4/3/2/1/1</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Championship · 2026-11-21 12:30</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Norwich City vs Cardiff City</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.34</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">81%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">75%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">60%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">18%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">22%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">3.37</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">44%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">25%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Norwich City: 2.29 goals/gm · shots 14.3 · SoT 5.1 · corners 4.6 (FH 1.9) · tackles 18.7 · saves 2.7 · cards 1.3 (7gm)</div>
+    <div style="margin-top:4px">Cardiff City: 2.43 goals/gm · shots 14.3 · SoT 6.0 · corners 4.7 (FH 2.6) · tackles 14.6 · saves 4.4 · cards 1.6 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Norwich City last games</span> — goals 1/0/0/3/3/4/5 · shots 12/12/9/16/15/19/17 · SoT 5/4/2/5/5/8/7 · corners 2/5/1/7/9/5/3 · cards 1/2/3/2/1/0/0</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Cardiff City last games</span> — goals 1/5/2/1/0/3/5 · shots 10/22/7/16/13/7/25 · SoT 1/10/3/4/9/4/11 · corners 6/6/4/3/5/4/5 · cards 0/1/3/1/2/0/4</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Eredivisie · 2026-11-21 17:45</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">FC Utrecht vs SC Cambuur</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.16</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">78%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">70%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">16%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">16%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">67%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">4.29</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">62%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">43%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>FC Utrecht: 1.71 goals/gm · shots 15.9 · SoT 4.9 · corners 5.0 (FH 2.4) · tackles 13.7 · saves 3.7 · cards 1.7 (7gm)</div>
+    <div style="margin-top:4px">SC Cambuur: 2.71 goals/gm · shots 13.1 · SoT 5.9 · corners 3.9 (FH 2.0) · tackles 18.0 · saves 2.4 · cards 2.3 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">FC Utrecht last games</span> — goals 2/0/3/2/1/2/2 · shots 12/5/24/16/23/15/16 · SoT 6/2/6/5/5/5/5 · corners 2/3/7/4/7/9/3 · cards 0/2/2/2/2/2/2</div>
+    <div style="margin-top:3px"><span style="color:#aaa">SC Cambuur last games</span> — goals 3/1/1/2/6/4/2 · shots 16/8/13/11/19/15/10 · SoT 7/3/4/6/11/7/3 · corners 4/3/5/3/4/7/1 · cards 2/2/3/4/0/2/3</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Eredivisie · 2026-11-21 20:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">FC Groningen vs SC Heerenveen</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.13</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">78%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">73%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">22%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">18%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">59%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">5.3</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">77%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">61%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>FC Groningen: 2.57 goals/gm · shots 12.7 · SoT 5.9 · corners 3.1 (FH 2.0) · tackles 16.6 · saves 2.7 · cards 1.9 (7gm)</div>
+    <div style="margin-top:4px">SC Heerenveen: 2.43 goals/gm · shots 16.1 · SoT 6.1 · corners 5.0 (FH 2.9) · tackles 12.7 · saves 1.3 · cards 1.1 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">FC Groningen last games</span> — goals 1/3/5/2/2/2/3 · shots 4/17/14/16/9/20/9 · SoT 2/7/9/5/3/10/5 · corners 0/5/6/7/2/2/0 · cards 0/0/2/1/3/1/6</div>
+    <div style="margin-top:3px"><span style="color:#aaa">SC Heerenveen last games</span> — goals 0/4/0/4/3/1/5 · shots 23/23/12/14/15/8/18 · SoT 6/9/5/7/5/2/9 · corners 8/6/6/4/2/5/4 · cards 2/0/2/0/0/3/1</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Swiss Super League · 2026-11-21 17:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">FC Lugano vs Grasshopper Club Zürich</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.81</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">73%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">63%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">71%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">16%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">13%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">5.12</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">75%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">58%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>FC Lugano: 2.71 goals/gm · shots 16.4 · SoT 6.3 · corners 4.4 (FH 2.4) · tackles 14.6 · saves 4.0 · cards 3.1 (7gm)</div>
+    <div style="margin-top:4px">Grasshopper Club Zürich: 1.0 goals/gm · shots 13.9 · SoT 4.4 · corners 4.4 (FH 2.1) · tackles 23.3 · saves 3.3 · cards 2.0 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">FC Lugano last games</span> — goals 2/4/4/4/3/2/0 · shots 18/12/21/19/19/12/14 · SoT 7/8/5/7/6/7/4 · corners 4/2/6/8/2/6/3 · cards 3/4/3/3/2/3/4</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Grasshopper Club Zürich last games</span> — goals 1/2/1/0/0/2/1 · shots 17/8/21/8/13/20/10 · SoT 5/3/6/2/4/7/4 · corners 5/1/8/3/4/8/2 · cards 3/3/2/1/1/3/1</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Eredivisie · 2026-11-21 15:30</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">NEC Nijmegen vs PSV Eindhoven</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.69</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">71%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">63%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">15%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">17%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">68%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">4.24</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">61%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">42%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>NEC Nijmegen: 1.29 goals/gm · shots 16.9 · SoT 4.7 · corners 7.6 (FH 2.9) · tackles 16.3 · saves 2.7 · cards 1.7 (7gm)</div>
+    <div style="margin-top:4px">PSV Eindhoven: 3.14 goals/gm · shots 17.9 · SoT 6.0 · corners 5.4 (FH 2.6) · tackles 16.6 · saves 2.9 · cards 2.0 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">NEC Nijmegen last games</span> — goals 0/1/1/2/2/0/3 · shots 10/17/8/24/22/21/16 · SoT 1/5/2/7/9/2/7 · corners 5/5/4/13/11/7/8 · cards 4/0/2/0/0/3/3</div>
+    <div style="margin-top:3px"><span style="color:#aaa">PSV Eindhoven last games</span> — goals 4/2/2/1/1/7/5 · shots 28/11/16/15/19/20/16 · SoT 10/4/2/4/6/9/7 · corners 9/5/4/2/6/11/1 · cards 1/3/1/3/4/0/2</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Championship · 2026-11-21 15:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">West Ham United vs Preston North End</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.59</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">70%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">60%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">70%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">17%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">13%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">5.12</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">75%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">58%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>West Ham United: 2.14 goals/gm · shots 19.1 · SoT 7.4 · corners 7.4 (FH 3.4) · tackles 15.3 · saves 1.3 · cards 2.1 (7gm)</div>
+    <div style="margin-top:4px">Preston North End: 0.71 goals/gm · shots 10.3 · SoT 1.6 · corners 4.0 (FH 1.7) · tackles 16.4 · saves 3.6 · cards 2.4 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">West Ham United last games</span> — goals 1/6/1/2/1/3/1 · shots 12/32/9/28/14/18/21 · SoT 5/12/4/11/5/10/5 · corners 4/11/1/13/8/6/9 · cards 2/2/2/1/3/3/2</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Preston North End last games</span> — goals 0/0/1/1/0/2/1 · shots 12/6/11/19/3/6/15 · SoT 1/1/1/4/0/2/2 · corners 4/3/2/6/7/3/3 · cards 1/3/4/1/2/1/5</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Premier League · 2026-11-21 15:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Aston Villa vs Sunderland</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.47</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">67%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">60%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">67%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">18%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">15%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">4.72</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">69%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">51%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Aston Villa: 2.0 goals/gm · shots 13.3 · SoT 4.6 · corners 3.7 (FH 2.6) · tackles 19.3 · saves 4.1 · cards 2.0 (7gm)</div>
+    <div style="margin-top:4px">Sunderland: 0.71 goals/gm · shots 12.1 · SoT 3.3 · corners 4.1 (FH 1.6) · tackles 14.6 · saves 2.6 · cards 2.9 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Aston Villa last games</span> — goals 1/3/2/1/2/1/4 · shots 7/15/20/15/8/16/12 · SoT 5/6/7/3/2/3/6 · corners 6/1/2/5/4/7/1 · cards 2/2/2/2/4/1/1</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Sunderland last games</span> — goals 0/3/0/0/0/1/1 · shots 12/17/12/3/15/17/9 · SoT 3/9/3/0/4/2/2 · corners 4/5/7/3/4/4/2 · cards 7/1/0/3/1/3/5</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Premier League · 2026-11-21 15:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Coventry City vs Crystal Palace</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.42</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">66%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">65%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">54%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">21%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">24%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">3.95</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">56%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">36%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Coventry City: 1.43 goals/gm · shots 12.1 · SoT 3.7 · corners 3.3 (FH 1.9) · tackles 12.7 · saves 2.4 · cards 1.1 (7gm)</div>
+    <div style="margin-top:4px">Crystal Palace: 0.86 goals/gm · shots 11.3 · SoT 4.0 · corners 4.3 (FH 1.7) · tackles 19.0 · saves 3.7 · cards 2.1 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Coventry City last games</span> — goals 0/1/4/1/0/3/1 · shots 14/10/9/12/13/12/15 · SoT 6/3/6/1/2/4/4 · corners 5/2/2/4/4/4/2 · cards 1/0/1/3/0/2/1</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Crystal Palace last games</span> — goals 2/0/3/0/0/0/1 · shots 11/12/13/5/17/2/19 · SoT 4/4/7/1/4/1/7 · corners 6/3/5/5/7/0/4 · cards 2/3/2/1/3/2/2</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Serie A · 2026-11-21 17:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Parma vs Roma</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.41</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">66%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">58%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">15%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">18%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">67%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">5.99</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">85%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">71%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Parma: 1.0 goals/gm · shots 10.6 · SoT 3.3 · corners 2.9 (FH 1.4) · tackles 16.6 · saves 4.3 · cards 1.7 (7gm)</div>
+    <div style="margin-top:4px">Roma: 2.71 goals/gm · shots 18.3 · SoT 5.9 · corners 6.4 (FH 3.4) · tackles 13.9 · saves 3.6 · cards 2.0 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Parma last games</span> — goals 2/0/0/1/0/3/1 · shots 5/9/25/10/8/6/11 · SoT 2/2/8/4/2/3/2 · corners 2/1/6/3/3/4/1 · cards 3/0/3/1/1/0/4</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Roma last games</span> — goals 2/0/2/3/4/5/3 · shots 18/9/15/24/20/14/28 · SoT 4/2/5/4/8/9/9 · corners 4/2/5/11/7/4/12 · cards 3/4/2/4/0/1/0</div>
+  </div>
+</div>
+</body></html>
