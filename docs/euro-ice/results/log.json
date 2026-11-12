@@ -41463,9 +41463,10 @@
     "match_date": "2026-11-11T18:45:00.000Z",
     "date_key": "2026-11-11",
     "logged_at": "2026-11-11T18:10:45.507952+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2,
+    "verified_at": "2026-11-12T18:38:19.054626+00:00"
   },
   {
     "id": "092e925a8d437057",
@@ -41483,9 +41484,10 @@
     "match_date": "2026-11-11T18:45:00.000Z",
     "date_key": "2026-11-11",
     "logged_at": "2026-11-11T18:10:45.507968+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-11-12T18:38:19.405103+00:00"
   },
   {
     "id": "469a0b4262210a8a",
@@ -41503,9 +41505,10 @@
     "match_date": "2026-11-11T18:45:00.000Z",
     "date_key": "2026-11-11",
     "logged_at": "2026-11-11T18:10:45.507974+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5,
+    "verified_at": "2026-11-12T18:38:19.772361+00:00"
   },
   {
     "id": "2dfb622f5beb1873",
@@ -41583,9 +41586,10 @@
     "match_date": "2026-11-11T18:45:00.000Z",
     "date_key": "2026-11-11",
     "logged_at": "2026-11-11T18:10:45.507987+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-11-12T18:38:21.092053+00:00"
   },
   {
     "id": "36027e978dbd726e",
@@ -41603,9 +41607,10 @@
     "match_date": "2026-11-11T18:45:00.000Z",
     "date_key": "2026-11-11",
     "logged_at": "2026-11-11T18:10:45.507996+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 6,
+    "verified_at": "2026-11-12T18:38:21.413407+00:00"
   },
   {
     "id": "258f33365bce3a8c",
@@ -41623,9 +41628,10 @@
     "match_date": "2026-11-11T18:45:00.000Z",
     "date_key": "2026-11-11",
     "logged_at": "2026-11-11T18:10:45.508000+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 9,
+    "verified_at": "2026-11-12T18:38:21.703518+00:00"
   },
   {
     "id": "99980e2cce62019d",
@@ -41643,9 +41649,10 @@
     "match_date": "2026-11-11T18:15:00.000Z",
     "date_key": "2026-11-11",
     "logged_at": "2026-11-11T18:10:45.508003+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0,
+    "verified_at": "2026-11-12T18:38:21.993808+00:00"
   },
   {
     "id": "f1d066f01ae3cfe9",
@@ -41663,9 +41670,10 @@
     "match_date": "2026-11-11T18:15:00.000Z",
     "date_key": "2026-11-11",
     "logged_at": "2026-11-11T18:10:45.508008+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-11-12T18:38:22.361023+00:00"
   },
   {
     "id": "72c44a6eef27d767",
@@ -41683,9 +41691,10 @@
     "match_date": "2026-11-11T18:15:00.000Z",
     "date_key": "2026-11-11",
     "logged_at": "2026-11-11T18:10:45.508010+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 3,
+    "verified_at": "2026-11-12T18:38:22.752373+00:00"
   },
   {
     "id": "62cae3a2448e1480",
@@ -41723,9 +41732,10 @@
     "match_date": "2026-11-11T18:45:00.000Z",
     "date_key": "2026-11-11",
     "logged_at": "2026-11-11T18:10:45.508017+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 6,
+    "verified_at": "2026-11-12T18:38:23.400682+00:00"
   },
   {
     "id": "306f5361cb8d5747",
@@ -41743,9 +41753,10 @@
     "match_date": "2026-11-11T18:15:00.000Z",
     "date_key": "2026-11-11",
     "logged_at": "2026-11-11T18:10:45.508020+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-11-12T18:38:23.718859+00:00"
   },
   {
     "id": "3478edd4ba9127e9",
@@ -41794,9 +41805,10 @@
     "match_date": "2026-11-11T18:45:00.000Z",
     "date_key": "2026-11-11",
     "logged_at": "2026-11-11T18:10:45.508025+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 6,
+    "verified_at": "2026-11-12T18:38:24.293421+00:00"
   },
   {
     "id": "1b19dfd8ff1fc543",
@@ -41818,6 +41830,112 @@
     "match_date": "2026-11-11T18:45:00.000Z",
     "date_key": "2026-11-11",
     "logged_at": "2026-11-11T18:10:45.508027+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "5390eda8b40de104",
+    "scanner": "team_total",
+    "subject": "Biel",
+    "market": "Biel Over 2.0 Goals",
+    "value": 61,
+    "detail": "line=2.0",
+    "streak_games": null,
+    "is_home": true,
+    "league": "National League",
+    "league_id": 44185,
+    "home_name": "Biel",
+    "away_name": "Z\u00fcrich Lions",
+    "match_date": "2026-11-12T19:00:00.000Z",
+    "date_key": "2026-11-12",
+    "logged_at": "2026-11-12T18:38:16.230515+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "e6462eb7ad4aec79",
+    "scanner": "team_total",
+    "subject": "Z\u00fcrich Lions",
+    "market": "Z\u00fcrich Lions Over 2.5 Goals",
+    "value": 78,
+    "detail": "line=2.5",
+    "streak_games": null,
+    "is_home": false,
+    "league": "National League",
+    "league_id": 44185,
+    "home_name": "Biel",
+    "away_name": "Z\u00fcrich Lions",
+    "match_date": "2026-11-12T19:00:00.000Z",
+    "date_key": "2026-11-12",
+    "logged_at": "2026-11-12T18:38:16.230531+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "031bafb741dd2393",
+    "scanner": "game_total",
+    "subject": "Biel vs Z\u00fcrich Lions",
+    "market": "Game Over 5.0 Total Goals",
+    "value": 73,
+    "detail": "line=5.0",
+    "streak_games": null,
+    "is_home": null,
+    "league": "National League",
+    "league_id": 44185,
+    "home_name": "Biel",
+    "away_name": "Z\u00fcrich Lions",
+    "match_date": "2026-11-12T19:00:00.000Z",
+    "date_key": "2026-11-12",
+    "logged_at": "2026-11-12T18:38:16.230535+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "020ab2a2697ffb91",
+    "scanner": "hot_form",
+    "subject": "Z\u00fcrich Lions",
+    "market": "Hot Form vs Biel",
+    "value": 4.0,
+    "detail": null,
+    "streak_games": null,
+    "is_home": false,
+    "league": "National League",
+    "league_id": 44185,
+    "home_name": "Biel",
+    "away_name": "Z\u00fcrich Lions",
+    "match_date": "2026-11-12T19:00:00.000Z",
+    "date_key": "2026-11-12",
+    "logged_at": "2026-11-12T18:38:16.230539+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "8a7fb92c8f9c1e0b",
+    "scanner": "real_streak",
+    "subject": "Z\u00fcrich Lions",
+    "market": "Real Streak vs Biel",
+    "value": 5,
+    "detail": null,
+    "streak_games": [
+      3,
+      5,
+      4,
+      4,
+      4
+    ],
+    "is_home": false,
+    "league": "National League",
+    "league_id": 44185,
+    "home_name": "Biel",
+    "away_name": "Z\u00fcrich Lions",
+    "match_date": "2026-11-12T19:00:00.000Z",
+    "date_key": "2026-11-12",
+    "logged_at": "2026-11-12T18:38:16.230542+00:00",
     "status": "pending",
     "result": null,
     "actual": null
