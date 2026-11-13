@@ -113,7 +113,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.26,
+      "lambda": 4.24,
       "corners_list": [
         4,
         2,
@@ -124,10 +124,10 @@
         5
       ],
       "line": 3.0,
-      "prob": 62
+      "prob": 61
     },
     "away_corners": {
-      "lambda": 4.16,
+      "lambda": 4.14,
       "corners_list": [
         6,
         7,
@@ -141,7 +141,7 @@
       "prob": 78
     },
     "home_cards": {
-      "lambda": 1.59,
+      "lambda": 1.6,
       "yellow_cards_list": [
         2,
         2,
@@ -152,10 +152,10 @@
         0
       ],
       "line": 1.0,
-      "prob": 47
+      "prob": 48
     },
     "away_cards": {
-      "lambda": 1.89,
+      "lambda": 1.9,
       "yellow_cards_list": [
         1,
         4,
@@ -166,10 +166,10 @@
         1
       ],
       "line": 1.0,
-      "prob": 56
+      "prob": 57
     },
     "home_sot": {
-      "lambda": 4.1,
+      "lambda": 4.03,
       "sot_list": [
         2,
         3,
@@ -180,10 +180,10 @@
         6
       ],
       "line": 2.5,
-      "prob": 78
+      "prob": 77
     },
     "away_sot": {
-      "lambda": 4.79,
+      "lambda": 4.7,
       "sot_list": [
         4,
         2,
@@ -194,7 +194,7 @@
         0
       ],
       "line": 3.0,
-      "prob": 70
+      "prob": 69
     }
   },
   {
@@ -311,7 +311,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.99,
+      "lambda": 3.95,
       "corners_list": [
         2,
         10,
@@ -322,10 +322,10 @@
         14
       ],
       "line": 2.5,
-      "prob": 76
+      "prob": 75
     },
     "away_corners": {
-      "lambda": 6.79,
+      "lambda": 6.69,
       "corners_list": [
         10,
         6,
@@ -336,10 +336,10 @@
         4
       ],
       "line": 4.5,
-      "prob": 81
+      "prob": 80
     },
     "home_cards": {
-      "lambda": 1.98,
+      "lambda": 2.0,
       "yellow_cards_list": [
         1,
         1,
@@ -353,7 +353,7 @@
       "prob": 59
     },
     "away_cards": {
-      "lambda": 1.08,
+      "lambda": 1.09,
       "yellow_cards_list": [
         0,
         1,
@@ -367,7 +367,7 @@
       "prob": 66
     },
     "home_sot": {
-      "lambda": 6.11,
+      "lambda": 5.95,
       "sot_list": [
         7,
         8,
@@ -378,10 +378,10 @@
         9
       ],
       "line": 4.0,
-      "prob": 73
+      "prob": 71
     },
     "away_sot": {
-      "lambda": 6.1,
+      "lambda": 5.91,
       "sot_list": [
         10,
         8,
@@ -392,7 +392,7 @@
         2
       ],
       "line": 4.0,
-      "prob": 73
+      "prob": 70
     }
   },
   {
@@ -509,7 +509,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.16,
+      "lambda": 7.03,
       "corners_list": [
         9,
         9,
@@ -520,10 +520,10 @@
         8
       ],
       "line": 5.0,
-      "prob": 72
+      "prob": 70
     },
     "away_corners": {
-      "lambda": 4.34,
+      "lambda": 4.27,
       "corners_list": [
         8,
         5,
@@ -534,10 +534,10 @@
         2
       ],
       "line": 3.0,
-      "prob": 63
+      "prob": 62
     },
     "home_cards": {
-      "lambda": 1.18,
+      "lambda": 1.2,
       "yellow_cards_list": [
         0,
         1,
@@ -548,10 +548,10 @@
         1
       ],
       "line": 0.5,
-      "prob": 69
+      "prob": 70
     },
     "away_cards": {
-      "lambda": 2.48,
+      "lambda": 2.49,
       "yellow_cards_list": [
         2,
         3,
@@ -565,7 +565,7 @@
       "prob": 71
     },
     "home_sot": {
-      "lambda": 9.57,
+      "lambda": 9.38,
       "sot_list": [
         6,
         15,
@@ -576,10 +576,10 @@
         9
       ],
       "line": 6.5,
-      "prob": 84
+      "prob": 83
     },
     "away_sot": {
-      "lambda": 3.9,
+      "lambda": 3.83,
       "sot_list": [
         6,
         5,
@@ -590,7 +590,7 @@
         6
       ],
       "line": 2.5,
-      "prob": 75
+      "prob": 74
     }
   },
   {
@@ -707,7 +707,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.71,
+      "lambda": 6.61,
       "corners_list": [
         7,
         5,
@@ -718,10 +718,10 @@
         4
       ],
       "line": 4.5,
-      "prob": 80
+      "prob": 79
     },
     "away_corners": {
-      "lambda": 3.66,
+      "lambda": 3.61,
       "corners_list": [
         5,
         3,
@@ -732,10 +732,10 @@
         9
       ],
       "line": 2.5,
-      "prob": 71
+      "prob": 70
     },
     "home_cards": {
-      "lambda": 1.98,
+      "lambda": 2.0,
       "yellow_cards_list": [
         3,
         2,
@@ -749,7 +749,7 @@
       "prob": 59
     },
     "away_cards": {
-      "lambda": 2.68,
+      "lambda": 2.7,
       "yellow_cards_list": [
         1,
         2,
@@ -763,7 +763,7 @@
       "prob": 75
     },
     "home_sot": {
-      "lambda": 4.16,
+      "lambda": 4.08,
       "sot_list": [
         2,
         6,
@@ -774,10 +774,10 @@
         4
       ],
       "line": 2.5,
-      "prob": 78
+      "prob": 77
     },
     "away_sot": {
-      "lambda": 2.89,
+      "lambda": 2.85,
       "sot_list": [
         5,
         4,
@@ -788,7 +788,7 @@
         4
       ],
       "line": 2.0,
-      "prob": 55
+      "prob": 54
     }
   },
   {
@@ -905,7 +905,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.14,
+      "lambda": 5.95,
       "corners_list": [
         7,
         6,
@@ -916,10 +916,10 @@
         7
       ],
       "line": 4.0,
-      "prob": 73
+      "prob": 71
     },
     "away_corners": {
-      "lambda": 5.07,
+      "lambda": 4.93,
       "corners_list": [
         8,
         3,
@@ -930,10 +930,10 @@
         3
       ],
       "line": 3.5,
-      "prob": 74
+      "prob": 73
     },
     "home_cards": {
-      "lambda": 1.51,
+      "lambda": 1.55,
       "yellow_cards_list": [
         2,
         0,
@@ -944,10 +944,10 @@
         0
       ],
       "line": 1.0,
-      "prob": 45
+      "prob": 46
     },
     "away_cards": {
-      "lambda": 2.11,
+      "lambda": 2.15,
       "yellow_cards_list": [
         1,
         3,
@@ -958,10 +958,10 @@
         0
       ],
       "line": 1.5,
-      "prob": 62
+      "prob": 63
     },
     "home_sot": {
-      "lambda": 4.16,
+      "lambda": 4.11,
       "sot_list": [
         2,
         6,
@@ -975,7 +975,7 @@
       "prob": 78
     },
     "away_sot": {
-      "lambda": 4.88,
+      "lambda": 4.8,
       "sot_list": [
         4,
         6,
@@ -985,8 +985,8 @@
         5,
         5
       ],
-      "line": 3.5,
-      "prob": 72
+      "line": 3.0,
+      "prob": 71
     }
   },
   {
@@ -1103,7 +1103,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.47,
+      "lambda": 5.37,
       "corners_list": [
         2,
         3,
@@ -1114,10 +1114,10 @@
         9
       ],
       "line": 3.5,
-      "prob": 79
+      "prob": 78
     },
     "away_corners": {
-      "lambda": 4.56,
+      "lambda": 4.47,
       "corners_list": [
         1,
         3,
@@ -1128,10 +1128,10 @@
         4
       ],
       "line": 3.0,
-      "prob": 67
+      "prob": 65
     },
     "home_cards": {
-      "lambda": 1.78,
+      "lambda": 1.8,
       "yellow_cards_list": [
         5,
         2,
@@ -1142,10 +1142,10 @@
         0
       ],
       "line": 1.0,
-      "prob": 53
+      "prob": 54
     },
     "away_cards": {
-      "lambda": 2.19,
+      "lambda": 2.21,
       "yellow_cards_list": [
         3,
         4,
@@ -1156,10 +1156,10 @@
         1
       ],
       "line": 1.5,
-      "prob": 64
+      "prob": 65
     },
     "home_sot": {
-      "lambda": 7.01,
+      "lambda": 6.87,
       "sot_list": [
         3,
         4,
@@ -1169,11 +1169,11 @@
         3,
         8
       ],
-      "line": 5.0,
-      "prob": 70
+      "line": 4.5,
+      "prob": 81
     },
     "away_sot": {
-      "lambda": 4.18,
+      "lambda": 4.1,
       "sot_list": [
         4,
         6,
@@ -1183,8 +1183,8 @@
         2,
         5
       ],
-      "line": 3.0,
-      "prob": 60
+      "line": 2.5,
+      "prob": 78
     }
   },
   {
@@ -1301,7 +1301,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.34,
+      "lambda": 5.24,
       "corners_list": [
         2,
         5,
@@ -1312,10 +1312,10 @@
         3
       ],
       "line": 3.5,
-      "prob": 78
+      "prob": 77
     },
     "away_corners": {
-      "lambda": 3.78,
+      "lambda": 3.72,
       "corners_list": [
         6,
         6,
@@ -1326,10 +1326,10 @@
         5
       ],
       "line": 2.5,
-      "prob": 73
+      "prob": 72
     },
     "home_cards": {
-      "lambda": 1.49,
+      "lambda": 1.5,
       "yellow_cards_list": [
         1,
         2,
@@ -1343,7 +1343,7 @@
       "prob": 44
     },
     "away_cards": {
-      "lambda": 1.58,
+      "lambda": 1.6,
       "yellow_cards_list": [
         0,
         1,
@@ -1354,10 +1354,10 @@
         4
       ],
       "line": 1.0,
-      "prob": 47
+      "prob": 48
     },
     "home_sot": {
-      "lambda": 7.06,
+      "lambda": 6.94,
       "sot_list": [
         5,
         4,
@@ -1367,11 +1367,11 @@
         8,
         7
       ],
-      "line": 5.0,
-      "prob": 71
+      "line": 4.5,
+      "prob": 82
     },
     "away_sot": {
-      "lambda": 5.29,
+      "lambda": 5.22,
       "sot_list": [
         1,
         10,
@@ -1382,7 +1382,7 @@
         11
       ],
       "line": 3.5,
-      "prob": 77
+      "prob": 76
     }
   },
   {
@@ -1499,7 +1499,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.03,
+      "lambda": 4.95,
       "corners_list": [
         4,
         13,
@@ -1510,10 +1510,10 @@
         4
       ],
       "line": 3.5,
-      "prob": 74
+      "prob": 73
     },
     "away_corners": {
-      "lambda": 4.12,
+      "lambda": 4.04,
       "corners_list": [
         1,
         1,
@@ -1524,10 +1524,10 @@
         6
       ],
       "line": 2.5,
-      "prob": 78
+      "prob": 77
     },
     "home_cards": {
-      "lambda": 2.48,
+      "lambda": 2.5,
       "yellow_cards_list": [
         2,
         3,
@@ -1541,7 +1541,7 @@
       "prob": 71
     },
     "away_cards": {
-      "lambda": 2.19,
+      "lambda": 2.2,
       "yellow_cards_list": [
         4,
         2,
@@ -1552,10 +1552,10 @@
         2
       ],
       "line": 1.5,
-      "prob": 64
+      "prob": 65
     },
     "home_sot": {
-      "lambda": 4.12,
+      "lambda": 4.06,
       "sot_list": [
         3,
         4,
@@ -1566,10 +1566,10 @@
         1
       ],
       "line": 2.5,
-      "prob": 78
+      "prob": 77
     },
     "away_sot": {
-      "lambda": 4.04,
+      "lambda": 3.98,
       "sot_list": [
         3,
         7,
@@ -1580,7 +1580,7 @@
         4
       ],
       "line": 2.5,
-      "prob": 77
+      "prob": 76
     }
   },
   {
@@ -1697,7 +1697,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.66,
+      "lambda": 3.61,
       "corners_list": [
         2,
         1,
@@ -1708,10 +1708,10 @@
         4
       ],
       "line": 2.5,
-      "prob": 71
+      "prob": 70
     },
     "away_corners": {
-      "lambda": 5.5,
+      "lambda": 5.43,
       "corners_list": [
         4,
         11,
@@ -1722,10 +1722,10 @@
         5
       ],
       "line": 3.5,
-      "prob": 80
+      "prob": 79
     },
     "home_cards": {
-      "lambda": 1.67,
+      "lambda": 1.7,
       "yellow_cards_list": [
         1,
         0,
@@ -1736,10 +1736,10 @@
         3
       ],
       "line": 1.0,
-      "prob": 50
+      "prob": 51
     },
     "away_cards": {
-      "lambda": 1.97,
+      "lambda": 2.0,
       "yellow_cards_list": [
         1,
         1,
@@ -1753,7 +1753,7 @@
       "prob": 59
     },
     "home_sot": {
-      "lambda": 3.47,
+      "lambda": 3.41,
       "sot_list": [
         3,
         0,
@@ -1764,10 +1764,10 @@
         2
       ],
       "line": 2.0,
-      "prob": 67
+      "prob": 66
     },
     "away_sot": {
-      "lambda": 4.9,
+      "lambda": 4.81,
       "sot_list": [
         3,
         7,
@@ -1777,8 +1777,8 @@
         7,
         1
       ],
-      "line": 3.5,
-      "prob": 72
+      "line": 3.0,
+      "prob": 71
     }
   },
   {
@@ -1895,7 +1895,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.16,
+      "lambda": 3.1,
       "corners_list": [
         3,
         4,
@@ -1906,10 +1906,10 @@
         6
       ],
       "line": 2.0,
-      "prob": 61
+      "prob": 60
     },
     "away_corners": {
-      "lambda": 6.64,
+      "lambda": 6.48,
       "corners_list": [
         6,
         5,
@@ -1920,10 +1920,10 @@
         5
       ],
       "line": 4.5,
-      "prob": 79
+      "prob": 77
     },
     "home_cards": {
-      "lambda": 1.67,
+      "lambda": 1.69,
       "yellow_cards_list": [
         2,
         2,
@@ -1937,7 +1937,7 @@
       "prob": 50
     },
     "away_cards": {
-      "lambda": 2.07,
+      "lambda": 2.09,
       "yellow_cards_list": [
         1,
         2,
@@ -1947,11 +1947,11 @@
         3,
         2
       ],
-      "line": 1.0,
-      "prob": 61
+      "line": 1.5,
+      "prob": 62
     },
     "home_sot": {
-      "lambda": 3.26,
+      "lambda": 3.18,
       "sot_list": [
         1,
         1,
@@ -1962,10 +1962,10 @@
         7
       ],
       "line": 2.0,
-      "prob": 63
+      "prob": 62
     },
     "away_sot": {
-      "lambda": 5.58,
+      "lambda": 5.43,
       "sot_list": [
         9,
         7,
@@ -1975,8 +1975,8 @@
         2,
         9
       ],
-      "line": 4.0,
-      "prob": 65
+      "line": 3.5,
+      "prob": 79
     }
   },
   {
@@ -2093,7 +2093,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.41,
+      "lambda": 4.32,
       "corners_list": [
         4,
         2,
@@ -2104,10 +2104,10 @@
         1
       ],
       "line": 3.0,
-      "prob": 64
+      "prob": 63
     },
     "away_corners": {
-      "lambda": 5.03,
+      "lambda": 4.93,
       "corners_list": [
         7,
         6,
@@ -2118,10 +2118,10 @@
         2
       ],
       "line": 3.5,
-      "prob": 74
+      "prob": 73
     },
     "home_cards": {
-      "lambda": 2.58,
+      "lambda": 2.6,
       "yellow_cards_list": [
         3,
         3,
@@ -2135,7 +2135,7 @@
       "prob": 73
     },
     "away_cards": {
-      "lambda": 1.28,
+      "lambda": 1.29,
       "yellow_cards_list": [
         1,
         3,
@@ -2149,7 +2149,7 @@
       "prob": 72
     },
     "home_sot": {
-      "lambda": 4.32,
+      "lambda": 4.22,
       "sot_list": [
         8,
         2,
@@ -2160,10 +2160,10 @@
         0
       ],
       "line": 3.0,
-      "prob": 63
+      "prob": 61
     },
     "away_sot": {
-      "lambda": 7.81,
+      "lambda": 7.62,
       "sot_list": [
         6,
         3,
@@ -2173,8 +2173,8 @@
         10,
         7
       ],
-      "line": 5.5,
-      "prob": 79
+      "line": 5.0,
+      "prob": 77
     }
   },
   {
@@ -2291,7 +2291,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.87,
+      "lambda": 3.81,
       "corners_list": [
         2,
         6,
@@ -2302,10 +2302,10 @@
         3
       ],
       "line": 2.5,
-      "prob": 74
+      "prob": 73
     },
     "away_corners": {
-      "lambda": 6.52,
+      "lambda": 6.41,
       "corners_list": [
         7,
         2,
@@ -2316,10 +2316,10 @@
         6
       ],
       "line": 4.5,
-      "prob": 78
+      "prob": 77
     },
     "home_cards": {
-      "lambda": 3.08,
+      "lambda": 3.1,
       "yellow_cards_list": [
         4,
         6,
@@ -2330,10 +2330,10 @@
         3
       ],
       "line": 2.0,
-      "prob": 59
+      "prob": 60
     },
     "away_cards": {
-      "lambda": 2.08,
+      "lambda": 2.1,
       "yellow_cards_list": [
         1,
         5,
@@ -2343,11 +2343,11 @@
         1,
         3
       ],
-      "line": 1.0,
+      "line": 1.5,
       "prob": 62
     },
     "home_sot": {
-      "lambda": 3.87,
+      "lambda": 3.81,
       "sot_list": [
         0,
         7,
@@ -2358,10 +2358,10 @@
         6
       ],
       "line": 2.5,
-      "prob": 74
+      "prob": 73
     },
     "away_sot": {
-      "lambda": 7.43,
+      "lambda": 7.27,
       "sot_list": [
         8,
         2,
@@ -2372,7 +2372,7 @@
         6
       ],
       "line": 5.0,
-      "prob": 75
+      "prob": 73
     }
   },
   {
@@ -2489,7 +2489,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.82,
+      "lambda": 4.74,
       "corners_list": [
         5,
         3,
@@ -2500,10 +2500,10 @@
         6
       ],
       "line": 3.0,
-      "prob": 71
+      "prob": 70
     },
     "away_corners": {
-      "lambda": 5.43,
+      "lambda": 5.34,
       "corners_list": [
         5,
         5,
@@ -2514,10 +2514,10 @@
         6
       ],
       "line": 3.5,
-      "prob": 79
+      "prob": 78
     },
     "home_cards": {
-      "lambda": 2.19,
+      "lambda": 2.2,
       "yellow_cards_list": [
         2,
         2,
@@ -2528,10 +2528,10 @@
         3
       ],
       "line": 1.5,
-      "prob": 64
+      "prob": 65
     },
     "away_cards": {
-      "lambda": 1.69,
+      "lambda": 1.7,
       "yellow_cards_list": [
         1,
         1,
@@ -2542,10 +2542,10 @@
         0
       ],
       "line": 1.0,
-      "prob": 50
+      "prob": 51
     },
     "home_sot": {
-      "lambda": 4.95,
+      "lambda": 4.86,
       "sot_list": [
         5,
         3,
@@ -2555,11 +2555,11 @@
         10,
         3
       ],
-      "line": 3.5,
-      "prob": 73
+      "line": 3.0,
+      "prob": 71
     },
     "away_sot": {
-      "lambda": 5.58,
+      "lambda": 5.47,
       "sot_list": [
         8,
         2,
@@ -2569,8 +2569,8 @@
         2,
         7
       ],
-      "line": 4.0,
-      "prob": 65
+      "line": 3.5,
+      "prob": 79
     }
   },
   {
@@ -2687,7 +2687,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.66,
+      "lambda": 6.55,
       "corners_list": [
         14,
         9,
@@ -2698,10 +2698,10 @@
         6
       ],
       "line": 4.5,
-      "prob": 79
+      "prob": 78
     },
     "away_corners": {
-      "lambda": 3.94,
+      "lambda": 3.88,
       "corners_list": [
         3,
         6,
@@ -2712,10 +2712,10 @@
         2
       ],
       "line": 2.5,
-      "prob": 75
+      "prob": 74
     },
     "home_cards": {
-      "lambda": 2.29,
+      "lambda": 2.3,
       "yellow_cards_list": [
         1,
         2,
@@ -2729,7 +2729,7 @@
       "prob": 67
     },
     "away_cards": {
-      "lambda": 1.38,
+      "lambda": 1.4,
       "yellow_cards_list": [
         1,
         0,
@@ -2739,11 +2739,11 @@
         3,
         1
       ],
-      "line": 0.5,
-      "prob": 75
+      "line": 1.0,
+      "prob": 41
     },
     "home_sot": {
-      "lambda": 6.02,
+      "lambda": 5.91,
       "sot_list": [
         5,
         6,
@@ -2754,10 +2754,10 @@
         8
       ],
       "line": 4.0,
-      "prob": 72
+      "prob": 70
     },
     "away_sot": {
-      "lambda": 4.39,
+      "lambda": 4.31,
       "sot_list": [
         0,
         5,
@@ -2768,7 +2768,7 @@
         3
       ],
       "line": 3.0,
-      "prob": 64
+      "prob": 62
     }
   },
   {
@@ -2885,7 +2885,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.16,
+      "lambda": 6.63,
       "corners_list": [
         5,
         11,
@@ -2895,11 +2895,11 @@
         19,
         4
       ],
-      "line": 5.0,
-      "prob": 72
+      "line": 4.5,
+      "prob": 79
     },
     "away_corners": {
-      "lambda": 2.62,
+      "lambda": 2.49,
       "corners_list": [
         3,
         4,
@@ -2910,10 +2910,10 @@
         2
       ],
       "line": 1.5,
-      "prob": 74
+      "prob": 71
     },
     "home_cards": {
-      "lambda": 1.8,
+      "lambda": 1.88,
       "yellow_cards_list": [
         0,
         1,
@@ -2924,10 +2924,10 @@
         3
       ],
       "line": 1.0,
-      "prob": 54
+      "prob": 56
     },
     "away_cards": {
-      "lambda": 2.22,
+      "lambda": 2.29,
       "yellow_cards_list": [
         3,
         3,
@@ -2938,10 +2938,10 @@
         2
       ],
       "line": 1.5,
-      "prob": 65
+      "prob": 67
     },
     "home_sot": {
-      "lambda": 5.04,
+      "lambda": 4.64,
       "sot_list": [
         2,
         7,
@@ -2951,11 +2951,11 @@
         9,
         4
       ],
-      "line": 3.5,
-      "prob": 74
+      "line": 3.0,
+      "prob": 68
     },
     "away_sot": {
-      "lambda": 3.52,
+      "lambda": 3.28,
       "sot_list": [
         6,
         4,
@@ -2965,8 +2965,8 @@
         3,
         2
       ],
-      "line": 2.5,
-      "prob": 68
+      "line": 2.0,
+      "prob": 64
     }
   },
   {
@@ -3083,7 +3083,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.46,
+      "lambda": 5.09,
       "corners_list": [
         5,
         2,
@@ -3094,10 +3094,10 @@
         2
       ],
       "line": 3.5,
-      "prob": 79
+      "prob": 75
     },
     "away_corners": {
-      "lambda": 4.2,
+      "lambda": 4.04,
       "corners_list": [
         6,
         3,
@@ -3107,11 +3107,11 @@
         0,
         4
       ],
-      "line": 3.0,
-      "prob": 60
+      "line": 2.5,
+      "prob": 77
     },
     "home_cards": {
-      "lambda": 1.27,
+      "lambda": 1.35,
       "yellow_cards_list": [
         0,
         0,
@@ -3122,10 +3122,10 @@
         1
       ],
       "line": 0.5,
-      "prob": 72
+      "prob": 74
     },
     "away_cards": {
-      "lambda": 1.87,
+      "lambda": 1.95,
       "yellow_cards_list": [
         1,
         3,
@@ -3136,10 +3136,10 @@
         2
       ],
       "line": 1.0,
-      "prob": 56
+      "prob": 58
     },
     "home_sot": {
-      "lambda": 4.98,
+      "lambda": 4.88,
       "sot_list": [
         6,
         3,
@@ -3150,10 +3150,10 @@
         4
       ],
       "line": 3.5,
-      "prob": 73
+      "prob": 72
     },
     "away_sot": {
-      "lambda": 4.3,
+      "lambda": 4.26,
       "sot_list": [
         4,
         4,
@@ -3281,7 +3281,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.6,
+      "lambda": 4.55,
       "corners_list": [
         10,
         12,
@@ -3295,7 +3295,7 @@
       "prob": 67
     },
     "away_corners": {
-      "lambda": 4.4,
+      "lambda": 4.33,
       "corners_list": [
         5,
         4,
@@ -3306,10 +3306,10 @@
         6
       ],
       "line": 3.0,
-      "prob": 64
+      "prob": 63
     },
     "home_cards": {
-      "lambda": 1.96,
+      "lambda": 2.04,
       "yellow_cards_list": [
         1,
         0,
@@ -3320,10 +3320,10 @@
         4
       ],
       "line": 1.0,
-      "prob": 58
+      "prob": 60
     },
     "away_cards": {
-      "lambda": 2.06,
+      "lambda": 2.14,
       "yellow_cards_list": [
         1,
         2,
@@ -3333,11 +3333,11 @@
         2,
         2
       ],
-      "line": 1.0,
-      "prob": 61
+      "line": 1.5,
+      "prob": 63
     },
     "home_sot": {
-      "lambda": 5.37,
+      "lambda": 5.31,
       "sot_list": [
         7,
         2,
@@ -3351,7 +3351,7 @@
       "prob": 78
     },
     "away_sot": {
-      "lambda": 4.05,
+      "lambda": 4.0,
       "sot_list": [
         6,
         2,
@@ -3362,7 +3362,7 @@
         4
       ],
       "line": 2.5,
-      "prob": 77
+      "prob": 76
     }
   },
   {
@@ -3479,7 +3479,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.18,
+      "lambda": 4.07,
       "corners_list": [
         2,
         3,
@@ -3489,11 +3489,11 @@
         4,
         7
       ],
-      "line": 3.0,
-      "prob": 60
+      "line": 2.5,
+      "prob": 77
     },
     "away_corners": {
-      "lambda": 3.44,
+      "lambda": 3.36,
       "corners_list": [
         1,
         6,
@@ -3504,10 +3504,10 @@
         3
       ],
       "line": 2.0,
-      "prob": 67
+      "prob": 65
     },
     "home_cards": {
-      "lambda": 2.49,
+      "lambda": 2.54,
       "yellow_cards_list": [
         5,
         1,
@@ -3518,10 +3518,10 @@
         3
       ],
       "line": 1.5,
-      "prob": 71
+      "prob": 72
     },
     "away_cards": {
-      "lambda": 2.4,
+      "lambda": 2.45,
       "yellow_cards_list": [
         5,
         2,
@@ -3532,10 +3532,10 @@
         4
       ],
       "line": 1.5,
-      "prob": 69
+      "prob": 70
     },
     "home_sot": {
-      "lambda": 4.25,
+      "lambda": 4.15,
       "sot_list": [
         10,
         2,
@@ -3545,11 +3545,11 @@
         5,
         4
       ],
-      "line": 3.0,
-      "prob": 61
+      "line": 2.5,
+      "prob": 78
     },
     "away_sot": {
-      "lambda": 3.21,
+      "lambda": 3.13,
       "sot_list": [
         7,
         3,
@@ -3560,7 +3560,7 @@
         5
       ],
       "line": 2.0,
-      "prob": 62
+      "prob": 61
     }
   },
   {
@@ -3677,7 +3677,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.72,
+      "lambda": 3.6,
       "corners_list": [
         6,
         1,
@@ -3688,10 +3688,10 @@
         1
       ],
       "line": 2.5,
-      "prob": 72
+      "prob": 70
     },
     "away_corners": {
-      "lambda": 5.03,
+      "lambda": 4.85,
       "corners_list": [
         4,
         5,
@@ -3701,11 +3701,11 @@
         4,
         2
       ],
-      "line": 3.5,
-      "prob": 74
+      "line": 3.0,
+      "prob": 71
     },
     "home_cards": {
-      "lambda": 2.02,
+      "lambda": 2.06,
       "yellow_cards_list": [
         2,
         2,
@@ -3716,10 +3716,10 @@
         1
       ],
       "line": 1.0,
-      "prob": 60
+      "prob": 61
     },
     "away_cards": {
-      "lambda": 2.32,
+      "lambda": 2.36,
       "yellow_cards_list": [
         6,
         1,
@@ -3730,10 +3730,10 @@
         5
       ],
       "line": 1.5,
-      "prob": 67
+      "prob": 68
     },
     "home_sot": {
-      "lambda": 4.82,
+      "lambda": 4.76,
       "sot_list": [
         5,
         6,
@@ -3744,10 +3744,10 @@
         6
       ],
       "line": 3.0,
-      "prob": 71
+      "prob": 70
     },
     "away_sot": {
-      "lambda": 4.43,
+      "lambda": 4.37,
       "sot_list": [
         3,
         9,
@@ -3758,7 +3758,7 @@
         2
       ],
       "line": 3.0,
-      "prob": 65
+      "prob": 64
     }
   },
   {
@@ -3875,7 +3875,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 7.57,
+      "lambda": 7.19,
       "corners_list": [
         9,
         6,
@@ -3886,10 +3886,10 @@
         7
       ],
       "line": 5.0,
-      "prob": 77
+      "prob": 72
     },
     "away_corners": {
-      "lambda": 2.96,
+      "lambda": 2.85,
       "corners_list": [
         5,
         7,
@@ -3900,10 +3900,10 @@
         1
       ],
       "line": 2.0,
-      "prob": 57
+      "prob": 54
     },
     "home_cards": {
-      "lambda": 2.42,
+      "lambda": 2.44,
       "yellow_cards_list": [
         3,
         1,
@@ -3917,7 +3917,7 @@
       "prob": 70
     },
     "away_cards": {
-      "lambda": 2.42,
+      "lambda": 2.44,
       "yellow_cards_list": [
         2,
         1,
@@ -3931,7 +3931,7 @@
       "prob": 70
     },
     "home_sot": {
-      "lambda": 5.49,
+      "lambda": 5.34,
       "sot_list": [
         3,
         8,
@@ -3942,10 +3942,10 @@
         5
       ],
       "line": 3.5,
-      "prob": 80
+      "prob": 78
     },
     "away_sot": {
-      "lambda": 2.96,
+      "lambda": 2.9,
       "sot_list": [
         4,
         5,
@@ -3956,7 +3956,7 @@
         2
       ],
       "line": 2.0,
-      "prob": 57
+      "prob": 55
     }
   },
   {
@@ -4073,7 +4073,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 9.03,
+      "lambda": 8.58,
       "corners_list": [
         4,
         11,
@@ -4083,11 +4083,11 @@
         6,
         9
       ],
-      "line": 6.5,
-      "prob": 80
+      "line": 6.0,
+      "prob": 75
     },
     "away_corners": {
-      "lambda": 4.07,
+      "lambda": 3.9,
       "corners_list": [
         4,
         3,
@@ -4098,10 +4098,10 @@
         3
       ],
       "line": 2.5,
-      "prob": 77
+      "prob": 75
     },
     "home_cards": {
-      "lambda": 2.13,
+      "lambda": 2.14,
       "yellow_cards_list": [
         2,
         2,
@@ -4115,7 +4115,7 @@
       "prob": 63
     },
     "away_cards": {
-      "lambda": 2.23,
+      "lambda": 2.25,
       "yellow_cards_list": [
         1,
         2,
@@ -4126,10 +4126,10 @@
         5
       ],
       "line": 1.5,
-      "prob": 65
+      "prob": 66
     },
     "home_sot": {
-      "lambda": 8.08,
+      "lambda": 7.89,
       "sot_list": [
         5,
         12,
@@ -4140,10 +4140,10 @@
         5
       ],
       "line": 5.5,
-      "prob": 82
+      "prob": 80
     },
     "away_sot": {
-      "lambda": 1.84,
+      "lambda": 1.79,
       "sot_list": [
         1,
         1,
@@ -4154,7 +4154,7 @@
         2
       ],
       "line": 1.0,
-      "prob": 55
+      "prob": 53
     }
   },
   {
@@ -4271,7 +4271,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.96,
+      "lambda": 4.77,
       "corners_list": [
         3,
         1,
@@ -4281,11 +4281,11 @@
         5,
         5
       ],
-      "line": 3.5,
-      "prob": 73
+      "line": 3.0,
+      "prob": 70
     },
     "away_corners": {
-      "lambda": 6.73,
+      "lambda": 6.48,
       "corners_list": [
         7,
         7,
@@ -4296,10 +4296,10 @@
         7
       ],
       "line": 4.5,
-      "prob": 80
+      "prob": 77
     },
     "home_cards": {
-      "lambda": 1.42,
+      "lambda": 1.43,
       "yellow_cards_list": [
         1,
         2,
@@ -4313,7 +4313,7 @@
       "prob": 42
     },
     "away_cards": {
-      "lambda": 1.71,
+      "lambda": 1.73,
       "yellow_cards_list": [
         2,
         2,
@@ -4324,10 +4324,10 @@
         1
       ],
       "line": 1.0,
-      "prob": 51
+      "prob": 52
     },
     "home_sot": {
-      "lambda": 3.71,
+      "lambda": 3.64,
       "sot_list": [
         8,
         2,
@@ -4338,10 +4338,10 @@
         3
       ],
       "line": 2.5,
-      "prob": 72
+      "prob": 70
     },
     "away_sot": {
-      "lambda": 4.29,
+      "lambda": 4.2,
       "sot_list": [
         2,
         3,
@@ -4352,7 +4352,7 @@
         6
       ],
       "line": 3.0,
-      "prob": 62
+      "prob": 60
     }
   },
   {
@@ -4469,7 +4469,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.98,
+      "lambda": 3.87,
       "corners_list": [
         4,
         4,
@@ -4480,10 +4480,10 @@
         0
       ],
       "line": 2.5,
-      "prob": 76
+      "prob": 74
     },
     "away_corners": {
-      "lambda": 6.22,
+      "lambda": 6.01,
       "corners_list": [
         9,
         6,
@@ -4494,10 +4494,10 @@
         8
       ],
       "line": 4.0,
-      "prob": 74
+      "prob": 72
     },
     "home_cards": {
-      "lambda": 1.8,
+      "lambda": 1.82,
       "yellow_cards_list": [
         1,
         1,
@@ -4511,7 +4511,7 @@
       "prob": 54
     },
     "away_cards": {
-      "lambda": 2.01,
+      "lambda": 2.03,
       "yellow_cards_list": [
         4,
         1,
@@ -4525,7 +4525,7 @@
       "prob": 60
     },
     "home_sot": {
-      "lambda": 2.88,
+      "lambda": 2.81,
       "sot_list": [
         4,
         1,
@@ -4536,10 +4536,10 @@
         3
       ],
       "line": 2.0,
-      "prob": 55
+      "prob": 53
     },
     "away_sot": {
-      "lambda": 4.94,
+      "lambda": 4.84,
       "sot_list": [
         7,
         7,
@@ -4549,8 +4549,8 @@
         9,
         8
       ],
-      "line": 3.5,
-      "prob": 73
+      "line": 3.0,
+      "prob": 71
     }
   },
   {
@@ -4667,7 +4667,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.44,
+      "lambda": 6.23,
       "corners_list": [
         2,
         6,
@@ -4677,11 +4677,11 @@
         3,
         6
       ],
-      "line": 4.5,
-      "prob": 77
+      "line": 4.0,
+      "prob": 74
     },
     "away_corners": {
-      "lambda": 3.53,
+      "lambda": 3.44,
       "corners_list": [
         6,
         1,
@@ -4691,11 +4691,11 @@
         7,
         5
       ],
-      "line": 2.5,
-      "prob": 68
+      "line": 2.0,
+      "prob": 67
     },
     "home_cards": {
-      "lambda": 1.91,
+      "lambda": 1.93,
       "yellow_cards_list": [
         4,
         3,
@@ -4709,7 +4709,7 @@
       "prob": 57
     },
     "away_cards": {
-      "lambda": 2.31,
+      "lambda": 2.33,
       "yellow_cards_list": [
         0,
         4,
@@ -4720,10 +4720,10 @@
         1
       ],
       "line": 1.5,
-      "prob": 67
+      "prob": 68
     },
     "home_sot": {
-      "lambda": 5.63,
+      "lambda": 5.49,
       "sot_list": [
         5,
         4,
@@ -4733,11 +4733,11 @@
         5,
         7
       ],
-      "line": 4.0,
-      "prob": 66
+      "line": 3.5,
+      "prob": 80
     },
     "away_sot": {
-      "lambda": 3.29,
+      "lambda": 3.22,
       "sot_list": [
         6,
         4,
@@ -4748,7 +4748,7 @@
         1
       ],
       "line": 2.0,
-      "prob": 64
+      "prob": 62
     }
   },
   {
@@ -4865,7 +4865,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.77,
+      "lambda": 6.59,
       "corners_list": [
         4,
         3,
@@ -4876,10 +4876,10 @@
         6
       ],
       "line": 4.5,
-      "prob": 80
+      "prob": 79
     },
     "away_corners": {
-      "lambda": 4.67,
+      "lambda": 4.55,
       "corners_list": [
         5,
         10,
@@ -4890,10 +4890,10 @@
         8
       ],
       "line": 3.0,
-      "prob": 69
+      "prob": 67
     },
     "home_cards": {
-      "lambda": 1.6,
+      "lambda": 1.62,
       "yellow_cards_list": [
         3,
         1,
@@ -4907,7 +4907,7 @@
       "prob": 48
     },
     "away_cards": {
-      "lambda": 1.29,
+      "lambda": 1.31,
       "yellow_cards_list": [
         1,
         0,
@@ -4918,10 +4918,10 @@
         0
       ],
       "line": 0.5,
-      "prob": 72
+      "prob": 73
     },
     "home_sot": {
-      "lambda": 6.53,
+      "lambda": 6.36,
       "sot_list": [
         6,
         9,
@@ -4932,10 +4932,10 @@
         4
       ],
       "line": 4.5,
-      "prob": 78
+      "prob": 76
     },
     "away_sot": {
-      "lambda": 2.7,
+      "lambda": 2.64,
       "sot_list": [
         3,
         7,
@@ -4946,7 +4946,7 @@
         4
       ],
       "line": 1.5,
-      "prob": 75
+      "prob": 74
     }
   },
   {
@@ -5063,7 +5063,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.44,
+      "lambda": 3.36,
       "corners_list": [
         2,
         3,
@@ -5074,10 +5074,10 @@
         2
       ],
       "line": 2.0,
-      "prob": 67
+      "prob": 65
     },
     "away_corners": {
-      "lambda": 6.0,
+      "lambda": 5.85,
       "corners_list": [
         8,
         3,
@@ -5088,10 +5088,10 @@
         2
       ],
       "line": 4.0,
-      "prob": 71
+      "prob": 69
     },
     "home_cards": {
-      "lambda": 2.09,
+      "lambda": 2.11,
       "yellow_cards_list": [
         3,
         0,
@@ -5105,7 +5105,7 @@
       "prob": 62
     },
     "away_cards": {
-      "lambda": 1.69,
+      "lambda": 1.71,
       "yellow_cards_list": [
         2,
         1,
@@ -5116,10 +5116,10 @@
         2
       ],
       "line": 1.0,
-      "prob": 50
+      "prob": 51
     },
     "home_sot": {
-      "lambda": 3.2,
+      "lambda": 3.13,
       "sot_list": [
         3,
         0,
@@ -5130,10 +5130,10 @@
         3
       ],
       "line": 2.0,
-      "prob": 62
+      "prob": 61
     },
     "away_sot": {
-      "lambda": 4.61,
+      "lambda": 4.49,
       "sot_list": [
         3,
         4,
@@ -5144,7 +5144,7 @@
         3
       ],
       "line": 3.0,
-      "prob": 68
+      "prob": 66
     }
   },
   {
@@ -5261,7 +5261,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.61,
+      "lambda": 4.53,
       "corners_list": [
         10,
         3,
@@ -5272,10 +5272,10 @@
         6
       ],
       "line": 3.0,
-      "prob": 68
+      "prob": 66
     },
     "away_corners": {
-      "lambda": 5.44,
+      "lambda": 5.32,
       "corners_list": [
         10,
         1,
@@ -5286,10 +5286,10 @@
         7
       ],
       "line": 3.5,
-      "prob": 79
+      "prob": 78
     },
     "home_cards": {
-      "lambda": 1.78,
+      "lambda": 1.8,
       "yellow_cards_list": [
         1,
         2,
@@ -5300,10 +5300,10 @@
         2
       ],
       "line": 1.0,
-      "prob": 53
+      "prob": 54
     },
     "away_cards": {
-      "lambda": 2.19,
+      "lambda": 2.21,
       "yellow_cards_list": [
         3,
         2,
@@ -5314,10 +5314,10 @@
         3
       ],
       "line": 1.5,
-      "prob": 64
+      "prob": 65
     },
     "home_sot": {
-      "lambda": 3.5,
+      "lambda": 3.44,
       "sot_list": [
         5,
         6,
@@ -5327,11 +5327,11 @@
         3,
         6
       ],
-      "line": 2.5,
-      "prob": 68
+      "line": 2.0,
+      "prob": 67
     },
     "away_sot": {
-      "lambda": 3.85,
+      "lambda": 3.75,
       "sot_list": [
         6,
         2,
@@ -5342,7 +5342,7 @@
         3
       ],
       "line": 2.5,
-      "prob": 74
+      "prob": 72
     }
   },
   {
@@ -5459,7 +5459,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.5,
+      "lambda": 5.42,
       "corners_list": [
         5,
         3,
@@ -5470,10 +5470,10 @@
         6
       ],
       "line": 3.5,
-      "prob": 80
+      "prob": 79
     },
     "away_corners": {
-      "lambda": 4.81,
+      "lambda": 4.74,
       "corners_list": [
         5,
         7,
@@ -5484,10 +5484,10 @@
         2
       ],
       "line": 3.0,
-      "prob": 71
+      "prob": 70
     },
     "home_cards": {
-      "lambda": 2.37,
+      "lambda": 2.39,
       "yellow_cards_list": [
         1,
         5,
@@ -5498,10 +5498,10 @@
         2
       ],
       "line": 1.5,
-      "prob": 68
+      "prob": 69
     },
     "away_cards": {
-      "lambda": 2.88,
+      "lambda": 2.9,
       "yellow_cards_list": [
         4,
         2,
@@ -5515,7 +5515,7 @@
       "prob": 55
     },
     "home_sot": {
-      "lambda": 5.3,
+      "lambda": 5.2,
       "sot_list": [
         7,
         2,
@@ -5526,10 +5526,10 @@
         3
       ],
       "line": 3.5,
-      "prob": 77
+      "prob": 76
     },
     "away_sot": {
-      "lambda": 3.95,
+      "lambda": 3.87,
       "sot_list": [
         3,
         5,
@@ -5540,7 +5540,7 @@
         2
       ],
       "line": 2.5,
-      "prob": 75
+      "prob": 74
     }
   },
   {
@@ -5657,7 +5657,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.78,
+      "lambda": 5.69,
       "corners_list": [
         5,
         5,
@@ -5668,10 +5668,10 @@
         8
       ],
       "line": 4.0,
-      "prob": 68
+      "prob": 67
     },
     "away_corners": {
-      "lambda": 4.29,
+      "lambda": 4.22,
       "corners_list": [
         9,
         5,
@@ -5682,10 +5682,10 @@
         1
       ],
       "line": 3.0,
-      "prob": 62
+      "prob": 61
     },
     "home_cards": {
-      "lambda": 1.76,
+      "lambda": 1.77,
       "yellow_cards_list": [
         4,
         0,
@@ -5713,7 +5713,7 @@
       "prob": 56
     },
     "home_sot": {
-      "lambda": 4.7,
+      "lambda": 4.6,
       "sot_list": [
         1,
         5,
@@ -5724,10 +5724,10 @@
         7
       ],
       "line": 3.0,
-      "prob": 69
+      "prob": 67
     },
     "away_sot": {
-      "lambda": 5.48,
+      "lambda": 5.37,
       "sot_list": [
         10,
         4,
@@ -5738,7 +5738,7 @@
         7
       ],
       "line": 3.5,
-      "prob": 80
+      "prob": 78
     }
   },
   {
@@ -5855,7 +5855,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.04,
+      "lambda": 5.98,
       "corners_list": [
         4,
         2,
@@ -5866,10 +5866,10 @@
         3
       ],
       "line": 4.0,
-      "prob": 72
+      "prob": 71
     },
     "away_corners": {
-      "lambda": 5.01,
+      "lambda": 4.96,
       "corners_list": [
         5,
         1,
@@ -5880,10 +5880,10 @@
         2
       ],
       "line": 3.5,
-      "prob": 74
+      "prob": 73
     },
     "home_cards": {
-      "lambda": 2.59,
+      "lambda": 2.61,
       "yellow_cards_list": [
         3,
         3,
@@ -5897,7 +5897,7 @@
       "prob": 73
     },
     "away_cards": {
-      "lambda": 1.98,
+      "lambda": 2.0,
       "yellow_cards_list": [
         3,
         3,
@@ -5911,7 +5911,7 @@
       "prob": 59
     },
     "home_sot": {
-      "lambda": 6.7,
+      "lambda": 6.53,
       "sot_list": [
         7,
         8,
@@ -5922,10 +5922,10 @@
         4
       ],
       "line": 4.5,
-      "prob": 80
+      "prob": 78
     },
     "away_sot": {
-      "lambda": 5.2,
+      "lambda": 5.07,
       "sot_list": [
         5,
         3,
@@ -5936,7 +5936,7 @@
         4
       ],
       "line": 3.5,
-      "prob": 76
+      "prob": 74
     }
   },
   {
@@ -6053,7 +6053,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 6.11,
+      "lambda": 6.06,
       "corners_list": [
         8,
         4,
@@ -6064,10 +6064,10 @@
         4
       ],
       "line": 4.0,
-      "prob": 73
+      "prob": 72
     },
     "away_corners": {
-      "lambda": 5.22,
+      "lambda": 5.18,
       "corners_list": [
         10,
         7,
@@ -6081,7 +6081,7 @@
       "prob": 76
     },
     "home_cards": {
-      "lambda": 2.29,
+      "lambda": 2.31,
       "yellow_cards_list": [
         4,
         2,
@@ -6095,7 +6095,7 @@
       "prob": 67
     },
     "away_cards": {
-      "lambda": 2.09,
+      "lambda": 2.1,
       "yellow_cards_list": [
         3,
         2,
@@ -6109,7 +6109,7 @@
       "prob": 62
     },
     "home_sot": {
-      "lambda": 6.28,
+      "lambda": 6.14,
       "sot_list": [
         10,
         5,
@@ -6119,11 +6119,11 @@
         7,
         8
       ],
-      "line": 4.5,
-      "prob": 75
+      "line": 4.0,
+      "prob": 73
     },
     "away_sot": {
-      "lambda": 5.41,
+      "lambda": 5.29,
       "sot_list": [
         1,
         2,
@@ -6134,7 +6134,7 @@
         3
       ],
       "line": 3.5,
-      "prob": 79
+      "prob": 77
     }
   },
   {
@@ -6251,7 +6251,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.38,
+      "lambda": 4.27,
       "corners_list": [
         5,
         4,
@@ -6262,10 +6262,10 @@
         3
       ],
       "line": 3.0,
-      "prob": 64
+      "prob": 62
     },
     "away_corners": {
-      "lambda": 5.32,
+      "lambda": 5.05,
       "corners_list": [
         2,
         6,
@@ -6276,10 +6276,10 @@
         7
       ],
       "line": 3.5,
-      "prob": 78
+      "prob": 74
     },
     "home_cards": {
-      "lambda": 2.58,
+      "lambda": 2.62,
       "yellow_cards_list": [
         2,
         1,
@@ -6290,10 +6290,10 @@
         2
       ],
       "line": 1.5,
-      "prob": 73
+      "prob": 74
     },
     "away_cards": {
-      "lambda": 1.62,
+      "lambda": 1.71,
       "yellow_cards_list": [
         2,
         1,
@@ -6304,10 +6304,10 @@
         0
       ],
       "line": 1.0,
-      "prob": 48
+      "prob": 51
     },
     "home_sot": {
-      "lambda": 3.05,
+      "lambda": 2.92,
       "sot_list": [
         5,
         5,
@@ -6318,10 +6318,10 @@
         5
       ],
       "line": 2.0,
-      "prob": 59
+      "prob": 56
     },
     "away_sot": {
-      "lambda": 5.06,
+      "lambda": 4.65,
       "sot_list": [
         5,
         2,
@@ -6331,8 +6331,8 @@
         3,
         10
       ],
-      "line": 3.5,
-      "prob": 74
+      "line": 3.0,
+      "prob": 68
     }
   },
   {
@@ -6449,7 +6449,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.72,
+      "lambda": 4.6,
       "corners_list": [
         5,
         4,
@@ -6460,10 +6460,10 @@
         4
       ],
       "line": 3.0,
-      "prob": 69
+      "prob": 67
     },
     "away_corners": {
-      "lambda": 5.61,
+      "lambda": 5.47,
       "corners_list": [
         7,
         6,
@@ -6473,11 +6473,11 @@
         3,
         4
       ],
-      "line": 4.0,
-      "prob": 66
+      "line": 3.5,
+      "prob": 79
     },
     "home_cards": {
-      "lambda": 1.58,
+      "lambda": 1.6,
       "yellow_cards_list": [
         1,
         1,
@@ -6488,10 +6488,10 @@
         2
       ],
       "line": 1.0,
-      "prob": 47
+      "prob": 48
     },
     "away_cards": {
-      "lambda": 1.38,
+      "lambda": 1.39,
       "yellow_cards_list": [
         0,
         2,
@@ -6501,11 +6501,11 @@
         4,
         0
       ],
-      "line": 0.5,
-      "prob": 75
+      "line": 1.0,
+      "prob": 40
     },
     "home_sot": {
-      "lambda": 4.27,
+      "lambda": 4.15,
       "sot_list": [
         10,
         1,
@@ -6515,11 +6515,11 @@
         1,
         6
       ],
-      "line": 3.0,
-      "prob": 62
+      "line": 2.5,
+      "prob": 78
     },
     "away_sot": {
-      "lambda": 6.64,
+      "lambda": 6.44,
       "sot_list": [
         5,
         5,
@@ -6530,7 +6530,7 @@
         5
       ],
       "line": 4.5,
-      "prob": 79
+      "prob": 77
     }
   },
   {
@@ -6647,7 +6647,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.12,
+      "lambda": 4.06,
       "corners_list": [
         4,
         1,
@@ -6658,10 +6658,10 @@
         5
       ],
       "line": 2.5,
-      "prob": 78
+      "prob": 77
     },
     "away_corners": {
-      "lambda": 4.35,
+      "lambda": 4.29,
       "corners_list": [
         4,
         5,
@@ -6672,10 +6672,10 @@
         8
       ],
       "line": 3.0,
-      "prob": 63
+      "prob": 62
     },
     "home_cards": {
-      "lambda": 2.46,
+      "lambda": 2.49,
       "yellow_cards_list": [
         4,
         1,
@@ -6686,10 +6686,10 @@
         1
       ],
       "line": 1.5,
-      "prob": 70
+      "prob": 71
     },
     "away_cards": {
-      "lambda": 1.57,
+      "lambda": 1.59,
       "yellow_cards_list": [
         1,
         1,
@@ -6703,7 +6703,7 @@
       "prob": 47
     },
     "home_sot": {
-      "lambda": 4.92,
+      "lambda": 4.82,
       "sot_list": [
         6,
         3,
@@ -6713,11 +6713,11 @@
         4,
         3
       ],
-      "line": 3.5,
-      "prob": 72
+      "line": 3.0,
+      "prob": 71
     },
     "away_sot": {
-      "lambda": 5.88,
+      "lambda": 5.76,
       "sot_list": [
         8,
         4,
@@ -6728,7 +6728,7 @@
         9
       ],
       "line": 4.0,
-      "prob": 70
+      "prob": 68
     }
   },
   {
@@ -6845,7 +6845,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.57,
+      "lambda": 5.48,
       "corners_list": [
         6,
         6,
@@ -6855,11 +6855,11 @@
         6,
         1
       ],
-      "line": 4.0,
-      "prob": 65
+      "line": 3.5,
+      "prob": 80
     },
     "away_corners": {
-      "lambda": 3.26,
+      "lambda": 3.2,
       "corners_list": [
         5,
         0,
@@ -6870,7 +6870,7 @@
         7
       ],
       "line": 2.0,
-      "prob": 63
+      "prob": 62
     },
     "home_cards": {
       "lambda": 1.57,
@@ -6887,7 +6887,7 @@
       "prob": 47
     },
     "away_cards": {
-      "lambda": 1.36,
+      "lambda": 1.37,
       "yellow_cards_list": [
         2,
         2,
@@ -6898,10 +6898,10 @@
         1
       ],
       "line": 0.5,
-      "prob": 74
+      "prob": 75
     },
     "home_sot": {
-      "lambda": 10.24,
+      "lambda": 9.97,
       "sot_list": [
         12,
         12,
@@ -6912,10 +6912,10 @@
         3
       ],
       "line": 7.0,
-      "prob": 80
+      "prob": 78
     },
     "away_sot": {
-      "lambda": 2.82,
+      "lambda": 2.76,
       "sot_list": [
         4,
         2,
@@ -6925,8 +6925,8 @@
         0,
         2
       ],
-      "line": 2.0,
-      "prob": 54
+      "line": 1.5,
+      "prob": 76
     }
   },
   {
@@ -7043,7 +7043,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.36,
+      "lambda": 5.27,
       "corners_list": [
         2,
         3,
@@ -7054,10 +7054,10 @@
         3
       ],
       "line": 3.5,
-      "prob": 78
+      "prob": 77
     },
     "away_corners": {
-      "lambda": 3.99,
+      "lambda": 3.92,
       "corners_list": [
         4,
         3,
@@ -7068,10 +7068,10 @@
         1
       ],
       "line": 2.5,
-      "prob": 76
+      "prob": 75
     },
     "home_cards": {
-      "lambda": 1.76,
+      "lambda": 1.77,
       "yellow_cards_list": [
         0,
         2,
@@ -7085,7 +7085,7 @@
       "prob": 53
     },
     "away_cards": {
-      "lambda": 2.06,
+      "lambda": 2.07,
       "yellow_cards_list": [
         2,
         2,
@@ -7099,7 +7099,7 @@
       "prob": 61
     },
     "home_sot": {
-      "lambda": 4.27,
+      "lambda": 4.19,
       "sot_list": [
         6,
         2,
@@ -7110,10 +7110,10 @@
         5
       ],
       "line": 3.0,
-      "prob": 62
+      "prob": 60
     },
     "away_sot": {
-      "lambda": 6.7,
+      "lambda": 6.54,
       "sot_list": [
         7,
         3,
@@ -7124,7 +7124,7 @@
         3
       ],
       "line": 4.5,
-      "prob": 80
+      "prob": 78
     }
   },
   {
@@ -7241,7 +7241,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 5.78,
+      "lambda": 5.7,
       "corners_list": [
         2,
         5,
@@ -7252,10 +7252,10 @@
         1
       ],
       "line": 4.0,
-      "prob": 68
+      "prob": 67
     },
     "away_corners": {
-      "lambda": 5.49,
+      "lambda": 5.42,
       "corners_list": [
         2,
         5,
@@ -7266,10 +7266,10 @@
         8
       ],
       "line": 3.5,
-      "prob": 80
+      "prob": 79
     },
     "home_cards": {
-      "lambda": 1.58,
+      "lambda": 1.6,
       "yellow_cards_list": [
         1,
         3,
@@ -7280,10 +7280,10 @@
         0
       ],
       "line": 1.0,
-      "prob": 47
+      "prob": 48
     },
     "away_cards": {
-      "lambda": 2.68,
+      "lambda": 2.7,
       "yellow_cards_list": [
         2,
         4,
@@ -7297,7 +7297,7 @@
       "prob": 75
     },
     "home_sot": {
-      "lambda": 3.89,
+      "lambda": 3.8,
       "sot_list": [
         8,
         7,
@@ -7308,10 +7308,10 @@
         7
       ],
       "line": 2.5,
-      "prob": 75
+      "prob": 73
     },
     "away_sot": {
-      "lambda": 4.36,
+      "lambda": 4.26,
       "sot_list": [
         4,
         4,
@@ -7322,7 +7322,7 @@
         2
       ],
       "line": 3.0,
-      "prob": 63
+      "prob": 62
     }
   },
   {
@@ -7439,7 +7439,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 3.38,
+      "lambda": 3.32,
       "corners_list": [
         0,
         5,
@@ -7450,10 +7450,10 @@
         0
       ],
       "line": 2.0,
-      "prob": 66
+      "prob": 64
     },
     "away_corners": {
-      "lambda": 6.31,
+      "lambda": 6.18,
       "corners_list": [
         8,
         6,
@@ -7463,8 +7463,8 @@
         5,
         4
       ],
-      "line": 4.5,
-      "prob": 75
+      "line": 4.0,
+      "prob": 74
     },
     "home_cards": {
       "lambda": 1.68,
@@ -7495,7 +7495,7 @@
       "prob": 75
     },
     "home_sot": {
-      "lambda": 3.74,
+      "lambda": 3.66,
       "sot_list": [
         2,
         7,
@@ -7506,10 +7506,10 @@
         5
       ],
       "line": 2.5,
-      "prob": 72
+      "prob": 71
     },
     "away_sot": {
-      "lambda": 6.57,
+      "lambda": 6.37,
       "sot_list": [
         6,
         9,
@@ -7520,7 +7520,7 @@
         9
       ],
       "line": 4.5,
-      "prob": 78
+      "prob": 76
     }
   },
   {
@@ -7637,7 +7637,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.47,
+      "lambda": 4.39,
       "corners_list": [
         6,
         2,
@@ -7648,10 +7648,10 @@
         4
       ],
       "line": 3.0,
-      "prob": 65
+      "prob": 64
     },
     "away_corners": {
-      "lambda": 5.69,
+      "lambda": 5.59,
       "corners_list": [
         5,
         6,
@@ -7662,7 +7662,7 @@
         7
       ],
       "line": 4.0,
-      "prob": 67
+      "prob": 66
     },
     "home_cards": {
       "lambda": 1.37,
@@ -7679,7 +7679,7 @@
       "prob": 75
     },
     "away_cards": {
-      "lambda": 1.57,
+      "lambda": 1.58,
       "yellow_cards_list": [
         0,
         2,
@@ -7693,7 +7693,7 @@
       "prob": 47
     },
     "home_sot": {
-      "lambda": 5.92,
+      "lambda": 5.75,
       "sot_list": [
         2,
         1,
@@ -7704,10 +7704,10 @@
         8
       ],
       "line": 4.0,
-      "prob": 70
+      "prob": 68
     },
     "away_sot": {
-      "lambda": 5.63,
+      "lambda": 5.48,
       "sot_list": [
         3,
         1,
@@ -7717,8 +7717,8 @@
         5,
         2
       ],
-      "line": 4.0,
-      "prob": 66
+      "line": 3.5,
+      "prob": 80
     }
   },
   {
@@ -7835,7 +7835,7 @@
       ]
     },
     "home_corners": {
-      "lambda": 4.0,
+      "lambda": 3.95,
       "corners_list": [
         5,
         1,
@@ -7846,10 +7846,10 @@
         5
       ],
       "line": 2.5,
-      "prob": 76
+      "prob": 75
     },
     "away_corners": {
-      "lambda": 2.48,
+      "lambda": 2.45,
       "corners_list": [
         1,
         3,
@@ -7860,10 +7860,10 @@
         6
       ],
       "line": 1.5,
-      "prob": 71
+      "prob": 70
     },
     "home_cards": {
-      "lambda": 2.27,
+      "lambda": 2.29,
       "yellow_cards_list": [
         2,
         2,
@@ -7874,10 +7874,10 @@
         3
       ],
       "line": 1.5,
-      "prob": 66
+      "prob": 67
     },
     "away_cards": {
-      "lambda": 1.66,
+      "lambda": 1.69,
       "yellow_cards_list": [
         1,
         2,
@@ -7888,10 +7888,10 @@
         1
       ],
       "line": 1.0,
-      "prob": 49
+      "prob": 50
     },
     "home_sot": {
-      "lambda": 5.13,
+      "lambda": 5.03,
       "sot_list": [
         4,
         3,
@@ -7902,10 +7902,10 @@
         11
       ],
       "line": 3.5,
-      "prob": 75
+      "prob": 74
     },
     "away_sot": {
-      "lambda": 4.13,
+      "lambda": 4.05,
       "sot_list": [
         5,
         9,
@@ -7916,7 +7916,5947 @@
         8
       ],
       "line": 2.5,
+      "prob": 77
+    }
+  },
+  {
+    "match_id": "mt_644522882",
+    "league": "Eredivisie",
+    "date": "2026-11-22T11:15:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "FC Twente",
+    "away_team": "Willem II Tilburg",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 7.57,
+      "corners_list": [
+        12,
+        6,
+        7,
+        5,
+        6,
+        8,
+        9
+      ],
+      "avg_corners_conceded": 3.0,
+      "corners_conceded_list": [
+        2,
+        5,
+        5,
+        4,
+        3,
+        0,
+        2
+      ],
+      "avg_yellow_cards": 1.43,
+      "yellow_cards_list": [
+        1,
+        1,
+        1,
+        0,
+        3,
+        1,
+        3
+      ],
+      "avg_sot": 7.57,
+      "sot_list": [
+        12,
+        5,
+        6,
+        5,
+        5,
+        15,
+        5
+      ],
+      "avg_sot_conceded": 3.71,
+      "sot_conceded_list": [
+        5,
+        4,
+        5,
+        5,
+        5,
+        0,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.29,
+      "corners_list": [
+        2,
+        5,
+        3,
+        4,
+        13,
+        1,
+        2
+      ],
+      "avg_corners_conceded": 7.0,
+      "corners_conceded_list": [
+        14,
+        3,
+        7,
+        3,
+        4,
+        11,
+        7
+      ],
+      "avg_yellow_cards": 1.71,
+      "yellow_cards_list": [
+        0,
+        3,
+        0,
+        4,
+        2,
+        2,
+        1
+      ],
+      "avg_sot": 3.0,
+      "sot_list": [
+        4,
+        3,
+        2,
+        4,
+        2,
+        1,
+        5
+      ],
+      "avg_sot_conceded": 7.29,
+      "sot_conceded_list": [
+        12,
+        3,
+        6,
+        8,
+        11,
+        9,
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 8.69,
+      "corners_list": [
+        12,
+        6,
+        7,
+        5,
+        6,
+        8,
+        9
+      ],
+      "line": 6.0,
+      "prob": 76
+    },
+    "away_corners": {
+      "lambda": 3.23,
+      "corners_list": [
+        2,
+        5,
+        3,
+        4,
+        13,
+        1,
+        2
+      ],
+      "line": 2.0,
+      "prob": 63
+    },
+    "home_cards": {
+      "lambda": 1.59,
+      "yellow_cards_list": [
+        1,
+        1,
+        1,
+        0,
+        3,
+        1,
+        3
+      ],
+      "line": 1.0,
+      "prob": 47
+    },
+    "away_cards": {
+      "lambda": 1.78,
+      "yellow_cards_list": [
+        0,
+        3,
+        0,
+        4,
+        2,
+        2,
+        1
+      ],
+      "line": 1.0,
+      "prob": 53
+    },
+    "home_sot": {
+      "lambda": 9.33,
+      "sot_list": [
+        12,
+        5,
+        6,
+        5,
+        5,
+        15,
+        5
+      ],
+      "line": 6.5,
+      "prob": 82
+    },
+    "away_sot": {
+      "lambda": 2.99,
+      "sot_list": [
+        4,
+        3,
+        2,
+        4,
+        2,
+        1,
+        5
+      ],
+      "line": 2.0,
+      "prob": 57
+    }
+  },
+  {
+    "match_id": "mt_733653101",
+    "league": "Championship",
+    "date": "2026-11-22T12:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Burnley",
+    "away_team": "Blackburn Rovers",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.14,
+      "corners_list": [
+        2,
+        7,
+        3,
+        5,
+        5,
+        1,
+        6
+      ],
+      "avg_corners_conceded": 5.14,
+      "corners_conceded_list": [
+        6,
+        7,
+        6,
+        2,
+        2,
+        8,
+        5
+      ],
+      "avg_yellow_cards": 1.57,
+      "yellow_cards_list": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2,
+        3
+      ],
+      "avg_sot": 4.71,
+      "sot_list": [
+        8,
+        4,
+        4,
+        4,
+        4,
+        1,
+        8
+      ],
+      "avg_sot_conceded": 6.0,
+      "sot_conceded_list": [
+        6,
+        5,
+        8,
+        7,
+        0,
+        5,
+        11
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.57,
+      "corners_list": [
+        11,
+        5,
+        4,
+        7,
+        2,
+        6,
+        4
+      ],
+      "avg_corners_conceded": 6.86,
+      "corners_conceded_list": [
+        6,
+        10,
+        8,
+        9,
+        1,
+        5,
+        9
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        1,
+        0,
+        3,
+        3,
+        1,
+        3,
+        3
+      ],
+      "avg_sot": 3.29,
+      "sot_list": [
+        8,
+        1,
+        2,
+        5,
+        1,
+        3,
+        3
+      ],
+      "avg_sot_conceded": 4.29,
+      "sot_conceded_list": [
+        1,
+        7,
+        4,
+        1,
+        9,
+        3,
+        5
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.61,
+      "corners_list": [
+        2,
+        7,
+        3,
+        5,
+        5,
+        1,
+        6
+      ],
+      "line": 4.0,
+      "prob": 66
+    },
+    "away_corners": {
+      "lambda": 5.55,
+      "corners_list": [
+        11,
+        5,
+        4,
+        7,
+        2,
+        6,
+        4
+      ],
+      "line": 3.5,
+      "prob": 80
+    },
+    "home_cards": {
+      "lambda": 1.74,
+      "yellow_cards_list": [
+        0,
+        2,
+        2,
+        1,
+        1,
+        2,
+        3
+      ],
+      "line": 1.0,
+      "prob": 52
+    },
+    "away_cards": {
+      "lambda": 2.04,
+      "yellow_cards_list": [
+        1,
+        0,
+        3,
+        3,
+        1,
+        3,
+        3
+      ],
+      "line": 1.0,
+      "prob": 60
+    },
+    "home_sot": {
+      "lambda": 4.53,
+      "sot_list": [
+        8,
+        4,
+        4,
+        4,
+        4,
+        1,
+        8
+      ],
+      "line": 3.0,
+      "prob": 66
+    },
+    "away_sot": {
+      "lambda": 4.52,
+      "sot_list": [
+        8,
+        1,
+        2,
+        5,
+        1,
+        3,
+        3
+      ],
+      "line": 3.0,
+      "prob": 66
+    }
+  },
+  {
+    "match_id": "mt_511569297",
+    "league": "LaLiga",
+    "date": "2026-11-22T13:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Barcelona",
+    "away_team": "Villarreal",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 6.57,
+      "corners_list": [
+        18,
+        3,
+        9,
+        5,
+        6,
+        3,
+        2
+      ],
+      "avg_corners_conceded": 2.57,
+      "corners_conceded_list": [
+        0,
+        1,
+        2,
+        2,
+        6,
+        3,
+        4
+      ],
+      "avg_yellow_cards": 1.86,
+      "yellow_cards_list": [
+        3,
+        0,
+        2,
+        2,
+        3,
+        2,
+        1
+      ],
+      "avg_sot": 7.29,
+      "sot_list": [
+        9,
+        7,
+        8,
+        10,
+        6,
+        7,
+        4
+      ],
+      "avg_sot_conceded": 3.43,
+      "sot_conceded_list": [
+        3,
+        3,
+        1,
+        5,
+        5,
+        3,
+        4
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 7.57,
+      "corners_list": [
+        8,
+        7,
+        3,
+        10,
+        9,
+        7,
+        9
+      ],
+      "avg_corners_conceded": 4.57,
+      "corners_conceded_list": [
+        4,
+        1,
+        9,
+        5,
+        6,
+        3,
+        4
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        2
+      ],
+      "avg_sot": 5.57,
+      "sot_list": [
+        7,
+        7,
+        4,
+        7,
+        3,
+        4,
+        7
+      ],
+      "avg_sot_conceded": 2.29,
+      "sot_conceded_list": [
+        1,
+        1,
+        4,
+        1,
+        5,
+        3,
+        1
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.72,
+      "corners_list": [
+        18,
+        3,
+        9,
+        5,
+        6,
+        3,
+        2
+      ],
+      "line": 4.0,
+      "prob": 68
+    },
+    "away_corners": {
+      "lambda": 4.48,
+      "corners_list": [
+        8,
+        7,
+        3,
+        10,
+        9,
+        7,
+        9
+      ],
+      "line": 3.0,
+      "prob": 65
+    },
+    "home_cards": {
+      "lambda": 1.89,
+      "yellow_cards_list": [
+        3,
+        0,
+        2,
+        2,
+        3,
+        2,
+        1
+      ],
+      "line": 1.0,
+      "prob": 56
+    },
+    "away_cards": {
+      "lambda": 1.99,
+      "yellow_cards_list": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        2
+      ],
+      "line": 1.0,
+      "prob": 59
+    },
+    "home_sot": {
+      "lambda": 4.17,
+      "sot_list": [
+        9,
+        7,
+        8,
+        10,
+        6,
+        7,
+        4
+      ],
+      "line": 3.0,
+      "prob": 60
+    },
+    "away_sot": {
+      "lambda": 4.3,
+      "sot_list": [
+        7,
+        7,
+        4,
+        7,
+        3,
+        4,
+        7
+      ],
+      "line": 3.0,
+      "prob": 62
+    }
+  },
+  {
+    "match_id": "mt_023789533",
+    "league": "Swiss Super League",
+    "date": "2026-11-22T13:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "FC Z\u00fcrich",
+    "away_team": "FC St. Gallen 1879",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.43,
+      "corners_list": [
+        4,
+        7,
+        5,
+        5,
+        2,
+        6,
+        9
+      ],
+      "avg_corners_conceded": 6.57,
+      "corners_conceded_list": [
+        8,
+        2,
+        5,
+        6,
+        9,
+        8,
+        8
+      ],
+      "avg_yellow_cards": 1.86,
+      "yellow_cards_list": [
+        6,
+        0,
+        0,
+        0,
+        2,
+        3,
+        2
+      ],
+      "avg_sot": 5.14,
+      "sot_list": [
+        6,
+        6,
+        2,
+        5,
+        6,
+        10,
+        1
+      ],
+      "avg_sot_conceded": 4.86,
+      "sot_conceded_list": [
+        7,
+        3,
+        4,
+        5,
+        6,
+        7,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 6.14,
+      "corners_list": [
+        10,
+        8,
+        7,
+        6,
+        3,
+        2,
+        7
+      ],
+      "avg_corners_conceded": 4.57,
+      "corners_conceded_list": [
+        2,
+        2,
+        5,
+        8,
+        8,
+        4,
+        3
+      ],
+      "avg_yellow_cards": 1.71,
+      "yellow_cards_list": [
+        2,
+        3,
+        1,
+        3,
+        1,
+        1,
+        1
+      ],
+      "avg_sot": 5.86,
+      "sot_list": [
+        6,
+        5,
+        9,
+        5,
+        3,
+        6,
+        7
+      ],
+      "avg_sot_conceded": 5.14,
+      "sot_conceded_list": [
+        8,
+        8,
+        2,
+        4,
+        4,
+        6,
+        4
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.0,
+      "corners_list": [
+        4,
+        7,
+        5,
+        5,
+        2,
+        6,
+        9
+      ],
+      "line": 3.5,
+      "prob": 73
+    },
+    "away_corners": {
+      "lambda": 7.11,
+      "corners_list": [
+        10,
+        8,
+        7,
+        6,
+        3,
+        2,
+        7
+      ],
+      "line": 5.0,
+      "prob": 71
+    },
+    "home_cards": {
+      "lambda": 1.9,
+      "yellow_cards_list": [
+        6,
+        0,
+        0,
+        0,
+        2,
+        3,
+        2
+      ],
+      "line": 1.0,
+      "prob": 57
+    },
+    "away_cards": {
+      "lambda": 1.8,
+      "yellow_cards_list": [
+        2,
+        3,
+        1,
+        3,
+        1,
+        1,
+        1
+      ],
+      "line": 1.0,
+      "prob": 54
+    },
+    "home_sot": {
+      "lambda": 5.3,
+      "sot_list": [
+        6,
+        6,
+        2,
+        5,
+        6,
+        10,
+        1
+      ],
+      "line": 3.5,
+      "prob": 77
+    },
+    "away_sot": {
+      "lambda": 5.6,
+      "sot_list": [
+        6,
+        5,
+        9,
+        5,
+        3,
+        6,
+        7
+      ],
+      "line": 4.0,
+      "prob": 66
+    }
+  },
+  {
+    "match_id": "mt_022398114",
+    "league": "Danish Superliga",
+    "date": "2026-11-22T13:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Viborg FF",
+    "away_team": "Randers FC",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.71,
+      "corners_list": [
+        6,
+        4,
+        7,
+        3,
+        3,
+        10,
+        7
+      ],
+      "avg_corners_conceded": 4.43,
+      "corners_conceded_list": [
+        4,
+        5,
+        4,
+        3,
+        10,
+        3,
+        2
+      ],
+      "avg_yellow_cards": 1.57,
+      "yellow_cards_list": [
+        1,
+        0,
+        1,
+        3,
+        3,
+        2,
+        1
+      ],
+      "avg_sot": 5.14,
+      "sot_list": [
+        4,
+        6,
+        4,
+        4,
+        5,
+        9,
+        4
+      ],
+      "avg_sot_conceded": 4.0,
+      "sot_conceded_list": [
+        5,
+        2,
+        4,
+        6,
+        4,
+        2,
+        5
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.0,
+      "corners_list": [
+        3,
+        4,
+        4,
+        7,
+        6,
+        4,
+        0
+      ],
+      "avg_corners_conceded": 5.29,
+      "corners_conceded_list": [
+        11,
+        5,
+        7,
+        4,
+        6,
+        3,
+        1
+      ],
+      "avg_yellow_cards": 1.71,
+      "yellow_cards_list": [
+        3,
+        0,
+        3,
+        3,
+        0,
+        3,
+        0
+      ],
+      "avg_sot": 3.71,
+      "sot_list": [
+        2,
+        6,
+        4,
+        3,
+        5,
+        4,
+        2
+      ],
+      "avg_sot_conceded": 6.14,
+      "sot_conceded_list": [
+        5,
+        7,
+        4,
+        5,
+        8,
+        8,
+        6
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.77,
+      "corners_list": [
+        6,
+        4,
+        7,
+        3,
+        3,
+        10,
+        7
+      ],
+      "line": 4.0,
+      "prob": 68
+    },
+    "away_corners": {
+      "lambda": 3.99,
+      "corners_list": [
+        3,
+        4,
+        4,
+        7,
+        6,
+        4,
+        0
+      ],
+      "line": 2.5,
+      "prob": 76
+    },
+    "home_cards": {
+      "lambda": 1.7,
+      "yellow_cards_list": [
+        1,
+        0,
+        1,
+        3,
+        3,
+        2,
+        1
+      ],
+      "line": 1.0,
+      "prob": 51
+    },
+    "away_cards": {
+      "lambda": 1.8,
+      "yellow_cards_list": [
+        3,
+        0,
+        3,
+        3,
+        0,
+        3,
+        0
+      ],
+      "line": 1.0,
+      "prob": 54
+    },
+    "home_sot": {
+      "lambda": 6.07,
+      "sot_list": [
+        4,
+        6,
+        4,
+        4,
+        5,
+        9,
+        4
+      ],
+      "line": 4.0,
+      "prob": 72
+    },
+    "away_sot": {
+      "lambda": 3.59,
+      "sot_list": [
+        2,
+        6,
+        4,
+        3,
+        5,
+        4,
+        2
+      ],
+      "line": 2.5,
+      "prob": 70
+    }
+  },
+  {
+    "match_id": "mt_988246777",
+    "league": "Danish Superliga",
+    "date": "2026-11-22T13:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "AC Horsens",
+    "away_team": "Silkeborg IF",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 3.29,
+      "corners_list": [
+        4,
+        3,
+        4,
+        4,
+        2,
+        3,
+        3
+      ],
+      "avg_corners_conceded": 5.86,
+      "corners_conceded_list": [
+        7,
+        2,
+        6,
+        7,
+        4,
+        10,
+        5
+      ],
+      "avg_yellow_cards": 2.29,
+      "yellow_cards_list": [
+        3,
+        2,
+        3,
+        1,
+        3,
+        1,
+        3
+      ],
+      "avg_sot": 4.57,
+      "sot_list": [
+        3,
+        5,
+        7,
+        5,
+        7,
+        2,
+        3
+      ],
+      "avg_sot_conceded": 5.57,
+      "sot_conceded_list": [
+        5,
+        3,
+        7,
+        3,
+        6,
+        9,
+        6
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 2.71,
+      "corners_list": [
+        4,
+        1,
+        6,
+        1,
+        1,
+        6,
+        0
+      ],
+      "avg_corners_conceded": 6.29,
+      "corners_conceded_list": [
+        6,
+        7,
+        4,
+        9,
+        7,
+        10,
+        1
+      ],
+      "avg_yellow_cards": 2.29,
+      "yellow_cards_list": [
+        1,
+        2,
+        1,
+        1,
+        5,
+        3,
+        3
+      ],
+      "avg_sot": 4.43,
+      "sot_list": [
+        5,
+        6,
+        7,
+        3,
+        5,
+        3,
+        2
+      ],
+      "avg_sot_conceded": 4.71,
+      "sot_conceded_list": [
+        4,
+        2,
+        7,
+        7,
+        4,
+        9,
+        0
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.52,
+      "corners_list": [
+        4,
+        3,
+        4,
+        4,
+        2,
+        3,
+        3
+      ],
+      "line": 3.0,
+      "prob": 66
+    },
+    "away_corners": {
+      "lambda": 3.83,
+      "corners_list": [
+        4,
+        1,
+        6,
+        1,
+        1,
+        6,
+        0
+      ],
+      "line": 2.5,
+      "prob": 74
+    },
+    "home_cards": {
+      "lambda": 2.2,
+      "yellow_cards_list": [
+        3,
+        2,
+        3,
+        1,
+        3,
+        1,
+        3
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "away_cards": {
+      "lambda": 2.2,
+      "yellow_cards_list": [
+        1,
+        2,
+        1,
+        1,
+        5,
+        3,
+        3
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "home_sot": {
+      "lambda": 4.6,
+      "sot_list": [
+        3,
+        5,
+        7,
+        5,
+        7,
+        2,
+        3
+      ],
+      "line": 3.0,
+      "prob": 67
+    },
+    "away_sot": {
+      "lambda": 5.08,
+      "sot_list": [
+        5,
+        6,
+        7,
+        3,
+        5,
+        3,
+        2
+      ],
+      "line": 3.5,
+      "prob": 75
+    }
+  },
+  {
+    "match_id": "mt_899633240",
+    "league": "Eredivisie",
+    "date": "2026-11-22T13:30:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Sparta Rotterdam",
+    "away_team": "AZ Alkmaar",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.43,
+      "corners_list": [
+        5,
+        3,
+        6,
+        3,
+        5,
+        7,
+        9
+      ],
+      "avg_corners_conceded": 5.43,
+      "corners_conceded_list": [
+        9,
+        6,
+        9,
+        4,
+        3,
+        2,
+        5
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        1,
+        2,
+        3,
+        4,
+        1,
+        3,
+        0
+      ],
+      "avg_sot": 5.29,
+      "sot_list": [
+        6,
+        0,
+        8,
+        8,
+        5,
+        4,
+        6
+      ],
+      "avg_sot_conceded": 7.14,
+      "sot_conceded_list": [
+        10,
+        9,
+        6,
+        4,
+        4,
+        10,
+        7
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 6.57,
+      "corners_list": [
+        11,
+        5,
+        6,
+        6,
+        3,
+        8,
+        7
+      ],
+      "avg_corners_conceded": 3.0,
+      "corners_conceded_list": [
+        2,
+        2,
+        7,
+        3,
+        6,
+        1,
+        0
+      ],
+      "avg_yellow_cards": 1.71,
+      "yellow_cards_list": [
+        0,
+        1,
+        3,
+        2,
+        3,
+        2,
+        1
+      ],
+      "avg_sot": 4.86,
+      "sot_list": [
+        5,
+        8,
+        2,
+        4,
+        5,
+        5,
+        5
+      ],
+      "avg_sot_conceded": 3.57,
+      "sot_conceded_list": [
+        2,
+        1,
+        4,
+        6,
+        5,
+        2,
+        5
+      ]
+    },
+    "home_corners": {
+      "lambda": 3.8,
+      "corners_list": [
+        5,
+        3,
+        6,
+        3,
+        5,
+        7,
+        9
+      ],
+      "line": 2.5,
+      "prob": 73
+    },
+    "away_corners": {
+      "lambda": 6.45,
+      "corners_list": [
+        11,
+        5,
+        6,
+        6,
+        3,
+        8,
+        7
+      ],
+      "line": 4.5,
+      "prob": 77
+    },
+    "home_cards": {
+      "lambda": 1.99,
+      "yellow_cards_list": [
+        1,
+        2,
+        3,
+        4,
+        1,
+        3,
+        0
+      ],
+      "line": 1.0,
+      "prob": 59
+    },
+    "away_cards": {
+      "lambda": 1.78,
+      "yellow_cards_list": [
+        0,
+        1,
+        3,
+        2,
+        3,
+        2,
+        1
+      ],
+      "line": 1.0,
+      "prob": 53
+    },
+    "home_sot": {
+      "lambda": 4.26,
+      "sot_list": [
+        6,
+        0,
+        8,
+        8,
+        5,
+        4,
+        6
+      ],
+      "line": 3.0,
+      "prob": 62
+    },
+    "away_sot": {
+      "lambda": 6.58,
+      "sot_list": [
+        5,
+        8,
+        2,
+        4,
+        5,
+        5,
+        5
+      ],
+      "line": 4.5,
+      "prob": 79
+    }
+  },
+  {
+    "match_id": "mt_899633225",
+    "league": "Eredivisie",
+    "date": "2026-11-22T13:30:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "AFC Ajax",
+    "away_team": "ADO Den Haag",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.29,
+      "corners_list": [
+        14,
+        9,
+        4,
+        4,
+        3,
+        1,
+        2
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        2,
+        0,
+        4,
+        7,
+        5,
+        8,
+        9
+      ],
+      "avg_yellow_cards": 1.86,
+      "yellow_cards_list": [
+        0,
+        1,
+        2,
+        2,
+        2,
+        1,
+        5
+      ],
+      "avg_sot": 6.29,
+      "sot_list": [
+        12,
+        8,
+        5,
+        11,
+        4,
+        2,
+        2
+      ],
+      "avg_sot_conceded": 4.0,
+      "sot_conceded_list": [
+        4,
+        2,
+        2,
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 3.71,
+      "corners_list": [
+        2,
+        6,
+        0,
+        3,
+        8,
+        2,
+        5
+      ],
+      "avg_corners_conceded": 6.29,
+      "corners_conceded_list": [
+        12,
+        3,
+        8,
+        2,
+        2,
+        8,
+        9
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        3,
+        3,
+        1,
+        3,
+        1,
+        3,
+        1
+      ],
+      "avg_sot": 4.71,
+      "sot_list": [
+        5,
+        6,
+        2,
+        3,
+        7,
+        3,
+        7
+      ],
+      "avg_sot_conceded": 5.57,
+      "sot_conceded_list": [
+        12,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6
+      ]
+    },
+    "home_corners": {
+      "lambda": 6.15,
+      "corners_list": [
+        14,
+        9,
+        4,
+        4,
+        3,
+        1,
+        2
+      ],
+      "line": 4.0,
+      "prob": 73
+    },
+    "away_corners": {
+      "lambda": 4.09,
+      "corners_list": [
+        2,
+        6,
+        0,
+        3,
+        8,
+        2,
+        5
+      ],
+      "line": 2.5,
+      "prob": 77
+    },
+    "home_cards": {
+      "lambda": 1.89,
+      "yellow_cards_list": [
+        0,
+        1,
+        2,
+        2,
+        2,
+        1,
+        5
+      ],
+      "line": 1.0,
+      "prob": 56
+    },
+    "away_cards": {
+      "lambda": 2.08,
+      "yellow_cards_list": [
+        3,
+        3,
+        1,
+        3,
+        1,
+        3,
+        1
+      ],
+      "line": 1.0,
+      "prob": 62
+    },
+    "home_sot": {
+      "lambda": 6.6,
+      "sot_list": [
+        12,
+        8,
+        5,
+        11,
+        4,
+        2,
+        2
+      ],
+      "line": 4.5,
+      "prob": 79
+    },
+    "away_sot": {
+      "lambda": 4.23,
+      "sot_list": [
+        5,
+        6,
+        2,
+        3,
+        7,
+        3,
+        7
+      ],
+      "line": 3.0,
+      "prob": 61
+    }
+  },
+  {
+    "match_id": "mt_733621093",
+    "league": "Premier League",
+    "date": "2026-11-22T14:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Hull City",
+    "away_team": "Brighton & Hove Albion",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.0,
+      "corners_list": [
+        4,
+        7,
+        7,
+        2,
+        5,
+        6,
+        4
+      ],
+      "avg_corners_conceded": 6.57,
+      "corners_conceded_list": [
+        10,
+        4,
+        6,
+        10,
+        6,
+        3,
+        7
+      ],
+      "avg_yellow_cards": 3.14,
+      "yellow_cards_list": [
+        5,
+        5,
+        2,
+        2,
+        0,
+        3,
+        5
+      ],
+      "avg_sot": 3.0,
+      "sot_list": [
+        5,
+        4,
+        5,
+        0,
+        2,
+        3,
+        2
+      ],
+      "avg_sot_conceded": 6.29,
+      "sot_conceded_list": [
+        7,
+        5,
+        7,
+        6,
+        6,
+        3,
+        10
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.57,
+      "corners_list": [
+        3,
+        5,
+        5,
+        8,
+        2,
+        2,
+        7
+      ],
+      "avg_corners_conceded": 5.43,
+      "corners_conceded_list": [
+        5,
+        6,
+        7,
+        5,
+        4,
+        8,
+        3
+      ],
+      "avg_yellow_cards": 2.29,
+      "yellow_cards_list": [
+        0,
+        4,
+        1,
+        2,
+        2,
+        3,
+        4
+      ],
+      "avg_sot": 5.0,
+      "sot_list": [
+        7,
+        5,
+        4,
+        9,
+        1,
+        3,
+        6
+      ],
+      "avg_sot_conceded": 3.14,
+      "sot_conceded_list": [
+        6,
+        2,
+        3,
+        1,
+        4,
+        6,
+        0
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.18,
+      "corners_list": [
+        4,
+        7,
+        7,
+        2,
+        5,
+        6,
+        4
+      ],
+      "line": 3.5,
+      "prob": 76
+    },
+    "away_corners": {
+      "lambda": 5.56,
+      "corners_list": [
+        3,
+        5,
+        5,
+        8,
+        2,
+        2,
+        7
+      ],
+      "line": 4.0,
+      "prob": 65
+    },
+    "home_cards": {
+      "lambda": 2.92,
+      "yellow_cards_list": [
+        5,
+        5,
+        2,
+        2,
+        0,
+        3,
+        5
+      ],
+      "line": 2.0,
+      "prob": 56
+    },
+    "away_cards": {
+      "lambda": 2.32,
+      "yellow_cards_list": [
+        0,
+        4,
+        1,
+        2,
+        2,
+        3,
+        4
+      ],
+      "line": 1.5,
+      "prob": 67
+    },
+    "home_sot": {
+      "lambda": 2.62,
+      "sot_list": [
+        5,
+        4,
+        5,
+        0,
+        2,
+        3,
+        2
+      ],
+      "line": 1.5,
+      "prob": 74
+    },
+    "away_sot": {
+      "lambda": 6.13,
+      "sot_list": [
+        7,
+        5,
+        4,
+        9,
+        1,
+        3,
+        6
+      ],
+      "line": 4.0,
+      "prob": 73
+    }
+  },
+  {
+    "match_id": "mt_022015283",
+    "league": "Bundesliga",
+    "date": "2026-11-22T14:30:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "FC Augsburg",
+    "away_team": "1. FSV Mainz 05",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.14,
+      "corners_list": [
+        2,
+        2,
+        5,
+        12,
+        5,
+        1,
+        2
+      ],
+      "avg_corners_conceded": 4.86,
+      "corners_conceded_list": [
+        14,
+        2,
+        9,
+        4,
+        1,
+        2,
+        2
+      ],
+      "avg_yellow_cards": 1.57,
+      "yellow_cards_list": [
+        1,
+        2,
+        3,
+        3,
+        0,
+        0,
+        2
+      ],
+      "avg_sot": 5.71,
+      "sot_list": [
+        5,
+        4,
+        5,
+        8,
+        5,
+        5,
+        8
+      ],
+      "avg_sot_conceded": 6.29,
+      "sot_conceded_list": [
+        5,
+        11,
+        10,
+        8,
+        1,
+        2,
+        7
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.29,
+      "corners_list": [
+        4,
+        4,
+        4,
+        1,
+        6,
+        11,
+        7
+      ],
+      "avg_corners_conceded": 5.29,
+      "corners_conceded_list": [
+        5,
+        6,
+        3,
+        4,
+        6,
+        5,
+        8
+      ],
+      "avg_yellow_cards": 2.43,
+      "yellow_cards_list": [
+        0,
+        5,
+        3,
+        2,
+        2,
+        5,
+        0
+      ],
+      "avg_sot": 5.0,
+      "sot_list": [
+        5,
+        8,
+        5,
+        6,
+        8,
+        2,
+        1
+      ],
+      "avg_sot_conceded": 6.43,
+      "sot_conceded_list": [
+        5,
+        7,
+        7,
+        3,
+        8,
+        6,
+        9
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.56,
+      "corners_list": [
+        2,
+        2,
+        5,
+        12,
+        5,
+        1,
+        2
+      ],
+      "line": 3.0,
+      "prob": 67
+    },
+    "away_corners": {
+      "lambda": 5.09,
+      "corners_list": [
+        4,
+        4,
+        4,
+        1,
+        6,
+        11,
+        7
+      ],
+      "line": 3.5,
+      "prob": 75
+    },
+    "home_cards": {
+      "lambda": 1.7,
+      "yellow_cards_list": [
+        1,
+        2,
+        3,
+        3,
+        0,
+        0,
+        2
+      ],
+      "line": 1.0,
+      "prob": 51
+    },
+    "away_cards": {
+      "lambda": 2.3,
+      "yellow_cards_list": [
+        0,
+        5,
+        3,
+        2,
+        2,
+        5,
+        0
+      ],
+      "line": 1.5,
+      "prob": 67
+    },
+    "home_sot": {
+      "lambda": 6.98,
+      "sot_list": [
+        5,
+        4,
+        5,
+        8,
+        5,
+        5,
+        8
+      ],
+      "line": 5.0,
+      "prob": 70
+    },
+    "away_sot": {
+      "lambda": 6.21,
+      "sot_list": [
+        5,
+        8,
+        5,
+        6,
+        8,
+        2,
+        1
+      ],
+      "line": 4.0,
+      "prob": 74
+    }
+  },
+  {
+    "match_id": "mt_466815008",
+    "league": "Danish Superliga",
+    "date": "2026-11-22T15:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "S\u00f8nderjyske Fodbold",
+    "away_team": "Odense Boldklub",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.29,
+      "corners_list": [
+        6,
+        5,
+        7,
+        9,
+        4,
+        1,
+        5
+      ],
+      "avg_corners_conceded": 4.29,
+      "corners_conceded_list": [
+        6,
+        4,
+        3,
+        1,
+        2,
+        5,
+        9
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        1,
+        3,
+        1,
+        1,
+        1,
+        3,
+        5
+      ],
+      "avg_sot": 4.71,
+      "sot_list": [
+        3,
+        7,
+        5,
+        7,
+        6,
+        1,
+        4
+      ],
+      "avg_sot_conceded": 4.71,
+      "sot_conceded_list": [
+        4,
+        6,
+        4,
+        3,
+        7,
+        4,
+        5
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.57,
+      "corners_list": [
+        11,
+        9,
+        3,
+        2,
+        2,
+        10,
+        2
+      ],
+      "avg_corners_conceded": 5.71,
+      "corners_conceded_list": [
+        3,
+        2,
+        9,
+        9,
+        4,
+        6,
+        7
+      ],
+      "avg_yellow_cards": 1.29,
+      "yellow_cards_list": [
+        1,
+        2,
+        1,
+        2,
+        2,
+        0,
+        1
+      ],
+      "avg_sot": 4.71,
+      "sot_list": [
+        5,
+        5,
+        3,
+        4,
+        2,
+        9,
+        5
+      ],
+      "avg_sot_conceded": 4.43,
+      "sot_conceded_list": [
+        2,
+        3,
+        5,
+        4,
+        10,
+        3,
+        4
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.76,
+      "corners_list": [
+        6,
+        5,
+        7,
+        9,
+        4,
+        1,
+        5
+      ],
+      "line": 4.0,
+      "prob": 68
+    },
+    "away_corners": {
+      "lambda": 4.9,
+      "corners_list": [
+        11,
+        9,
+        3,
+        2,
+        2,
+        10,
+        2
+      ],
+      "line": 3.5,
+      "prob": 72
+    },
+    "home_cards": {
+      "lambda": 2.1,
+      "yellow_cards_list": [
+        1,
+        3,
+        1,
+        1,
+        1,
+        3,
+        5
+      ],
+      "line": 1.5,
+      "prob": 62
+    },
+    "away_cards": {
+      "lambda": 1.51,
+      "yellow_cards_list": [
+        1,
+        2,
+        1,
+        2,
+        2,
+        0,
+        1
+      ],
+      "line": 1.0,
+      "prob": 45
+    },
+    "home_sot": {
+      "lambda": 4.52,
+      "sot_list": [
+        3,
+        7,
+        5,
+        7,
+        6,
+        1,
+        4
+      ],
+      "line": 3.0,
+      "prob": 66
+    },
+    "away_sot": {
+      "lambda": 4.71,
+      "sot_list": [
+        5,
+        5,
+        3,
+        4,
+        2,
+        9,
+        5
+      ],
+      "line": 3.0,
+      "prob": 69
+    }
+  },
+  {
+    "match_id": "mt_022075451",
+    "league": "LaLiga",
+    "date": "2026-11-22T15:15:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Racing de Santander",
+    "away_team": "Real Sociedad",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.43,
+      "corners_list": [
+        0,
+        3,
+        8,
+        4,
+        9,
+        4,
+        3
+      ],
+      "avg_corners_conceded": 6.71,
+      "corners_conceded_list": [
+        18,
+        3,
+        3,
+        7,
+        4,
+        6,
+        6
+      ],
+      "avg_yellow_cards": 2.86,
+      "yellow_cards_list": [
+        2,
+        5,
+        3,
+        3,
+        3,
+        2,
+        2
+      ],
+      "avg_sot": 5.29,
+      "sot_list": [
+        3,
+        5,
+        11,
+        1,
+        9,
+        1,
+        7
+      ],
+      "avg_sot_conceded": 6.14,
+      "sot_conceded_list": [
+        9,
+        9,
+        2,
+        7,
+        1,
+        7,
+        8
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 6.14,
+      "corners_list": [
+        9,
+        5,
+        7,
+        5,
+        2,
+        8,
+        7
+      ],
+      "avg_corners_conceded": 5.43,
+      "corners_conceded_list": [
+        3,
+        7,
+        10,
+        4,
+        3,
+        5,
+        6
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        2,
+        3,
+        1,
+        2,
+        1,
+        4,
+        2
+      ],
+      "avg_sot": 4.71,
+      "sot_list": [
+        3,
+        6,
+        4,
+        9,
+        3,
+        5,
+        3
+      ],
+      "avg_sot_conceded": 4.43,
+      "sot_conceded_list": [
+        5,
+        5,
+        7,
+        6,
+        2,
+        3,
+        3
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.87,
+      "corners_list": [
+        0,
+        3,
+        8,
+        4,
+        9,
+        4,
+        3
+      ],
+      "line": 3.5,
+      "prob": 72
+    },
+    "away_corners": {
+      "lambda": 7.18,
+      "corners_list": [
+        9,
+        5,
+        7,
+        5,
+        2,
+        8,
+        7
+      ],
+      "line": 5.0,
+      "prob": 72
+    },
+    "home_cards": {
+      "lambda": 2.59,
+      "yellow_cards_list": [
+        2,
+        5,
+        3,
+        3,
+        3,
+        2,
+        2
+      ],
+      "line": 1.5,
+      "prob": 73
+    },
+    "away_cards": {
+      "lambda": 2.09,
+      "yellow_cards_list": [
+        2,
+        3,
+        1,
+        2,
+        1,
+        4,
+        2
+      ],
+      "line": 1.5,
+      "prob": 62
+    },
+    "home_sot": {
+      "lambda": 4.86,
+      "sot_list": [
+        3,
+        5,
+        11,
+        1,
+        9,
+        1,
+        7
+      ],
+      "line": 3.0,
+      "prob": 71
+    },
+    "away_sot": {
+      "lambda": 5.65,
+      "sot_list": [
+        3,
+        6,
+        4,
+        9,
+        3,
+        5,
+        3
+      ],
+      "line": 4.0,
+      "prob": 67
+    }
+  },
+  {
+    "match_id": "mt_371502413",
+    "league": "Swiss Super League",
+    "date": "2026-11-22T15:30:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Basel",
+    "away_team": "FC Luzern",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.29,
+      "corners_list": [
+        1,
+        3,
+        5,
+        5,
+        5,
+        6,
+        5
+      ],
+      "avg_corners_conceded": 5.0,
+      "corners_conceded_list": [
+        7,
+        6,
+        7,
+        1,
+        4,
+        6,
+        4
+      ],
+      "avg_yellow_cards": 2.29,
+      "yellow_cards_list": [
+        1,
+        2,
+        4,
+        1,
+        2,
+        4,
+        2
+      ],
+      "avg_sot": 3.71,
+      "sot_list": [
+        2,
+        6,
+        2,
+        1,
+        3,
+        5,
+        7
+      ],
+      "avg_sot_conceded": 5.43,
+      "sot_conceded_list": [
+        5,
+        3,
+        9,
+        7,
+        4,
+        7,
+        3
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.29,
+      "corners_list": [
+        2,
+        6,
+        5,
+        7,
+        9,
+        3,
+        5
+      ],
+      "avg_corners_conceded": 5.29,
+      "corners_conceded_list": [
+        8,
+        3,
+        8,
+        8,
+        2,
+        4,
+        4
+      ],
+      "avg_yellow_cards": 2.29,
+      "yellow_cards_list": [
+        5,
+        1,
+        2,
+        2,
+        1,
+        2,
+        3
+      ],
+      "avg_sot": 5.57,
+      "sot_list": [
+        7,
+        3,
+        11,
+        4,
+        6,
+        1,
+        7
+      ],
+      "avg_sot_conceded": 6.43,
+      "sot_conceded_list": [
+        10,
+        6,
+        6,
+        7,
+        6,
+        2,
+        8
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.7,
+      "corners_list": [
+        1,
+        3,
+        5,
+        5,
+        5,
+        6,
+        5
+      ],
+      "line": 3.0,
+      "prob": 69
+    },
+    "away_corners": {
+      "lambda": 5.22,
+      "corners_list": [
+        2,
+        6,
+        5,
+        7,
+        9,
+        3,
+        5
+      ],
+      "line": 3.5,
+      "prob": 76
+    },
+    "home_cards": {
+      "lambda": 2.2,
+      "yellow_cards_list": [
+        1,
+        2,
+        4,
+        1,
+        2,
+        4,
+        2
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "away_cards": {
+      "lambda": 2.2,
+      "yellow_cards_list": [
+        5,
+        1,
+        2,
+        2,
+        1,
+        2,
+        3
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "home_sot": {
+      "lambda": 5.02,
+      "sot_list": [
+        2,
+        6,
+        2,
+        1,
+        3,
+        5,
+        7
+      ],
+      "line": 3.5,
+      "prob": 74
+    },
+    "away_sot": {
+      "lambda": 5.86,
+      "sot_list": [
+        7,
+        3,
+        11,
+        4,
+        6,
+        1,
+        7
+      ],
+      "line": 4.0,
+      "prob": 70
+    }
+  },
+  {
+    "match_id": "mt_733611066",
+    "league": "Swiss Super League",
+    "date": "2026-11-22T15:30:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "FC Vaduz",
+    "away_team": "FC Lausanne-Sport",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.57,
+      "corners_list": [
+        7,
+        2,
+        3,
+        1,
+        6,
+        6,
+        7
+      ],
+      "avg_corners_conceded": 5.29,
+      "corners_conceded_list": [
+        3,
+        7,
+        7,
+        5,
+        6,
+        8,
+        1
+      ],
+      "avg_yellow_cards": 1.86,
+      "yellow_cards_list": [
+        0,
+        2,
+        1,
+        3,
+        3,
+        3,
+        1
+      ],
+      "avg_sot": 5.43,
+      "sot_list": [
+        11,
+        3,
+        3,
+        7,
+        3,
+        5,
+        6
+      ],
+      "avg_sot_conceded": 5.86,
+      "sot_conceded_list": [
+        3,
+        6,
+        5,
+        1,
+        12,
+        7,
+        7
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 7.71,
+      "corners_list": [
+        3,
+        12,
+        1,
+        8,
+        7,
+        9,
+        14
+      ],
+      "avg_corners_conceded": 4.71,
+      "corners_conceded_list": [
+        7,
+        2,
+        6,
+        6,
+        6,
+        4,
+        2
+      ],
+      "avg_yellow_cards": 2.57,
+      "yellow_cards_list": [
+        4,
+        1,
+        3,
+        4,
+        4,
+        2,
+        0
+      ],
+      "avg_sot": 4.14,
+      "sot_list": [
+        3,
+        4,
+        4,
+        4,
+        3,
+        5,
+        6
+      ],
+      "avg_sot_conceded": 5.57,
+      "sot_conceded_list": [
+        11,
+        4,
+        5,
+        5,
+        2,
+        8,
+        4
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.52,
+      "corners_list": [
+        7,
+        2,
+        3,
+        1,
+        6,
+        6,
+        7
+      ],
+      "line": 3.0,
+      "prob": 66
+    },
+    "away_corners": {
+      "lambda": 7.21,
+      "corners_list": [
+        3,
+        12,
+        1,
+        8,
+        7,
+        9,
+        14
+      ],
+      "line": 5.0,
+      "prob": 73
+    },
+    "home_cards": {
+      "lambda": 1.9,
+      "yellow_cards_list": [
+        0,
+        2,
+        1,
+        3,
+        3,
+        3,
+        1
+      ],
+      "line": 1.0,
+      "prob": 57
+    },
+    "away_cards": {
+      "lambda": 2.4,
+      "yellow_cards_list": [
+        4,
+        1,
+        3,
+        4,
+        4,
+        2,
+        0
+      ],
+      "line": 1.5,
+      "prob": 69
+    },
+    "home_sot": {
+      "lambda": 5.84,
+      "sot_list": [
+        11,
+        3,
+        3,
+        7,
+        3,
+        5,
+        6
+      ],
+      "line": 4.0,
+      "prob": 69
+    },
+    "away_sot": {
+      "lambda": 5.01,
+      "sot_list": [
+        3,
+        4,
+        4,
+        4,
+        3,
+        5,
+        6
+      ],
+      "line": 3.5,
+      "prob": 74
+    }
+  },
+  {
+    "match_id": "mt_988477009",
+    "league": "Eredivisie",
+    "date": "2026-11-22T15:45:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Go Ahead Eagles",
+    "away_team": "Fortuna Sittard",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.29,
+      "corners_list": [
+        9,
+        7,
+        9,
+        6,
+        4,
+        2,
+        0
+      ],
+      "avg_corners_conceded": 4.57,
+      "corners_conceded_list": [
+        0,
+        5,
+        6,
+        5,
+        2,
+        7,
+        7
+      ],
+      "avg_yellow_cards": 0.86,
+      "yellow_cards_list": [
+        1,
+        2,
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "avg_sot": 4.86,
+      "sot_list": [
+        6,
+        6,
+        6,
+        6,
+        7,
+        1,
+        2
+      ],
+      "avg_sot_conceded": 5.14,
+      "sot_conceded_list": [
+        2,
+        5,
+        8,
+        9,
+        3,
+        7,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 3.29,
+      "corners_list": [
+        3,
+        3,
+        5,
+        0,
+        7,
+        1,
+        4
+      ],
+      "avg_corners_conceded": 7.14,
+      "corners_conceded_list": [
+        11,
+        5,
+        7,
+        13,
+        4,
+        6,
+        4
+      ],
+      "avg_yellow_cards": 1.29,
+      "yellow_cards_list": [
+        1,
+        1,
+        0,
+        2,
+        2,
+        1,
+        2
+      ],
+      "avg_sot": 3.86,
+      "sot_list": [
+        4,
+        3,
+        5,
+        3,
+        5,
+        3,
+        4
+      ],
+      "avg_sot_conceded": 6.0,
+      "sot_conceded_list": [
+        10,
+        3,
+        6,
+        7,
+        2,
+        6,
+        8
+      ]
+    },
+    "home_corners": {
+      "lambda": 6.77,
+      "corners_list": [
+        9,
+        7,
+        9,
+        6,
+        4,
+        2,
+        0
+      ],
+      "line": 4.5,
+      "prob": 80
+    },
+    "away_corners": {
+      "lambda": 3.57,
+      "corners_list": [
+        3,
+        3,
+        5,
+        0,
+        7,
+        1,
+        4
+      ],
+      "line": 2.5,
+      "prob": 69
+    },
+    "home_cards": {
+      "lambda": 1.19,
+      "yellow_cards_list": [
+        1,
+        2,
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "line": 0.5,
+      "prob": 70
+    },
+    "away_cards": {
+      "lambda": 1.49,
+      "yellow_cards_list": [
+        1,
+        1,
+        0,
+        2,
+        2,
+        1,
+        2
+      ],
+      "line": 1.0,
+      "prob": 44
+    },
+    "home_sot": {
+      "lambda": 5.78,
+      "sot_list": [
+        6,
+        6,
+        6,
+        6,
+        7,
+        1,
+        2
+      ],
+      "line": 4.0,
+      "prob": 68
+    },
+    "away_sot": {
+      "lambda": 4.4,
+      "sot_list": [
+        4,
+        3,
+        5,
+        3,
+        5,
+        3,
+        4
+      ],
+      "line": 3.0,
+      "prob": 64
+    }
+  },
+  {
+    "match_id": "mt_732091161",
+    "league": "Eliteserien",
+    "date": "2026-11-22T16:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Troms\u00f8 IL",
+    "away_team": "Viking FK",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 3.71,
+      "corners_list": [
+        4,
+        7,
+        2,
+        1,
+        6,
+        2,
+        4
+      ],
+      "avg_corners_conceded": 3.71,
+      "corners_conceded_list": [
+        4,
+        1,
+        8,
+        2,
+        4,
+        3,
+        4
+      ],
+      "avg_yellow_cards": 2.29,
+      "yellow_cards_list": [
+        3,
+        0,
+        3,
+        4,
+        2,
+        4,
+        0
+      ],
+      "avg_sot": 5.0,
+      "sot_list": [
+        9,
+        11,
+        5,
+        3,
+        4,
+        0,
+        3
+      ],
+      "avg_sot_conceded": 5.0,
+      "sot_conceded_list": [
+        10,
+        2,
+        5,
+        2,
+        5,
+        9,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.57,
+      "corners_list": [
+        7,
+        7,
+        4,
+        6,
+        4,
+        3,
+        8
+      ],
+      "avg_corners_conceded": 5.29,
+      "corners_conceded_list": [
+        5,
+        6,
+        13,
+        0,
+        6,
+        5,
+        2
+      ],
+      "avg_yellow_cards": 1.71,
+      "yellow_cards_list": [
+        0,
+        1,
+        0,
+        3,
+        3,
+        5,
+        0
+      ],
+      "avg_sot": 7.14,
+      "sot_list": [
+        12,
+        9,
+        4,
+        4,
+        5,
+        5,
+        11
+      ],
+      "avg_sot_conceded": 3.86,
+      "sot_conceded_list": [
+        2,
+        6,
+        6,
+        2,
+        4,
+        3,
+        4
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.27,
+      "corners_list": [
+        4,
+        7,
+        2,
+        1,
+        6,
+        2,
+        4
+      ],
+      "line": 3.0,
+      "prob": 62
+    },
+    "away_corners": {
+      "lambda": 4.43,
+      "corners_list": [
+        7,
+        7,
+        4,
+        6,
+        4,
+        3,
+        8
+      ],
+      "line": 3.0,
+      "prob": 65
+    },
+    "home_cards": {
+      "lambda": 2.2,
+      "yellow_cards_list": [
+        3,
+        0,
+        3,
+        4,
+        2,
+        4,
+        0
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "away_cards": {
+      "lambda": 1.8,
+      "yellow_cards_list": [
+        0,
+        1,
+        0,
+        3,
+        3,
+        5,
+        0
+      ],
+      "line": 1.0,
+      "prob": 54
+    },
+    "home_sot": {
+      "lambda": 4.29,
+      "sot_list": [
+        9,
+        11,
+        5,
+        3,
+        4,
+        0,
+        3
+      ],
+      "line": 3.0,
+      "prob": 62
+    },
+    "away_sot": {
+      "lambda": 6.67,
+      "sot_list": [
+        12,
+        9,
+        4,
+        4,
+        5,
+        5,
+        11
+      ],
+      "line": 4.5,
+      "prob": 79
+    }
+  },
+  {
+    "match_id": "mt_894652268",
+    "league": "Eliteserien",
+    "date": "2026-11-22T16:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Aalesunds FK",
+    "away_team": "Rosenborg BK",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.71,
+      "corners_list": [
+        4,
+        6,
+        8,
+        8,
+        4,
+        7,
+        3
+      ],
+      "avg_corners_conceded": 9.43,
+      "corners_conceded_list": [
+        6,
+        10,
+        6,
+        4,
+        20,
+        7,
+        13
+      ],
+      "avg_yellow_cards": 2.57,
+      "yellow_cards_list": [
+        5,
+        4,
+        1,
+        2,
+        1,
+        4,
+        1
+      ],
+      "avg_sot": 5.14,
+      "sot_list": [
+        3,
+        6,
+        7,
+        8,
+        2,
+        5,
+        5
+      ],
+      "avg_sot_conceded": 6.29,
+      "sot_conceded_list": [
+        5,
+        8,
+        8,
+        3,
+        6,
+        9,
+        5
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 6.0,
+      "corners_list": [
+        4,
+        6,
+        7,
+        8,
+        7,
+        4,
+        6
+      ],
+      "avg_corners_conceded": 3.86,
+      "corners_conceded_list": [
+        4,
+        4,
+        1,
+        7,
+        4,
+        4,
+        3
+      ],
+      "avg_yellow_cards": 2.29,
+      "yellow_cards_list": [
+        2,
+        0,
+        4,
+        3,
+        2,
+        3,
+        2
+      ],
+      "avg_sot": 7.14,
+      "sot_list": [
+        10,
+        8,
+        10,
+        6,
+        7,
+        4,
+        5
+      ],
+      "avg_sot_conceded": 4.86,
+      "sot_conceded_list": [
+        9,
+        7,
+        4,
+        5,
+        2,
+        5,
+        2
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.63,
+      "corners_list": [
+        4,
+        6,
+        8,
+        8,
+        4,
+        7,
+        3
+      ],
+      "line": 3.0,
+      "prob": 68
+    },
+    "away_corners": {
+      "lambda": 9.26,
+      "corners_list": [
+        4,
+        6,
+        7,
+        8,
+        7,
+        4,
+        6
+      ],
+      "line": 6.5,
+      "prob": 82
+    },
+    "home_cards": {
+      "lambda": 2.4,
+      "yellow_cards_list": [
+        5,
+        4,
+        1,
+        2,
+        1,
+        4,
+        1
+      ],
+      "line": 1.5,
+      "prob": 69
+    },
+    "away_cards": {
+      "lambda": 2.21,
+      "yellow_cards_list": [
+        2,
+        0,
+        4,
+        3,
+        2,
+        3,
+        2
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "home_sot": {
+      "lambda": 5.11,
+      "sot_list": [
+        3,
+        6,
+        7,
+        8,
+        2,
+        5,
+        5
+      ],
+      "line": 3.5,
+      "prob": 75
+    },
+    "away_sot": {
+      "lambda": 7.89,
+      "sot_list": [
+        10,
+        8,
+        10,
+        6,
+        7,
+        4,
+        5
+      ],
+      "line": 5.5,
+      "prob": 80
+    }
+  },
+  {
+    "match_id": "mt_986410047",
+    "league": "Eliteserien",
+    "date": "2026-11-22T16:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Sarpsborg 08",
+    "away_team": "Lillestr\u00f8m SK",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 8.71,
+      "corners_list": [
+        3,
+        11,
+        6,
+        7,
+        20,
+        9,
+        5
+      ],
+      "avg_corners_conceded": 5.29,
+      "corners_conceded_list": [
+        6,
+        1,
+        8,
+        8,
+        4,
+        2,
+        8
+      ],
+      "avg_yellow_cards": 1.86,
+      "yellow_cards_list": [
+        0,
+        1,
+        2,
+        2,
+        2,
+        3,
+        3
+      ],
+      "avg_sot": 5.86,
+      "sot_list": [
+        4,
+        7,
+        8,
+        5,
+        6,
+        7,
+        4
+      ],
+      "avg_sot_conceded": 4.71,
+      "sot_conceded_list": [
+        2,
+        4,
+        7,
+        6,
+        2,
+        6,
+        6
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 6.14,
+      "corners_list": [
+        6,
+        6,
+        7,
+        3,
+        3,
+        5,
+        13
+      ],
+      "avg_corners_conceded": 5.57,
+      "corners_conceded_list": [
+        6,
+        7,
+        6,
+        4,
+        8,
+        5,
+        3
+      ],
+      "avg_yellow_cards": 1.43,
+      "yellow_cards_list": [
+        2,
+        1,
+        0,
+        2,
+        3,
+        1,
+        1
+      ],
+      "avg_sot": 4.86,
+      "sot_list": [
+        2,
+        6,
+        5,
+        6,
+        6,
+        4,
+        5
+      ],
+      "avg_sot_conceded": 5.86,
+      "sot_conceded_list": [
+        3,
+        9,
+        12,
+        7,
+        4,
+        1,
+        5
+      ]
+    },
+    "home_corners": {
+      "lambda": 8.21,
+      "corners_list": [
+        3,
+        11,
+        6,
+        7,
+        20,
+        9,
+        5
+      ],
+      "line": 5.5,
+      "prob": 83
+    },
+    "away_corners": {
+      "lambda": 6.04,
+      "corners_list": [
+        6,
+        6,
+        7,
+        3,
+        3,
+        5,
+        13
+      ],
+      "line": 4.0,
+      "prob": 72
+    },
+    "home_cards": {
+      "lambda": 1.9,
+      "yellow_cards_list": [
+        0,
+        1,
+        2,
+        2,
+        2,
+        3,
+        3
+      ],
+      "line": 1.0,
+      "prob": 57
+    },
+    "away_cards": {
+      "lambda": 1.6,
+      "yellow_cards_list": [
+        2,
+        1,
+        0,
+        2,
+        3,
+        1,
+        1
+      ],
+      "line": 1.0,
+      "prob": 48
+    },
+    "home_sot": {
+      "lambda": 6.44,
+      "sot_list": [
+        4,
+        7,
+        8,
+        5,
+        6,
+        7,
+        4
+      ],
+      "line": 4.5,
+      "prob": 77
+    },
+    "away_sot": {
+      "lambda": 4.8,
+      "sot_list": [
+        2,
+        6,
+        5,
+        6,
+        6,
+        4,
+        5
+      ],
+      "line": 3.0,
+      "prob": 71
+    }
+  },
+  {
+    "match_id": "mt_153704474",
+    "league": "Eliteserien",
+    "date": "2026-11-22T16:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "V\u00e5lerenga IF",
+    "away_team": "IK Start",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.71,
+      "corners_list": [
+        6,
+        9,
+        12,
+        4,
+        3,
+        3,
+        3
+      ],
+      "avg_corners_conceded": 6.14,
+      "corners_conceded_list": [
+        6,
+        6,
+        7,
+        8,
+        10,
+        2,
+        4
+      ],
+      "avg_yellow_cards": 2.14,
+      "yellow_cards_list": [
+        4,
+        0,
+        2,
+        1,
+        4,
+        2,
+        2
+      ],
+      "avg_sot": 5.57,
+      "sot_list": [
+        3,
+        4,
+        5,
+        10,
+        6,
+        9,
+        2
+      ],
+      "avg_sot_conceded": 4.29,
+      "sot_conceded_list": [
+        2,
+        2,
+        5,
+        7,
+        8,
+        0,
+        6
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.29,
+      "corners_list": [
+        9,
+        4,
+        5,
+        6,
+        5,
+        5,
+        3
+      ],
+      "avg_corners_conceded": 5.29,
+      "corners_conceded_list": [
+        7,
+        5,
+        4,
+        5,
+        5,
+        5,
+        6
+      ],
+      "avg_yellow_cards": 1.43,
+      "yellow_cards_list": [
+        0,
+        3,
+        0,
+        2,
+        1,
+        1,
+        3
+      ],
+      "avg_sot": 2.71,
+      "sot_list": [
+        6,
+        0,
+        5,
+        3,
+        2,
+        1,
+        2
+      ],
+      "avg_sot_conceded": 5.43,
+      "sot_conceded_list": [
+        4,
+        6,
+        7,
+        12,
+        0,
+        4,
+        5
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.73,
+      "corners_list": [
+        6,
+        9,
+        12,
+        4,
+        3,
+        3,
+        3
+      ],
+      "line": 4.0,
+      "prob": 68
+    },
+    "away_corners": {
+      "lambda": 6.04,
+      "corners_list": [
+        9,
+        4,
+        5,
+        6,
+        5,
+        5,
+        3
+      ],
+      "line": 4.0,
+      "prob": 72
+    },
+    "home_cards": {
+      "lambda": 2.1,
+      "yellow_cards_list": [
+        4,
+        0,
+        2,
+        1,
+        4,
+        2,
+        2
+      ],
+      "line": 1.5,
+      "prob": 62
+    },
+    "away_cards": {
+      "lambda": 1.6,
+      "yellow_cards_list": [
+        0,
+        3,
+        0,
+        2,
+        1,
+        1,
+        3
+      ],
+      "line": 1.0,
+      "prob": 48
+    },
+    "home_sot": {
+      "lambda": 5.86,
+      "sot_list": [
+        3,
+        4,
+        5,
+        10,
+        6,
+        9,
+        2
+      ],
+      "line": 4.0,
+      "prob": 70
+    },
+    "away_sot": {
+      "lambda": 3.1,
+      "sot_list": [
+        6,
+        0,
+        5,
+        3,
+        2,
+        1,
+        2
+      ],
+      "line": 2.0,
+      "prob": 60
+    }
+  },
+  {
+    "match_id": "mt_732091157",
+    "league": "Eliteserien",
+    "date": "2026-11-22T16:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Kristiansund BK",
+    "away_team": "Sandefjord Fotball",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 3.29,
+      "corners_list": [
+        5,
+        4,
+        0,
+        4,
+        4,
+        2,
+        4
+      ],
+      "avg_corners_conceded": 5.86,
+      "corners_conceded_list": [
+        7,
+        6,
+        5,
+        8,
+        3,
+        9,
+        3
+      ],
+      "avg_yellow_cards": 1.86,
+      "yellow_cards_list": [
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        4
+      ],
+      "avg_sot": 5.14,
+      "sot_list": [
+        2,
+        7,
+        3,
+        3,
+        9,
+        6,
+        6
+      ],
+      "avg_sot_conceded": 6.86,
+      "sot_conceded_list": [
+        12,
+        8,
+        8,
+        8,
+        3,
+        7,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 3.86,
+      "corners_list": [
+        2,
+        5,
+        1,
+        4,
+        5,
+        7,
+        3
+      ],
+      "avg_corners_conceded": 7.14,
+      "corners_conceded_list": [
+        10,
+        4,
+        7,
+        3,
+        5,
+        7,
+        14
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        3,
+        2,
+        2,
+        0,
+        1,
+        4,
+        2
+      ],
+      "avg_sot": 5.29,
+      "sot_list": [
+        3,
+        6,
+        4,
+        7,
+        0,
+        9,
+        8
+      ],
+      "avg_sot_conceded": 6.0,
+      "sot_conceded_list": [
+        10,
+        0,
+        10,
+        6,
+        2,
+        5,
+        9
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.94,
+      "corners_list": [
+        5,
+        4,
+        0,
+        4,
+        4,
+        2,
+        4
+      ],
+      "line": 3.5,
+      "prob": 73
+    },
+    "away_corners": {
+      "lambda": 4.7,
+      "corners_list": [
+        2,
+        5,
+        1,
+        4,
+        5,
+        7,
+        3
+      ],
+      "line": 3.0,
+      "prob": 69
+    },
+    "home_cards": {
+      "lambda": 1.9,
+      "yellow_cards_list": [
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        4
+      ],
+      "line": 1.0,
+      "prob": 57
+    },
+    "away_cards": {
+      "lambda": 2.0,
+      "yellow_cards_list": [
+        3,
+        2,
+        2,
+        0,
+        1,
+        4,
+        2
+      ],
+      "line": 1.0,
+      "prob": 59
+    },
+    "home_sot": {
+      "lambda": 5.93,
+      "sot_list": [
+        2,
+        7,
+        3,
+        3,
+        9,
+        6,
+        6
+      ],
+      "line": 4.0,
+      "prob": 71
+    },
+    "away_sot": {
+      "lambda": 6.7,
+      "sot_list": [
+        3,
+        6,
+        4,
+        7,
+        0,
+        9,
+        8
+      ],
+      "line": 4.5,
+      "prob": 80
+    }
+  },
+  {
+    "match_id": "mt_370285512",
+    "league": "Eliteserien",
+    "date": "2026-11-22T16:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "KFUM Oslo",
+    "away_team": "SK Brann",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 3.43,
+      "corners_list": [
+        6,
+        1,
+        7,
+        2,
+        3,
+        3,
+        2
+      ],
+      "avg_corners_conceded": 6.57,
+      "corners_conceded_list": [
+        4,
+        11,
+        12,
+        1,
+        4,
+        6,
+        8
+      ],
+      "avg_yellow_cards": 1.57,
+      "yellow_cards_list": [
+        1,
+        2,
+        0,
+        3,
+        2,
+        1,
+        2
+      ],
+      "avg_sot": 4.0,
+      "sot_list": [
+        5,
+        4,
+        5,
+        2,
+        3,
+        5,
+        4
+      ],
+      "avg_sot_conceded": 5.71,
+      "sot_conceded_list": [
+        3,
+        7,
+        5,
+        3,
+        9,
+        2,
+        11
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 7.43,
+      "corners_list": [
+        7,
+        3,
+        13,
+        8,
+        8,
+        4,
+        9
+      ],
+      "avg_corners_conceded": 5.14,
+      "corners_conceded_list": [
+        9,
+        6,
+        4,
+        4,
+        3,
+        7,
+        3
+      ],
+      "avg_yellow_cards": 2.43,
+      "yellow_cards_list": [
+        3,
+        1,
+        2,
+        1,
+        1,
+        5,
+        4
+      ],
+      "avg_sot": 5.0,
+      "sot_list": [
+        4,
+        2,
+        6,
+        7,
+        4,
+        5,
+        7
+      ],
+      "avg_sot_conceded": 6.43,
+      "sot_conceded_list": [
+        6,
+        8,
+        4,
+        10,
+        6,
+        4,
+        7
+      ]
+    },
+    "home_corners": {
+      "lambda": 3.96,
+      "corners_list": [
+        6,
+        1,
+        7,
+        2,
+        3,
+        3,
+        2
+      ],
+      "line": 2.5,
+      "prob": 76
+    },
+    "away_corners": {
+      "lambda": 8.13,
+      "corners_list": [
+        7,
+        3,
+        13,
+        8,
+        8,
+        4,
+        9
+      ],
+      "line": 5.5,
+      "prob": 82
+    },
+    "home_cards": {
+      "lambda": 1.7,
+      "yellow_cards_list": [
+        1,
+        2,
+        0,
+        3,
+        2,
+        1,
+        2
+      ],
+      "line": 1.0,
+      "prob": 51
+    },
+    "away_cards": {
+      "lambda": 2.3,
+      "yellow_cards_list": [
+        3,
+        1,
+        2,
+        1,
+        1,
+        5,
+        4
+      ],
+      "line": 1.5,
+      "prob": 67
+    },
+    "home_sot": {
+      "lambda": 5.24,
+      "sot_list": [
+        5,
+        4,
+        5,
+        2,
+        3,
+        5,
+        4
+      ],
+      "line": 3.5,
+      "prob": 77
+    },
+    "away_sot": {
+      "lambda": 5.59,
+      "sot_list": [
+        4,
+        2,
+        6,
+        7,
+        4,
+        5,
+        7
+      ],
+      "line": 4.0,
+      "prob": 66
+    }
+  },
+  {
+    "match_id": "mt_641538899",
+    "league": "Eliteserien",
+    "date": "2026-11-22T16:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "HamKam",
+    "away_team": "Fredrikstad FK",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.29,
+      "corners_list": [
+        6,
+        1,
+        4,
+        1,
+        4,
+        6,
+        8
+      ],
+      "avg_corners_conceded": 4.86,
+      "corners_conceded_list": [
+        2,
+        7,
+        5,
+        5,
+        7,
+        3,
+        5
+      ],
+      "avg_yellow_cards": 1.29,
+      "yellow_cards_list": [
+        0,
+        1,
+        0,
+        1,
+        3,
+        3,
+        1
+      ],
+      "avg_sot": 3.29,
+      "sot_list": [
+        3,
+        2,
+        7,
+        1,
+        2,
+        2,
+        6
+      ],
+      "avg_sot_conceded": 6.0,
+      "sot_conceded_list": [
+        7,
+        11,
+        5,
+        3,
+        7,
+        5,
+        4
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.14,
+      "corners_list": [
+        6,
+        6,
+        8,
+        0,
+        9,
+        4,
+        3
+      ],
+      "avg_corners_conceded": 5.43,
+      "corners_conceded_list": [
+        3,
+        9,
+        2,
+        6,
+        5,
+        4,
+        9
+      ],
+      "avg_yellow_cards": 1.57,
+      "yellow_cards_list": [
+        2,
+        1,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "avg_sot": 4.14,
+      "sot_list": [
+        2,
+        2,
+        5,
+        2,
+        6,
+        5,
+        7
+      ],
+      "avg_sot_conceded": 5.43,
+      "sot_conceded_list": [
+        4,
+        4,
+        5,
+        4,
+        10,
+        4,
+        7
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.75,
+      "corners_list": [
+        6,
+        1,
+        4,
+        1,
+        4,
+        6,
+        8
+      ],
+      "line": 3.0,
+      "prob": 70
+    },
+    "away_corners": {
+      "lambda": 4.97,
+      "corners_list": [
+        6,
+        6,
+        8,
+        0,
+        9,
+        4,
+        3
+      ],
+      "line": 3.5,
+      "prob": 73
+    },
+    "home_cards": {
+      "lambda": 1.5,
+      "yellow_cards_list": [
+        0,
+        1,
+        0,
+        1,
+        3,
+        3,
+        1
+      ],
+      "line": 1.0,
+      "prob": 44
+    },
+    "away_cards": {
+      "lambda": 1.7,
+      "yellow_cards_list": [
+        2,
+        1,
+        2,
+        2,
+        1,
+        1,
+        2
+      ],
+      "line": 1.0,
+      "prob": 51
+    },
+    "home_sot": {
+      "lambda": 4.07,
+      "sot_list": [
+        3,
+        2,
+        7,
+        1,
+        2,
+        2,
+        6
+      ],
+      "line": 2.5,
+      "prob": 77
+    },
+    "away_sot": {
+      "lambda": 5.07,
+      "sot_list": [
+        2,
+        2,
+        5,
+        2,
+        6,
+        5,
+        7
+      ],
+      "line": 3.5,
+      "prob": 74
+    }
+  },
+  {
+    "match_id": "mt_155834700",
+    "league": "Premier League",
+    "date": "2026-11-22T16:30:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Liverpool",
+    "away_team": "Manchester United",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.71,
+      "corners_list": [
+        5,
+        3,
+        5,
+        9,
+        4,
+        7,
+        7
+      ],
+      "avg_corners_conceded": 4.29,
+      "corners_conceded_list": [
+        8,
+        3,
+        6,
+        3,
+        2,
+        4,
+        4
+      ],
+      "avg_yellow_cards": 2.43,
+      "yellow_cards_list": [
+        0,
+        2,
+        4,
+        3,
+        0,
+        4,
+        4
+      ],
+      "avg_sot": 4.14,
+      "sot_list": [
+        3,
+        3,
+        6,
+        5,
+        4,
+        0,
+        8
+      ],
+      "avg_sot_conceded": 3.29,
+      "sot_conceded_list": [
+        4,
+        2,
+        4,
+        2,
+        1,
+        3,
+        7
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 6.57,
+      "corners_list": [
+        6,
+        13,
+        4,
+        3,
+        5,
+        7,
+        8
+      ],
+      "avg_corners_conceded": 4.14,
+      "corners_conceded_list": [
+        7,
+        3,
+        4,
+        2,
+        4,
+        8,
+        1
+      ],
+      "avg_yellow_cards": 2.57,
+      "yellow_cards_list": [
+        1,
+        0,
+        4,
+        2,
+        4,
+        6,
+        1
+      ],
+      "avg_sot": 5.0,
+      "sot_list": [
+        3,
+        6,
+        4,
+        3,
+        5,
+        5,
+        9
+      ],
+      "avg_sot_conceded": 5.14,
+      "sot_conceded_list": [
+        2,
+        6,
+        3,
+        5,
+        4,
+        10,
+        6
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.25,
+      "corners_list": [
+        5,
+        3,
+        5,
+        9,
+        4,
+        7,
+        7
+      ],
+      "line": 3.0,
+      "prob": 61
+    },
+    "away_corners": {
+      "lambda": 5.03,
+      "corners_list": [
+        6,
+        13,
+        4,
+        3,
+        5,
+        7,
+        8
+      ],
+      "line": 3.5,
+      "prob": 74
+    },
+    "home_cards": {
+      "lambda": 2.36,
+      "yellow_cards_list": [
+        0,
+        2,
+        4,
+        3,
+        0,
+        4,
+        4
+      ],
+      "line": 1.5,
+      "prob": 68
+    },
+    "away_cards": {
+      "lambda": 2.47,
+      "yellow_cards_list": [
+        1,
+        0,
+        4,
+        2,
+        4,
+        6,
+        1
+      ],
+      "line": 1.5,
+      "prob": 71
+    },
+    "home_sot": {
+      "lambda": 4.77,
+      "sot_list": [
+        3,
+        3,
+        6,
+        5,
+        4,
+        0,
+        8
+      ],
+      "line": 3.0,
+      "prob": 70
+    },
+    "away_sot": {
+      "lambda": 3.98,
+      "sot_list": [
+        3,
+        6,
+        4,
+        3,
+        5,
+        5,
+        9
+      ],
+      "line": 2.5,
+      "prob": 76
+    }
+  },
+  {
+    "match_id": "mt_377364703",
+    "league": "Bundesliga",
+    "date": "2026-11-22T16:30:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "SV Werder Bremen",
+    "away_team": "Hamburger SV",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.71,
+      "corners_list": [
+        5,
+        2,
+        3,
+        5,
+        6,
+        8,
+        4
+      ],
+      "avg_corners_conceded": 5.14,
+      "corners_conceded_list": [
+        8,
+        2,
+        9,
+        3,
+        6,
+        4,
+        4
+      ],
+      "avg_yellow_cards": 1.71,
+      "yellow_cards_list": [
+        1,
+        2,
+        1,
+        1,
+        1,
+        3,
+        3
+      ],
+      "avg_sot": 6.86,
+      "sot_list": [
+        5,
+        11,
+        4,
+        11,
+        8,
+        4,
+        5
+      ],
+      "avg_sot_conceded": 5.57,
+      "sot_conceded_list": [
+        6,
+        4,
+        10,
+        4,
+        8,
+        2,
+        5
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.57,
+      "corners_list": [
+        7,
+        3,
+        3,
+        5,
+        3,
+        6,
+        5
+      ],
+      "avg_corners_conceded": 6.14,
+      "corners_conceded_list": [
+        7,
+        5,
+        7,
+        9,
+        6,
+        6,
+        3
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        2,
+        2,
+        0,
+        3,
+        2,
+        4,
+        1
+      ],
+      "avg_sot": 4.43,
+      "sot_list": [
+        4,
+        7,
+        4,
+        3,
+        1,
+        3,
+        9
+      ],
+      "avg_sot_conceded": 6.0,
+      "sot_conceded_list": [
+        6,
+        5,
+        4,
+        5,
+        6,
+        10,
+        6
+      ]
+    },
+    "home_corners": {
+      "lambda": 5.58,
+      "corners_list": [
+        5,
+        2,
+        3,
+        5,
+        6,
+        8,
+        4
+      ],
+      "line": 4.0,
+      "prob": 65
+    },
+    "away_corners": {
+      "lambda": 4.79,
+      "corners_list": [
+        7,
+        3,
+        3,
+        5,
+        3,
+        6,
+        5
+      ],
+      "line": 3.0,
+      "prob": 70
+    },
+    "home_cards": {
+      "lambda": 1.8,
+      "yellow_cards_list": [
+        1,
+        2,
+        1,
+        1,
+        1,
+        3,
+        3
+      ],
+      "line": 1.0,
+      "prob": 54
+    },
+    "away_cards": {
+      "lambda": 2.0,
+      "yellow_cards_list": [
+        2,
+        2,
+        0,
+        3,
+        2,
+        4,
+        1
+      ],
+      "line": 1.0,
+      "prob": 59
+    },
+    "home_sot": {
+      "lambda": 7.72,
+      "sot_list": [
+        5,
+        11,
+        4,
+        11,
+        8,
+        4,
+        5
+      ],
+      "line": 5.5,
       "prob": 78
+    },
+    "away_sot": {
+      "lambda": 5.26,
+      "sot_list": [
+        4,
+        7,
+        4,
+        3,
+        1,
+        3,
+        9
+      ],
+      "line": 3.5,
+      "prob": 77
+    }
+  },
+  {
+    "match_id": "mt_155673994",
+    "league": "Danish Superliga",
+    "date": "2026-11-22T17:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "FC Nordsj\u00e6lland",
+    "away_team": "FC K\u00f8benhavn",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.29,
+      "corners_list": [
+        2,
+        5,
+        9,
+        7,
+        7,
+        6,
+        1
+      ],
+      "avg_corners_conceded": 2.14,
+      "corners_conceded_list": [
+        4,
+        4,
+        3,
+        1,
+        1,
+        2,
+        0
+      ],
+      "avg_yellow_cards": 2.29,
+      "yellow_cards_list": [
+        2,
+        2,
+        3,
+        6,
+        2,
+        1,
+        0
+      ],
+      "avg_sot": 5.71,
+      "sot_list": [
+        3,
+        2,
+        5,
+        8,
+        4,
+        12,
+        6
+      ],
+      "avg_sot_conceded": 4.57,
+      "sot_conceded_list": [
+        2,
+        6,
+        3,
+        10,
+        5,
+        4,
+        2
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.57,
+      "corners_list": [
+        7,
+        4,
+        2,
+        11,
+        4,
+        5,
+        6
+      ],
+      "avg_corners_conceded": 2.14,
+      "corners_conceded_list": [
+        4,
+        1,
+        4,
+        1,
+        2,
+        1,
+        2
+      ],
+      "avg_yellow_cards": 1.29,
+      "yellow_cards_list": [
+        1,
+        1,
+        3,
+        1,
+        0,
+        1,
+        2
+      ],
+      "avg_sot": 5.0,
+      "sot_list": [
+        5,
+        3,
+        1,
+        7,
+        10,
+        4,
+        5
+      ],
+      "avg_sot_conceded": 2.0,
+      "sot_conceded_list": [
+        3,
+        2,
+        3,
+        3,
+        2,
+        1,
+        0
+      ]
+    },
+    "home_corners": {
+      "lambda": 3.12,
+      "corners_list": [
+        2,
+        5,
+        9,
+        7,
+        7,
+        6,
+        1
+      ],
+      "line": 2.0,
+      "prob": 60
+    },
+    "away_corners": {
+      "lambda": 3.24,
+      "corners_list": [
+        7,
+        4,
+        2,
+        11,
+        4,
+        5,
+        6
+      ],
+      "line": 2.0,
+      "prob": 63
+    },
+    "home_cards": {
+      "lambda": 2.21,
+      "yellow_cards_list": [
+        2,
+        2,
+        3,
+        6,
+        2,
+        1,
+        0
+      ],
+      "line": 1.5,
+      "prob": 65
+    },
+    "away_cards": {
+      "lambda": 1.51,
+      "yellow_cards_list": [
+        1,
+        1,
+        3,
+        1,
+        0,
+        1,
+        2
+      ],
+      "line": 1.0,
+      "prob": 45
+    },
+    "home_sot": {
+      "lambda": 3.23,
+      "sot_list": [
+        3,
+        2,
+        5,
+        8,
+        4,
+        12,
+        6
+      ],
+      "line": 2.0,
+      "prob": 63
+    },
+    "away_sot": {
+      "lambda": 4.81,
+      "sot_list": [
+        5,
+        3,
+        1,
+        7,
+        10,
+        4,
+        5
+      ],
+      "line": 3.0,
+      "prob": 71
+    }
+  },
+  {
+    "match_id": "mt_377354841",
+    "league": "LaLiga",
+    "date": "2026-11-22T17:30:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Osasuna",
+    "away_team": "M\u00e1laga",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 3.86,
+      "corners_list": [
+        0,
+        4,
+        4,
+        7,
+        4,
+        2,
+        6
+      ],
+      "avg_corners_conceded": 6.14,
+      "corners_conceded_list": [
+        8,
+        4,
+        8,
+        4,
+        7,
+        8,
+        4
+      ],
+      "avg_yellow_cards": 3.0,
+      "yellow_cards_list": [
+        2,
+        3,
+        5,
+        2,
+        2,
+        4,
+        3
+      ],
+      "avg_sot": 3.57,
+      "sot_list": [
+        1,
+        3,
+        5,
+        7,
+        2,
+        2,
+        5
+      ],
+      "avg_sot_conceded": 5.57,
+      "sot_conceded_list": [
+        11,
+        2,
+        7,
+        1,
+        7,
+        7,
+        4
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 5.14,
+      "corners_list": [
+        4,
+        9,
+        8,
+        4,
+        2,
+        3,
+        6
+      ],
+      "avg_corners_conceded": 5.71,
+      "corners_conceded_list": [
+        8,
+        5,
+        2,
+        5,
+        7,
+        10,
+        3
+      ],
+      "avg_yellow_cards": 3.0,
+      "yellow_cards_list": [
+        5,
+        2,
+        4,
+        1,
+        1,
+        2,
+        6
+      ],
+      "avg_sot": 4.86,
+      "sot_list": [
+        1,
+        4,
+        7,
+        6,
+        3,
+        5,
+        8
+      ],
+      "avg_sot_conceded": 6.29,
+      "sot_conceded_list": [
+        7,
+        7,
+        4,
+        9,
+        4,
+        6,
+        7
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.63,
+      "corners_list": [
+        0,
+        4,
+        4,
+        7,
+        4,
+        2,
+        6
+      ],
+      "line": 3.0,
+      "prob": 68
+    },
+    "away_corners": {
+      "lambda": 5.92,
+      "corners_list": [
+        4,
+        9,
+        8,
+        4,
+        2,
+        3,
+        6
+      ],
+      "line": 4.0,
+      "prob": 70
+    },
+    "home_cards": {
+      "lambda": 2.68,
+      "yellow_cards_list": [
+        2,
+        3,
+        5,
+        2,
+        2,
+        4,
+        3
+      ],
+      "line": 1.5,
+      "prob": 75
+    },
+    "away_cards": {
+      "lambda": 2.69,
+      "yellow_cards_list": [
+        5,
+        2,
+        4,
+        1,
+        1,
+        2,
+        6
+      ],
+      "line": 1.5,
+      "prob": 75
+    },
+    "home_sot": {
+      "lambda": 4.79,
+      "sot_list": [
+        1,
+        3,
+        5,
+        7,
+        2,
+        2,
+        5
+      ],
+      "line": 3.0,
+      "prob": 70
+    },
+    "away_sot": {
+      "lambda": 5.39,
+      "sot_list": [
+        1,
+        4,
+        7,
+        6,
+        3,
+        5,
+        8
+      ],
+      "line": 3.5,
+      "prob": 79
+    }
+  },
+  {
+    "match_id": "mt_466492726",
+    "league": "LaLiga",
+    "date": "2026-11-22T20:00:00.000Z",
+    "date_key": "2026-11-22",
+    "home_team": "Getafe",
+    "away_team": "Atl\u00e9tico Madrid",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 4.0,
+      "corners_list": [
+        3,
+        5,
+        2,
+        8,
+        4,
+        2,
+        4
+      ],
+      "avg_corners_conceded": 6.14,
+      "corners_conceded_list": [
+        4,
+        9,
+        9,
+        8,
+        2,
+        2,
+        9
+      ],
+      "avg_yellow_cards": 3.71,
+      "yellow_cards_list": [
+        5,
+        4,
+        4,
+        6,
+        3,
+        2,
+        2
+      ],
+      "avg_sot": 3.0,
+      "sot_list": [
+        2,
+        7,
+        1,
+        4,
+        1,
+        5,
+        1
+      ],
+      "avg_sot_conceded": 5.71,
+      "sot_conceded_list": [
+        8,
+        4,
+        8,
+        5,
+        4,
+        4,
+        7
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 6.14,
+      "corners_list": [
+        8,
+        3,
+        10,
+        12,
+        3,
+        3,
+        4
+      ],
+      "avg_corners_conceded": 2.29,
+      "corners_conceded_list": [
+        0,
+        1,
+        0,
+        4,
+        4,
+        5,
+        2
+      ],
+      "avg_yellow_cards": 2.71,
+      "yellow_cards_list": [
+        1,
+        2,
+        3,
+        5,
+        4,
+        0,
+        4
+      ],
+      "avg_sot": 6.57,
+      "sot_list": [
+        11,
+        9,
+        7,
+        6,
+        4,
+        5,
+        4
+      ],
+      "avg_sot_conceded": 3.14,
+      "sot_conceded_list": [
+        1,
+        3,
+        3,
+        2,
+        5,
+        4,
+        4
+      ]
+    },
+    "home_corners": {
+      "lambda": 2.66,
+      "corners_list": [
+        3,
+        5,
+        2,
+        8,
+        4,
+        2,
+        4
+      ],
+      "line": 1.5,
+      "prob": 74
+    },
+    "away_corners": {
+      "lambda": 6.74,
+      "corners_list": [
+        8,
+        3,
+        10,
+        12,
+        3,
+        3,
+        4
+      ],
+      "line": 4.5,
+      "prob": 80
+    },
+    "home_cards": {
+      "lambda": 3.17,
+      "yellow_cards_list": [
+        5,
+        4,
+        4,
+        6,
+        3,
+        2,
+        2
+      ],
+      "line": 2.0,
+      "prob": 61
+    },
+    "away_cards": {
+      "lambda": 2.47,
+      "yellow_cards_list": [
+        1,
+        2,
+        3,
+        5,
+        4,
+        0,
+        4
+      ],
+      "line": 1.5,
+      "prob": 71
+    },
+    "home_sot": {
+      "lambda": 2.68,
+      "sot_list": [
+        2,
+        7,
+        1,
+        4,
+        1,
+        5,
+        1
+      ],
+      "line": 1.5,
+      "prob": 75
+    },
+    "away_sot": {
+      "lambda": 6.88,
+      "sot_list": [
+        11,
+        9,
+        7,
+        6,
+        4,
+        5,
+        4
+      ],
+      "line": 4.5,
+      "prob": 82
+    }
+  },
+  {
+    "match_id": "mt_511437881",
+    "league": "Danish Superliga",
+    "date": "2026-11-23T18:00:00.000Z",
+    "date_key": "2026-11-23",
+    "home_team": "Br\u00f8ndby IF",
+    "away_team": "FC Midtjylland",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 5.29,
+      "corners_list": [
+        2,
+        1,
+        8,
+        9,
+        6,
+        9,
+        2
+      ],
+      "avg_corners_conceded": 4.86,
+      "corners_conceded_list": [
+        6,
+        4,
+        4,
+        2,
+        6,
+        6,
+        6
+      ],
+      "avg_yellow_cards": 2.0,
+      "yellow_cards_list": [
+        4,
+        1,
+        2,
+        1,
+        1,
+        3,
+        2
+      ],
+      "avg_sot": 4.14,
+      "sot_list": [
+        4,
+        2,
+        7,
+        4,
+        8,
+        4,
+        0
+      ],
+      "avg_sot_conceded": 4.0,
+      "sot_conceded_list": [
+        5,
+        3,
+        5,
+        4,
+        5,
+        1,
+        5
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.43,
+      "corners_list": [
+        6,
+        2,
+        4,
+        3,
+        5,
+        2,
+        9
+      ],
+      "avg_corners_conceded": 4.14,
+      "corners_conceded_list": [
+        2,
+        9,
+        2,
+        3,
+        2,
+        6,
+        5
+      ],
+      "avg_yellow_cards": 1.57,
+      "yellow_cards_list": [
+        1,
+        3,
+        1,
+        3,
+        1,
+        1,
+        1
+      ],
+      "avg_sot": 4.71,
+      "sot_list": [
+        5,
+        3,
+        3,
+        6,
+        7,
+        4,
+        5
+      ],
+      "avg_sot_conceded": 5.0,
+      "sot_conceded_list": [
+        4,
+        5,
+        1,
+        4,
+        5,
+        12,
+        4
+      ]
+    },
+    "home_corners": {
+      "lambda": 4.57,
+      "corners_list": [
+        2,
+        1,
+        8,
+        9,
+        6,
+        9,
+        2
+      ],
+      "line": 3.0,
+      "prob": 67
+    },
+    "away_corners": {
+      "lambda": 4.51,
+      "corners_list": [
+        6,
+        2,
+        4,
+        3,
+        5,
+        2,
+        9
+      ],
+      "line": 3.0,
+      "prob": 66
+    },
+    "home_cards": {
+      "lambda": 2.01,
+      "yellow_cards_list": [
+        4,
+        1,
+        2,
+        1,
+        1,
+        3,
+        2
+      ],
+      "line": 1.0,
+      "prob": 60
+    },
+    "away_cards": {
+      "lambda": 1.7,
+      "yellow_cards_list": [
+        1,
+        3,
+        1,
+        3,
+        1,
+        1,
+        1
+      ],
+      "line": 1.0,
+      "prob": 51
+    },
+    "home_sot": {
+      "lambda": 4.48,
+      "sot_list": [
+        4,
+        2,
+        7,
+        4,
+        8,
+        4,
+        0
+      ],
+      "line": 3.0,
+      "prob": 65
+    },
+    "away_sot": {
+      "lambda": 4.2,
+      "sot_list": [
+        5,
+        3,
+        3,
+        6,
+        7,
+        4,
+        5
+      ],
+      "line": 3.0,
+      "prob": 60
+    }
+  },
+  {
+    "match_id": "mt_644018538",
+    "league": "Premier League",
+    "date": "2026-11-23T20:00:00.000Z",
+    "date_key": "2026-11-23",
+    "home_team": "Brentford",
+    "away_team": "Everton",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 3.14,
+      "corners_list": [
+        1,
+        4,
+        2,
+        3,
+        6,
+        3,
+        3
+      ],
+      "avg_corners_conceded": 5.86,
+      "corners_conceded_list": [
+        2,
+        12,
+        2,
+        9,
+        5,
+        4,
+        7
+      ],
+      "avg_yellow_cards": 2.29,
+      "yellow_cards_list": [
+        1,
+        2,
+        5,
+        4,
+        1,
+        1,
+        2
+      ],
+      "avg_sot": 3.0,
+      "sot_list": [
+        2,
+        6,
+        4,
+        2,
+        6,
+        1,
+        0
+      ],
+      "avg_sot_conceded": 4.71,
+      "sot_conceded_list": [
+        10,
+        2,
+        7,
+        5,
+        2,
+        1,
+        6
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.43,
+      "corners_list": [
+        6,
+        4,
+        6,
+        5,
+        3,
+        5,
+        2
+      ],
+      "avg_corners_conceded": 5.86,
+      "corners_conceded_list": [
+        5,
+        4,
+        7,
+        7,
+        12,
+        4,
+        2
+      ],
+      "avg_yellow_cards": 1.86,
+      "yellow_cards_list": [
+        2,
+        2,
+        0,
+        3,
+        3,
+        2,
+        1
+      ],
+      "avg_sot": 4.57,
+      "sot_list": [
+        3,
+        2,
+        7,
+        5,
+        3,
+        5,
+        7
+      ],
+      "avg_sot_conceded": 4.0,
+      "sot_conceded_list": [
+        2,
+        4,
+        5,
+        7,
+        4,
+        2,
+        4
+      ]
+    },
+    "home_corners": {
+      "lambda": 3.14,
+      "corners_list": [
+        1,
+        4,
+        2,
+        3,
+        6,
+        3,
+        3
+      ],
+      "line": 2.0,
+      "prob": 61
+    },
+    "away_corners": {
+      "lambda": 4.24,
+      "corners_list": [
+        6,
+        4,
+        6,
+        5,
+        3,
+        5,
+        2
+      ],
+      "line": 3.0,
+      "prob": 61
+    },
+    "home_cards": {
+      "lambda": 2.25,
+      "yellow_cards_list": [
+        1,
+        2,
+        5,
+        4,
+        1,
+        1,
+        2
+      ],
+      "line": 1.5,
+      "prob": 66
+    },
+    "away_cards": {
+      "lambda": 1.92,
+      "yellow_cards_list": [
+        2,
+        2,
+        0,
+        3,
+        3,
+        2,
+        1
+      ],
+      "line": 1.0,
+      "prob": 57
+    },
+    "home_sot": {
+      "lambda": 2.97,
+      "sot_list": [
+        2,
+        6,
+        4,
+        2,
+        6,
+        1,
+        0
+      ],
+      "line": 2.0,
+      "prob": 57
+    },
+    "away_sot": {
+      "lambda": 4.58,
+      "sot_list": [
+        3,
+        2,
+        7,
+        5,
+        3,
+        5,
+        7
+      ],
+      "line": 3.0,
+      "prob": 67
+    }
+  },
+  {
+    "match_id": "mt_899827576",
+    "league": "LaLiga",
+    "date": "2026-11-23T20:00:00.000Z",
+    "date_key": "2026-11-23",
+    "home_team": "Levante UD",
+    "away_team": "Elche",
+    "home_form": {
+      "n_games": 7,
+      "avg_corners": 3.29,
+      "corners_list": [
+        1,
+        5,
+        5,
+        3,
+        3,
+        5,
+        1
+      ],
+      "avg_corners_conceded": 4.57,
+      "corners_conceded_list": [
+        7,
+        2,
+        3,
+        9,
+        2,
+        3,
+        6
+      ],
+      "avg_yellow_cards": 1.86,
+      "yellow_cards_list": [
+        1,
+        2,
+        2,
+        3,
+        3,
+        0,
+        2
+      ],
+      "avg_sot": 3.71,
+      "sot_list": [
+        1,
+        8,
+        4,
+        7,
+        2,
+        4,
+        0
+      ],
+      "avg_sot_conceded": 5.29,
+      "sot_conceded_list": [
+        7,
+        5,
+        5,
+        4,
+        3,
+        5,
+        8
+      ]
+    },
+    "away_form": {
+      "n_games": 7,
+      "avg_corners": 4.71,
+      "corners_list": [
+        2,
+        3,
+        5,
+        5,
+        3,
+        6,
+        9
+      ],
+      "avg_corners_conceded": 4.71,
+      "corners_conceded_list": [
+        5,
+        3,
+        2,
+        10,
+        3,
+        2,
+        8
+      ],
+      "avg_yellow_cards": 3.0,
+      "yellow_cards_list": [
+        4,
+        2,
+        1,
+        4,
+        3,
+        3,
+        4
+      ],
+      "avg_sot": 3.57,
+      "sot_list": [
+        3,
+        6,
+        2,
+        1,
+        9,
+        3,
+        1
+      ],
+      "avg_sot_conceded": 4.57,
+      "sot_conceded_list": [
+        4,
+        4,
+        0,
+        7,
+        5,
+        3,
+        9
+      ]
+    },
+    "home_corners": {
+      "lambda": 3.65,
+      "corners_list": [
+        1,
+        5,
+        5,
+        3,
+        3,
+        5,
+        1
+      ],
+      "line": 2.5,
+      "prob": 71
+    },
+    "away_corners": {
+      "lambda": 4.51,
+      "corners_list": [
+        2,
+        3,
+        5,
+        5,
+        3,
+        6,
+        9
+      ],
+      "line": 3.0,
+      "prob": 66
+    },
+    "home_cards": {
+      "lambda": 1.87,
+      "yellow_cards_list": [
+        1,
+        2,
+        2,
+        3,
+        3,
+        0,
+        2
+      ],
+      "line": 1.0,
+      "prob": 56
+    },
+    "away_cards": {
+      "lambda": 2.67,
+      "yellow_cards_list": [
+        4,
+        2,
+        1,
+        4,
+        3,
+        3,
+        4
+      ],
+      "line": 1.5,
+      "prob": 75
+    },
+    "home_sot": {
+      "lambda": 3.91,
+      "sot_list": [
+        1,
+        8,
+        4,
+        7,
+        2,
+        4,
+        0
+      ],
+      "line": 2.5,
+      "prob": 75
+    },
+    "away_sot": {
+      "lambda": 4.23,
+      "sot_list": [
+        3,
+        6,
+        2,
+        1,
+        9,
+        3,
+        1
+      ],
+      "line": 3.0,
+      "prob": 61
     }
   }
 ]
