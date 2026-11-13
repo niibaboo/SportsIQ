@@ -1,5 +1,38 @@
 {
-  "generated": "2026-11-12T20:55:58.549646+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-11-13T01:34:48.743733+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_id": "401873052",
+      "home_id": "19",
+      "away_id": "28",
+      "home_team": "New York Giants",
+      "away_team": "Washington Commanders",
+      "home_score": 0.0,
+      "away_score": 0.0,
+      "period": 1,
+      "display_clock": "6:53",
+      "status": "6:53 - 1st",
+      "elapsed_minute": 8.1,
+      "minutes_remaining": 51.9,
+      "next_score": {
+        "home": 54,
+        "away": 46
+      },
+      "game_total_pace": {
+        "prob": 33,
+        "status": "On Pace: Under"
+      },
+      "model_signal": {
+        "label": "Game Total Under",
+        "prob": 67,
+        "qualifies": false
+      },
+      "pregame_projection": {
+        "exp_home": 22.6,
+        "exp_away": 19.6,
+        "exp_total": 42.3
+      }
+    }
+  ]
 }
