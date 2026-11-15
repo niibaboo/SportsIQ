@@ -1227,5 +1227,22 @@
     "status": "hit",
     "final_home_score": 17.0,
     "final_away_score": 3.0
+  },
+  "401873062_Game_Total_Under": {
+    "id": "401873062_Game_Total_Under",
+    "game_id": "401873062",
+    "home_id": "13",
+    "away_id": "26",
+    "home_team": "Las Vegas Raiders",
+    "away_team": "Seattle Seahawks",
+    "label": "Game Total Under",
+    "prob": 74,
+    "logged_at": "2026-11-15T22:24:25.480837+00:00",
+    "logged_period": 2,
+    "logged_clock": "0:00",
+    "logged_home_score": 10.0,
+    "logged_away_score": 7.0,
+    "pregame_total": 46.6,
+    "status": "pending"
   }
 }
