@@ -66,6 +66,7 @@ ARCHIVE_PATH = "docs/orange-line/results/archive.json"
 #     hit/miss totals in archive.json and dropped from log.json, so the log
 #     stops growing without bound (it was heading for GitHub's file size limit).
 MAX_GAME_LOOKUPS = 150
+CALIBRATION_SCANNERS = ("team_stat_ou", "team_stat_1x2")
 VOID_AFTER_DAYS = 10
 ARCHIVE_AFTER_DAYS = 3
 
@@ -181,6 +182,9 @@ def fold_old_entries(log, archive, now=None):
         elif e["status"] == "verified" and (e.get("verified_at") or "9999")[:10] < cutoff:
             d = archive["by_scanner"].setdefault(e["scanner"], {"hit": 0, "miss": 0})
             d[e["result"]] += 1
+            if e["scanner"] in CALIBRATION_SCANNERS and isinstance(e.get("value"), (int, float)):
+                d["psum"] = d.get("psum", 0.0) + e["value"]
+                d["pn"] = d.get("pn", 0) + 1
             folded += 1
         else:
             kept.append(e)
@@ -188,7 +192,7 @@ def fold_old_entries(log, archive, now=None):
     return kept, archive
 
 
-def log_todays_signals(legs, hot_form_entries, real_streak_entries, log):
+def log_todays_signals(legs, hot_form_entries, real_streak_entries, log, team_stat_entries=None):
     """Legs already carry game_id, game_date, league, is_home, line, and
     (for player props) player_id/stat_key -- added specifically for this
     tracker when the legs were built. Hot Form/Real Streak entries carry
@@ -212,6 +216,22 @@ def log_todays_signals(legs, hot_form_entries, real_streak_entries, log):
             "league": leg.get("league"), "game_id": leg["game_id"], "game_date": leg["game_date"],
             "date_key": leg["game_date"], "is_home": leg.get("is_home"),
             "player_id": leg.get("player_id"), "stat_key": leg.get("stat_key"),
+            "logged_at": datetime.now(timezone.utc).isoformat(),
+            "status": "pending", "result": None, "actual": None,
+        })
+        existing_ids.add(eid)
+        added += 1
+
+    for e in (team_stat_entries or []):
+        eid = _entry_id(e["scanner"] + "|" + e["stat_key"], e["market"], e["game_date"], e["match"])
+        if eid in existing_ids:
+            continue
+        log.append({
+            "id": eid, "scanner": e["scanner"], "match": e["match"], "market": e["market"],
+            "value": e["prob"], "detail": None, "line": e.get("line"), "threshold": None,
+            "league": e.get("league"), "game_id": e["game_id"], "game_date": e["game_date"],
+            "date_key": e["game_date"], "is_home": None, "player_id": None,
+            "stat_key": e["stat_key"], "pick": e.get("pick"),
             "logged_at": datetime.now(timezone.utc).isoformat(),
             "status": "pending", "result": None, "actual": None,
         })
@@ -411,6 +431,70 @@ def _verify_player_leg(entry):
     return {"actual": actual, "result": "hit" if actual > entry["line"] else "miss"}
 
 
+def _team_stat_totals(summary, stat_key):
+    """(home_total, away_total): each team's boxscore player stats summed.
+    None when any player row can't be read, so a partial sum never grades a
+    pick. Uses the home/away order of header.competitors to name the teams."""
+    players = summary.get("boxscore", {}).get("players", [])
+    comps = summary.get("header", {}).get("competitions", [{}])[0].get("competitors", [])
+    if len(players) != 2 or len(comps) != 2:
+        print(f"    [DIAG] team stat: expected 2 team blocks and 2 competitors, got {len(players)}/{len(comps)}")
+        return None, None
+    parser = _parse_makes_attempts if stat_key == "3PT" else None
+    totals = {}
+    for block in players:
+        tid = str(block.get("team", {}).get("id"))
+        total, seen = 0.0, 0
+        for cat in block.get("statistics", []):
+            labels = cat.get("labels") or cat.get("names")
+            if not labels or stat_key not in labels:
+                continue
+            idx = labels.index(stat_key)
+            for a in cat.get("athletes", []):
+                stats = a.get("stats", [])
+                if idx >= len(stats):
+                    continue  # DNP rows come back empty
+                raw = stats[idx]
+                val = parser(raw) if parser else None
+                if parser is None:
+                    try:
+                        val = float(raw)
+                    except (TypeError, ValueError):
+                        val = None
+                if val is None:
+                    print(f"    [DIAG] team stat: unreadable {stat_key} value {raw!r} for team {tid}")
+                    return None, None
+                total += val
+                seen += 1
+        if not seen:
+            print(f"    [DIAG] team stat: no '{stat_key}' column found for team {tid}")
+            return None, None
+        totals[tid] = total
+    home = next((c for c in comps if c.get("homeAway") == "home"), None)
+    away = next((c for c in comps if c.get("homeAway") == "away"), None)
+    try:
+        return totals[str(home["team"]["id"])], totals[str(away["team"]["id"])]
+    except (KeyError, TypeError):
+        print(f"    [DIAG] team stat: competitor team ids {[(c.get('team') or {}).get('id') for c in comps]} "
+              f"don't match boxscore team ids {list(totals)}")
+        return None, None
+
+
+def _verify_team_stat_entry(entry):
+    summary = _get_summary(entry["league"], entry["game_id"])
+    if not summary or not _is_final(summary):
+        return None
+    h, a = _team_stat_totals(summary, entry["stat_key"])
+    if h is None:
+        return None
+    if entry["scanner"] == "team_stat_ou":
+        actual = h + a
+        return {"actual": actual, "result": "hit" if actual > entry["line"] else "miss"}
+    d = h - a
+    outcome = "home" if d > 0 else "away" if d < 0 else "tie"
+    return {"actual": f"{h:g}-{a:g}", "result": "hit" if outcome == entry.get("pick") else "miss"}
+
+
 def _verify_player_form_entry(entry):
     """Hot Form / Real Streak for a PLAYER -- same boxscore lookup as
     _verify_player_leg, just checked against the flagged threshold
@@ -462,6 +546,8 @@ def verify_pending_results(log, max_lookups=MAX_GAME_LOOKUPS):
         try:
             if entry["scanner"] in ("team_total", "game_total"):
                 result = _verify_team_leg(entry)
+            elif entry["scanner"] in ("team_stat_ou", "team_stat_1x2"):
+                result = _verify_team_stat_entry(entry)
             elif entry["scanner"] in ("rebounds", "assists", "ra", "points", "tpm"):
                 result = _verify_player_leg(entry)
             elif entry["scanner"] in ("player_hot_form", "player_real_streak"):
@@ -498,20 +584,54 @@ def build_results_dashboard(log, archive=None):
     void_total = archive.get("void", 0) + sum(1 for e in log if e["status"] == "void")
 
     # Older settled picks live in the archive's running totals, not the log.
-    by_scanner = {k: {"hit": v.get("hit", 0), "miss": v.get("miss", 0)} for k, v in archive.get("by_scanner", {}).items()}
+    by_scanner = {k: dict({"hit": v.get("hit", 0), "miss": v.get("miss", 0)},
+                          psum=v.get("psum", 0.0), pn=v.get("pn", 0))
+                  for k, v in archive.get("by_scanner", {}).items()}
     for e in verified:
         d = by_scanner.setdefault(e["scanner"], {"hit": 0, "miss": 0})
         d[e["result"]] += 1
+    # Calibration needs the stored probability, so split team-stat picks by stat.
+    cal = {}
+    for e in verified:
+        if e["scanner"] in CALIBRATION_SCANNERS and isinstance(e.get("value"), (int, float)):
+            c = cal.setdefault((e["scanner"], e.get("stat_key")), {"n": 0, "hit": 0, "psum": 0.0})
+            c["n"] += 1
+            c["hit"] += e["result"] == "hit"
+            c["psum"] += e["value"]
+    for sc in CALIBRATION_SCANNERS:  # archived picks (no per-stat split kept)
+        a = archive.get("by_scanner", {}).get(sc)
+        if a and a.get("pn"):
+            c = cal.setdefault((sc, "older, all stats"), {"n": 0, "hit": 0, "psum": 0.0})
+            c["n"] += a["pn"]
+            c["hit"] += a.get("hit", 0)
+            c["psum"] += a["psum"]
+    cal_rows = ""
+    for (sc, stat), c in sorted(cal.items(), key=lambda kv: (kv[0][0], str(kv[0][1]))):
+        name = ("Combined over at middle line" if sc == "team_stat_ou" else "1X2 top pick") + f" · {stat}"
+        pred, act = 100 * c["psum"] / c["n"], 100 * c["hit"] / c["n"]
+        gap = act - pred
+        flag = "" if c["n"] >= 30 else " (too few to judge)"
+        cal_rows += (f'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #3a2a20;font-size:12px">'
+                     f'<span>{name}</span><span>model {pred:.0f}% · actual {act:.0f}% ({gap:+.0f}) · n={c["n"]}{flag}</span></div>')
+    cal_html = ""
+    if cal_rows:
+        cal_html = ('<div style="background:#1a1310;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #3a2a20">'
+                    '<div style="font-weight:bold;margin-bottom:4px">Team rebounds / assists / 3PT — calibration</div>'
+                    '<div style="color:#998;font-size:11px;margin-bottom:8px">Does what the model calls 50% land near 50%? '
+                    'Model = average probability it gave; actual = how often it happened. Gaps within a few points are noise below ~100 picks.</div>'
+                    f'{cal_rows}</div>')
 
     SCANNER_LABELS = {
         "team_total": "Team Total", "game_total": "Game Total",
         "rebounds": "Rebounds", "assists": "Assists", "ra": "Rebounds+Assists",
         "points": "Points", "tpm": "3-Pointers Made",
         "player_hot_form": "Player Hot Form", "player_real_streak": "Player Real Streak",
+        "team_stat_ou": "Team REB/AST/3PT Over (mid line)", "team_stat_1x2": "Team REB/AST/3PT 1X2 pick",
     }
 
-    total_hit = sum(d["hit"] for d in by_scanner.values())
-    total_miss = sum(d["miss"] for d in by_scanner.values())
+    # Calibration picks (~50% by design) are judged on their own panel, not the overall figure.
+    total_hit = sum(d["hit"] for k, d in by_scanner.items() if k not in CALIBRATION_SCANNERS)
+    total_miss = sum(d["miss"] for k, d in by_scanner.items() if k not in CALIBRATION_SCANNERS)
     total = total_hit + total_miss
     overall_pct = round(100 * total_hit / total) if total else None
 
@@ -552,6 +672,7 @@ def build_results_dashboard(log, archive=None):
   {rows}
 </div>
 
+{cal_html}
 <div style="background:#1a1310;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #3a2a20">
   <div style="font-weight:bold;margin-bottom:8px">Recent Results</div>
   {recent_rows or '<p style="color:#998;font-size:12px">Nothing verified yet — check back after a few days of picks have had time to play out.</p>'}
@@ -574,11 +695,11 @@ def build_results_dashboard(log, archive=None):
     print(f"  Results dashboard: {total} verified, {overall_pct}% overall" if total else "  Results dashboard: no verified picks yet")
 
 
-def run_results_tracker(legs, hot_form_entries=None, real_streak_entries=None):
+def run_results_tracker(legs, hot_form_entries=None, real_streak_entries=None, team_stat_entries=None):
     """Single entry point called from orange_line.py's main()."""
     print("\nRunning results tracker...")
     log = load_log()
-    log = log_todays_signals(legs, hot_form_entries, real_streak_entries, log)
+    log = log_todays_signals(legs, hot_form_entries, real_streak_entries, log, team_stat_entries)
     log = verify_pending_results(log)
     archive = load_archive()
     log, archive = fold_old_entries(log, archive)
