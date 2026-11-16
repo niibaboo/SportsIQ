@@ -45,11 +45,29 @@ import os
 import json
 import hashlib
 import requests
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 BASE_FMT = "https://site.api.espn.com/apis/site/v2/sports/basketball/{league}/summary"
 LOG_PATH = "docs/orange-line/results/log.json"
 DASHBOARD_PATH = "docs/orange-line/results/index.html"
+ARCHIVE_PATH = "docs/orange-line/results/archive.json"
+
+# Why these exist (user report, 2026-11-16: "the pending result is too much" --
+# 39,691 pending vs 122/211 verified). The tracker logs ~2,000 candidate legs
+# a day, but used to grade at most 60 ENTRIES per run, oldest first, so the
+# backlog could only grow (Points and 3PT never even got reached), and a leg
+# whose player didn't play stayed "pending" forever. Now:
+#   - the per-run cap counts distinct GAME lookups (one request each, shared
+#     by every leg of that game), not entries;
+#   - a player who isn't in a finished game's boxscore is "void" (a DNP is a
+#     void bet at a bookmaker), and anything still unverifiable after
+#     VOID_AFTER_DAYS is voided too;
+#   - verified entries older than ARCHIVE_AFTER_DAYS are folded into running
+#     hit/miss totals in archive.json and dropped from log.json, so the log
+#     stops growing without bound (it was heading for GitHub's file size limit).
+MAX_GAME_LOOKUPS = 150
+VOID_AFTER_DAYS = 10
+ARCHIVE_AFTER_DAYS = 3
 
 LEAGUE_NAME_TO_KEY = {"NBA": "nba", "WNBA": "wnba",
                       "NCAAB": "mens-college-basketball", "WNCAAB": "womens-college-basketball"}
@@ -126,7 +144,48 @@ def load_log():
 def save_log(entries):
     os.makedirs(os.path.dirname(LOG_PATH), exist_ok=True)
     with open(LOG_PATH, "w") as f:
-        json.dump(entries, f, indent=2, default=str)
+        json.dump(entries, f, separators=(",", ":"), default=str)
+
+
+def load_archive():
+    if not os.path.exists(ARCHIVE_PATH):
+        return {"by_scanner": {}, "void": 0}
+    try:
+        with open(ARCHIVE_PATH) as f:
+            a = json.load(f)
+        a.setdefault("by_scanner", {})
+        a.setdefault("void", 0)
+        return a
+    except Exception as e:
+        print(f"  [!] Couldn't read archive ({e}) -- starting a fresh one.")
+        return {"by_scanner": {}, "void": 0}
+
+
+def save_archive(archive):
+    os.makedirs(os.path.dirname(ARCHIVE_PATH), exist_ok=True)
+    with open(ARCHIVE_PATH, "w") as f:
+        json.dump(archive, f, indent=2)
+
+
+def fold_old_entries(log, archive, now=None):
+    """Move settled entries out of the log into the archive's running totals:
+    verified ones older than ARCHIVE_AFTER_DAYS (counted by hit/miss per
+    scanner), and every void one (counted). Pending entries always stay."""
+    today = (now or datetime.now(timezone.utc)).date()
+    cutoff = (today - timedelta(days=ARCHIVE_AFTER_DAYS)).isoformat()
+    kept, folded, voided = [], 0, 0
+    for e in log:
+        if e["status"] == "void":
+            archive["void"] = archive.get("void", 0) + 1
+            voided += 1
+        elif e["status"] == "verified" and (e.get("verified_at") or "9999")[:10] < cutoff:
+            d = archive["by_scanner"].setdefault(e["scanner"], {"hit": 0, "miss": 0})
+            d[e["result"]] += 1
+            folded += 1
+        else:
+            kept.append(e)
+    print(f"  Archive: folded {folded} verified + {voided} void entries out of the log; {len(kept)} remain")
+    return kept, archive
 
 
 def log_todays_signals(legs, hot_form_entries, real_streak_entries, log):
@@ -214,6 +273,21 @@ def _team_scores(summary):
         return float(home.get("score")), float(away.get("score"))
     except (TypeError, ValueError):
         return None, None
+
+
+def _player_in_boxscore(summary, player_id):
+    """(boxscore_has_players, player_found). Used to tell a DNP (the game is
+    final, ESPN returned a real boxscore, and this player is simply not in
+    it) apart from "couldn't read the boxscore" (leave pending)."""
+    players = summary.get("boxscore", {}).get("players", [])
+    if not players:
+        return False, False
+    for team_block in players:
+        for cat in team_block.get("statistics", []):
+            for a in cat.get("athletes", []):
+                if str(a.get("athlete", {}).get("id")) == str(player_id):
+                    return True, True
+    return True, False
 
 
 def _verify_team_leg(entry):
@@ -328,6 +402,9 @@ def _verify_player_leg(entry):
     summary = _get_summary(entry["league"], entry["game_id"])
     if not summary or not _is_final(summary):
         return None
+    has_players, found = _player_in_boxscore(summary, entry["player_id"])
+    if has_players and not found:
+        return {"void": "dnp"}
     actual = _player_stat_value(summary, entry["player_id"], entry["scanner"])
     if actual is None:
         return None
@@ -352,24 +429,33 @@ def _verify_player_form_entry(entry):
     # scanner=None and always returned None, leaving those entries stuck
     # "pending" forever instead of counted hit/miss.
     scanner_key = {"REB": "rebounds", "AST": "assists", "RA": "ra", "PTS": "points", "3PM": "tpm"}.get(entry["stat_key"])
+    has_players, found = _player_in_boxscore(summary, entry["player_id"])
+    if has_players and not found:
+        return {"void": "dnp"}
     actual = _player_stat_value(summary, entry["player_id"], scanner_key)
     if actual is None:
         return None
     return {"actual": actual, "result": "hit" if actual >= entry["threshold"] else "miss"}
 
 
-def verify_pending_results(log, max_checks=60):
-    today = datetime.now(timezone.utc).date().isoformat()
-    checked = 0
-    updated = 0
+def verify_pending_results(log, max_lookups=MAX_GAME_LOOKUPS):
+    now = datetime.now(timezone.utc)
+    today = now.date().isoformat()
+    void_cutoff = (now.date() - timedelta(days=VOID_AFTER_DAYS)).isoformat()
+    lookups = checked = updated = voided = deferred = 0
 
     for entry in log:
         if entry["status"] != "pending":
             continue
         if entry["date_key"] >= today:
             continue
-        if checked >= max_checks:
-            break
+        league_key = LEAGUE_NAME_TO_KEY.get(entry.get("league"))
+        cache_key = (league_key, entry.get("game_id"))
+        if cache_key not in SUMMARY_CACHE:
+            if lookups >= max_lookups:
+                deferred += 1       # picked up on a later run; cached games above are still free
+                continue
+            lookups += 1
         checked += 1
 
         result = None
@@ -384,23 +470,35 @@ def verify_pending_results(log, max_checks=60):
             print(f"    [!] verification error for entry {entry['id']} ({entry['scanner']}): {e}")
             result = None
 
-        if result:
+        if result and result.get("void"):
+            entry["status"] = "void"
+            entry["void_reason"] = result["void"]
+            voided += 1
+        elif result:
             entry["status"] = "verified"
             entry["result"] = result["result"]
             entry["actual"] = result["actual"]
             entry["verified_at"] = datetime.now(timezone.utc).isoformat()
             updated += 1
+        elif entry["date_key"] < void_cutoff:
+            entry["status"] = "void"
+            entry["void_reason"] = f"unverifiable after {VOID_AFTER_DAYS} days"
+            voided += 1
 
-    print(f"  Results verification: checked {checked} pending entries, {updated} newly verified "
-          f"({len(SUMMARY_CACHE)} distinct game(s) looked up)")
+    print(f"  Results verification: checked {checked} pending entries across {lookups} new game lookup(s), "
+          f"{updated} newly verified, {voided} voided, {deferred} deferred to the next run "
+          f"({len(SUMMARY_CACHE)} distinct game(s) cached)")
     return log
 
 
-def build_results_dashboard(log):
+def build_results_dashboard(log, archive=None):
+    archive = archive or {"by_scanner": {}, "void": 0}
     verified = [e for e in log if e["status"] == "verified"]
     pending = [e for e in log if e["status"] == "pending"]
+    void_total = archive.get("void", 0) + sum(1 for e in log if e["status"] == "void")
 
-    by_scanner = {}
+    # Older settled picks live in the archive's running totals, not the log.
+    by_scanner = {k: {"hit": v.get("hit", 0), "miss": v.get("miss", 0)} for k, v in archive.get("by_scanner", {}).items()}
     for e in verified:
         d = by_scanner.setdefault(e["scanner"], {"hit": 0, "miss": 0})
         d[e["result"]] += 1
@@ -446,7 +544,7 @@ def build_results_dashboard(log):
 <div style="background:#1a1310;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #3a2a20;text-align:center">
   <div style="font-size:11px;color:#998">OVERALL</div>
   <div style="font-size:32px;font-weight:bold;color:#ffeb3b">{overall_pct if overall_pct is not None else "—"}{"%" if overall_pct is not None else ""}</div>
-  <div style="font-size:12px;color:#998">{total_hit}/{total} verified picks · {len(pending)} pending (game not final yet)</div>
+  <div style="font-size:12px;color:#998">{total_hit}/{total} verified picks · {len(pending)} waiting for the game to finish{f" · {void_total} void (player did not play / unverifiable)" if void_total else ""}</div>
 </div>
 
 <div style="background:#1a1310;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #3a2a20">
@@ -482,5 +580,8 @@ def run_results_tracker(legs, hot_form_entries=None, real_streak_entries=None):
     log = load_log()
     log = log_todays_signals(legs, hot_form_entries, real_streak_entries, log)
     log = verify_pending_results(log)
+    archive = load_archive()
+    log, archive = fold_old_entries(log, archive)
     save_log(log)
-    build_results_dashboard(log)
+    save_archive(archive)
+    build_results_dashboard(log, archive)
