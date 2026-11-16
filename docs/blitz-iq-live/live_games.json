@@ -1,101 +1,37 @@
 {
-  "generated": "2026-11-15T22:24:25.478170+00:00",
-  "total_live": 3,
+  "generated": "2026-11-16T02:17:25.280605+00:00",
+  "total_live": 1,
   "games": [
     {
-      "game_id": "401873062",
-      "home_id": "13",
-      "away_id": "26",
-      "home_team": "Las Vegas Raiders",
-      "away_team": "Seattle Seahawks",
+      "game_id": "401873064",
+      "home_id": "4",
+      "away_id": "23",
+      "home_team": "Cincinnati Bengals",
+      "away_team": "Pittsburgh Steelers",
       "home_score": 10.0,
-      "away_score": 7.0,
+      "away_score": 0.0,
       "period": 2,
-      "display_clock": "0:00",
-      "status": "Halftime",
-      "elapsed_minute": 30.0,
-      "minutes_remaining": 30.0,
+      "display_clock": "9:48",
+      "status": "9:48 - 2nd",
+      "elapsed_minute": 20.2,
+      "minutes_remaining": 39.8,
       "next_score": {
-        "home": 59,
-        "away": 41
+        "home": 71,
+        "away": 29
       },
       "game_total_pace": {
-        "prob": 26,
+        "prob": 31,
         "status": "On Pace: Under"
-      },
-      "model_signal": {
-        "label": "Game Total Under",
-        "prob": 74,
-        "qualifies": true
-      },
-      "pregame_projection": {
-        "exp_home": 19.3,
-        "exp_away": 27.3,
-        "exp_total": 46.6
-      }
-    },
-    {
-      "game_id": "401873061",
-      "home_id": "22",
-      "away_id": "14",
-      "home_team": "Arizona Cardinals",
-      "away_team": "Los Angeles Rams",
-      "home_score": 6.0,
-      "away_score": 10.0,
-      "period": 2,
-      "display_clock": "1:06",
-      "status": "1:06 - 2nd",
-      "elapsed_minute": 28.9,
-      "minutes_remaining": 31.1,
-      "next_score": {
-        "home": 38,
-        "away": 62
-      },
-      "game_total_pace": {
-        "prob": 35,
-        "status": "On Pace: Under"
-      },
-      "model_signal": {
-        "label": "Game Total Under",
-        "prob": 65,
-        "qualifies": false
-      },
-      "pregame_projection": {
-        "exp_home": 15.9,
-        "exp_away": 25.7,
-        "exp_total": 41.6
-      }
-    },
-    {
-      "game_id": "401873063",
-      "home_id": "6",
-      "away_id": "25",
-      "home_team": "Dallas Cowboys",
-      "away_team": "San Francisco 49ers",
-      "home_score": 10.0,
-      "away_score": 10.0,
-      "period": 2,
-      "display_clock": "6:49",
-      "status": "6:49 - 2nd",
-      "elapsed_minute": 23.2,
-      "minutes_remaining": 36.8,
-      "next_score": {
-        "home": 50,
-        "away": 50
-      },
-      "game_total_pace": {
-        "prob": 50,
-        "status": "On Pace: Over"
       },
       "model_signal": {
         "label": "Home Next Score",
-        "prob": 50,
-        "qualifies": false
+        "prob": 71,
+        "qualifies": true
       },
       "pregame_projection": {
-        "exp_home": 24.0,
-        "exp_away": 27.8,
-        "exp_total": 51.8
+        "exp_home": 22.7,
+        "exp_away": 23.9,
+        "exp_total": 46.6
       }
     }
   ]

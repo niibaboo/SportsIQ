@@ -1243,6 +1243,25 @@
     "logged_home_score": 10.0,
     "logged_away_score": 7.0,
     "pregame_total": 46.6,
+    "status": "hit",
+    "final_home_score": 13.0,
+    "final_away_score": 21.0
+  },
+  "401873064_Home_Next_Score": {
+    "id": "401873064_Home_Next_Score",
+    "game_id": "401873064",
+    "home_id": "4",
+    "away_id": "23",
+    "home_team": "Cincinnati Bengals",
+    "away_team": "Pittsburgh Steelers",
+    "label": "Home Next Score",
+    "prob": 71,
+    "logged_at": "2026-11-16T02:17:25.283595+00:00",
+    "logged_period": 2,
+    "logged_clock": "9:48",
+    "logged_home_score": 10.0,
+    "logged_away_score": 0.0,
+    "pregame_total": 46.6,
     "status": "pending"
   }
 }
