@@ -230,6 +230,60 @@ def _current_scoring_streak(scored_list, threshold):
 team_form_cache = {}
 
 
+# Team rebounds / assists / 3PT (user request, 2026-11-16: "update like the new
+# Orange Line"). Unlike the NBA/ESPN version, this API's game-stats payload has
+# a real team 'total' block (points is confirmed there), so each team's actual
+# box-score totals are used where the key exists -- no summing of a rotation.
+# Rebounds/assists use the same field names the player rows are confirmed to
+# use (totalRebounds / assistances); the 3-pointers-made key is NOT confirmed,
+# so several likely names are tried and the available keys are printed ([DIAG])
+# when none match, in which case 3PT is simply left out.
+TEAM_STAT_SPECS = [
+    ('reb', 'Rebounds', 2.0, ('totalRebounds',)),
+    ('ast', 'Assists', 2.0, ('assistances',)),
+    ('tpm', '3-Pointers Made', 1.5, ('fieldGoalsMade3', 'threePointersMade', 'fieldGoalsMadeThree', 'fieldGoalsMade3Points')),
+]
+TEAM_STAT_MIN_GAMES = 3        # need at least this many games with the stat for a projection
+TEAM_STAT_STD_COEF = 0.9       # sd = coef * sqrt(mean); an UNCALIBRATED starting value
+_diag_printed = set()
+
+
+def team_stat_from_block(block, keys):
+    """One team's box-score total for a stat, or None. Prefers the official
+    'total' block; falls back to summing the player rows (needs 5+ players
+    reporting, and omits team rebounds, so it can run a little low)."""
+    block = block or {}
+    total = block.get('total') or {}
+    for k in keys:
+        v = total.get(k)
+        if v is not None:
+            try:
+                return float(v)
+            except (TypeError, ValueError):
+                pass
+    players = block.get('players') or []
+    for k in keys:
+        vals = []
+        for p in players:
+            v = (p.get('stats') or {}).get(k)
+            try:
+                if v is not None:
+                    vals.append(float(v))
+            except (TypeError, ValueError):
+                pass
+        if len(vals) >= 5:
+            return float(sum(vals))
+    return None
+
+
+def _diag_missing_stat(code, keys, block):
+    if code in _diag_printed:
+        return
+    _diag_printed.add(code)
+    print(f"    [DIAG] team stat '{code}': none of {list(keys)} found in a team's total block or player rows. "
+          f"Keys in total block: {sorted((block or {}).get('total', {}).keys())}")
+
+
 def get_team_form(tv_code, schedule, season):
     """Last RECENT_GAMES played games' scored/allowed points, pulled from
     each game's box score 'total.points' on whichever side (local/road)
@@ -239,6 +293,7 @@ def get_team_form(tv_code, schedule, season):
 
     recent = _team_games(schedule, tv_code)[-RECENT_GAMES:]
     scored, allowed = [], []
+    stat_vals = {code: [] for code, _l, _s, _k in TEAM_STAT_SPECS}
     for g in recent:
         gc = g.get('gameCode')
         if gc is None:
@@ -257,6 +312,12 @@ def get_team_form(tv_code, schedule, season):
             continue
         scored.append(float(pts))
         allowed.append(float(opp_pts))
+        for code, _label, _step, keys in TEAM_STAT_SPECS:
+            v = team_stat_from_block(stats.get(side), keys)
+            if v is None:
+                _diag_missing_stat(code, keys, stats.get(side))
+            else:
+                stat_vals[code].append(v)
 
     if not scored:
         team_form_cache[(season, tv_code)] = None
@@ -269,6 +330,9 @@ def get_team_form(tv_code, schedule, season):
         'n_games': n,
         'scored_list': scored,
         'allowed_list': allowed,
+        # Only kept when EVERY counted game has the stat, so the chips line up
+        # with the points chips game for game.
+        'stat_lists': {c: v for c, v in stat_vals.items() if len(v) == n},
     }
     team_form_cache[(season, tv_code)] = form
     return form
@@ -861,6 +925,7 @@ CARD_TEMPLATE = """<div class="gamecard" data-volume="{volume_level}" data-home=
   <div style="background:#0f1318;border-radius:8px;padding:8px;margin-top:6px;font-size:11px">
     {home_team}: {home_scored} scored/gm • {home_allowed} allowed/gm ({home_n}gm)
   </div>
+  {recent_html}{team_stats_html}
   {player_props_html}
 </div>"""
 
@@ -1065,6 +1130,169 @@ def render_volume_panel(ranked):
             .replace("{rows}", rows))
 
 
+def _stat_sd(mean):
+    return TEAM_STAT_STD_COEF * math.sqrt(max(mean, 0.0))
+
+
+def team_stat_mean(form, code):
+    """Recency-weighted mean of the team's own box-score totals, or None."""
+    vals = ((form or {}).get('stat_lists') or {}).get(code)
+    if not vals or len(vals) < TEAM_STAT_MIN_GAMES:
+        return None
+    return recency_weighted(vals)
+
+
+def stat_1x2(mu_home, mu_away):
+    """(P home more, P tie, P away more) for integer-valued team totals;
+    normal approximation with a continuity correction (tie = P(|D| < 0.5))."""
+    sd = math.sqrt(_stat_sd(mu_home) ** 2 + _stat_sd(mu_away) ** 2)
+    mu = mu_home - mu_away
+    p_away = norm_cdf(-0.5, mu, sd)
+    p_home = 1.0 - norm_cdf(0.5, mu, sd)
+    return p_home, max(0.0, 1.0 - p_home - p_away), p_away
+
+
+def stat_over_ladder(mu_home, mu_away, step, n_lines=3):
+    """Combined over/under at n_lines half-point lines around the projection."""
+    mu = mu_home + mu_away
+    sd = math.sqrt(_stat_sd(mu_home) ** 2 + _stat_sd(mu_away) ** 2)
+    main = math.floor(mu) + 0.5
+    out = []
+    for i in range(-(n_lines // 2), n_lines // 2 + 1):
+        line = main + i * step
+        if line < 0.5:
+            continue
+        over = 1.0 - norm_cdf(line, mu, sd)
+        out.append((line, over, 1.0 - over))
+    return mu, out
+
+
+def _half(x):
+    return round(x * 2) / 2
+
+
+def _fmt_num(v):
+    return str(int(v)) if float(v).is_integer() else f"{v:.1f}"
+
+
+def _over_under_run(values, line):
+    kind, n = None, 0
+    for v in reversed(values):
+        k = 'over' if v > line else ('under' if v < line else None)
+        if k is None or (kind is not None and k != kind):
+            break
+        kind, n = k, n + 1
+    return kind, n
+
+
+def _chips_row(label, values, line):
+    if not values:
+        return ""
+    chips = ""
+    for v in values:
+        bg, fg = ("#16321f", "#7ee09a") if v > line else (("#3a1f1f", "#f08a8a") if v < line else ("#2a2f36", "#aaa"))
+        chips += (f'<span style="display:inline-block;min-width:24px;text-align:center;padding:1px 4px;margin:1px;'
+                  f'border-radius:4px;background:{bg};color:{fg}">{_fmt_num(v)}</span>')
+    overs = sum(1 for v in values if v > line)
+    kind, n = _over_under_run(values, line)
+    run = f" · <b style=\"color:{'#7ee09a' if kind == 'over' else '#f08a8a'}\">{n} straight {kind}</b>" if kind and n >= 2 else ""
+    return (f'<div style="margin-bottom:6px"><div style="color:#dde">{label} <span style="color:#778">vs {_fmt_num(line)}</span></div>'
+            f'<div>{chips}</div>'
+            f'<div style="color:#99a">avg {sum(values) / len(values):.1f} · over {overs}/{len(values)}{run}</div></div>')
+
+
+def recent_totals_html(p):
+    """Last-games chips for each team's points and the game total, vs tonight's projection."""
+    hf, af = p.get('home_form'), p.get('away_form')
+    if not hf or not af or p.get('exp_total') is None:
+        return ""
+    def game_totals(form):
+        return [a + b for a, b in zip(form.get('scored_list') or [], form.get('allowed_list') or [])]
+    game_line = _half(p['exp_total'])
+    n = max(len(hf.get('scored_list') or []), len(af.get('scored_list') or []))
+    rows = (_chips_row(f"{p['away_team']} points", af.get('scored_list'), _half(p['exp_away']))
+            + _chips_row(f"{p['home_team']} points", hf.get('scored_list'), _half(p['exp_home']))
+            + _chips_row(f"{p['away_team']} game totals", game_totals(af), game_line)
+            + _chips_row(f"{p['home_team']} game totals", game_totals(hf), game_line))
+    if not rows:
+        return ""
+    return (f'<div style="background:#0f1318;border-radius:8px;padding:8px 10px;margin-top:6px;font-size:11px">'
+            f'<div style="color:#778;text-transform:uppercase;font-size:9px;margin-bottom:5px">Last {n} games · oldest → latest · green = over tonight\'s projection</div>'
+            f'{rows}</div>')
+
+
+def team_stats_html(p):
+    away_team, home_team = p['away_team'], p['home_team']
+    blocks = ""
+    for code, label, step, _keys in TEAM_STAT_SPECS:
+        mh = team_stat_mean(p.get('home_form'), code)
+        ma = team_stat_mean(p.get('away_form'), code)
+        if mh is None or ma is None:
+            continue
+        ph, pt, pa = stat_1x2(mh, ma)
+        best = max((ph, 'h'), (pt, 't'), (pa, 'a'))[1]
+        def cell(txt, val, tag):
+            hi = tag == best
+            return (f'<div style="flex:1;text-align:center;padding:4px 2px;border-radius:6px;'
+                    f'background:{"#1c2a3a" if hi else "#151a21"};border:1px solid {"#36506e" if hi else "#232a33"}">'
+                    f'<div style="color:#99a;font-size:10px">{txt}</div>'
+                    f'<div style="color:{"#ffeb3b" if hi else "#dde"};font-weight:bold">{val * 100:.0f}%</div></div>')
+        mu, ladder = stat_over_ladder(mh, ma, step)
+        lad = "".join(
+            f'<div style="flex:1;text-align:center;padding:4px 2px;border-radius:6px;background:#151a21;border:1px solid #232a33">'
+            f'<div style="color:#99a;font-size:10px">{line:g}</div>'
+            f'<div style="color:#7ee09a">O {over * 100:.0f}%</div>'
+            f'<div style="color:#f08a8a">U {under * 100:.0f}%</div></div>'
+            for line, over, under in ladder)
+        hist_a = p['away_form']['stat_lists'][code]
+        hist_h = p['home_form']['stat_lists'][code]
+        recent = ('<div style="color:#778;font-size:9px;text-transform:uppercase;margin:6px 0 3px">'
+                  "Last games · official team totals · oldest → latest · green = over this team's projection</div>"
+                  + _chips_row(f"{away_team} {label.lower()}", hist_a, _half(ma))
+                  + _chips_row(f"{home_team} {label.lower()}", hist_h, _half(mh)))
+        blocks += (f'<div style="margin-bottom:10px"><div style="color:#dde;margin-bottom:4px"><b>{label}</b> '
+                   f'<span style="color:#778">{away_team} {ma:.1f} · {home_team} {mh:.1f} · total {mu:.1f}</span></div>'
+                   f'<div style="display:flex;gap:4px;margin-bottom:4px">{cell(away_team + " more", pa, "a")}{cell("Tie", pt, "t")}{cell(home_team + " more", ph, "h")}</div>'
+                   f'<div style="display:flex;gap:4px">{lad}</div>{recent}</div>')
+    if not blocks:
+        return ""
+    return ('<div style="background:#0f1318;border-radius:8px;padding:8px 10px;margin-top:6px;font-size:11px">'
+            '<div style="color:#778;text-transform:uppercase;font-size:9px;margin-bottom:6px">Team rebounds · assists · 3PT — which team gets more, and combined over/under (model only)</div>'
+            f'{blocks}'
+            '<div style="color:#778;font-size:10px;line-height:1.5">Each projection is the team\'s own recency-weighted average of its last '
+            f'games\' box-score totals (needs {TEAM_STAT_MIN_GAMES}+ games). It ignores the opponent, injuries and lineup news, and the spread (sd = {TEAM_STAT_STD_COEF} x sqrt(mean)) is an uncalibrated '
+            'estimate. There is no bookmaker line: the lines sit around the model\'s own projection, so check them against your bookmaker\'s real line. '
+            'The Results tracker records these picks so the 50% lines can be checked against what actually happens.</div></div>')
+
+
+def build_team_stat_entries(predictions):
+    """Tracker entries for CALIBRATION: combined over/under at the middle line
+    (value = model P(over)) and the 1X2 top pick (value = model P(pick))."""
+    out = []
+    for p in predictions:
+        if p.get('game_code') is None:
+            continue
+        date_key = (p.get('date') or '')[:10]
+        for code, label, step, _keys in TEAM_STAT_SPECS:
+            mh = team_stat_mean(p.get('home_form'), code)
+            ma = team_stat_mean(p.get('away_form'), code)
+            if mh is None or ma is None:
+                continue
+            base = {'match': p['match'], 'season': p['season'], 'game_code': p['game_code'],
+                    'game_date': date_key, 'stat_key': code}
+            mu, ladder = stat_over_ladder(mh, ma, step)
+            mid = min(ladder, key=lambda r: abs(r[0] - mu)) if ladder else None
+            if mid:
+                out.append(dict(base, scanner='team_stat_ou', market=f'Team {label} Over {mid[0]:g} (combined)',
+                                prob=mid[1], line=mid[0]))
+            ph, pt, pa = stat_1x2(mh, ma)
+            pick, prob = max(('home', ph), ('tie', pt), ('away', pa), key=lambda t: t[1])
+            team = {'home': p['home_team'], 'away': p['away_team'], 'tie': 'Tie'}[pick]
+            out.append(dict(base, scanner='team_stat_1x2', market=f'Team {label} 1X2: {team}',
+                            prob=prob, line=None, pick=pick))
+    return out
+
+
 def player_props_section(team_label, props):
     if not props:
         return ""
@@ -1101,6 +1329,7 @@ def make_html(predictions, streak_entries=None, real_streak_entries=None, lg_sco
             last_date_key = date_key
         cards += CARD_TEMPLATE.format(
             volume_level=_vol(p)[0], volume_badge=_vol(p)[1],
+            recent_html=recent_totals_html(p), team_stats_html=team_stats_html(p),
             home_attr=html_lib.escape(p['home_team'], quote=True), away_attr=html_lib.escape(p['away_team'], quote=True),
             date=p['date'][:16].replace('T', ' '), match=p['match'],
             away_team=p['away_team'], home_team=p['home_team'],
@@ -1187,6 +1416,7 @@ if __name__ == "__main__":
         import euroleague_iq_results_tracker
         euroleague_iq_results_tracker.run_results_tracker(
             build_legs(predictions), streak_entries, real_streak_entries, lg_scored,
+            team_stat_entries=build_team_stat_entries(predictions),
         )
     except Exception as e:
         print(f"[!] Results tracker failed, but the rest of this run succeeded: {e}")
