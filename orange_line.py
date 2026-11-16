@@ -2129,6 +2129,7 @@ CARD_TEMPLATE = """<div class="gamecard" data-volume="{volume_level}" data-home=
   <div style="font-size:17px;font-weight:bold;margin-bottom:10px">{match}</div>
   {team_total_html}
   {recent_html}
+  {team_stats_html}
   {pace_html}
   {playstyle_html}
   {top_players_html}
@@ -2198,6 +2199,116 @@ def recent_totals_html(p):
     return (f'<div style="background:#0f0a08;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:11px">'
             f'<div style="color:#776;text-transform:uppercase;font-size:9px;margin-bottom:5px">Last {n} games · oldest → latest · green = over tonight\'s projection</div>'
             f'{rows}</div>')
+
+
+# Team rebounds / assists / 3PT: head-to-head "1X2" and combined over/under
+# (user request, 2026-11-16). MODEL-ONLY -- no bookmaker line is available
+# here, so the over/under is a ladder of lines around the model's own
+# projection, not a price comparison.
+#
+# How it works: a team's projected total for a stat is the sum of its top
+# TEAM_STAT_ROTATION players' own projections (ranked by average minutes),
+# the same recency-weighted, shrunk numbers the player rows use. Each team's
+# total is treated as roughly normal with sd = TEAM_STAT_STD_COEF * sqrt(mean)
+# (count-like stats: sd grows with the square root of the level, so the same
+# rule covers NBA, WNBA and college). The Tie probability in the 1X2 is the
+# chance both teams finish on exactly the same integer total.
+#
+# UNCALIBRATED assumptions, to be checked against real results: the 0.9
+# coefficient (set so a ~44-rebound team gets sd ~6), the two teams being
+# independent (real totals are positively linked through pace, so true
+# spread on the COMBINED total is a little wider than shown), and the
+# rotation sum missing injuries, lineup changes and minutes limits.
+TEAM_STAT_ROTATION = 10
+TEAM_STAT_MIN_PLAYERS = 5
+TEAM_STAT_STD_COEF = 0.9
+TEAM_STAT_SPECS = [
+    # key in the player dict, label, ladder step between lines
+    ('reb_proj', 'Rebounds', 2.0),
+    ('ast_proj', 'Assists', 2.0),
+    ('tpm_proj', '3-Pointers Made', 1.5),
+]
+
+
+def team_stat_total(props, key):
+    """Sum of the top TEAM_STAT_ROTATION players' projections for `key`, or
+    None when fewer than TEAM_STAT_MIN_PLAYERS have one."""
+    rows = [pl for pl in (props or []) if pl.get(key) is not None]
+    rows.sort(key=lambda pl: (pl.get('min_avg') or 0.0,
+                              (pl.get('pts_proj') or 0) + (pl.get('reb_proj') or 0) + (pl.get('ast_proj') or 0)),
+              reverse=True)
+    rows = rows[:TEAM_STAT_ROTATION]
+    if len(rows) < TEAM_STAT_MIN_PLAYERS:
+        return None
+    return sum(pl[key] for pl in rows)
+
+
+def _stat_sd(mean):
+    return TEAM_STAT_STD_COEF * math.sqrt(max(mean, 0.0))
+
+
+def stat_1x2(mu_home, mu_away):
+    """(P home more, P tie, P away more) for integer-valued team totals.
+    The difference D = home - away is integer-valued, so Tie = P(-0.5 < D < 0.5)
+    under a normal approximation with a continuity correction."""
+    sd = math.sqrt(_stat_sd(mu_home) ** 2 + _stat_sd(mu_away) ** 2)
+    mu = mu_home - mu_away
+    p_away = norm_cdf(-0.5, mu, sd)
+    p_home = 1.0 - norm_cdf(0.5, mu, sd)
+    return p_home, max(0.0, 1.0 - p_home - p_away), p_away
+
+
+def stat_over_ladder(mu_home, mu_away, step, n_lines=3):
+    """Over/under on the COMBINED total at n_lines half-point lines around
+    the projection. Half-point lines have no push, so Over + Under = 100%."""
+    mu = mu_home + mu_away
+    sd = math.sqrt(_stat_sd(mu_home) ** 2 + _stat_sd(mu_away) ** 2)
+    main = math.floor(mu) + 0.5
+    half = n_lines // 2
+    out = []
+    for i in range(-half, half + 1):
+        line = main + i * step
+        if line < 0.5:
+            continue
+        over = 1.0 - norm_cdf(line, mu, sd)
+        out.append((line, over, 1.0 - over))
+    return mu, out
+
+
+def team_stats_html(p):
+    away_team, home_team = p['away_team'], p['home_team']
+    blocks = ""
+    for key, label, step in TEAM_STAT_SPECS:
+        mh = team_stat_total(p.get('home_props'), key)
+        ma = team_stat_total(p.get('away_props'), key)
+        if mh is None or ma is None:
+            continue
+        ph, pt, pa = stat_1x2(mh, ma)
+        best = max((ph, 'h'), (pt, 't'), (pa, 'a'))[1]
+        def cell(txt, val, tag):
+            hi = tag == best
+            return (f'<div style="flex:1;text-align:center;padding:4px 2px;border-radius:6px;'
+                    f'background:{"#2a1c10" if hi else "#1a1310"};border:1px solid {"#5a3a18" if hi else "#2a201a"}">'
+                    f'<div style="color:#998;font-size:10px">{txt}</div>'
+                    f'<div style="color:{"#ffeb3b" if hi else "#e8dcd0"};font-weight:bold">{val * 100:.0f}%</div></div>')
+        mu, ladder = stat_over_ladder(mh, ma, step)
+        lad = ""
+        for line, over, under in ladder:
+            lad += (f'<div style="flex:1;text-align:center;padding:4px 2px;border-radius:6px;background:#1a1310;border:1px solid #2a201a">'
+                    f'<div style="color:#998;font-size:10px">{line:g}</div>'
+                    f'<div style="color:#7ee09a">O {over * 100:.0f}%</div>'
+                    f'<div style="color:#f08a8a">U {under * 100:.0f}%</div></div>')
+        blocks += (f'<div style="margin-bottom:10px"><div style="color:#e8dcd0;margin-bottom:4px"><b>{label}</b> '
+                   f'<span style="color:#776">{away_team} {ma:.1f} · {home_team} {mh:.1f} · total {mu:.1f}</span></div>'
+                   f'<div style="display:flex;gap:4px;margin-bottom:4px">{cell(away_team + " more", pa, "a")}{cell("Tie", pt, "t")}{cell(home_team + " more", ph, "h")}</div>'
+                   f'<div style="display:flex;gap:4px">{lad}</div></div>')
+    if not blocks:
+        return ""
+    return ('<div style="background:#0f0a08;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:11px">'
+            '<div style="color:#776;text-transform:uppercase;font-size:9px;margin-bottom:6px">Team rebounds · assists · 3PT — which team gets more, and combined over/under (model only)</div>'
+            f'{blocks}'
+            f'<div style="color:#776;font-size:10px;line-height:1.5">Each team = its top {TEAM_STAT_ROTATION} players by minutes, projections summed. '
+            'No injuries or lineup news, no bookmaker line: the lines are placed around the model\'s own projection, so check them against your bookmaker\'s actual line.</div></div>')
 
 
 PACE_ROW = """<div style="font-size:11px;color:#998;margin-bottom:8px">{icon} <span style="color:#e8dcd0">{verdict}</span> — {away_team} {away_label} ({away_pct_str}) · {home_team} {home_label} ({home_pct_str})</div>"""
@@ -2521,7 +2632,7 @@ def make_html(predictions):
         return level, badge
 
     cards = "".join(CARD_TEMPLATE.format(
-        volume_level=_vol(p)[0], volume_badge=_vol(p)[1], recent_html=recent_totals_html(p),
+        volume_level=_vol(p)[0], volume_badge=_vol(p)[1], recent_html=recent_totals_html(p), team_stats_html=team_stats_html(p),
         home_attr=html_lib.escape(p['home_team'], quote=True), away_attr=html_lib.escape(p['away_team'], quote=True),
         date=p['date'][:16].replace('T', ' '), match=p['match'], league=p.get('league', ''),
         team_total_html=(
