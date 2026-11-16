@@ -119,6 +119,18 @@ CARDS_REAL_STREAK_MIN_LENGTH = 3
 # defense genuinely gives up more SOT, same logic as corners-conceded),
 # not the un-adjusted treatment used for cards. Threshold of 4 is what
 # clears a "Team Over 3.5 SOT" line, the bet365 market this was built for.
+# Under (cold) streaks -- mirror of Real Streak (user request, 2026-11-16: the
+# "overs are not hitting well"): consecutive most-recent games in which the team
+# stayed AT OR BELOW the cap. Caps sit at the usual under line (4.5 corners,
+# 1.5 cards, 3.5 SOT). Cards are common at 0-1 (roughly half of games), so that
+# bar is 4 straight. STARTING GUESSES; the model's own under % is shown beside each.
+CORNERS_UNDER_MAX = 4
+CORNERS_UNDER_MIN_LENGTH = 3
+CARDS_UNDER_MAX = 1
+CARDS_UNDER_MIN_LENGTH = 4
+SOT_UNDER_MAX = 3
+SOT_UNDER_MIN_LENGTH = 3
+
 SOT_HOT_FORM_MIN = 4.0
 SOT_HOT_FORM_MIN_GAMES = 3
 SOT_REAL_STREAK_THRESHOLD = 4
@@ -449,6 +461,30 @@ def _current_streak(values_oldest_first, threshold):
     return streak
 
 
+def _current_under_streak(values_oldest_first, cap):
+    """Consecutive most-recent values <= cap (oldest->newest input)."""
+    streak = 0
+    for v in reversed(values_oldest_first):
+        if v <= cap:
+            streak += 1
+        else:
+            break
+    return streak
+
+
+def build_under_streak_entries(team_rows, cap, min_length, label, unit):
+    entries = []
+    for t in team_rows:
+        streak = _current_under_streak(t["list"], cap)
+        if streak >= min_length:
+            lam = t.get("lam")
+            entries.append({**t, "streak": streak, "threshold": cap, "label": label, "unit": unit,
+                             "streak_games": t["list"][-streak:],
+                             "p_under": round(poisson_cdf(cap, lam) * 100) if lam is not None else None})
+    entries.sort(key=lambda e: -e["streak"])
+    return entries
+
+
 def build_hot_form_entries(team_rows, stat_key, min_avg, min_games, label, unit):
     """team_rows: list of {"team", "match", "league", "n_games", "avg", "list"}."""
     entries = []
@@ -584,7 +620,7 @@ def build_legs(predictions):
     return legs
 
 
-def _team_rows(predictions, side_key, form_key, stat_avg_key, stat_list_key):
+def _team_rows(predictions, side_key, form_key, stat_avg_key, stat_list_key, pred_key=None):
     rows = []
     is_home = side_key == "home"
     for p in predictions:
@@ -601,17 +637,18 @@ def _team_rows(predictions, side_key, form_key, stat_avg_key, stat_list_key):
             "match": match_label, "match_id": p["match_id"], "league": p["league"],
             "date": p["date"], "date_key": p["date_key"],
             "n_games": form["n_games"], "avg": avg, "list": lst,
+            "lam": (p.get(f"{side_key}_{pred_key}") or {}).get("lambda") if pred_key else None,
         })
     return rows
 
 
 def build_all_form_entries(predictions):
-    corner_rows = (_team_rows(predictions, "home", "home_form", "avg_corners", "corners_list") +
-                   _team_rows(predictions, "away", "away_form", "avg_corners", "corners_list"))
-    card_rows = (_team_rows(predictions, "home", "home_form", "avg_yellow_cards", "yellow_cards_list") +
-                 _team_rows(predictions, "away", "away_form", "avg_yellow_cards", "yellow_cards_list"))
-    sot_rows = (_team_rows(predictions, "home", "home_form", "avg_sot", "sot_list") +
-                _team_rows(predictions, "away", "away_form", "avg_sot", "sot_list"))
+    corner_rows = (_team_rows(predictions, "home", "home_form", "avg_corners", "corners_list", "corners") +
+                   _team_rows(predictions, "away", "away_form", "avg_corners", "corners_list", "corners"))
+    card_rows = (_team_rows(predictions, "home", "home_form", "avg_yellow_cards", "yellow_cards_list", "cards") +
+                 _team_rows(predictions, "away", "away_form", "avg_yellow_cards", "yellow_cards_list", "cards"))
+    sot_rows = (_team_rows(predictions, "home", "home_form", "avg_sot", "sot_list", "sot") +
+                _team_rows(predictions, "away", "away_form", "avg_sot", "sot_list", "sot"))
 
     return {
         "corners_hot_form": build_hot_form_entries(
@@ -632,6 +669,12 @@ def build_all_form_entries(predictions):
         "sot_real_streak": build_real_streak_entries(
             sot_rows, SOT_REAL_STREAK_THRESHOLD, SOT_REAL_STREAK_MIN_LENGTH,
             "Real SOT Streak", "SOT"),
+        "corners_under_streak": build_under_streak_entries(
+            corner_rows, CORNERS_UNDER_MAX, CORNERS_UNDER_MIN_LENGTH, "Corners Under Streak", "corners"),
+        "cards_under_streak": build_under_streak_entries(
+            card_rows, CARDS_UNDER_MAX, CARDS_UNDER_MIN_LENGTH, "Cards Under Streak", "cards"),
+        "sot_under_streak": build_under_streak_entries(
+            sot_rows, SOT_UNDER_MAX, SOT_UNDER_MIN_LENGTH, "SOT Under Streak", "SOT"),
     }
 
 
@@ -748,10 +791,13 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="UTF-8">
   {builder}
   {corners_hot_form}
   {corners_real_streak}
+  {corners_under_streak}
   {cards_hot_form}
   {cards_real_streak}
+  {cards_under_streak}
   {sot_hot_form}
   {sot_real_streak}
+  {sot_under_streak}
   <div id="matchCardsContainer">{cards}</div>
   <p id="noCardsForDate" class="emptyForDate">No matches for the selected date.</p>
 
@@ -972,6 +1018,19 @@ def make_html(predictions):
         lambda e: f"{e['streak']}+ straight", lambda e: format_history(e["list"]),
     )
 
+    def _under_panel(key, title, cap, unit_word):
+        return _streak_panel(
+            forms[key], "🧊", title,
+            f"Genuinely CONSECUTIVE recent games with {cap} or fewer {unit_word}, walking back from the most recent. "
+            "Low form is context, not a prediction.",
+            lambda e: f"{e['streak']}+ straight" if e["streak"] >= len(e["list"]) else f"{e['streak']} straight",
+            lambda e: format_history(e["streak_games"]) + (f" · model Under {cap + 0.5:g}: {e['p_under']}%" if e.get("p_under") is not None else ""),
+        )
+
+    corners_under_streak = _under_panel("corners_under_streak", "Corners Under Streak", CORNERS_UNDER_MAX, "corners")
+    cards_under_streak = _under_panel("cards_under_streak", "Cards Under Streak", CARDS_UNDER_MAX, "yellow cards")
+    sot_under_streak = _under_panel("sot_under_streak", "SOT Under Streak", SOT_UNDER_MAX, "shots on target")
+
     # Group consecutive same-day cards under a date header -- same fix
     # already applied to EuroLeague IQ for the identical "not
     # chronologically arranged" symptom. The header itself carries
@@ -1021,6 +1080,7 @@ def make_html(predictions):
         builder=builder, corners_hot_form=corners_hot_form, corners_real_streak=corners_real_streak,
         cards_hot_form=cards_hot_form, cards_real_streak=cards_real_streak,
         sot_hot_form=sot_hot_form, sot_real_streak=sot_real_streak, cards=cards_html,
+        corners_under_streak=corners_under_streak, cards_under_streak=cards_under_streak, sot_under_streak=sot_under_streak,
         legs_json=json.dumps(legs),
     )
 
@@ -1093,6 +1153,9 @@ if __name__ == "__main__":
             corners_real_streak=forms["corners_real_streak"],
             cards_real_streak=forms["cards_real_streak"],
             sot_real_streak=forms["sot_real_streak"],
+            corners_under_streak=forms["corners_under_streak"],
+            cards_under_streak=forms["cards_under_streak"],
+            sot_under_streak=forms["sot_under_streak"],
         )
     except Exception as e:
         print(f"[!] results tracker failed (main run unaffected): {e}")
