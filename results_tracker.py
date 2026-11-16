@@ -86,7 +86,7 @@ def save_log(entries):
         json.dump(entries, f, indent=2, default=str)
 
 
-def log_todays_signals(all_predictions, hot_form_entries, streak_entries, log, thresholds):
+def log_todays_signals(all_predictions, hot_form_entries, streak_entries, log, thresholds, under_streak_entries=None):
     """Appends every qualifying pick from this run into the log as a
     PENDING entry. Skips anything already logged (same scanner+subject+
     match date+market) so re-running the same day is always safe.
@@ -150,6 +150,13 @@ def log_todays_signals(all_predictions, hot_form_entries, streak_entries, log, t
 
     for e in streak_entries:
         add("real_streak", e["team"], f"Real Streak vs {e['opponent']}", e["streak_len"],
+            match_id=None, match_date=e["date"], date_key=e["date_key"], league=e["league"],
+            home_team=e["team"] if e["is_home"] else e["opponent"],
+            away_team=e["opponent"] if e["is_home"] else e["team"],
+            detail=f"is_home={e['is_home']}", streak_games=e.get("streak_games"))
+
+    for e in (under_streak_entries or []):
+        add("under_streak", e["team"], f"Under Streak vs {e['opponent']}", e["streak_len"],
             match_id=None, match_date=e["date"], date_key=e["date_key"], league=e["league"],
             home_team=e["team"] if e["is_home"] else e["opponent"],
             away_team=e["opponent"] if e["is_home"] else e["team"],
@@ -242,7 +249,7 @@ def _verify_corners_entry(entry, key, threshold=10.5):
     return {"actual": total, "result": "hit" if total > threshold else "miss"}
 
 
-def _verify_form_streak_entry(entry, key, real_streak_threshold):
+def _verify_form_streak_entry(entry, key, real_streak_threshold, under_max=None):
     """Hot Form / Real Streak -- these describe a team's PAST form, not
     a prediction about this specific match's total. The natural check:
     did the team keep scoring (>= REAL_STREAK_THRESHOLD, i.e. 2+) in
@@ -277,10 +284,12 @@ def _verify_form_streak_entry(entry, key, real_streak_threshold):
         return None
     is_home = entry["detail"] == "is_home=True"
     team_goals = s["home"] if is_home else s["away"]
+    if under_max is not None:  # Under Streak: a hit means the team stayed at or under the cap
+        return {"actual": team_goals, "result": "hit" if team_goals <= under_max else "miss"}
     return {"actual": team_goals, "result": "hit" if team_goals >= real_streak_threshold else "miss"}
 
 
-def verify_pending_results(log, key, real_streak_threshold, max_checks=60):
+def verify_pending_results(log, key, real_streak_threshold, max_checks=60, under_max=1):
     """Looks at every PENDING entry whose match date has already
     passed (so the game should be over by now), tries to fetch the
     real result, and updates it in place. Capped at max_checks per run
@@ -313,6 +322,8 @@ def verify_pending_results(log, key, real_streak_threshold, max_checks=60):
                 result = _verify_corners_entry(entry, key)
             elif entry["scanner"] in ("hot_form", "real_streak"):
                 result = _verify_form_streak_entry(entry, key, real_streak_threshold)
+            elif entry["scanner"] == "under_streak":
+                result = _verify_form_streak_entry(entry, key, real_streak_threshold, under_max=under_max)
         except Exception as e:
             print(f"    [!] verification error for entry {entry['id']} ({entry['scanner']}): {e}")
             result = None
@@ -353,6 +364,7 @@ def build_results_dashboard(log):
         "corners_safe": "Safe Corners", "over45": "Over 4.5 Goals", "away_to_score": "Away to Score",
         "home_over15": "Home Over 1.5 Goals",
         "hot_form": "Hot Form", "real_streak": "Real Streak",
+        "under_streak": "Under Streak (team 1 or fewer)",
     }
 
     total_hit = sum(d["hit"] for d in by_scanner.values())
@@ -477,13 +489,14 @@ def build_results_dashboard(log):
     print(f"  Results dashboard: {total} verified, {overall_pct}% overall" if total else "  Results dashboard: no verified picks yet")
 
 
-def run_results_tracker(all_predictions, hot_form_entries, streak_entries, key, thresholds):
+def run_results_tracker(all_predictions, hot_form_entries, streak_entries, key, thresholds, under_streak_entries=None):
     """Single entry point called from match_iq.py's main(). thresholds
     must contain: over25_min, btts_min, corners_min, safe_corners_min,
     safe_corners_min_sample, over45_min, real_streak_threshold."""
     print("\nRunning results tracker...")
     log = load_log()
-    log = log_todays_signals(all_predictions, hot_form_entries, streak_entries, log, thresholds)
-    log = verify_pending_results(log, key, thresholds["real_streak_threshold"])
+    log = log_todays_signals(all_predictions, hot_form_entries, streak_entries, log, thresholds, under_streak_entries)
+    log = verify_pending_results(log, key, thresholds["real_streak_threshold"],
+                                 under_max=thresholds.get("under_streak_max", 1))
     save_log(log)
     build_results_dashboard(log)
