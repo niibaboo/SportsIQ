@@ -66,7 +66,7 @@ ARCHIVE_PATH = "docs/orange-line/results/archive.json"
 #     hit/miss totals in archive.json and dropped from log.json, so the log
 #     stops growing without bound (it was heading for GitHub's file size limit).
 MAX_GAME_LOOKUPS = 150
-CALIBRATION_SCANNERS = ("team_stat_ou", "team_stat_1x2")
+CALIBRATION_SCANNERS = ("team_stat_ou", "team_stat_1x2", "first_half_margin")
 VOID_AFTER_DAYS = 10
 ARCHIVE_AFTER_DAYS = 3
 
@@ -185,6 +185,12 @@ def fold_old_entries(log, archive, now=None):
             if e["scanner"] in CALIBRATION_SCANNERS and isinstance(e.get("value"), (int, float)):
                 d["psum"] = d.get("psum", 0.0) + e["value"]
                 d["pn"] = d.get("pn", 0) + 1
+            if e["scanner"] == "first_half_margin" and isinstance(e.get("actual"), (int, float)) and e.get("pred_mean") is not None:
+                err = e["actual"] - e["pred_mean"]
+                d["sq"] = d.get("sq", 0.0) + err * err
+                d["err"] = d.get("err", 0.0) + err
+                d["sdsum"] = d.get("sdsum", 0.0) + (e.get("sd") or 0)
+                d["sqn"] = d.get("sqn", 0) + 1
             folded += 1
         else:
             kept.append(e)
@@ -232,6 +238,7 @@ def log_todays_signals(legs, hot_form_entries, real_streak_entries, log, team_st
             "league": e.get("league"), "game_id": e["game_id"], "game_date": e["game_date"],
             "date_key": e["game_date"], "is_home": None, "player_id": None,
             "stat_key": e["stat_key"], "pick": e.get("pick"),
+            "pred_mean": e.get("pred_mean"), "sd": e.get("sd"),
             "logged_at": datetime.now(timezone.utc).isoformat(),
             "status": "pending", "result": None, "actual": None,
         })
@@ -275,6 +282,48 @@ def log_todays_signals(legs, hot_form_entries, real_streak_entries, log, team_st
 
     print(f"  Results log: {added} new pick(s) logged, {len(log)} total in log")
     return log
+
+
+def _first_half_margin(summary, league_key):
+    """Real first-half margin (home - away) from the per-period linescores, or
+    None. NBA/WNBA/women's college play quarters (first half = 2 periods);
+    men's college plays two halves (1 period). Prints [DIAG] when the shape
+    isn't what's expected -- the linescores field is not confirmed live."""
+    need = 1 if league_key == "mens-college-basketball" else 2
+    comps = summary.get("header", {}).get("competitions", [{}])[0].get("competitors", [])
+    home = next((c for c in comps if c.get("homeAway") == "home"), None)
+    away = next((c for c in comps if c.get("homeAway") == "away"), None)
+    if not home or not away:
+        return None
+    def half(c):
+        ls = c.get("linescores") or []
+        if len(ls) < need + 1:  # a finished game has more periods than the first half
+            return None
+        total = 0.0
+        for item in ls[:need]:
+            v = item.get("value", item.get("displayValue"))
+            try:
+                total += float(v)
+            except (TypeError, ValueError):
+                return None
+        return total
+    h, a = half(home), half(away)
+    if h is None or a is None:
+        print(f"    [DIAG] first-half margin: couldn't read linescores for {league_key} "
+              f"(home has {len(home.get('linescores') or [])} period(s), away {len(away.get('linescores') or [])})")
+        return None
+    return h - a
+
+
+def _verify_first_half_entry(entry):
+    summary = _get_summary(entry["league"], entry["game_id"])
+    if not summary or not _is_final(summary):
+        return None
+    m = _first_half_margin(summary, LEAGUE_NAME_TO_KEY.get(entry["league"]))
+    if m is None or entry.get("pred_mean") is None or not entry.get("sd"):
+        return None
+    err = m - entry["pred_mean"]
+    return {"actual": m, "result": "hit" if abs(err) <= entry["sd"] else "miss"}
 
 
 def _is_final(summary):
@@ -546,6 +595,8 @@ def verify_pending_results(log, max_lookups=MAX_GAME_LOOKUPS):
         try:
             if entry["scanner"] in ("team_total", "game_total"):
                 result = _verify_team_leg(entry)
+            elif entry["scanner"] == "first_half_margin":
+                result = _verify_first_half_entry(entry)
             elif entry["scanner"] in ("team_stat_ou", "team_stat_1x2"):
                 result = _verify_team_stat_entry(entry)
             elif entry["scanner"] in ("rebounds", "assists", "ra", "points", "tpm"):
@@ -605,18 +656,36 @@ def build_results_dashboard(log, archive=None):
             c["n"] += a["pn"]
             c["hit"] += a.get("hit", 0)
             c["psum"] += a["psum"]
+    # 1st-half margin spread check: realised spread vs the one the model assumed.
+    fh_n, fh_sq, fh_err, fh_sd = 0, 0.0, 0.0, 0.0
+    for e in verified:
+        if e["scanner"] == "first_half_margin" and isinstance(e.get("actual"), (int, float)) and e.get("pred_mean") is not None:
+            err = e["actual"] - e["pred_mean"]
+            fh_n, fh_sq, fh_err, fh_sd = fh_n + 1, fh_sq + err * err, fh_err + err, fh_sd + (e.get("sd") or 0)
+    a_fh = archive.get("by_scanner", {}).get("first_half_margin") or {}
+    fh_n += a_fh.get("sqn", 0); fh_sq += a_fh.get("sq", 0.0); fh_err += a_fh.get("err", 0.0); fh_sd += a_fh.get("sdsum", 0.0)
+    fh_note = ""
+    if fh_n:
+        real_sd = (fh_sq / fh_n) ** 0.5
+        fh_note = (f'<div style="padding:8px 0;font-size:12px;color:#e8dcd0">1st-half margin spread: real &plusmn;{real_sd:.1f} pts vs '
+                   f'&plusmn;{fh_sd / fh_n:.1f} assumed · average miss {fh_err / fh_n:+.1f} (home minus model) · n={fh_n}'
+                   f'{"" if fh_n >= 100 else " (too few to change the spread yet)"}</div>')
     cal_rows = ""
     for (sc, stat), c in sorted(cal.items(), key=lambda kv: (kv[0][0], str(kv[0][1]))):
-        name = ("Combined over at middle line" if sc == "team_stat_ou" else "1X2 top pick") + f" · {stat}"
+        if sc == "first_half_margin":
+            name = "1st-half margin inside the model's ±1 spread (model says ~68%)"
+        else:
+            name = ("Combined over at middle line" if sc == "team_stat_ou" else "1X2 top pick") + f" · {stat}"
         pred, act = 100 * c["psum"] / c["n"], 100 * c["hit"] / c["n"]
         gap = act - pred
         flag = "" if c["n"] >= 30 else " (too few to judge)"
         cal_rows += (f'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #3a2a20;font-size:12px">'
                      f'<span>{name}</span><span>model {pred:.0f}% · actual {act:.0f}% ({gap:+.0f}) · n={c["n"]}{flag}</span></div>')
+    cal_rows += fh_note
     cal_html = ""
     if cal_rows:
         cal_html = ('<div style="background:#1a1310;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #3a2a20">'
-                    '<div style="font-weight:bold;margin-bottom:4px">Team rebounds / assists / 3PT — calibration</div>'
+                    '<div style="font-weight:bold;margin-bottom:4px">Team rebounds / assists / 3PT and 1st-half margin — calibration</div>'
                     '<div style="color:#998;font-size:11px;margin-bottom:8px">Does what the model calls 50% land near 50%? '
                     'Model = average probability it gave; actual = how often it happened. Gaps within a few points are noise below ~100 picks.</div>'
                     f'{cal_rows}</div>')
