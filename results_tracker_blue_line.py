@@ -95,7 +95,8 @@ CATEGORY_SCANNER = {
 
 def log_todays_signals(legs, hot_form_entries, real_streak_entries, log,
                         player_hot_form_entries=None, player_real_streak_entries=None,
-                        goalie_hot_form_entries=None, goalie_real_streak_entries=None):
+                        goalie_hot_form_entries=None, goalie_real_streak_entries=None,
+                        under_streak_entries=None, player_under_entries=None, goalie_under_entries=None):
     """Legs already carry game_id, game_date, is_home, line, and (for
     player props) player_id -- added specifically for this tracker when
     the legs were built. hot_form_entries/real_streak_entries are
@@ -242,6 +243,44 @@ def log_todays_signals(legs, hot_form_entries, real_streak_entries, log,
         })
         existing_ids.add(eid)
         added += 1
+
+    for e in (under_streak_entries or []):
+        eid = _entry_id("under_streak", e["team"], e["date"], e["opponent"])
+        if eid in existing_ids or not e.get("game_id"):
+            continue
+        log.append({
+            "id": eid, "scanner": "under_streak", "subject": e["team"],
+            "match": f"{e['team']} {'vs' if e['is_home'] else '@'} {e['opponent']}",
+            "market": f"Under Streak vs {e['opponent']}", "value": e["streak_len"],
+            "detail": f"is_home={e['is_home']};p_under={e.get('p_under')}",
+            "streak_games": e.get("streak_games"), "line": None,
+            "game_id": e["game_id"], "game_date": e["date"],
+            "is_home": e["is_home"], "player_id": None, "date_key": e["date"],
+            "logged_at": datetime.now(timezone.utc).isoformat(),
+            "status": "pending", "result": None, "actual": None,
+        })
+        existing_ids.add(eid)
+        added += 1
+
+    for scanner, label, entries in (("sog_under_streak", "SOG Under Streak", player_under_entries),
+                                    ("saves_under_streak", "Saves Under Streak", goalie_under_entries)):
+        for e in (entries or []):
+            eid = _entry_id(scanner, e.get("player_id") or e["player"], e["date"], e["opponent"])
+            if eid in existing_ids or not e.get("game_id"):
+                continue
+            log.append({
+                "id": eid, "scanner": scanner, "subject": e["player"],
+                "match": f"{e['team']} {'vs' if e['is_home'] else '@'} {e['opponent']}",
+                "market": f"{e['player']} {label} vs {e['opponent']}", "value": e["streak_len"],
+                "detail": f"{e['team']} · {e.get('pos','')} · is_home={e['is_home']}",
+                "streak_games": e.get("streak_games"), "line": None,
+                "game_id": e["game_id"], "game_date": e["date"],
+                "is_home": e["is_home"], "player_id": e.get("player_id"), "date_key": e["date"],
+                "logged_at": datetime.now(timezone.utc).isoformat(),
+                "status": "pending", "result": None, "actual": None,
+            })
+            existing_ids.add(eid)
+            added += 1
 
     print(f"  Results log: {added} new pick(s) logged, {len(log)} total in log")
     return log
@@ -441,6 +480,46 @@ def _verify_player_form_streak_entry(entry):
 # real number of HTTP calls per run is bounded by unique games in the
 # backlog, not by entry count -- checking 3000 entries that mostly share
 # a few hundred games costs a few hundred requests, not 3000.
+SOG_UNDER_MAX = 1      # keep in step with blue_line.SOG_UNDER_MAX
+SAVES_UNDER_MAX = 24   # keep in step with blue_line.SAVES_UNDER_MAX
+
+
+def _verify_player_under_entry(entry):
+    """Hit = the player stayed at or under the cap in the flagged game. A
+    player missing from the boxscore (scratched) stays pending, as with the
+    other per-player streaks."""
+    sog = entry["scanner"] == "sog_under_streak"
+    cap = SOG_UNDER_MAX if sog else SAVES_UNDER_MAX
+    if not entry.get("player_id"):
+        return None
+    box = _get_boxscore(entry["game_id"])
+    if not box or box.get("gameState") not in _FINISHED_STATES:
+        return None
+    p = _find_player_stat(box, entry["is_home"], entry["player_id"])
+    if not p:
+        return None
+    actual = _skater_sog(p) if sog else p.get("saves")
+    if actual is None:
+        return None
+    return {"actual": actual, "result": "hit" if actual <= cap else "miss"}
+
+
+UNDER_MAX_GOALS = 2  # keep in step with blue_line.UNDER_STREAK_MAX_GOALS
+
+
+def _verify_under_streak_entry(entry):
+    """Hit = the team scored UNDER_MAX_GOALS or fewer in the flagged game."""
+    box = _get_boxscore(entry["game_id"])
+    if not box or box.get("gameState") not in _FINISHED_STATES:
+        return None
+    home_score = box.get("homeTeam", {}).get("score")
+    away_score = box.get("awayTeam", {}).get("score")
+    if home_score is None or away_score is None:
+        return None
+    actual = home_score if entry["is_home"] else away_score
+    return {"actual": actual, "result": "hit" if actual <= UNDER_MAX_GOALS else "miss"}
+
+
 def verify_pending_results(log, max_checks=3000):
     today = datetime.now(timezone.utc).date().isoformat()
     checked = 0
@@ -463,6 +542,10 @@ def verify_pending_results(log, max_checks=3000):
                 result = _verify_player_leg(entry)
             elif entry["scanner"] in ("hot_form", "real_streak"):
                 result = _verify_form_streak_entry(entry)
+            elif entry["scanner"] in ("sog_under_streak", "saves_under_streak"):
+                result = _verify_player_under_entry(entry)
+            elif entry["scanner"] == "under_streak":
+                result = _verify_under_streak_entry(entry)
             elif entry["scanner"] in ("sog_hot_form", "sog_real_streak", "saves_hot_form", "saves_real_streak"):
                 result = _verify_player_form_streak_entry(entry)
         except Exception as e:
@@ -493,7 +576,8 @@ def build_results_dashboard(log):
         "team_total": "Team Total", "game_total": "Game Total",
         "anytime_goal": "Anytime Goalscorer", "to_record_point": "To Record a Point",
         "shots_on_goal": "Shots on Goal", "goalie_saves": "Goalie Saves",
-        "hot_form": "Hot Form", "real_streak": "Real Streak",
+        "hot_form": "Hot Form", "real_streak": "Real Streak", "under_streak": "Under Streak (team 2 or fewer)",
+        "sog_under_streak": "Player SOG Under Streak (1 or fewer)", "saves_under_streak": "Goalie Saves Under Streak (24 or fewer)",
         "sog_hot_form": "Player SOG Hot Form", "sog_real_streak": "Player SOG Real Streak",
         "saves_hot_form": "Goalie Saves Hot Form", "saves_real_streak": "Goalie Saves Real Streak",
     }
@@ -561,13 +645,16 @@ def build_results_dashboard(log):
 
 def run_results_tracker(legs, hot_form_entries=None, real_streak_entries=None,
                          player_hot_form_entries=None, player_real_streak_entries=None,
-                         goalie_hot_form_entries=None, goalie_real_streak_entries=None):
+                         goalie_hot_form_entries=None, goalie_real_streak_entries=None,
+                         under_streak_entries=None, player_under_entries=None, goalie_under_entries=None):
     """Single entry point called from blue_line.py's main()."""
     print("\nRunning results tracker...")
     log = load_log()
     log = log_todays_signals(legs, hot_form_entries or [], real_streak_entries or [], log,
                               player_hot_form_entries or [], player_real_streak_entries or [],
-                              goalie_hot_form_entries or [], goalie_real_streak_entries or [])
+                              goalie_hot_form_entries or [], goalie_real_streak_entries or [],
+                              under_streak_entries=under_streak_entries or [],
+                              player_under_entries=player_under_entries or [], goalie_under_entries=goalie_under_entries or [])
     log = verify_pending_results(log)
     save_log(log)
     build_results_dashboard(log)
