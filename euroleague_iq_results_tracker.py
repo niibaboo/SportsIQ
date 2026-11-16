@@ -97,7 +97,7 @@ def save_log(entries):
         json.dump(entries, f, indent=2, default=str)
 
 
-def log_todays_signals(legs, streak_entries, real_streak_entries, log):
+def log_todays_signals(legs, streak_entries, real_streak_entries, log, team_stat_entries=None):
     """Legs already carry season, game_code, is_home, line, and (for
     player props) player_code/stat_key -- added specifically for this
     tracker when the legs were built. Hot Form / Real Streak entries carry
@@ -155,6 +155,23 @@ def log_todays_signals(legs, streak_entries, real_streak_entries, log):
             e["season"], e["game_code"], (e.get("date") or "")[:10],
             is_home=e["is_home"], threshold=e["threshold"], streak_games=e.get("streak_games"))
 
+    for e in (team_stat_entries or []):
+        eid = _entry_id(e["scanner"] + "|" + e["stat_key"], e["market"], e["game_date"], e["match"])
+        if eid in existing_ids:
+            continue
+        log.append({
+            "id": eid, "scanner": e["scanner"], "match": e["match"], "market": e["market"],
+            "value": e["prob"], "detail": None, "streak_games": None,
+            "line": e.get("line"), "threshold": None,
+            "season": e["season"], "game_code": e["game_code"], "game_date": e["game_date"],
+            "date_key": e["game_date"], "is_home": None, "player_code": None,
+            "stat_key": e["stat_key"], "pick": e.get("pick"),
+            "logged_at": datetime.now(timezone.utc).isoformat(),
+            "status": "pending", "result": None, "actual": None,
+        })
+        existing_ids.add(eid)
+        added += 1
+
     print(f"  Results log: {added} new pick(s) logged, {len(log)} total in log")
     return log
 
@@ -204,6 +221,60 @@ def _verify_player_leg(entry):
     return {"actual": actual, "result": "hit" if actual > entry["line"] else "miss"}
 
 
+# Must match euroleague_iq.TEAM_STAT_SPECS' keys (duplicated, not imported, so
+# this file still runs standalone against an existing log).
+TEAM_STAT_KEYS = {
+    "reb": ("totalRebounds",),
+    "ast": ("assistances",),
+    "tpm": ("fieldGoalsMade3", "threePointersMade", "fieldGoalsMadeThree", "fieldGoalsMade3Points"),
+}
+CALIBRATION_SCANNERS = ("team_stat_ou", "team_stat_1x2")
+
+
+def _team_stat_from_block(block, keys):
+    block = block or {}
+    total = block.get("total") or {}
+    for k in keys:
+        v = total.get(k)
+        if v is not None:
+            try:
+                return float(v)
+            except (TypeError, ValueError):
+                pass
+    vals = []
+    for k in keys:
+        vals = []
+        for p in block.get("players") or []:
+            v = (p.get("stats") or {}).get(k)
+            try:
+                if v is not None:
+                    vals.append(float(v))
+            except (TypeError, ValueError):
+                pass
+        if len(vals) >= 5:
+            return float(sum(vals))
+    return None
+
+
+def _verify_team_stat_entry(entry):
+    stats = _get_game_stats(entry["season"], entry["game_code"])
+    if not _is_final(stats):
+        return None
+    keys = TEAM_STAT_KEYS.get(entry.get("stat_key"))
+    if not keys:
+        return None
+    h = _team_stat_from_block(stats.get("local"), keys)
+    a = _team_stat_from_block(stats.get("road"), keys)
+    if h is None or a is None:
+        print(f"    [DIAG] team stat '{entry.get('stat_key')}': couldn't read both teams' totals for game {entry['game_code']}")
+        return None
+    if entry["scanner"] == "team_stat_ou":
+        return {"actual": h + a, "result": "hit" if h + a > entry["line"] else "miss"}
+    d = h - a
+    outcome = "home" if d > 0 else "away" if d < 0 else "tie"
+    return {"actual": f"{h:g}-{a:g}", "result": "hit" if outcome == entry.get("pick") else "miss"}
+
+
 def _verify_form_streak_entry(entry):
     """Hot Form / Real Streak are raw-form screens, not probabilistic
     predictions -- 'hit' means the flagged team's actual points in THIS
@@ -242,6 +313,8 @@ def verify_pending_results(log, max_checks=200):
                 result = _verify_player_leg(entry)
             elif entry["scanner"] in ("hot_form", "real_streak"):
                 result = _verify_form_streak_entry(entry)
+            elif entry["scanner"] in CALIBRATION_SCANNERS:
+                result = _verify_team_stat_entry(entry)
         except Exception as e:
             print(f"    [!] verification error for entry {entry['id']} ({entry['scanner']}): {e}")
             result = None
@@ -271,10 +344,34 @@ def build_results_dashboard(log):
         "team_total": "Team Total", "game_total": "Game Total",
         "points": "Points", "rebounds": "Rebounds", "assists": "Assists",
         "hot_form": "Hot Form", "real_streak": "Real Streak",
+        "team_stat_ou": "Team REB/AST/3PT Over (mid line)", "team_stat_1x2": "Team REB/AST/3PT 1X2 pick",
     }
 
-    total_hit = sum(d["hit"] for d in by_scanner.values())
-    total_miss = sum(d["miss"] for d in by_scanner.values())
+    # Calibration picks (~50% by design) get their own panel, not the overall figure.
+    total_hit = sum(d["hit"] for k, d in by_scanner.items() if k not in CALIBRATION_SCANNERS)
+    total_miss = sum(d["miss"] for k, d in by_scanner.items() if k not in CALIBRATION_SCANNERS)
+    cal = {}
+    for e in verified:
+        if e["scanner"] in CALIBRATION_SCANNERS and isinstance(e.get("value"), (int, float)):
+            c = cal.setdefault((e["scanner"], e.get("stat_key")), {"n": 0, "hit": 0, "psum": 0.0})
+            c["n"] += 1
+            c["hit"] += e["result"] == "hit"
+            c["psum"] += e["value"]
+    cal_rows = ""
+    STAT_NAMES = {"reb": "rebounds", "ast": "assists", "tpm": "3PT"}
+    for (sc, stat), c in sorted(cal.items(), key=lambda kv: (kv[0][0], str(kv[0][1]))):
+        name = ("Combined over at middle line" if sc == "team_stat_ou" else "1X2 top pick") + f" · {STAT_NAMES.get(stat, stat)}"
+        pred, act = 100 * c["psum"] / c["n"], 100 * c["hit"] / c["n"]
+        flag = "" if c["n"] >= 30 else " (too few to judge)"
+        cal_rows += (f'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2a3038;font-size:12px">'
+                     f'<span>{name}</span><span>model {pred:.0f}% · actual {act:.0f}% ({act - pred:+.0f}) · n={c["n"]}{flag}</span></div>')
+    cal_html = ""
+    if cal_rows:
+        cal_html = ('<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #2a3038">'
+                    '<div style="font-weight:bold;margin-bottom:4px">Team rebounds / assists / 3PT — calibration</div>'
+                    '<div style="color:#888;font-size:11px;margin-bottom:8px">Does what the model calls 50% land near 50%? '
+                    'Model = average probability it gave; actual = how often it happened. Gaps within a few points are noise below ~100 picks.</div>'
+                    f'{cal_rows}</div>')
     total = total_hit + total_miss
     overall_pct = round(100 * total_hit / total) if total else None
 
@@ -315,6 +412,7 @@ def build_results_dashboard(log):
   {rows}
 </div>
 
+{cal_html}
 <div style="background:#1a1f26;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #2a3038">
   <div style="font-weight:bold;margin-bottom:8px">Recent Results</div>
   {recent_rows or '<p style="color:#888;font-size:12px">Nothing verified yet — check back after a few days of picks have had time to play out.</p>'}
@@ -336,11 +434,11 @@ def build_results_dashboard(log):
     print(f"  Results dashboard: {total} verified, {overall_pct}% overall" if total else "  Results dashboard: no verified picks yet")
 
 
-def run_results_tracker(legs, streak_entries=None, real_streak_entries=None, lg_scored=None):
+def run_results_tracker(legs, streak_entries=None, real_streak_entries=None, lg_scored=None, team_stat_entries=None):
     """Single entry point called from euroleague_iq.py's main()."""
     print("\nRunning results tracker...")
     log = load_log()
-    log = log_todays_signals(legs, streak_entries or [], real_streak_entries or [], log)
+    log = log_todays_signals(legs, streak_entries or [], real_streak_entries or [], log, team_stat_entries)
     log = verify_pending_results(log)
     save_log(log)
     build_results_dashboard(log)
