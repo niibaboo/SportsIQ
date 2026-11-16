@@ -157,6 +157,26 @@ def _current_goal_streak(last5_gf, threshold=REAL_STREAK_THRESHOLD):
     return streak
 
 
+# Under Streak -- the mirror of Real Streak (user request, 2026-11-16: "the
+# overs are not hitting well"). Consecutive most-recent games in which the team
+# scored AT MOST this many goals, i.e. a run that stayed under 2.5. Same
+# raw-form-screen caveat as Real Streak: a run of low scoring is context, not a
+# probability; the panel prints the model's own P(under 2.5) beside it, and
+# the H2H check flags a matchup where this team usually scores more.
+UNDER_STREAK_MAX_GOALS = 2
+UNDER_STREAK_MIN_LENGTH = 3
+
+
+def _current_under_streak(last5_gf, max_goals=UNDER_STREAK_MAX_GOALS):
+    streak = 0
+    for g in reversed(last5_gf):
+        if g <= max_goals:
+            streak += 1
+        else:
+            break
+    return streak
+
+
 def safe_line(lam, factor=DEFAULT_LINE_FACTOR, round_to=0.5):
     if lam is None:
         return None
@@ -465,6 +485,7 @@ def build_legs_and_cards(target_date):
     cards = ""
     streak_entries = []
     real_streak_entries = []
+    under_streak_entries = []
     from_date = season_start_guess(target_date)
 
     for league in LEAGUE_TARGETS:
@@ -536,6 +557,23 @@ def build_legs_and_cards(target_date):
                         "h2h": h2h,
                     })
 
+                under_len = _current_under_streak(l5)
+                if under_len >= UNDER_STREAK_MIN_LENGTH:
+                    h2h_u = None
+                    try:
+                        h2h_u = summarize_h2h(team["id"], opp["id"])
+                    except Exception as e:
+                        print(f"    [!] H2H summary failed for {team['name']} vs {opp['name']}: {e}")
+                    under_streak_entries.append({
+                        "team": team["name"], "opponent": opp["name"], "is_home": is_home,
+                        "league": league["name"], "league_id": league["id"], "date": m.get("date", ""),
+                        "streak_len": under_len, "streak_games": l5[-under_len:],
+                        "full_sample": under_len >= len(l5),
+                        "p_under": round((1.0 - prob_over(proj["lambda"], UNDER_STREAK_MAX_GOALS + 0.5)) * 100),
+                        "lambda": proj["lambda"],
+                        "home_name": home["name"], "away_name": away["name"], "h2h": h2h_u,
+                    })
+
             if home_proj and away_proj:
                 total_lambda = home_proj["lambda"] + away_proj["lambda"]
                 line = safe_line(total_lambda)
@@ -578,7 +616,8 @@ def build_legs_and_cards(target_date):
 
     streak_entries.sort(key=lambda e: -e["last5_avg"])
     real_streak_entries.sort(key=lambda e: -e["streak_len"])
-    return legs, cards, streak_entries, real_streak_entries
+    under_streak_entries.sort(key=lambda e: -e["streak_len"])
+    return legs, cards, streak_entries, real_streak_entries, under_streak_entries
 
 
 GOAL_STREAK_MIN = 3.5  # hockey-appropriate bar — higher than Match IQ's
@@ -622,6 +661,20 @@ REAL_STREAK_H2H_LINE = """<div style="font-size:10px;color:#7ec8ff;margin-top:3p
     <div style="font-size:10px;color:{flag_color};font-weight:700;margin-top:2px">{flag_icon} {flag_label}</div>"""
 REAL_STREAK_H2H_NONE = """<div style="font-size:10px;color:var(--sub);font-style:italic;margin-top:3px">No H2H history found for this matchup.</div>"""
 
+UNDER_STREAK_ENTRY_TEMPLATE = """<div style="background:var(--panel2);border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
+  <div style="min-width:56px;text-align:center;background:var(--bg);border:1px solid #60a5fa;border-radius:8px;padding:6px 4px;flex-shrink:0">
+    <div style="font-size:9px;color:var(--sub)">UNDER</div>
+    <div style="font-size:17px;font-weight:bold;color:#60a5fa">{streak_len}{plus}</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:10px;color:var(--sub)">{league}</div>
+    <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{team} <span style="color:var(--sub);font-weight:normal;font-size:11px">({home_away})</span> vs {opponent}</div>
+    <div style="font-size:10px;color:#cbd5e1">{streak_len} straight scoring {max_goals} or fewer (old→new): {streak_str}</div>
+    <div style="font-size:10px;color:#93c5fd;margin-top:3px">Model: {team} Under {line} goals {p_under}% (proj {lam} goals)</div>
+    {h2h_line}
+  </div>
+</div>"""
+
 STREAK_PANEL_TEMPLATE = """<div class="builderPanel">
   <div class="builderTitle">🔥 Hot Form &amp; Streaks</div>
   <div style="font-size:11px;color:var(--sub);margin-bottom:10px">
@@ -634,11 +687,14 @@ STREAK_PANEL_TEMPLATE = """<div class="builderPanel">
   {hot_form_entries}
   <div style="font-size:12px;font-weight:700;margin:14px 0 2px">🔥 Real Streak <span style="color:var(--sub);font-weight:normal;font-size:10px">(≥{min_streak}+ CONSECUTIVE games ≥{streak_threshold}, no break)</span></div>
   {streak_entries}
+  <div style="font-size:12px;font-weight:700;margin:14px 0 2px">🧊 Under Streak <span style="color:var(--sub);font-weight:normal;font-size:10px">({under_min}+ CONSECUTIVE games scoring ≤{under_max}, no break)</span></div>
+  {under_entries}
 </div>"""
 
 
-def render_streak_panel(hot_form_entries, real_streak_entries):
-    if not hot_form_entries and not real_streak_entries:
+def render_streak_panel(hot_form_entries, real_streak_entries, under_streak_entries=None):
+    under_streak_entries = under_streak_entries or []
+    if not hot_form_entries and not real_streak_entries and not under_streak_entries:
         return ""
     hot_form_html = "".join(
         STREAK_ENTRY_TEMPLATE.format(
@@ -682,7 +738,29 @@ def render_streak_panel(hot_form_entries, real_streak_entries):
         )
         for e in real_streak_entries
     ) or '<p style="color:var(--sub);font-size:11px">None currently.</p>'
+    def _under_h2h(e):
+        h2h = e.get("h2h")
+        if not h2h:
+            return REAL_STREAK_H2H_NONE
+        if h2h["avg_goals_for"] <= UNDER_STREAK_MAX_GOALS:
+            icon, label, color = "✅", "Backed by H2H", "#22c55e"
+        else:
+            icon, label, color = "⚠️", f"H2H says this team usually scores more ({h2h['avg_goals_for']} > {UNDER_STREAK_MAX_GOALS})", "#ef4444"
+        return REAL_STREAK_H2H_LINE.format(opponent=e["opponent"], flag_icon=icon, flag_label=label, flag_color=color, **h2h)
+
+    under_html = "".join(
+        UNDER_STREAK_ENTRY_TEMPLATE.format(
+            streak_len=e["streak_len"], plus="+" if e["full_sample"] else "",
+            league=e["league"], team=e["team"], home_away="Home" if e["is_home"] else "Away",
+            opponent=e["opponent"], max_goals=UNDER_STREAK_MAX_GOALS,
+            streak_str="/".join(str(v) for v in e["streak_games"]),
+            line=UNDER_STREAK_MAX_GOALS + 0.5, p_under=e["p_under"], lam=e["lambda"],
+            h2h_line=_under_h2h(e),
+        )
+        for e in under_streak_entries
+    ) or '<p style="color:var(--sub);font-size:11px">None currently.</p>'
     return STREAK_PANEL_TEMPLATE.format(
+        under_min=UNDER_STREAK_MIN_LENGTH, under_max=UNDER_STREAK_MAX_GOALS, under_entries=under_html,
         min_avg=GOAL_STREAK_MIN, min_games=GOAL_STREAK_MIN_GAMES,
         min_streak=REAL_STREAK_MIN_LENGTH, streak_threshold=REAL_STREAK_THRESHOLD,
         hot_form_entries=hot_form_html, streak_entries=streak_html,
@@ -856,12 +934,12 @@ initToggles();
 """
 
 
-def render_html(legs, cards, streak_entries, real_streak_entries, target_date):
+def render_html(legs, cards, streak_entries, real_streak_entries, target_date, under_streak_entries=None):
     return HTML_TEMPLATE.format(
         date=target_date.isoformat(),
         generated=datetime.now().strftime("%Y-%m-%d %H:%M"),
         weight=int(RECENT_WEIGHT * 100),
-        streak_panel=render_streak_panel(streak_entries, real_streak_entries),
+        streak_panel=render_streak_panel(streak_entries, real_streak_entries, under_streak_entries),
         cards=cards or "<p style='color:var(--sub);text-align:center'>No matchups had enough data for a full card today.</p>",
         legs_json=json.dumps(legs),
     )
@@ -874,7 +952,7 @@ if __name__ == "__main__":
         target = date.today()
 
     print(f"Fetching Euro Ice slate for {target.isoformat()}…")
-    legs, cards, streak_entries, real_streak_entries = build_legs_and_cards(target)
+    legs, cards, streak_entries, real_streak_entries, under_streak_entries = build_legs_and_cards(target)
 
     if not legs:
         print("No usable legs today — either no fixtures found for the configured "
@@ -882,9 +960,9 @@ if __name__ == "__main__":
               "docs/ left as whatever the last successful run published.")
         raise SystemExit(0)
 
-    print(f"  Hot Form: {len(streak_entries)} team-entries · Real Streak: {len(real_streak_entries)} team-entries")
+    print(f"  Hot Form: {len(streak_entries)} team-entries · Real Streak: {len(real_streak_entries)} team-entries · Under Streak: {len(under_streak_entries)} team-entries")
 
-    html = render_html(legs, cards, streak_entries, real_streak_entries, target)
+    html = render_html(legs, cards, streak_entries, real_streak_entries, target, under_streak_entries)
     os.makedirs("docs/euro-ice", exist_ok=True)
     with open("docs/euro-ice/index.html", "w") as f:
         f.write(html)
@@ -893,7 +971,8 @@ if __name__ == "__main__":
 
     try:
         import euro_ice_results_tracker as results_tracker
-        results_tracker.run_results_tracker(legs, streak_entries, real_streak_entries, API_KEY, REAL_STREAK_THRESHOLD)
+        results_tracker.run_results_tracker(legs, streak_entries, real_streak_entries, API_KEY, REAL_STREAK_THRESHOLD,
+                                            under_streak_entries=under_streak_entries)
     except Exception as e:
         # Results tracking sits on top of everything above, which has
         # already succeeded by this point -- a failure here should
