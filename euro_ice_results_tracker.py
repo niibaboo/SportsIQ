@@ -80,7 +80,7 @@ def save_log(entries):
         json.dump(entries, f, indent=2, default=str)
 
 
-def log_todays_signals(legs, streak_entries, real_streak_entries, log):
+def log_todays_signals(legs, streak_entries, real_streak_entries, log, under_streak_entries=None):
     """Team Total AND Game Total legs now both carry everything needed
     for later verification (line, league_id, home/away names, match
     date) -- added specifically for this tracker when the legs were
@@ -140,6 +140,13 @@ def log_todays_signals(legs, streak_entries, real_streak_entries, log):
             e["league"], e["league_id"], e["date"], date_key,
             e["home_name"], e["away_name"], is_home=e["is_home"], streak_games=e.get("streak_games"))
 
+    for e in (under_streak_entries or []):
+        date_key = (e["date"] or "")[:10]
+        add("under_streak", e["team"], f"Under Streak vs {e['opponent']}", e["streak_len"],
+            e["league"], e["league_id"], e["date"], date_key,
+            e["home_name"], e["away_name"], is_home=e["is_home"], streak_games=e.get("streak_games"),
+            detail=f"max={UNDER_MAX_GOALS};p_under={e.get('p_under')}")
+
     print(f"  Results log: {added} new pick(s) logged, {len(log)} total in log")
     return log
 
@@ -198,6 +205,25 @@ def _verify_form_streak_entry(entry, key, threshold):
     return {"actual": team_goals, "result": "hit" if team_goals >= threshold else "miss"}
 
 
+UNDER_MAX_GOALS = 2  # keep in step with euro_ice.UNDER_STREAK_MAX_GOALS
+
+
+def _verify_under_streak_entry(entry, key):
+    m = _find_finished_match(entry, key)
+    if not m:
+        return None
+    score = parse_score(m.get("state", {}).get("score", {}).get("current"))
+    if not score:
+        return None
+    home_goals, away_goals = score
+    team_goals = home_goals if entry["is_home"] else away_goals
+    try:
+        max_goals = float(str(entry.get("detail") or "").split("max=")[1].split(";")[0])
+    except (IndexError, ValueError):
+        max_goals = UNDER_MAX_GOALS
+    return {"actual": team_goals, "result": "hit" if team_goals <= max_goals else "miss"}
+
+
 def verify_pending_results(log, key, real_streak_threshold, max_checks=60):
     today = datetime.now(timezone.utc).date().isoformat()
     checked = 0
@@ -220,6 +246,8 @@ def verify_pending_results(log, key, real_streak_threshold, max_checks=60):
                 result = _verify_game_total_entry(entry, key)
             elif entry["scanner"] in ("hot_form", "real_streak"):
                 result = _verify_form_streak_entry(entry, key, real_streak_threshold)
+            elif entry["scanner"] == "under_streak":
+                result = _verify_under_streak_entry(entry, key)
         except Exception as e:
             print(f"    [!] verification error for entry {entry['id']} ({entry['scanner']}): {e}")
             result = None
@@ -254,7 +282,8 @@ def build_results_dashboard(log):
         d[e["result"]] += 1
 
     SCANNER_LABELS = {"team_total": "Team Total Goals", "game_total": "Game Total Goals",
-                       "hot_form": "Hot Form", "real_streak": "Real Streak"}
+                       "hot_form": "Hot Form", "real_streak": "Real Streak",
+                       "under_streak": "Under Streak (team 2 or fewer)"}
 
     total_hit = sum(d["hit"] for d in by_scanner.values())
     total_miss = sum(d["miss"] for d in by_scanner.values())
@@ -331,7 +360,7 @@ def build_results_dashboard(log):
   builder UI (combining two teams' separate scoring histories isn't a genuine paired
   record to count against there), but the final score itself is real and checkable.
   Hot Form / Real Streak are verified against whether the flagged team scored 2+ in
-  the SAME match the signal was flagged alongside. Sample sizes are still small early
+  the SAME match the signal was flagged alongside. Under Streak is graded the opposite way: a hit means the team scored 2 or fewer. Sample sizes are still small early
   on — treat percentages with real caution until there's a few weeks of data.
 </div>
 </body></html>"""
@@ -342,11 +371,11 @@ def build_results_dashboard(log):
     print(f"  Results dashboard: {total} verified, {overall_pct}% overall" if total else "  Results dashboard: no verified picks yet")
 
 
-def run_results_tracker(legs, streak_entries, real_streak_entries, key, real_streak_threshold):
+def run_results_tracker(legs, streak_entries, real_streak_entries, key, real_streak_threshold, under_streak_entries=None):
     """Single entry point called from euro_ice.py's main()."""
     print("\nRunning results tracker...")
     log = load_log()
-    log = log_todays_signals(legs, streak_entries, real_streak_entries, log)
+    log = log_todays_signals(legs, streak_entries, real_streak_entries, log, under_streak_entries)
     log = verify_pending_results(log, key, real_streak_threshold)
     save_log(log)
     build_results_dashboard(log)
