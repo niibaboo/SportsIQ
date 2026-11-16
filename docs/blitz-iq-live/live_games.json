@@ -1,38 +1,5 @@
 {
-  "generated": "2026-11-16T02:17:25.280605+00:00",
-  "total_live": 1,
-  "games": [
-    {
-      "game_id": "401873064",
-      "home_id": "4",
-      "away_id": "23",
-      "home_team": "Cincinnati Bengals",
-      "away_team": "Pittsburgh Steelers",
-      "home_score": 10.0,
-      "away_score": 0.0,
-      "period": 2,
-      "display_clock": "9:48",
-      "status": "9:48 - 2nd",
-      "elapsed_minute": 20.2,
-      "minutes_remaining": 39.8,
-      "next_score": {
-        "home": 71,
-        "away": 29
-      },
-      "game_total_pace": {
-        "prob": 31,
-        "status": "On Pace: Under"
-      },
-      "model_signal": {
-        "label": "Home Next Score",
-        "prob": 71,
-        "qualifies": true
-      },
-      "pregame_projection": {
-        "exp_home": 22.7,
-        "exp_away": 23.9,
-        "exp_total": 46.6
-      }
-    }
-  ]
+  "generated": "2026-11-16T09:50:14.102645+00:00",
+  "total_live": 0,
+  "games": []
 }
