@@ -1,0 +1,400 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Match IQ</title></head>
+<body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
+<h2 style="text-align:center">⚽ MATCH IQ — Full Stats</h2>
+<p style="text-align:center;color:#888;font-size:11px">Powered by TheStatsAPI · 16 Nov 15:12</p>
+<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Safe Corners</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a>·<a href="scanners/away_to_score/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Away to Score</a>·<a href="scanners/home_over15/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Home O1.5</a>·<a href="scanners/goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Hot Form/Streak</a></p>
+<p style="text-align:center;margin:4px 0 0;font-size:12px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none">📊 Results Tracker</a></p>
+
+<div style="display:flex;align-items:center;justify-content:center;gap:20px;margin:10px 0 4px">
+  <a href="match_iq_day-2026-11-23.html" style="color:#7ec8ff;text-decoration:none;font-size:20px">◀</a>
+  <span style="font-size:15px;font-weight:bold">Tue 24 Nov</span>
+  <a href="match_iq_day-2026-11-25.html" style="color:#7ec8ff;text-decoration:none;font-size:20px">▶</a>
+</div>
+<p style="text-align:center;margin-bottom:16px"><a href="match_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
+
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:14px;font-weight:bold;margin-bottom:10px">🎯 Safest Bet Builder</div>
+  <div id="categoryToggles" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;font-size:12px"></div>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+    <label style="font-size:12px;color:#aaa">Target odds:</label>
+    <input id="targetOdds" type="number" step="0.1" min="1.1" value="5.0"
+      style="width:70px;background:#0f1318;border:1px solid #333;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
+    <label style="font-size:12px;color:#aaa">Max legs:</label>
+    <input id="maxLegs" type="number" step="1" min="2" value="8"
+      style="width:55px;background:#0f1318;border:1px solid #333;color:white;border-radius:6px;padding:6px 8px;font-size:13px">
+    <button onclick="buildSafest()"
+      style="background:#3a7d7a;border:none;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
+      Build
+    </button>
+    <button onclick="buildSafest()"
+      style="background:#2a3038;border:1px solid #444;color:white;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer">
+      🔀 Shuffle
+    </button>
+  </div>
+  <div id="builderResult" style="font-size:12px;color:#888">
+    Untick any market type you don't want considered (Corners starts unticked —
+    lower counts mean more relative variance than shots/SoT), set a target odds
+    and leg cap, then tap Build. It rotates through whichever categories are
+    ticked, groups near-tied legs and shuffles within each group so it draws
+    from more of the day's matches rather than always the exact same few, and
+    caps at 2 legs per match to avoid stacking correlated legs from one game.
+    Tap Shuffle for a fresh pick among equally-safe options without changing
+    your settings.
+  </div>
+</div>
+<script>
+const LEGS = [{"match": "Como v AEK Athens", "market": "Over 2.5 Goals", "prob": 91, "category": "Goals", "detail": "5.53 exp goals (4v6gm)", "history": "H 4/2/4/9 \u00b7 A 0/4/1/1/1/2"}, {"match": "Como v AEK Athens", "market": "BTTS", "prob": 77, "category": "BTTS", "detail": "5.53 exp goals (4v6gm)", "history": "H 4/2/4/9 \u00b7 A 0/4/1/1/1/2"}, {"match": "Como v AEK Athens", "market": "AEK Athens to Score (Over 0.5)", "prob": 78, "category": "Team to Score", "detail": "1.53 exp goals vs 4v6gm sample", "history": "0/4/1/1/1/2"}, {"match": "Como v AEK Athens", "market": "Como Over 1.5 Goals", "prob": 91, "category": "Team Goals", "detail": "4.0 exp goals (4v6gm)", "history": "4/2/4/9"}, {"match": "Como v AEK Athens", "market": "FH Corners Over 3.5", "prob": 38, "category": "FH Corners", "detail": "3.12 exp FH corners (4v6gm)", "history": "H 1/0/1/3 \u00b7 A 1/3/2/1/0/0"}, {"match": "Como v AEK Athens", "market": "Como Over 9.5 Shots", "prob": 86, "category": "Shots", "detail": "avg 13.5 (4gm)", "history": "14/11/11/18"}, {"match": "Como v AEK Athens", "market": "Como Over 5.5 Shots on Target", "prob": 79, "category": "Shots on Target", "detail": "avg 7.8 (4gm)", "history": "6/5/8/12"}, {"match": "Como v AEK Athens", "market": "Como Over 1.0 Corners", "prob": 59, "category": "Corners", "detail": "avg 2.0 (4gm)", "history": "1/1/1/5"}, {"match": "Como v AEK Athens", "market": "Como Over 0.5 Cards", "prob": 78, "category": "Cards", "detail": "avg 1.5 (4gm)", "history": "2/3/1/0"}, {"match": "Como v AEK Athens", "market": "AEK Athens Over 9.5 Shots", "prob": 86, "category": "Shots", "detail": "avg 13.5 (6gm)", "history": "12/18/18/13/11/9"}, {"match": "Como v AEK Athens", "market": "AEK Athens Over 2.5 Shots on Target", "prob": 73, "category": "Shots on Target", "detail": "avg 3.8 (6gm)", "history": "1/7/4/3/3/5"}, {"match": "Como v AEK Athens", "market": "AEK Athens Over 2.0 Corners", "prob": 64, "category": "Corners", "detail": "avg 3.3 (6gm)", "history": "2/6/7/2/3/0"}, {"match": "Como v AEK Athens", "market": "AEK Athens Over 0.5 Cards", "prob": 82, "category": "Cards", "detail": "avg 1.7 (6gm)", "history": "0/3/1/4/0/2"}, {"match": "Manchester City v Napoli", "market": "Over 2.5 Goals", "prob": 89, "category": "Goals", "detail": "5.25 exp goals (4v4gm)", "history": "H 2/2/5/3 \u00b7 A 0/1/4/1"}, {"match": "Manchester City v Napoli", "market": "BTTS", "prob": 79, "category": "BTTS", "detail": "5.25 exp goals (4v4gm)", "history": "H 2/2/5/3 \u00b7 A 0/1/4/1"}, {"match": "Manchester City v Napoli", "market": "Napoli to Score (Over 0.5)", "prob": 81, "category": "Team to Score", "detail": "1.67 exp goals vs 4v4gm sample", "history": "0/1/4/1"}, {"match": "Manchester City v Napoli", "market": "Manchester City Over 1.5 Goals", "prob": 87, "category": "Team Goals", "detail": "3.58 exp goals (4v4gm)", "history": "2/2/5/3"}, {"match": "Manchester City v Napoli", "market": "FH Corners Over 3.5", "prob": 67, "category": "FH Corners", "detail": "4.55 exp FH corners (4v4gm)", "history": "H 1/6/5/1 \u00b7 A 0/3/1/3"}, {"match": "Manchester City v Napoli", "market": "Manchester City Over 13.5 Shots", "prob": 90, "category": "Shots", "detail": "avg 19.0 (4gm)", "history": "20/27/17/12"}, {"match": "Manchester City v Napoli", "market": "Manchester City Over 5.5 Shots on Target", "prob": 79, "category": "Shots on Target", "detail": "avg 7.8 (4gm)", "history": "10/9/7/5"}, {"match": "Manchester City v Napoli", "market": "Manchester City Over 4.5 Corners", "prob": 81, "category": "Corners", "detail": "avg 6.8 (4gm)", "history": "5/11/8/3"}, {"match": "Manchester City v Napoli", "market": "Manchester City Over 0.5 Cards", "prob": 83, "category": "Cards", "detail": "avg 1.8 (4gm)", "history": "3/1/1/2"}, {"match": "Manchester City v Napoli", "market": "Napoli Over 7.5 Shots", "prob": 86, "category": "Shots", "detail": "avg 11.0 (4gm)", "history": "5/11/17/11"}, {"match": "Manchester City v Napoli", "market": "Napoli Over 3.5 Shots on Target", "prob": 73, "category": "Shots on Target", "detail": "avg 5.0 (4gm)", "history": "3/3/8/6"}, {"match": "Manchester City v Napoli", "market": "Napoli Over 2.0 Corners", "prob": 53, "category": "Corners", "detail": "avg 2.8 (4gm)", "history": "0/4/2/5"}, {"match": "Manchester City v Napoli", "market": "Napoli Over 0.5 Cards", "prob": 96, "category": "Cards", "detail": "avg 3.2 (4gm)", "history": "2/3/3/5"}, {"match": "Galatasaray v Aston Villa", "market": "Over 2.5 Goals", "prob": 87, "category": "Goals", "detail": "4.93 exp goals (4v4gm)", "history": "H 1/1/4/2 \u00b7 A 3/6/3/0"}, {"match": "Galatasaray v Aston Villa", "market": "BTTS", "prob": 80, "category": "BTTS", "detail": "4.93 exp goals (4v4gm)", "history": "H 1/1/4/2 \u00b7 A 3/6/3/0"}, {"match": "Galatasaray v Aston Villa", "market": "Aston Villa to Score (Over 0.5)", "prob": 96, "category": "Team to Score", "detail": "3.12 exp goals vs 4v4gm sample", "history": "3/6/3/0"}, {"match": "Galatasaray v Aston Villa", "market": "Galatasaray Over 1.5 Goals", "prob": 54, "category": "Team Goals", "detail": "1.81 exp goals (4v4gm)", "history": "1/1/4/2"}, {"match": "Galatasaray v Aston Villa", "market": "FH Corners Over 3.5", "prob": 72, "category": "FH Corners", "detail": "4.89 exp FH corners (4v4gm)", "history": "H 2/1/0/4 \u00b7 A 3/6/6/4"}, {"match": "Galatasaray v Aston Villa", "market": "Galatasaray Over 6.5 Shots", "prob": 84, "category": "Shots", "detail": "avg 9.5 (4gm)", "history": "10/5/10/13"}, {"match": "Galatasaray v Aston Villa", "market": "Galatasaray Over 2.5 Shots on Target", "prob": 68, "category": "Shots on Target", "detail": "avg 3.5 (4gm)", "history": "3/3/4/4"}, {"match": "Galatasaray v Aston Villa", "market": "Galatasaray Over 2.5 Corners", "prob": 68, "category": "Corners", "detail": "avg 3.5 (4gm)", "history": "4/1/3/6"}, {"match": "Galatasaray v Aston Villa", "market": "Galatasaray Over 0.5 Cards", "prob": 89, "category": "Cards", "detail": "avg 2.2 (4gm)", "history": "3/2/1/3"}, {"match": "Galatasaray v Aston Villa", "market": "Aston Villa Over 12.5 Shots", "prob": 90, "category": "Shots", "detail": "avg 17.8 (4gm)", "history": "21/20/21/9"}, {"match": "Galatasaray v Aston Villa", "market": "Aston Villa Over 5.5 Shots on Target", "prob": 79, "category": "Shots on Target", "detail": "avg 7.8 (4gm)", "history": "9/11/10/1"}, {"match": "Galatasaray v Aston Villa", "market": "Aston Villa Over 5.0 Corners", "prob": 76, "category": "Corners", "detail": "avg 7.5 (4gm)", "history": "5/9/8/8"}, {"match": "Galatasaray v Aston Villa", "market": "Aston Villa Over 0.5 Cards", "prob": 78, "category": "Cards", "detail": "avg 1.5 (4gm)", "history": "3/0/0/3"}, {"match": "Bod\u00f8/Glimt v LASK", "market": "Over 2.5 Goals", "prob": 83, "category": "Goals", "detail": "4.55 exp goals (7v6gm)", "history": "H 2/3/3/0/1/3/0 \u00b7 A 0/4/0/3/3/4"}, {"match": "Bod\u00f8/Glimt v LASK", "market": "BTTS", "prob": 80, "category": "BTTS", "detail": "4.55 exp goals (7v6gm)", "history": "H 2/3/3/0/1/3/0 \u00b7 A 0/4/0/3/3/4"}, {"match": "Bod\u00f8/Glimt v LASK", "market": "LASK to Score (Over 0.5)", "prob": 90, "category": "Team to Score", "detail": "2.34 exp goals vs 7v6gm sample", "history": "0/4/0/3/3/4"}, {"match": "Bod\u00f8/Glimt v LASK", "market": "Bod\u00f8/Glimt Over 1.5 Goals", "prob": 65, "category": "Team Goals", "detail": "2.21 exp goals (7v6gm)", "history": "2/3/3/0/1/3/0"}, {"match": "Bod\u00f8/Glimt v LASK", "market": "FH Corners Over 3.5", "prob": 68, "category": "FH Corners", "detail": "4.64 exp FH corners (7v6gm)", "history": "H 4/1/3/2/1/1/0 \u00b7 A 0/4/1/3/2/4"}, {"match": "Bod\u00f8/Glimt v LASK", "market": "Bod\u00f8/Glimt Over 8.5 Shots", "prob": 85, "category": "Shots", "detail": "avg 12.1 (7gm)", "history": "23/8/21/3/11/15/4"}, {"match": "Bod\u00f8/Glimt v LASK", "market": "Bod\u00f8/Glimt Over 3.5 Shots on Target", "prob": 73, "category": "Shots on Target", "detail": "avg 5.0 (7gm)", "history": "9/4/9/0/3/6/4"}, {"match": "Bod\u00f8/Glimt v LASK", "market": "Bod\u00f8/Glimt Over 3.0 Corners", "prob": 64, "category": "Corners", "detail": "avg 4.4 (7gm)", "history": "10/2/4/3/4/5/3"}, {"match": "Bod\u00f8/Glimt v LASK", "market": "Bod\u00f8/Glimt Over 0.5 Cards", "prob": 50, "category": "Cards", "detail": "avg 0.7 (7gm)", "history": "2/1/0/2/0/0/0"}, {"match": "Bod\u00f8/Glimt v LASK", "market": "LASK Over 14.5 Shots", "prob": 91, "category": "Shots", "detail": "avg 20.5 (6gm)", "history": "20/40/11/12/11/29"}, {"match": "Bod\u00f8/Glimt v LASK", "market": "LASK Over 4.5 Shots on Target", "prob": 80, "category": "Shots on Target", "detail": "avg 6.7 (6gm)", "history": "8/8/3/4/7/10"}, {"match": "Bod\u00f8/Glimt v LASK", "market": "LASK Over 3.5 Corners", "prob": 76, "category": "Corners", "detail": "avg 5.2 (6gm)", "history": "3/10/3/3/4/8"}, {"match": "Bod\u00f8/Glimt v LASK", "market": "LASK Over 0.5 Cards", "prob": 83, "category": "Cards", "detail": "avg 1.8 (6gm)", "history": "1/2/2/1/5/0"}, {"match": "RB Leipzig v RC Lens", "market": "Over 2.5 Goals", "prob": 83, "category": "Goals", "detail": "4.52 exp goals (4v4gm)", "history": "H 1/1/1/2 \u00b7 A 3/0/0/1"}, {"match": "RB Leipzig v RC Lens", "market": "BTTS", "prob": 78, "category": "BTTS", "detail": "4.52 exp goals (4v4gm)", "history": "H 1/1/1/2 \u00b7 A 3/0/0/1"}, {"match": "RB Leipzig v RC Lens", "market": "RC Lens to Score (Over 0.5)", "prob": 84, "category": "Team to Score", "detail": "1.81 exp goals vs 4v4gm sample", "history": "3/0/0/1"}, {"match": "RB Leipzig v RC Lens", "market": "RB Leipzig Over 1.5 Goals", "prob": 75, "category": "Team Goals", "detail": "2.7 exp goals (4v4gm)", "history": "1/1/1/2"}, {"match": "RB Leipzig v RC Lens", "market": "FH Corners Over 3.5", "prob": 60, "category": "FH Corners", "detail": "4.17 exp FH corners (4v4gm)", "history": "H 1/2/1/2 \u00b7 A 3/1/2/2"}, {"match": "RB Leipzig v RC Lens", "market": "RB Leipzig Over 10.0 Shots", "prob": 86, "category": "Shots", "detail": "avg 14.5 (4gm)", "history": "14/19/11/14"}, {"match": "RB Leipzig v RC Lens", "market": "RB Leipzig Over 4.0 Shots on Target", "prob": 69, "category": "Shots on Target", "detail": "avg 5.8 (4gm)", "history": "4/7/6/6"}, {"match": "RB Leipzig v RC Lens", "market": "RB Leipzig Over 3.0 Corners", "prob": 60, "category": "Corners", "detail": "avg 4.2 (4gm)", "history": "5/6/1/5"}, {"match": "RB Leipzig v RC Lens", "market": "RB Leipzig Over 0.5 Cards", "prob": 89, "category": "Cards", "detail": "avg 2.2 (4gm)", "history": "3/1/1/4"}, {"match": "RB Leipzig v RC Lens", "market": "RC Lens Over 13.5 Shots", "prob": 91, "category": "Shots", "detail": "avg 19.2 (4gm)", "history": "26/21/19/11"}, {"match": "RB Leipzig v RC Lens", "market": "RC Lens Over 4.0 Shots on Target", "prob": 71, "category": "Shots on Target", "detail": "avg 6.0 (4gm)", "history": "8/6/7/3"}, {"match": "RB Leipzig v RC Lens", "market": "RC Lens Over 4.0 Corners", "prob": 74, "category": "Corners", "detail": "avg 6.2 (4gm)", "history": "9/6/5/5"}, {"match": "RB Leipzig v RC Lens", "market": "RC Lens Over 0.5 Cards", "prob": 83, "category": "Cards", "detail": "avg 1.8 (4gm)", "history": "1/2/2/2"}, {"match": "Cardiff City v Preston North End", "market": "Over 2.5 Goals", "prob": 77, "category": "Goals", "detail": "4.04 exp goals (7v7gm)", "history": "H 1/5/2/1/0/3/5 \u00b7 A 0/0/1/1/0/2/1"}, {"match": "Cardiff City v Preston North End", "market": "BTTS", "prob": 67, "category": "BTTS", "detail": "4.04 exp goals (7v7gm)", "history": "H 1/5/2/1/0/3/5 \u00b7 A 0/0/1/1/0/2/1"}, {"match": "Cardiff City v Preston North End", "market": "Preston North End to Score (Over 0.5)", "prob": 71, "category": "Team to Score", "detail": "1.23 exp goals vs 7v7gm sample", "history": "0/0/1/1/0/2/1"}, {"match": "Cardiff City v Preston North End", "market": "Cardiff City Over 1.5 Goals", "prob": 77, "category": "Team Goals", "detail": "2.81 exp goals (7v7gm)", "history": "1/5/2/1/0/3/5"}, {"match": "Cardiff City v Preston North End", "market": "FH Corners Over 3.5", "prob": 52, "category": "FH Corners", "detail": "3.78 exp FH corners (7v7gm)", "history": "H 1/4/2/1/2/3/5 \u00b7 A 1/3/2/1/3/1/1"}, {"match": "Cardiff City v Preston North End", "market": "Cardiff City Over 10.0 Shots", "prob": 84, "category": "Shots", "detail": "avg 14.3 (7gm)", "history": "10/22/7/16/13/7/25"}, {"match": "Cardiff City v Preston North End", "market": "Cardiff City Over 4.0 Shots on Target", "prob": 71, "category": "Shots on Target", "detail": "avg 6.0 (7gm)", "history": "1/10/3/4/9/4/11"}, {"match": "Cardiff City v Preston North End", "market": "Cardiff City Over 3.0 Corners", "prob": 69, "category": "Corners", "detail": "avg 4.7 (7gm)", "history": "6/6/4/3/5/4/5"}, {"match": "Cardiff City v Preston North End", "market": "Cardiff City Over 0.5 Cards", "prob": 80, "category": "Cards", "detail": "avg 1.6 (7gm)", "history": "0/1/3/1/2/0/4"}, {"match": "Cardiff City v Preston North End", "market": "Preston North End Over 7.0 Shots", "prob": 81, "category": "Shots", "detail": "avg 10.3 (7gm)", "history": "12/6/11/19/3/6/15"}, {"match": "Cardiff City v Preston North End", "market": "Preston North End Over 1.0 Shots on Target", "prob": 48, "category": "Shots on Target", "detail": "avg 1.6 (7gm)", "history": "1/1/1/4/0/2/2"}, {"match": "Cardiff City v Preston North End", "market": "Preston North End Over 2.5 Corners", "prob": 76, "category": "Corners", "detail": "avg 4.0 (7gm)", "history": "4/3/2/6/7/3/3"}, {"match": "Cardiff City v Preston North End", "market": "Preston North End Over 0.5 Cards", "prob": 91, "category": "Cards", "detail": "avg 2.4 (7gm)", "history": "1/3/4/1/2/1/5"}, {"match": "\u0160K Slovan Bratislava v Real Betis", "market": "Over 2.5 Goals", "prob": 74, "category": "Goals", "detail": "3.84 exp goals (7v4gm)", "history": "H 2/1/1/1/0/0/0 \u00b7 A 3/3/1/1"}, {"match": "\u0160K Slovan Bratislava v Real Betis", "market": "BTTS", "prob": 58, "category": "BTTS", "detail": "3.84 exp goals (7v4gm)", "history": "H 2/1/1/1/0/0/0 \u00b7 A 3/3/1/1"}, {"match": "\u0160K Slovan Bratislava v Real Betis", "market": "Real Betis to Score (Over 0.5)", "prob": 94, "category": "Team to Score", "detail": "2.88 exp goals vs 7v4gm sample", "history": "3/3/1/1"}, {"match": "\u0160K Slovan Bratislava v Real Betis", "market": "\u0160K Slovan Bratislava Over 1.5 Goals", "prob": 25, "category": "Team Goals", "detail": "0.96 exp goals (7v4gm)", "history": "2/1/1/1/0/0/0"}, {"match": "\u0160K Slovan Bratislava v Real Betis", "market": "FH Corners Over 3.5", "prob": 46, "category": "FH Corners", "detail": "3.48 exp FH corners (7v4gm)", "history": "H 2/2/0/1/1/2 \u00b7 A 2/4/1/1"}, {"match": "\u0160K Slovan Bratislava v Real Betis", "market": "\u0160K Slovan Bratislava Over 7.5 Shots", "prob": 84, "category": "Shots", "detail": "avg 10.7 (7gm)", "history": "15/17/9/15/1/7"}, {"match": "\u0160K Slovan Bratislava v Real Betis", "market": "\u0160K Slovan Bratislava Over 2.0 Shots on Target", "prob": 66, "category": "Shots on Target", "detail": "avg 3.4 (7gm)", "history": "4/2/8/4/1/0/5"}, {"match": "\u0160K Slovan Bratislava v Real Betis", "market": "\u0160K Slovan Bratislava Over 2.0 Corners", "prob": 55, "category": "Corners", "detail": "avg 2.9 (7gm)", "history": "2/4/8/2/1/1/2"}, {"match": "\u0160K Slovan Bratislava v Real Betis", "market": "\u0160K Slovan Bratislava Over 0.5 Cards", "prob": 85, "category": "Cards", "detail": "avg 1.9 (7gm)", "history": "3/2/1/1/1/3/2"}, {"match": "\u0160K Slovan Bratislava v Real Betis", "market": "Real Betis Over 12.5 Shots", "prob": 90, "category": "Shots", "detail": "avg 17.8 (4gm)", "history": "20/17/23/11"}, {"match": "\u0160K Slovan Bratislava v Real Betis", "market": "Real Betis Over 4.5 Shots on Target", "prob": 78, "category": "Shots on Target", "detail": "avg 6.5 (4gm)", "history": "5/7/10/4"}, {"match": "\u0160K Slovan Bratislava v Real Betis", "market": "Real Betis Over 3.0 Corners", "prob": 71, "category": "Corners", "detail": "avg 4.8 (4gm)", "history": "5/5/4/5"}, {"match": "\u0160K Slovan Bratislava v Real Betis", "market": "Real Betis Over 0.5 Cards", "prob": 95, "category": "Cards", "detail": "avg 3.0 (4gm)", "history": "3/4/1/4"}, {"match": "Feyenoord v FC Porto", "market": "Over 2.5 Goals", "prob": 70, "category": "Goals", "detail": "3.6 exp goals (4v4gm)", "history": "H 1/3/0/0 \u00b7 A 0/2/0/4"}, {"match": "Feyenoord v FC Porto", "market": "BTTS", "prob": 66, "category": "BTTS", "detail": "3.6 exp goals (4v4gm)", "history": "H 1/3/0/0 \u00b7 A 0/2/0/4"}, {"match": "Feyenoord v FC Porto", "market": "FC Porto to Score (Over 0.5)", "prob": 90, "category": "Team to Score", "detail": "2.26 exp goals vs 4v4gm sample", "history": "0/2/0/4"}, {"match": "Feyenoord v FC Porto", "market": "Feyenoord Over 1.5 Goals", "prob": 39, "category": "Team Goals", "detail": "1.34 exp goals (4v4gm)", "history": "1/3/0/0"}, {"match": "Feyenoord v FC Porto", "market": "FH Corners Over 3.5", "prob": 39, "category": "FH Corners", "detail": "3.16 exp FH corners (4v4gm)", "history": "H 0/2/1/3 \u00b7 A 0/0/1/3"}, {"match": "Feyenoord v FC Porto", "market": "Feyenoord Over 7.0 Shots", "prob": 78, "category": "Shots", "detail": "avg 10.0 (4gm)", "history": "4/13/12/11"}, {"match": "Feyenoord v FC Porto", "market": "Feyenoord Over 2.0 Shots on Target", "prob": 53, "category": "Shots on Target", "detail": "avg 2.8 (4gm)", "history": "2/5/2/2"}, {"match": "Feyenoord v FC Porto", "market": "Feyenoord Over 2.5 Corners", "prob": 68, "category": "Corners", "detail": "avg 3.5 (4gm)", "history": "1/4/4/5"}, {"match": "Feyenoord v FC Porto", "market": "Feyenoord Over 0.5 Cards", "prob": 78, "category": "Cards", "detail": "avg 1.5 (4gm)", "history": "1/2/2/1"}, {"match": "Feyenoord v FC Porto", "market": "FC Porto Over 8.5 Shots", "prob": 86, "category": "Shots", "detail": "avg 12.2 (4gm)", "history": "5/11/14/19"}, {"match": "Feyenoord v FC Porto", "market": "FC Porto Over 3.0 Shots on Target", "prob": 60, "category": "Shots on Target", "detail": "avg 4.2 (4gm)", "history": "0/5/4/8"}, {"match": "Feyenoord v FC Porto", "market": "FC Porto Over 1.5 Corners", "prob": 71, "category": "Corners", "detail": "avg 2.5 (4gm)", "history": "2/1/2/5"}, {"match": "Feyenoord v FC Porto", "market": "FC Porto Over 0.5 Cards", "prob": 70, "category": "Cards", "detail": "avg 1.2 (4gm)", "history": "1/3/0/1"}, {"match": "Norwich City v Queens Park Rangers", "market": "Over 2.5 Goals", "prob": 69, "category": "Goals", "detail": "3.56 exp goals (7v7gm)", "history": "H 1/0/0/3/3/4/5 \u00b7 A 1/4/0/5/1/1/2"}, {"match": "Norwich City v Queens Park Rangers", "market": "BTTS", "prob": 67, "category": "BTTS", "detail": "3.56 exp goals (7v7gm)", "history": "H 1/0/0/3/3/4/5 \u00b7 A 1/4/0/5/1/1/2"}, {"match": "Norwich City v Queens Park Rangers", "market": "Queens Park Rangers to Score (Over 0.5)", "prob": 76, "category": "Team to Score", "detail": "1.42 exp goals vs 7v7gm sample", "history": "1/4/0/5/1/1/2"}, {"match": "Norwich City v Queens Park Rangers", "market": "Norwich City Over 1.5 Goals", "prob": 63, "category": "Team Goals", "detail": "2.14 exp goals (7v7gm)", "history": "1/0/0/3/3/4/5"}, {"match": "Norwich City v Queens Park Rangers", "market": "FH Corners Over 3.5", "prob": 30, "category": "FH Corners", "detail": "2.77 exp FH corners (7v7gm)", "history": "H 1/0/1/2/5/4/0 \u00b7 A 0/1/1/1/4/4/1"}, {"match": "Norwich City v Queens Park Rangers", "market": "Norwich City Over 10.0 Shots", "prob": 84, "category": "Shots", "detail": "avg 14.3 (7gm)", "history": "12/12/9/16/15/19/17"}, {"match": "Norwich City v Queens Park Rangers", "market": "Norwich City Over 3.5 Shots on Target", "prob": 75, "category": "Shots on Target", "detail": "avg 5.1 (7gm)", "history": "5/4/2/5/5/8/7"}, {"match": "Norwich City v Queens Park Rangers", "market": "Norwich City Over 3.0 Corners", "prob": 67, "category": "Corners", "detail": "avg 4.6 (7gm)", "history": "2/5/1/7/9/5/3"}, {"match": "Norwich City v Queens Park Rangers", "market": "Norwich City Over 0.5 Cards", "prob": 73, "category": "Cards", "detail": "avg 1.3 (7gm)", "history": "1/2/3/2/1/0/0"}, {"match": "Norwich City v Queens Park Rangers", "market": "Queens Park Rangers Over 9.0 Shots", "prob": 84, "category": "Shots", "detail": "avg 13.1 (7gm)", "history": "7/9/12/12/12/20/20"}, {"match": "Norwich City v Queens Park Rangers", "market": "Queens Park Rangers Over 3.0 Shots on Target", "prob": 62, "category": "Shots on Target", "detail": "avg 4.3 (7gm)", "history": "3/7/4/5/2/5/4"}, {"match": "Norwich City v Queens Park Rangers", "market": "Queens Park Rangers Over 3.0 Corners", "prob": 62, "category": "Corners", "detail": "avg 4.3 (7gm)", "history": "1/1/4/6/4/8/6"}, {"match": "Norwich City v Queens Park Rangers", "market": "Queens Park Rangers Over 0.5 Cards", "prob": 90, "category": "Cards", "detail": "avg 2.3 (7gm)", "history": "4/2/2/2/3/1/2"}];
+
+function initCategoryToggles() {
+  const container = document.getElementById('categoryToggles');
+  const cats = [...new Set(LEGS.map(l => l.category))];
+  container.innerHTML = cats.map(c => `
+    <label style="display:flex;align-items:center;gap:4px;color:#ccc;cursor:pointer">
+      <input type="checkbox" class="catToggle" value="${c}" ${c === 'Corners' ? '' : 'checked'}>
+      ${c}
+    </label>
+  `).join('');
+}
+initCategoryToggles();
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Sorts safest-first at a coarse level (5-point probability bands) but
+// shuffles legs WITHIN each band, so e.g. five different legs all sitting
+// at 84-88% get picked in a different order each time instead of always
+// the same one — this is what actually lets the builder draw from the
+// full pool of matches instead of fixating on whichever leg happens to
+// be a fraction of a percent ahead.
+function tieredShuffle(legs, bandSize) {
+  const bands = {};
+  legs.forEach(l => {
+    const band = Math.floor(l.prob / bandSize);
+    (bands[band] = bands[band] || []).push(l);
+  });
+  const bandKeys = Object.keys(bands).map(Number).sort((a, b) => b - a);
+  let result = [];
+  bandKeys.forEach(b => { result = result.concat(shuffle(bands[b])); });
+  return result;
+}
+
+function buildSafest() {
+  const target = parseFloat(document.getElementById('targetOdds').value) || 5.0;
+  const maxLegs = parseInt(document.getElementById('maxLegs').value) || 8;
+  const activeCats = [...document.querySelectorAll('.catToggle:checked')].map(el => el.value);
+
+  // Group legs by category, tiered-shuffled within each, so the builder can
+  // round-robin across market types instead of exhausting one category
+  // (usually Shots, since it tends to have the highest raw probabilities)
+  // before touching any other — and so it doesn't fixate on the same
+  // handful of matches every time when many legs are near-equally safe.
+  const byCategory = {};
+  LEGS.filter(l => l.prob > 0 && activeCats.includes(l.category)).forEach(l => {
+    (byCategory[l.category] = byCategory[l.category] || []).push(l);
+  });
+  const categories = Object.keys(byCategory);
+  categories.forEach(c => { byCategory[c] = tieredShuffle(byCategory[c], 5); });
+  const cursor = {};
+  categories.forEach(c => cursor[c] = 0);
+
+  const chosen = [];
+  const matchCount = {};
+  let combinedOdds = 1;
+  let addedThisPass = true;
+
+  while (addedThisPass && combinedOdds < target && chosen.length < maxLegs) {
+    addedThisPass = false;
+    for (const cat of categories) {
+      if (combinedOdds >= target || chosen.length >= maxLegs) break;
+      const arr = byCategory[cat];
+      while (cursor[cat] < arr.length) {
+        const leg = arr[cursor[cat]];
+        cursor[cat]++;
+        const count = matchCount[leg.match] || 0;
+        if (count >= 2) continue;  // cap legs per match to limit correlation risk
+        chosen.push(leg);
+        combinedOdds *= 100 / leg.prob;
+        matchCount[leg.match] = count + 1;
+        addedThisPass = true;
+        break;
+      }
+    }
+  }
+
+  const el = document.getElementById('builderResult');
+  if (!chosen.length) {
+    el.innerHTML = 'No legs available to build from.';
+    return;
+  }
+
+  const rows = chosen.map(l =>
+    `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #2a3038">
+       <span>${l.match}<br><span style="color:#7ec8ff">${l.market}</span> <span style="color:#555">· ${l.category}</span>
+       ${l.detail ? `<br><span style="color:#666;font-size:10px">${l.detail}</span>` : ''}
+       ${l.history ? `<br><span style="color:#555;font-size:10px">last games: ${l.history}</span>` : ''}</span>
+       <span style="color:#ffeb3b;font-weight:bold">${l.prob}%</span>
+     </div>`
+  ).join('');
+
+  const capNote = chosen.length >= maxLegs && combinedOdds < target
+    ? ' (hit the leg cap before reaching target — raise Max legs or lower Target odds)'
+    : (combinedOdds < target ? ' (ran out of legs before reaching target)' : '');
+
+  el.innerHTML = `
+    <div style="color:white;font-size:13px;margin-bottom:6px">
+      ${chosen.length} legs · est. combined odds ~<b>${combinedOdds.toFixed(2)}</b>${capNote}
+    </div>
+    ${rows}
+    <div style="color:#666;font-size:10px;margin-top:8px;line-height:1.4">
+      Estimate multiplies each leg's fair odds (100/probability) — real bookmaker
+      odds include their margin and legs within the same match aren't fully
+      independent, so treat this as a ranking tool, not a firm price. Shots/SoT/
+      corners lines are set automatically below each team's recent-form average
+      for a safety margin; goals/BTTS/FH-corners use the model's own probabilities.
+    </div>
+  `;
+}
+</script>
+
+<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">UEFA Champions League · 2026-11-24 20:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Como vs AEK Athens</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">5.53</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">91%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">77%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">78%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">10%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">9%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">3.12</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">38%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">21%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Como: 4.75 goals/gm · shots 13.5 · SoT 7.8 · corners 2.0 (FH 1.2) · tackles 18.5 · saves 2.8 · cards 1.5 (4gm)</div>
+    <div style="margin-top:4px">AEK Athens: 1.5 goals/gm · shots 13.5 · SoT 3.8 · corners 3.3 (FH 1.2) · tackles 18.7 · saves 2.8 · cards 1.7 (6gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Como last games</span> — goals 4/2/4/9 · shots 14/11/11/18 · SoT 6/5/8/12 · corners 1/1/1/5 · cards 2/3/1/0</div>
+    <div style="margin-top:3px"><span style="color:#aaa">AEK Athens last games</span> — goals 0/4/1/1/1/2 · shots 12/18/18/13/11/9 · SoT 1/7/4/3/3/5 · corners 2/6/7/2/3/0 · cards 0/3/1/4/0/2</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">UEFA Champions League · 2026-11-24 20:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Manchester City vs Napoli</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">5.25</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">89%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">79%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">72%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">13%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">14%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">4.55</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">67%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">48%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Manchester City: 3.0 goals/gm · shots 19.0 · SoT 7.8 · corners 6.8 (FH 3.2) · tackles 17.2 · saves 3.0 · cards 1.8 (4gm)</div>
+    <div style="margin-top:4px">Napoli: 1.5 goals/gm · shots 11.0 · SoT 5.0 · corners 2.8 (FH 1.8) · tackles 13.8 · saves 3.5 · cards 3.2 (4gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Manchester City last games</span> — goals 2/2/5/3 · shots 20/27/17/12 · SoT 10/9/7/5 · corners 5/11/8/3 · cards 3/1/1/2</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Napoli last games</span> — goals 0/1/4/1 · shots 5/11/17/11 · SoT 3/3/8/6 · corners 0/4/2/5 · cards 2/3/3/5</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">UEFA Champions League · 2026-11-24 17:45</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Galatasaray vs Aston Villa</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.93</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">87%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">80%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">20%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">16%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">63%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">4.89</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">72%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">54%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Galatasaray: 2.0 goals/gm · shots 9.5 · SoT 3.5 · corners 3.5 (FH 1.8) · tackles 15.8 · saves 4.2 · cards 2.2 (4gm)</div>
+    <div style="margin-top:4px">Aston Villa: 3.0 goals/gm · shots 17.8 · SoT 7.8 · corners 7.5 (FH 4.8) · tackles 17.0 · saves 4.0 · cards 1.5 (4gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Galatasaray last games</span> — goals 1/1/4/2 · shots 10/5/10/13 · SoT 3/3/4/4 · corners 4/1/3/6 · cards 3/2/1/3</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Aston Villa last games</span> — goals 3/6/3/0 · shots 21/20/21/9 · SoT 9/11/10/1 · corners 5/9/8/8 · cards 3/0/0/3</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">UEFA Champions League · 2026-11-24 17:45</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Bodø/Glimt vs LASK</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.55</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">83%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">80%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">38%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">19%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">43%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">4.64</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">68%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">49%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Bodø/Glimt: 1.71 goals/gm · shots 12.1 · SoT 5.0 · corners 4.4 (FH 1.7) · tackles 19.0 · saves 3.9 · cards 0.7 (7gm)</div>
+    <div style="margin-top:4px">LASK: 2.33 goals/gm · shots 20.5 · SoT 6.7 · corners 5.2 (FH 2.3) · tackles 20.2 · saves 2.8 · cards 1.8 (6gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Bodø/Glimt last games</span> — goals 2/3/3/0/1/3/0 · shots 23/8/21/3/11/15/4 · SoT 9/4/9/0/3/6/4 · corners 10/2/4/3/4/5/3 · cards 2/1/0/2/0/0/0</div>
+    <div style="margin-top:3px"><span style="color:#aaa">LASK last games</span> — goals 0/4/0/3/3/4 · shots 20/40/11/12/11/29 · SoT 8/8/3/4/7/10 · corners 3/10/3/3/4/8 · cards 1/2/2/1/5/0</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">UEFA Champions League · 2026-11-24 20:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">RB Leipzig vs RC Lens</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.52</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">83%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">78%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">57%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">18%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">25%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">4.17</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">60%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">40%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>RB Leipzig: 1.25 goals/gm · shots 14.5 · SoT 5.8 · corners 4.2 (FH 1.5) · tackles 12.8 · saves 4.0 · cards 2.2 (4gm)</div>
+    <div style="margin-top:4px">RC Lens: 1.0 goals/gm · shots 19.2 · SoT 6.0 · corners 6.2 (FH 2.0) · tackles 22.0 · saves 2.5 · cards 1.8 (4gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">RB Leipzig last games</span> — goals 1/1/1/2 · shots 14/19/11/14 · SoT 4/7/6/6 · corners 5/6/1/5 · cards 3/1/1/4</div>
+    <div style="margin-top:3px"><span style="color:#aaa">RC Lens last games</span> — goals 3/0/0/1 · shots 26/21/19/11 · SoT 8/6/7/3 · corners 9/6/5/5 · cards 1/2/2/2</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Championship · 2026-11-24 19:45</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Cardiff City vs Preston North End</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">4.04</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">77%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">67%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">70%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">16%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">14%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">3.78</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">52%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">33%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Cardiff City: 2.43 goals/gm · shots 14.3 · SoT 6.0 · corners 4.7 (FH 2.6) · tackles 14.6 · saves 4.4 · cards 1.6 (7gm)</div>
+    <div style="margin-top:4px">Preston North End: 0.71 goals/gm · shots 10.3 · SoT 1.6 · corners 4.0 (FH 1.7) · tackles 16.4 · saves 3.6 · cards 2.4 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Cardiff City last games</span> — goals 1/5/2/1/0/3/5 · shots 10/22/7/16/13/7/25 · SoT 1/10/3/4/9/4/11 · corners 6/6/4/3/5/4/5 · cards 0/1/3/1/2/0/4</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Preston North End last games</span> — goals 0/0/1/1/0/2/1 · shots 12/6/11/19/3/6/15 · SoT 1/1/1/4/0/2/2 · corners 4/3/2/6/7/3/3 · cards 1/3/4/1/2/1/5</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">UEFA Champions League · 2026-11-24 20:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">ŠK Slovan Bratislava vs Real Betis</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.84</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">74%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">58%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">10%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">14%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">76%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">3.48</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">46%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">27%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>ŠK Slovan Bratislava: 0.71 goals/gm · shots 10.7 · SoT 3.4 · corners 2.9 (FH 1.3) · tackles 16.3 · saves 5.5 · cards 1.9 (7gm)</div>
+    <div style="margin-top:4px">Real Betis: 2.0 goals/gm · shots 17.8 · SoT 6.5 · corners 4.8 (FH 2.0) · tackles 13.5 · saves 2.2 · cards 3.0 (4gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">ŠK Slovan Bratislava last games</span> — goals 2/1/1/1/0/0/0 · shots 15/17/9/15/1/7 · SoT 4/2/8/4/1/0/5 · corners 2/4/8/2/1/1/2 · cards 3/2/1/1/1/3/2</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Real Betis last games</span> — goals 3/3/1/1 · shots 20/17/23/11 · SoT 5/7/10/4 · corners 5/5/4/5 · cards 3/4/1/4</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">UEFA Champions League · 2026-11-24 20:00</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Feyenoord vs FC Porto</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.6</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">70%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">66%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">22%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">20%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">58%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">3.16</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">39%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">21%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Feyenoord: 1.0 goals/gm · shots 10.0 · SoT 2.8 · corners 3.5 (FH 1.5) · tackles 18.5 · saves 5.0 · cards 1.5 (4gm)</div>
+    <div style="margin-top:4px">FC Porto: 1.5 goals/gm · shots 12.2 · SoT 4.2 · corners 2.5 (FH 1.0) · tackles 15.0 · saves 4.8 · cards 1.2 (4gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Feyenoord last games</span> — goals 1/3/0/0 · shots 4/13/12/11 · SoT 2/5/2/2 · corners 1/4/4/5 · cards 1/2/2/1</div>
+    <div style="margin-top:3px"><span style="color:#aaa">FC Porto last games</span> — goals 0/2/0/4 · shots 5/11/14/19 · SoT 0/5/4/8 · corners 2/1/2/5 · cards 1/3/0/1</div>
+  </div>
+</div><div style="background:#1a1f26;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #2a3038">
+  <div style="font-size:11px;color:#999">Championship · 2026-11-24 19:45</div>
+  <div style="font-size:17px;font-weight:bold;margin:6px 0 10px">Norwich City vs Queens Park Rangers</div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">EXP TOTAL</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">3.56</div></div>
+    <div><div style="color:#aaa;font-size:11px">OVER 2.5</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">69%</div></div>
+    <div><div style="color:#aaa;font-size:11px">BTTS</div><div style="color:#ffeb3b;font-size:20px;font-weight:bold">67%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">54%</div></div>
+    <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">21%</div></div>
+    <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">25%</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
+    <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">2.77</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 3.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">30%</div></div>
+    <div><div style="color:#aaa;font-size:11px">FH OVER 4.5</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">15%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:11px">
+    <div>Norwich City: 2.29 goals/gm · shots 14.3 · SoT 5.1 · corners 4.6 (FH 1.9) · tackles 18.7 · saves 2.7 · cards 1.3 (7gm)</div>
+    <div style="margin-top:4px">Queens Park Rangers: 2.0 goals/gm · shots 13.1 · SoT 4.3 · corners 4.3 (FH 1.7) · tackles 11.9 · saves 2.9 · cards 2.3 (7gm)</div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;font-size:10px;color:#888;margin-top:6px;line-height:1.6">
+    <div><span style="color:#aaa">Norwich City last games</span> — goals 1/0/0/3/3/4/5 · shots 12/12/9/16/15/19/17 · SoT 5/4/2/5/5/8/7 · corners 2/5/1/7/9/5/3 · cards 1/2/3/2/1/0/0</div>
+    <div style="margin-top:3px"><span style="color:#aaa">Queens Park Rangers last games</span> — goals 1/4/0/5/1/1/2 · shots 7/9/12/12/12/20/20 · SoT 3/7/4/5/2/5/4 · corners 1/1/4/6/4/8/6 · cards 4/2/2/2/3/1/2</div>
+  </div>
+</div>
+</body></html>
