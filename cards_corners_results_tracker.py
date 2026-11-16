@@ -137,7 +137,8 @@ def _streak_entry_id(scanner, subject, date_key, market):
 
 
 def log_todays_signals(predictions, log, corners_real_streak=None, cards_real_streak=None,
-                        sot_real_streak=None):
+                        sot_real_streak=None, corners_under_streak=None, cards_under_streak=None,
+                        sot_under_streak=None):
     """Appends one pending entry per team per market (Corners, Cards)
     for every upcoming match in this run's predictions -- skipping
     anything already logged under the same category+match+team, so
@@ -172,7 +173,8 @@ def log_todays_signals(predictions, log, corners_real_streak=None, cards_real_st
 
     def add_streak(scanner, e):
         nonlocal added
-        market = f"Real Streak vs {e['opponent']}"
+        kind = "Under Streak" if scanner.endswith("under_streak") else "Real Streak"
+        market = f"{kind} vs {e['opponent']}"
         eid = _streak_entry_id(scanner, e["team"], e["date_key"], market)
         if eid in existing_ids:
             return
@@ -195,6 +197,13 @@ def log_todays_signals(predictions, log, corners_real_streak=None, cards_real_st
         add_streak("cards_real_streak", e)
     for e in sot_real_streak:
         add_streak("sot_real_streak", e)
+    # Under (cold) streaks: 'threshold' holds the CAP; a hit = the team stayed at or under it.
+    for e in (corners_under_streak or []):
+        add_streak("corners_under_streak", e)
+    for e in (cards_under_streak or []):
+        add_streak("cards_under_streak", e)
+    for e in (sot_under_streak or []):
+        add_streak("sot_under_streak", e)
 
     for p in predictions:
         base = dict(match_id=p["match_id"], league=p["league"], date=p["date"], date_key=p["date_key"],
@@ -277,6 +286,9 @@ STREAK_STAT_KEY = {
     "corners_real_streak": "corner_kicks",
     "cards_real_streak": "yellow_cards",
     "sot_real_streak": "shots_on_target",
+    "corners_under_streak": "corner_kicks",
+    "cards_under_streak": "yellow_cards",
+    "sot_under_streak": "shots_on_target",
 }
 
 
@@ -310,6 +322,8 @@ def _verify_streak_entry(entry, key):
     threshold = entry.get("threshold")
     if threshold is None:
         return None
+    if entry["scanner"].endswith("under_streak"):
+        return {"actual": side_val, "result": "hit" if side_val <= threshold else "miss"}
     return {"actual": side_val, "result": "hit" if side_val >= threshold else "miss"}
 
 
@@ -356,6 +370,9 @@ STREAK_CATEGORY_LABEL = {
     "corners_real_streak": "Real Corner Streak",
     "cards_real_streak": "Real Card Streak",
     "sot_real_streak": "Real SOT Streak",
+    "corners_under_streak": "Corners Under Streak",
+    "cards_under_streak": "Cards Under Streak",
+    "sot_under_streak": "SOT Under Streak",
 }
 
 
@@ -377,7 +394,8 @@ def build_results_dashboard(log):
         d[e["result"]] += 1
 
     CATEGORY_ORDER = ["Team Corners", "Team Cards", "Team Shots on Target",
-                       "Real Corner Streak", "Real Card Streak", "Real SOT Streak"]
+                       "Real Corner Streak", "Real Card Streak", "Real SOT Streak",
+                       "Corners Under Streak", "Cards Under Streak", "SOT Under Streak"]
     CATEGORY_NOTE = {
         "Team Corners": "opponent-adjusted projection · safety-margined line",
         "Team Cards": "yellow cards only, no opponent adjustment · safety-margined line",
@@ -385,6 +403,9 @@ def build_results_dashboard(log):
         "Real Corner Streak": "genuinely consecutive games clearing the corners threshold",
         "Real Card Streak": "genuinely consecutive games clearing the cards threshold",
         "Real SOT Streak": "genuinely consecutive games clearing the shots-on-target threshold",
+        "Corners Under Streak": "consecutive games at 4 or fewer corners · hit = stayed at or under",
+        "Cards Under Streak": "consecutive games at 1 or fewer yellows · hit = stayed at or under",
+        "SOT Under Streak": "consecutive games at 3 or fewer shots on target · hit = stayed at or under",
     }
 
     total_hit = sum(d["hit"] for d in by_cat.values())
@@ -407,7 +428,10 @@ def build_results_dashboard(log):
     recent_rows = ""
     for e in recent:
         color = "#22c55e" if e["result"] == "hit" else "#ef4444"
-        detail = f"line {e['line']}" if "line" in e else f"needs {e.get('threshold')}+"
+        if str(e.get("scanner", "")).endswith("under_streak"):
+            detail = f"needs {e.get('threshold')} or fewer"
+        else:
+            detail = f"line {e['line']}" if "line" in e else f"needs {e.get('threshold')}+"
         recent_rows += f"""<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #233040;font-size:12px">
   <div><b>{e['team']}</b><br><span style="color:#8b98a8">{_cat(e)} · {detail} · actual {e['actual']}</span></div>
   <span style="color:{color};font-weight:bold">{e['result'].upper()}</span>
@@ -451,11 +475,13 @@ def build_results_dashboard(log):
 
 
 def run_results_tracker(predictions, key, corners_real_streak=None, cards_real_streak=None,
-                         sot_real_streak=None):
+                         sot_real_streak=None, corners_under_streak=None, cards_under_streak=None,
+                         sot_under_streak=None):
     """Single entry point called from cards_corners_iq.py's main block."""
     print("\nRunning results tracker...")
     log = load_log()
-    log = log_todays_signals(predictions, log, corners_real_streak, cards_real_streak, sot_real_streak)
+    log = log_todays_signals(predictions, log, corners_real_streak, cards_real_streak, sot_real_streak,
+                             corners_under_streak, cards_under_streak, sot_under_streak)
     log = verify_pending_results(log, key)
     save_log(log)
     build_results_dashboard(log)
