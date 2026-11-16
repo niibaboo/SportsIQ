@@ -2241,11 +2241,30 @@ def _rotation(props, key):
     return rows if len(rows) >= TEAM_STAT_MIN_PLAYERS else []
 
 
+TEAM_STAT_RAW_KEY = {'reb_proj': 'rebs', 'ast_proj': 'asts', 'tpm_proj': 'tpm'}
+TEAM_STAT_WARN_PCT = 10.0
+
+
+def _player_raw_mean(pl, key):
+    """Recency-weighted mean of the player's own logged games -- NOT shrunk
+    toward the league prior. Shrinking pulls low-minute players up toward an
+    average player, which inflates a sum over ten players; falls back to the
+    shrunk projection when no raw list is present."""
+    vals = pl.get(TEAM_STAT_RAW_KEY.get(key, ''))
+    if vals:
+        m = recency_weighted(list(vals))
+        if m is not None:
+            return m
+    return pl.get(key)
+
+
 def team_stat_total(props, key):
-    """Sum of the rotation's projections for `key`, or None when too few
-    players have one."""
+    """Sum of the rotation's own (unshrunk) recent averages for `key`, or
+    None when too few players have a projection."""
     rows = _rotation(props, key)
-    return sum(pl[key] for pl in rows) if rows else None
+    vals = [_player_raw_mean(pl, key) for pl in rows]
+    vals = [v for v in vals if v is not None]
+    return sum(vals) if len(vals) == len(rows) and rows else None
 
 
 def _player_dated_values(league_key, athlete_id, stat_key):
@@ -2279,8 +2298,31 @@ def team_stat_history(league_name, props, proj_key, stat_label):
             if d:
                 by_date.setdefault(str(d)[:10], {})[pl.get('player_id')] = v
     need = max(TEAM_STAT_MIN_PLAYERS, math.ceil(0.7 * len(rows)))
-    games = sorted((d, sum(m.values())) for d, m in by_date.items() if len(m) >= need)
+    # A rotation player who sat out a counted game is filled in at their own
+    # average, so the chips are comparable with the projection (which also
+    # assumes everyone plays).
+    avgs = {pl.get('player_id'): _player_raw_mean(pl, proj_key) for pl in rows}
+    games = []
+    for d, m in sorted(by_date.items()):
+        if len(m) < need:
+            continue
+        total = sum(m.values())
+        for pid, avg in avgs.items():
+            if pid not in m and avg is not None:
+                total += avg
+        games.append((d, total))
     return [total for _d, total in games][-RECENT_GAMES:]
+
+
+def _recent_avg(hist):
+    return sum(hist) / len(hist) if hist else None
+
+
+def _disagree_pct(proj, hist):
+    avg = _recent_avg(hist)
+    if avg is None or not avg:
+        return None
+    return (proj - avg) / avg * 100.0
 
 
 def _stat_sd(mean):
@@ -2343,19 +2385,25 @@ def team_stats_html(p):
         recent = ""
         if hist_away or hist_home:
             recent = ('<div style="color:#776;font-size:9px;text-transform:uppercase;margin:6px 0 3px">'
-                      "Last games · rotation total · oldest → latest · green = over this team's projection</div>"
+                      "Last games · rotation total (absent players at their average) · oldest → latest · green = over this team's projection</div>"
                       + _chips_row(f"{away_team} {label.lower()}", hist_away, _half(ma))
                       + _chips_row(f"{home_team} {label.lower()}", hist_home, _half(mh)))
+        warn = ""
+        for tm, proj, hist in ((away_team, ma, hist_away), (home_team, mh, hist_home)):
+            dp = _disagree_pct(proj, hist)
+            if dp is not None and abs(dp) > TEAM_STAT_WARN_PCT:
+                warn += (f'<div style="color:#ffb74d;font-size:10px;margin-bottom:3px">&#9888; {tm}: projection {proj:.1f} vs recent '
+                         f'{_recent_avg(hist):.1f} ({dp:+.0f}%) &mdash; treat with caution</div>')
         blocks += (f'<div style="margin-bottom:10px"><div style="color:#e8dcd0;margin-bottom:4px"><b>{label}</b> '
                    f'<span style="color:#776">{away_team} {ma:.1f} · {home_team} {mh:.1f} · total {mu:.1f}</span></div>'
                    f'<div style="display:flex;gap:4px;margin-bottom:4px">{cell(away_team + " more", pa, "a")}{cell("Tie", pt, "t")}{cell(home_team + " more", ph, "h")}</div>'
-                   f'<div style="display:flex;gap:4px">{lad}</div>{recent}</div>')
+                   f'<div style="display:flex;gap:4px">{lad}</div>{warn}{recent}</div>')
     if not blocks:
         return ""
     return ('<div style="background:#0f0a08;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:11px">'
             '<div style="color:#776;text-transform:uppercase;font-size:9px;margin-bottom:6px">Team rebounds · assists · 3PT — which team gets more, and combined over/under (model only)</div>'
             f'{blocks}'
-            f'<div style="color:#776;font-size:10px;line-height:1.5">Each team = its top {TEAM_STAT_ROTATION} players by minutes, projections summed. '
+            f'<div style="color:#776;font-size:10px;line-height:1.5">Each team = its top {TEAM_STAT_ROTATION} players by minutes, their own recent averages summed (not pulled toward the league average). '
             'No injuries or lineup news, no bookmaker line: the lines are placed around the model\'s own projection, so check them against your bookmaker\'s actual line. The last-games chips add up the same players\' logged stats game by game (only games where at least 70% of them played), so they estimate this rotation\'s output, not an official team figure.</div></div>')
 
 
