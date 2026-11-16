@@ -1302,6 +1302,37 @@ def build_predictions():
     return predictions
 
 
+def build_team_stat_entries(predictions):
+    """Tracker entries for the team rebound/assist/3PT markets, for
+    CALIBRATION: the combined over/under at the middle line (value = model
+    P(over); a 'hit' means it went over) and the 1X2 top pick (value = model
+    P(that pick); a 'hit' means it was right). Pending until graded."""
+    out = []
+    for p in predictions:
+        game_id = p.get('game_id')
+        if not game_id:
+            continue
+        date_key = (p.get('date') or '')[:10]
+        for key, label, step, stat_label in TEAM_STAT_SPECS:
+            mh = team_stat_total(p.get('home_props'), key)
+            ma = team_stat_total(p.get('away_props'), key)
+            if mh is None or ma is None:
+                continue
+            base = {'match': p['match'], 'league': p.get('league'), 'game_id': game_id,
+                    'game_date': date_key, 'stat_key': stat_label}
+            mu, ladder = stat_over_ladder(mh, ma, step)
+            mid = min(ladder, key=lambda r: abs(r[0] - mu)) if ladder else None
+            if mid:
+                out.append(dict(base, scanner='team_stat_ou', market=f'Team {label} Over {mid[0]:g} (combined)',
+                                prob=mid[1], line=mid[0]))
+            ph, pt, pa = stat_1x2(mh, ma)
+            pick, prob = max(('home', ph), ('tie', pt), ('away', pa), key=lambda t: t[1])
+            team = {'home': p['home_team'], 'away': p['away_team'], 'tie': 'Tie'}[pick]
+            out.append(dict(base, scanner='team_stat_1x2', market=f'Team {label} 1X2: {team}',
+                            prob=prob, line=None, pick=pick))
+    return out
+
+
 def build_legs(predictions):
     legs = []
     for p in predictions:
@@ -2821,6 +2852,7 @@ if __name__ == "__main__":
         # on the page would be misleading.
         hot_form = build_hot_form_entries(predictions) if SHOW_STREAK_PANEL else []
         real_streak = build_real_streak_entries(predictions) if SHOW_STREAK_PANEL else []
-        orange_line_results_tracker.run_results_tracker(legs, hot_form, real_streak)
+        orange_line_results_tracker.run_results_tracker(legs, hot_form, real_streak,
+                                                        team_stat_entries=build_team_stat_entries(predictions))
     except Exception as e:
         print(f"[!] Results tracker failed, but the rest of this run succeeded: {e}")
