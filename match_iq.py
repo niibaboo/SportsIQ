@@ -1194,6 +1194,50 @@ def _current_goal_streak(form, threshold=REAL_STREAK_THRESHOLD):
     return streak
 
 
+# Under Streak -- mirror of Real Streak (user request, 2026-11-16: "the overs
+# are not hitting well"): consecutive most-recent games in which the team
+# scored AT MOST this many goals (stayed under 1.5). Football's base rate for
+# a team scoring 0-1 is high (roughly 60-65% of games), so a 3-game run is
+# ordinary; the bar is 4 straight, and the model's own P(under 1.5) is printed
+# beside each entry. Raw form context, not a prediction.
+UNDER_STREAK_MAX_GOALS = 1
+UNDER_STREAK_MIN_LENGTH = 4
+
+
+def _current_under_streak(form, max_goals=UNDER_STREAK_MAX_GOALS):
+    """goals_list is newest-first (see fetch_form)."""
+    streak = 0
+    for g in (form.get("goals_list") or []):
+        if g <= max_goals:
+            streak += 1
+        else:
+            break
+    return streak
+
+
+def build_under_streak_entries(all_predictions):
+    entries = []
+    for p in all_predictions:
+        for team_key, opp_key, form_key, is_home, exp_key in [
+            ("home_team", "away_team", "home_form", True, "exp_home"),
+            ("away_team", "home_team", "away_form", False, "exp_away"),
+        ]:
+            form = p[form_key]
+            run = _current_under_streak(form)
+            if run >= UNDER_STREAK_MIN_LENGTH:
+                gl = form.get("goals_list") or []
+                exp = p.get(exp_key)
+                p_under = round(poisson_cdf(UNDER_STREAK_MAX_GOALS, exp) * 100) if exp is not None else None
+                entries.append({
+                    "team": p[team_key], "opponent": p[opp_key], "is_home": is_home,
+                    "league": p["league"], "date": p["date"], "date_key": p["date_key"],
+                    "streak_len": run, "streak_games": list(reversed(gl[:run])),
+                    "full_sample": run >= len(gl), "p_under": p_under, "exp": exp,
+                })
+    entries.sort(key=lambda e: (e["date_key"], -e["streak_len"]))
+    return entries
+
+
 def _last5_goal_avg(form):
     """Genuine last-5-GAME average — deliberately NOT the same as
     avg_scored, which is a shrinkage-blended figure over up to
@@ -1289,6 +1333,19 @@ REAL_STREAK_CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px
   </div>
 </div>"""
 
+UNDER_STREAK_CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;padding:14px;margin:10px 0;border:1px solid #2a3038;display:flex;gap:12px;align-items:flex-start">
+  <div style="min-width:72px;text-align:center;background:#0f1318;border:1px solid #60a5fa;border-radius:10px;padding:8px 6px;flex-shrink:0">
+    <div style="font-size:10px;color:#888">UNDER</div>
+    <div style="font-size:20px;font-weight:bold;color:#60a5fa">{streak_len}{plus}</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div style="font-size:11px;color:#999">{league} · {time}</div>
+    <div style="font-size:15px;font-weight:bold;margin:2px 0 6px">{team} <span style="color:#8b98a8;font-weight:normal;font-size:12px">({home_away})</span> vs {opponent}</div>
+    <div style="font-size:10px;color:#8b98a8">{streak_len} straight games scoring {max_goals} or fewer (old→new): {streak_str}</div>
+    <div style="font-size:10px;color:#93c5fd;margin-top:3px">{model_line}</div>
+  </div>
+</div>"""
+
 STREAK_HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Hot Form &amp; Streaks — Match IQ</title></head>
 <body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
@@ -1307,8 +1364,12 @@ STREAK_HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <p style="text-align:center;color:#888;font-size:12px;margin:2px 0 10px">{streak_count} team(s)</p>
 {streak_cards}
 
+<h3 style="margin:22px 0 2px;font-size:15px">🧊 Under Streak <span style="color:#8b98a8;font-weight:normal;font-size:11px">({under_min}+ CONSECUTIVE games scoring {under_max} or fewer, no break)</span></h3>
+<p style="text-align:center;color:#888;font-size:12px;margin:2px 0 10px">{under_count} team(s)</p>
+{under_cards}
+
 <div style="font-size:11px;color:#8b98a8;text-align:center;margin-top:20px;line-height:1.6">
-  Both sections are raw recent-FORM screens, not probabilistic predictions like the other
+  All sections are raw recent-FORM screens, not probabilistic predictions like the other
   scanners. Hot Form and Real Streak measure genuinely different things — a team can appear
   in one, both, or neither. Cross-check against Over 2.5/BTTS for that team's specific
   upcoming matchup before treating either alone as a signal.
@@ -1347,7 +1408,25 @@ def render_real_streak_cards(entries):
     return cards
 
 
-def make_streak_html(hot_form_entries, streak_entries, date_label=None, prev_href=None, next_href=None):
+def render_under_streak_cards(entries):
+    if not entries:
+        return '<p style="text-align:center;color:#888">No teams currently on a qualifying under streak.</p>'
+    cards = ""
+    for e in entries:
+        model_line = (f"Model: {e['team']} Under 1.5 goals {e['p_under']}% (exp {e['exp']} goals)"
+                      if e.get("p_under") is not None else "Model: no projection for this side")
+        cards += UNDER_STREAK_CARD_TEMPLATE.format(
+            streak_len=e["streak_len"], plus="+" if e["full_sample"] else "",
+            league=e["league"], time=e["date"][:16].replace("T", " "),
+            team=e["team"], home_away="Home" if e["is_home"] else "Away", opponent=e["opponent"],
+            max_goals=UNDER_STREAK_MAX_GOALS, streak_str="/".join(str(v) for v in e["streak_games"]),
+            model_line=model_line,
+        )
+    return cards
+
+
+def make_streak_html(hot_form_entries, streak_entries, date_label=None, prev_href=None, next_href=None, under_entries=None):
+    under_entries = under_entries or []
     prev_link = f'<a href="{prev_href}" style="color:#7ec8ff;text-decoration:none;font-size:20px">◀</a>' if prev_href else '<span style="color:#444;font-size:20px">◀</span>'
     next_link = f'<a href="{next_href}" style="color:#7ec8ff;text-decoration:none;font-size:20px">▶</a>' if next_href else '<span style="color:#444;font-size:20px">▶</span>'
     date_bar = f"""
@@ -1364,10 +1443,12 @@ def make_streak_html(hot_form_entries, streak_entries, date_label=None, prev_hre
         date_bar=date_bar, csv_name="goal_streak_predictions.csv",
         hot_form_count=len(hot_form_entries), hot_form_cards=render_streak_cards(hot_form_entries),
         streak_count=len(streak_entries), streak_cards=render_real_streak_cards(streak_entries),
+        under_min=UNDER_STREAK_MIN_LENGTH, under_max=UNDER_STREAK_MAX_GOALS,
+        under_count=len(under_entries), under_cards=render_under_streak_cards(under_entries),
     )
 
 
-def write_streak_csv(hot_form_entries, streak_entries, path):
+def write_streak_csv(hot_form_entries, streak_entries, path, under_entries=None):
     with open(path, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["Type", "Date", "League", "Team", "HomeAway", "Opponent", "Value", "Games"])
@@ -1380,17 +1461,23 @@ def write_streak_csv(hot_form_entries, streak_entries, path):
             writer.writerow(["Real Streak (consecutive)", e["date"], e["league"], e["team"],
                               "Home" if e["is_home"] else "Away", e["opponent"],
                               e["streak_len"], "/".join(str(v) for v in e["streak_games"])])
+        for e in (under_entries or []):
+            writer.writerow(["Under Streak (consecutive)", e["date"], e["league"], e["team"],
+                              "Home" if e["is_home"] else "Away", e["opponent"],
+                              e["streak_len"], "/".join(str(v) for v in e["streak_games"])])
 
 
 def build_goal_streak_scanner(all_predictions, base_dir="docs/match-iq/scanners"):
     hot_form_entries = build_goal_streak_entries(all_predictions)
     streak_entries = build_real_streak_entries(all_predictions)
+    under_entries = build_under_streak_entries(all_predictions)
+    under_by_date = group_by_date(under_entries)
     out_dir = f"{base_dir}/goal_streak"
     os.makedirs(out_dir, exist_ok=True)
 
     hot_form_by_date = group_by_date(hot_form_entries)
     streak_by_date = group_by_date(streak_entries)
-    date_keys = sorted(set(hot_form_by_date.keys()) | set(streak_by_date.keys()))
+    date_keys = sorted(set(hot_form_by_date.keys()) | set(streak_by_date.keys()) | set(under_by_date.keys()))
 
     if not date_keys:
         with open(f"{out_dir}/index.html", "w") as f:
@@ -1403,6 +1490,7 @@ def build_goal_streak_scanner(all_predictions, base_dir="docs/match-iq/scanners"
                 hot_form_by_date.get(date_key, []), streak_by_date.get(date_key, []),
                 date_label=format_date_label(date_key),
                 prev_href=prev_href, next_href=next_href,
+                under_entries=under_by_date.get(date_key, []),
             )
             with open(f"{out_dir}/{date_page_filename(date_key)}", "w") as f:
                 f.write(page_html)
@@ -1411,7 +1499,8 @@ def build_goal_streak_scanner(all_predictions, base_dir="docs/match-iq/scanners"
         with open(f"{out_dir}/index.html", "w") as f:
             f.write(soonest_html)
 
-    write_streak_csv(hot_form_entries, streak_entries, f"{out_dir}/goal_streak_predictions.csv")
+    write_streak_csv(hot_form_entries, streak_entries, f"{out_dir}/goal_streak_predictions.csv", under_entries)
+    print(f"  Under Streak: {len(under_entries)} team-entries")
     print(f"  Hot Form: {len(hot_form_entries)} team-entries · Real Streak: {len(streak_entries)} "
           f"team-entries across {len(date_keys)} date(s)")
 
@@ -1637,12 +1726,14 @@ if __name__ == "__main__":
             build_goal_streak_entries(all_predictions),
             build_real_streak_entries(all_predictions),
             api_key,
+            under_streak_entries=build_under_streak_entries(all_predictions),
             thresholds={
                 "over25_min": SCANNER_OVER25_MIN, "btts_min": SCANNER_BTTS_MIN,
                 "corners_min": SCANNER_CORNERS_MIN, "safe_corners_min": SCANNER_SAFE_CORNERS_MIN,
                 "safe_corners_min_sample": SAFE_CORNERS_MIN_SAMPLE, "over45_min": SCANNER_OVER45_MIN,
                 "away_to_score_min": SCANNER_AWAY_TO_SCORE_MIN, "home_over15_min": SCANNER_HOME_OVER15_MIN,
                 "real_streak_threshold": REAL_STREAK_THRESHOLD,
+                "under_streak_max": UNDER_STREAK_MAX_GOALS,
             },
         )
     except Exception as e:
