@@ -2413,7 +2413,6 @@ FIRST_HALF_SHARE = 0.5
 FIRST_HALF_SD = {'nba': 8.5, 'wnba': 7.5, 'mens-college-basketball': 8.5, 'womens-college-basketball': 8.0}
 FIRST_HALF_SD_DEFAULT = 8.5
 HALF_MARGIN_BUCKETS = [(1, 3), (4, 6), (7, 9), (10, 12), (13, 15), (16, None)]
-FIRST_HALF_EDGE_PP = 3.0     # edge needed (percentage points over the bookmaker's margin-free price) to flag a bucket
 _LEAGUE_KEY_BY_NAME = {lg['name']: lg['key'] for lg in LEAGUES}
 
 
@@ -2448,6 +2447,12 @@ def first_half_html(p):
     probs = first_half_margin_probs(mu, sd)
     away, home = p['away_team'], p['home_team']
     lead = home if mu > 0 else away
+    p_home, p_away, p_tie = sum(probs['home']), sum(probs['away']), probs['tie']
+    # The three most likely single outcomes, for a quick read.
+    flat = [(probs['home'][i], f"{home} {_bucket_label(*HALF_MARGIN_BUCKETS[i])}") for i in range(len(HALF_MARGIN_BUCKETS))]
+    flat += [(probs['away'][i], f"{away} {_bucket_label(*HALF_MARGIN_BUCKETS[i])}") for i in range(len(HALF_MARGIN_BUCKETS))]
+    flat.append((p_tie, "Tie"))
+    top3 = " · ".join(f"{n} {pr * 100:.0f}%" for pr, n in sorted(flat, reverse=True)[:3])
     cell = 'style="padding:3px 4px;text-align:center"'
     rows = ""
     for i, (lo, hi) in enumerate(HALF_MARGIN_BUCKETS):
@@ -2465,17 +2470,18 @@ def first_half_html(p):
     return ('<details class="fh" style="background:#0f0a08;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:11px">'
             '<summary style="cursor:pointer;color:#ff9a2e">1st Half Winning Margin — model vs bookmaker (type in the odds)</summary>'
             f'<div style="color:#998;margin:6px 0">Model: expected half-time lead {lead} by {abs(mu):.1f} (spread &plusmn;{sd:.1f}, uncalibrated). '
-            'Enter the bookmaker\'s decimal odds in every box to strip their margin and see the edge per bucket.</div>'
+            'Each box shows the model\'s chance of that outcome and its fair odds; type the bookmaker\'s decimal odds to see their margin-free chance beside it.</div>'
+            f'<div style="color:#e8dcd0;margin:4px 0 6px"><b>{home} lead at half {p_home * 100:.0f}%</b> · tie {p_tie * 100:.0f}% · <b>{away} lead {p_away * 100:.0f}%</b><br>'
+            f'<span style="color:#998">Most likely: {top3}</span></div>'
             f'<table style="width:100%;border-collapse:collapse"><tr style="color:#e8dcd0"><th></th><th>{away}</th><th>{home}</th></tr>{rows}</table>'
             '<div class="fhsum" style="margin-top:6px;color:#998"></div>'
-            '<div style="color:#776;font-size:10px;line-height:1.5;margin-top:4px">&ldquo;Edge&rdquo; = model chance minus the bookmaker\'s margin-free chance. '
-            f'Flagged only at {FIRST_HALF_EDGE_PP:g}+ points. The spread behind these numbers is a starting guess until enough first halves are logged; '
+            '<div style="color:#776;font-size:10px;line-height:1.5;margin-top:4px">&ldquo;Fair&rdquo; odds = 1 divided by the model\'s chance; the bookmaker\'s margin-free chance removes their built-in margin. '
+            'The spread behind these numbers is a starting guess until enough first halves are logged; '
             'a wrong spread moves the big-margin buckets the most.</div></details>')
 
 
 FIRST_HALF_SCRIPT = """<script>
 (function(){
-  var EDGE = __EDGE__;
   document.addEventListener('input', function(e){
     var box = e.target.closest ? e.target.closest('.fh') : null;
     if (!box || !e.target.classList.contains('fhin')) return;
@@ -2489,16 +2495,15 @@ FIRST_HALF_SCRIPT = """<script>
       var base = (p * 100).toFixed(1) + '% \u00b7 fair ' + (1 / p).toFixed(1);
       if (!(odds[k] > 1)) { out.textContent = base; out.style.color = '#998'; return; }
       if (filled < ins.length) { out.textContent = base + ' \u00b7 book ' + (100 / odds[k]).toFixed(1) + '% (raw)'; out.style.color = '#998'; return; }
-      var dv = (1 / odds[k]) / total * 100, edge = p * 100 - dv;
-      out.textContent = base + ' \u00b7 book ' + dv.toFixed(1) + '% \u00b7 edge ' + (edge >= 0 ? '+' : '') + edge.toFixed(1);
-      out.style.color = edge >= EDGE ? '#7ee09a' : (edge <= -EDGE ? '#f08a8a' : '#998');
-      inp.style.borderColor = edge >= EDGE ? '#7ee09a' : '#443';
+      var dv = (1 / odds[k]) / total * 100;
+      out.textContent = base + ' \\u00b7 book ' + dv.toFixed(1) + '%';
+      out.style.color = '#998';
     });
     sum.textContent = filled < ins.length ? (filled + ' of ' + ins.length + ' prices entered') :
       'Bookmaker margin (overround): ' + ((total - 1) * 100).toFixed(1) + '%';
   });
 })();
-</script>""".replace('__EDGE__', repr(FIRST_HALF_EDGE_PP))
+</script>"""
 
 
 def team_stats_html(p):
