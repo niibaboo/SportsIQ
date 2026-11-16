@@ -1313,6 +1313,14 @@ def build_team_stat_entries(predictions):
         if not game_id:
             continue
         date_key = (p.get('date') or '')[:10]
+        fh = first_half_params(p)
+        if fh:
+            # Spread check: 'hit' = the real first-half margin landed within one
+            # sd of the model's mean (the model says that should be ~68%).
+            out.append({'match': p['match'], 'league': p.get('league'), 'game_id': game_id,
+                        'game_date': date_key, 'stat_key': '1H', 'scanner': 'first_half_margin',
+                        'market': '1st-half margin within +/-1 sd', 'prob': 0.6827, 'line': None,
+                        'pred_mean': round(fh[0], 3), 'sd': fh[1]})
         for key, label, step, stat_label in TEAM_STAT_SPECS:
             mh = team_stat_total(p.get('home_props'), key)
             ma = team_stat_total(p.get('away_props'), key)
@@ -2161,6 +2169,7 @@ CARD_TEMPLATE = """<div class="gamecard" data-volume="{volume_level}" data-home=
   {team_total_html}
   {recent_html}
   {team_stats_html}
+  {first_half_html}
   {pace_html}
   {playstyle_html}
   {top_players_html}
@@ -2386,6 +2395,110 @@ def stat_over_ladder(mu_home, mu_away, step, n_lines=3):
         over = 1.0 - norm_cdf(line, mu, sd)
         out.append((line, over, 1.0 - over))
     return mu, out
+
+
+# --- 1st Half Winning Margin (user request, 2026-11-16) -------------------
+# Bookmaker market: who leads at half-time and by how much (1-3, 4-6, 7-9,
+# 10-12, 13-15, 16+ for either team, plus a tie). Model: the first-half margin
+# D = home - away is roughly NORMAL with mean = FIRST_HALF_SHARE x (projected
+# full-game margin) and a spread that is an UNCALIBRATED starting estimate per
+# league (see FIRST_HALF_SD) -- the Results tracker logs every game's real
+# first-half margin so the spread can be checked and corrected. Integer margins
+# use a continuity correction (e.g. "1-3 home" = D between 0.5 and 3.5).
+# MODEL ONLY: no odds feed exists here, so each card has a small calculator
+# where the bookmaker's prices are typed in; it strips their margin and shows
+# the edge per bucket. A 13-way market usually carries a heavy overround, so
+# only a clear gap means anything.
+FIRST_HALF_SHARE = 0.5
+FIRST_HALF_SD = {'nba': 8.5, 'wnba': 7.5, 'mens-college-basketball': 8.5, 'womens-college-basketball': 8.0}
+FIRST_HALF_SD_DEFAULT = 8.5
+HALF_MARGIN_BUCKETS = [(1, 3), (4, 6), (7, 9), (10, 12), (13, 15), (16, None)]
+FIRST_HALF_EDGE_PP = 3.0     # edge needed (percentage points over the bookmaker's margin-free price) to flag a bucket
+_LEAGUE_KEY_BY_NAME = {lg['name']: lg['key'] for lg in LEAGUES}
+
+
+def first_half_params(p):
+    """(mean margin home-away at half-time, sd) for a prediction, or None."""
+    if p.get('exp_home') is None or p.get('exp_away') is None:
+        return None
+    key = _LEAGUE_KEY_BY_NAME.get(p.get('league'))
+    return (p['exp_home'] - p['exp_away']) * FIRST_HALF_SHARE, FIRST_HALF_SD.get(key, FIRST_HALF_SD_DEFAULT)
+
+
+def first_half_margin_probs(mu, sd):
+    """{'away': [p per bucket], 'home': [...], 'tie': p} -- sums to 1."""
+    def band(lo, hi):  # P(lo <= D <= hi) for integer D; None = open end
+        a = 0.0 if lo is None else norm_cdf(lo - 0.5, mu, sd)
+        b = 1.0 if hi is None else norm_cdf(hi + 0.5, mu, sd)
+        return max(0.0, b - a)
+    home = [band(lo, hi) for lo, hi in HALF_MARGIN_BUCKETS]
+    away = [band(-hi if hi is not None else None, -lo) for lo, hi in HALF_MARGIN_BUCKETS]
+    return {'home': home, 'away': away, 'tie': band(0, 0)}
+
+
+def _bucket_label(lo, hi):
+    return f"{lo}+" if hi is None else f"{lo}-{hi}"
+
+
+def first_half_html(p):
+    params = first_half_params(p)
+    if not params:
+        return ""
+    mu, sd = params
+    probs = first_half_margin_probs(mu, sd)
+    away, home = p['away_team'], p['home_team']
+    lead = home if mu > 0 else away
+    cell = 'style="padding:3px 4px;text-align:center"'
+    rows = ""
+    for i, (lo, hi) in enumerate(HALF_MARGIN_BUCKETS):
+        def box(side, team):
+            pr = probs[side][i]
+            return (f'<td {cell}><input type="number" step="0.01" min="1.01" inputmode="decimal" class="fhin" data-p="{pr:.5f}" placeholder="odds" '
+                    f'style="width:62px;background:#0f0a08;color:#e8dcd0;border:1px solid #443;border-radius:4px;padding:3px;text-align:center">'
+                    f'<div class="fho" style="font-size:10px;color:#998">{pr * 100:.1f}% · fair {1 / pr:.1f}</div></td>' if pr > 0 else f'<td {cell}>&ndash;</td>')
+        rows += (f'<tr><td style="padding:3px 4px;color:#998">{_bucket_label(lo, hi)}</td>{box("away", away)}{box("home", home)}</tr>')
+    pt = probs['tie']
+    rows += (f'<tr><td style="padding:3px 4px;color:#998">Tie</td><td colspan="2" {cell}>'
+             f'<input type="number" step="0.01" min="1.01" inputmode="decimal" class="fhin" data-p="{pt:.5f}" placeholder="odds" '
+             f'style="width:62px;background:#0f0a08;color:#e8dcd0;border:1px solid #443;border-radius:4px;padding:3px;text-align:center">'
+             f'<div class="fho" style="font-size:10px;color:#998">{pt * 100:.1f}% · fair {1 / pt:.1f}</div></td></tr>')
+    return ('<details class="fh" style="background:#0f0a08;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:11px">'
+            '<summary style="cursor:pointer;color:#ff9a2e">1st Half Winning Margin — model vs bookmaker (type in the odds)</summary>'
+            f'<div style="color:#998;margin:6px 0">Model: expected half-time lead {lead} by {abs(mu):.1f} (spread &plusmn;{sd:.1f}, uncalibrated). '
+            'Enter the bookmaker\'s decimal odds in every box to strip their margin and see the edge per bucket.</div>'
+            f'<table style="width:100%;border-collapse:collapse"><tr style="color:#e8dcd0"><th></th><th>{away}</th><th>{home}</th></tr>{rows}</table>'
+            '<div class="fhsum" style="margin-top:6px;color:#998"></div>'
+            '<div style="color:#776;font-size:10px;line-height:1.5;margin-top:4px">&ldquo;Edge&rdquo; = model chance minus the bookmaker\'s margin-free chance. '
+            f'Flagged only at {FIRST_HALF_EDGE_PP:g}+ points. The spread behind these numbers is a starting guess until enough first halves are logged; '
+            'a wrong spread moves the big-margin buckets the most.</div></details>')
+
+
+FIRST_HALF_SCRIPT = """<script>
+(function(){
+  var EDGE = __EDGE__;
+  document.addEventListener('input', function(e){
+    var box = e.target.closest ? e.target.closest('.fh') : null;
+    if (!box || !e.target.classList.contains('fhin')) return;
+    var ins = Array.prototype.slice.call(box.querySelectorAll('.fhin'));
+    var odds = ins.map(function(i){ return parseFloat(i.value); });
+    var filled = odds.filter(function(o){ return o > 1; }).length;
+    var total = 0; odds.forEach(function(o){ if (o > 1) total += 1 / o; });
+    var sum = box.querySelector('.fhsum');
+    ins.forEach(function(inp, k){
+      var out = inp.parentNode.querySelector('.fho'), p = parseFloat(inp.getAttribute('data-p'));
+      var base = (p * 100).toFixed(1) + '% \u00b7 fair ' + (1 / p).toFixed(1);
+      if (!(odds[k] > 1)) { out.textContent = base; out.style.color = '#998'; return; }
+      if (filled < ins.length) { out.textContent = base + ' \u00b7 book ' + (100 / odds[k]).toFixed(1) + '% (raw)'; out.style.color = '#998'; return; }
+      var dv = (1 / odds[k]) / total * 100, edge = p * 100 - dv;
+      out.textContent = base + ' \u00b7 book ' + dv.toFixed(1) + '% \u00b7 edge ' + (edge >= 0 ? '+' : '') + edge.toFixed(1);
+      out.style.color = edge >= EDGE ? '#7ee09a' : (edge <= -EDGE ? '#f08a8a' : '#998');
+      inp.style.borderColor = edge >= EDGE ? '#7ee09a' : '#443';
+    });
+    sum.textContent = filled < ins.length ? (filled + ' of ' + ins.length + ' prices entered') :
+      'Bookmaker margin (overround): ' + ((total - 1) * 100).toFixed(1) + '%';
+  });
+})();
+</script>""".replace('__EDGE__', repr(FIRST_HALF_EDGE_PP))
 
 
 def team_stats_html(p):
@@ -2759,7 +2872,7 @@ def make_html(predictions):
         return level, badge
 
     cards = "".join(CARD_TEMPLATE.format(
-        volume_level=_vol(p)[0], volume_badge=_vol(p)[1], recent_html=recent_totals_html(p), team_stats_html=team_stats_html(p),
+        volume_level=_vol(p)[0], volume_badge=_vol(p)[1], recent_html=recent_totals_html(p), team_stats_html=team_stats_html(p), first_half_html=first_half_html(p),
         home_attr=html_lib.escape(p['home_team'], quote=True), away_attr=html_lib.escape(p['away_team'], quote=True),
         date=p['date'][:16].replace('T', ' '), match=p['match'], league=p.get('league', ''),
         team_total_html=(
@@ -2809,11 +2922,13 @@ def make_html(predictions):
     season_panel = render_season_perfect_panel(build_season_perfect_entries(predictions))
     team_total_panel = render_season_team_total_panel(build_season_team_total_entries(predictions))
 
-    return HTML_TEMPLATE.format(
+    page = HTML_TEMPLATE.format(
         recent=RECENT_GAMES, generated=datetime.now().strftime('%d %b %H:%M'),
         builder=builder, streak_panel=streak_panel, season_panel=season_panel,
         team_total_panel=team_total_panel, volume_panel=render_volume_panel(volume_ranked), cards=cards,
     )
+    # The calculator script is added after .format (it carries JS braces).
+    return page.replace("</body>", FIRST_HALF_SCRIPT + "</body>")
 
 
 def write_csv(predictions, path):
