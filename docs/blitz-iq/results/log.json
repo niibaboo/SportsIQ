@@ -17676,9 +17676,10 @@
     "athlete_id": "15847",
     "stat_key": "REC",
     "logged_at": "2026-10-15T13:08:55.290844+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4.0,
+    "verified_at": "2026-11-16T17:53:17.180001+00:00"
   },
   {
     "id": "e6fe1058be8b41c7",
@@ -17695,9 +17696,10 @@
     "athlete_id": "15847",
     "stat_key": "TD",
     "logged_at": "2026-10-15T13:08:55.290846+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-16T17:53:17.180030+00:00"
   },
   {
     "id": "fc4b42f9326a76f6",
@@ -17714,9 +17716,10 @@
     "athlete_id": "4567048",
     "stat_key": "YDS",
     "logged_at": "2026-10-15T13:08:55.290849+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 128.0,
+    "verified_at": "2026-11-16T17:53:17.180041+00:00"
   },
   {
     "id": "05c6455985ba36f3",
@@ -17733,9 +17736,10 @@
     "athlete_id": "4567048",
     "stat_key": "TD",
     "logged_at": "2026-10-15T13:08:55.290851+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2.0,
+    "verified_at": "2026-11-16T17:53:17.180057+00:00"
   },
   {
     "id": "7d4665b7477d5542",
@@ -17752,9 +17756,10 @@
     "athlete_id": "4612826",
     "stat_key": "REC",
     "logged_at": "2026-10-15T13:08:55.290854+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1.0,
+    "verified_at": "2026-11-16T17:53:17.180062+00:00"
   },
   {
     "id": "9ae445fe08474a02",
@@ -17771,9 +17776,10 @@
     "athlete_id": "4612826",
     "stat_key": "TD",
     "logged_at": "2026-10-15T13:08:55.290856+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-16T17:53:17.180080+00:00"
   },
   {
     "id": "94c58186b15d3b35",
@@ -17790,9 +17796,10 @@
     "athlete_id": "4038941",
     "stat_key": "YDS",
     "logged_at": "2026-10-15T13:08:55.290858+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 204.0,
+    "verified_at": "2026-11-16T17:53:17.180084+00:00"
   },
   {
     "id": "486c95df2ceb3e52",
@@ -17809,9 +17816,10 @@
     "athlete_id": "4241263",
     "stat_key": "REC",
     "logged_at": "2026-10-15T13:08:55.290861+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3.0,
+    "verified_at": "2026-11-16T17:53:17.180088+00:00"
   },
   {
     "id": "3e05cd838232cc9d",
@@ -17828,9 +17836,10 @@
     "athlete_id": "4241263",
     "stat_key": "TD",
     "logged_at": "2026-10-15T13:08:55.290865+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-16T17:53:17.180147+00:00"
   },
   {
     "id": "fab0b7f73ecd0a02",
@@ -17847,9 +17856,10 @@
     "athlete_id": "4685382",
     "stat_key": "YDS",
     "logged_at": "2026-10-15T13:08:55.290868+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 18.0,
+    "verified_at": "2026-11-16T17:53:17.180153+00:00"
   },
   {
     "id": "12b668b5b3bbef7f",
@@ -17866,9 +17876,10 @@
     "athlete_id": "4685382",
     "stat_key": "TD",
     "logged_at": "2026-10-15T13:08:55.290870+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-16T17:53:17.180168+00:00"
   },
   {
     "id": "ec7b06aecedeeea5",
@@ -51258,6 +51269,46 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-11-15T15:21:47.300353+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "6632b4eefaf50598",
+    "scanner": "team_total",
+    "match": "Los Angeles Chargers @ Baltimore Ravens",
+    "market": "Baltimore Ravens Over 20.0 Points",
+    "value": 50,
+    "detail": "proj 20.1 pts (5gm)",
+    "line": 20.0,
+    "direction": "over",
+    "game_id": "401873065",
+    "game_date": "2026-11-17",
+    "date_key": "2026-11-17",
+    "is_home": true,
+    "athlete_id": null,
+    "stat_key": null,
+    "logged_at": "2026-11-16T17:53:15.128429+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "78c839fc080e14e4",
+    "scanner": "team_total",
+    "match": "Los Angeles Chargers @ Baltimore Ravens",
+    "market": "Baltimore Ravens Under 20.0 Points",
+    "value": 50,
+    "detail": "proj 20.1 pts (5gm)",
+    "line": 20.0,
+    "direction": "under",
+    "game_id": "401873065",
+    "game_date": "2026-11-17",
+    "date_key": "2026-11-17",
+    "is_home": true,
+    "athlete_id": null,
+    "stat_key": null,
+    "logged_at": "2026-11-16T17:53:15.128448+00:00",
     "status": "pending",
     "result": null,
     "actual": null
