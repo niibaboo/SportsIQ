@@ -2223,24 +2223,64 @@ TEAM_STAT_ROTATION = 10
 TEAM_STAT_MIN_PLAYERS = 5
 TEAM_STAT_STD_COEF = 0.9
 TEAM_STAT_SPECS = [
-    # key in the player dict, label, ladder step between lines
-    ('reb_proj', 'Rebounds', 2.0),
-    ('ast_proj', 'Assists', 2.0),
-    ('tpm_proj', '3-Pointers Made', 1.5),
+    # key in the player dict, label, ladder step between lines, ESPN gamelog stat label
+    ('reb_proj', 'Rebounds', 2.0, 'REB'),
+    ('ast_proj', 'Assists', 2.0, 'AST'),
+    ('tpm_proj', '3-Pointers Made', 1.5, '3PT'),
 ]
 
 
-def team_stat_total(props, key):
-    """Sum of the top TEAM_STAT_ROTATION players' projections for `key`, or
-    None when fewer than TEAM_STAT_MIN_PLAYERS have one."""
+def _rotation(props, key):
+    """The top TEAM_STAT_ROTATION players by average minutes that have a
+    projection for `key`; [] when fewer than TEAM_STAT_MIN_PLAYERS."""
     rows = [pl for pl in (props or []) if pl.get(key) is not None]
     rows.sort(key=lambda pl: (pl.get('min_avg') or 0.0,
                               (pl.get('pts_proj') or 0) + (pl.get('reb_proj') or 0) + (pl.get('ast_proj') or 0)),
               reverse=True)
     rows = rows[:TEAM_STAT_ROTATION]
-    if len(rows) < TEAM_STAT_MIN_PLAYERS:
-        return None
-    return sum(pl[key] for pl in rows)
+    return rows if len(rows) >= TEAM_STAT_MIN_PLAYERS else []
+
+
+def team_stat_total(props, key):
+    """Sum of the rotation's projections for `key`, or None when too few
+    players have one."""
+    rows = _rotation(props, key)
+    return sum(pl[key] for pl in rows) if rows else None
+
+
+def _player_dated_values(league_key, athlete_id, stat_key):
+    """The (date, value, opponent) rows orange_line already fetched for this
+    player, from the same season get_player_gamelog() used (current season if
+    it had games, else the prior one). Read-only -- no request is made."""
+    year = _current_season_year(league_key)
+    for season in (year, year - 1):
+        rows = player_gamelog_meta_cache.get((league_key, athlete_id, stat_key, season))
+        if rows:
+            return rows
+    return []
+
+
+def team_stat_history(league_name, props, proj_key, stat_label):
+    """Estimated team total per game for the last RECENT_GAMES games, oldest
+    first: the sum, game by game, of this rotation's own logged stat. There is
+    no official per-team rebounds/assists/3PT history in this feed, so this is
+    the CURRENT rotation's production -- a game counts only if at least 70% of
+    the rotation played in it (otherwise a missing starter would drag that
+    game's total down and fake an 'under'). Players who have since left the
+    team, and bench players outside the top 10, are not in it -- the same
+    scope as the projection it is compared with."""
+    league_key = next((l['key'] for l in LEAGUES if l['name'] == league_name), None)
+    rows = _rotation(props, proj_key)
+    if not league_key or not rows:
+        return []
+    by_date = {}
+    for pl in rows:
+        for d, v, _opp in _player_dated_values(league_key, pl.get('player_id'), stat_label):
+            if d:
+                by_date.setdefault(str(d)[:10], {})[pl.get('player_id')] = v
+    need = max(TEAM_STAT_MIN_PLAYERS, math.ceil(0.7 * len(rows)))
+    games = sorted((d, sum(m.values())) for d, m in by_date.items() if len(m) >= need)
+    return [total for _d, total in games][-RECENT_GAMES:]
 
 
 def _stat_sd(mean):
@@ -2278,7 +2318,7 @@ def stat_over_ladder(mu_home, mu_away, step, n_lines=3):
 def team_stats_html(p):
     away_team, home_team = p['away_team'], p['home_team']
     blocks = ""
-    for key, label, step in TEAM_STAT_SPECS:
+    for key, label, step, stat_label in TEAM_STAT_SPECS:
         mh = team_stat_total(p.get('home_props'), key)
         ma = team_stat_total(p.get('away_props'), key)
         if mh is None or ma is None:
@@ -2298,17 +2338,25 @@ def team_stats_html(p):
                     f'<div style="color:#998;font-size:10px">{line:g}</div>'
                     f'<div style="color:#7ee09a">O {over * 100:.0f}%</div>'
                     f'<div style="color:#f08a8a">U {under * 100:.0f}%</div></div>')
+        hist_away = team_stat_history(p.get('league'), p.get('away_props'), key, stat_label)
+        hist_home = team_stat_history(p.get('league'), p.get('home_props'), key, stat_label)
+        recent = ""
+        if hist_away or hist_home:
+            recent = ('<div style="color:#776;font-size:9px;text-transform:uppercase;margin:6px 0 3px">'
+                      "Last games · rotation total · oldest → latest · green = over this team's projection</div>"
+                      + _chips_row(f"{away_team} {label.lower()}", hist_away, _half(ma))
+                      + _chips_row(f"{home_team} {label.lower()}", hist_home, _half(mh)))
         blocks += (f'<div style="margin-bottom:10px"><div style="color:#e8dcd0;margin-bottom:4px"><b>{label}</b> '
                    f'<span style="color:#776">{away_team} {ma:.1f} · {home_team} {mh:.1f} · total {mu:.1f}</span></div>'
                    f'<div style="display:flex;gap:4px;margin-bottom:4px">{cell(away_team + " more", pa, "a")}{cell("Tie", pt, "t")}{cell(home_team + " more", ph, "h")}</div>'
-                   f'<div style="display:flex;gap:4px">{lad}</div></div>')
+                   f'<div style="display:flex;gap:4px">{lad}</div>{recent}</div>')
     if not blocks:
         return ""
     return ('<div style="background:#0f0a08;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:11px">'
             '<div style="color:#776;text-transform:uppercase;font-size:9px;margin-bottom:6px">Team rebounds · assists · 3PT — which team gets more, and combined over/under (model only)</div>'
             f'{blocks}'
             f'<div style="color:#776;font-size:10px;line-height:1.5">Each team = its top {TEAM_STAT_ROTATION} players by minutes, projections summed. '
-            'No injuries or lineup news, no bookmaker line: the lines are placed around the model\'s own projection, so check them against your bookmaker\'s actual line.</div></div>')
+            'No injuries or lineup news, no bookmaker line: the lines are placed around the model\'s own projection, so check them against your bookmaker\'s actual line. The last-games chips add up the same players\' logged stats game by game (only games where at least 70% of them played), so they estimate this rotation\'s output, not an official team figure.</div></div>')
 
 
 PACE_ROW = """<div style="font-size:11px;color:#998;margin-bottom:8px">{icon} <span style="color:#e8dcd0">{verdict}</span> — {away_team} {away_label} ({away_pct_str}) · {home_team} {home_label} ({home_pct_str})</div>"""
