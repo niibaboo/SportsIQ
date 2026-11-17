@@ -1,5 +1,38 @@
 {
-  "generated": "2026-11-16T19:54:46.358688+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-11-17T02:41:56.647766+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_id": "401873065",
+      "home_id": "33",
+      "away_id": "24",
+      "home_team": "Baltimore Ravens",
+      "away_team": "Los Angeles Chargers",
+      "home_score": 7.0,
+      "away_score": 17.0,
+      "period": 2,
+      "display_clock": "0:31",
+      "status": "0:31 - 2nd",
+      "elapsed_minute": 29.5,
+      "minutes_remaining": 30.5,
+      "next_score": {
+        "home": 29,
+        "away": 71
+      },
+      "game_total_pace": {
+        "prob": 63,
+        "status": "On Pace: Over"
+      },
+      "model_signal": {
+        "label": "Away Next Score",
+        "prob": 71,
+        "qualifies": true
+      },
+      "pregame_projection": {
+        "exp_home": 20.1,
+        "exp_away": 21.8,
+        "exp_total": 41.8
+      }
+    }
+  ]
 }
