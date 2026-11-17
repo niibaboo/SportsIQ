@@ -1,55 +1,55 @@
 [
   {
-    "match": "Eisb\u00e4ren Berlin vs Schwenninger",
-    "subject": "Eisb\u00e4ren Berlin",
-    "market": "Eisb\u00e4ren Berlin Over 2.5 Goals",
-    "prob": 68,
-    "hit_rate": {
-      "hits": 4,
-      "total": 5
-    },
-    "category": "DEL Team Total",
-    "detail": "proj 3.53 goals \u00b7 season 3.6/gm",
-    "history": "4/5/1/5/3",
-    "line": 2.5,
-    "is_home": true,
-    "league_id": 16953,
-    "home_name": "Eisb\u00e4ren Berlin",
-    "away_name": "Schwenninger",
-    "match_date": "2026-11-15T18:00:00.000Z"
-  },
-  {
-    "match": "Eisb\u00e4ren Berlin vs Schwenninger",
-    "subject": "Schwenninger",
-    "market": "Schwenninger Over 1.5 Goals",
-    "prob": 72,
+    "match": "Slovan Bratislava HC vs Bansk\u00e1 Bystrica",
+    "subject": "Slovan Bratislava HC",
+    "market": "Slovan Bratislava HC Over 2.0 Goals",
+    "prob": 67,
     "hit_rate": {
       "hits": 3,
       "total": 5
     },
-    "category": "DEL Team Total",
-    "detail": "proj 2.52 goals \u00b7 season 3.67/gm",
-    "history": "1/0/2/4/2",
-    "line": 1.5,
-    "is_home": false,
-    "league_id": 16953,
-    "home_name": "Eisb\u00e4ren Berlin",
-    "away_name": "Schwenninger",
-    "match_date": "2026-11-15T18:00:00.000Z"
+    "category": "Extraliga Team Total",
+    "detail": "proj 3.46 goals \u00b7 season 3.53/gm",
+    "history": "3/2/2/5/4",
+    "line": 2.0,
+    "is_home": true,
+    "league_id": 78225,
+    "home_name": "Slovan Bratislava HC",
+    "away_name": "Bansk\u00e1 Bystrica",
+    "match_date": "2026-11-17T17:30:00.000Z"
   },
   {
-    "match": "Eisb\u00e4ren Berlin vs Schwenninger",
-    "subject": "Eisb\u00e4ren Berlin vs Schwenninger",
-    "market": "Game Over 4.0 Total Goals",
-    "prob": 72,
+    "match": "Slovan Bratislava HC vs Bansk\u00e1 Bystrica",
+    "subject": "Bansk\u00e1 Bystrica",
+    "market": "Bansk\u00e1 Bystrica Over 1.0 Goals",
+    "prob": 60,
+    "hit_rate": {
+      "hits": 3,
+      "total": 5
+    },
+    "category": "Extraliga Team Total",
+    "detail": "proj 2.04 goals \u00b7 season 3.56/gm",
+    "history": "2/2/6/1/0",
+    "line": 1.0,
+    "is_home": false,
+    "league_id": 78225,
+    "home_name": "Slovan Bratislava HC",
+    "away_name": "Bansk\u00e1 Bystrica",
+    "match_date": "2026-11-17T17:30:00.000Z"
+  },
+  {
+    "match": "Slovan Bratislava HC vs Bansk\u00e1 Bystrica",
+    "subject": "Slovan Bratislava HC vs Bansk\u00e1 Bystrica",
+    "market": "Game Over 3.5 Total Goals",
+    "prob": 80,
     "hit_rate": null,
-    "category": "DEL Game Total",
-    "detail": "proj 6.05 goals combined",
+    "category": "Extraliga Game Total",
+    "detail": "proj 5.5 goals combined",
     "history": null,
-    "line": 4.0,
-    "league_id": 16953,
-    "home_name": "Eisb\u00e4ren Berlin",
-    "away_name": "Schwenninger",
-    "match_date": "2026-11-15T18:00:00.000Z"
+    "line": 3.5,
+    "league_id": 78225,
+    "home_name": "Slovan Bratislava HC",
+    "away_name": "Bansk\u00e1 Bystrica",
+    "match_date": "2026-11-17T17:30:00.000Z"
   }
 ]

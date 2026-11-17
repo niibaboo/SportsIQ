@@ -43935,9 +43935,10 @@
     "match_date": "2026-11-13T18:15:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877664+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 2,
+    "verified_at": "2026-11-17T09:07:30.108107+00:00"
   },
   {
     "id": "327572652ce52e27",
@@ -43955,9 +43956,10 @@
     "match_date": "2026-11-13T18:15:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877668+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 7,
+    "verified_at": "2026-11-17T09:07:30.466989+00:00"
   },
   {
     "id": "463b65a8bcf0abf4",
@@ -43975,9 +43977,10 @@
     "match_date": "2026-11-13T18:15:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877672+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:30.774157+00:00"
   },
   {
     "id": "59782f20184bfe26",
@@ -43995,9 +43998,10 @@
     "match_date": "2026-11-13T18:15:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877678+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-11-17T09:07:31.070745+00:00"
   },
   {
     "id": "3e4c64183f0544e6",
@@ -44015,9 +44019,10 @@
     "match_date": "2026-11-13T18:15:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877682+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 5,
+    "verified_at": "2026-11-17T09:07:31.359417+00:00"
   },
   {
     "id": "972ae503df955d53",
@@ -44035,9 +44040,10 @@
     "match_date": "2026-11-13T17:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877687+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5,
+    "verified_at": "2026-11-17T09:07:31.662983+00:00"
   },
   {
     "id": "1008395c7f1dfcac",
@@ -44055,9 +44061,10 @@
     "match_date": "2026-11-13T17:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877691+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-11-17T09:07:31.968409+00:00"
   },
   {
     "id": "491bd66f36e0eb45",
@@ -44075,9 +44082,10 @@
     "match_date": "2026-11-13T17:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877695+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 9,
+    "verified_at": "2026-11-17T09:07:32.376102+00:00"
   },
   {
     "id": "50051e5487a0e92b",
@@ -44095,9 +44103,10 @@
     "match_date": "2026-11-13T18:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877700+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-11-17T09:07:32.726283+00:00"
   },
   {
     "id": "153aae4cabaa88aa",
@@ -44115,9 +44124,10 @@
     "match_date": "2026-11-13T16:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877704+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:33.025304+00:00"
   },
   {
     "id": "1d95fb5c265e1098",
@@ -44135,9 +44145,10 @@
     "match_date": "2026-11-13T18:15:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877708+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:33.297433+00:00"
   },
   {
     "id": "189aeb58bdf3c2d8",
@@ -44155,9 +44166,10 @@
     "match_date": "2026-11-13T18:45:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877712+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:33.569006+00:00"
   },
   {
     "id": "2784cf835f64fa78",
@@ -44175,9 +44187,10 @@
     "match_date": "2026-11-13T18:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877716+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:33.865752+00:00"
   },
   {
     "id": "8ed7bc12e00a45ff",
@@ -44195,9 +44208,10 @@
     "match_date": "2026-11-13T18:15:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877720+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2,
+    "verified_at": "2026-11-17T09:07:34.570408+00:00"
   },
   {
     "id": "7c5a9400e6a98bd4",
@@ -44215,9 +44229,10 @@
     "match_date": "2026-11-13T18:15:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877724+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-11-17T09:07:34.870495+00:00"
   },
   {
     "id": "5b70d1d8a3a2b82d",
@@ -44235,9 +44250,10 @@
     "match_date": "2026-11-13T17:00:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877729+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-11-17T09:07:35.236396+00:00"
   },
   {
     "id": "a2ab5e3abb49f310",
@@ -44255,9 +44271,10 @@
     "match_date": "2026-11-13T16:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877732+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:35.599071+00:00"
   },
   {
     "id": "f045b24326ec112d",
@@ -44275,9 +44292,10 @@
     "match_date": "2026-11-13T18:45:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877735+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2,
+    "verified_at": "2026-11-17T09:07:35.912755+00:00"
   },
   {
     "id": "7833b0f1e1cc700e",
@@ -44295,9 +44313,10 @@
     "match_date": "2026-11-13T18:45:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877739+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:36.228488+00:00"
   },
   {
     "id": "5c7d080e6cf4462e",
@@ -44315,9 +44334,10 @@
     "match_date": "2026-11-13T16:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877742+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-11-17T09:07:36.644373+00:00"
   },
   {
     "id": "277f977f9d6ee0ac",
@@ -44335,9 +44355,10 @@
     "match_date": "2026-11-13T17:00:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877746+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:36.909070+00:00"
   },
   {
     "id": "9d9890289d04ab77",
@@ -44355,9 +44376,10 @@
     "match_date": "2026-11-13T16:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877749+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-11-17T09:07:37.248766+00:00"
   },
   {
     "id": "8aa3186ea3b7bcf5",
@@ -44381,9 +44403,10 @@
     "match_date": "2026-11-13T18:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877754+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:37.719834+00:00"
   },
   {
     "id": "c8b697f0892dda1e",
@@ -44407,9 +44430,10 @@
     "match_date": "2026-11-13T18:45:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877760+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:37.989691+00:00"
   },
   {
     "id": "c66997abf25c03cd",
@@ -44433,9 +44457,10 @@
     "match_date": "2026-11-13T16:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877763+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:38.285805+00:00"
   },
   {
     "id": "6ed6a41bd2eb4050",
@@ -44459,9 +44484,10 @@
     "match_date": "2026-11-13T16:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877767+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2,
+    "verified_at": "2026-11-17T09:07:38.615951+00:00"
   },
   {
     "id": "8a4e4e1c83a64de0",
@@ -44485,9 +44511,10 @@
     "match_date": "2026-11-13T18:15:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877770+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:38.918994+00:00"
   },
   {
     "id": "9ab893ff8be6c880",
@@ -44510,9 +44537,10 @@
     "match_date": "2026-11-13T17:00:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877774+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2,
+    "verified_at": "2026-11-17T09:07:39.178625+00:00"
   },
   {
     "id": "0e23353af8e950e6",
@@ -44535,9 +44563,10 @@
     "match_date": "2026-11-13T16:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877778+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-11-17T09:07:39.602913+00:00"
   },
   {
     "id": "a4aa49a4c9ddf86f",
@@ -44560,9 +44589,10 @@
     "match_date": "2026-11-13T16:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877781+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-11-17T09:07:39.892915+00:00"
   },
   {
     "id": "a1798bc3b622b781",
@@ -44585,9 +44615,10 @@
     "match_date": "2026-11-13T18:45:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877785+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-11-17T09:07:40.260519+00:00"
   },
   {
     "id": "7db57049e43df0cd",
@@ -44609,9 +44640,10 @@
     "match_date": "2026-11-13T17:00:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877790+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 6,
+    "verified_at": "2026-11-17T09:07:40.545892+00:00"
   },
   {
     "id": "ef16d64068f81e51",
@@ -44633,9 +44665,10 @@
     "match_date": "2026-11-13T17:00:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877795+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 2,
+    "verified_at": "2026-11-17T09:07:40.810406+00:00"
   },
   {
     "id": "abf6843fd84f59b5",
@@ -44657,9 +44690,10 @@
     "match_date": "2026-11-13T17:00:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877800+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-11-17T09:07:41.067464+00:00"
   },
   {
     "id": "c01ebac6fdbe37de",
@@ -44681,9 +44715,10 @@
     "match_date": "2026-11-13T18:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877803+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-11-17T09:07:41.321880+00:00"
   },
   {
     "id": "0937706db5cf705f",
@@ -44705,9 +44740,10 @@
     "match_date": "2026-11-13T18:45:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877807+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:42.015354+00:00"
   },
   {
     "id": "cd6dd54c458001bc",
@@ -44729,9 +44765,10 @@
     "match_date": "2026-11-13T17:30:00.000Z",
     "date_key": "2026-11-13",
     "logged_at": "2026-11-13T16:29:14.877810+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5,
+    "verified_at": "2026-11-17T09:07:42.474953+00:00"
   },
   {
     "id": "ec8622703b636476",
@@ -44749,9 +44786,10 @@
     "match_date": "2026-11-14T17:00:00.000Z",
     "date_key": "2026-11-14",
     "logged_at": "2026-11-14T16:46:28.091444+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:42.829354+00:00"
   },
   {
     "id": "262c9e3a39e94893",
@@ -44769,9 +44807,10 @@
     "match_date": "2026-11-14T17:00:00.000Z",
     "date_key": "2026-11-14",
     "logged_at": "2026-11-14T16:46:28.091466+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-11-17T09:07:43.217179+00:00"
   },
   {
     "id": "72311da17d521a89",
@@ -44789,9 +44828,10 @@
     "match_date": "2026-11-14T17:00:00.000Z",
     "date_key": "2026-11-14",
     "logged_at": "2026-11-14T16:46:28.091475+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5,
+    "verified_at": "2026-11-17T09:07:43.470506+00:00"
   },
   {
     "id": "afd1a244394b6004",
@@ -44809,9 +44849,10 @@
     "match_date": "2026-11-14T17:00:00.000Z",
     "date_key": "2026-11-14",
     "logged_at": "2026-11-14T16:46:28.091483+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 4,
+    "verified_at": "2026-11-17T09:07:43.841353+00:00"
   },
   {
     "id": "69f28342b0790676",
@@ -44829,9 +44870,10 @@
     "match_date": "2026-11-14T17:00:00.000Z",
     "date_key": "2026-11-14",
     "logged_at": "2026-11-14T16:46:28.091491+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:44.252275+00:00"
   },
   {
     "id": "ee4b7ba493a1041e",
@@ -44849,9 +44891,10 @@
     "match_date": "2026-11-14T17:00:00.000Z",
     "date_key": "2026-11-14",
     "logged_at": "2026-11-14T16:46:28.091496+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5,
+    "verified_at": "2026-11-17T09:07:44.543439+00:00"
   },
   {
     "id": "8c98420c2ee5cc86",
@@ -44869,9 +44912,10 @@
     "match_date": "2026-11-14T17:00:00.000Z",
     "date_key": "2026-11-14",
     "logged_at": "2026-11-14T16:46:28.091501+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1,
+    "verified_at": "2026-11-17T09:07:45.178623+00:00"
   },
   {
     "id": "2ce47f56c3dc15f4",
@@ -44889,9 +44933,10 @@
     "match_date": "2026-11-14T17:00:00.000Z",
     "date_key": "2026-11-14",
     "logged_at": "2026-11-14T16:46:28.091513+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 3,
+    "verified_at": "2026-11-17T09:07:45.553592+00:00"
   },
   {
     "id": "5957685240c05746",
@@ -44909,9 +44954,10 @@
     "match_date": "2026-11-14T17:00:00.000Z",
     "date_key": "2026-11-14",
     "logged_at": "2026-11-14T16:46:28.091519+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 4,
+    "verified_at": "2026-11-17T09:07:45.853703+00:00"
   },
   {
     "id": "12a115a1332fff7f",
@@ -44929,9 +44975,10 @@
     "match_date": "2026-11-14T17:00:00.000Z",
     "date_key": "2026-11-14",
     "logged_at": "2026-11-14T16:46:28.091525+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 5,
+    "verified_at": "2026-11-17T09:07:46.152719+00:00"
   },
   {
     "id": "a35903be39cf8c97",
@@ -45791,6 +45838,66 @@
     "match_date": "2026-11-15T18:00:00.000Z",
     "date_key": "2026-11-15",
     "logged_at": "2026-11-15T17:28:41.288281+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "909625f89551ebb1",
+    "scanner": "team_total",
+    "subject": "Slovan Bratislava HC",
+    "market": "Slovan Bratislava HC Over 2.0 Goals",
+    "value": 67,
+    "detail": "line=2.0",
+    "streak_games": null,
+    "is_home": true,
+    "league": "Extraliga",
+    "league_id": 78225,
+    "home_name": "Slovan Bratislava HC",
+    "away_name": "Bansk\u00e1 Bystrica",
+    "match_date": "2026-11-17T17:30:00.000Z",
+    "date_key": "2026-11-17",
+    "logged_at": "2026-11-17T09:07:25.349440+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "924d3c6baf53dbbc",
+    "scanner": "team_total",
+    "subject": "Bansk\u00e1 Bystrica",
+    "market": "Bansk\u00e1 Bystrica Over 1.0 Goals",
+    "value": 60,
+    "detail": "line=1.0",
+    "streak_games": null,
+    "is_home": false,
+    "league": "Extraliga",
+    "league_id": 78225,
+    "home_name": "Slovan Bratislava HC",
+    "away_name": "Bansk\u00e1 Bystrica",
+    "match_date": "2026-11-17T17:30:00.000Z",
+    "date_key": "2026-11-17",
+    "logged_at": "2026-11-17T09:07:25.349462+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "0a3c69094e269139",
+    "scanner": "game_total",
+    "subject": "Slovan Bratislava HC vs Bansk\u00e1 Bystrica",
+    "market": "Game Over 3.5 Total Goals",
+    "value": 80,
+    "detail": "line=3.5",
+    "streak_games": null,
+    "is_home": null,
+    "league": "Extraliga",
+    "league_id": 78225,
+    "home_name": "Slovan Bratislava HC",
+    "away_name": "Bansk\u00e1 Bystrica",
+    "match_date": "2026-11-17T17:30:00.000Z",
+    "date_key": "2026-11-17",
+    "logged_at": "2026-11-17T09:07:25.349468+00:00",
     "status": "pending",
     "result": null,
     "actual": null
