@@ -187,6 +187,8 @@ def get_scoreboard(league_key, date_str=None):
 
 roster_cache = {}
 team_form_cache = {}
+team_event_id_cache = {}  # (league_key, team_id) -> {event date: event id}, for the
+                            # 1st-half division panel (needs per-game summaries)
 team_season_meta_cache = {}  # (league_key, team_id) -> FULL current-season dated
                                # (date, scored, allowed) tuples, no RECENT_GAMES trim --
                                # feeds the "100% Team Total" season feature below.
@@ -309,6 +311,7 @@ def get_team_form(league_key, team_id):
     # whether `scored` above ends up using the prior-season fallback
     # below, since "this season" for the 100% feature must never include
     # last season's games. Reuses current_events, so zero extra calls.
+    team_event_id_cache[cache_key] = {e.get('date', ''): e.get('id') for e in current_events if e.get('id')}
     team_season_meta_cache[cache_key] = (
         _extract_all_completed_team_games(current_events, team_id) if current_events else []
     )
@@ -1113,6 +1116,15 @@ def project_player_props(league_key, team_id, pts_scale=1.0):
         # 'REB','AST','BLK','STL','PF','TO','PTS']). Best-effort: missing
         # or short minutes data just leaves rest_risk False rather than
         # blocking the rest of this player's prop.
+        # Blocks / Steals (user request, 2026-11-17: season-streak markets
+        # matching the book's Blocks / Steals / Pts+Ast+Reb tabs). 'BLK' and
+        # 'STL' are confirmed root labels (see the MIN comment above); this
+        # only fills player_gamelog_meta_cache for the 100% This Season panel
+        # and reuses the already-cached gamelog response, so it costs no
+        # extra HTTP requests.
+        for _k in ('BLK', 'STL'):
+            get_player_gamelog(league_key, player['id'], _k)
+
         mins = get_player_gamelog(league_key, player['id'], 'MIN')
         min_avg, min_last, rest_risk = None, None, False
         if len(mins) >= 3:
@@ -1610,7 +1622,35 @@ def build_real_streak_entries(predictions):
 # SEASON_STREAK_UNDER_THRESHOLD (Under) -- both rough judgment calls like
 # every other threshold in this file, not fitted to real data yet.
 SEASON_STREAK_MIN_GAMES = 3  # "100%, 1/1" after one game isn't a signal worth flagging
-SEASON_STREAK_UNDER_THRESHOLD = {"REB": 4.0, "AST": 2.0, "RA": 6.0, "PTS": 10.0, "3PM": 1.0}
+SEASON_STREAK_UNDER_THRESHOLD = {"REB": 4.0, "AST": 2.0, "RA": 6.0, "PTS": 10.0, "3PM": 1.0,
+                                 "PRA": 15.0}
+# Blocks / Steals / Pts+Ast+Reb (user request, 2026-11-17, from the book's
+# market tabs). Over-only for BLK/STL: "never blocked a shot all season" is
+# mostly bench noise, so no Under line is defined for them. Thresholds are
+# judgment calls, not fitted: 1+ block / 1+ steal in EVERY game, 25+ PRA.
+SEASON_EXTRA_OVER = {"BLK": 1.0, "STL": 1.0, "PRA": 25.0}
+STAT_LABELS.update({"BLK": "Blocks", "STL": "Steals", "PRA": "Pts+Ast+Reb"})
+SEASON_COMBINED = {"RA": ("REB", "AST"), "PRA": ("PTS", "REB", "AST")}
+
+
+def _season_values(league_key, athlete_id, stat_key, year):
+    """Full current-season values for a stat. Combined stats (RA, PRA) are
+    summed game by game, matching games by date -- a game missing from any
+    component, or lacking a date, is dropped rather than mis-paired.
+    (RA never appeared in this panel before: nothing stored a 'RA' gamelog
+    entry, so the lookup always came back empty.)"""
+    parts = SEASON_COMBINED.get(stat_key)
+    if not parts:
+        dated = player_gamelog_meta_cache.get((league_key, athlete_id, stat_key, year))
+        return [v for _, v, _ in dated] if dated else []
+    maps = []
+    for k in parts:
+        dated = player_gamelog_meta_cache.get((league_key, athlete_id, k, year))
+        if not dated or any(d is None for d, _, _ in dated):
+            return []
+        maps.append({d: v for d, v, _ in dated})
+    common = sorted(set(maps[0]).intersection(*maps[1:]))
+    return [sum(m[d] for m in maps) for d in common]
 
 
 def build_season_perfect_entries(predictions):
@@ -1621,11 +1661,8 @@ def build_season_perfect_entries(predictions):
         for team_name, props in [(p["home_team"], p.get("home_props") or []),
                                    (p["away_team"], p.get("away_props") or [])]:
             for prop in props:
-                for stat_key in ("REB", "AST", "RA", "PTS", "3PM"):
-                    dated = player_gamelog_meta_cache.get((league_key, prop["player_id"], stat_key, current_year))
-                    if not dated:
-                        continue
-                    values = [v for _, v, _ in dated]
+                for stat_key in ("REB", "AST", "RA", "PTS", "3PM", "BLK", "STL", "PRA"):
+                    values = _season_values(league_key, prop["player_id"], stat_key, current_year)
                     if len(values) < SEASON_STREAK_MIN_GAMES:
                         continue
                     base = {
@@ -1633,11 +1670,11 @@ def build_season_perfect_entries(predictions):
                         "match": p["match"], "stat": stat_key, "total": len(values), "values": values,
                         "player_id": prop["player_id"], "game_id": p.get("game_id"), "date": p.get("date", ""),
                     }
-                    over_line = REAL_STREAK_THRESHOLD[stat_key]
-                    if all(v >= over_line for v in values):
+                    over_line = REAL_STREAK_THRESHOLD.get(stat_key, SEASON_EXTRA_OVER.get(stat_key))
+                    if over_line is not None and all(v >= over_line for v in values):
                         entries.append({**base, "direction": "over", "line": over_line})
-                    under_line = SEASON_STREAK_UNDER_THRESHOLD[stat_key]
-                    if all(v <= under_line for v in values):
+                    under_line = SEASON_STREAK_UNDER_THRESHOLD.get(stat_key)
+                    if under_line is not None and all(v <= under_line for v in values):
                         entries.append({**base, "direction": "under", "line": under_line})
     entries.sort(key=lambda e: -e["total"])
     return entries
@@ -2159,6 +2196,7 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 {streak_panel}
 {season_panel}
 {team_total_panel}
+{division_panel}
 {volume_panel}
 {cards}
 </body></html>"""
@@ -2779,6 +2817,173 @@ VOLUME_PANEL_TEMPLATE = """<div id="volPanel" data-k='{k_json}' style="backgroun
 </script>"""
 
 
+# ---------------------------------------------------------------------------
+# Division leaders -- FIRST-HALF winning-margin streaks (NBA only).
+# Top three teams per division are picked by full-game win% (tie -> point
+# differential) from team_season_meta_cache, which build_predictions already
+# fills for every NBA team. Their last DIVISION_CHIPS games' FIRST-HALF
+# margins come from per-game summaries (period linescores), so this costs up
+# to 18 teams x 7 games extra requests (de-duplicated, cached). The streak is
+# consecutive most-recent games in which the team led at half by
+# DIVISION_HALF_MARGIN_MIN+ points. The ranking is our own tally, not ESPN's.
+# ---------------------------------------------------------------------------
+DIVISION_HALF_MARGIN_MIN = 5
+DIVISION_CHIPS = 7
+DIVISION_TOP_N = 3
+NBA_DIVISIONS = {
+    "Atlantic": ["Celtics", "Nets", "Knicks", "76ers", "Raptors"],
+    "Central": ["Bulls", "Cavaliers", "Pistons", "Pacers", "Bucks"],
+    "Southeast": ["Hawks", "Hornets", "Heat", "Magic", "Wizards"],
+    "Northwest": ["Nuggets", "Timberwolves", "Thunder", "Trail Blazers", "Jazz"],
+    "Pacific": ["Warriors", "Clippers", "Lakers", "Suns", "Kings"],
+    "Southwest": ["Mavericks", "Rockets", "Grizzlies", "Pelicans", "Spurs"],
+}
+_summary_cache = {}
+
+
+def _division_of(team_name):
+    low = (team_name or "").lower()
+    for div, nicks in NBA_DIVISIONS.items():
+        for n in nicks:
+            if low.endswith(n.lower()):
+                return div
+    return None
+
+
+def _fetch_summary(league_key, event_id):
+    key = (league_key, event_id)
+    if key not in _summary_cache:
+        r = _get(f"{BASE_FMT.format(league=league_key)}/summary", params={"event": event_id})
+        try:
+            _summary_cache[key] = r.json() if r is not None else None
+        except Exception:
+            _summary_cache[key] = None
+    return _summary_cache[key]
+
+
+def _team_first_half_margin(summary, team_id):
+    """First-half margin from this team's point of view (2 quarters), or None."""
+    comps = (summary or {}).get("header", {}).get("competitions", [{}])[0].get("competitors", [])
+    me = next((c for c in comps if str((c.get("team") or {}).get("id", c.get("id"))) == str(team_id)), None)
+    opp = next((c for c in comps if c is not me), None)
+    if not me or not opp:
+        return None
+
+    def half(c):
+        ls = c.get("linescores") or []
+        if len(ls) < 3:  # finished game has 4+ periods
+            return None
+        try:
+            return sum(float(i.get("value", i.get("displayValue"))) for i in ls[:2])
+        except (TypeError, ValueError):
+            return None
+    h1, h2 = half(me), half(opp)
+    return None if h1 is None or h2 is None else h1 - h2
+
+
+def build_division_leaders(teams, predictions, season_cache=None, id_cache=None,
+                           summary_fn=None, league_key="nba"):
+    """Returns [(division, [team dicts])] with top-N per division."""
+    cache = team_season_meta_cache if season_cache is None else season_cache
+    ids = team_event_id_cache if id_cache is None else id_cache
+    fetch = summary_fn or _fetch_summary
+    playing = {}
+    for p in predictions:
+        if p.get("league", "").lower() == league_key:
+            playing[p["home_team"]] = p["away_team"]
+            playing[p["away_team"]] = p["home_team"]
+    by_div = {d: [] for d in NBA_DIVISIONS}
+    for t in teams:
+        info = t.get("team", t)
+        name = info.get("displayName") or info.get("name") or ""
+        tid = info.get("id")
+        div = _division_of(name)
+        if div is None:
+            print(f"  [DIAG] division panel: no division match for '{name}'")
+            continue
+        dated = cache.get((league_key, tid)) or []
+        if not dated:
+            continue
+        margins = [sc - al for _, sc, al in dated]
+        wins = sum(1 for m in margins if m > 0)
+        by_div[div].append({"name": name, "id": tid, "wins": wins, "losses": len(margins) - wins,
+                            "diff": sum(margins), "dated": dated, "opp": playing.get(name)})
+    out = []
+    missing = 0
+    for div in NBA_DIVISIONS:
+        rows = by_div[div]
+        rows.sort(key=lambda r: (-(r["wins"] / max(1, r["wins"] + r["losses"])), -r["diff"]))
+        rows = rows[:DIVISION_TOP_N]
+        for r in rows:
+            idmap = ids.get((league_key, r["id"])) or {}
+            halves = []
+            for d, _, _ in r["dated"][-DIVISION_CHIPS:]:
+                eid = idmap.get(d)
+                m = _team_first_half_margin(fetch(league_key, eid), r["id"]) if eid else None
+                halves.append(m)
+                if m is None:
+                    missing += 1
+            r["halves"] = halves
+            streak = 0
+            for m in reversed(halves):
+                if m is not None and m >= DIVISION_HALF_MARGIN_MIN:
+                    streak += 1
+                else:
+                    break
+            r["streak"] = streak
+            known = [m for m in halves if m is not None]
+            r["led"] = sum(1 for m in known if m > 0)
+            r["known"] = len(known)
+        if rows:
+            out.append((div, rows))
+    if missing:
+        print(f"  [DIAG] division panel: {missing} first-half margin(s) unreadable "
+              f"(no event id/summary/linescores) -- shown as '–', break the streak")
+    return out
+
+
+def render_division_panel(leaders):
+    if not leaders:
+        return ""
+    if all(r["known"] == 0 for _, rows in leaders for r in rows):
+        return ""  # linescores unavailable -- better no panel than an empty one
+    body = ""
+    for div, rows in leaders:
+        body += f'<div style="font-size:11px;color:#ff9a2e;margin:10px 0 4px">{html_lib.escape(div)} Division</div>'
+        for i, r in enumerate(rows, 1):
+            chips = "".join(
+                (f'<span style="display:inline-block;min-width:26px;text-align:center;margin:1px;padding:1px 4px;border-radius:4px;'
+                 f'font-size:10px;background:{"#12301f" if m > 0 else "#3a1414"};color:{"#10b981" if m > 0 else "#f87171"}'
+                 f'{";border:1px solid #10b981" if m >= DIVISION_HALF_MARGIN_MIN else ""}">{m:+.0f}</span>')
+                if m is not None else
+                '<span style="display:inline-block;min-width:26px;text-align:center;margin:1px;font-size:10px;color:#776">–</span>'
+                for m in r["halves"])
+            badge = (f'<span style="color:#10b981;font-weight:bold">🔥 {r["streak"]} straight leading at half by {DIVISION_HALF_MARGIN_MIN}+</span>'
+                     if r["streak"] >= 2 else
+                     (f'<span style="color:#cbd5e1">{r["streak"]} leading at half by {DIVISION_HALF_MARGIN_MIN}+</span>'
+                      if r["streak"] else '<span style="color:#776">no current streak</span>'))
+            opp = (f' <span style="color:#998">· plays {html_lib.escape(r["opp"])} next</span>' if r["opp"] else "")
+            body += (f'<div style="background:#241a14;border-radius:8px;padding:8px 10px;margin:4px 0">'
+                     f'<div style="font-size:13px;font-weight:bold">{i}. {html_lib.escape(r["name"])} '
+                     f'<span style="color:#998;font-weight:normal;font-size:11px">{r["wins"]}-{r["losses"]} · led at half in {r["led"]}/{r["known"]}</span></div>'
+                     f'<div style="font-size:11px;margin:2px 0">{badge}{opp}</div>'
+                     f'<div>{chips}</div></div>')
+    return ('<div style="background:#1a1310;border:1px solid #3a2a20;border-radius:12px;padding:12px 14px;margin:12px 0">'
+            '<div style="font-weight:bold;color:#ff9a2e">🏆 Division Leaders — 1st Half Margin Streaks</div>'
+            f'<div style="font-size:10px;color:#998;margin:2px 0 4px">Top {DIVISION_TOP_N} per division by win % (our tally). '
+            f'Chips = 1st-half margin in last {DIVISION_CHIPS} games, oldest → newest; green outline = led at half by {DIVISION_HALF_MARGIN_MIN}+.</div>'
+            f'{body}</div>')
+
+
+def division_panel_html(predictions):
+    try:
+        teams = get_teams("nba")
+        return render_division_panel(build_division_leaders(teams, predictions))
+    except Exception as e:
+        print(f"  [!] division panel skipped: {e}")
+        return ""
+
+
 def render_volume_panel(ranked):
     if not ranked:
         return ""
@@ -2930,7 +3135,7 @@ def make_html(predictions):
     page = HTML_TEMPLATE.format(
         recent=RECENT_GAMES, generated=datetime.now().strftime('%d %b %H:%M'),
         builder=builder, streak_panel=streak_panel, season_panel=season_panel,
-        team_total_panel=team_total_panel, volume_panel=render_volume_panel(volume_ranked), cards=cards,
+        team_total_panel=team_total_panel, division_panel=division_panel_html(predictions), volume_panel=render_volume_panel(volume_ranked), cards=cards,
     )
     # The calculator script is added after .format (it carries JS braces).
     return page.replace("</body>", FIRST_HALF_SCRIPT + "</body>")
