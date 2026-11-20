@@ -1,33 +1,41 @@
 {
   "by_scanner": {
     "team_total": {
-      "hit": 8,
-      "miss": 0
+      "hit": 405,
+      "miss": 388
     },
     "game_total": {
-      "hit": 4,
-      "miss": 0
+      "hit": 219,
+      "miss": 196
     },
     "rebounds": {
-      "hit": 39,
-      "miss": 21
+      "hit": 2652,
+      "miss": 2410
     },
     "assists": {
-      "hit": 27,
-      "miss": 33
+      "hit": 2412,
+      "miss": 2501
     },
     "ra": {
-      "hit": 35,
-      "miss": 25
+      "hit": 2912,
+      "miss": 2254
     },
     "player_hot_form": {
-      "hit": 4,
-      "miss": 7
+      "hit": 526,
+      "miss": 374
     },
     "player_real_streak": {
-      "hit": 5,
-      "miss": 3
+      "hit": 828,
+      "miss": 357
+    },
+    "points": {
+      "hit": 3288,
+      "miss": 2171
+    },
+    "tpm": {
+      "hit": 1906,
+      "miss": 2086
     }
   },
-  "void": 9009
+  "void": 9509
 }
