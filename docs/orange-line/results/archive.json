@@ -1,24 +1,24 @@
 {
   "by_scanner": {
     "team_total": {
-      "hit": 413,
-      "miss": 395
+      "hit": 438,
+      "miss": 407
     },
     "game_total": {
-      "hit": 224,
-      "miss": 198
+      "hit": 238,
+      "miss": 204
     },
     "rebounds": {
-      "hit": 2703,
-      "miss": 2454
+      "hit": 2857,
+      "miss": 2601
     },
     "assists": {
-      "hit": 2467,
-      "miss": 2541
+      "hit": 2599,
+      "miss": 2703
     },
     "ra": {
-      "hit": 2970,
-      "miss": 2291
+      "hit": 3140,
+      "miss": 2430
     },
     "player_hot_form": {
       "hit": 526,
@@ -29,13 +29,35 @@
       "miss": 357
     },
     "points": {
-      "hit": 3354,
-      "miss": 2202
+      "hit": 3557,
+      "miss": 2337
     },
     "tpm": {
-      "hit": 1953,
-      "miss": 2134
+      "hit": 2080,
+      "miss": 2298
+    },
+    "team_stat_ou": {
+      "hit": 13,
+      "miss": 30,
+      "psum": 21.430124917958327,
+      "pn": 43
+    },
+    "team_stat_1x2": {
+      "hit": 24,
+      "miss": 18,
+      "psum": 29.931316478391167,
+      "pn": 42
+    },
+    "first_half_margin": {
+      "hit": 3,
+      "miss": 11,
+      "psum": 9.557799999999999,
+      "pn": 14,
+      "sq": 4805.475000000001,
+      "err": 119.5,
+      "sdsum": 117.5,
+      "sqn": 14
     }
   },
-  "void": 9798
+  "void": 10238
 }
