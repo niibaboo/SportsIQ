@@ -18114,9 +18114,10 @@
     "athlete_id": "4429615",
     "stat_key": "TD",
     "logged_at": "2026-10-15T13:08:55.290905+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-22T15:58:13.045943+00:00"
   },
   {
     "id": "2120a7484b29a3b5",
@@ -18152,9 +18153,10 @@
     "athlete_id": "3116365",
     "stat_key": "REC",
     "logged_at": "2026-10-15T13:08:55.290910+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 1.0,
+    "verified_at": "2026-11-22T15:58:13.045981+00:00"
   },
   {
     "id": "f44dc8b3be2d038b",
@@ -18171,9 +18173,10 @@
     "athlete_id": "3116365",
     "stat_key": "TD",
     "logged_at": "2026-10-15T13:08:55.290913+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-22T15:58:13.046027+00:00"
   },
   {
     "id": "e543ff94ee0ff422",
@@ -18190,9 +18193,10 @@
     "athlete_id": "3043078",
     "stat_key": "YDS",
     "logged_at": "2026-10-15T13:08:55.290915+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 58.0,
+    "verified_at": "2026-11-22T15:58:13.046034+00:00"
   },
   {
     "id": "e16b0fbd50cbc1bd",
@@ -18209,9 +18213,10 @@
     "athlete_id": "3043078",
     "stat_key": "TD",
     "logged_at": "2026-10-15T13:08:55.290918+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "miss",
+    "actual": 0.0,
+    "verified_at": "2026-11-22T15:58:13.046052+00:00"
   },
   {
     "id": "fc2823797ecdaf69",
@@ -18228,9 +18233,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-10-15T13:08:55.290922+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 23.0,
+    "verified_at": "2026-11-22T15:58:13.111407+00:00"
   },
   {
     "id": "f7665031f7ff7b67",
@@ -18247,9 +18253,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-10-15T13:08:55.290925+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 31.0,
+    "verified_at": "2026-11-22T15:58:13.111431+00:00"
   },
   {
     "id": "50b507bce0c508d4",
@@ -18266,9 +18273,10 @@
     "athlete_id": null,
     "stat_key": null,
     "logged_at": "2026-10-15T13:08:55.290927+00:00",
-    "status": "pending",
-    "result": null,
-    "actual": null
+    "status": "verified",
+    "result": "hit",
+    "actual": 54.0,
+    "verified_at": "2026-11-22T15:58:13.111439+00:00"
   },
   {
     "id": "e535c5ae15d5bc1d",
@@ -57947,5 +57955,85 @@
       2.0,
       2.0
     ]
+  },
+  {
+    "id": "cfd6c2af8ad65861",
+    "scanner": "game_total",
+    "match": "Tennessee Titans @ Dallas Cowboys",
+    "market": "Game Over 66.5 Total Points",
+    "value": 51,
+    "detail": "proj 66.9 pts (5v5gm)",
+    "line": 66.5,
+    "direction": "over",
+    "game_id": "401873073",
+    "game_date": "2026-11-22",
+    "date_key": "2026-11-22",
+    "is_home": null,
+    "athlete_id": null,
+    "stat_key": null,
+    "logged_at": "2026-11-22T15:58:11.068176+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "1c42a3e3ba64b2a9",
+    "scanner": "team_total",
+    "match": "Las Vegas Raiders @ Denver Broncos",
+    "market": "Denver Broncos Over 29.5 Points",
+    "value": 52,
+    "detail": "proj 29.9 pts (5gm)",
+    "line": 29.5,
+    "direction": "over",
+    "game_id": "401873075",
+    "game_date": "2026-11-22",
+    "date_key": "2026-11-22",
+    "is_home": true,
+    "athlete_id": null,
+    "stat_key": null,
+    "logged_at": "2026-11-22T15:58:11.068222+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "0bd5956d437e3cda",
+    "scanner": "team_total",
+    "match": "Las Vegas Raiders @ Denver Broncos",
+    "market": "Denver Broncos Under 29.5 Points",
+    "value": 48,
+    "detail": "proj 29.9 pts (5gm)",
+    "line": 29.5,
+    "direction": "under",
+    "game_id": "401873075",
+    "game_date": "2026-11-22",
+    "date_key": "2026-11-22",
+    "is_home": true,
+    "athlete_id": null,
+    "stat_key": null,
+    "logged_at": "2026-11-22T15:58:11.068229+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
+  },
+  {
+    "id": "2cd4d3866c74ea22",
+    "scanner": "game_total",
+    "match": "Baltimore Ravens @ Carolina Panthers",
+    "market": "Game Over 41.5 Total Points",
+    "value": 51,
+    "detail": "proj 41.9 pts (5v5gm)",
+    "line": 41.5,
+    "direction": "over",
+    "game_id": "401873068",
+    "game_date": "2026-11-22",
+    "date_key": "2026-11-22",
+    "is_home": null,
+    "athlete_id": null,
+    "stat_key": null,
+    "logged_at": "2026-11-22T15:58:11.068368+00:00",
+    "status": "pending",
+    "result": null,
+    "actual": null
   }
 ]
