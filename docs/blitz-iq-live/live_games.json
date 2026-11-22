@@ -1,38 +1,5 @@
 {
-  "generated": "2026-11-20T03:02:37.102921+00:00",
-  "total_live": 1,
-  "games": [
-    {
-      "game_id": "401873066",
-      "home_id": "34",
-      "away_id": "11",
-      "home_team": "Houston Texans",
-      "away_team": "Indianapolis Colts",
-      "home_score": 17.0,
-      "away_score": 3.0,
-      "period": 2,
-      "display_clock": "0:00",
-      "status": "Halftime",
-      "elapsed_minute": 30.0,
-      "minutes_remaining": 30.0,
-      "next_score": {
-        "home": 77,
-        "away": 23
-      },
-      "game_total_pace": {
-        "prob": 30,
-        "status": "On Pace: Under"
-      },
-      "model_signal": {
-        "label": "Home Next Score",
-        "prob": 77,
-        "qualifies": true
-      },
-      "pregame_projection": {
-        "exp_home": 30.1,
-        "exp_away": 20.4,
-        "exp_total": 50.6
-      }
-    }
-  ]
+  "generated": "2026-11-22T03:58:04.081006+00:00",
+  "total_live": 0,
+  "games": []
 }
