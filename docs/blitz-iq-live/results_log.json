@@ -1322,7 +1322,10 @@
     "logged_home_score": 20.0,
     "logged_away_score": 6.0,
     "pregame_total": 45.0,
-    "status": "pending"
+    "status": "miss",
+    "scorer_team_id": "15",
+    "final_home_score": 26.0,
+    "final_away_score": 9.0
   },
   "401873073_Home_Next_Score": {
     "id": "401873073_Home_Next_Score",
@@ -1339,7 +1342,10 @@
     "logged_home_score": 27.0,
     "logged_away_score": 9.0,
     "pregame_total": 66.9,
-    "status": "pending"
+    "status": "miss",
+    "scorer_team_id": "10",
+    "final_home_score": 51.0,
+    "final_away_score": 30.0
   },
   "401873067_Game_Total_Over": {
     "id": "401873067_Game_Total_Over",
@@ -1356,7 +1362,9 @@
     "logged_home_score": 27.0,
     "logged_away_score": 7.0,
     "pregame_total": 41.5,
-    "status": "pending"
+    "status": "miss",
+    "final_home_score": 34.0,
+    "final_away_score": 7.0
   },
   "401873068_Game_Total_Over": {
     "id": "401873068_Game_Total_Over",
@@ -1373,6 +1381,42 @@
     "logged_home_score": 22.0,
     "logged_away_score": 26.0,
     "pregame_total": 41.9,
+    "status": "hit",
+    "final_home_score": 35.0,
+    "final_away_score": 33.0
+  },
+  "401873075_Game_Total_Over": {
+    "id": "401873075_Game_Total_Over",
+    "game_id": "401873075",
+    "home_id": "7",
+    "away_id": "13",
+    "home_team": "Denver Broncos",
+    "away_team": "Las Vegas Raiders",
+    "label": "Game Total Over",
+    "prob": 99,
+    "logged_at": "2026-11-23T00:30:24.202874+00:00",
+    "logged_period": 4,
+    "logged_clock": "2:00",
+    "logged_home_score": 31.0,
+    "logged_away_score": 24.0,
+    "pregame_total": 49.8,
+    "status": "pending"
+  },
+  "401873069_Game_Total_Under": {
+    "id": "401873069_Game_Total_Under",
+    "game_id": "401873069",
+    "home_id": "19",
+    "away_id": "30",
+    "home_team": "New York Giants",
+    "away_team": "Jacksonville Jaguars",
+    "label": "Game Total Under",
+    "prob": 100,
+    "logged_at": "2026-11-23T00:30:24.202884+00:00",
+    "logged_period": 4,
+    "logged_clock": "6:39",
+    "logged_home_score": 23.0,
+    "logged_away_score": 9.0,
+    "pregame_total": 49.6,
     "status": "pending"
   }
 }

@@ -1,229 +1,69 @@
 {
-  "generated": "2026-11-22T19:43:04.875355+00:00",
-  "total_live": 7,
+  "generated": "2026-11-23T00:30:24.199696+00:00",
+  "total_live": 2,
   "games": [
     {
-      "game_id": "401873070",
-      "home_id": "2",
-      "away_id": "15",
-      "home_team": "Buffalo Bills",
-      "away_team": "Miami Dolphins",
-      "home_score": 20.0,
-      "away_score": 6.0,
-      "period": 2,
-      "display_clock": "0:00",
-      "status": "Halftime",
-      "elapsed_minute": 30.0,
-      "minutes_remaining": 30.0,
+      "game_id": "401873075",
+      "home_id": "7",
+      "away_id": "13",
+      "home_team": "Denver Broncos",
+      "away_team": "Las Vegas Raiders",
+      "home_score": 31.0,
+      "away_score": 24.0,
+      "period": 4,
+      "display_clock": "2:00",
+      "status": "2:00 - 4th",
+      "elapsed_minute": 58.0,
+      "minutes_remaining": 2.0,
       "next_score": {
-        "home": 77,
-        "away": 23
+        "home": 56,
+        "away": 44
       },
       "game_total_pace": {
-        "prob": 64,
-        "status": "On Pace: Over"
-      },
-      "model_signal": {
-        "label": "Home Next Score",
-        "prob": 77,
-        "qualifies": true
-      },
-      "pregame_projection": {
-        "exp_home": 28.6,
-        "exp_away": 16.4,
-        "exp_total": 45.0
-      }
-    },
-    {
-      "game_id": "401873071",
-      "home_id": "3",
-      "away_id": "18",
-      "home_team": "Chicago Bears",
-      "away_team": "New Orleans Saints",
-      "home_score": 16.0,
-      "away_score": 10.0,
-      "period": 2,
-      "display_clock": "0:00",
-      "status": "Halftime",
-      "elapsed_minute": 30.0,
-      "minutes_remaining": 30.0,
-      "next_score": {
-        "home": 62,
-        "away": 38
-      },
-      "game_total_pace": {
-        "prob": 63,
+        "prob": 99,
         "status": "On Pace: Over"
       },
       "model_signal": {
         "label": "Game Total Over",
-        "prob": 63,
-        "qualifies": false
-      },
-      "pregame_projection": {
-        "exp_home": 24.6,
-        "exp_away": 20.6,
-        "exp_total": 45.2
-      }
-    },
-    {
-      "game_id": "401873073",
-      "home_id": "6",
-      "away_id": "10",
-      "home_team": "Dallas Cowboys",
-      "away_team": "Tennessee Titans",
-      "home_score": 27.0,
-      "away_score": 9.0,
-      "period": 3,
-      "display_clock": "14:35",
-      "status": "14:35 - 3rd",
-      "elapsed_minute": 30.4,
-      "minutes_remaining": 29.6,
-      "next_score": {
-        "home": 75,
-        "away": 25
-      },
-      "game_total_pace": {
-        "prob": 58,
-        "status": "On Pace: Over"
-      },
-      "model_signal": {
-        "label": "Home Next Score",
-        "prob": 75,
+        "prob": 99,
         "qualifies": true
       },
       "pregame_projection": {
-        "exp_home": 37.0,
-        "exp_away": 29.9,
-        "exp_total": 66.9
+        "exp_home": 29.8,
+        "exp_away": 20.0,
+        "exp_total": 49.8
       }
     },
     {
-      "game_id": "401873072",
-      "home_id": "8",
-      "away_id": "27",
-      "home_team": "Detroit Lions",
-      "away_team": "Tampa Bay Buccaneers",
-      "home_score": 10.0,
-      "away_score": 7.0,
-      "period": 3,
-      "display_clock": "12:25",
-      "status": "12:25 - 3rd",
-      "elapsed_minute": 32.6,
-      "minutes_remaining": 27.4,
+      "game_id": "401873069",
+      "home_id": "19",
+      "away_id": "30",
+      "home_team": "New York Giants",
+      "away_team": "Jacksonville Jaguars",
+      "home_score": 23.0,
+      "away_score": 9.0,
+      "period": 4,
+      "display_clock": "6:39",
+      "status": "6:39 - 4th",
+      "elapsed_minute": 53.4,
+      "minutes_remaining": 6.6,
       "next_score": {
-        "home": 59,
-        "away": 41
+        "home": 63,
+        "away": 37
       },
       "game_total_pace": {
-        "prob": 34,
+        "prob": 0,
         "status": "On Pace: Under"
       },
       "model_signal": {
         "label": "Game Total Under",
-        "prob": 66,
-        "qualifies": false
-      },
-      "pregame_projection": {
-        "exp_home": 21.1,
-        "exp_away": 17.6,
-        "exp_total": 38.7
-      }
-    },
-    {
-      "game_id": "401873067",
-      "home_id": "12",
-      "away_id": "22",
-      "home_team": "Kansas City Chiefs",
-      "away_team": "Arizona Cardinals",
-      "home_score": 27.0,
-      "away_score": 7.0,
-      "period": 3,
-      "display_clock": "11:53",
-      "status": "11:53 - 3rd",
-      "elapsed_minute": 33.1,
-      "minutes_remaining": 26.9,
-      "next_score": {
-        "home": 79,
-        "away": 21
-      },
-      "game_total_pace": {
-        "prob": 88,
-        "status": "On Pace: Over"
-      },
-      "model_signal": {
-        "label": "Game Total Over",
-        "prob": 88,
-        "qualifies": true
-      },
-      "pregame_projection": {
-        "exp_home": 28.0,
-        "exp_away": 13.5,
-        "exp_total": 41.5
-      }
-    },
-    {
-      "game_id": "401873076",
-      "home_id": "21",
-      "away_id": "23",
-      "home_team": "Philadelphia Eagles",
-      "away_team": "Pittsburgh Steelers",
-      "home_score": 13.0,
-      "away_score": 6.0,
-      "period": 3,
-      "display_clock": "13:43",
-      "status": "13:43 - 3rd",
-      "elapsed_minute": 31.3,
-      "minutes_remaining": 28.7,
-      "next_score": {
-        "home": 67,
-        "away": 33
-      },
-      "game_total_pace": {
-        "prob": 41,
-        "status": "On Pace: Under"
-      },
-      "model_signal": {
-        "label": "Home Next Score",
-        "prob": 67,
-        "qualifies": false
-      },
-      "pregame_projection": {
-        "exp_home": 16.1,
-        "exp_away": 24.4,
-        "exp_total": 40.5
-      }
-    },
-    {
-      "game_id": "401873068",
-      "home_id": "29",
-      "away_id": "33",
-      "home_team": "Carolina Panthers",
-      "away_team": "Baltimore Ravens",
-      "home_score": 22.0,
-      "away_score": 26.0,
-      "period": 2,
-      "display_clock": "0:00",
-      "status": "Halftime",
-      "elapsed_minute": 30.0,
-      "minutes_remaining": 30.0,
-      "next_score": {
-        "home": 55,
-        "away": 45
-      },
-      "game_total_pace": {
-        "prob": 100,
-        "status": "On Pace: Over"
-      },
-      "model_signal": {
-        "label": "Game Total Over",
         "prob": 100,
         "qualifies": true
       },
       "pregame_projection": {
-        "exp_home": 24.1,
-        "exp_away": 17.8,
-        "exp_total": 41.9
+        "exp_home": 19.9,
+        "exp_away": 29.8,
+        "exp_total": 49.6
       }
     }
   ]
