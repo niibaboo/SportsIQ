@@ -1400,7 +1400,9 @@
     "logged_home_score": 31.0,
     "logged_away_score": 24.0,
     "pregame_total": 49.8,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 38.0,
+    "final_away_score": 24.0
   },
   "401873069_Game_Total_Under": {
     "id": "401873069_Game_Total_Under",
@@ -1417,6 +1419,8 @@
     "logged_home_score": 23.0,
     "logged_away_score": 9.0,
     "pregame_total": 49.6,
-    "status": "pending"
+    "status": "hit",
+    "final_home_score": 23.0,
+    "final_away_score": 18.0
   }
 }
