@@ -1630,6 +1630,11 @@ SEASON_STREAK_UNDER_THRESHOLD = {"REB": 4.0, "AST": 2.0, "RA": 6.0, "PTS": 10.0,
 # judgment calls, not fitted: 1+ block / 1+ steal in EVERY game, 25+ PRA.
 SEASON_EXTRA_OVER = {"BLK": 1.0, "STL": 1.0, "PRA": 25.0}
 STAT_LABELS.update({"BLK": "Blocks", "STL": "Steals", "PRA": "Pts+Ast+Reb"})
+# Panel trimmed to the four lines that matter (user request, 2026-11-24:
+# "kill the noise"): Over only, STRICTLY above the line, every game this
+# season. Under, RA, Blocks, Steals and Pts+Ast+Reb are switched off by
+# leaving them out of this dict (their helpers above are kept for reuse).
+SEASON_PANEL_OVER = {"PTS": 20.0, "REB": 7.0, "AST": 5.0, "3PM": 2.0}
 SEASON_COMBINED = {"RA": ("REB", "AST"), "PRA": ("PTS", "REB", "AST")}
 
 
@@ -1661,21 +1666,17 @@ def build_season_perfect_entries(predictions):
         for team_name, props in [(p["home_team"], p.get("home_props") or []),
                                    (p["away_team"], p.get("away_props") or [])]:
             for prop in props:
-                for stat_key in ("REB", "AST", "RA", "PTS", "3PM", "BLK", "STL", "PRA"):
+                for stat_key, over_line in SEASON_PANEL_OVER.items():
                     values = _season_values(league_key, prop["player_id"], stat_key, current_year)
                     if len(values) < SEASON_STREAK_MIN_GAMES:
                         continue
-                    base = {
-                        "name": prop["name"], "team": team_name, "league": p.get("league", ""),
-                        "match": p["match"], "stat": stat_key, "total": len(values), "values": values,
-                        "player_id": prop["player_id"], "game_id": p.get("game_id"), "date": p.get("date", ""),
-                    }
-                    over_line = REAL_STREAK_THRESHOLD.get(stat_key, SEASON_EXTRA_OVER.get(stat_key))
-                    if over_line is not None and all(v >= over_line for v in values):
-                        entries.append({**base, "direction": "over", "line": over_line})
-                    under_line = SEASON_STREAK_UNDER_THRESHOLD.get(stat_key)
-                    if under_line is not None and all(v <= under_line for v in values):
-                        entries.append({**base, "direction": "under", "line": under_line})
+                    if all(v > over_line for v in values):  # strictly above the line
+                        entries.append({
+                            "name": prop["name"], "team": team_name, "league": p.get("league", ""),
+                            "match": p["match"], "stat": stat_key, "total": len(values), "values": values,
+                            "player_id": prop["player_id"], "game_id": p.get("game_id"), "date": p.get("date", ""),
+                            "direction": "over", "line": over_line,
+                        })
     entries.sort(key=lambda e: -e["total"])
     return entries
 
