@@ -1634,6 +1634,7 @@ STAT_LABELS.update({"BLK": "Blocks", "STL": "Steals", "PRA": "Pts+Ast+Reb"})
 # "kill the noise"): Over only, STRICTLY above the line, every game this
 # season. Under, RA, Blocks, Steals and Pts+Ast+Reb are switched off by
 # leaving them out of this dict (their helpers above are kept for reuse).
+SEASON_ALLOW_MISS_FROM = 5
 SEASON_PANEL_OVER = {"PTS": 20.0, "REB": 7.0, "AST": 5.0, "3PM": 2.0}
 SEASON_COMBINED = {"RA": ("REB", "AST"), "PRA": ("PTS", "REB", "AST")}
 
@@ -1670,26 +1671,32 @@ def build_season_perfect_entries(predictions):
                     values = _season_values(league_key, prop["player_id"], stat_key, current_year)
                     if len(values) < SEASON_STREAK_MIN_GAMES:
                         continue
-                    if all(v > over_line for v in values):  # strictly above the line
+                    hits = sum(1 for v in values if v > over_line)  # strictly above the line
+                    # One miss allowed once there are SEASON_ALLOW_MISS_FROM+ games
+                    # (user request 2026-11-24: 100% was too tight); below that
+                    # a single miss would be 2/3 or 3/4 -- not worth flagging.
+                    allowed_miss = 1 if len(values) >= SEASON_ALLOW_MISS_FROM else 0
+                    if hits >= len(values) - allowed_miss:
                         entries.append({
+                            "hits": hits,
                             "name": prop["name"], "team": team_name, "league": p.get("league", ""),
                             "match": p["match"], "stat": stat_key, "total": len(values), "values": values,
                             "player_id": prop["player_id"], "game_id": p.get("game_id"), "date": p.get("date", ""),
                             "direction": "over", "line": over_line,
                         })
-    entries.sort(key=lambda e: -e["total"])
+    entries.sort(key=lambda e: (-(e["hits"] / e["total"]), -e["total"]))
     return entries
 
 
 SEASON_PERFECT_ENTRY_TEMPLATE = """<div class="season-row" data-match="{match}" data-direction="{direction}" data-stat="{stat}" style="background:#241a14;border-radius:8px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start">
   <div style="min-width:56px;text-align:center;background:#0f0a08;border:1px solid #10b981;border-radius:8px;padding:6px 4px;flex-shrink:0">
-    <div style="font-size:9px;color:#998">100%</div>
-    <div style="font-size:15px;font-weight:bold;color:#10b981">{hits}/{hits}</div>
+    <div style="font-size:9px;color:#998">{pct}%</div>
+    <div style="font-size:15px;font-weight:bold;color:#10b981">{hits}/{total}</div>
   </div>
   <div style="flex:1;min-width:0">
     <div style="font-size:10px;color:#998">{league} · {match}</div>
     <div style="font-size:14px;font-weight:bold;margin:1px 0 4px">{name} ({team}) <span style="color:#998;font-weight:normal;font-size:11px">{direction_label} {line} {stat_label}</span></div>
-    <div style="font-size:10px;color:#cbd5e1">every game this season: {values_str}</div>
+    <div style="font-size:10px;color:#cbd5e1;overflow-wrap:anywhere;word-break:break-word;line-height:1.5">games this season: {values_str}</div>
   </div>
 </div>"""
 
@@ -1697,11 +1704,6 @@ SEASON_FILTER_BAR = """<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bo
   <select id="seasonFixtureFilter" onchange="filterSeasonPerfect()" style="background:#0f0a08;border:1px solid #3a2a20;color:#f59e0b;padding:5px 8px;border-radius:6px">
     <option value="all">All Fixtures</option>
     {fixture_options}
-  </select>
-  <select id="seasonDirectionFilter" onchange="filterSeasonPerfect()" style="background:#0f0a08;border:1px solid #3a2a20;color:#f59e0b;padding:5px 8px;border-radius:6px">
-    <option value="all">Over &amp; Under</option>
-    <option value="over">Over only</option>
-    <option value="under">Under only</option>
   </select>
   <select id="seasonStatFilter" onchange="filterSeasonPerfect()" style="background:#0f0a08;border:1px solid #3a2a20;color:#f59e0b;padding:5px 8px;border-radius:6px">
     <option value="all">All Bet Types</option>
@@ -1711,11 +1713,9 @@ SEASON_FILTER_BAR = """<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bo
 <script>
 function filterSeasonPerfect() {{
   var fixture = document.getElementById('seasonFixtureFilter').value;
-  var direction = document.getElementById('seasonDirectionFilter').value;
   var stat = document.getElementById('seasonStatFilter').value;
   document.querySelectorAll('.season-row').forEach(function(row) {{
     var show = (fixture === 'all' || row.getAttribute('data-match') === fixture)
-      && (direction === 'all' || row.getAttribute('data-direction') === direction)
       && (stat === 'all' || row.getAttribute('data-stat') === stat);
     row.style.display = show ? 'flex' : 'none';
   }});
@@ -1725,10 +1725,9 @@ function filterSeasonPerfect() {{
 SEASON_PERFECT_PANEL_TEMPLATE = """<div style="background:#1a1310;border-radius:12px;padding:16px;margin:12px 0;border:1px solid #3a2a20">
   <div style="font-size:14px;font-weight:bold;margin-bottom:10px">💯 100% This Season</div>
   <div style="font-size:11px;color:#998;margin-bottom:10px">
-    Every game played so far THIS SEASON has cleared the line shown -- a stricter, longer
-    window than Real Streak above (which caps at the last {recent}). Resets each new
-    season. A perfect record over a short season is still a short sample -- "3/3" means
-    three games, not three months.
+    Cleared the line shown in every game played THIS SEASON -- or all but one once
+    a player has 5+ games (e.g. 15/16 = 94%). Resets each new season. A short season
+    is still a short sample -- "3/3" means three games, not three months.
   </div>
   {filters}
   <div id="seasonPerfectRows">{cards}</div>
@@ -1748,10 +1747,10 @@ def render_season_perfect_panel(entries):
     stat_options = "".join(f'<option value="{s}">{STAT_LABELS[s]}</option>' for s in seen_stats)
     cards = "".join(
         SEASON_PERFECT_ENTRY_TEMPLATE.format(
-            match=e["match"], direction=e["direction"], stat=e["stat"], hits=e["total"],
+            match=e["match"], direction=e["direction"], stat=e["stat"], hits=e["hits"], total=e["total"], pct=round(100 * e["hits"] / e["total"]),
             league=e["league"], name=e["name"], team=e["team"],
             direction_label="Over" if e["direction"] == "over" else "Under", line=e["line"],
-            stat_label=STAT_LABELS[e["stat"]], values_str="/".join(str(v) for v in e["values"]),
+            stat_label=STAT_LABELS[e["stat"]], values_str=", ".join(f"{v:g}" for v in e["values"]),
         )
         for e in entries
     )
