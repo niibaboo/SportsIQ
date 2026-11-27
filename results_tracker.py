@@ -141,6 +141,18 @@ def log_todays_signals(all_predictions, hot_form_entries, streak_entries, log, t
             add("home_over15", match_label, f"{p['home_team']} Over 1.5 Goals", p["home_over15"],
                 detail=f"exp {p.get('exp_home')} goals", **base)
 
+    # Win & BTTS (2026-11-27): one pick per match -- whichever side has the
+    # higher joint probability -- logged with that probability as `value` so
+    # the dashboard can compare the model's average % with the real hit rate.
+    for p in all_predictions:
+        if p.get("win_btts_best", 0) >= thresholds.get("win_btts_min", 101):
+            side = p["win_btts_side"]
+            team = p["home_team"] if side == "home" else p["away_team"]
+            add("win_btts", f"{p['home_team']} vs {p['away_team']}", f"{team} Win & BTTS", p["win_btts_best"],
+                match_id=p["match_id"], match_date=p["date"], date_key=p["date_key"],
+                league=p["league"], home_team=p["home_team"], away_team=p["away_team"],
+                detail=f"side={side}")
+
     for e in hot_form_entries:
         add("hot_form", e["team"], f"Hot Form vs {e['opponent']}", e["last5_avg"],
             match_id=None, match_date=e["date"], date_key=e["date_key"], league=e["league"],
@@ -195,6 +207,23 @@ def _verify_btts_entry(entry, key):
         return None
     hit = s["home"] >= 1 and s["away"] >= 1
     return {"actual": f"{s['home']}-{s['away']}", "result": "hit" if hit else "miss"}
+
+
+def _verify_win_btts_entry(entry, key):
+    """Hit = the picked side won AND both teams scored."""
+    data = _get(f"/football/matches/{entry['match_id']}", key)
+    if not data or not data.get("data"):
+        return None
+    m = data["data"]
+    if m.get("status") != "finished":
+        return None
+    s = m.get("score", {})
+    if s.get("home") is None or s.get("away") is None:
+        return None
+    h, a = s["home"], s["away"]
+    side = (entry.get("detail") or "").replace("side=", "")
+    won = h > a if side == "home" else a > h
+    return {"actual": f"{h}-{a}", "result": "hit" if (won and h >= 1 and a >= 1) else "miss"}
 
 
 def _verify_away_to_score_entry(entry, key):
@@ -314,6 +343,8 @@ def verify_pending_results(log, key, real_streak_threshold, max_checks=60, under
                 result = _verify_goals_entry(entry, key, GOAL_THRESHOLD_SCANNERS[entry["scanner"]])
             elif entry["scanner"] == "btts":
                 result = _verify_btts_entry(entry, key)
+            elif entry["scanner"] == "win_btts":
+                result = _verify_win_btts_entry(entry, key)
             elif entry["scanner"] == "away_to_score":
                 result = _verify_away_to_score_entry(entry, key)
             elif entry["scanner"] == "home_over15":
@@ -362,7 +393,7 @@ def build_results_dashboard(log):
     SCANNER_LABELS = {
         "over25": "Over 2.5 Goals", "btts": "BTTS", "corners": "Over 10.5 Corners",
         "corners_safe": "Safe Corners", "over45": "Over 4.5 Goals", "away_to_score": "Away to Score",
-        "home_over15": "Home Over 1.5 Goals",
+        "home_over15": "Home Over 1.5 Goals", "win_btts": "Win & BTTS",
         "hot_form": "Hot Form", "real_streak": "Real Streak",
         "under_streak": "Under Streak (team 1 or fewer)",
     }
@@ -426,6 +457,22 @@ def build_results_dashboard(log):
     over25_league_rows = _market_league_rows("over25")
     btts_league_rows = _market_league_rows("btts")
 
+    # Win & BTTS calibration: model's average probability vs the real hit rate.
+    wb = [e for e in verified if e["scanner"] == "win_btts" and isinstance(e.get("value"), (int, float))]
+    if wb:
+        wb_avg = sum(e["value"] for e in wb) / len(wb)
+        wb_rate = 100 * sum(1 for e in wb if e["result"] == "hit") / len(wb)
+        wb_note = (f"model average {wb_avg:.0f}% vs actual {wb_rate:.0f}% over {len(wb)} pick(s)"
+                   + (" -- too few to judge (need 30+)" if len(wb) < 30 else
+                      (" -- model looks over-confident" if wb_avg - wb_rate > 7 else
+                       (" -- model looks under-confident" if wb_rate - wb_avg > 7 else " -- well calibrated"))))
+    else:
+        wb_note = "no verified picks yet"
+    wb_panel = f"""<div style="background:#1a1f26;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #2a3038">
+  <div style="font-weight:bold;margin-bottom:4px">Win &amp; BTTS — Calibration</div>
+  <div style="color:#8b98a8;font-size:12px">{wb_note}</div>
+</div>"""
+
     recent = sorted(verified, key=lambda e: e.get("verified_at", ""), reverse=True)[:30]
     recent_rows = ""
     for e in recent:
@@ -468,6 +515,8 @@ def build_results_dashboard(log):
   <div style="font-weight:bold;margin-bottom:8px">BTTS — By League</div>
   {btts_league_rows}
 </div>
+
+{wb_panel}
 
 <div style="background:#1a1f26;border-radius:12px;padding:16px;margin:14px 0;border:1px solid #2a3038">
   <div style="font-weight:bold;margin-bottom:8px">Recent Results</div>
