@@ -27,6 +27,7 @@ sample size, tracked automatically, no manual logging required.
 
 import os
 import json
+import time
 import hashlib
 import requests
 from datetime import datetime, timezone
@@ -48,16 +49,50 @@ def _headers(key):
     return {"Authorization": f"Bearer {key}"}
 
 
-def _get(path, key, params=None, timeout=15):
+# Rate-limit handling (2026-11-27): the main run makes 1,000+ calls over ~27
+# minutes, then this module fired 60 checks back-to-back with NO delay and
+# every one came back 429, so nothing was graded. Now: a short delay between
+# calls, one wait-and-retry on a 429, a per-run response cache (several
+# scanners log the same match, so each match is fetched once), and
+# verify_pending_results() stops early after RATE_LIMIT_STOP consecutive
+# refusals instead of hammering the API.
+CALL_DELAY = 0.6
+RATE_LIMIT_STOP = 4
+PRE_VERIFY_PAUSE = 60
+_response_cache = {}
+_rate_limit_streak = 0
+
+
+def _get(path, key, params=None, timeout=15, _retried=False):
+    global _rate_limit_streak
+    cache_key = (path, tuple(sorted((params or {}).items())))
+    if cache_key in _response_cache:
+        return _response_cache[cache_key]
     try:
         r = requests.get(f"{BASE}{path}", headers=_headers(key), params=params or {}, timeout=timeout)
     except Exception as e:
         print(f"    [!] verification request failed: {path} ({e})")
         return None
+    time.sleep(CALL_DELAY)
+    if r.status_code == 429:
+        if not _retried:
+            try:
+                wait = min(int(r.headers.get("Retry-After", 20)), 60)
+            except (TypeError, ValueError):
+                wait = 20
+            print(f"    [!] 429 on {path} -- waiting {wait}s and retrying once")
+            time.sleep(wait)
+            return _get(path, key, params, timeout, _retried=True)
+        _rate_limit_streak += 1
+        print(f"    [!] 429 on {path} (still rate limited)")
+        return None
     if r.status_code != 200:
         print(f"    [!] {r.status_code} on {path}: {r.text[:150]}")
         return None
-    return r.json()
+    _rate_limit_streak = 0
+    data = r.json()
+    _response_cache[cache_key] = data
+    return data
 
 
 def _entry_id(scanner, subject, match_date_key, market):
@@ -318,24 +353,36 @@ def _verify_form_streak_entry(entry, key, real_streak_threshold, under_max=None)
     return {"actual": team_goals, "result": "hit" if team_goals >= real_streak_threshold else "miss"}
 
 
-def verify_pending_results(log, key, real_streak_threshold, max_checks=60, under_max=1):
+def verify_pending_results(log, key, real_streak_threshold, max_checks=120, under_max=1):
     """Looks at every PENDING entry whose match date has already
     passed (so the game should be over by now), tries to fetch the
     real result, and updates it in place. Capped at max_checks per run
     so a backlog can't blow up API usage in one go -- it'll just catch
     up gradually over a few runs instead."""
+    global _rate_limit_streak
     today = datetime.now(timezone.utc).date().isoformat()
     checked = 0
     updated = 0
 
-    for entry in log:
-        if entry["status"] != "pending":
-            continue
-        if entry["date_key"] >= today:
-            continue  # match hasn't happened yet, nothing to verify
+    # Least-recently-tried first (never-tried entries first), so entries that
+    # keep failing can't permanently block newer ones behind them.
+    due = [e for e in log if e["status"] == "pending" and e["date_key"] < today]
+    due.sort(key=lambda e: e.get("last_check_at", ""))
+    if due:
+        print(f"  {len(due)} pending entr{'y' if len(due) == 1 else 'ies'} due for checking -- "
+              f"pausing {PRE_VERIFY_PAUSE}s first so the API rate limit can recover")
+        time.sleep(PRE_VERIFY_PAUSE)
+    _rate_limit_streak = 0
+
+    for entry in due:
         if checked >= max_checks:
             break
+        if _rate_limit_streak >= RATE_LIMIT_STOP:
+            print(f"  [!] {RATE_LIMIT_STOP} rate-limit refusals in a row -- stopping verification early; "
+                  f"remaining entries stay pending and are retried next run")
+            break
         checked += 1
+        entry["last_check_at"] = datetime.now(timezone.utc).isoformat()
 
         result = None
         try:
