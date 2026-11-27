@@ -62,6 +62,9 @@ SCANNER_OVER45_MIN = 50
 SCANNER_AWAY_TO_SCORE_MIN = 75  # higher bar than BTTS -- a one-sided market
                                  # (just the away side scoring) is easier to
                                  # hit than BTTS, so it earns a stricter floor
+SCANNER_WIN_BTTS_MIN = 25       # Win & BTTS is a joint (win AND both score) market, so its
+                                 # probabilities run far lower than any single market's -- even a
+                                 # strong favourite rarely tops ~35%. 25% is a high bar for it.
 SCANNER_HOME_OVER15_MIN = 65    # needing 2+ goals is a harder bar than just
                                  # scoring once, so this sits below the
                                  # Over 0.5 markets' floors, not above them
@@ -440,6 +443,46 @@ def predict_1x2(exp_home, exp_away, max_goals=8):
     }
 
 
+def predict_win_btts(exp_home, exp_away, max_goals=10):
+    """Win & BTTS combos, read straight off the independent-Poisson scoreline
+    grid (same grid as predict_1x2) -- NOT Win% x BTTS%, which would ignore
+    that the two outcomes are correlated (a win needs goals, BTTS needs goals
+    from both sides). Home Win & BTTS = every scoreline with home > away AND
+    away >= 1; the "No" version is the clean-sheet wins (away == 0). Same
+    independence caveat as BTTS/correct-score elsewhere (no Dixon-Coles
+    low-score adjustment), so the results tracker keeps a calibration line
+    for it rather than assuming it is right. Added 2026-11-27 (user request)."""
+    hw_btts = aw_btts = draw_btts = hw_clean = aw_clean = 0.0
+    for h in range(max_goals + 1):
+        ph = poisson_pmf(h, exp_home)
+        for a in range(max_goals + 1):
+            p = ph * poisson_pmf(a, exp_away)
+            both = h >= 1 and a >= 1
+            if h > a:
+                if both:
+                    hw_btts += p
+                else:
+                    hw_clean += p
+            elif a > h:
+                if both:
+                    aw_btts += p
+                else:
+                    aw_clean += p
+            elif both:
+                draw_btts += p
+    best_side = "home" if hw_btts >= aw_btts else "away"
+    return {
+        "home_win_btts": round(hw_btts * 100, 1), "away_win_btts": round(aw_btts * 100, 1),
+        "draw_btts": round(draw_btts * 100, 1),
+        "home_win_btts_no": round(hw_clean * 100, 1), "away_win_btts_no": round(aw_clean * 100, 1),
+        "win_btts_best": round(max(hw_btts, aw_btts) * 100, 1), "win_btts_side": best_side,
+    }
+
+
+def _fair_odds(pct):
+    return f"{100 / pct:.2f}" if pct and pct > 0 else "—"
+
+
 def predict_fh_corners(h_form, a_form):
     """FH corners Over/Under — now opponent-adjusted: each side's own FH
     corner-WINNING rate is weighed against the other side's FH corner-
@@ -713,6 +756,7 @@ def build_all_predictions(key):
             full_corners_proj = predict_full_corners(h_form, a_form)
             fh_btts_proj = predict_fh_btts(h_form, a_form)
             result_1x2 = predict_1x2(proj["exp_home"], proj["exp_away"])
+            win_btts = predict_win_btts(proj["exp_home"], proj["exp_away"])
             # Weakest-link sample size for the corners prediction — the
             # smaller of the two teams' recent-games counts, since a
             # shrink()-heavy estimate from one thin-data team makes the
@@ -729,7 +773,7 @@ def build_all_predictions(key):
                 "home_form": h_form, "away_form": a_form,
                 "home_props": predict_team_props(h_form), "away_props": predict_team_props(a_form),
                 "corners_sample_n": corners_sample_n,
-                **proj, **fh_corners_proj, **full_corners_proj, **fh_btts_proj, **result_1x2,
+                **proj, **fh_corners_proj, **full_corners_proj, **fh_btts_proj, **result_1x2, **win_btts,
             }
             all_predictions.append(merged)
 
@@ -931,7 +975,7 @@ HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <body style="background:#0b0f14;color:white;font-family:Arial;padding:12px;max-width:600px;margin:auto">
 <h2 style="text-align:center">⚽ MATCH IQ — Full Stats</h2>
 <p style="text-align:center;color:#888;font-size:11px">Powered by TheStatsAPI · {generated}</p>
-<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Safe Corners</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a>·<a href="scanners/away_to_score/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Away to Score</a>·<a href="scanners/home_over15/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Home O1.5</a>·<a href="scanners/goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Hot Form/Streak</a></p>
+<p style="text-align:center;margin:6px 0 0;font-size:12px">Daily Signals: <a href="scanners/over25/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 2.5</a>·<a href="scanners/btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">BTTS</a>·<a href="scanners/corners/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Corners 10.5+</a>·<a href="scanners/corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Safe Corners</a>·<a href="scanners/over45/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Over 4.5</a>·<a href="scanners/away_to_score/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Away to Score</a>·<a href="scanners/home_over15/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Home O1.5</a>·<a href="scanners/win_btts/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Win &amp; BTTS</a>·<a href="scanners/goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 4px">Hot Form/Streak</a></p>
 <p style="text-align:center;margin:4px 0 0;font-size:12px"><a href="results/index.html" style="color:#f59e0b;text-decoration:none">📊 Results Tracker</a></p>
 {date_bar}
 <p style="text-align:center;margin-bottom:16px"><a href="match_iq_predictions.csv" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Download CSV</a></p>
@@ -951,6 +995,14 @@ CARD_TEMPLATE = """<div style="background:#1a1f26;border-radius:12px;padding:16p
     <div><div style="color:#aaa;font-size:11px">HOME WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">{home_win_pct}%</div></div>
     <div><div style="color:#aaa;font-size:11px">DRAW</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">{draw_pct}%</div></div>
     <div><div style="color:#aaa;font-size:11px">AWAY WIN</div><div style="color:#a0e8a0;font-size:18px;font-weight:bold">{away_win_pct}%</div></div>
+  </div>
+  <div style="background:#0f1318;border-radius:8px;padding:8px;margin-bottom:10px;font-size:11px;color:#aaa">
+    <div style="display:flex;justify-content:space-between;text-align:center">
+      <div style="flex:1"><div>{home_team} WIN &amp; BTTS</div><div style="color:#f0a0e8;font-size:18px;font-weight:bold">{home_win_btts}%</div><div style="color:#666;font-size:10px">fair {home_win_btts_odds}</div></div>
+      <div style="flex:1"><div>DRAW &amp; BTTS</div><div style="color:#f0a0e8;font-size:18px;font-weight:bold">{draw_btts}%</div><div style="color:#666;font-size:10px">fair {draw_btts_odds}</div></div>
+      <div style="flex:1"><div>{away_team} WIN &amp; BTTS</div><div style="color:#f0a0e8;font-size:18px;font-weight:bold">{away_win_btts}%</div><div style="color:#666;font-size:10px">fair {away_win_btts_odds}</div></div>
+    </div>
+    <div style="color:#666;font-size:10px;margin-top:4px;text-align:center">Win &amp; BTTS No (clean-sheet win): {home_team} {home_win_btts_no}% · {away_team} {away_win_btts_no}%</div>
   </div>
   <div style="display:flex;justify-content:space-between;text-align:center;margin-bottom:10px">
     <div><div style="color:#aaa;font-size:11px">FH CORNERS EXP</div><div style="color:#7ec8ff;font-size:18px;font-weight:bold">{exp_fh_corners}</div></div>
@@ -1001,6 +1053,10 @@ def make_html(predictions, date_label=None, prev_href=None, next_href=None):
         league=p["league"], date=p["date"][:16].replace("T", " "),
         home_team=p["home_team"], away_team=p["away_team"],
         exp_total=p["exp_total"], over25=p["over25"], btts=p["btts"],
+        home_win_btts=p["home_win_btts"], away_win_btts=p["away_win_btts"], draw_btts=p["draw_btts"],
+        home_win_btts_odds=_fair_odds(p["home_win_btts"]), away_win_btts_odds=_fair_odds(p["away_win_btts"]),
+        draw_btts_odds=_fair_odds(p["draw_btts"]),
+        home_win_btts_no=p["home_win_btts_no"], away_win_btts_no=p["away_win_btts_no"],
         home_win_pct=p["home_win_pct"], draw_pct=p["draw_pct"], away_win_pct=p["away_win_pct"],
         exp_fh_corners=p["exp_fh_corners"], fh_corners_over35=p["fh_corners_over35"],
         fh_corners_over45=p["fh_corners_over45"],
@@ -1041,7 +1097,7 @@ def write_csv(predictions, path):
         writer = csv.writer(f)
         writer.writerow([
             "Date", "League", "HomeTeam", "AwayTeam", "ExpHome", "ExpAway", "ExpTotal", "Over25", "BTTS",
-            "HomeWinPct", "DrawPct", "AwayWinPct",
+            "HomeWinPct", "DrawPct", "AwayWinPct", "HomeWinBTTS", "DrawBTTS", "AwayWinBTTS",
             "ExpFHCorners", "FHCornersOver35", "FHCornersOver45",
             "HomeGoalsAvg", "HomeShotsAvg", "HomeSoTAvg", "HomeCornersAvg", "HomeFHCornersAvg",
             "HomeTacklesAvg", "HomeSavesAvg", "HomeCardsAvg", "HomeSample",
@@ -1055,6 +1111,7 @@ def write_csv(predictions, path):
                 p["date"], p["league"], p["home_team"], p["away_team"],
                 p["exp_home"], p["exp_away"], p["exp_total"], p["over25"], p["btts"],
                 p["home_win_pct"], p["draw_pct"], p["away_win_pct"],
+                p["home_win_btts"], p["draw_btts"], p["away_win_btts"],
                 p["exp_fh_corners"], p["fh_corners_over35"], p["fh_corners_over45"],
                 hf["avg_scored"], fmt(hf["avg_shots"]), fmt(hf["avg_shots_on_target"]),
                 fmt(hf["avg_corners"]), fmt(hf["avg_fh_corners"]), fmt(hf["avg_tackles"]),
@@ -1086,7 +1143,7 @@ SCANNER_HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 <p style="text-align:center;margin-bottom:6px"><a href="../../match_iq_index.html" style="color:#7ec8ff;text-decoration:none;font-size:12px">← Match IQ</a></p>
 <h2 style="text-align:center;margin-bottom:2px">{icon} {page_title}</h2>
 <p style="text-align:center;color:#888;font-size:11px;margin-top:0">{subtitle} · {generated}</p>
-<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a>·<a href="../corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Safe Corners</a>·<a href="../over45/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 4.5</a>·<a href="../goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Hot Form/Streak</a></p>
+<p style="text-align:center;margin:8px 0 4px;font-size:12px"><a href="../over25/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 2.5</a>·<a href="../btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">BTTS</a>·<a href="../corners/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Corners 10.5+</a>·<a href="../corners_safe/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Safe Corners</a>·<a href="../over45/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Over 4.5</a>·<a href="../win_btts/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Win &amp; BTTS</a>·<a href="../goal_streak/" style="color:#7ec8ff;text-decoration:none;margin:0 6px">Hot Form/Streak</a></p>
 {date_bar}
 <p style="text-align:center;margin-bottom:12px"><a href="{csv_name}" download style="background:#222;border:1px solid #444;color:white;padding:8px 14px;border-radius:8px;text-decoration:none;font-size:13px">⬇ Export CSV</a></p>
 <p style="text-align:center;color:#888;font-size:12px;margin-bottom:14px">{qualified_count} matches qualified</p>
@@ -1097,7 +1154,7 @@ SCANNER_HTML_TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8">
 def _scanner_badge_value(p, market_key):
     return {"over25": p["over25"], "btts": p["btts"], "corners_over105": p["corners_over105"],
             "over45": p["over45"], "away_to_score": p["away_to_score"],
-            "home_over15": p["home_over15"]}[market_key]
+            "home_over15": p["home_over15"], "win_btts_best": p["win_btts_best"]}[market_key]
 
 
 def render_scanner_cards(predictions, market_key, badge_label):
@@ -1112,6 +1169,11 @@ def render_scanner_cards(predictions, market_key, badge_label):
                 full = "✓ full sample" if n >= SAFE_CORNERS_MIN_SAMPLE else "thin sample"
                 sample_note = (f'<div style="font-size:10px;color:#8b98a8;margin-top:4px">'
                                 f'data: {n}/{SAFE_CORNERS_MIN_SAMPLE} games ({full})</div>')
+        if market_key == "win_btts_best":
+            side_team = p["home_team"] if p["win_btts_side"] == "home" else p["away_team"]
+            sample_note = (f'<div style="font-size:11px;color:#f0a0e8;margin-top:4px">'
+                           f'Pick: <b>{side_team} Win &amp; BTTS</b> · fair odds {_fair_odds(p["win_btts_best"])} · '
+                           f'(home {p["home_win_btts"]}% / away {p["away_win_btts"]}%)</div>')
         # Last-5-GAMES goals, oldest->newest — same "last 5" convention as
         # Hot Form/Real Streak (GOAL_STREAK_MIN_GAMES) and format_history's
         # existing newest-first-list convention, just reused here rather
@@ -1156,11 +1218,12 @@ def write_scanner_csv(predictions, path):
     with open(path, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["Date", "League", "HomeTeam", "AwayTeam", "Over25", "Over45", "BTTS", "AwayToScore",
-                          "HomeOver15", "ExpCorners", "CornersOver105", "CornersSampleN"])
+                          "HomeOver15", "HomeWinBTTS", "AwayWinBTTS", "ExpCorners", "CornersOver105", "CornersSampleN"])
         for p in predictions:
             writer.writerow([p["date"], p["league"], p["home_team"], p["away_team"],
                               p["over25"], p["over45"], p["btts"], p.get("away_to_score", ""),
-                              p.get("home_over15", ""), p["exp_corners"], p["corners_over105"],
+                              p.get("home_over15", ""), p.get("home_win_btts", ""), p.get("away_win_btts", ""),
+                              p["exp_corners"], p["corners_over105"],
                               p.get("corners_sample_n", "")])
 
 
@@ -1542,6 +1605,11 @@ SCANNER_CONFIGS = [
         "subtitle_fmt": f"All matches with ≥{SCANNER_AWAY_TO_SCORE_MIN}% probability the away team scores (Over 0.5)",
     },
     {
+        "dir": "win_btts", "market_key": "win_btts_best", "min": SCANNER_WIN_BTTS_MIN,
+        "title": "Win & BTTS Daily Scanner", "icon": "🎲", "badge_label": "W&B",
+        "subtitle_fmt": f"Matches where either side's Win & BTTS probability is ≥{SCANNER_WIN_BTTS_MIN}% (joint probability, from the full scoreline grid)",
+    },
+    {
         "dir": "home_over15", "market_key": "home_over15", "min": SCANNER_HOME_OVER15_MIN,
         "title": "Home Over 1.5 Goals Daily Scanner", "icon": "🏠", "badge_label": "H1.5",
         "subtitle_fmt": f"All matches with ≥{SCANNER_HOME_OVER15_MIN}% probability the home team scores 2+ goals",
@@ -1732,6 +1800,7 @@ if __name__ == "__main__":
                 "corners_min": SCANNER_CORNERS_MIN, "safe_corners_min": SCANNER_SAFE_CORNERS_MIN,
                 "safe_corners_min_sample": SAFE_CORNERS_MIN_SAMPLE, "over45_min": SCANNER_OVER45_MIN,
                 "away_to_score_min": SCANNER_AWAY_TO_SCORE_MIN, "home_over15_min": SCANNER_HOME_OVER15_MIN,
+                "win_btts_min": SCANNER_WIN_BTTS_MIN,
                 "real_streak_threshold": REAL_STREAK_THRESHOLD,
                 "under_streak_max": UNDER_STREAK_MAX_GOALS,
             },
