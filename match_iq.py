@@ -62,9 +62,10 @@ SCANNER_OVER45_MIN = 50
 SCANNER_AWAY_TO_SCORE_MIN = 75  # higher bar than BTTS -- a one-sided market
                                  # (just the away side scoring) is easier to
                                  # hit than BTTS, so it earns a stricter floor
-SCANNER_WIN_BTTS_MIN = 25       # Win & BTTS is a joint (win AND both score) market, so its
-                                 # probabilities run far lower than any single market's -- even a
-                                 # strong favourite rarely tops ~35%. 25% is a high bar for it.
+SCANNER_WIN_BTTS_MIN = 40       # Win & BTTS is a joint (win AND both score) market, so its
+                                 # probabilities run far lower than any single market's. Launched at
+                                 # 25% (17 matches qualified in one day -- too many); raised to 40%
+                                 # on 2026-11-27 so only the strongest cases show.
 SCANNER_HOME_OVER15_MIN = 65    # needing 2+ goals is a harder bar than just
                                  # scoring once, so this sits below the
                                  # Over 0.5 markets' floors, not above them
