@@ -1,5 +1,38 @@
 {
-  "generated": "2026-11-26T15:59:44.446610+00:00",
-  "total_live": 0,
-  "games": []
+  "generated": "2026-11-27T00:20:15.386032+00:00",
+  "total_live": 1,
+  "games": [
+    {
+      "game_id": "401873080",
+      "home_id": "6",
+      "away_id": "21",
+      "home_team": "Dallas Cowboys",
+      "away_team": "Philadelphia Eagles",
+      "home_score": 31.0,
+      "away_score": 10.0,
+      "period": 3,
+      "display_clock": "0:24",
+      "status": "0:24 - 3rd",
+      "elapsed_minute": 44.6,
+      "minutes_remaining": 15.4,
+      "next_score": {
+        "home": 76,
+        "away": 24
+      },
+      "game_total_pace": {
+        "prob": 49,
+        "status": "On Pace: Under"
+      },
+      "model_signal": {
+        "label": "Home Next Score",
+        "prob": 76,
+        "qualifies": true
+      },
+      "pregame_projection": {
+        "exp_home": 33.0,
+        "exp_away": 22.4,
+        "exp_total": 55.3
+      }
+    }
+  ]
 }
