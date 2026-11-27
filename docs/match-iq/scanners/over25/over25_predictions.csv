@@ -1,52 +1,57 @@
-Date,League,HomeTeam,AwayTeam,Over25,Over45,BTTS,AwayToScore,HomeOver15,ExpCorners,CornersOver105,CornersSampleN
-2026-11-25T20:00:00.000Z,UEFA Champions League,Paris Saint-Germain,Roma,95,74,84,85,93,8.77,27,4
-2026-11-25T20:00:00.000Z,UEFA Champions League,Club Brugge KV,Liverpool,94,73,91,95,82,11.49,60,4
-2026-11-25T17:45:00.000Z,UEFA Champions League,Sabah FK,Barcelona,88,57,79,97,50,9.24,32,4
-2026-11-25T17:45:00.000Z,UEFA Champions League,SK Slavia Praha,Villarreal,86,52,83,90,70,10.62,49,4
-2026-11-25T20:00:00.000Z,UEFA Champions League,Lille,FC Bayern München,82,46,64,96,30,9.73,38,4
-2026-11-25T20:00:00.000Z,UEFA Champions League,Sporting,Manchester United,70,30,68,77,64,7.5,14,4
-2026-11-27T19:00:00.000Z,Eredivisie,FC Groningen,Willem II Tilburg,87,56,74,77,87,9.6,37,7
-2026-11-27T18:00:00.000Z,Danish Superliga,Sønderjyske Fodbold,Brøndby IF,70,29,68,88,43,9.94,41,7
-2026-11-28T17:00:00.000Z,Eliteserien,Rosenborg BK,Molde FK,88,56,78,81,84,13.22,77,7
-2026-11-28T20:00:00.000Z,Eredivisie,SC Cambuur,Sparta Rotterdam,87,55,76,78,85,9.39,34,7
-2026-11-28T17:30:00.000Z,MLS,Charlotte FC,Chicago Fire,87,54,81,86,79,11.44,59,7
-2026-11-28T15:30:00.000Z,Eredivisie,Excelsior,SC Telstar,82,46,72,95,41,9.42,34,7
-2026-11-28T17:45:00.000Z,Eredivisie,PSV Eindhoven,Go Ahead Eagles,78,39,64,68,80,9.41,34,7
-2026-11-28T14:00:00.000Z,Serie A,Frosinone,Parma,76,38,70,76,73,12.94,74,7
-2026-11-28T15:00:00.000Z,Eliteserien,Bodø/Glimt,KFUM Oslo,76,37,71,77,72,9.47,35,7
-2026-11-28T14:30:00.000Z,Bundesliga,Hamburger SV,FC Bayern München,76,37,65,94,33,10.94,53,7
-2026-11-28T01:00:00.000Z,MLS,Columbus Crew,Inter Miami CF,73,33,63,68,75,7.25,12,7
-2026-11-29T15:30:00.000Z,Swiss Super League,FC Thun,FC St. Gallen 1879,86,54,81,95,59,11.16,56,7
-2026-11-29T16:00:00.000Z,Eliteserien,SK Brann,Kristiansund BK,83,48,80,88,69,10.71,51,7
-2026-11-29T17:00:00.000Z,Serie A,Roma,Monza,81,44,70,74,80,9.98,41,7
-2026-11-29T13:00:00.000Z,Swiss Super League,FC Luzern,FC Lugano,80,43,74,93,46,11.19,56,7
-2026-11-29T12:00:00.000Z,Championship,Swansea City,Cardiff City,79,41,77,88,61,9.71,38,7
-2026-11-29T20:00:00.000Z,LaLiga,Real Sociedad,Sevilla,79,41,73,78,75,9.39,34,7
-2026-11-29T13:30:00.000Z,Eliteserien,Fredrikstad FK,Aalesunds FK,78,39,73,92,47,14.2,84,7
-2026-11-29T16:00:00.000Z,Eliteserien,Sandefjord Fotball,Tromsø IL,76,37,73,80,69,8.91,28,7
-2026-11-29T16:30:00.000Z,Bundesliga,TSG Hoffenheim,FC Augsburg,74,35,73,84,61,8.71,26,7
-2026-11-29T14:30:00.000Z,Bundesliga,SC Freiburg,RB Leipzig,74,35,71,90,45,8.74,26,7
-2026-11-29T13:30:00.000Z,Eredivisie,Feyenoord,AFC Ajax,73,33,72,88,50,9.96,41,7
-2026-11-29T15:15:00.000Z,LaLiga,Deportivo La Coruña,Barcelona,72,32,61,93,28,9.75,39,7
-2026-11-29T14:00:00.000Z,Serie A,Sassuolo,Napoli,72,32,57,94,24,10.02,42,7
-2026-11-29T16:00:00.000Z,Eliteserien,IK Start,Sarpsborg 08,71,31,70,87,49,13.51,79,7
-2026-11-29T19:00:00.000Z,Eredivisie,NEC Nijmegen,FC Twente,70,30,62,92,31,9.54,36,7
-2026-11-30T17:30:00.000Z,Serie A,Lecce,Atalanta,79,41,74,93,48,10.8,52,7
-2026-11-30T19:45:00.000Z,Serie A,Cagliari,Milan,72,32,56,94,23,8.0,18,7
-2026-12-02T18:00:00.000Z,LaLiga,Real Sociedad,Real Madrid,71,31,67,90,40,10.85,52,7
-2026-12-04T18:00:00.000Z,Eliteserien,Molde FK,Viking FK,94,71,89,97,72,13.13,76,7
-2026-12-04T19:00:00.000Z,Eredivisie,SC Telstar,FC Groningen,89,60,86,94,70,10.13,43,7
-2026-12-04T19:45:00.000Z,Serie A,Bologna,Roma,74,34,70,90,44,10.53,48,7
-2026-12-04T19:30:00.000Z,Bundesliga,FC Bayern München,SC Paderborn 07,71,31,59,64,75,10.82,52,7
-2026-12-05T14:30:00.000Z,Bundesliga,RB Leipzig,1. FSV Mainz 05,92,68,81,82,91,10.5,48,7
-2026-12-05T17:00:00.000Z,Swiss Super League,FC Thun,FC Luzern,90,62,87,94,73,10.83,52,7
-2026-12-05T15:30:00.000Z,Eredivisie,Willem II Tilburg,Feyenoord,85,50,66,97,32,10.33,46,7
-2026-12-05T17:00:00.000Z,Serie A,Frosinone,Inter,85,50,79,94,54,10.17,44,7
-2026-12-05T15:00:00.000Z,Eliteserien,Aalesunds FK,Bodø/Glimt,80,43,75,93,49,13.87,82,7
-2026-12-05T17:00:00.000Z,Swiss Super League,FC Vaduz,Young Boys,77,38,72,92,46,10.43,47,7
-2026-12-05T15:00:00.000Z,Championship,Cardiff City,Lincoln City,75,36,74,85,61,11.1,55,7
-2026-12-05T17:45:00.000Z,Eredivisie,Sparta Rotterdam,NEC Nijmegen,75,35,73,89,51,10.74,51,7
-2026-12-05T19:30:00.000Z,Swiss Super League,FC Zürich,FC Lugano,74,35,73,87,54,12.3,68,7
-2026-12-05T14:30:00.000Z,Bundesliga,Bayer 04 Leverkusen,Borussia M'gladbach,73,33,69,76,69,10.82,52,7
-2026-12-05T19:00:00.000Z,Eredivisie,AZ Alkmaar,PSV Eindhoven,72,32,68,91,39,8.29,21,7
-2026-12-05T15:00:00.000Z,Premier League,Manchester United,Coventry City,72,32,65,92,34,9.84,40,7
+Date,League,HomeTeam,AwayTeam,Over25,Over45,BTTS,AwayToScore,HomeOver15,HomeWinBTTS,AwayWinBTTS,ExpCorners,CornersOver105,CornersSampleN
+2026-11-27T19:00:00.000Z,Eredivisie,FC Groningen,Willem II Tilburg,87,56,74,77,87,53.3,9.3,9.5,35,7
+2026-11-27T18:00:00.000Z,Danish Superliga,Sønderjyske Fodbold,Brøndby IF,70,29,68,88,43,17.4,32.1,9.88,40,7
+2026-11-28T17:00:00.000Z,Eliteserien,Rosenborg BK,Molde FK,88,56,78,81,84,51.3,13.4,13.11,76,7
+2026-11-28T20:00:00.000Z,Eredivisie,SC Cambuur,Sparta Rotterdam,87,55,76,78,85,52.3,10.9,9.31,33,7
+2026-11-28T17:30:00.000Z,MLS,Charlotte FC,Chicago Fire,87,54,81,86,79,45.1,20.0,11.3,58,7
+2026-11-28T15:30:00.000Z,Eredivisie,Excelsior,SC Telstar,82,46,72,95,41,11.1,46.9,9.33,33,7
+2026-11-28T17:45:00.000Z,Eredivisie,PSV Eindhoven,Go Ahead Eagles,78,39,64,68,80,44.0,8.0,9.34,34,7
+2026-11-28T14:00:00.000Z,Serie A,Frosinone,Parma,76,38,70,76,73,40.3,13.8,12.8,73,7
+2026-11-28T15:00:00.000Z,Eliteserien,Bodø/Glimt,KFUM Oslo,76,37,71,77,72,39.2,15.2,9.37,34,7
+2026-11-28T14:30:00.000Z,Bundesliga,Hamburger SV,FC Bayern München,76,37,65,94,33,8.9,42.7,10.83,52,7
+2026-11-28T01:00:00.000Z,MLS,Columbus Crew,Inter Miami CF,73,33,63,68,75,40.1,9.0,7.15,11,7
+2026-11-29T15:30:00.000Z,Swiss Super League,FC Thun,FC St. Gallen 1879,86,54,81,95,59,20.9,44.1,11.05,55,7
+2026-11-29T16:00:00.000Z,Eliteserien,SK Brann,Kristiansund BK,83,48,80,88,69,34.4,27.7,10.6,49,7
+2026-11-29T17:00:00.000Z,Serie A,Roma,Monza,81,44,70,74,80,46.2,10.4,9.87,40,7
+2026-11-29T13:00:00.000Z,Swiss Super League,FC Luzern,FC Lugano,80,43,74,93,46,15.3,42.5,11.08,55,7
+2026-11-29T12:00:00.000Z,Championship,Swansea City,Cardiff City,79,42,77,89,61,27.9,30.7,9.52,36,7
+2026-11-29T20:00:00.000Z,LaLiga,Real Sociedad,Sevilla,79,41,73,78,75,42.3,14.6,9.27,33,7
+2026-11-29T13:30:00.000Z,Eliteserien,Fredrikstad FK,Aalesunds FK,78,39,73,92,47,17.1,39.2,14.08,83,7
+2026-11-29T16:00:00.000Z,Eliteserien,Sandefjord Fotball,Tromsø IL,76,37,73,80,69,37.1,18.0,8.83,27,7
+2026-11-29T16:30:00.000Z,Bundesliga,TSG Hoffenheim,FC Augsburg,74,35,73,84,61,30.1,24.0,8.61,25,7
+2026-11-29T14:30:00.000Z,Bundesliga,SC Freiburg,RB Leipzig,74,35,71,90,45,17.1,36.2,8.63,25,7
+2026-11-29T13:30:00.000Z,Eredivisie,Feyenoord,AFC Ajax,73,33,72,88,50,21.4,31.8,9.88,40,7
+2026-11-29T15:15:00.000Z,LaLiga,Deportivo La Coruña,Barcelona,72,32,61,93,28,7.8,39.8,9.62,37,7
+2026-11-29T14:00:00.000Z,Serie A,Sassuolo,Napoli,72,32,57,94,24,6.1,39.5,9.9,40,7
+2026-11-29T16:00:00.000Z,Eliteserien,IK Start,Sarpsborg 08,71,31,70,87,49,21.4,30.0,13.39,78,7
+2026-11-29T19:00:00.000Z,Eredivisie,NEC Nijmegen,FC Twente,70,30,62,92,31,9.8,37.7,9.46,35,7
+2026-11-30T17:30:00.000Z,Serie A,Lecce,Atalanta,79,41,74,93,48,16.9,40.3,10.68,50,7
+2026-11-30T19:45:00.000Z,Serie A,Cagliari,Milan,72,32,56,94,23,5.6,38.9,7.89,17,7
+2026-12-02T18:00:00.000Z,LaLiga,Real Sociedad,Real Madrid,71,31,67,90,40,14.8,35.5,10.7,50,7
+2026-12-04T18:00:00.000Z,Eliteserien,Molde FK,Viking FK,94,71,89,97,72,24.7,48.9,13.02,75,7
+2026-12-04T19:00:00.000Z,Eredivisie,SC Telstar,FC Groningen,89,60,86,94,70,29.2,39.2,10.02,42,7
+2026-12-04T19:45:00.000Z,Serie A,Bologna,Roma,74,34,70,90,44,16.7,36.0,10.43,47,7
+2026-12-04T19:30:00.000Z,Bundesliga,FC Bayern München,SC Paderborn 07,71,31,59,64,75,38.7,7.5,10.69,50,7
+2026-12-05T14:30:00.000Z,Bundesliga,RB Leipzig,1. FSV Mainz 05,92,68,81,82,91,59.5,10.0,10.36,46,7
+2026-12-05T17:00:00.000Z,Swiss Super League,FC Thun,FC Luzern,90,62,87,94,73,32.8,36.8,10.71,51,7
+2026-12-05T15:30:00.000Z,Eredivisie,Willem II Tilburg,Feyenoord,85,50,66,97,32,6.1,50.3,10.24,45,7
+2026-12-05T17:00:00.000Z,Serie A,Frosinone,Inter,85,50,79,94,54,18.5,44.2,10.05,42,7
+2026-12-05T15:00:00.000Z,Eliteserien,Aalesunds FK,Bodø/Glimt,80,43,75,93,49,17.1,41.1,13.72,81,7
+2026-12-05T17:00:00.000Z,Swiss Super League,FC Vaduz,Young Boys,77,38,72,92,46,16.8,38.5,10.3,45,7
+2026-12-05T15:00:00.000Z,Championship,Cardiff City,Lincoln City,76,36,74,85,61,29.9,25.4,10.78,51,7
+2026-12-05T17:45:00.000Z,Eredivisie,Sparta Rotterdam,NEC Nijmegen,75,35,73,89,51,21.7,32.9,10.66,50,7
+2026-12-05T19:30:00.000Z,Swiss Super League,FC Zürich,FC Lugano,74,35,73,87,54,24.0,30.1,12.15,67,7
+2026-12-05T14:30:00.000Z,Bundesliga,Bayer 04 Leverkusen,Borussia M'gladbach,73,33,69,76,69,36.9,15.0,10.68,50,7
+2026-12-05T19:00:00.000Z,Eredivisie,AZ Alkmaar,PSV Eindhoven,72,32,68,91,39,13.9,37.1,8.23,21,7
+2026-12-05T15:00:00.000Z,Premier League,Manchester United,Coventry City,72,32,65,92,34,11.1,38.5,9.88,40,7
+2026-12-06T13:00:00.000Z,Danish Superliga,FC Nordsjælland,Lyngby,88,57,77,79,86,53.4,11.1,6.9,9,7
+2026-12-06T14:00:00.000Z,Serie A,Lazio,Atalanta,86,53,73,76,85,51.7,9.5,10.6,49,7
+2026-12-06T16:00:00.000Z,Eliteserien,Sarpsborg 08,SK Brann,81,45,77,93,53,19.4,40.6,13.92,82,7
+2026-12-06T11:15:00.000Z,Eredivisie,SC Heerenveen,SC Cambuur,76,37,74,83,65,33.5,22.0,8.14,20,7
+2026-12-06T13:30:00.000Z,Eredivisie,AFC Ajax,FC Utrecht,75,36,67,72,75,41.0,11.0,9.26,33,7
+2026-12-06T13:00:00.000Z,Danish Superliga,FC Midtjylland,Silkeborg IF,75,35,69,75,71,38.8,13.8,7.57,14,7
+2026-12-06T16:00:00.000Z,Eliteserien,HamKam,Sandefjord Fotball,74,35,73,87,55,24.5,29.7,9.87,40,7
+2026-12-06T19:45:00.000Z,Serie A,Milan,Parma,74,34,60,63,77,40.7,6.9,7.96,18,7
+2026-12-06T13:30:00.000Z,Eredivisie,Go Ahead Eagles,FC Twente,73,34,61,94,28,7.8,40.5,9.72,38,7
+2026-12-06T16:00:00.000Z,Eliteserien,KFUM Oslo,Fredrikstad FK,73,33,70,78,67,35.1,17.1,9.62,37,7
+2026-12-06T16:00:00.000Z,Eliteserien,Kristiansund BK,Lillestrøm SK,71,31,68,90,42,15.8,35.0,10.72,51,7
